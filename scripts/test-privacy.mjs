@@ -279,7 +279,7 @@ try {
   assert.match(av, /14 dagen/);
   assert.match(av, /niet bedoeld als medisch hulpmiddel/);
   assert.match(av, /geen dossier|vervangt je dossier niet/i);
-  assert.match(av, /binnen 30 dagen/);
+  assert.match(av, /30 dagen later wissen we alles/);
   assert.match(av, /class="invul"/);
   assert.match(av, /In het kort[\s\S]*14 dagen, is gratis[\s\S]*De artikelen hieronder gelden/);
   assert.match(av, /href="\/verwerkersovereenkomst"/);

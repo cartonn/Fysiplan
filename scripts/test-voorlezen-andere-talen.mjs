@@ -48,7 +48,7 @@ function context(taal,{reviewOk=true}={}){
     regelVan(/  function tr\(k\)\{[^\n]*\n/)+regelVan(/  function vt\(s\)\{[^\n]*\n/)+regelVan(/  function normEx\(s\)\{[^\n]*\n/)+
     tussen('  var mediaReviewReady=false,','  function geldigeUitsnede(')+tussen('  function geldigeUitsnede(','  async function loadMobileReview(')+
     tussen('  async function loadMobileReview(','  // Een oude afkeuring mag')+tussen('  function metEigen(lib,kaart){','  function dagStr(t)')+
-    tussen('  var bezigLezen=false,noorRequest=0;','  // ---- als app'),ctx);
+    tussen('  var bezigLezen=false,noorRequest=0,noorBron=-1;','  // ---- als app'),ctx);
   ctx.VERT[taal]={[A.uitleg]:MARKER+A.uitleg};
   return {ctx,knop,log,laad:()=>vm.runInContext('loadMobileReview().catch(function(){mediaReviewReady=false;})',ctx)};
 }
@@ -166,7 +166,7 @@ for(const taal of TALEN){
     if(r.ctx.bezigLezen)vm.runInContext('stopLezen()',r.ctx);
   }
   assert.equal(gelezen+overgeslagen,review.entries.length); // 319 V1-beelden + nieuwe lijntekeningen
-  // open bronkeuze (2026-11-03): Back extension en Rug extensie worden net zo overgeslagen
-  for(const id of ['fp_a0a18c0c13673d38','fp_7b07f346644f9c17'])assert.ok(wegIds.has(id),id+' overgeslagen');
+  // Back extension en Rug extensie: hold opgeheven op 2026-11-09 (tekening, avatar en uitleg volgen Physitrack)
+  for(const id of ['fp_a0a18c0c13673d38','fp_7b07f346644f9c17'])assert.equal(wegIds.has(id),uitlegWeg.has(id),id+': alleen nog overgeslagen bij een houd op de uitleg');
   console.log(`Voorlezen in andere talen: per oefening dezelfde regel als de kaartknoppen en het Nederlands (${gelezen} voorgelezen, ${overgeslagen} overgeslagen van ${review.entries.length}); gemengd, alles tegengehouden, 8 talen en controle niet te laden getest; zonder houds exact de bestaande voorlezing.`);
 }

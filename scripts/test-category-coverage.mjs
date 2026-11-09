@@ -65,7 +65,7 @@ for (const m of bewijs.mappings) {
   assert.ok(!uitleg.holds.some((h) => h.status === 'hold' && (h.exerciseId === id || h.name === m.name)), `${m.name}: uitleg wordt tegengehouden`);
   for (const veld of ['visual', 'text', 'holds', 'runtimeOverride']) assert.ok(String(m.evidence?.[veld] || '').length > 20, `${m.name}: bewijs ${veld}`);
   assert.ok(Array.isArray(m.evidence.sources) && m.evidence.sources.length, `${m.name}: bron`);
-  for (const pad of [e.img, e.kaartImg]) assert.ok(m.evidence.visual.includes(pad), `${m.name}: het bekeken beeld ${pad} is het beeld van het record`);
+  for (const pad of [e.img, e.kaartImg].filter(Boolean)) assert.ok(m.evidence.visual.includes(pad), `${m.name}: het bekeken beeld ${pad} is het beeld van het record`);
 }
 
 // ---- 3. afgewezen kandidaten blijven buiten ----
@@ -78,12 +78,13 @@ for (const n of bewijs.notApplied) {
 const heelToe = bewijs.notApplied.find((n) => n.name === 'Standing chair heel/toe');
 assert.ok(heelToe && uitleg.holds.some((h) => h.status === 'hold' && h.exerciseId === heelToe.exerciseId), 'heel/toe: houding staat er en de mapping niet');
 assert.ok(bewijs.notApplied.some((n) => n.exerciseId === 'fp_295fd35a63d44ef8'), 'Chair squat staat expliciet bij niet toegepast');
-// Een tijdelijke bronhold (open bronkeuze, 2026-11-03) laat de categorie staan: Back extension
-// en Rug extensie blijven onder Core en Rug vindbaar; alleen hun beeld telt als tegengehouden.
+// Back extension en Rug extensie blijven onder Core en Rug vindbaar. Hun tijdelijke bronhold
+// (open bronkeuze, 2026-11-03) is op 2026-11-09 opgeheven: tekening, avatar en uitleg volgen
+// nu Physitrack (content/physitrack-crosscheck-beelden.json, beeldenRonde3).
 for (const id of ['fp_a0a18c0c13673d38', 'fp_7b07f346644f9c17']) {
   const e = v2.find((x) => exerciseId(x) === id);
   assert.ok(e && e.groep === 'Core' && (e.ook || []).includes('Rug'), `${id}: categorie ongewijzigd`);
-  assert.ok(afgekeurd.has(id + '|' + bronVan(e)), `${e.naam}: beeld tegengehouden`);
+  assert.ok(!afgekeurd.has(id + '|' + bronVan(e)), `${e.naam}: beeld niet meer tegengehouden`);
 }
 
 // ---- 4. niet-auto-vullen-categorieën ----

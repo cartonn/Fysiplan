@@ -198,10 +198,12 @@ const knopEl=id=>{if(!knoppen.has(id))knoppen.set(id,{textContent:'',attrs:{},kl
   classList:{add(k){knoppen.get(id).klassen.add(k);},remove(k){knoppen.get(id).klassen.delete(k);}},
   setAttribute(k,v){this.attrs[k]=v;}});return knoppen.get(id);};
 const meldingen=[];
+// sinds 2026-11-09 staat de melding op de pagina (#noorMelding) in plaats van in een alert()
+knoppen.set('noorMelding',{hidden:true,set textContent(v){if(v)meldingen.push(v);},get textContent(){return '';}});
 const kaart=vm.createContext({document:{getElementById:knopEl,querySelectorAll:()=>[]},window:s.venster,NoorAudio:s.N,
   mediaReviewReady:true,explanationHolds:[],TAAL:'nl',tr:x=>x==='stop'?'Stop':x,alert:m=>meldingen.push(m),demoGeluidKnop(){}});
 const knip=(a,b)=>{const i=html.indexOf(a);assert.ok(i>=0,a);const j=html.indexOf(b,i);assert.ok(j>i,b);return html.slice(i,j);};
-vm.runInContext(knip('  var bezigLezen=false,noorRequest=0;','  function leesVoor(){')+knip('  async function speelNoor(','  // ---- als app'),kaart);
+vm.runInContext(knip('  var bezigLezen=false,noorRequest=0,noorBron=-1;','  function leesVoor(){')+knip('  async function speelNoor(','  // ---- als app'),kaart);
 bezig=vm.runInContext('speelNoor([{name:"Test",text:"Algemene uitleg."}])',kaart);
 await wachtRij();
 assert.equal(knopEl('leesBtn').attrs['aria-pressed'],'true','tijdens het laden staat de knop op Stop');

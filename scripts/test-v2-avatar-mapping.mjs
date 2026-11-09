@@ -1,8 +1,7 @@
 // De V2-kaartbeelden van Standing chair hip extension en Standing chair knee lift waren
 // onderling verwisseld (2026-11-03). Deze test legt de wérkelijk verwachte koppeling vast,
 // los van de uitzonderingslijst zelf, zodat een fout in die lijst niet mee "geldig" wordt.
-// Ook zeven bronnen (vijf met een zichtbaar defect, twee met een open bronkeuze) worden op de
-// kaart tijdelijk tegengehouden.
+// Ook één bron met een zichtbaar defect wordt op de kaart tijdelijk tegengehouden.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
@@ -20,13 +19,14 @@ const HEUP='images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg';   /
 const LIJN_HEUP='images/seated-chair/standing-chair-hip-extension-line-v1.png'; // toont een knieheffing
 const LIJN_KNIE='images/seated-chair/standing-chair-knee-lift-line-v1.png';     // toont een heupextensie
 const KNIE='images/seated-chair/standing-chair-knee-lift-avatar-v8.jpg';       // toont een heupextensie
-const BEELD_KNIEHEFFING='3f549445eff57fa963e6e742d79d33898a0c177d872dd51b9facab8562950abb';
+// 2026-11-09: knieheffing opnieuw gemaakt volgens Physitrack (controleronde 3), nu met begin en eind.
+const BEELD_KNIEHEFFING='9db88256c4f1a08adfadea28d5fe791d1ba31a6ebc07a8b43bf1540c0c5ab8a8';
 const BEELD_HEUPEXTENSIE='64ab13e0e71e5c0e158066f7e05dc482515ad4312313ee79884f73be17dea048';
 const verwacht=[
   {id:'fp_514654a0d4181742',naam:'Standing chair hip extension',kaartImg:KNIE,sha:BEELD_HEUPEXTENSIE,
     img:LIJN_KNIE,v1img:LIJN_HEUP,pijl:'images/beginhouding-pijl-v1/313.webp',tekst:/gestrekt been rustig naar achteren vanuit de heup/},
   {id:'fp_5319c4700561725d',naam:'Standing chair knee lift',kaartImg:HEUP,sha:BEELD_KNIEHEFFING,
-    img:LIJN_HEUP,v1img:LIJN_KNIE,pijl:'images/beginhouding-pijl-v1/315.webp',tekst:/breng één knie gecontroleerd omhoog/}
+    img:LIJN_HEUP,v1img:LIJN_KNIE,pijl:'images/beginhouding-pijl-v1/315.webp',tekst:/breng één knie gecontroleerd omhoog/,paar:true}
 ];
 
 // ---- 1. de catalogus: het beeld met de beweging uit de eigen tekst ----
@@ -71,7 +71,8 @@ for(const v of verwacht){
 // en Dips met de voeten los tussen de leggers,
 // en Yoga knee to chest hip stretch zittend, zoals tekening, avatar en Physitrack (Seated knee hugs).
 // Elke andere wijziging van dit bestand laat deze test falen.
-assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'d0956b4673e62beb58dd128d7589b351681c7e833d12b4bc4053532562df8af8','public/oefeningen.json is ongewijzigd');
+// 2026-11-09 ronde 3: 22 V1-uitleggen volgens Physitrack (content/physitrack-crosscheck-beelden.json uitlegRonde3).
+assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'ab1e09506ae2838dc9030a24d2e36ef3704447c88d2a4dfe3442a01c2d8a95c1','public/oefeningen.json is ongewijzigd');
 assert.notEqual(v2.find(x=>x.exerciseId==='fp_514654a0d4181742').kaartImg,v2.find(x=>x.exerciseId==='fp_5319c4700561725d').kaartImg);
 // geen bestand verplaatst, hernoemd of overschreven
 assert.equal(sha(HEUP),BEELD_KNIEHEFFING);assert.equal(sha(KNIE),BEELD_HEUPEXTENSIE);
@@ -122,32 +123,27 @@ for(const v of verwacht){
   const r=review.entries.find(x=>x.exerciseId===v.id);
   assert.equal(r.source,v.kaartImg);assert.equal(r.assetSha256,v.sha);
   assert.equal(r.status,'unreviewed');assert.equal(r.clinicalApproved,false);
-  assert.notEqual(r.poseGeometry.status,'geometry-approved',v.naam+': geen begin/eind-paar');
-  assert.deepEqual(r.poses,[]);
+  if(v.paar){assert.equal(r.poseGeometry.status,'geometry-approved',v.naam+': nieuw beeld met begin en eind, uitsnedes bekeken');assert.equal(r.poses.length,2);}
+  else{assert.notEqual(r.poseGeometry.status,'geometry-approved',v.naam+': geen begin/eind-paar');assert.deepEqual(r.poses,[]);}
   assert.equal(r.explanationSha256,tekstSha(v2.find(x=>x.exerciseId===v.id).uitleg));
   assert.ok(r.observations.some(t=>/gecorrigeerd/.test(t)&&/V1-lijnbeeld/.test(t)),'de correctie en wat niet is aangepast staan erbij');
 }
 
-// ---- 4. tijdelijke houds op drie bronnen (één bronfout, twee open bronkeuzes) ----
+// ---- 4. tijdelijke hold op één bron (bronfout) ----
 // 2026-11-09: holds op Chair squat, Standing chair shoulder rotations, Dips en Triceps dips opgeheven met een nieuwe avatar
-// uit de Physitrack-crosscheck (content/physitrack-crosscheck-beelden.json, holdsOpgeheven).
+// uit de Physitrack-crosscheck (content/physitrack-crosscheck-beelden.json, holdsOpgeheven); de open bronkeuzes
+// Back extension en Rug extensie opgeheven omdat tekening, avatar en uitleg nu Physitrack volgen (beeldenRonde3).
 const houds=[
-  ['fp_7dc1478e2b3c17b0','Step up with knee raise','images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg'],
-  ['fp_a0a18c0c13673d38','Back extension','images/core/back-extension-avatar-v7.jpg'],
-  ['fp_7b07f346644f9c17','Rug extensie','images/core/rug-extensie-avatar-v7.jpg']
+  ['fp_7dc1478e2b3c17b0','Step up with knee raise','images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg']
 ];
-// Back extension en Rug extensie: de hold verandert niets aan de catalogi. V1 en V2 delen id,
-// naam, uitleg, lijnbeeld en kaartbeeld; precies daardoor geldt de hold ook op een via V1
-// gemaakte QR-kaart (zie onder).
-const BRONKEUZE={'fp_a0a18c0c13673d38':'fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50',
-  'fp_7b07f346644f9c17':'7480d432c7638d3568edea6ca3a8e4fc9b48caa8e646580bec5790f79a431b47'};
-for(const [id,hash] of Object.entries(BRONKEUZE)){
+// Back extension en Rug extensie: V1 en V2 delen nog steeds id, naam, uitleg, lijnbeeld en kaartbeeld, en
+// zonder hold worden ze gewoon getoond.
+for(const id of ['fp_a0a18c0c13673d38','fp_7b07f346644f9c17']){
   const e2=v2.find(x=>exerciseId(x)===id),e1=v1.filter(x=>exerciseId(x)===id);
   assert.equal(e1.length,1,id+': precies één V1-record');
   for(const k of ['naam','groep','img','kaartImg','uitleg'])assert.equal(e1[0][k],e2[k],e2.naam+': V1 en V2 gelijk op '+k);
-  assert.equal(sha(e2.kaartImg),hash,e2.naam+': exact de beoordeelde bytes');
-  assert.ok(fs.existsSync('public/'+e2.img),e2.naam+': V1-lijnbeeld bestaat nog');
-  assert.equal(review.entries.find(x=>x.exerciseId===id).hold?.kind,'source-choice-pending',e2.naam+': hold op open bronkeuze');
+  const r=review.entries.find(x=>x.exerciseId===id);
+  assert.ok(!r.hold,e2.naam+': geen hold meer');assert.notEqual(r.status,'rejected',e2.naam);assert.equal(r.assetSha256,sha(e2.kaartImg),e2.naam);
 }
 for(const [id,naam,bron] of houds){
   const e=v2.find(x=>exerciseId(x)===id);
@@ -175,15 +171,8 @@ const stap=opKaart('fp_7dc1478e2b3c17b0');
 assert.equal(kaart.mediaWithheld({...stap,kaartImg:stap.kaartImg.replace('/v2/','/')}),true,'Step up with knee raise op gedeelde QR-route');
 assert.equal(kaart.mediaWithheld({...stap,kaartImg:'/v2/images/review/new-step.jpg'}),false,'geen hold op ander bronpad');
 assert.equal(kaart.mediaWithheld({...stap,exerciseId:'different-id'}),false,'geen hold op ander id');
-for(const id of ['fp_295fd35a63d44ef8','fp_4b99c5f11b42a30d','fp_013ba6ad937cc9d9','fp_f227db5fcf245d9c'])assert.equal(kaart.mediaWithheld(opKaart(id)),false,id+': hold opgeheven, nieuwe avatar zichtbaar');
-for(const id of Object.keys(BRONKEUZE)){
-  const o=opKaart(id);
-  assert.equal(kaart.mediaWithheld({...o,kaartImg:o.kaartImg.replace('/v2/','/')}),true,o.naam+' op gedeelde QR-route (V1-pad)');
-  assert.equal(kaart.mediaWithheld({...o,kaartImg:o.kaartImg.replace('/v2/','')}),true,o.naam+' met relatief pad');
-  assert.equal(kaart.mediaWithheld({...o,kaartImg:'/v2/images/review/'+id+'-nieuw.jpg'}),false,o.naam+': geen hold op ander bronpad');
-  assert.equal(kaart.mediaWithheld({...o,exerciseId:'different-id'}),false,o.naam+': geen hold op ander id');
-}
-// de twee holds blijven bij hun eigen beeld: Backextensie (apparaat), met een andere bank, blijft zichtbaar
+for(const id of ['fp_295fd35a63d44ef8','fp_4b99c5f11b42a30d','fp_013ba6ad937cc9d9','fp_f227db5fcf245d9c','fp_a0a18c0c13673d38','fp_7b07f346644f9c17'])assert.equal(kaart.mediaWithheld(opKaart(id)),false,id+': hold opgeheven, nieuw beeld zichtbaar');
+// Backextensie (apparaat), met een andere bank, blijft zichtbaar
 assert.equal(kaart.mediaWithheld(opKaart('fp_b5725b610192706a')),false,'Backextensie (apparaat) niet meegehouden');
 for(const v of verwacht){
   assert.equal(kaart.mediaWithheld(opKaart(v.id)),false,v.naam+' toont het gecorrigeerde beeld');
@@ -200,4 +189,4 @@ const imp=spawnSync(process.execPath,['scripts/carla-avatar-pipeline.mjs','impor
 assert.notEqual(imp.status,0);assert.match(imp.stderr,/Import geweigerd/,'import voor een uitzondering wordt vóór elk schrijven geweigerd');
 assert.deepEqual([sha('oefeningen-v2.json'),sha(HEUP),sha(KNIE)],voor,'catalogus en beelden onaangeroerd');
 
-console.log('V2-kaart- en lijnbeelden: hip extension en knee lift tonen de beweging uit hun eigen uitleg (ids, teksten, geleverde pijlbeelden en V1 byte-gelijk, geen begin/eind-paar); 3 bronnen tijdelijk tegengehouden op de kaart (1 defect, 2 open bronkeuze, ook via de gedeelde V1-QR-route); pijplijn draait de correctie niet terug.');
+console.log('V2-kaart- en lijnbeelden: hip extension en knee lift tonen de beweging uit hun eigen uitleg (ids, teksten, geleverde pijlbeelden en V1 byte-gelijk); 1 bron tijdelijk tegengehouden op de kaart (defect, ook via de gedeelde V1-QR-route); pijplijn draait de correctie niet terug.');

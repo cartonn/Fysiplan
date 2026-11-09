@@ -115,8 +115,9 @@
       "output": "images/bovenste-extremiteit/dumbell-front-press-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.76729,
-      "sha256": "019a26db7f9d07db4ab6134dbdbc887c8d3faa88b48929e8b12febebf8313f26"
+      "nearWhiteRatio": 0.83323,
+      "sha256": "c685b35b72edeabe87ef00f98e62b3d74fdf0eaedfcf98b3f7b1d79745ef5e4d",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (10-dumbell-front-press-avatar.png)"
     },
     {
       "order": 12,
@@ -156,9 +157,9 @@
       "output": "images/bovenste-extremiteit/endo-pull-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.86229,
-      "sha256": "ccd3baf0571698a8b0a1379fefe442620c51678258e1d261f5021f82827e260e",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.84875,
+      "sha256": "3602f176539e3f3e6fef94cd404cc48d1362423d8441c8f551b3bf0bba8a920b",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (14-endo-pull-avatar.png)"
     },
     {
       "order": 16,
@@ -167,8 +168,9 @@
       "output": "images/bovenste-extremiteit/exo-pull-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.74014,
-      "sha256": "f85e76ee034c7273195e7abe9dca6e643610379b006f9d4c19feffa889dfa147"
+      "nearWhiteRatio": 0.76167,
+      "sha256": "6afc41b9e682ef6817f7de70925296a8a1deec8bc8eeb14a309e8d98a3ec12ce",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (15-exo-pull-avatar.png)"
     },
     {
       "order": 17,
@@ -291,9 +293,9 @@
       "output": "images/bovenste-extremiteit/pully-cross-down-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.87802,
-      "sha256": "fa18d0ad1d7453047468e95a7e360991b9449aecb175af39c455c945508e8182",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.80625,
+      "sha256": "563bfc0831b1ebea5d90cbab1c60f506b51d64de414f8f3effd639a1fcfc157e",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (27-pully-cross-down-avatar.png)"
     },
     {
       "order": 29,
@@ -302,9 +304,9 @@
       "output": "images/bovenste-extremiteit/pully-cross-over-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.86542,
-      "sha256": "2aac32b93236530ebb41bd32d7a7c140b4b3f9fe806cb6799ce2c47c26f79887",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.7801,
+      "sha256": "ae31f67051b5b2961f8a04bed3718e5de5aa0a55de66f91168205dfe08e896fe",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (28-pully-cross-over-avatar.png)"
     },
     {
       "order": 30,
@@ -346,8 +348,9 @@
       "output": "images/bovenste-extremiteit/pully-press-double-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.81565,
-      "sha256": "e2f53c226078efef65aea4c7fc637a1e2013ab23de64f9c08838d7b39c81d1b2"
+      "nearWhiteRatio": 0.73438,
+      "sha256": "263aba0339ed979548e67a13499f9bbb636a523f2382a6edcd59d569aa254707",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (32-pully-press-double-avatar.png)"
     },
     {
       "order": 34,
@@ -356,8 +359,9 @@
       "output": "images/bovenste-extremiteit/pully-press-single-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.84637,
-      "sha256": "26ce5d14e5945b1ac4c8ea3b493d518a55c1d5bdc60e9bf1da837fd08bc14293"
+      "nearWhiteRatio": 0.80594,
+      "sha256": "f4cd70e47efa20316bbd1ee7c07ae9be808c269301510c75a943336e590912cf",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (33-pully-press-single-avatar.png)"
     },
     {
       "order": 35,
@@ -366,9 +370,9 @@
       "output": "images/bovenste-extremiteit/pully-pull-over-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.7124,
-      "sha256": "5457387a8ffa6ea355952decb66ba7196348317d2b3960d025e0bf239b92796f",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.73073,
+      "sha256": "6f24f2f73782bffaec48dda0f5cebc9217754cb1a75799903de6dfbf32aac279",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (34-pully-pull-over-avatar.png)"
     },
     {
       "order": 36,
@@ -407,8 +411,9 @@
       "output": "images/bovenste-extremiteit/shoulder-rotation-shrugs-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.53897,
-      "sha256": "b2f91a3e116026dc60cecf491de1c8f59f01b8c1dd2ddf7fc963097d16333c7e"
+      "nearWhiteRatio": 0.86583,
+      "sha256": "244776f34e38c438c165bc74b8c15a70acd54472fc1b1488ab834710feb64653",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (38-shoulder-rotation-shrugs-avatar.png)"
     },
     {
       "order": 40,
@@ -428,9 +433,9 @@
       "output": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.77271,
-      "sha256": "e937212a6825e5b72a4cc085871f0877dd1ac79626ad856fadcf7724541537c0",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.79594,
+      "sha256": "48ff3b01017ffe6113a0a9797c94f56259c62020909fb2cc6b433596a378660f",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (40-triceps-dumbell-kickbacks-avatar.png)"
     },
     {
       "order": 42,
@@ -471,9 +476,9 @@
       "output": "images/bovenste-extremiteit/wrist-flexion-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.76531,
-      "sha256": "2b672f15f5bb364f9bab278b07dcbe1865224ced7cdc7b291f29953b0531997a",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.71458,
+      "sha256": "db3df6139f2f208401fea306a03b2989b4155ec67f7bddecfb8e8c3c89a39b3f",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (44-wrist-flexion-avatar.png)"
     },
     {
       "order": 46,
@@ -524,8 +529,9 @@
       "output": "images/onderste-extremiteit/crabwalk-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.76086,
-      "sha256": "d1408e90fa81c5ed7f52c35e0c28534e642283f9b1be40102c064d5b6137f79e"
+      "nearWhiteRatio": 0.87156,
+      "sha256": "6b2c9a2a1106e16e2845a291986fd0dd1c6edda88ae79e2dfbf7d5169b58109e",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (49-crabwalk-avatar.png)"
     },
     {
       "order": 51,
@@ -534,9 +540,9 @@
       "output": "images/onderste-extremiteit/dead-lift-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.84958,
-      "sha256": "f9e17fe8852961cf5c11ae35facdb7b8c8af2dd0390d10f5e319037180761244",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.88167,
+      "sha256": "c3befa2f30c059a4f213021fc245807eb4268e3ba6f3b6d2821ca2d975684e65",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (50-dead-lift-avatar.png)"
     },
     {
       "order": 52,
@@ -576,9 +582,9 @@
       "output": "images/onderste-extremiteit/hack-squat-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.8949,
-      "sha256": "ffd6523303e7b123374ed85dcc21b44c71d4ab2279a345046372400c5ce99b27",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.69677,
+      "sha256": "7af8a404bf2cadd247d80c619857a5f00e65a5e94306fc5ee33f584e619344be",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (54-hack-squat-avatar.png)"
     },
     {
       "order": 56,
@@ -609,8 +615,9 @@
       "output": "images/onderste-extremiteit/leg-curl-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.85241,
-      "sha256": "0f892d7e0c50bfe9ebfcf46a31811ee61e172d084b7cfed5698d64609d047fad"
+      "nearWhiteRatio": 0.8624,
+      "sha256": "151643a8714c39eb038b28241e7de8b03d9bbc313f4729f007bd59d8fcd03c2b",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (57-leg-curl-avatar.png)"
     },
     {
       "order": 59,
@@ -701,9 +708,9 @@
       "output": "images/onderste-extremiteit/squat-lunges-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.83479,
-      "sha256": "f5447e3a8586447b31ed6df78efc193d21486623ac2905c32e04d57c7b086326",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.8875,
+      "sha256": "dfda6f11816589b97f0ada85f0c34a67767c352077ad0054ad132af2131d776c",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (66-squat-lunges-avatar.png)"
     },
     {
       "order": 68,
@@ -786,8 +793,9 @@
       "output": "images/onderste-extremiteit/wall-sit-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.77598,
-      "sha256": "8f5dad30fd267554da433de2478cc3200e93dd8246aabe52cca2f486a947b646"
+      "nearWhiteRatio": 0.89073,
+      "sha256": "4ffd6fb9c0fbcaa0ea8b8390bf5ff1945fd04905459108c592f36a8bcb2f0281",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (74-wall-sit-avatar.png)"
     },
     {
       "order": 76,
@@ -807,8 +815,9 @@
       "output": "images/core/alternate-heel-touchers-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.77368,
-      "sha256": "065e091f86178319a54fc36ec8bb1e6d3dc596c893af5bc795fc00a51d98d4aa"
+      "nearWhiteRatio": 0.75854,
+      "sha256": "0ff3f568cfabe3912f29aa42ba98bf7e30829ed97d5014ec8ba055c8b4a51f1a",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (76-alternate-heel-touchers-avatar.png)"
     },
     {
       "order": 78,
@@ -817,8 +826,9 @@
       "output": "images/core/back-extension-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.80694,
-      "sha256": "fc043247f30c168e50c4d2e69e093594486416fb80a438f22e58c3a67cf3cb50"
+      "nearWhiteRatio": 0.72823,
+      "sha256": "dfb4d562fdb7e4553a0c9d118f23e381afd0089399b86b9d2fc226450b33cffa",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (77-back-extension-avatar.png)"
     },
     {
       "order": 79,
@@ -837,9 +847,9 @@
       "output": "images/core/barbell-twist-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.88552,
-      "sha256": "cf95be74d4cb5e065f4b842772ad1ea8f3c15e2ceb632929487ecf2d7e956441",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.81646,
+      "sha256": "f878b4e0a29d9e061680cf985d7bde23efb449053954c64004629b4fc3e38f57",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (79-barbell-twist-avatar.png)"
     },
     {
       "order": 81,
@@ -848,9 +858,9 @@
       "output": "images/core/bear-crawls-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.8124,
-      "sha256": "affa815e210b343f2afbf4758154f3b2f9a398886fbdfff9815404a02518a6db",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.75813,
+      "sha256": "83f6833e8769329889cbecd8abfd8ff1a788334e192d47b742d3d410b68f1fdb",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (80-bear-crawls-avatar.png)"
     },
     {
       "order": 82,
@@ -869,8 +879,9 @@
       "output": "images/core/bicycles-buik-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.79715,
-      "sha256": "6fe06ba1c9ebf6462736d03c775014492a26d1d894ed689188633e9ba53f01be"
+      "nearWhiteRatio": 0.70552,
+      "sha256": "a691016e67c04f68f919b230d4718a07a537368d81fdcfc263f0a6c5c11c4362",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (82-bicycles-buik-avatar.png)"
     },
     {
       "order": 84,
@@ -931,9 +942,9 @@
       "output": "images/core/crunch-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.78792,
-      "sha256": "2876426c7e19fbeac257930c0efe09daddb57a9e2e97a74759bb43371914cefc",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.76625,
+      "sha256": "e32726e0b63c613782e67a6eb46654a4c4bed764f31b99f13c0ebc702c209746",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (88-crunch-avatar.png)"
     },
     {
       "order": 90,
@@ -942,8 +953,9 @@
       "output": "images/core/curl-up-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.81298,
-      "sha256": "a0c6a51060f2ebd74065b472ca526c8a245916021c0834026320d17f800f1605"
+      "nearWhiteRatio": 0.7275,
+      "sha256": "8404df7e75731f949eb30254d1be58651d9803c5b1ba70303173c8de6e9f7a78",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (89-curl-up-avatar.png)"
     },
     {
       "order": 91,
@@ -1015,8 +1027,9 @@
       "output": "images/core/mountain-climber-x-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.7785,
-      "sha256": "e3c5ccf18fb26f513d68c1c3137d6ecd311100c1d9807098d2fbe57232202628"
+      "nearWhiteRatio": 0.69688,
+      "sha256": "ea164315cf86c7dc01e1990b6305cca5dcdaa6f82582981854b61f98f8d80fd1",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (96-mountain-climber-x-avatar.png)"
     },
     {
       "order": 98,
@@ -1046,9 +1059,9 @@
       "output": "images/core/plank-jacks-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.81271,
-      "sha256": "21e8b58113d7ae241a1537a13b613263d0a7acdf1dbb5bdc5ca7f7a3304eb708",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.72542,
+      "sha256": "ea13a7c47a51284601adeabce3dcd62896de1262189f4fd4e91920eab611b6ad",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (99-plank-jacks-avatar.png)"
     },
     {
       "order": 101,
@@ -1108,9 +1121,9 @@
       "output": "images/core/scissors-2-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.81917,
-      "sha256": "619d68ed4e817ccee640e1785126a63022348f83ccad097b3f561061cb0c4319",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.7524,
+      "sha256": "748b551c8684c32d0c7cf3334ddf57de7cef83d806ce65fb155023b9d298d4d1",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (105-scissors-2-avatar.png)"
     },
     {
       "order": 107,
@@ -1140,8 +1153,9 @@
       "output": "images/core/superman-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.865,
-      "sha256": "cc45bacd708908c919816e83c1204f5ae45619db8af5e67e84105bcac3dfa2dc"
+      "nearWhiteRatio": 0.775,
+      "sha256": "0c53b5ff243c505f378d41591c04ee016143959618344c70801d268fe062b056",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (108-superman-avatar.png)"
     },
     {
       "order": 110,
@@ -1213,8 +1227,9 @@
       "output": "images/bosu/balans-op-1-been-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.75815,
-      "sha256": "9de421fedf052ba705fe2e444b55786488e522e6a42330c7f65c9f28145ee838"
+      "nearWhiteRatio": 0.87104,
+      "sha256": "f2221c6d7ec2bc0e94b8b5bcf6d9674ef04c22c6fad74490613d90d33bf2144d",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (115-balans-op-1-been-avatar.png)"
     },
     {
       "order": 117,
@@ -1285,8 +1300,9 @@
       "output": "images/bosu/bosu-plank-leg-lift-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.76364,
-      "sha256": "d8ce04d18925bb7fc8c31d6b63db32739701e9459c878303a1f8600737eafe90"
+      "nearWhiteRatio": 0.72083,
+      "sha256": "09bee15ae1b97617d097cde4ca0e1a11469d413b5fa9a46eda4bcbb2349c91e8",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (122-bosu-plank-leg-lift-avatar.png)"
     },
     {
       "order": 124,
@@ -1316,8 +1332,9 @@
       "output": "images/bosu/bosu-zijw-plank-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.75311,
-      "sha256": "e8abd5b933e5d63471c4e6eb9fdd707f05bd41d11e64922239ffd69d6fd9f705"
+      "nearWhiteRatio": 0.72031,
+      "sha256": "0de8d7e31b3e8def48f912d04970094ae6726bee9c6140036a3aa3b7f3d37c54",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (125-bosu-zijw-plank-avatar.png)"
     },
     {
       "order": 127,
@@ -1326,8 +1343,9 @@
       "output": "images/trx/trx-ab-roll-out-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.84684,
-      "sha256": "9ac0939dbba7312652caf6108c8e6570d19512ae1a4018ba2261f079514b4a53"
+      "nearWhiteRatio": 0.81802,
+      "sha256": "f5742fe12de7ba5737f8b5bcc82b92f3603ac6bb81b558fdac0804c09f6dc5c1",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (126-trx-ab-roll-out-avatar.png)"
     },
     {
       "order": 128,
@@ -1347,9 +1365,9 @@
       "output": "images/trx/trx-chest-press-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.85437,
-      "sha256": "7e34837e4081b2eb2a860cc424ed5c298b268a115b1e378b29d7dab1b0c39938",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.84281,
+      "sha256": "f9a6540dcc4d0dce1cac7775ba05256ba0ae2b4e139b004abb809e2931cc422c",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (128-trx-chest-press-avatar.png)"
     },
     {
       "order": 130,
@@ -1441,8 +1459,9 @@
       "output": "images/trx/trx-plank-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.84438,
-      "sha256": "534eabd1b494a5f9f6d1c578b166439d7a8438624bf1b0b8e1715bbc668d8309"
+      "nearWhiteRatio": 0.70344,
+      "sha256": "9fe96dc47887a231ac3242c51507dd732096305aca890198a26c1d69c2b7f870",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (137-trx-plank-avatar.png)"
     },
     {
       "order": 139,
@@ -1532,8 +1551,9 @@
       "output": "images/trx/trx-triceps-extension-ii-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.81627,
-      "sha256": "9bcf365ed23cc27bfbda8c3f4ae7810267158bd38e56d4b1a562789d7837431b"
+      "nearWhiteRatio": 0.84948,
+      "sha256": "058720fd42d8f99ee4535cb124461e2096b761fdc68a36c5d3cc2688c7229b8b",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (146-trx-triceps-extension-ii-avatar.png)"
     },
     {
       "order": 148,
@@ -1562,8 +1582,9 @@
       "output": "images/yoga/yoga-cat-tail-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.7247,
-      "sha256": "c5f9bb109a77f2810b83d741d304ec889615fca424b4fc4818b283a638cced74"
+      "nearWhiteRatio": 0.71958,
+      "sha256": "1dac5f8042ed1ef8dbfca12d2dd898820107ce0889c1f1a0b16a1881c2b152b1",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (149-yoga-cat-tail-avatar.png)"
     },
     {
       "order": 151,
@@ -1602,9 +1623,9 @@
       "output": "images/yoga/yoga-ear-pressure-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.79323,
-      "sha256": "c990bfcabec6cb549e7a390deaa1674c6f41b0b0cbe45255eba3b7b3c06d0ab8",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.81073,
+      "sha256": "4c6099cf1e3d4483f25a10ed51c123e6df6a66cd7cf1a93c6ee04f8e001ff416",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (153-yoga-ear-pressure-avatar.png)"
     },
     {
       "order": 155,
@@ -1684,8 +1705,9 @@
       "output": "images/yoga/yoga-hamstring-stretch-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.75925,
-      "sha256": "d2b5e7f8a4aaf575891d6c64d6379d174a3368fc1e57924611966d980f5d812d"
+      "nearWhiteRatio": 0.75531,
+      "sha256": "04d01372194eb8c8ead59c6fe31fd0a89a879a7dc900eb3b9ba58bee1aaa4f5e",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (161-yoga-hamstring-stretch-avatar.png)"
     },
     {
       "order": 163,
@@ -1694,8 +1716,9 @@
       "output": "images/yoga/yoga-happy-baby-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.78649,
-      "sha256": "522d385a04021cf4dc1e51a3e1201014b4555be08ff5103671e92283d2e2108e"
+      "nearWhiteRatio": 0.69969,
+      "sha256": "4ecf2a357475ecb2d221e042e1b0f9c49afa525afe32a9274bdc0d7c59a042df",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (162-yoga-happy-baby-avatar-r2.png)"
     },
     {
       "order": 164,
@@ -1704,8 +1727,9 @@
       "output": "images/yoga/yoga-hip-flexor-stretch-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.78544,
-      "sha256": "1a291688269ba56075de14b7c7d350a4a60eec92abfec49c216d86b8612e6b60"
+      "nearWhiteRatio": 0.77323,
+      "sha256": "67cf8f6414e2ae293a7dde5624bfd07bac70007fdaff765fe782d0aa4cb5be14",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (163-yoga-hip-flexor-stretch-avatar.png)"
     },
     {
       "order": 165,
@@ -1735,9 +1759,9 @@
       "output": "images/yoga/yoga-noose-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.72865,
-      "sha256": "0de98d8386472006cd52c1629d3f629f77c3f6b4506727174793cd7968acb9a5",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck, ronde 3 (output/physitrack-crosscheck/beelden/avatars-r3)."
+      "nearWhiteRatio": 0.71573,
+      "sha256": "9bfbdd207a04f3fd11b5d625554f46515f80a099008ecaf9ce27da2f36501f22",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (166-yoga-noose-avatar-r2.png)"
     },
     {
       "order": 168,
@@ -1856,8 +1880,9 @@
       "output": "images/bodyblade/bodyblade-diagonaal-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.80699,
-      "sha256": "98202f2d61a049e6b246a4cc86edea7e32b1a4ae2e3bc0b3d0bed55038aa8c7b"
+      "nearWhiteRatio": 0.83417,
+      "sha256": "a877b32bfcbd783409abd68533f5e9dbce03af884340ca5f6e40bb3929543bc3",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (178-bodyblade-diagonaal-avatar.png)"
     },
     {
       "order": 180,
@@ -1906,8 +1931,9 @@
       "output": "images/bodyblade/bodyblade-high-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.7943,
-      "sha256": "7ec3e7bc96644755a49c1bb5ebe2dcc3fa6933fdbf657ff704a33d16184cde05"
+      "nearWhiteRatio": 0.85969,
+      "sha256": "e8528d199d2a62188a853accaba2aafa83183d803c01b271b9204143303be413",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (183-bodyblade-high-avatar.png)"
     },
     {
       "order": 185,
@@ -2143,8 +2169,9 @@
       "output": "images/apparaten/endy-triceps-dips-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.78823,
-      "sha256": "181df4cc650820af366d37547b353b21b9922954fb566d070c6614739f33438b"
+      "nearWhiteRatio": 0.68625,
+      "sha256": "d1a38e8efd83cf5ca5ed87d4cc54b943932f710e9b2d7f1adcb293fda8c7ebc9",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (206-endy-triceps-dips-avatar.png)"
     },
     {
       "order": 208,
@@ -2163,8 +2190,9 @@
       "output": "images/apparaten/gluteus-kick-apparaat-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.67092,
-      "sha256": "27d851cb7fc52c3ff72c4d520c9bd569fb8cc8b8411b0670bf852b68b43febca"
+      "nearWhiteRatio": 0.77948,
+      "sha256": "a062fe1184651d1335a24a35428b706b2812e8049b55aa7a3ed9d95ebe2ac1e8",
+      "physitrackCrosscheck": "2026-11-09 ronde 3: opnieuw volgens tekening en Physitrack (208-gluteus-kick-apparaat-avatar.png)"
     },
     {
       "order": 210,

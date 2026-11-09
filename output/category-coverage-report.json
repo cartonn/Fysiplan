@@ -1,22 +1,22 @@
 {
  "scope": "Basiscatalogus in de repository (public/oefeningen-v2.json). Runtime-overrides op de server niet meegeteld; die gaan altijd voor.",
  "inputs": {
-  "public/oefeningen-v2.json": "739e5d561b837828",
-  "public/mobile-media-review.json": "afa87ca5218e3f97",
-  "public/mobile-narration-review.json": "e31b3b5c8f6d2c2c",
-  "public/index.html": "44331c4f02d45b3c",
-  "content/category-secondary-evidence.json": "5eb5e3167a827ec2"
+  "public/oefeningen-v2.json": "7bce846d5d1dc1ab",
+  "public/mobile-media-review.json": "9af7b05864999732",
+  "public/mobile-narration-review.json": "1e61cfcf26612e6e",
+  "public/index.html": "785ba562286c5cf7",
+  "content/category-secondary-evidence.json": "38afbf1e0f0eb85a"
  },
  "totals": {
-  "records": 604,
-  "available": 446,
+  "records": 633,
+  "available": 475,
   "withoutAsset": 158,
-  "withSecondary": 23,
-  "secondaryLabels": 23,
+  "withSecondary": 246,
+  "secondaryLabels": 315,
   "evidence": {
    "preexisting": 6,
    "earlier": 13,
-   "mappings": 4,
+   "mappings": 296,
    "notApplied": 5
   }
  },
@@ -24,28 +24,28 @@
   {
    "category": "Bovenste extremiteit",
    "missingAssets": 50,
-   "availableIncludingSecondary": 45,
-   "noAutoFill": false,
-   "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
-  },
-  {
-   "category": "Onderste extremiteit",
-   "missingAssets": 80,
-   "availableIncludingSecondary": 30,
+   "availableIncludingSecondary": 114,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
   {
    "category": "Core",
    "missingAssets": 20,
-   "availableIncludingSecondary": 34,
+   "availableIncludingSecondary": 74,
+   "noAutoFill": false,
+   "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
+  },
+  {
+   "category": "Onderste extremiteit",
+   "missingAssets": 80,
+   "availableIncludingSecondary": 134,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
   {
    "category": "Conditie",
    "missingAssets": 8,
-   "availableIncludingSecondary": 12,
+   "availableIncludingSecondary": 17,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   }
@@ -74,53 +74,19 @@
    "gap": "geen"
   },
   {
-   "category": "Rug",
-   "group": "Lichaamsgebied",
-   "storedLabels": [
-    "Rug"
-   ],
-   "records": 38,
-   "primary": 25,
-   "primaryAvailable": 25,
-   "secondary": 13,
-   "secondaryAvailable": 13,
-   "available": 38,
-   "availableClean": 36,
-   "mediaRejected": 2,
-   "explanationHeld": 0,
-   "missingAssets": [],
-   "secondaryRecords": [
-    "Back extension",
-    "Mobilisatie rotatie rug",
-    "Rug extensie",
-    "Side bents",
-    "Foam roller back upper",
-    "Foam roller back extension",
-    "Mob thoracaal",
-    "Mob lower back",
-    "Mob back left/right",
-    "Back stretch",
-    "Seated side leans",
-    "Seated lumbar rotations",
-    "Seated cat-cow"
-   ],
-   "noAutoFill": false,
-   "gap": "geen"
-  },
-  {
    "category": "Bovenste extremiteit",
    "group": "Lichaamsgebied",
    "storedLabels": [
     "Bovenste extremiteit"
    ],
-   "records": 95,
-   "primary": 95,
-   "primaryAvailable": 45,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 45,
-   "availableClean": 43,
-   "mediaRejected": 2,
+   "records": 164,
+   "primary": 124,
+   "primaryAvailable": 74,
+   "secondary": 40,
+   "secondaryAvailable": 40,
+   "available": 114,
+   "availableClean": 114,
+   "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [
     {
@@ -374,7 +340,258 @@
      "coreExerciseId": "fc_b765e6c4113807c7"
     }
    ],
-   "secondaryRecords": [],
+   "secondaryRecords": [
+    "Bosu chest press dumbell",
+    "TRX biceps curl",
+    "TRX chest press",
+    "TRX flyes I",
+    "TRX flyes II",
+    "TRX row",
+    "TRX triceps extension",
+    "TRX triceps extension II",
+    "Bodyblade back",
+    "Bodyblade diagonaal",
+    "Bodyblade front bovengreep",
+    "Bodyblade front ondergreep",
+    "Bodyblade high",
+    "Chest press (apparaat)",
+    "Chin-dip (apparaat)",
+    "Endy Fly",
+    "Endy Pulldown",
+    "Endy Triceps dips",
+    "Vertical row (apparaat)",
+    "Boven schouderhoogte plaatsen – ergonomische basis",
+    "Boven schouderhoogte plaatsen – licht en dichtbij",
+    "Swiss ball push up",
+    "Swiss ball dumbbell flyes",
+    "Swiss ball dumbbell chest press",
+    "Swiss ball dumbbell biceps curl",
+    "Foam roller lat stretch",
+    "Foam roller fore arm",
+    "Med ball wall throw",
+    "Med ball chest press",
+    "Med ball floor press",
+    "Med ball push up one arm",
+    "Med ball push up two arms",
+    "Med ball overhead circles",
+    "Seated shoulder stretch",
+    "Seated shoulder roll",
+    "Seated arm circles",
+    "Seated chest opener",
+    "Standing chair shoulder rotations",
+    "Seated dumbell press up",
+    "Seated biceps curl"
+   ],
+   "noAutoFill": false,
+   "gap": "deels-zonder-beeld"
+  },
+  {
+   "category": "Rug",
+   "group": "Lichaamsgebied",
+   "storedLabels": [
+    "Rug"
+   ],
+   "records": 52,
+   "primary": 25,
+   "primaryAvailable": 25,
+   "secondary": 27,
+   "secondaryAvailable": 27,
+   "available": 52,
+   "availableClean": 52,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [
+    "Back extension",
+    "Good mornings",
+    "Mobilisatie rotatie rug",
+    "Rug extensie",
+    "Side bents",
+    "Superman",
+    "Yoga camel",
+    "Yoga cobra",
+    "Yoga extended child's pose",
+    "Yoga extended puppy",
+    "Yoga Marichi’s III",
+    "Yoga plow",
+    "Yoga revolved downward facing dog",
+    "Yoga snake",
+    "Backextensie (apparaat)",
+    "Endy Rugmachine",
+    "Swiss ball back ext",
+    "Foam roller back upper",
+    "Foam roller back extension",
+    "Mob thoracaal",
+    "Mob lower back",
+    "Mob back left/right",
+    "Back stretch",
+    "Abs stretch",
+    "Seated side leans",
+    "Seated lumbar rotations",
+    "Seated cat-cow"
+   ],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Core",
+   "group": "Lichaamsgebied",
+   "storedLabels": [
+    "Core"
+   ],
+   "records": 94,
+   "primary": 54,
+   "primaryAvailable": 34,
+   "secondary": 40,
+   "secondaryAvailable": 40,
+   "available": 74,
+   "availableClean": 74,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [
+    {
+     "name": "Bekken kantelen – liggend",
+     "exerciseId": "fp_5a4c52a711bbd0da",
+     "coreExerciseId": "fc_e67719afce6ea283"
+    },
+    {
+     "name": "Bekken kantelen – op handen en knieën",
+     "exerciseId": "fp_08279fc71366aa1d",
+     "coreExerciseId": "fc_164ceca2c451a6e9"
+    },
+    {
+     "name": "Bekken kantelen – zittend",
+     "exerciseId": "fp_8b43b4f2b8cb2d7c",
+     "coreExerciseId": "fc_e0716a1330efc480"
+    },
+    {
+     "name": "Bekken kantelen – staand",
+     "exerciseId": "fp_9d3161cd781b7994",
+     "coreExerciseId": "fc_4a567baedc40ebd4"
+    },
+    {
+     "name": "Bekken kantelen – met lichte weerstand",
+     "exerciseId": "fp_e7787b96c977c980",
+     "coreExerciseId": "fc_49f10d332d302a5e"
+    },
+    {
+     "name": "Brug – liggend",
+     "exerciseId": "fp_c1a2674e6e8b37a1",
+     "coreExerciseId": "fc_e07aeef0bf691a98"
+    },
+    {
+     "name": "Brug – met lichte weerstand",
+     "exerciseId": "fp_c8c2ca23e18524ec",
+     "coreExerciseId": "fc_892e99f2581bea53"
+    },
+    {
+     "name": "Bird dog – op handen en knieën",
+     "exerciseId": "fp_b3167682caa64b67",
+     "coreExerciseId": "fc_a6edd896bd4200e0"
+    },
+    {
+     "name": "Bird dog – staand",
+     "exerciseId": "fp_e0c0ce4d53b50784",
+     "coreExerciseId": "fc_af144d48d2fa6bec"
+    },
+    {
+     "name": "Bird dog – met lichte weerstand",
+     "exerciseId": "fp_4dd3d123298d83bc",
+     "coreExerciseId": "fc_10ac6e1c7e7b1021"
+    },
+    {
+     "name": "Dead bug – liggend",
+     "exerciseId": "fp_5f412398211b18c6",
+     "coreExerciseId": "fc_ec806bc50d827710"
+    },
+    {
+     "name": "Dead bug – staand",
+     "exerciseId": "fp_d3a6a1473849ade1",
+     "coreExerciseId": "fc_6e6f41316acc5234"
+    },
+    {
+     "name": "Dead bug – met lichte weerstand",
+     "exerciseId": "fp_68e71498e04bde3d",
+     "coreExerciseId": "fc_9127466e54d4048a"
+    },
+    {
+     "name": "Romp heupscharnier – op handen en knieën",
+     "exerciseId": "fp_9338043c94c52f1f",
+     "coreExerciseId": "fc_9a7d1074950fc14d"
+    },
+    {
+     "name": "Romp heupscharnier – zittend",
+     "exerciseId": "fp_cfe79b68bb2bbb79",
+     "coreExerciseId": "fc_dfaf4f468f172ed9"
+    },
+    {
+     "name": "Romp heupscharnier – staand",
+     "exerciseId": "fp_3fad61b466eee53c",
+     "coreExerciseId": "fc_14ad1e81dbb67608"
+    },
+    {
+     "name": "Romp heupscharnier – met lichte weerstand",
+     "exerciseId": "fp_50fd5edeb35381b1",
+     "coreExerciseId": "fc_b9afb611bed36add"
+    },
+    {
+     "name": "Romp draaien – met lichte weerstand",
+     "exerciseId": "fp_c6c8158023b28d42",
+     "coreExerciseId": "fc_91ec773b4aa918aa"
+    },
+    {
+     "name": "Romp zijwaarts buigen – met lichte weerstand",
+     "exerciseId": "fp_f15b1f5dd1dfb35c",
+     "coreExerciseId": "fc_79460ae8de6fef00"
+    },
+    {
+     "name": "Rug strekken – met lichte weerstand",
+     "exerciseId": "fp_c591d23beb426e98",
+     "coreExerciseId": "fc_e8afdecc8524d6b3"
+    }
+   ],
+   "secondaryRecords": [
+    "Glute bridges",
+    "Bosu brigdes",
+    "Bosu brigdes single leg",
+    "Bosu leg pull in",
+    "Bosu mountain climber",
+    "Bosu plank",
+    "Bosu plank leg lift",
+    "Bosu v ups",
+    "Bosu zijw plank",
+    "TRX ab roll out",
+    "TRX glute bridge",
+    "TRX mountain climber",
+    "TRX plank",
+    "TRX plank side",
+    "TRX saw pikes",
+    "Yoga full boat",
+    "Kettlebell swing",
+    "Kettlebelle swing one arm",
+    "Bodyblade diagonaal",
+    "Endy Buikmachine",
+    "Diepe buikactivatie – liggend",
+    "Swiss ball plank",
+    "Swiss ball hip raise",
+    "Swiss ball feet to chest",
+    "Swiss ball knee to chest",
+    "Swiss ball rollout",
+    "Swiss ball abs",
+    "Swiss ball push up",
+    "Swiss ball leg lifts",
+    "Swiss ball core",
+    "Swiss ball russian twist",
+    "Med ball slams",
+    "Med ball rotation passes",
+    "Med ball rotation passes knee",
+    "Med. Ball - Alt. Side slam",
+    "Med ball overhead circles",
+    "Med ball V-ups",
+    "Seated ab contractions",
+    "Seated chair crunches",
+    "Seated knee to elbow"
+   ],
    "noAutoFill": false,
    "gap": "deels-zonder-beeld"
   },
@@ -384,14 +601,14 @@
    "storedLabels": [
     "Onderste extremiteit"
    ],
-   "records": 110,
+   "records": 214,
    "primary": 110,
    "primaryAvailable": 30,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 30,
-   "availableClean": 28,
-   "mediaRejected": 2,
+   "secondary": 104,
+   "secondaryAvailable": 104,
+   "available": 134,
+   "availableClean": 133,
+   "mediaRejected": 1,
    "explanationHeld": 0,
    "missingAssets": [
     {
@@ -795,128 +1012,112 @@
      "coreExerciseId": "fc_bb16c1a51cd515bb"
     }
    ],
-   "secondaryRecords": [],
-   "noAutoFill": false,
-   "gap": "deels-zonder-beeld"
-  },
-  {
-   "category": "Core",
-   "group": "Lichaamsgebied",
-   "storedLabels": [
-    "Core"
+   "secondaryRecords": [
+    "Bruggen 1 been liften",
+    "Bruggen beginner",
+    "Bruggen met halter",
+    "Bruggen met halter op bank",
+    "Bruggen op bal",
+    "Good mornings",
+    "Fiets",
+    "Squat jumps",
+    "Stairs",
+    "Bosu brigdes",
+    "Bosu brigdes single leg",
+    "Bosu squat",
+    "TRX glute bridge",
+    "TRX lunge",
+    "TRX lunge lateral high",
+    "TRX lunge lateral low",
+    "TRX lunge reverse",
+    "TRX squat",
+    "TRX squat overhead",
+    "TRX squat pistol",
+    "Yoga butterfly stretch",
+    "Yoga cat tail",
+    "Yoga deep squat",
+    "Yoga downward dog",
+    "Yoga extended triangle",
+    "Yoga frog",
+    "Yoga glute stretch",
+    "Yoga half monkey",
+    "Yoga hamstring stretch",
+    "Yoga happy baby",
+    "Yoga hip flexor stretch",
+    "Yoga knee to chest hip stretch",
+    "Yoga pigeon",
+    "Yoga reverse warrior",
+    "Yoga warrior II",
+    "Yoga warrior III",
+    "Yoga wide angle seated forward bend",
+    "Kettlebell swing",
+    "Kettlebelle swing one arm",
+    "Bodyblade front squat",
+    "Bodyblade front uitstap",
+    "Foam rol glutes stretch",
+    "Foam rol quat stretch",
+    "Voor zijwaarts",
+    "Endy Beenstrekker",
+    "Endy Heup abductie",
+    "Endy Leg curl",
+    "Endy Leg ext",
+    "Fiets (apparaat)",
+    "Gluteus kick (apparaat)",
+    "Leg press (apparaat)",
+    "Stairs (apparaat)",
+    "Voorwerp van vloer tillen – ergonomische basis",
+    "Voorwerp van vloer tillen – licht en dichtbij",
+    "Functioneel opstaan – functioneel",
+    "Zijlig heupkracht – zijlig",
+    "Hop vooruit – techniek langzaam",
+    "Landing op twee benen – techniek langzaam",
+    "Landing op één been – techniek langzaam",
+    "Alternating lunge jumps",
+    "Box jumps",
+    "Long jumps",
+    "Skate jumps",
+    "Sprints",
+    "Snap jumps",
+    "Rope jumping",
+    "Swiss ball wall squat",
+    "Swiss ball hip raise",
+    "Swiss ball leg curl hip raise",
+    "Swiss ball squeezes adductoren",
+    "Swiss ball leg curl one leg",
+    "Foam roller glute med.",
+    "Foam roller glute",
+    "Foam roller quadriceps",
+    "Foam roller hamstring",
+    "Foam roller calf",
+    "Foam roller tractus",
+    "Foam roller adductoren",
+    "Mob Hip flexion/extension",
+    "Mob Hip opener",
+    "Mob adductoren",
+    "Adductoren stretch",
+    "Mob Hip circles",
+    "Gluteal stretch",
+    "Hamstring stretch",
+    "Hamstring stretch one leg",
+    "Quadriceps stretch",
+    "Seated ankle rotations",
+    "Seated calfs raises",
+    "Seated knee lift",
+    "Seated leg extension",
+    "Seated band abduction",
+    "Seated hamstring stretch",
+    "Seated marching",
+    "Standing chair leg curl",
+    "Seated ankle stretches",
+    "Seated leg press – resistance band",
+    "Standing chair calfs raises",
+    "Standing chair half squat",
+    "Standing chair abductie",
+    "Standing chair hip extension",
+    "Standing chair back leg raise",
+    "Standing chair knee lift",
+    "One leg standing"
    ],
-   "records": 54,
-   "primary": 54,
-   "primaryAvailable": 34,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 34,
-   "availableClean": 32,
-   "mediaRejected": 2,
-   "explanationHeld": 0,
-   "missingAssets": [
-    {
-     "name": "Bekken kantelen – liggend",
-     "exerciseId": "fp_5a4c52a711bbd0da",
-     "coreExerciseId": "fc_e67719afce6ea283"
-    },
-    {
-     "name": "Bekken kantelen – op handen en knieën",
-     "exerciseId": "fp_08279fc71366aa1d",
-     "coreExerciseId": "fc_164ceca2c451a6e9"
-    },
-    {
-     "name": "Bekken kantelen – zittend",
-     "exerciseId": "fp_8b43b4f2b8cb2d7c",
-     "coreExerciseId": "fc_e0716a1330efc480"
-    },
-    {
-     "name": "Bekken kantelen – staand",
-     "exerciseId": "fp_9d3161cd781b7994",
-     "coreExerciseId": "fc_4a567baedc40ebd4"
-    },
-    {
-     "name": "Bekken kantelen – met lichte weerstand",
-     "exerciseId": "fp_e7787b96c977c980",
-     "coreExerciseId": "fc_49f10d332d302a5e"
-    },
-    {
-     "name": "Brug – liggend",
-     "exerciseId": "fp_c1a2674e6e8b37a1",
-     "coreExerciseId": "fc_e07aeef0bf691a98"
-    },
-    {
-     "name": "Brug – met lichte weerstand",
-     "exerciseId": "fp_c8c2ca23e18524ec",
-     "coreExerciseId": "fc_892e99f2581bea53"
-    },
-    {
-     "name": "Bird dog – op handen en knieën",
-     "exerciseId": "fp_b3167682caa64b67",
-     "coreExerciseId": "fc_a6edd896bd4200e0"
-    },
-    {
-     "name": "Bird dog – staand",
-     "exerciseId": "fp_e0c0ce4d53b50784",
-     "coreExerciseId": "fc_af144d48d2fa6bec"
-    },
-    {
-     "name": "Bird dog – met lichte weerstand",
-     "exerciseId": "fp_4dd3d123298d83bc",
-     "coreExerciseId": "fc_10ac6e1c7e7b1021"
-    },
-    {
-     "name": "Dead bug – liggend",
-     "exerciseId": "fp_5f412398211b18c6",
-     "coreExerciseId": "fc_ec806bc50d827710"
-    },
-    {
-     "name": "Dead bug – staand",
-     "exerciseId": "fp_d3a6a1473849ade1",
-     "coreExerciseId": "fc_6e6f41316acc5234"
-    },
-    {
-     "name": "Dead bug – met lichte weerstand",
-     "exerciseId": "fp_68e71498e04bde3d",
-     "coreExerciseId": "fc_9127466e54d4048a"
-    },
-    {
-     "name": "Romp heupscharnier – op handen en knieën",
-     "exerciseId": "fp_9338043c94c52f1f",
-     "coreExerciseId": "fc_9a7d1074950fc14d"
-    },
-    {
-     "name": "Romp heupscharnier – zittend",
-     "exerciseId": "fp_cfe79b68bb2bbb79",
-     "coreExerciseId": "fc_dfaf4f468f172ed9"
-    },
-    {
-     "name": "Romp heupscharnier – staand",
-     "exerciseId": "fp_3fad61b466eee53c",
-     "coreExerciseId": "fc_14ad1e81dbb67608"
-    },
-    {
-     "name": "Romp heupscharnier – met lichte weerstand",
-     "exerciseId": "fp_50fd5edeb35381b1",
-     "coreExerciseId": "fc_b9afb611bed36add"
-    },
-    {
-     "name": "Romp draaien – met lichte weerstand",
-     "exerciseId": "fp_c6c8158023b28d42",
-     "coreExerciseId": "fc_91ec773b4aa918aa"
-    },
-    {
-     "name": "Romp zijwaarts buigen – met lichte weerstand",
-     "exerciseId": "fp_f15b1f5dd1dfb35c",
-     "coreExerciseId": "fc_79460ae8de6fef00"
-    },
-    {
-     "name": "Rug strekken – met lichte weerstand",
-     "exerciseId": "fp_c591d23beb426e98",
-     "coreExerciseId": "fc_e8afdecc8524d6b3"
-    }
-   ],
-   "secondaryRecords": [],
    "noAutoFill": false,
    "gap": "deels-zonder-beeld"
   },
@@ -924,17 +1125,116 @@
    "category": "Mobiliteit",
    "group": "Doel en toepassing",
    "storedLabels": [
+    "Mobiliteit",
     "Mobility"
    ],
-   "records": 15,
+   "records": 92,
    "primary": 15,
    "primaryAvailable": 15,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 15,
-   "availableClean": 14,
+   "secondary": 77,
+   "secondaryAvailable": 77,
+   "available": 92,
+   "availableClean": 91,
    "mediaRejected": 0,
    "explanationHeld": 1,
+   "missingAssets": [],
+   "secondaryRecords": [
+    "Been pendelen",
+    "Mobilisatie rotatie rug",
+    "Stick twist",
+    "Yoga butterfly stretch",
+    "Yoga camel",
+    "Yoga cat tail",
+    "Yoga cobra",
+    "Yoga deep squat",
+    "Yoga downward dog",
+    "Yoga extended child's pose",
+    "Yoga extended puppy",
+    "Yoga extended triangle",
+    "Yoga frog",
+    "Yoga glute stretch",
+    "Yoga half monkey",
+    "Yoga hamstring stretch",
+    "Yoga happy baby",
+    "Yoga hip flexor stretch",
+    "Yoga knee to chest hip stretch",
+    "Yoga Marichi’s III",
+    "Yoga pigeon",
+    "Yoga plow",
+    "Yoga reverse warrior",
+    "Yoga revolved downward facing dog",
+    "Yoga wide angle seated forward bend",
+    "Foam rol glutes stretch",
+    "Foam rol quat stretch",
+    "Levator scapulae rek – zittend actief",
+    "Levator scapulae rek – functioneel staand",
+    "Bovenste trapezius rek – zittend actief",
+    "Bovenste trapezius rek – functioneel staand",
+    "Rug bol en hol – op handen en knieën",
+    "Rug bol en hol – zittend",
+    "Rug bol en hol – staand",
+    "Rug bol en hol – met lichte weerstand",
+    "Romp draaien – liggend",
+    "Romp draaien – op handen en knieën",
+    "Romp draaien – zittend",
+    "Romp draaien – staand",
+    "Romp zijwaarts buigen – liggend",
+    "Romp zijwaarts buigen – zittend",
+    "Romp zijwaarts buigen – staand",
+    "Rug strekken – liggend",
+    "Rug strekken – op handen en knieën",
+    "Rug strekken – zittend",
+    "Rug strekken – staand",
+    "Knie naar borst – liggend",
+    "Knie naar borst – zittend",
+    "Knie naar borst – staand",
+    "Open boek – liggend",
+    "Open boek – op handen en knieën",
+    "Open boek – zittend",
+    "Thoracale extensie – liggend",
+    "Thoracale extensie – op handen en knieën",
+    "Thoracale extensie – zittend",
+    "Thoracale extensie – staand",
+    "Bekkenmobiliteit – liggend",
+    "Foam roller glute med.",
+    "Foam roller glute",
+    "Foam roller quadriceps",
+    "Foam roller hamstring",
+    "Foam roller calf",
+    "Foam roller tractus",
+    "Foam roller lat stretch",
+    "Foam roller adductoren",
+    "Foam roller fore arm",
+    "Foam roller back extension",
+    "Seated side leans",
+    "Seated lat stretch",
+    "Seated lumbar rotations",
+    "Seated cat-cow",
+    "Seated ankle rotations",
+    "Seated hamstring stretch",
+    "Seated shoulder stretch",
+    "Seated chest opener",
+    "Seated cervical stretch",
+    "Seated ankle stretches"
+   ],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Yoga",
+   "group": "Doel en toepassing",
+   "storedLabels": [
+    "Yoga"
+   ],
+   "records": 28,
+   "primary": 28,
+   "primaryAvailable": 28,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 28,
+   "availableClean": 26,
+   "mediaRejected": 0,
+   "explanationHeld": 2,
    "missingAssets": [],
    "secondaryRecords": [],
    "noAutoFill": false,
@@ -946,17 +1246,22 @@
    "storedLabels": [
     "Balans en valpreventie"
    ],
-   "records": 31,
+   "records": 36,
    "primary": 30,
    "primaryAvailable": 30,
-   "secondary": 1,
-   "secondaryAvailable": 1,
-   "available": 31,
-   "availableClean": 31,
+   "secondary": 6,
+   "secondaryAvailable": 6,
+   "available": 36,
+   "availableClean": 36,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [],
    "secondaryRecords": [
+    "Bosu squat",
+    "TRX squat pistol",
+    "Yoga warrior III",
+    "Landing op één been – techniek langzaam",
+    "Skate jumps",
     "One leg standing"
    ],
    "noAutoFill": false,
@@ -968,17 +1273,19 @@
    "storedLabels": [
     "Werk en dagelijkse handelingen"
    ],
-   "records": 12,
+   "records": 14,
    "primary": 10,
    "primaryAvailable": 10,
-   "secondary": 2,
-   "secondaryAvailable": 2,
-   "available": 12,
-   "availableClean": 12,
+   "secondary": 4,
+   "secondaryAvailable": 4,
+   "available": 14,
+   "availableClean": 14,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [],
    "secondaryRecords": [
+    "Stoel opstaan en lopen – zonder steun",
+    "Functioneel opstaan – functioneel",
     "Seated foreward reach",
     "Seated chair squats"
    ],
@@ -989,15 +1296,16 @@
    "category": "Conditie",
    "group": "Doel en toepassing",
    "storedLabels": [
-    "Cardio"
+    "Cardio",
+    "Conditie"
    ],
-   "records": 20,
+   "records": 25,
    "primary": 14,
    "primaryAvailable": 6,
-   "secondary": 6,
-   "secondaryAvailable": 6,
-   "available": 12,
-   "availableClean": 11,
+   "secondary": 11,
+   "secondaryAvailable": 11,
+   "available": 17,
+   "availableClean": 16,
    "mediaRejected": 0,
    "explanationHeld": 1,
    "missingAssets": [
@@ -1048,7 +1356,12 @@
     "Fiets (apparaat)",
     "Loopband (apparaat)",
     "Roeier (apparaat)",
-    "Stairs (apparaat)"
+    "Stairs (apparaat)",
+    "Alternating lunge jumps",
+    "Sprints",
+    "Rope jumping",
+    "Med ball slams",
+    "Med ball throw and jog"
    ],
    "noAutoFill": false,
    "gap": "deels-zonder-beeld"
@@ -1057,60 +1370,27 @@
    "category": "Wendbaarheid",
    "group": "Doel en toepassing",
    "storedLabels": [
-    "Agility"
+    "Agility",
+    "Wendbaarheid"
    ],
-   "records": 7,
+   "records": 12,
    "primary": 7,
    "primaryAvailable": 7,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 7,
-   "availableClean": 7,
+   "secondary": 5,
+   "secondaryAvailable": 5,
+   "available": 12,
+   "availableClean": 12,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [],
-   "secondaryRecords": [],
-   "noAutoFill": false,
-   "gap": "geen"
-  },
-  {
-   "category": "Yoga",
-   "group": "Doel en toepassing",
-   "storedLabels": [
-    "Yoga"
+   "secondaryRecords": [
+    "Squat jumps",
+    "Voor zijwaarts",
+    "Laterale shuffle – submaximaal",
+    "Richtingsverandering – techniek langzaam",
+    "Versnellen en afremmen – submaximaal"
    ],
-   "records": 28,
-   "primary": 28,
-   "primaryAvailable": 28,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 28,
-   "availableClean": 26,
-   "mediaRejected": 0,
-   "explanationHeld": 2,
-   "missingAssets": [],
-   "secondaryRecords": [],
    "noAutoFill": false,
-   "gap": "geen"
-  },
-  {
-   "category": "Sportrevalidatie",
-   "group": "Specifieke revalidatie",
-   "storedLabels": [
-    "Sportrevalidatie"
-   ],
-   "records": 7,
-   "primary": 7,
-   "primaryAvailable": 7,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 7,
-   "availableClean": 7,
-   "mediaRejected": 0,
-   "explanationHeld": 0,
-   "missingAssets": [],
-   "secondaryRecords": [],
-   "noAutoFill": true,
    "gap": "geen"
   },
   {
@@ -1174,90 +1454,10 @@
    "gap": "geen"
   },
   {
-   "category": "Apparaten",
-   "group": "Materiaal en uitgangshouding",
+   "category": "Sportrevalidatie",
+   "group": "Specifieke revalidatie",
    "storedLabels": [
-    "Apparaten"
-   ],
-   "records": 27,
-   "primary": 27,
-   "primaryAvailable": 27,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 27,
-   "availableClean": 22,
-   "mediaRejected": 4,
-   "explanationHeld": 5,
-   "missingAssets": [],
-   "secondaryRecords": [],
-   "noAutoFill": false,
-   "gap": "geen"
-  },
-  {
-   "category": "Bosu",
-   "group": "Materiaal en uitgangshouding",
-   "storedLabels": [
-    "Bosu"
-   ],
-   "records": 11,
-   "primary": 11,
-   "primaryAvailable": 11,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 11,
-   "availableClean": 11,
-   "mediaRejected": 0,
-   "explanationHeld": 0,
-   "missingAssets": [],
-   "secondaryRecords": [],
-   "noAutoFill": false,
-   "gap": "geen"
-  },
-  {
-   "category": "TRX",
-   "group": "Materiaal en uitgangshouding",
-   "storedLabels": [
-    "TRX"
-   ],
-   "records": 21,
-   "primary": 21,
-   "primaryAvailable": 21,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 21,
-   "availableClean": 20,
-   "mediaRejected": 1,
-   "explanationHeld": 0,
-   "missingAssets": [],
-   "secondaryRecords": [],
-   "noAutoFill": false,
-   "gap": "geen"
-  },
-  {
-   "category": "Kettlebell",
-   "group": "Materiaal en uitgangshouding",
-   "storedLabels": [
-    "Kettlebell"
-   ],
-   "records": 2,
-   "primary": 2,
-   "primaryAvailable": 2,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 2,
-   "availableClean": 2,
-   "mediaRejected": 0,
-   "explanationHeld": 0,
-   "missingAssets": [],
-   "secondaryRecords": [],
-   "noAutoFill": false,
-   "gap": "geen"
-  },
-  {
-   "category": "Bodyblade",
-   "group": "Materiaal en uitgangshouding",
-   "storedLabels": [
-    "Bodyblade"
+    "Sportrevalidatie"
    ],
    "records": 7,
    "primary": 7,
@@ -1270,93 +1470,12 @@
    "explanationHeld": 0,
    "missingAssets": [],
    "secondaryRecords": [],
-   "noAutoFill": false,
-   "gap": "geen"
-  },
-  {
-   "category": "Foam roller",
-   "group": "Materiaal en uitgangshouding",
-   "storedLabels": [
-    "Foam Roller",
-    "Foam roller"
-   ],
-   "records": 16,
-   "primary": 16,
-   "primaryAvailable": 16,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 16,
-   "availableClean": 14,
-   "mediaRejected": 0,
-   "explanationHeld": 2,
-   "missingAssets": [],
-   "secondaryRecords": [],
-   "noAutoFill": false,
-   "gap": "geen"
-  },
-  {
-   "category": "Speedladder",
-   "group": "Materiaal en uitgangshouding",
-   "storedLabels": [
-    "Speedladder"
-   ],
-   "records": 1,
-   "primary": 1,
-   "primaryAvailable": 1,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 1,
-   "availableClean": 1,
-   "mediaRejected": 0,
-   "explanationHeld": 0,
-   "missingAssets": [],
-   "secondaryRecords": [],
-   "noAutoFill": false,
-   "gap": "geen"
-  },
-  {
-   "category": "Oefenbal",
-   "group": "Materiaal en uitgangshouding",
-   "storedLabels": [
-    "Exercise Ball"
-   ],
-   "records": 18,
-   "primary": 18,
-   "primaryAvailable": 18,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 18,
-   "availableClean": 18,
-   "mediaRejected": 0,
-   "explanationHeld": 0,
-   "missingAssets": [],
-   "secondaryRecords": [],
-   "noAutoFill": false,
-   "gap": "geen"
-  },
-  {
-   "category": "Medicijnbal",
-   "group": "Materiaal en uitgangshouding",
-   "storedLabels": [
-    "Medicine Ball"
-   ],
-   "records": 15,
-   "primary": 15,
-   "primaryAvailable": 15,
-   "secondary": 0,
-   "secondaryAvailable": 0,
-   "available": 15,
-   "availableClean": 12,
-   "mediaRejected": 0,
-   "explanationHeld": 3,
-   "missingAssets": [],
-   "secondaryRecords": [],
-   "noAutoFill": false,
+   "noAutoFill": true,
    "gap": "geen"
   },
   {
    "category": "Zittend op stoel",
-   "group": "Materiaal en uitgangshouding",
+   "group": "Uitgangshouding",
    "storedLabels": [
     "Seated Chair"
    ],
@@ -1376,7 +1495,7 @@
   },
   {
    "category": "Staand bij stoel",
-   "group": "Materiaal en uitgangshouding",
+   "group": "Uitgangshouding",
    "storedLabels": [
     "Standing Chair"
    ],
@@ -1386,9 +1505,190 @@
    "secondary": 0,
    "secondaryAvailable": 0,
    "available": 10,
-   "availableClean": 8,
-   "mediaRejected": 1,
+   "availableClean": 9,
+   "mediaRejected": 0,
    "explanationHeld": 1,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Apparaten",
+   "group": "Materiaal",
+   "storedLabels": [
+    "Apparaten"
+   ],
+   "records": 27,
+   "primary": 27,
+   "primaryAvailable": 27,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 27,
+   "availableClean": 22,
+   "mediaRejected": 4,
+   "explanationHeld": 5,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Bodyblade",
+   "group": "Materiaal",
+   "storedLabels": [
+    "Bodyblade"
+   ],
+   "records": 7,
+   "primary": 7,
+   "primaryAvailable": 7,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 7,
+   "availableClean": 7,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Bosu",
+   "group": "Materiaal",
+   "storedLabels": [
+    "Bosu"
+   ],
+   "records": 11,
+   "primary": 11,
+   "primaryAvailable": 11,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 11,
+   "availableClean": 11,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Foam roller",
+   "group": "Materiaal",
+   "storedLabels": [
+    "Foam Roller",
+    "Foam roller"
+   ],
+   "records": 16,
+   "primary": 16,
+   "primaryAvailable": 16,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 16,
+   "availableClean": 14,
+   "mediaRejected": 0,
+   "explanationHeld": 2,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Kettlebell",
+   "group": "Materiaal",
+   "storedLabels": [
+    "Kettlebell"
+   ],
+   "records": 2,
+   "primary": 2,
+   "primaryAvailable": 2,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 2,
+   "availableClean": 2,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Medicijnbal",
+   "group": "Materiaal",
+   "storedLabels": [
+    "Medicine Ball"
+   ],
+   "records": 15,
+   "primary": 15,
+   "primaryAvailable": 15,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 15,
+   "availableClean": 12,
+   "mediaRejected": 0,
+   "explanationHeld": 3,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Oefenbal",
+   "group": "Materiaal",
+   "storedLabels": [
+    "Exercise Ball"
+   ],
+   "records": 18,
+   "primary": 18,
+   "primaryAvailable": 18,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 18,
+   "availableClean": 18,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "Speedladder",
+   "group": "Materiaal",
+   "storedLabels": [
+    "Speedladder"
+   ],
+   "records": 1,
+   "primary": 1,
+   "primaryAvailable": 1,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 1,
+   "availableClean": 1,
+   "mediaRejected": 0,
+   "explanationHeld": 0,
+   "missingAssets": [],
+   "secondaryRecords": [],
+   "noAutoFill": false,
+   "gap": "geen"
+  },
+  {
+   "category": "TRX",
+   "group": "Materiaal",
+   "storedLabels": [
+    "TRX"
+   ],
+   "records": 21,
+   "primary": 21,
+   "primaryAvailable": 21,
+   "secondary": 0,
+   "secondaryAvailable": 0,
+   "available": 21,
+   "availableClean": 20,
+   "mediaRejected": 1,
+   "explanationHeld": 0,
    "missingAssets": [],
    "secondaryRecords": [],
    "noAutoFill": false,

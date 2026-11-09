@@ -93,24 +93,10 @@ try {
     && !['Step up with knee raise'].includes(e.naam)).kaartImg;
   const herschreven = await sharp(fs.readFileSync(path.join(repo, 'public', stap.kaartImg))).jpeg({quality: 88}).toBuffer();
   assert.notEqual(createHash('sha256').update(herschreven).digest('hex'), sha('public/' + stap.kaartImg));
-  // Back extension en Rug extensie (open bronkeuze): elk beeld opnieuw gecodeerd, dus zelfde
-  // inhoud maar andere bytes, precies wat een stille vervanging op hetzelfde pad zou zijn.
-  const bronkeuzeGevallen = [];
-  for (const n of ['Back extension', 'Rug extensie']) {
-    const e = naam(v2, n);
-    const opnieuw = await sharp(fs.readFileSync(path.join(repo, 'public', e.kaartImg))).jpeg({quality: 87}).toBuffer();
-    assert.notEqual(createHash('sha256').update(opnieuw).digest('hex'), sha('public/' + e.kaartImg), n);
-    const fout = new RegExp('Tijdelijke hold voor ' + n + ' past niet meer');
-    bronkeuzeGevallen.push(
-      [n + ': ander pad', {bestanden: metV2((c) => { naam(c, n).kaartImg = anderBeeld; })}, fout],
-      [n + ': andere bytes op hetzelfde pad', {beelden: {[e.kaartImg]: opnieuw}}, fout],
-      [n + ': andere naam bij hetzelfde id', {bestanden: metV2((c) => { naam(c, n).naam = n + ' (variant)'; })}, fout],
-      [n + ': ander id (herkoppeld lijnbeeld)', {bestanden: metV2((c) => { naam(c, n).img = 'images/core/' + n.toLowerCase().replace(' ', '-') + '-nieuw.jpg'; })},
-        new RegExp('Tijdelijke hold niet toegepast: ' + n)]);
-  }
+  // Back extension en Rug extensie hadden tot 2026-11-09 een open-bronkeuzehold; die is opgeheven
+  // (tekening, avatar en uitleg volgen nu Physitrack).
   const houdGevallen = [
     ['controle: exacte bron', {}, null],
-    ...bronkeuzeGevallen,
     // Chair squat, Dips, Triceps dips: holds op 2026-11-09 opgeheven met een nieuwe avatar (Physitrack-crosscheck).
     ['ander pad', {bestanden: metV2((c) => { naam(c, 'Step up with knee raise').kaartImg = anderBeeld; })}, /Tijdelijke hold voor Step up with knee raise past niet meer/],
     ['andere bytes op hetzelfde pad', {beelden: {[stap.kaartImg]: herschreven}}, /Tijdelijke hold voor Step up with knee raise past niet meer/],
@@ -126,10 +112,9 @@ try {
     if (!verwacht) {
       assert.equal(r.code, 0, label + ': ' + r.fout);
       const review = JSON.parse(fs.readFileSync(path.join(r.root, 'public/mobile-media-review.json'), 'utf8'));
-      assert.equal(review.summary.rejected, 8, label);
-      assert.equal(review.entries.filter((e) => e.hold?.temporary).length, 3, label);
-      assert.deepEqual(review.entries.filter((e) => e.hold?.kind === 'source-choice-pending').map((e) => e.exerciseId).sort(),
-        ['fp_7b07f346644f9c17', 'fp_a0a18c0c13673d38'], label);
+      assert.equal(review.summary.rejected, 6, label);
+      assert.equal(review.entries.filter((e) => e.hold?.temporary).length, 1, label);
+      assert.equal(review.entries.filter((e) => e.hold?.kind === 'source-choice-pending').length, 0, label);
       // de wegwerpmap levert exact dezelfde beoordeling als de repo: het harnas zelf verandert niets
       assert.equal(fs.readFileSync(path.join(r.root, 'public/mobile-media-review.json'), 'utf8'),
         fs.readFileSync(path.join(repo, 'public/mobile-media-review.json'), 'utf8'), label);
@@ -227,7 +212,9 @@ try {
   // Alleen legacykaarten in de wegwerpcatalogus: daarvoor maakt de graph nooit nieuwe
   // lijnbeelden, hij herschrijft alleen het img-veld. Precies dat moet de correctie overleven.
   {
-    const legacy = v2.filter((e) => !e.coreExerciseId);
+    // nieuwe oefeningen (nieuweOefening in content/nieuwe-lijntekeningen.json) staan niet in V1
+    const nieuweOefeningen = new Set(JSON.parse(fs.readFileSync('content/nieuwe-lijntekeningen.json', 'utf8')).lijntekeningen.filter((e) => e.nieuweOefening).map((e) => e.naam));
+    const legacy = v2.filter((e) => !e.coreExerciseId && !nieuweOefeningen.has(e.naam));
     const root = wegwerp({bestanden: {'public/oefeningen-v2.json': JSON.stringify(legacy, null, 1) + '\n'}});
     const r = await draai(root, 'v2-line-art-graph.mjs', ['run', '--execute']);
     assert.equal(r.code, 0, r.fout);
@@ -246,4 +233,4 @@ try {
   fs.rmSync(werk, {recursive: true, force: true});
 }
 assert.deepEqual(BEWAAKT.map(sha), voor, 'echte catalogi, beoordeling, pijlen en beelden byte-gelijk');
-console.log('Uitzonderingen smal: 3 bron-houds; Step up-, Back extension- en Rug extensie-mutaties op pad/bytes/naam/id falen; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug; houdingvolgorde Dumbell bench press faalt bij andere bytes/uitleg/naam/pad/id/uitsnede/as en zonder regel verandert alleen die volgorde.');
+console.log('Uitzonderingen smal: 1 bron-hold; Step up-mutaties op pad/bytes/naam/id falen; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug; houdingvolgorde Dumbell bench press faalt bij andere bytes/uitleg/naam/pad/id/uitsnede/as en zonder regel verandert alleen die volgorde.');

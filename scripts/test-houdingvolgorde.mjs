@@ -118,7 +118,7 @@ img.complete = true; img.naturalWidth = r.width; img.naturalHeight = r.height; i
 const tekenaar = vm.createContext({document: {getElementById: (id) => (ids[id] = ids[id] || stub('div')), createElement: stub},
   Math, Number, URL, JSON, location: {href: 'https://praktijk.example/k/abc'},
   window: {matchMedia: () => ({matches: true})}, matchMedia: () => ({matches: true}),
-  TAAL: 'nl', tr: (k) => T.nl[k] ?? k, vt: (s) => s, DEMO_BRON: {nl: 'herkomst'}, NoorAudio: {match: () => false},
+  TAAL: 'nl', tr: (k) => T.nl[k] ?? k, vt: (s) => s, uitlegNietVertaald: () => false, DEMO_BRON: {nl: 'herkomst'}, NoorAudio: {match: () => false},
   demoKlok() {}, demoGeluidKnop() {}, demoZeg() {},
   bronGecontroleerd: {['/v2/' + BRON + '|' + BRON_SHA]: true},
   demo: {info: {name: r.name, uitleg: 'uitleg', poseMetadata: keuring[ID + '|' + BRON] && {...keuring[ID + '|' + BRON]}}}});

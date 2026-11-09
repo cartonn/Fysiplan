@@ -80,6 +80,9 @@ html.v2 #logoBtn:hover{color:var(--brand);border-color:var(--brand-100)}
 
 /* QR-blok in de kaartkop: staat er standaard op zodra de kaart een cliëntnaam heeft */
 html.v2 #a4 .qrblok{flex-direction:column;align-items:center;gap:3px;align-self:flex-start;flex:0 0 auto;position:relative}
+/* deelknoppen onder de QR mogen afbreken, anders duwt de rij de cliëntvelden (Roepnaam e.d.) tot een paar px smal */
+html.v2 #a4 .qrblok{max-width:132px}
+html.v2 #a4 .qrblok>span{flex-wrap:wrap;justify-content:center;column-gap:8px!important;row-gap:2px;text-align:center}
 html.v2 #a4 .qrblok .qrx{position:absolute;top:-9px;right:-9px;width:20px;height:20px;border-radius:99px;
   background:#fff;border:1px solid var(--line);color:var(--muted);display:flex;align-items:center;
   justify-content:center;font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--sh-sm)}
@@ -432,9 +435,9 @@ html.v2{
   --line:#e6e4dc; --line2:#efeee8;
   --ring:0 0 0 3px rgba(29,58,107,.16);
 }
-.fp-zij,.fp-kruimel{display:none}
+.fp-zij,.fp-kruimel,.zb-praktijk,.fp-hulp{display:none}
 @media screen{
-  html.v2 header.topbar .mark,html.v2 .fp-zij .mark{background:var(--brand)}
+  html.v2 header.topbar .mark{background:var(--brand)}
   html.v2 .chip.on,html.v2 .smart-filter.on{background:var(--brand);border-color:var(--brand)}
   html.v2 #k_inbox .ib-tel{background:var(--brand)}
   html.v2 .row .add.on,html.v2 .row .add:hover{background:var(--brand);border-color:var(--brand)}
@@ -442,64 +445,42 @@ html.v2{
   html.v2 .card .hd{font-size:13.5px}
 }
 @media screen and (min-width:1100px){
-  html.v2 body{padding-left:236px;transition:padding-left .18s ease}
-  html.v2.zij-klein body{padding-left:68px}
-
-  /* zijbalk */
-  html.v2 .fp-zij{display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;width:236px;z-index:32;
-    background:#fbfaf6;border-right:1px solid var(--line);padding:16px 12px 14px;overflow-y:auto;overflow-x:hidden;transition:width .18s ease}
-  html.v2.zij-klein .fp-zij{width:68px}
-  html.v2 .zb-merk{display:flex;align-items:center;gap:9px;padding:2px 6px 14px}
-  html.v2 .zb-merk .mark{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex:0 0 30px}
-  html.v2 .zb-merk b{font-size:19px;font-weight:750;letter-spacing:-.04em;color:var(--brand)}
-  html.v2 .zb-merk b i{font-style:normal;color:#c98a2b}
-  html.v2 .zb-praktijk{display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;margin:0 0 16px;border:1px solid var(--line);border-radius:11px;
-    background:#fff;cursor:pointer;text-align:left;font:inherit;box-shadow:0 1px 2px rgba(20,27,38,.04)}
+  /* Geen navigatiebalk links meer (Ahmed, 2026-11-09): Sjablonen en Kaarten stonden er
+     dubbel. De kopbalk draagt merk, praktijk, beeldkeuze, Hulp en Printen; links is
+     alle ruimte voor categorieën en oefeningen. */
+  html.v2 header.topbar{height:56px;background:rgba(245,244,239,.86);border-bottom:1px solid var(--line);padding:0 16px}
+  html.v2 header.topbar .brand{display:flex;order:1}
+  html.v2 header.topbar .brand .mark{width:30px;height:30px}
+  html.v2 header.topbar h1{color:var(--brand);font-size:18px;font-weight:750;letter-spacing:-.04em}
+  html.v2 .topbar .menu>.mi{display:none}
+  html.v2 header.topbar .menu{border-left:0;margin-left:0;padding-left:0;order:4}
+  html.v2 header.topbar .spacer{order:3}
+  html.v2 header.topbar #printBtn{order:6;height:34px;border-radius:9px}
+  /* praktijk: naast het merk; opent Kaarten (inloggen, account, Team) */
+  html.v2 .zb-praktijk{order:2;display:flex;align-items:center;gap:8px;max-width:260px;height:38px;padding:0 12px 0 5px;margin-left:10px;
+    border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;text-align:left;font:inherit}
   html.v2 .zb-praktijk:hover{border-color:#d6d3c9}
+  html.v2 .zb-praktijk:focus-visible{outline:none;box-shadow:var(--ring)}
   html.v2 .zb-pav{width:28px;height:28px;border-radius:8px;background:var(--brand-50);color:var(--brand);display:flex;align-items:center;justify-content:center;
     font-size:11px;font-weight:750;flex:0 0 28px}
-  html.v2 .zb-ptekst{min-width:0;display:flex;flex-direction:column}
+  html.v2 .zb-ptekst{min-width:0;display:flex;flex-direction:column;line-height:1.2}
   html.v2 .zb-ptekst b{font-size:12.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   html.v2 .zb-ptekst small{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  html.v2 .zb-label{font-size:10.5px;font-weight:650;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);padding:10px 10px 6px}
-  html.v2 .zb-nav{display:flex;flex-direction:column;gap:1px}
-  html.v2 .zb-item{display:flex;align-items:center;gap:10px;width:100%;height:36px;padding:0 10px;border:0;border-radius:9px;background:transparent;
-    color:var(--text);font:inherit;font-size:13.5px;font-weight:500;cursor:pointer;text-align:left;white-space:nowrap}
-  html.v2 .zb-item svg{flex:0 0 17px;color:var(--muted)}
-  html.v2 .zb-item:hover{background:#f1efe8;color:var(--ink)}
-  html.v2 .zb-item.aan{background:var(--brand-50);color:var(--brand);font-weight:650}
-  html.v2 .zb-item.aan svg{color:var(--brand)}
-  html.v2 .zb-item:focus-visible{outline:none;box-shadow:var(--ring)}
-  html.v2 .zb-tel{margin-left:auto;font-size:10.5px;font-weight:700;color:#b42318;background:#fdecea;border-radius:99px;padding:1px 7px}
-  html.v2 .zb-ruimte{flex:1}
-  html.v2 .zb-tip{font-size:11.5px;line-height:1.45;color:var(--muted);background:#f3f1ea;border:1px solid var(--line);border-radius:11px;padding:10px 11px;margin:14px 0 10px}
-  html.v2 .zb-tip b{display:block;color:var(--ink);font-size:12px;margin-bottom:2px}
-  html.v2 .zb-voet{display:flex;flex-wrap:wrap;gap:4px 10px;padding:0 6px}
-  html.v2 .zb-voet a{font-size:10.5px;color:var(--soft);text-decoration:underline;text-underline-offset:2px}
-  html.v2 .zb-voet a:hover{color:var(--text)}
-  /* ingeklapt: alleen iconen */
-  html.v2.zij-klein .fp-zij{padding:16px 10px}
-  html.v2.zij-klein .zb-merk{padding:2px 9px 14px}
-  html.v2.zij-klein .zb-merk b,html.v2.zij-klein .zb-ptekst,html.v2.zij-klein .zb-item span,html.v2.zij-klein .zb-tip,
-  html.v2.zij-klein .zb-voet,html.v2.zij-klein .zb-label{display:none}
-  html.v2.zij-klein .zb-praktijk{padding:9px;justify-content:center}
-  html.v2.zij-klein .zb-item{justify-content:center;padding:0;position:relative}
-  html.v2.zij-klein .zb-tel{position:absolute;top:2px;right:2px;padding:0 5px}
-  html.v2.zij-klein .zb-nav+.zb-label{display:block;height:1px;padding:0;margin:10px 6px;background:var(--line);font-size:0}
-
-  /* kopbalk: broodkruimel links, beeldkeuze en Printen rechts */
-  html.v2 header.topbar{height:56px;background:rgba(245,244,239,.86);border-bottom:1px solid var(--line)}
-  html.v2 header.topbar .brand{display:none}
-  html.v2 .topbar .menu>.mi{display:none}
-  html.v2 header.topbar .menu{border-left:0;margin-left:0;padding-left:0;order:3}
-  html.v2 header.topbar .spacer{order:2}
-  html.v2 header.topbar #printBtn{order:4;height:34px;border-radius:9px}
-  html.v2 .fp-kruimel{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);order:1}
-  html.v2 .fp-kruimel i{font-style:normal;color:var(--soft)}
-  html.v2 .fp-kruimel b{color:var(--ink);font-weight:550}
-  html.v2 .fp-kruimel .kr-knop{width:30px;height:30px;border:0;background:transparent;border-radius:8px;color:var(--muted);display:flex;align-items:center;
-    justify-content:center;cursor:pointer;margin-right:4px}
-  html.v2 .fp-kruimel .kr-knop:hover{background:#ecebe4;color:var(--ink)}
+  /* Hulp-menu: Help, Wat is er nieuw en de juridische links */
+  html.v2 .fp-hulp{order:5;position:relative;display:block}
+  html.v2 .fp-hulpknop{height:34px;display:inline-flex;align-items:center;gap:6px;padding:0 10px;border:0;border-radius:9px;background:transparent;
+    color:var(--text);font:inherit;font-size:13px;font-weight:550;cursor:pointer}
+  html.v2 .fp-hulpknop:hover,html.v2 .fp-hulpknop[aria-expanded="true"]{background:#ecebe4;color:var(--ink)}
+  html.v2 .fp-hulpknop:focus-visible{outline:none;box-shadow:var(--ring)}
+  html.v2 .fp-hulpmenu{position:absolute;right:0;top:calc(100% + 6px);z-index:40;min-width:220px;padding:6px;background:#fff;border:1px solid var(--line);
+    border-radius:12px;box-shadow:0 12px 32px rgba(20,27,38,.14)}
+  html.v2 .fp-hulpmenu[hidden]{display:none}
+  html.v2 .fp-hulpmenu>button{display:block;width:100%;text-align:left;padding:8px 10px;border:0;border-radius:8px;background:transparent;font:inherit;
+    font-size:13.5px;color:var(--ink);cursor:pointer}
+  html.v2 .fp-hulpmenu>button:hover,html.v2 .fp-hulpmenu>button:focus-visible{background:#f1efe8;outline:none}
+  html.v2 .fp-hulpvoet{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;padding:8px 10px 4px;border-top:1px solid var(--line2)}
+  html.v2 .fp-hulpvoet a{font-size:11.5px;color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+  html.v2 .fp-hulpvoet a:hover{color:var(--ink)}
   html.v2 .topbar #beeldKeuze .beeldsegment{background:#ecebe4;border-color:var(--line)}
 
   /* paginakop */
@@ -542,19 +523,20 @@ html.v2 .fp-kop .tb-acties #clearBtn:hover{color:#b42318;background:#fdf3f2}
    oefeningen. Smalle zijbalk standaard; acties direct boven de kaart.
    ====================================================================== */
 @media screen and (min-width:1100px){
-  html.v2 .wrap{grid-template-columns:minmax(400px,430px) minmax(0,1fr);gap:14px;padding:14px 16px 16px}
+  html.v2 .wrap{grid-template-columns:minmax(440px,490px) minmax(0,1fr);gap:14px;padding:14px 16px 16px}
   html.v2 .col-controls{top:70px;height:calc(100vh - 84px)}
-  html.v2 .col-controls .hd{padding:11px 14px 10px}
-  html.v2 .col-controls .bd{display:grid;grid-template-columns:132px minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);
-    column-gap:10px;padding:10px 10px 0 10px;overflow:hidden}
+  html.v2 .col-controls>.hd{display:none}
+  html.v2 .smart-filters .sf-tel{margin-left:auto;font-size:11.5px;color:var(--muted);white-space:nowrap}
+  html.v2 .col-controls .bd{display:grid;grid-template-columns:128px minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);
+    column-gap:10px;padding:12px 10px 0 10px;overflow:hidden}
   /* categorieën: eigen kolom, eigen scroll */
   html.v2 #filters{grid-column:1;grid-row:1/4;display:flex;flex-direction:column;flex-wrap:nowrap;gap:2px;max-height:none;min-height:0;
     overflow-y:auto;margin:0;padding:0 4px 12px 0;border-right:1px solid var(--line2);scrollbar-width:thin}
   html.v2 #filters .chip{display:block;width:100%;text-align:left;border:0;border-radius:7px;background:transparent;color:var(--text);
-    font-size:12.5px;font-weight:500;padding:6px 8px;line-height:1.25;white-space:normal;flex:0 0 auto}
+    font-size:12px;font-weight:500;padding:5px 7px;line-height:1.25;white-space:normal;flex:0 0 auto}
   html.v2 #filters .chip:hover{background:#f1efe8;color:var(--ink)}
   html.v2 #filters .chip.on{background:var(--brand-50);color:var(--brand);font-weight:650}
-  html.v2 #filters .category-heading{font-size:10px;letter-spacing:.12em;margin:10px 0 3px 8px;flex:0 0 auto}
+  html.v2 #filters .category-heading{font-size:9.5px;letter-spacing:.1em;margin:10px 0 3px 7px;flex:0 0 auto}
   html.v2 #search{grid-column:2;grid-row:1;height:36px;margin-bottom:6px!important}
   html.v2 .smart-filters{grid-column:2;grid-row:2;margin:0 0 6px;flex-wrap:wrap;min-height:0;gap:4px}
   html.v2 .smart-filter{padding:4px 8px;font-size:11.5px}
@@ -562,7 +544,7 @@ html.v2 .fp-kop .tb-acties #clearBtn:hover{color:#b42318;background:#fdf3f2}
   html.v2 .col-controls #list{grid-column:2;grid-row:3;min-height:0;height:auto;margin:0 -6px 0 0;padding:0 6px 10px 0}
   /* compacte oefenrijen: zoveel mogelijk tegelijk in beeld */
   html.v2 .row{gap:9px;padding:5px 6px;border-radius:10px}
-  html.v2 .row .thumb{width:44px!important;height:44px!important;flex:0 0 44px;border-radius:8px}
+  html.v2 .row .thumb{width:76px!important;height:76px!important;flex:0 0 76px;border-radius:10px;padding:1px}
   html.v2 .row .nm{font-size:13px;line-height:1.25}
   html.v2 .row .nm small{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   html.v2 .row .add{width:28px;height:28px;border-radius:8px;font-size:16px}
@@ -585,8 +567,11 @@ html.v2 .fp-kop .tb-acties #clearBtn:hover{color:#b42318;background:#fdf3f2}
   html.v2 #a4{height:auto;max-height:none}
 }
 @media screen and (min-width:1100px) and (max-width:1279px){
-  html.v2 .wrap{grid-template-columns:360px minmax(0,1fr)}
-  html.v2 .col-controls .bd{grid-template-columns:112px minmax(0,1fr)}
+  html.v2 .wrap{grid-template-columns:430px minmax(0,1fr)}
+  html.v2 .col-controls .bd{grid-template-columns:108px minmax(0,1fr)}
+  html.v2 .smart-filters{flex-wrap:nowrap}
+  html.v2 .row .nm{font-size:12.5px}
+  html.v2 .zb-praktijk{max-width:200px}
   html.v2 #a4wrap .tb-acties .btn{padding:0 9px}
   html.v2 #a4wrap .fp-teller .fp-balk{display:none}
 }
@@ -622,8 +607,6 @@ html.v2 .tm-lid.uitgenodigd .fp-av{opacity:.75;border:0}
   html.v2 .row .add:hover{transform:scale(1.12)}
   html.v2 #a4 .pic{transition:box-shadow .2s ease}
   html.v2 #a4 .pic:hover{box-shadow:inset 0 0 0 2px var(--brand-100)}
-  html.v2 .zb-item{transition:background .15s ease,color .15s ease,padding-left .18s ease}
-  html.v2:not(.zij-klein) .zb-item:hover{padding-left:14px}
   /* binnenkomen: kaartjes in Kaarten en het team glijden na elkaar in */
   html.v2 #k_inbox .ib-item,html.v2 .tm-lid,html.v2 #k_srv_lijst div:has(> .srv-av){animation:fpKomIn .35s cubic-bezier(.2,.7,.2,1) both}
   html.v2 #k_inbox .ib-item:nth-child(2),html.v2 .tm-lid:nth-of-type(3){animation-delay:.05s}
@@ -650,3 +633,134 @@ html.v2 .pr-melding .pr-naam input{width:100%;box-sizing:border-box;margin:0 0 9
 html.v2 .pr-melding .pr-knoppen{display:flex;flex-wrap:wrap;gap:6px}
 html.v2 .pr-melding .btn{font-size:12.5px;padding:6px 11px}
 html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
+
+/* Standaard behandelkaarten (Sjablonen): bibliotheek met categorieën, lijst en voorbeeld.
+   Alleen het scherm; de print raakt dit nooit. */
+@media screen{
+  html.v2 #ovSjab .modal.sjb{width:min(1120px,96vw);max-width:none;height:min(760px,calc(100vh - 32px));max-height:none;
+    padding:0;display:flex;flex-direction:column;overflow:hidden}
+  html.v2 .sjb-kop{display:flex;align-items:flex-start;gap:16px;padding:20px 24px 10px}
+  html.v2 .sjb-kop-tekst{flex:1;min-width:0}
+  html.v2 .sjb-kop small{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  html.v2 .sjb-kop h3{margin:2px 0 4px;font-size:22px;letter-spacing:-.03em;color:var(--ink)}
+  html.v2 .sjb-kop p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+  html.v2 .sjb-dicht{border:0;background:transparent;font-size:24px;line-height:1;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:8px}
+  html.v2 .sjb-dicht:hover{background:var(--line2);color:var(--ink)}
+  html.v2 .sjb-zoek{padding:0 24px 12px;border-bottom:1px solid var(--line)}
+  html.v2 .sjb-zoek input{width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:14px}
+  html.v2 .sjb-zoek input:focus{outline:2px solid var(--brand-100);border-color:var(--brand)}
+  html.v2 .sjb-body{flex:1;min-height:0;display:grid;grid-template-columns:220px minmax(0,1fr) 360px}
+  html.v2 .sjb-cats{overflow:auto;padding:12px 10px;border-right:1px solid var(--line);background:#fafbfc}
+  html.v2 .sjb-catlabel{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin:14px 8px 4px}
+  html.v2 .sjb-cat{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:transparent;
+    padding:7px 9px;border-radius:8px;font:inherit;font-size:13.5px;color:var(--text);cursor:pointer}
+  html.v2 .sjb-cat span{flex:1;min-width:0}
+  html.v2 .sjb-cat b{font-weight:600;font-size:11.5px;color:var(--soft);font-variant-numeric:tabular-nums}
+  html.v2 .sjb-cat:hover{background:var(--line2)}
+  html.v2 .sjb-cat.aan{background:var(--brand-50);color:var(--brand-700);font-weight:600}
+  html.v2 .sjb-cat.aan b{color:var(--brand)}
+  html.v2 .sjb-cat.leeg{color:var(--soft)}
+  html.v2 .sjb-lijst{overflow:auto;padding:8px 12px 16px}
+  html.v2 .sjb-groep{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+    margin:12px 6px 4px;position:sticky;top:-8px;background:#fff;padding:6px 0 4px;z-index:1}
+  html.v2 .sjb-rij{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid transparent;background:#fff;
+    border-radius:12px;padding:9px 10px;margin:2px 0;cursor:pointer;font:inherit;color:var(--text)}
+  html.v2 .sjb-rij:hover{background:#f8fafc;border-color:var(--line)}
+  html.v2 .sjb-rij.aan{background:var(--brand-50);border-color:var(--brand-100)}
+  html.v2 .sjb-rij-beeld{display:flex;flex:none}
+  html.v2 .sjb-rij-beeld .thumb{border:1px solid var(--line);border-radius:9px;background:#fff;margin-left:-10px;box-shadow:0 0 0 2px #fff}
+  html.v2 .sjb-rij-beeld .thumb:first-child{margin-left:0}
+  html.v2 .sjb-rij-tekst{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+  html.v2 .sjb-rij-tekst b{font-size:14px;color:var(--ink);font-weight:650}
+  html.v2 .sjb-rij-tekst small{font-size:12px;color:var(--muted)}
+  html.v2 .sjb-rij-sub{font-size:12px;color:var(--muted);opacity:.9;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+  html.v2 .sjb-voorbeeld{overflow:auto;padding:16px 20px 18px;border-left:1px solid var(--line);background:#fcfcfd}
+  html.v2 .sjb-chip{display:inline-block;font-size:11px;font-weight:600;color:var(--brand-700);background:var(--brand-50);
+    border:1px solid var(--brand-100);border-radius:999px;padding:2px 9px}
+  html.v2 .sjb-vb-kop h4{margin:8px 0 4px;font-size:18px;letter-spacing:-.02em;color:var(--ink)}
+  html.v2 .sjb-vb-kop p{margin:0 0 10px;font-size:12.5px;color:var(--muted);line-height:1.5}
+  html.v2 .sjb-vb-oef{list-style:none;margin:0 0 12px;padding:0;counter-reset:sjb}
+  html.v2 .sjb-vb-oef li{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--line2);counter-increment:sjb}
+  html.v2 .sjb-vb-oef li::before{content:counter(sjb);flex:none;width:18px;font-size:11px;font-weight:600;color:var(--soft);text-align:right}
+  html.v2 .sjb-vb-oef .thumb{flex:none;border:1px solid var(--line);border-radius:9px;background:#fff}
+  html.v2 .sjb-vb-oef span{display:flex;flex-direction:column;min-width:0}
+  html.v2 .sjb-vb-oef b{font-size:13px;font-weight:600;color:var(--ink)}
+  html.v2 .sjb-vb-oef small{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+  html.v2 .sjb-vb-acties{display:flex;flex-wrap:wrap;gap:8px;position:sticky;bottom:-18px;background:#fcfcfd;padding:10px 0 4px}
+  html.v2 .sjb-vb-acties .btn{height:38px;padding:0 14px}
+  html.v2 .sjb-vb-klein{display:flex;gap:14px;margin:6px 0 0}
+  html.v2 .sjb-link{border:0;background:none;padding:0;font:inherit;font-size:12.5px;color:var(--brand);cursor:pointer}
+  html.v2 .sjb-link:hover{text-decoration:underline}
+  html.v2 .sjb-link.rood{color:#b42318}
+  html.v2 .sjb-vb-noot{font-size:12px;color:var(--muted);margin:8px 0 0;line-height:1.5}
+  html.v2 .sjb-leeg{padding:22px 10px;font-size:13px;color:var(--muted);line-height:1.55}
+  html.v2 .sjb-leeg b{display:block;color:var(--ink);margin-bottom:2px}
+  html.v2 .sjb-voet{display:flex;align-items:center;gap:8px;margin:0;padding:12px 24px;border-top:1px solid var(--line);background:#fff}
+  html.v2 .sjb-voet-tip{flex:1;font-size:12.5px;color:var(--muted)}
+  /* balk boven de kaart tijdens het aanpassen van een behandelkaart */
+  html.v2 .sjb-bewerk{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;padding:9px 22px;background:var(--brand-50);
+    border-bottom:1px solid var(--brand-100);font-size:13.5px;color:var(--brand-700)}
+  html.v2 .sjb-bewerk[hidden]{display:none}
+  html.v2 .sjb-bewerk .pb-ruimte{flex:1}
+  html.v2 .sjb-bewerk .sjb-bewerk-ok{display:none}
+  html.v2 .sjb-bewerk.ok .sjb-bewerk-ok{display:inline}
+  html.v2 .sjb-bewerk.ok .sjb-bewerk-tekst,html.v2 .sjb-bewerk.ok .btn{display:none}
+}
+@media screen and (max-width:980px){
+  html.v2 .sjb-body{grid-template-columns:180px minmax(0,1fr)}
+  html.v2 .sjb-voorbeeld{grid-column:1 / -1;border-left:0;border-top:1px solid var(--line);max-height:46vh}
+}
+@media print{html.v2 .sjb-bewerk{display:none!important}}
+/* iPad staand (700-920 px): het hele A4-blad past op de breedte, zonder opzij te vegen
+   (de zoom zet pasA4 in index.html); telefoons blijven ongewijzigd */
+@media screen and (min-width:700px) and (max-width:920px){
+  html.v2 #a4{zoom:var(--a4z,1);height:auto;max-height:none}
+  html.v2 #a4wrap::before{display:none}
+  html.v2 #a4wrap{overflow:hidden}
+}
+/* behandelkaarten op een staand scherm: het venster gebruikt de hoogte, het voorbeeld krijgt meer ruimte */
+@media screen and (max-width:980px){
+  html.v2 #ovSjab .modal.sjb{height:calc(100vh - 32px);height:calc(100dvh - 32px);max-height:1100px}
+  html.v2 .sjb-body{grid-template-rows:minmax(0,1fr) minmax(0,1.15fr)}
+  html.v2 .sjb-voorbeeld{max-height:none}
+  html.v2 .sjb-cats,html.v2 .sjb-lijst{min-height:0}
+}
+/* lage laptopschermen (720-800 px hoog): compactere kop, zodat lijst en voorbeeld de ruimte houden */
+@media screen and (max-height:800px) and (min-width:981px){
+  html.v2 .sjb-kop{padding:14px 24px 6px}
+  html.v2 .sjb-kop p{display:none}
+  html.v2 .sjb-zoek{padding-bottom:10px}
+  html.v2 .sjb-vb-oef li{padding:4px 0}
+}
+/* tablet: de kaart is ingezoomd (--a4z < 1), maar de knopjes op de oefening blijven 30 px groot om te tikken */
+@media screen and (hover:none){
+  html.v2 #a4 .pic .vid,html.v2 #a4 .pic .rm{width:calc(30px / var(--a4z,1));height:calc(30px / var(--a4z,1))}
+  html.v2 #a4 .pic .rm{line-height:calc(29px / var(--a4z,1));font-size:calc(18px / var(--a4z,1))}
+  html.v2 #a4 .pic .vid::after,html.v2 #a4 .pic .rm::after{inset:calc(-7px / var(--a4z,1))}
+}
+/* iPad: het oefenvakje is smal; zet afspelen linksonder en verwijderen rechtsboven, zodat de tekening zichtbaar blijft */
+@media screen and (hover:none) and (min-width:700px){
+  html.v2 #a4 .pic .vid{top:auto;bottom:calc(3px / var(--a4z,1));left:calc(3px / var(--a4z,1))}
+  html.v2 #a4 .pic .rm{top:calc(3px / var(--a4z,1));right:calc(3px / var(--a4z,1))}
+  /* zichtbaar 24 px, tikvlak 44 px (24 + 2×10): de tekening blijft te zien, tikken blijft makkelijk */
+  html.v2 #a4 .pic .vid,html.v2 #a4 .pic .rm{width:calc(24px / var(--a4z,1));height:calc(24px / var(--a4z,1))}
+  html.v2 #a4 .pic .rm{line-height:calc(23px / var(--a4z,1));font-size:calc(15px / var(--a4z,1))}
+  html.v2 #a4 .pic .vid::after,html.v2 #a4 .pic .rm::after{inset:calc(-10px / var(--a4z,1))}
+/* Laptop- en iPad-schermen (Ahmed, 2026-11-09): alles blijft goed zichtbaar.
+   - Tablet liggend/kleine laptop (921-1099px): de toetsenbordhint paste niet in de
+     smalle kolom en viel rechts weg; die hint is op een iPad ook niet nodig.
+   - Categorieblok tot 1099px: geen half afgesneden rij meer, maar volle rijen met een
+     zachte vervaging onderaan, zodat duidelijk is dat er meer staat (scrollen). */
+@media screen and (min-width:921px) and (max-width:1099px){
+  html.v2 .search-hint{display:none}
+  html.v2 #filters{max-height:112px}
+}
+@media screen and (max-width:1099px){
+  html.v2 #filters{padding-bottom:14px;
+    -webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 22px),transparent);
+    mask-image:linear-gradient(180deg,#000 calc(100% - 22px),transparent)}
+}
+/* Aanraakschermen (iPad): de logoknop op de kaart was te klein om te tikken. */
+@media screen and (pointer:coarse){
+  html.v2 #logoBtn{min-height:30px;padding:6px 14px;font-size:13px}
+}

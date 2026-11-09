@@ -9,19 +9,62 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | Gebied | Laatst gecontroleerd |
 |---|---|
 | (a) privacyverklaring (art. 13/14 AVG) | 2026-11-09 09u (art. 9-uitzondering, "Als je stopt", proefpraktijk zonder abonnement echt gewist, WhatsApp-link) |
-| (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-07 (eigen login per therapeut, één akkoord) |
+| (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-09 13u (art. 28 lid 3 a/g/h en lid 4 langs de tekst; einde proef: kaarten bleven onbeperkt; subverwerkers tegen alle externe hosts in code: geen gat) |
 | (c) algemene voorwaarden | 2026-11-09 05u (opzeggen in de app, einde abonnement; `AV_VERSIE` 2026-11-09) |
 | (d) code tegen tekst | 2026-11-09 05u (einde abonnement: wissen 30 dagen na het einde gebouwd) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-08 17u (patiënt: download klopt nu direct na vinkjes en seintje, niet pas na herladen) |
-| (f) cookies en lokale opslag | 2026-11-08 13u (cookies `fpproef`/`fp1` kloppen; alle localStorage-sleutels van /k en de app langs de tekst gelegd; twee ontbraken in /privacy, toegevoegd) |
+| (f) cookies en lokale opslag | 2026-11-09 21u (Cache Storage van /k: "Wis deze kaart" liet oefenbeelden en bibliotheek staan, opgelost; cookies en localStorage ongewijzigd sinds 8-11) |
 | (g) MDR en AI-verordening | 2026-11-09 01u (vraaghulp gaf mogelijk doseringsadvies: opgelost; videolabels AI-concept/klinisch gecontroleerd volgen de reviewstatus; landing en app zonder sorteer- of doseringsbelofte) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-08 21u (werknotitie mee naar het dossier, dossierlabel vervalt bij nieuwe praktijkregels, datum heet nu "laatst opgeslagen") |
-| (i) begrijpelijkheid (B1) | 2026-11-08 09u (VWO en voorwaarden: "In het kort", VWO als concept gemarkeerd; /v2/gegevens-tekst) |
+| (i) begrijpelijkheid (B1) | 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (b) verwerkersovereenkomst, dan (i) begrijpelijkheid. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (e) rechten van betrokkenen, dan (h) WGBO. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **LAAG (doorgezet door de gebruikers-sweep 2026-11-09 18u) — "Wis deze kaart van mijn telefoon" laat avatarbeelden van precies
+  deze oefeningen en `oefeningen.json` in Cache Storage (`fysiplan-kaart-v2`)**; op een gedeelde telefoon verraadt dat welke
+  oefeningen iemand doet. kaart.html r. ~1794 wist alleen URL's met het kaart-id. Toets tegen de tekst op /privacy (Truus, iPhone SE).
+  OPGELOST 2026-11-09 PR #142: `wisOfflineKopie` wist de hele offline-cache als er geen andere kaart op de telefoon
+  staat; staan er wel andere kaarten, dan gaan de gegevens van deze kaart en alle beelden die deze kaart laadde weg.
+  /privacy#opslag noemt de plaatjes nu. Test in `scripts/test-kaart-wis-telefoon.mjs` (faalt zonder fix).
+  Rest (LAAG): wist de praktijk de kaart (404), dan haalt de service worker alleen kaartgegevens weg, niet de beelden.
+
+- **MIDDEL — begrijpelijkheid + code tegen tekst (2026-11-09 17u): samenvatting voorwaarden beloofde iets anders dan art. 5.**
+  "In het kort" zei "Je kunt maandelijks opzeggen. Daarna wissen we je kaarten binnen 30 dagen." Art. 5 en de code
+  (`abonnementEindeStap`, lib/mollie.js) wissen pas 30 dagen na het einde van de betaalde maand, en dan alles van de
+  praktijk, niet alleen de kaarten; het wissen na een proef zonder abonnement (art. 3) stond er niet in.
+  OPGELOST 2026-11-09 (deze PR): samenvatting volgt art. 3 en 5; de termijn komt nu overal uit `NA_EINDE_WISSEN_DAGEN`
+  (`__NA_EINDE__`) in plaats van een vaste 30 in de tekst (VWO kort, VWO art. 10, voorwaarden art. 5).
+  Samenvatting is niet bindend ("De artikelen hieronder gelden"), dus geen nieuwe `AV_VERSIE` en geen nieuw akkoord.
+- **LAAG — begrijpelijkheid (B1) (2026-11-09 17u).** Gemeten op de gerenderde pagina's (gem. 8–10 woorden per zin, goed).
+  Te lang: opslag op de patiënttelefoon (61 woorden, nu een lijst), datalekartikel VWO art. 9 (41, nu korte zinnen met
+  gewone woorden in plaats van "aard, omvang"), "Wat Fysiplan niet doet" (32). "Grondslag" en "gerechtvaardigd belang"
+  krijgen nu uitleg in gewone taal; de privacy-samenvatting heeft een regel voor de therapeut (wissen als je stopt).
+  OPGELOST 2026-11-09 (deze PR). Test `scripts/test-juridisch-b1.mjs` (in test:privacy en CI): geen zin > 40 woorden,
+  patiëntdeel ≤ 30, samenvattingen kloppen met de constanten in de code. Rest: VWO art. 2 (opsomming van 39 woorden)
+  mag later een lijst worden; patiëntdeel /privacy alleen in het Nederlands (stond al open).
+
+- **HOOG — code tegen tekst + verwerkersovereenkomst (2026-11-09 13u): kaarten van een proef zonder abonnement bleven onbeperkt staan.**
+  VWO art. 10 beloofde "stopt de praktijk, dan binnen 30 dagen gewist", maar na een proef zonder abonnement bleef het
+  account staan zolang er een gedeelde kaart was, en een kaart die de patiënt af en toe opent (`bekeken` telt als
+  activiteit) verloopt nooit. Gevolg: patiëntgegevens en het account zonder einddatum, ook zonder lopende overeenkomst
+  (art. 5 lid 1e en art. 28 lid 3g AVG). OPGELOST 2026-11-09 (deze PR): `proefRonde` wist bij het verlopen van de
+  aanmelding (90 dagen na de proef, alleen als de aanmelding zelf zegt "geen klant") via `praktijkAllesWissen` de hele
+  praktijk, ook de kaarten. Een ontbrekend aanmeldingenbestand wist dus nooit kaarten. Voorwaarden art. 3, /privacy
+  #einde, VWO "In het kort" en art. 10, en de herinneringsmail noemen de 90 dagen. Test
+  `scripts/test-proef-einde-wissen.mjs` aangepast (faalt zonder fix). `AV_VERSIE` 2026-11-09-2, `VWO_VERSIE` 2026-11-09.
+  2026-11-09 14u: Ahmed koos 30 dagen in plaats van 90 (`PROEF_BEWAAR_DAGEN`, ook voor de aanmelding); `AV_VERSIE`
+  2026-11-09-3, `VWO_VERSIE` 2026-11-10.
+  Rest (LAAG): wist een proefpraktijk zelf eerder haar aanmelding ("Mijn proef wissen"), dan geldt nog de oude route
+  (account weg zodra de laatste kaart verloopt); begrenzen zou ook kaarten wissen als het aanmeldingenbestand ontbreekt.
+- **MIDDEL — verwerkersovereenkomst miste drie verplichte punten van art. 28 AVG (2026-11-09 13u).**
+  Lid 3a (wettelijke vordering vooraf melden), lid 3h (controle/audit door de praktijk of een deskundige) en lid 4
+  (verwerker blijft verantwoordelijk voor subverwerkers). OPGELOST 2026-11-09 (deze PR): art. 3, 6 en 11 aangevuld.
+  Bron: AVG art. 28 (eur-lex.europa.eu, Verordening (EU) 2016/679). Kosten en termijn van een audit: zie mensenwerk.
+- **LAAG — vertaalroute (2026-11-09 13u).** Bij vertalen gaan ook namen van eigen oefeningen van de praktijk naar
+  Anthropic; /privacy noemt "oefeningnamen", dat dekt het. Geen actie.
 
 - **MIDDEL — privacyverklaring + code (2026-11-09 09u): een proefpraktijk zonder abonnement werd nooit gewist.**
   De proefaanmelding verdween 90 dagen na de proef, maar het praktijkaccount (teamleden met naam en e-mail,

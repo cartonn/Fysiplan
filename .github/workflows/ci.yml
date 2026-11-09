@@ -30,6 +30,7 @@ jobs:
       - run: npm run test:drafts
       - run: npm run test:beheer
       - run: npm run test:proefpoort
+      - run: npm run test:oudeproef
       - run: npm run test:abonnement
       - run: npm run test:sweep
       - run: npm run test:offline
@@ -47,6 +48,7 @@ jobs:
       - run: node scripts/test-dossier-contact.mjs
       - run: node scripts/test-wees-opnames.mjs
       - run: node scripts/test-proef-einde-wissen.mjs
+      - run: node scripts/test-juridisch-b1.mjs
       - run: npm run test:kaartversie
       - run: npm run test:hernoem
       - run: npm run test:topbar
@@ -76,7 +78,19 @@ jobs:
       - run: npm run test:offlinestand
       - run: npm run test:lightbox
       - run: npm run test:profielovername
+      - run: npm run test:proefarchief
       - run: npm run test:vensterterug
       - run: npm run test:inboxmijn
       - run: npm run test:dubbelklikoverzicht
       - run: npm run test:kaart200taal
+      - run: npm run test:roepnaamander
+      - run: npm run test:kaartladen
+      - run: npm run test:noorstop
+      - run: npm run test:kaartdruk
+      - run: npm run test:nieuwekaartnaam
+      - run: npm run test:proefwissen
+      - run: npm run test:pijnscorebezig
+      - run: npm run test:nietvertaald
+      - run: npm run test:qrroepnaam
+      - run: npm run test:uitnodigingpraktijk
+      - run: npm run test:rempraktijk

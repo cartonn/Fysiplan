@@ -42,9 +42,15 @@ async function controleerNieuweLijntekening(exercise) {
 if (report.schemaVersion !== 1 || report.assetVersion !== 7 || report.background !== "#FFFFFF") {
   throw new Error("Oefenbeeldrapport heeft een onbekende versie of achtergrond");
 }
-const carlaCatalogue = catalogue.filter((exercise) => !exercise.coreExerciseId && String(exercise.img || "").endsWith("-line-v1.png"));
-const legacyCatalogue = catalogue.filter((exercise) => !exercise.coreExerciseId && !String(exercise.img || "").endsWith("-line-v1.png"));
-const top500Expansion = catalogue.filter((exercise) => exercise.coreExerciseId);
+// Nieuwe oefeningen (nieuweOefening: true in het register) vallen buiten de vaste 604 en worden
+// hieronder als nieuwe lijntekening met avatar volledig gecontroleerd.
+const nieuweOefeningen = new Set([...nieuweLijntekeningen.values()].filter((entry) => entry.nieuweOefening).map((entry) => entry.naam));
+const basisCatalogue = catalogue.filter((exercise) => !nieuweOefeningen.has(exercise.naam));
+if (basisCatalogue.length + nieuweOefeningen.size !== catalogue.length) throw new Error("Vastgelegde nieuwe oefening ontbreekt in oefeningen-v2.json");
+if (catalogue.some((exercise) => nieuweOefeningen.has(exercise.naam) && exercise.coreExerciseId)) throw new Error("Nieuwe oefening mag geen coreExerciseId hebben");
+const carlaCatalogue = basisCatalogue.filter((exercise) => !exercise.coreExerciseId && String(exercise.img || "").endsWith("-line-v1.png"));
+const legacyCatalogue = basisCatalogue.filter((exercise) => !exercise.coreExerciseId && !String(exercise.img || "").endsWith("-line-v1.png"));
+const top500Expansion = basisCatalogue.filter((exercise) => exercise.coreExerciseId);
 const v1ByName = new Map(v1Catalogue.map((exercise) => [exercise.naam, exercise]));
 if (legacyCatalogue.length !== 215 || report.cards.length !== legacyCatalogue.length) {
   throw new Error(`Verwacht 215 vaste legacykaarten; catalogus=${legacyCatalogue.length}, rapport=${report.cards.length}`);
@@ -52,8 +58,8 @@ if (legacyCatalogue.length !== 215 || report.cards.length !== legacyCatalogue.le
 if (carlaCatalogue.length !== 104) {
   throw new Error(`Verwacht 104 Carla-kaarten met V1-lijnreferentie; gevonden ${carlaCatalogue.length}`);
 }
-if (top500Expansion.length !== 285 || catalogue.length !== 604) {
-  throw new Error(`Verwacht 285 Core-uitbreidingskaarten en 604 totaal; uitbreiding=${top500Expansion.length}, totaal=${catalogue.length}`);
+if (top500Expansion.length !== 285 || basisCatalogue.length !== 604) {
+  throw new Error(`Verwacht 285 Core-uitbreidingskaarten en 604 totaal (plus nieuwe oefeningen); uitbreiding=${top500Expansion.length}, totaal=${basisCatalogue.length}`);
 }
 
 const reportByName = new Map(report.cards.map((entry) => [entry.name, entry]));
@@ -82,8 +88,16 @@ await Promise.all(legacyCatalogue.map(async (exercise) => {
 
 const expansionRatios = [];
 const pendingExpansion = [];
-for (const naam of nieuweLijntekeningen.keys()) {
+for (const [naam, entry] of nieuweLijntekeningen) {
+  if (entry.nieuweOefening) {
+    if (!entry.kaartImg) throw new Error(`Nieuwe oefening zonder vastgelegde avatar: ${naam}`);
+    continue;
+  }
   if (!top500Expansion.some((exercise) => exercise.naam === naam)) throw new Error(`Nieuwe lijntekening hoort bij geen uitbreidingsoefening: ${naam}`);
+}
+for (const exercise of catalogue.filter((e) => nieuweOefeningen.has(e.naam))) {
+  await controleerNieuweLijntekening(exercise);
+  nieuwGeldig.push(exercise.naam);
 }
 await Promise.all(top500Expansion.map(async (exercise) => {
   if (nieuweLijntekeningen.has(exercise.naam)) { await controleerNieuweLijntekening(exercise); nieuwGeldig.push(exercise.naam); return; }

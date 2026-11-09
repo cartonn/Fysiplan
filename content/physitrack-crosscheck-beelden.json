@@ -1513,5 +1513,1417 @@
         "pose": "pair-candidate"
       }
     ]
+  },
+  "uitlegRonde3": {
+    "datum": "2026-11-09",
+    "akkoord": "Ahmed: \"ja\" (09:59) op de tweede controleronde; merge alleen op zijn go",
+    "bron": "output/physitrack-crosscheck/ronde3-controle.csv (branch claude/project-thread-i8kbtd)",
+    "uitleg": [
+      {
+        "nr": 3,
+        "naam": "Barbell pull over",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Physitrack: voeten plat op de vloer (zoals tekening), ellebogen gebogen"
+      },
+      {
+        "nr": 4,
+        "naam": "Bench press",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Physitrack: voeten plat op de vloer, zoals tekening en avatar"
+      },
+      {
+        "nr": 12,
+        "naam": "Dumbell pull over",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Tekening en avatar (voeten op de vloer, gestrekte armen, boog naar achter het hoofd) kloppen met Physitrack"
+      },
+      {
+        "nr": 16,
+        "naam": "Flyes",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Physitrack: knieën gebogen, ellebogen licht gebogen, zakken tot horizontaal; voetplaats niet genoemd"
+      },
+      {
+        "nr": 34,
+        "naam": "Pully pull over",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Tekening (ruglig op vlakke bank, handvat achter het hoofd, boog naar voren) past bij Physitrack (ruglig, knieën gebogen, armen naar de bovenbenen); de vlakke ba"
+      },
+      {
+        "nr": 40,
+        "naam": "Triceps dumbell kickbacks",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Physitrack: staand voorovergebogen met de vrije hand op een steun op heuphoogte, niet knielend"
+      },
+      {
+        "nr": 54,
+        "naam": "Hack squat",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Physitrack en tekening tonen het hack-squatapparaat"
+      },
+      {
+        "nr": 103,
+        "naam": "Rusian twist",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Houding en draaipijlen kloppen, maar de Physitrack-variant gebruikt een bal en houdt de hielen op de mat; bal ontbreekt in tekening en uitleg (geen Physitrack-p"
+      },
+      {
+        "nr": 146,
+        "naam": "TRX triceps extension II",
+        "v2": 1,
+        "v1": 1,
+        "reden": "dichtstbij: TRX Tricep Extension; 02"
+      },
+      {
+        "nr": 173,
+        "naam": "Yoga warrior III",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Tekening: houding (armen omhoog, achterste voet op de tenen) past bij Physitrack, maar er staan nog twee pijlen; een pijl voor het kantelen van romp en been"
+      },
+      {
+        "nr": 387,
+        "naam": "Schouderblad liften en ontspannen – zittend actief",
+        "v2": 1,
+        "v1": 0,
+        "reden": "Tekening: pijl staat maar bij één schouder, terwijl beide schouders omhoog gaan; verder klopt de houding (handen op bovenbenen)"
+      },
+      {
+        "nr": 391,
+        "naam": "Bovenste trapezius rek – zittend actief",
+        "v2": 1,
+        "v1": 0,
+        "reden": "Physitrack zittend: hand over het hoofd en rek vasthouden; tekening toont alleen actief kantelen zonder hand (bruikbaar)"
+      },
+      {
+        "nr": 392,
+        "naam": "Bovenste trapezius rek – functioneel staand",
+        "v2": 1,
+        "v1": 0,
+        "reden": "Tekening en avatar kloppen (actieve variant is geldig, hand op hoofd optioneel)"
+      },
+      {
+        "nr": 460,
+        "naam": "Grote stappen – met ritmische cue",
+        "v2": 1,
+        "v1": 0,
+        "reden": "Physitrack dwingt de grote stap af met markeringen op de vloer; de tekening toont die ook, de uitleg noemt ze niet"
+      },
+      {
+        "nr": 462,
+        "naam": "Brug met symmetrie – bilateraal",
+        "v2": 1,
+        "v1": 0,
+        "reden": "Tekening klopt"
+      },
+      {
+        "nr": 482,
+        "naam": "Langdurig zitten onderbreken – met tempo of herhaling",
+        "v2": 1,
+        "v1": 0,
+        "reden": "Tekening: pijl klopt, maar er staat een vage extra boogje/streepje bij de knieën (beeldfout); opschonen"
+      },
+      {
+        "nr": 509,
+        "naam": "Swiss ball hip raise",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Tekening en avatar leggen de hielen/enkels op de bal, uitleg zegt onderbenen; uitleg gelijktrekken met de tekening."
+      },
+      {
+        "nr": 516,
+        "naam": "Swiss ball back ext",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Avatar: start en eind zijn vrijwel gelijk, de beweging is niet te zien; start duidelijk voorovergebogen over de bal tonen en eind in rechte lijn"
+      },
+      {
+        "nr": 519,
+        "naam": "Swiss ball core",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Tekening (wint) toont handen op de bovenbenen en een voet optillen; avatar-eind en uitleg voegen armen naar voren toe"
+      },
+      {
+        "nr": 538,
+        "naam": "Med ball slams",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Uitleg zegt 'breng de bal naar beneden' maar niet dat je hem op de grond gooit en door je knieën zakt; Physitrack gooit de bal echt tegen de vloer"
+      },
+      {
+        "nr": 552,
+        "naam": "Med ball V-ups",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Tekening en avatar starten nu met de bal in gestrekte armen omhoog en de knieën gebogen opgetild"
+      },
+      {
+        "nr": 582,
+        "naam": "Seated knee to elbow",
+        "v2": 1,
+        "v1": 1,
+        "reden": "Avatar houdt maar één hand achter het hoofd en legt de andere hand op de opgetilde knie; beide handen horen achter het hoofd, zoals in tekening en Physitrack"
+      },
+      {
+        "nr": 38,
+        "naam": "Shoulder rotation (shrugs)",
+        "v2": 1,
+        "v1": 1,
+        "reden": "recht omhoog en omlaag, zoals tekening en Physitrack (shrug); keuze volgens advies, Ahmed 10:40 \"volg je eigen advies\""
+      },
+      {
+        "nr": 66,
+        "naam": "Squat lunges",
+        "v2": 1,
+        "v1": 1,
+        "reden": "zonder stang, zoals tekening en Physitrack (split squat); avatar met stang wordt opnieuw gemaakt"
+      },
+      {
+        "nr": 15,
+        "naam": "Exo pull",
+        "v2": 1,
+        "v1": 1,
+        "reden": "samen met de nieuwe tekening van ronde 3, volgens Physitrack"
+      },
+      {
+        "nr": 128,
+        "naam": "TRX chest press",
+        "v2": 1,
+        "v1": 1,
+        "reden": "samen met de nieuwe tekening van ronde 3, volgens Physitrack"
+      },
+      {
+        "nr": 187,
+        "naam": "Voor zijwaarts",
+        "v2": 1,
+        "v1": 1,
+        "reden": "samen met de nieuwe tekening van ronde 3, volgens Physitrack"
+      },
+      {
+        "nr": 212,
+        "naam": "Rotator (apparaat)",
+        "v2": 1,
+        "v1": 1,
+        "reden": "samen met de nieuwe tekening van ronde 3, volgens Physitrack"
+      },
+      {
+        "nr": 415,
+        "naam": "Thoracale extensie – op handen en knieën",
+        "v2": 1,
+        "v1": 0,
+        "reden": "samen met de nieuwe tekening van ronde 3, volgens Physitrack"
+      },
+      {
+        "nr": 493,
+        "naam": "Hop vooruit – techniek langzaam",
+        "v2": 1,
+        "v1": 0,
+        "reden": "samen met de nieuwe tekening van ronde 3, volgens Physitrack"
+      },
+      {
+        "nr": 497,
+        "naam": "Richtingsverandering – techniek langzaam",
+        "v2": 1,
+        "v1": 0,
+        "reden": "samen met de nieuwe tekening van ronde 3, volgens Physitrack"
+      }
+    ],
+    "wachtOpTekening": [
+      57,
+      106,
+      199,
+      389,
+      390
+    ],
+    "openVraag": [
+      551
+    ],
+    "vergrendeld": [
+      475
+    ]
+  },
+  "beeldenRonde3": {
+    "datum": "2026-11-09",
+    "akkoord": "Ahmed 10:40: \"volg in alles je eigen advies ... en go\" (advies: 70 beelden, max 400 credits; gebruikt 370)",
+    "bron": "output/physitrack-crosscheck/beelden/ronde3 (branch claude/project-thread-i8kbtd, f8d92e1)",
+    "tekeningen": [
+      {
+        "nr": 102,
+        "naam": "Rug extensie",
+        "soort": "pijl",
+        "img": "images/beginhouding-pijl-v2/103.webp",
+        "sha256": "4af117d4e62116b022f09d6d4f4507bd3021009ed728b7ea7c17ceb9462b798c",
+        "bron": "ronde3/tekeningen/102-rug-extensie.png"
+      },
+      {
+        "nr": 128,
+        "naam": "TRX chest press",
+        "soort": "pijl",
+        "img": "images/beginhouding-pijl-v2/154.webp",
+        "sha256": "5fc34ff63f9a98efb44ed2da8febd9860e09ebb74804cfc12d05ee15a05ed66f",
+        "bron": "ronde3/tekeningen/128-trx-chest-press.png"
+      },
+      {
+        "nr": 15,
+        "naam": "Exo pull",
+        "soort": "pijl",
+        "img": "images/beginhouding-pijl-v2/016.webp",
+        "sha256": "c224ef085aa8c6fb63bb0d1e2c6eec79c815247ffff18b7deef4ba3d2c24c5cd",
+        "bron": "ronde3/tekeningen/15-exo-pull.png"
+      },
+      {
+        "nr": 157,
+        "naam": "Yoga frog",
+        "soort": "pijl",
+        "img": "images/beginhouding-pijl-v2/183.webp",
+        "sha256": "c015867a1bd00ef2693c3baec1693d9ae6c2bbeb2fc69a82b8d86bcbf1fde20c",
+        "bron": "ronde3/tekeningen/157-yoga-frog.png"
+      },
+      {
+        "nr": 183,
+        "naam": "Bodyblade high",
+        "soort": "pijl",
+        "img": "images/beginhouding-pijl-v2/209.webp",
+        "sha256": "c93233b12e87501e5202417d6dc46aa6c699eb8222a83baa7a09e96c0b0f0e50",
+        "bron": "ronde3/tekeningen/183-bodyblade-high.png"
+      },
+      {
+        "nr": 187,
+        "naam": "Voor zijwaarts",
+        "soort": "pijl",
+        "img": "images/beginhouding-pijl-v2/213.webp",
+        "sha256": "2d11b09c2c7b66559e2ccad2544599dbc8b0a245d0e857c561f5ccc7fce8918d",
+        "bron": "ronde3/tekeningen/187-voor-zijwaarts.png"
+      },
+      {
+        "nr": 192,
+        "naam": "Chin-dip (apparaat)",
+        "soort": "pijl",
+        "img": "images/beginhouding-pijl-v2/218.webp",
+        "sha256": "6cb717f565a727ffe2cafa1f25ed633ae0c83ce3f8f6d3cc62c4d26fe2a57e2c",
+        "bron": "ronde3/tekeningen/192-chin-dip-apparaat.png"
+      },
+      {
+        "nr": 212,
+        "naam": "Rotator (apparaat)",
+        "soort": "pijl",
+        "img": "images/beginhouding-pijl-v2/238.webp",
+        "sha256": "593b150ed41bd83490e4c8674b7a2f24e494d7eadadd8b4b7edb463cfc4e4355",
+        "bron": "ronde3/tekeningen/212-rotator-apparaat.png"
+      },
+      {
+        "nr": 415,
+        "naam": "Thoracale extensie – op handen en knieën",
+        "soort": "nieuwe lijntekening (zelfde pad)",
+        "img": "images/rug/thoracale-extensie-op-handen-en-knieen-line-v1.png",
+        "sha256": "9688ec7de2ef9935345cdf61be212fe5fb5dd73f9a0bf9826493febb7979247c",
+        "bron": "ronde3/tekeningen/415-thoracale-extensie-op-handen-en-knieen.png"
+      },
+      {
+        "nr": 440,
+        "naam": "Achterwaarts stappen – met steun",
+        "soort": "nieuwe lijntekening (zelfde pad)",
+        "img": "images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png",
+        "sha256": "44ed8fa0306197ac462e05575f3cbdcfa706294a3236b7c050699ab5550924dd",
+        "bron": "ronde3/tekeningen/440-achterwaarts-stappen-met-steun.png"
+      },
+      {
+        "nr": 493,
+        "naam": "Hop vooruit – techniek langzaam",
+        "soort": "nieuwe lijntekening (zelfde pad)",
+        "img": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-line-v1.png",
+        "sha256": "0e0a97d4f6e6881f4b71239e7da0b770bb561344d3b74e50e9f8db7424241d88",
+        "bron": "ronde3/tekeningen/493-hop-vooruit-techniek-langzaam.png"
+      },
+      {
+        "nr": 497,
+        "naam": "Richtingsverandering – techniek langzaam",
+        "soort": "nieuwe lijntekening (zelfde pad)",
+        "img": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-line-v1.png",
+        "sha256": "fd9aa6197e9f9ebd2ba51568230a30a83bb6ce577399c6978527912e365fd644",
+        "bron": "ronde3/tekeningen/497-richtingsverandering-techniek-langzaam.png"
+      },
+      {
+        "nr": 531,
+        "naam": "Foam roller back upper",
+        "soort": "pijl",
+        "img": "images/beginhouding-pijl-v2/247.webp",
+        "sha256": "a654854f928d8db97b92a50d5bb61de383f00a18ab0419978d893b268d0fe44b",
+        "bron": "ronde3/tekeningen/531-foam-roller-back-upper.png"
+      },
+      {
+        "nr": 572,
+        "naam": "Seated foreward reach",
+        "soort": "pijl",
+        "img": "images/beginhouding-pijl-v2/288.webp",
+        "sha256": "a4400dc224b36a496d5b06a0aa92ca35fb19120dd23f448140808a608d2db5a3",
+        "bron": "ronde3/tekeningen/572-seated-foreward-reach.png"
+      },
+      {
+        "nr": 67,
+        "naam": "Standing abduction",
+        "soort": "pijl",
+        "img": "images/beginhouding-pijl-v2/068.webp",
+        "sha256": "faa6c22b0d68b72c12d360a0c8126c49c03276565614b295fa11d6238fc70368",
+        "bron": "ronde3/tekeningen/67-standing-abduction.png"
+      }
+    ],
+    "avatars": [
+      {
+        "nr": 10,
+        "naam": "Dumbell front press",
+        "kaartImg": "images/bovenste-extremiteit/dumbell-front-press-avatar-v7.jpg",
+        "sha256": "c685b35b72edeabe87ef00f98e62b3d74fdf0eaedfcf98b3f7b1d79745ef5e4d",
+        "bron": "ronde3/avatars/10-dumbell-front-press-avatar.png",
+        "pose": "foreign-ink-in-crop"
+      },
+      {
+        "nr": 14,
+        "naam": "Endo pull",
+        "kaartImg": "images/bovenste-extremiteit/endo-pull-avatar-v7.jpg",
+        "sha256": "3602f176539e3f3e6fef94cd404cc48d1362423d8441c8f551b3bf0bba8a920b",
+        "bron": "ronde3/avatars/14-endo-pull-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 15,
+        "naam": "Exo pull",
+        "kaartImg": "images/bovenste-extremiteit/exo-pull-avatar-v7.jpg",
+        "sha256": "6afc41b9e682ef6817f7de70925296a8a1deec8bc8eeb14a309e8d98a3ec12ce",
+        "bron": "ronde3/avatars/15-exo-pull-avatar.png",
+        "pose": "poses-too-similar"
+      },
+      {
+        "nr": 27,
+        "naam": "Pully cross down",
+        "kaartImg": "images/bovenste-extremiteit/pully-cross-down-avatar-v7.jpg",
+        "sha256": "563bfc0831b1ebea5d90cbab1c60f506b51d64de414f8f3effd639a1fcfc157e",
+        "bron": "ronde3/avatars/27-pully-cross-down-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 28,
+        "naam": "Pully cross over",
+        "kaartImg": "images/bovenste-extremiteit/pully-cross-over-avatar-v7.jpg",
+        "sha256": "ae31f67051b5b2961f8a04bed3718e5de5aa0a55de66f91168205dfe08e896fe",
+        "bron": "ronde3/avatars/28-pully-cross-over-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 32,
+        "naam": "Pully press double",
+        "kaartImg": "images/bovenste-extremiteit/pully-press-double-avatar-v7.jpg",
+        "sha256": "263aba0339ed979548e67a13499f9bbb636a523f2382a6edcd59d569aa254707",
+        "bron": "ronde3/avatars/32-pully-press-double-avatar.png",
+        "pose": "foreign-ink-in-crop"
+      },
+      {
+        "nr": 33,
+        "naam": "Pully press single",
+        "kaartImg": "images/bovenste-extremiteit/pully-press-single-avatar-v7.jpg",
+        "sha256": "f4cd70e47efa20316bbd1ee7c07ae9be808c269301510c75a943336e590912cf",
+        "bron": "ronde3/avatars/33-pully-press-single-avatar.png",
+        "pose": "foreign-ink-in-crop"
+      },
+      {
+        "nr": 34,
+        "naam": "Pully pull over",
+        "kaartImg": "images/bovenste-extremiteit/pully-pull-over-avatar-v7.jpg",
+        "sha256": "6f24f2f73782bffaec48dda0f5cebc9217754cb1a75799903de6dfbf32aac279",
+        "bron": "ronde3/avatars/34-pully-pull-over-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 38,
+        "naam": "Shoulder rotation (shrugs)",
+        "kaartImg": "images/bovenste-extremiteit/shoulder-rotation-shrugs-avatar-v7.jpg",
+        "sha256": "244776f34e38c438c165bc74b8c15a70acd54472fc1b1488ab834710feb64653",
+        "bron": "ronde3/avatars/38-shoulder-rotation-shrugs-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 40,
+        "naam": "Triceps dumbell kickbacks",
+        "kaartImg": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-avatar-v7.jpg",
+        "sha256": "48ff3b01017ffe6113a0a9797c94f56259c62020909fb2cc6b433596a378660f",
+        "bron": "ronde3/avatars/40-triceps-dumbell-kickbacks-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 44,
+        "naam": "Wrist flexion",
+        "kaartImg": "images/bovenste-extremiteit/wrist-flexion-avatar-v7.jpg",
+        "sha256": "db3df6139f2f208401fea306a03b2989b4155ec67f7bddecfb8e8c3c89a39b3f",
+        "bron": "ronde3/avatars/44-wrist-flexion-avatar.png",
+        "pose": "poses-too-similar"
+      },
+      {
+        "nr": 49,
+        "naam": "Crabwalk",
+        "kaartImg": "images/onderste-extremiteit/crabwalk-avatar-v7.jpg",
+        "sha256": "6b2c9a2a1106e16e2845a291986fd0dd1c6edda88ae79e2dfbf7d5169b58109e",
+        "bron": "ronde3/avatars/49-crabwalk-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 50,
+        "naam": "Dead lift",
+        "kaartImg": "images/onderste-extremiteit/dead-lift-avatar-v7.jpg",
+        "sha256": "c3befa2f30c059a4f213021fc245807eb4268e3ba6f3b6d2821ca2d975684e65",
+        "bron": "ronde3/avatars/50-dead-lift-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 54,
+        "naam": "Hack squat",
+        "kaartImg": "images/onderste-extremiteit/hack-squat-avatar-v7.jpg",
+        "sha256": "7af8a404bf2cadd247d80c619857a5f00e65a5e94306fc5ee33f584e619344be",
+        "bron": "ronde3/avatars/54-hack-squat-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 57,
+        "naam": "Leg curl",
+        "kaartImg": "images/onderste-extremiteit/leg-curl-avatar-v7.jpg",
+        "sha256": "151643a8714c39eb038b28241e7de8b03d9bbc313f4729f007bd59d8fcd03c2b",
+        "bron": "ronde3/avatars/57-leg-curl-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 66,
+        "naam": "Squat lunges",
+        "kaartImg": "images/onderste-extremiteit/squat-lunges-avatar-v7.jpg",
+        "sha256": "dfda6f11816589b97f0ada85f0c34a67767c352077ad0054ad132af2131d776c",
+        "bron": "ronde3/avatars/66-squat-lunges-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 74,
+        "naam": "Wall sit",
+        "kaartImg": "images/onderste-extremiteit/wall-sit-avatar-v7.jpg",
+        "sha256": "4ffd6fb9c0fbcaa0ea8b8390bf5ff1945fd04905459108c592f36a8bcb2f0281",
+        "bron": "ronde3/avatars/74-wall-sit-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 76,
+        "naam": "Alternate heel touchers",
+        "kaartImg": "images/core/alternate-heel-touchers-avatar-v7.jpg",
+        "sha256": "0ff3f568cfabe3912f29aa42ba98bf7e30829ed97d5014ec8ba055c8b4a51f1a",
+        "bron": "ronde3/avatars/76-alternate-heel-touchers-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 77,
+        "naam": "Back extension",
+        "kaartImg": "images/core/back-extension-avatar-v7.jpg",
+        "sha256": "dfb4d562fdb7e4553a0c9d118f23e381afd0089399b86b9d2fc226450b33cffa",
+        "bron": "ronde3/avatars/77-back-extension-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 79,
+        "naam": "Barbell twist",
+        "kaartImg": "images/core/barbell-twist-avatar-v7.jpg",
+        "sha256": "f878b4e0a29d9e061680cf985d7bde23efb449053954c64004629b4fc3e38f57",
+        "bron": "ronde3/avatars/79-barbell-twist-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 80,
+        "naam": "Bear crawls",
+        "kaartImg": "images/core/bear-crawls-avatar-v7.jpg",
+        "sha256": "83f6833e8769329889cbecd8abfd8ff1a788334e192d47b742d3d410b68f1fdb",
+        "bron": "ronde3/avatars/80-bear-crawls-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 82,
+        "naam": "Bicycles buik",
+        "kaartImg": "images/core/bicycles-buik-avatar-v7.jpg",
+        "sha256": "a691016e67c04f68f919b230d4718a07a537368d81fdcfc263f0a6c5c11c4362",
+        "bron": "ronde3/avatars/82-bicycles-buik-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 88,
+        "naam": "Crunch",
+        "kaartImg": "images/core/crunch-avatar-v7.jpg",
+        "sha256": "e32726e0b63c613782e67a6eb46654a4c4bed764f31b99f13c0ebc702c209746",
+        "bron": "ronde3/avatars/88-crunch-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 89,
+        "naam": "Curl up",
+        "kaartImg": "images/core/curl-up-avatar-v7.jpg",
+        "sha256": "8404df7e75731f949eb30254d1be58651d9803c5b1ba70303173c8de6e9f7a78",
+        "bron": "ronde3/avatars/89-curl-up-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 96,
+        "naam": "Mountain climber x",
+        "kaartImg": "images/core/mountain-climber-x-avatar-v7.jpg",
+        "sha256": "ea164315cf86c7dc01e1990b6305cca5dcdaa6f82582981854b61f98f8d80fd1",
+        "bron": "ronde3/avatars/96-mountain-climber-x-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 99,
+        "naam": "Plank jacks",
+        "kaartImg": "images/core/plank-jacks-avatar-v7.jpg",
+        "sha256": "ea13a7c47a51284601adeabce3dcd62896de1262189f4fd4e91920eab611b6ad",
+        "bron": "ronde3/avatars/99-plank-jacks-avatar.png",
+        "pose": "poses-too-similar"
+      },
+      {
+        "nr": 105,
+        "naam": "Scissors 2",
+        "kaartImg": "images/core/scissors-2-avatar-v7.jpg",
+        "sha256": "748b551c8684c32d0c7cf3334ddf57de7cef83d806ce65fb155023b9d298d4d1",
+        "bron": "ronde3/avatars/105-scissors-2-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 108,
+        "naam": "Superman",
+        "kaartImg": "images/core/superman-avatar-v7.jpg",
+        "sha256": "0c53b5ff243c505f378d41591c04ee016143959618344c70801d268fe062b056",
+        "bron": "ronde3/avatars/108-superman-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 115,
+        "naam": "Balans op 1 been",
+        "kaartImg": "images/bosu/balans-op-1-been-avatar-v7.jpg",
+        "sha256": "f2221c6d7ec2bc0e94b8b5bcf6d9674ef04c22c6fad74490613d90d33bf2144d",
+        "bron": "ronde3/avatars/115-balans-op-1-been-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 122,
+        "naam": "Bosu plank leg lift",
+        "kaartImg": "images/bosu/bosu-plank-leg-lift-avatar-v7.jpg",
+        "sha256": "09bee15ae1b97617d097cde4ca0e1a11469d413b5fa9a46eda4bcbb2349c91e8",
+        "bron": "ronde3/avatars/122-bosu-plank-leg-lift-avatar.png",
+        "pose": "foreign-ink-in-crop"
+      },
+      {
+        "nr": 125,
+        "naam": "Bosu zijw plank",
+        "kaartImg": "images/bosu/bosu-zijw-plank-avatar-v7.jpg",
+        "sha256": "0de8d7e31b3e8def48f912d04970094ae6726bee9c6140036a3aa3b7f3d37c54",
+        "bron": "ronde3/avatars/125-bosu-zijw-plank-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 126,
+        "naam": "TRX ab roll out",
+        "kaartImg": "images/trx/trx-ab-roll-out-avatar-v7.jpg",
+        "sha256": "f5742fe12de7ba5737f8b5bcc82b92f3603ac6bb81b558fdac0804c09f6dc5c1",
+        "bron": "ronde3/avatars/126-trx-ab-roll-out-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 128,
+        "naam": "TRX chest press",
+        "kaartImg": "images/trx/trx-chest-press-avatar-v7.jpg",
+        "sha256": "f9a6540dcc4d0dce1cac7775ba05256ba0ae2b4e139b004abb809e2931cc422c",
+        "bron": "ronde3/avatars/128-trx-chest-press-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 137,
+        "naam": "TRX plank",
+        "kaartImg": "images/trx/trx-plank-avatar-v7.jpg",
+        "sha256": "9fe96dc47887a231ac3242c51507dd732096305aca890198a26c1d69c2b7f870",
+        "bron": "ronde3/avatars/137-trx-plank-avatar.png",
+        "pose": "foreign-ink-in-crop"
+      },
+      {
+        "nr": 146,
+        "naam": "TRX triceps extension II",
+        "kaartImg": "images/trx/trx-triceps-extension-ii-avatar-v7.jpg",
+        "sha256": "058720fd42d8f99ee4535cb124461e2096b761fdc68a36c5d3cc2688c7229b8b",
+        "bron": "ronde3/avatars/146-trx-triceps-extension-ii-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 149,
+        "naam": "Yoga cat tail",
+        "kaartImg": "images/yoga/yoga-cat-tail-avatar-v7.jpg",
+        "sha256": "1dac5f8042ed1ef8dbfca12d2dd898820107ce0889c1f1a0b16a1881c2b152b1",
+        "bron": "ronde3/avatars/149-yoga-cat-tail-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 153,
+        "naam": "Yoga ear pressure",
+        "kaartImg": "images/yoga/yoga-ear-pressure-avatar-v7.jpg",
+        "sha256": "4c6099cf1e3d4483f25a10ed51c123e6df6a66cd7cf1a93c6ee04f8e001ff416",
+        "bron": "ronde3/avatars/153-yoga-ear-pressure-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 161,
+        "naam": "Yoga hamstring stretch",
+        "kaartImg": "images/yoga/yoga-hamstring-stretch-avatar-v7.jpg",
+        "sha256": "04d01372194eb8c8ead59c6fe31fd0a89a879a7dc900eb3b9ba58bee1aaa4f5e",
+        "bron": "ronde3/avatars/161-yoga-hamstring-stretch-avatar.png",
+        "pose": "foreign-ink-in-crop"
+      },
+      {
+        "nr": 162,
+        "naam": "Yoga happy baby",
+        "kaartImg": "images/yoga/yoga-happy-baby-avatar-v7.jpg",
+        "sha256": "4ecf2a357475ecb2d221e042e1b0f9c49afa525afe32a9274bdc0d7c59a042df",
+        "bron": "ronde3/avatars/162-yoga-happy-baby-avatar-r2.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 163,
+        "naam": "Yoga hip flexor stretch",
+        "kaartImg": "images/yoga/yoga-hip-flexor-stretch-avatar-v7.jpg",
+        "sha256": "67cf8f6414e2ae293a7dde5624bfd07bac70007fdaff765fe782d0aa4cb5be14",
+        "bron": "ronde3/avatars/163-yoga-hip-flexor-stretch-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 166,
+        "naam": "Yoga noose",
+        "kaartImg": "images/yoga/yoga-noose-avatar-v7.jpg",
+        "sha256": "9bfbdd207a04f3fd11b5d625554f46515f80a099008ecaf9ce27da2f36501f22",
+        "bron": "ronde3/avatars/166-yoga-noose-avatar-r2.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 178,
+        "naam": "Bodyblade diagonaal",
+        "kaartImg": "images/bodyblade/bodyblade-diagonaal-avatar-v7.jpg",
+        "sha256": "a877b32bfcbd783409abd68533f5e9dbce03af884340ca5f6e40bb3929543bc3",
+        "bron": "ronde3/avatars/178-bodyblade-diagonaal-avatar.png",
+        "pose": "poses-too-similar"
+      },
+      {
+        "nr": 183,
+        "naam": "Bodyblade high",
+        "kaartImg": "images/bodyblade/bodyblade-high-avatar-v7.jpg",
+        "sha256": "e8528d199d2a62188a853accaba2aafa83183d803c01b271b9204143303be413",
+        "bron": "ronde3/avatars/183-bodyblade-high-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 206,
+        "naam": "Endy Triceps dips",
+        "kaartImg": "images/apparaten/endy-triceps-dips-avatar-v7.jpg",
+        "sha256": "d1a38e8efd83cf5ca5ed87d4cc54b943932f710e9b2d7f1adcb293fda8c7ebc9",
+        "bron": "ronde3/avatars/206-endy-triceps-dips-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 208,
+        "naam": "Gluteus kick (apparaat)",
+        "kaartImg": "images/apparaten/gluteus-kick-apparaat-avatar-v7.jpg",
+        "sha256": "a062fe1184651d1335a24a35428b706b2812e8049b55aa7a3ed9d95ebe2ac1e8",
+        "bron": "ronde3/avatars/208-gluteus-kick-apparaat-avatar.png",
+        "pose": "foreign-ink-in-crop"
+      },
+      {
+        "nr": 373,
+        "naam": "Kin intrekken – zittend actief",
+        "kaartImg": "images/nek/kin-intrekken-zittend-actief-avatar-v8.jpg",
+        "sha256": "15854f67cbe5caddd313cc8d4532cd90921ae691238b94b803a378a9b4a55b64",
+        "bron": "ronde3/avatars/373-kin-intrekken-zittend-actief-avatar.png",
+        "pose": "poses-too-similar"
+      },
+      {
+        "nr": 384,
+        "naam": "Diepe nekflexoren activeren – liggend ondersteund",
+        "kaartImg": "images/nek/diepe-nekflexoren-activeren-liggend-ondersteund-avatar-v8.jpg",
+        "sha256": "5d5b439ebc16b5f67f90a151d7f8cf7b395217ad7f20d8a6ad4bcae6e8abbc4d",
+        "bron": "ronde3/avatars/384-diepe-nekflexoren-activeren-liggend-ondersteund-avatar.png",
+        "pose": "poses-too-similar"
+      },
+      {
+        "nr": 385,
+        "naam": "Nekrotatie met oogfixatie – zittend actief",
+        "kaartImg": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar-v8.jpg",
+        "sha256": "1755b37009fa0ea4e91e80609673a624b3d160fb15e1c6f4bd65e56c1bd500c1",
+        "bron": "ronde3/avatars/385-nekrotatie-met-oogfixatie-zittend-actief-avatar.png",
+        "pose": "foreign-ink-in-crop"
+      },
+      {
+        "nr": 386,
+        "naam": "Nekrotatie met oogfixatie – functioneel staand",
+        "kaartImg": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v8.jpg",
+        "sha256": "07cc90a9fa9c29421b84e2f4a7ca1b008772dc1d8649559dfb0c52b4210e9f05",
+        "bron": "ronde3/avatars/386-nekrotatie-met-oogfixatie-functioneel-staand-avatar.png",
+        "pose": "ambiguous-objects"
+      },
+      {
+        "nr": 490,
+        "naam": "Bekkenkanteling postpartum – eerste fase rustig",
+        "kaartImg": "images/bekken-postpartum/bekkenkanteling-postpartum-eerste-fase-rustig-avatar-v8.jpg",
+        "sha256": "be3f0572ba25f6ed9577f2e1cc636b984dc186e6590fcbb9230465a017396d1e",
+        "bron": "ronde3/avatars/490-bekkenkanteling-postpartum-eerste-fase-rustig-avatar.png",
+        "pose": "poses-too-similar"
+      },
+      {
+        "nr": 516,
+        "naam": "Swiss ball back ext",
+        "kaartImg": "images/exercise-ball/swiss-ball-back-ext-avatar-v8.jpg",
+        "sha256": "b2c958471602aa9618d4438ddfc2691436cc2f02ab95ac1bdb26473e8a641934",
+        "bron": "ronde3/avatars/516-swiss-ball-back-ext-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 524,
+        "naam": "Swiss ball russian twist",
+        "kaartImg": "images/exercise-ball/swiss-ball-russian-twist-avatar-v8.jpg",
+        "sha256": "15b559f76ea57535e7f788786e63e27076747d8eb41e276518022eb321f63af5",
+        "bron": "ronde3/avatars/524-swiss-ball-russian-twist-avatar-r2.png",
+        "pose": "poses-too-similar"
+      },
+      {
+        "nr": 531,
+        "naam": "Foam roller back upper",
+        "kaartImg": "images/foam-roller/foam-roller-back-upper-avatar-v8.jpg",
+        "sha256": "f2ebb79a8f363efc810a20839fc3f014c2547b1a8ef3b0efa87635d8891470de",
+        "bron": "ronde3/avatars/531-foam-roller-back-upper-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 565,
+        "naam": "Quadriceps stretch",
+        "kaartImg": "images/mobility/quadriceps-stretch-avatar-v8.jpg",
+        "sha256": "175df8871dcc80efe8ee0d3b8b60cc3e9f69007a53265b74ecf9519d33464f34",
+        "bron": "ronde3/avatars/565-quadriceps-stretch-avatar.png",
+        "pose": "poses-too-similar"
+      },
+      {
+        "nr": 599,
+        "naam": "Standing chair knee lift",
+        "kaartImg": "images/seated-chair/standing-chair-hip-extension-avatar-v8.jpg",
+        "sha256": "9db88256c4f1a08adfadea28d5fe791d1ba31a6ebc07a8b43bf1540c0c5ab8a8",
+        "bron": "ronde3/avatars/599-standing-chair-knee-lift-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 601,
+        "naam": "Standing chair shoulder rotations",
+        "kaartImg": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
+        "sha256": "dddc836d046c188b93b9915565c1baf28cd5d2f4a35b30d1d565b00614a92bdc",
+        "bron": "ronde3/avatars/601-standing-chair-shoulder-rotations-avatar.png",
+        "pose": "pair-candidate"
+      }
+    ],
+    "restpunten": "tekening wijkt nog licht af van de nieuwe avatar: 10, 14, 57, 105, 115, 385, 386, 516",
+    "naamvoorstel": {
+      "nr": 396,
+      "naam": "Rug bol en hol – op de adem",
+      "status": "nog niet doorgevoerd"
+    }
+  },
+  "avatarsRonde3b": {
+    "datum": "2026-11-09",
+    "toelichting": "Avatars voor oefeningen zonder kaartImg, gemaakt in Runway met akkoord van Ahmed (max 550 credits), nagekeken naast de lijntekening.",
+    "inDeApp": [
+      {
+        "nr": 393,
+        "naam": "Rug bol en hol – op handen en knieën",
+        "kaartImg": "images/rug/rug-bol-en-hol-op-handen-en-knieen-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 394,
+        "naam": "Rug bol en hol – zittend",
+        "kaartImg": "images/rug/rug-bol-en-hol-zittend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 395,
+        "naam": "Rug bol en hol – staand",
+        "kaartImg": "images/rug/rug-bol-en-hol-staand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 396,
+        "naam": "Rug bol en hol – met lichte weerstand",
+        "kaartImg": "images/rug/rug-bol-en-hol-met-lichte-weerstand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 397,
+        "naam": "Romp draaien – liggend",
+        "kaartImg": "images/rug/romp-draaien-liggend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 398,
+        "naam": "Romp draaien – op handen en knieën",
+        "kaartImg": "images/rug/romp-draaien-op-handen-en-knieen-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 400,
+        "naam": "Romp draaien – staand",
+        "kaartImg": "images/rug/romp-draaien-staand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 401,
+        "naam": "Romp zijwaarts buigen – liggend",
+        "kaartImg": "images/rug/romp-zijwaarts-buigen-liggend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 402,
+        "naam": "Romp zijwaarts buigen – zittend",
+        "kaartImg": "images/rug/romp-zijwaarts-buigen-zittend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 403,
+        "naam": "Romp zijwaarts buigen – staand",
+        "kaartImg": "images/rug/romp-zijwaarts-buigen-staand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 404,
+        "naam": "Rug strekken – liggend",
+        "kaartImg": "images/rug/rug-strekken-liggend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 405,
+        "naam": "Rug strekken – op handen en knieën",
+        "kaartImg": "images/rug/rug-strekken-op-handen-en-knieen-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 406,
+        "naam": "Rug strekken – zittend",
+        "kaartImg": "images/rug/rug-strekken-zittend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 407,
+        "naam": "Rug strekken – staand",
+        "kaartImg": "images/rug/rug-strekken-staand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 408,
+        "naam": "Knie naar borst – liggend",
+        "kaartImg": "images/rug/knie-naar-borst-liggend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 409,
+        "naam": "Knie naar borst – zittend",
+        "kaartImg": "images/rug/knie-naar-borst-zittend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 410,
+        "naam": "Knie naar borst – staand",
+        "kaartImg": "images/rug/knie-naar-borst-staand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 411,
+        "naam": "Open boek – liggend",
+        "kaartImg": "images/rug/open-boek-liggend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 412,
+        "naam": "Open boek – op handen en knieën",
+        "kaartImg": "images/rug/open-boek-op-handen-en-knieen-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 413,
+        "naam": "Open boek – zittend",
+        "kaartImg": "images/rug/open-boek-zittend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 414,
+        "naam": "Thoracale extensie – liggend",
+        "kaartImg": "images/rug/thoracale-extensie-liggend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 415,
+        "naam": "Thoracale extensie – op handen en knieën",
+        "kaartImg": "images/rug/thoracale-extensie-op-handen-en-knieen-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 416,
+        "naam": "Thoracale extensie – zittend",
+        "kaartImg": "images/rug/thoracale-extensie-zittend-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 417,
+        "naam": "Thoracale extensie – staand",
+        "kaartImg": "images/rug/thoracale-extensie-staand-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 448,
+        "naam": "Reiken met aangedane arm – met visueel doel",
+        "kaartImg": "images/neurologische-revalidatie/reiken-met-aangedane-arm-met-visueel-doel-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 450,
+        "naam": "Hand openen na grijpen – bilateraal",
+        "kaartImg": "images/neurologische-revalidatie/hand-openen-na-grijpen-bilateraal-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 453,
+        "naam": "Symmetrisch opstaan – met ritmische cue",
+        "kaartImg": "images/neurologische-revalidatie/symmetrisch-opstaan-met-ritmische-cue-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 454,
+        "naam": "Stap initiëren – met visueel doel",
+        "kaartImg": "images/neurologische-revalidatie/stap-initieren-met-visueel-doel-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 455,
+        "naam": "Stap initiëren – met ritmische cue",
+        "kaartImg": "images/neurologische-revalidatie/stap-initieren-met-ritmische-cue-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 456,
+        "naam": "Zijwaarts verplaatsen in zit – met visueel doel",
+        "kaartImg": "images/neurologische-revalidatie/zijwaarts-verplaatsen-in-zit-met-visueel-doel-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 457,
+        "naam": "Hiel plaatsen – met visueel doel",
+        "kaartImg": "images/neurologische-revalidatie/hiel-plaatsen-met-visueel-doel-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 458,
+        "naam": "Voet naar marker – met visueel doel",
+        "kaartImg": "images/neurologische-revalidatie/voet-naar-marker-met-visueel-doel-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 459,
+        "naam": "Ritmisch marcheren – met ritmische cue",
+        "kaartImg": "images/neurologische-revalidatie/ritmisch-marcheren-met-ritmische-cue-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 460,
+        "naam": "Grote stappen – met ritmische cue",
+        "kaartImg": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 461,
+        "naam": "Grote stappen – functionele combinatie",
+        "kaartImg": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 462,
+        "naam": "Brug met symmetrie – bilateraal",
+        "kaartImg": "images/neurologische-revalidatie/brug-met-symmetrie-bilateraal-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 464,
+        "naam": "Blikstabilisatie horizontaal – staand langzaam",
+        "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 466,
+        "naam": "Blikstabilisatie verticaal – zittend langzaam",
+        "kaartImg": "images/vestibulair/blikstabilisatie-verticaal-zittend-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 467,
+        "naam": "Blikstabilisatie verticaal – staand langzaam",
+        "kaartImg": "images/vestibulair/blikstabilisatie-verticaal-staand-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 468,
+        "naam": "Ogen naar doelen – zittend langzaam",
+        "kaartImg": "images/vestibulair/ogen-naar-doelen-zittend-langzaam-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 469,
+        "naam": "Ogen naar doelen – staand langzaam",
+        "kaartImg": "images/vestibulair/ogen-naar-doelen-staand-langzaam-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 470,
+        "naam": "Doel volgen – zittend langzaam",
+        "kaartImg": "images/vestibulair/doel-volgen-zittend-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 471,
+        "naam": "Hoofd draaien in stand – staand langzaam",
+        "kaartImg": "images/vestibulair/hoofd-draaien-in-stand-staand-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 472,
+        "naam": "Buigen en oprichten – staand langzaam",
+        "kaartImg": "images/vestibulair/buigen-en-oprichten-staand-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 474,
+        "naam": "Voorwerp van vloer tillen – licht en dichtbij",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 476,
+        "naam": "Boven schouderhoogte plaatsen – ergonomische basis",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-ergonomische-basis-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 477,
+        "naam": "Boven schouderhoogte plaatsen – licht en dichtbij",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-licht-en-dichtbij-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 478,
+        "naam": "Duwen – licht en dichtbij",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/duwen-licht-en-dichtbij-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 479,
+        "naam": "Duwen – met stapverplaatsing",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/duwen-met-stapverplaatsing-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 480,
+        "naam": "Trekken – licht en dichtbij",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/trekken-licht-en-dichtbij-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 481,
+        "naam": "Draaien en plaatsen – met stapverplaatsing",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/draaien-en-plaatsen-met-stapverplaatsing-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 482,
+        "naam": "Langdurig zitten onderbreken – met tempo of herhaling",
+        "kaartImg": "images/werk-en-dagelijkse-handelingen/langdurig-zitten-onderbreken-met-tempo-of-herhaling-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 483,
+        "naam": "Bekkenbodem aanspannen – liggend",
+        "kaartImg": "images/bekken-postpartum/bekkenbodem-aanspannen-liggend-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 491,
+        "naam": "Functioneel opstaan – functioneel",
+        "kaartImg": "images/bekken-postpartum/functioneel-opstaan-functioneel-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 492,
+        "naam": "Zijlig heupkracht – zijlig",
+        "kaartImg": "images/bekken-postpartum/zijlig-heupkracht-zijlig-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 493,
+        "naam": "Hop vooruit – techniek langzaam",
+        "kaartImg": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 496,
+        "naam": "Laterale shuffle – submaximaal",
+        "kaartImg": "images/sportrevalidatie/laterale-shuffle-submaximaal-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 498,
+        "naam": "Sprinttechniek marcheren – techniek langzaam",
+        "kaartImg": "images/sportrevalidatie/sprinttechniek-marcheren-techniek-langzaam-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 499,
+        "naam": "Versnellen en afremmen – submaximaal",
+        "kaartImg": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 421,
+        "naam": "Semi-tandemstand – met steun",
+        "kaartImg": "images/balans-en-valpreventie/semi-tandemstand-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 422,
+        "naam": "Semi-tandemstand – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/semi-tandemstand-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 423,
+        "naam": "Semi-tandemstand – met hoofdbeweging",
+        "kaartImg": "images/balans-en-valpreventie/semi-tandemstand-met-hoofdbeweging-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 425,
+        "naam": "Tandemstand – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/tandemstand-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 426,
+        "naam": "Tandemstand – met hoofdbeweging",
+        "kaartImg": "images/balans-en-valpreventie/tandemstand-met-hoofdbeweging-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 427,
+        "naam": "Eenbeenstand – met steun",
+        "kaartImg": "images/balans-en-valpreventie/eenbeenstand-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 428,
+        "naam": "Eenbeenstand – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/eenbeenstand-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 430,
+        "naam": "Gewicht verplaatsen voor-achter – met steun",
+        "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 431,
+        "naam": "Gewicht verplaatsen voor-achter – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-zonder-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 432,
+        "naam": "Gewicht verplaatsen zijwaarts – met steun",
+        "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 434,
+        "naam": "Reiken in stand – met steun",
+        "kaartImg": "images/balans-en-valpreventie/reiken-in-stand-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 435,
+        "naam": "Reiken in stand – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/reiken-in-stand-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 436,
+        "naam": "Op de plaats marcheren – met steun",
+        "kaartImg": "images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 437,
+        "naam": "Op de plaats marcheren – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/op-de-plaats-marcheren-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 439,
+        "naam": "Zijwaarts stappen – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/zijwaarts-stappen-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 440,
+        "naam": "Achterwaarts stappen – met steun",
+        "kaartImg": "images/balans-en-valpreventie/achterwaarts-stappen-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 441,
+        "naam": "Achterwaarts stappen – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/achterwaarts-stappen-zonder-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 445,
+        "naam": "Draaien op de plaats – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/draaien-op-de-plaats-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 446,
+        "naam": "Stoel opstaan en lopen – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 447,
+        "naam": "Dubbele taak lopen – met cognitieve taak",
+        "kaartImg": "images/balans-en-valpreventie/dubbele-taak-lopen-met-cognitieve-taak-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 424,
+        "naam": "Tandemstand – met steun",
+        "kaartImg": "images/balans-en-valpreventie/tandemstand-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 399,
+        "naam": "Romp draaien – zittend",
+        "kaartImg": "images/rug/romp-draaien-zittend-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 429,
+        "naam": "Eenbeenstand – met hoofdbeweging",
+        "kaartImg": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 433,
+        "naam": "Gewicht verplaatsen zijwaarts – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 442,
+        "naam": "Over een obstakel stappen – met steun",
+        "kaartImg": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 443,
+        "naam": "Over een obstakel stappen – zonder steun",
+        "kaartImg": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 444,
+        "naam": "Draaien op de plaats – met steun",
+        "kaartImg": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 449,
+        "naam": "Reiken met aangedane arm – functionele combinatie",
+        "kaartImg": "images/neurologische-revalidatie/reiken-met-aangedane-arm-functionele-combinatie-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 451,
+        "naam": "Romp rotatie in zit – bilateraal",
+        "kaartImg": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 465,
+        "naam": "Blikstabilisatie horizontaal – tijdens lopen",
+        "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 495,
+        "naam": "Landing op één been – techniek langzaam",
+        "kaartImg": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-avatar-v8.jpg",
+        "herkansing": true
+      },
+      {
+        "nr": 497,
+        "naam": "Richtingsverandering – techniek langzaam",
+        "kaartImg": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-avatar-v8.jpg",
+        "herkansing": true
+      }
+    ],
+    "nietInDeApp": {
+      "onvoldoende": [
+        438
+      ],
+      "inwendigeBeweging": {
+        "nrs": [
+          484,
+          485,
+          486,
+          487,
+          488,
+          489
+        ],
+        "advies": "pijl intekenen in plaats van opnieuw genereren"
+      },
+      "vergrendeld": {
+        "nrs": [
+          475
+        ],
+        "reden": "privé-concept met eigen beelden; uitleg vergrendeld"
+      }
+    },
+    "herkansing": {
+      "datum": "2026-11-09",
+      "credits": 60,
+      "maximum": 70,
+      "inDeApp": [
+        399,
+        429,
+        433,
+        442,
+        443,
+        444,
+        449,
+        451,
+        465,
+        495,
+        497
+      ]
+    }
   }
 }

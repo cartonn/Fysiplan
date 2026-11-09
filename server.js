@@ -64,9 +64,9 @@ if (IS_PRODUCTIE && !ADMIN_KEY) console.warn("Beheer staat dicht: zet een eigen 
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-07";
+const VWO_VERSIE = "2026-11-10";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-09";
+const AV_VERSIE = "2026-11-09-3";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-09";
@@ -80,7 +80,11 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-07", tekst: "Beveiliging: elke therapeut een eigen login met de rollen beheerder en therapeut; wie uit het team gaat, verliest direct de toegang. Eén akkoord samen met de voorwaarden." },
   { stuk: "av", versie: "2026-11-07-2", tekst: "Artikel over je account: elke therapeut krijgt een eigen login en je deelt wachtwoorden met niemand." },
   { stuk: "av", versie: "2026-11-07-3", tekst: "Prijs: elke persoon met een eigen login telt als één therapeut; een login delen met meerdere mensen mag niet." },
-  { stuk: "av", versie: "2026-11-09", tekst: "Stoppen: opzeggen kan nu ook zelf in de app. Het abonnement stopt aan het einde van de betaalde maand; 30 dagen later wissen we alles van je praktijk." }
+  { stuk: "av", versie: "2026-11-09", tekst: "Stoppen: opzeggen kan nu ook zelf in de app. Het abonnement stopt aan het einde van de betaalde maand; 30 dagen later wissen we alles van je praktijk." },
+  { stuk: "av", versie: "2026-11-09-2", tekst: "Proef: word je geen klant, dan wissen we 90 dagen na de proef alles van je praktijk, ook de kaarten die je deelde." },
+  { stuk: "vwo", versie: "2026-11-09", tekst: "Einde: na de proef zonder abonnement wissen we alles na 90 dagen. Nieuw: een wettelijke vordering melden we vooraf, Fysiplan blijft verantwoordelijk voor subverwerkers, en de praktijk mag de afspraken laten controleren." },
+  { stuk: "av", versie: "2026-11-09-3", tekst: "Proef: word je geen klant, dan wissen we al 30 dagen na de proef alles van je praktijk (was 90 dagen)." },
+  { stuk: "vwo", versie: "2026-11-10", tekst: "Einde: na een proef zonder abonnement wissen we alles 30 dagen na de proef, net als na opzeggen." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -222,6 +226,14 @@ function nieuweSessie(pk, lid) {
 function maakHerstelcode() {
   const hex = randomBytes(10).toString("hex");
   return "FP-" + [hex.slice(0, 5), hex.slice(5, 10), hex.slice(10, 15), hex.slice(15, 20)].join("-");
+}
+// overgetypte herstelcode terug naar de uitgegeven vorm: hoofdletters, spaties of
+// ontbrekende streepjes mogen geen 403 geven (en tellen anders mee voor het slot)
+function herstelcodeNormaal(v) {
+  const ruw = String(v || "").trim();
+  const kaal = ruw.toLowerCase().replace(/[\s\-\u2010-\u2015_.]/g, "").replace(/^fp/, "");
+  if (!/^[0-9a-f]{20}$/.test(kaal)) return ruw;
+  return "FP-" + [kaal.slice(0, 5), kaal.slice(5, 10), kaal.slice(10, 15), kaal.slice(15, 20)].join("-");
 }
 const praktijkGeclaimd = (pk) => !!pk && Object.hasOwn(praktijkAccounts, pk);
 
@@ -514,8 +526,20 @@ function instelLink(request, token) {
 // de aanmelder kan alles zelf wissen. Inzage alleen voor ACCOUNT_BEHEER_EMAILS.
 const proefPath = join(dataDir, "proef-aanmeldingen.json");
 let proeven = {}; // { id: { id, email, naam, tel, praktijk, gestart, verloopt, akkoord, tokens:[sha256], klant?, doorgaan?, herinnerd?, kaarten? } }
-try { proeven = JSON.parse(await readFile(proefPath, "utf8")); } catch {}
-const PROEF_BEWAAR_DAGEN = 90;
+// Onleesbaar (kapot of half geschreven) is iets anders dan "nog geen aanmeldingen": dan
+// weet de server niet wie klant is, en mag het automatisch wissen van praktijken na een
+// proef niet draaien (anders verdween een betalende praktijk zonder kaarten). Het kapotte
+// bestand gaat apart, zodat de eerste nieuwe aanmelding het niet stil overschrijft.
+let proevenOnleesbaar = false;
+try { proeven = JSON.parse(await readFile(proefPath, "utf8")); } catch (err) {
+  if (err && err.code !== "ENOENT") {
+    proevenOnleesbaar = true;
+    console.error("proef-aanmeldingen.json onleesbaar; automatisch wissen na de proef staat uit tot een herstart met een goed bestand.");
+    await copyFile(proefPath, proefPath + ".onleesbaar-" + Date.now()).catch(() => {});
+  }
+}
+if (!proeven || typeof proeven !== "object" || Array.isArray(proeven)) { proeven = {}; proevenOnleesbaar = true; }
+const PROEF_BEWAAR_DAGEN = 30; // Ahmed koos 2026-11-09: 30 dagen, gelijk aan een opgezegd abonnement
 const proefTokenIndex = new Map(); // sha256(token) -> id
 for (const p of Object.values(proeven)) for (const h of p.tokens || []) proefTokenIndex.set(h, p.id);
 // wie krijgt een seintje bij een nieuwe aanmelding: eigen lijst, anders de accountbeheerders
@@ -775,7 +799,19 @@ async function proefRonde() {
   const nu = Date.now();
   let gewijzigd = false;
   for (const p of Object.values(proeven)) {
-    if (!p.klant && nu >= p.verloopt + PROEF_BEWAAR_DAGEN * 86400000) { proefWis(p.id); gewijzigd = true; continue; }
+    if (!p.klant && nu >= p.verloopt + PROEF_BEWAAR_DAGEN * 86400000) {
+      // proef zonder abonnement: niet alleen de aanmelding, ook de praktijk zelf gaat nu weg,
+      // met haar gedeelde kaarten. Een kaart die de patiënt bleef openen, verliep anders nooit,
+      // en dan bleef ook het account voor altijd staan (verwerkersovereenkomst art. 10,
+      // voorwaarden art. 3; art. 5 lid 1e en art. 28 lid 3g AVG). Alleen hier, waar de
+      // aanmelding zelf zegt dat er geen klant is; een ontbrekend bestand wist dus nooit kaarten.
+      const pks = Object.keys(praktijkAccounts).filter((k) => String(praktijkAccounts[k].proef?.id || "") === p.id);
+      for (const pk of pks) {
+        await praktijkAllesWissen(pk).then(() => auditLog("(gewist)", "praktijk-gewist-na-proef", null))
+          .catch((e) => console.error("wissen na proef:", e.message));
+      }
+      proefWis(p.id); gewijzigd = true; continue;
+    }
     if (p.gewist && nu >= Number(p.bewaarTot || 0)) { proefWis(p.id); gewijzigd = true; continue; }
     if (p.gewist) continue;
     // opgezegd abonnement: na de betaalde maand gestopt (geen nieuwe kaarten meer), en
@@ -799,7 +835,8 @@ async function proefRonde() {
       proefMail(p.email, "Je Fysiplan-proef loopt over twee dagen af",
         "Hoi " + p.naam + ",\n\nJe gratis proef van Fysiplan loopt tot en met " + datumNl(p.verloopt) + ".\n" +
         "Wil je daarna doorgaan? Antwoord op deze mail, dan bellen we je om het abonnement af te spreken.\n\n" +
-        "De kaarten die je met patiënten deelde blijven werken tot hun bewaartermijn afloopt (zie fysiplan.nl/privacy).\n\nGroet,\nFysiplan");
+        "De kaarten die je met patiënten deelde blijven werken tot hun bewaartermijn afloopt, en uiterlijk tot " + PROEF_BEWAAR_DAGEN +
+        " dagen na je proef (zie fysiplan.nl/privacy).\n\nGroet,\nFysiplan");
       proefMeldAhmed("Proef loopt bijna af: " + (p.praktijk || p.naam), p, "Deze proef loopt over twee dagen af. Goed moment om even te bellen.");
     }
   }
@@ -813,6 +850,7 @@ async function proefRonde() {
 // de bewaartermijn voorbij is en er geen gedeelde kaarten meer zijn, gaat de rest ook weg.
 // Zolang er nog kaarten zijn, blijft het account: de praktijk moet die nog kunnen inzien.
 async function proefZonderAbonnementWissen(nu = Date.now()) {
+  if (proevenOnleesbaar) return;
   for (const [pk, acc] of Object.entries(praktijkAccounts)) {
     const k = acc && acc.proef;
     if (!k || Object.hasOwn(proeven, String(k.id))) continue; // proef loopt, klant, of nog binnen de termijn
@@ -1055,6 +1093,12 @@ function laatsteActiviteitKaart(k) {
     k.antwoord ? Number(k.antwoord.t) || 0 : 0, afspraak, zwaar);
 }
 // het moment waarop de kaart (met scores en video's) van de server verdwijnt
+
+// eerste woord van een kaartnaam, voor "zelfde patiënt?" bij een roepnaamvoorstel
+function eersteNaamWoord(n) {
+  return String(n || "").trim().toLowerCase().normalize("NFC").split(/[\s.,;:]+/)[0] || "";
+}
+
 function verlooptOp(k) {
   const dag = 86400000;
   const basis = k.gearchiveerd
@@ -1429,24 +1473,44 @@ function logGeweigerd(req, pad) {
 // eenvoudige schrijflimiet per IP voor de open API's (kaarten, opnames, praktijkprofielen):
 // normaal praktijkgebruik haalt dit nooit, maar het stopt scripts die de opslag volpompen.
 // Venster van 5 minuten, max. 40 schrijfacties per IP; overschrijding wordt gelogd.
+// Met een geldige praktijksessie telt een verzoek NIET in die IP-bak maar per praktijk
+// (200 per 5 min) plus een ruimere bak voor alle sessies op één IP (400): een team achter
+// één wifi zette anders na ±40 gewone handelingen de hele praktijk én de patiënten in de
+// wachtkamer vijf minuten op 429 (security-backlog MIDDEL "schrijfrem per IP", sweep 7-11).
 const schrijfTeller = new Map();
-function schrijfLimiet(req, res) {
+const schrijfPraktijkTeller = new Map();
+const schrijfSessieIpTeller = new Map();
+const VENSTER_MS = 5 * 60 * 1000;
+const SCHRIJF_IP_MAX = 40, SCHRIJF_PRAKTIJK_MAX = 200, SCHRIJF_SESSIE_IP_MAX = 400;
+const LEES_IP_MAX = 120, LEES_PRAKTIJK_MAX = 600, LEES_SESSIE_IP_MAX = 1200;
+// telt één verzoek in `teller` onder `sleutel`; geeft true als het venster vol is
+// (de eerste overschrijding wordt gelogd met `logPad`)
+function telVenster(teller, sleutel, max, req, logPad) {
   const nu = Date.now();
-  if (schrijfTeller.size > 5000) {
-    for (const [k, v] of schrijfTeller) if (nu - v.start > 5 * 60 * 1000) schrijfTeller.delete(k);
+  if (teller.size > 5000) {
+    for (const [k, v] of teller) if (nu - v.start > VENSTER_MS) teller.delete(k);
   }
-  const ip = ipSleutel(req);
-  const t = schrijfTeller.get(ip);
-  if (!t || nu - t.start > 5 * 60 * 1000) {
-    schrijfTeller.set(ip, { start: nu, n: 1 });
-    return false;
-  }
-  if (++t.n > 40) {
-    if (t.n === 41) logGeweigerd(req, "limiet");
-    send429(res, 300, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
+  const t = teller.get(sleutel);
+  if (!t || nu - t.start > VENSTER_MS) { teller.set(sleutel, { start: nu, n: 1 }); return false; }
+  if (++t.n > max) {
+    if (t.n === max + 1) logGeweigerd(req, logPad);
     return true;
   }
   return false;
+}
+// remmen voor schrijven en lezen: anoniem (patiënt, aanmelden, inloggen) per IP; met een
+// geldige praktijksessie per praktijk en per IP in een eigen, ruimere bak
+function remVol(req, ipTeller, ipMax, pkTeller, pkMax, sesIpTeller, sesIpMax, logPad) {
+  const pk = praktijkSessieVan(req);
+  if (!pk) return telVenster(ipTeller, ipSleutel(req), ipMax, req, logPad);
+  return telVenster(pkTeller, pk, pkMax, req, logPad + "-praktijk") ||
+    telVenster(sesIpTeller, ipSleutel(req), sesIpMax, req, logPad + "-sessies");
+}
+function schrijfLimiet(req, res) {
+  if (!remVol(req, schrijfTeller, SCHRIJF_IP_MAX, schrijfPraktijkTeller, SCHRIJF_PRAKTIJK_MAX,
+    schrijfSessieIpTeller, SCHRIJF_SESSIE_IP_MAX, "limiet")) return false;
+  send429(res, 300, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
+  return true;
 }
 
 // CSRF-rem voor de open v2-schrijfroutes: een kwaadaardige site kan met een bekende
@@ -1632,23 +1696,13 @@ function nieuwePraktijkLimiet(req, res) {
   }
   return false;
 }
+const leesPraktijkTeller = new Map();
+const leesSessieIpTeller = new Map();
 function leesLimiet(req, res) {
-  const nu = Date.now();
-  if (leesTeller.size > 5000) {
-    for (const [k, v] of leesTeller) if (nu - v.start > 5 * 60 * 1000) leesTeller.delete(k);
-  }
-  const ip = ipSleutel(req);
-  const t = leesTeller.get(ip);
-  if (!t || nu - t.start > 5 * 60 * 1000) {
-    leesTeller.set(ip, { start: nu, n: 1 });
-    return false;
-  }
-  if (++t.n > 120) {
-    if (t.n === 121) logGeweigerd(req, "leeslimiet");
-    send429(res, 300, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
-    return true;
-  }
-  return false;
+  if (!remVol(req, leesTeller, LEES_IP_MAX, leesPraktijkTeller, LEES_PRAKTIJK_MAX,
+    leesSessieIpTeller, LEES_SESSIE_IP_MAX, "leeslimiet")) return false;
+  send429(res, 300, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
+  return true;
 }
 
 // dagelijkse reservekopie van alle databestanden (laatste 7 dagen): vangnet tegen
@@ -2631,7 +2685,7 @@ async function afhandelen(request, response) {
         if (treffers.length > 1 && nkKeuze) treffers = treffers.filter((x) => x.pk === nkKeuze || accountNaam(x.pk) === nkKeuze);
         if (!treffers.length) {
           loginMisTel(remKey);
-          await denied(request, response, "praktijk-login");
+          await denied(request, response, "praktijk-login", "Praktijknaam, e-mailadres of wachtwoord klopt niet.");
           return;
         }
         if (treffers.length > 1) {
@@ -2668,14 +2722,18 @@ async function afhandelen(request, response) {
           return;
         }
         loginMisTel(nk || "?");
-        await denied(request, response, "praktijk-login");
+        await denied(request, response, "praktijk-login", "Praktijknaam, e-mailadres of wachtwoord klopt niet.");
         auditLog(metNaam[0] || nk || "?", "login-mislukt", request);
         return;
       }
       loginMisPraktijk.delete(nk); // geslaagd: teller schoon
       // account dat tijdens een proef van dit apparaat is gemaakt: alsnog koppelen
       const pr = proefVan(request);
-      if (pr && !pr.klant && Number(acc.gemaakt) >= Number(pr.gestart) && proefKoppel(acc, pr)) await saveJson(accountsPath, praktijkAccounts);
+      // alleen een account dat binnen díe proef is gemaakt (niet erna): een oude proefcookie
+      // op dit apparaat mag een gewone praktijk niet aan een verlopen proef hangen, want dan
+      // gaat die op slot en wist de proefronde 30 dagen later alles, ook de patiëntkaarten
+      if (pr && !pr.klant && Number(acc.gemaakt) >= Number(pr.gestart) && Number(acc.gemaakt) <= Number(pr.verloopt) &&
+        proefKoppel(acc, pr)) await saveJson(accountsPath, praktijkAccounts);
       const token = nieuweSessie(pk);
       auditLog(pk, "ingelogd", request);
       await sendJson(response, 200, { ok: true, sessie: token });
@@ -2906,7 +2964,7 @@ async function afhandelen(request, response) {
       if (!checkHash(String(b.huidig || ""), acc.hash)) {
         loginMisTel(pk);
         auditLog(pk, "wachtwoord-wijzigen-mislukt", request);
-        await denied(request, response, "praktijk-wachtwoord");
+        await denied(request, response, "praktijk-wachtwoord", "Je huidige wachtwoord klopt niet.");
         return;
       }
       const nieuw = String(b.nieuw || "");
@@ -2951,19 +3009,19 @@ async function afhandelen(request, response) {
         await sendJson(response, 401, { ok: false, perEmail: true, fout: "Deze praktijk logt in met eigen logins. Wachtwoord kwijt? Vraag de beheerder om een nieuwe uitnodiging." });
         return;
       }
-      if (!nk || !kandidaten.length) { loginMisTel(nk || "?"); await denied(request, response, "praktijk-herstel"); return; }
+      if (!nk || !kandidaten.length) { loginMisTel(nk || "?"); await denied(request, response, "praktijk-herstel", "Praktijknaam of herstelcode klopt niet."); return; }
       if (!kandidaten.some((k) => praktijkAccounts[k].herstel)) {
         await sendJson(response, 404, { ok: false, fout: "Voor dit account is nog geen herstelcode ingesteld. Wijzig ingelogd het wachtwoord om er één te krijgen." });
         return;
       }
       // bij meerdere praktijken met deze naam: de praktijk waarvan de herstelcode klopt
-      const code = String(b.herstelcode || "").trim();
+      const code = herstelcodeNormaal(b.herstelcode);
       const pk = code ? kandidaten.find((k) => praktijkAccounts[k].herstel && checkHash(code, praktijkAccounts[k].herstel)) : null;
       const acc = pk ? praktijkAccounts[pk] : null;
       if (!acc) {
         loginMisTel(nk);
         auditLog(kandidaten[0], "herstel-mislukt", request);
-        await denied(request, response, "praktijk-herstel");
+        await denied(request, response, "praktijk-herstel", "Praktijknaam of herstelcode klopt niet.");
         return;
       }
       const nieuw = String(b.nieuw || "");
@@ -3007,7 +3065,7 @@ async function afhandelen(request, response) {
       if (!checkHash(String(b.huidig || ""), acc.hash)) {
         loginMisTel(pk);
         auditLog(pk, "herstelcode-vernieuwen-mislukt", request);
-        await denied(request, response, "praktijk-herstelcode");
+        await denied(request, response, "praktijk-herstelcode", "Je huidige wachtwoord klopt niet.");
         return;
       }
       const herstelcode = maakHerstelcode();
@@ -4016,7 +4074,14 @@ async function afhandelen(request, response) {
         // "opslaan als Piet V." vanuit de editor van Jan K. stil Jans kaart; Jans geprinte
         // QR opende daarna de kaart van Piet (gebruikers-sweep 2026-11-08, Sanne). De
         // editor vraagt nu: zelfde patiënt (naam verbeteren) of nieuwe kaart (kaartId leeg).
-        if (oudeSleutel && b.hernoem !== true) {
+        // Een roepnaamvoorstel ("Anna de Wit" → "Anna W.") is alleen een naamverbetering van
+        // dezelfde patiënt als de open kaart dezelfde voornaam heeft. Typte de therapeut in de
+        // editor van Joke de naam van een andere patiënt, dan hernoemde OK bij het voorstel stil
+        // Jokes kaart (gebruikers-sweep 2026-11-09, Sanne); dan eerst de hernoemVraag.
+        const roepOk = oudeSleutel && b.roepnaamHernoem === true &&
+          eersteNaamWoord(map[oudeSleutel].naam) !== "" &&
+          eersteNaamWoord(map[oudeSleutel].naam) === eersteNaamWoord(naam);
+        if (oudeSleutel && b.hernoem !== true && !roepOk) {
           // een verouderde editor (kaart intussen elders gewijzigd/hernoemd) hoort eerst dát
           const oud = map[oudeSleutel];
           if (Object.hasOwn(b, "basisTs") && b.overschrijf !== true && Number(oud.ts) > (Number(b.basisTs) || 0)) {
@@ -4816,10 +4881,24 @@ async function afhandelen(request, response) {
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      // Archiveren en terugzetten blijven open na een verlopen proef, maar mogen de bewaartermijn
+      // dan niet meer oprekken: aan/uit/aan zette `gearchiveerdOp` steeds op nu, zodat een
+      // praktijk zonder abonnement haar kaarten onbeperkt kon laten leven (gebruikers-sweep
+      // 2026-11-09, Mark). Zou de wijziging de kaart later laten verlopen dan nu, dan 403.
+      const voorArchief = { gearchiveerd: kaart.gearchiveerd, gearchiveerdOp: kaart.gearchiveerdOp };
+      const verlooptVoor = verlooptOp(kaart);
       if (b.archief) {
         if (!kaart.gearchiveerd) kaart.gearchiveerdOp = Date.now();
         kaart.gearchiveerd = true;
       } else { delete kaart.gearchiveerd; delete kaart.gearchiveerdOp; }
+      const proefVoorbij = !(ADMIN_KEY_EIGEN && isAdmin(request)) &&
+        (proefVerlopen(proefVan(request)) || praktijkProefVerlopen(pk));
+      if (proefVoorbij && verlooptOp(kaart) > verlooptVoor) {
+        for (const [veld, waarde] of Object.entries(voorArchief)) { if (waarde === undefined) delete kaart[veld]; else kaart[veld] = waarde; }
+        await sendJson(response, 403, { ok: false, proefVerlopen: true,
+          fout: "De gratis proef van je praktijk is voorbij. Deze kaart blijft tot " + datumNl(verlooptVoor) + " bewaard; langer kan niet zonder abonnement." });
+        return;
+      }
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, gearchiveerd: !!kaart.gearchiveerd, verloopt: verlooptOp(kaart) });
     } catch {
@@ -5455,7 +5534,11 @@ async function afhandelen(request, response) {
   if (urlPath === "/v2/proef/wissen" && request.method === "POST") {
     response.setHeader("cache-control", "no-store");
     if (kruisSite(request)) { await weigerKruis(response); return; }
-    try { await readBody(request, 2048); } catch {}
+    let wb = {};
+    try { wb = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
+    // alleen met het vinkje "Ja, wis mijn gegevens": één verdwaalde tik wiste anders alles
+    // (gebruikers-sweep 2026-11-09, Mark iPad)
+    if (wb.zeker !== "1") { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     const p = proefVan(request);
     // na een online betaling blijft wat de fiscale bewaarplicht vraagt (7 jaar); de rest gaat weg
     if (p) { proefNaPraktijkWissen(p.id); await bewaarProeven(); }
@@ -5727,9 +5810,15 @@ async function afhandelen(request, response) {
     delete lid.uitnodiging;
     await saveJson(accountsPath, praktijkAccounts);
     auditLog(pk, "uitnodiging-aangenomen", request, naam);
-    await serveerProef(request, response, "bericht", { TITEL: "Klaar", ETIKET: weergaveNaam(pk), KOP: "Je eigen login staat klaar.",
-      TEKST: "Open Fysiplan en log onder Kaarten in met " + lid.email + " en je nieuwe wachtwoord.",
-      KNOP_HTML: '<a class="knop oranje" href="/v2/app">Open Fysiplan</a>' });
+    // de knop zet de praktijknaam alvast klaar (/v2/app?praktijk=): de collega hoeft hem niet zelf
+    // te typen, want met een typfout ("Fysio X.") maakte Beveiligen stil een losse tweede
+    // praktijk zonder proef (gebruikers-sweep 2026-11-09, Mark iPad)
+    const prNaam = weergaveNaam(pk);
+    const appLink = prNaam ? "/v2/app?praktijk=" + encodeURIComponent(prNaam) : "/v2/app";
+    await serveerProef(request, response, "bericht", { TITEL: "Klaar", ETIKET: prNaam, KOP: "Je eigen login staat klaar.",
+      TEKST: "Open Fysiplan en log onder Kaarten in met " + lid.email + " en je nieuwe wachtwoord." +
+        (prNaam ? " De praktijknaam \u201c" + prNaam + "\u201d staat dan al ingevuld." : ""),
+      KNOP_HTML: '<a class="knop oranje" href="' + htmlEsc(appLink) + '">Open Fysiplan</a>' });
     return;
   }
 

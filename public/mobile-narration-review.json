@@ -10,8 +10,8 @@
   "unlistedStatus": "not_assessed_for_clinical_approval",
   "changedTextPolicy": "A changed text hash does not clear a hold. Resolve and explicitly review before recording.",
   "summary": {
-    "rawV2Entries": 604,
-    "effectiveEntries": 446,
+    "rawV2Entries": 633,
+    "effectiveEntries": 475,
     "held": 15,
     "clinicalApproved": 0,
     "v1V2TextDifferences": 0,
@@ -94,13 +94,13 @@
     {
       "exerciseId": "fp_8596981989aa3408",
       "name": "Rotator (apparaat)",
-      "text": "Ga rechtop op de zitting zitten met je knieën tussen de kussens en pak de handgrepen vast. Draai rustig je heupen en benen met de zitting mee naar één kant tegen de weerstand in, terwijl je bovenlichaam en blik naar voren blijven. Kom gecontroleerd terug naar het midden en herhaal naar de andere kant.",
-      "explanationSha256": "1f4f5dce97e510219fab26ffcd915b97817dc6d01024a8fb11ef237a2080d665",
-      "narrationSha256": "be6f7512ac408a761142b47831abfe817a977e00d8dc4eb6d73c824d1961ebb2",
+      "text": "Ga rechtop in het apparaat zitten met je knieën tussen de kussens en pak de handgrepen vast. Draai je bovenlichaam rustig naar één kant tegen de weerstand in, terwijl je heupen en zitting stil blijven. Kom gecontroleerd terug naar het midden en wissel van kant.",
+      "explanationSha256": "0ad2c7cc4fb3a673b6d2a8d86912172e32816c6e950741fce253b0eb6a48c720",
+      "narrationSha256": "5c14a22fad0035c52ae5005e314587f7b370a8c284ba3829842b29dd9e5c2fdb",
       "status": "hold",
       "clinicalApproved": false,
       "reasonCode": "text-image-contradiction",
-      "reason": "Text describes forearm outward rotation. Avatar rotator-apparaat-avatar-v7.jpg depicts seated trunk rotation on a torso machine. Existing withheld 238 explicitly says source shows trunk rotation but text shoulder rotation.",
+      "reason": "Text describes forearm outward rotation. Avatar rotator-apparaat-avatar-v7.jpg depicts seated trunk rotation on a torso machine. Existing withheld 238 explicitly says source shows trunk rotation but text shoulder rotation. 2026-11-09: uitleg herschreven naar romprotatie volgens Physitrack, gelijk aan de nieuwe tekening; hold blijft tot een expliciete herbeoordeling van beeld en tekst.",
       "requiredAction": "Confirm intended exercise and correct approved source text before narration."
     },
     {
