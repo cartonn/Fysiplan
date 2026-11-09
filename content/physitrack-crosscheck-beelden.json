@@ -1455,5 +1455,46 @@
         "pose": "pair-candidate"
       }
     ]
+  },
+  "holdsOpgeheven": {
+    "datum": "2026-11-09",
+    "akkoord": "Ahmed: \"ja\" (08:25) op het opheffen van de blokkades met de nieuwe avatars",
+    "avatars": [
+      {
+        "nr": 48,
+        "naam": "Chair squat",
+        "p": "images/onderste-extremiteit/chair-squat-avatar-v7.jpg",
+        "sha256": "9af974d2e80f1ab109e3d8e1e2cdabff489efafecc7f1d33c62b29280a02ce98",
+        "pose": "foreign-ink-in-crop",
+        "reden": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan.",
+        "override": false,
+        "reg": false,
+        "qa": true,
+        "bron": "avatars/48-chair-squat-avatar.png"
+      },
+      {
+        "nr": 601,
+        "naam": "Standing chair shoulder rotations",
+        "p": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
+        "sha256": "779afde6b3af12ea96d532f2d24af220b692cc138bc83227360705dbc760514f",
+        "pose": "pair-candidate",
+        "override": true,
+        "reg": false,
+        "qa": false,
+        "bron": "avatars/601-standing-chair-shoulder-rotations-avatar.png"
+      }
+    ],
+    "nogNiet": [
+      {
+        "nr": 8,
+        "naam": "Dips",
+        "reden": "nieuwe avatar staat met de voeten op de grond achter één stang; de tekening toont parallelle leggers"
+      },
+      {
+        "nr": 39,
+        "naam": "Triceps dips",
+        "reden": "nieuwe avatar gebruikt een bank; de tekening een stoel"
+      }
+    ]
   }
 }

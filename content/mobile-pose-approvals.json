@@ -1374,6 +1374,13 @@
       "assetSha256": "db532dd7bb334aeb46d7a197e9acb21495aaa7bca1c4f6199c8590838406644c",
       "reviewDate": "2026-11-09",
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck (ronde 4); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Standing chair shoulder rotations",
+      "source": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
+      "assetSha256": "779afde6b3af12ea96d532f2d24af220b692cc138bc83227360705dbc760514f",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     }
   ],
   "inspectionClaim": "Elk hieronder genoemde beeld is in de definitieve weergave op een contactvel bekeken. De hash bindt de controle aan exact dit bestand: verandert het beeld, dan vervalt de controle en valt de kaart terug op de volledige afbeelding."

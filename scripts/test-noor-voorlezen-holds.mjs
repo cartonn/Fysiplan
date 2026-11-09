@@ -85,7 +85,7 @@ function kaartContext(chosen){
 // 3. dezelfde regel als de knop per oefening (die verschijnt niet bij een tegengehouden beeld)
 {
   const k=kaartContext([]);await vm.runInContext('loadMobileReview()',k.ctx);
-  for(const [naam,verwacht] of [['Dips',true],['Triceps dips',true],['Standing chair shoulder rotations',true],['Rotator (apparaat)',true],
+  for(const [naam,verwacht] of [['Dips',true],['Triceps dips',true],['Standing chair shoulder rotations',false],['Rotator (apparaat)',true],
     ['Back extension',true],['Rug extensie',true],['Backextensie (apparaat)',false],
     ['Standing chair hip extension',false],['Standing chair knee lift',false],[normaal.naam,false]]){
     const o=vm.runInContext('vindOefening',k.ctx)({n:naam});

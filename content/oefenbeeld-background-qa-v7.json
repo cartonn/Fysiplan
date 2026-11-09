@@ -511,8 +511,9 @@
       "output": "images/onderste-extremiteit/chair-squat-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.81304,
-      "sha256": "a4d98858e15a11f54fa84e98cacf73603a302c0ff8dc632fd62d0bdd9bd96418"
+      "nearWhiteRatio": 0.8499,
+      "sha256": "9af974d2e80f1ab109e3d8e1e2cdabff489efafecc7f1d33c62b29280a02ce98",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck; tijdelijke hold opgeheven."
     },
     {
       "order": 50,
