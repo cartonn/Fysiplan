@@ -1,0 +1,44 @@
+[
+ {
+  "slug": "bal-knijpen",
+  "naam": "Bal knijpen",
+  "ref": "287",
+  "pose_en": "She sits upright on a chair, seen from the side, next to a small table. Her right forearm rests on the table, palm facing up, holding a soft ball in her right hand with the fingers loosely around it (hand open, relaxed). Draw the hand and ball clearly and large enough to read. The arrow is a short curved arrow next to the fingers showing the fingers closing around the ball.",
+  "eind_en": "END position: the same seated pose, the right hand squeezes the ball firmly, fingers tightly closed around it; the forearm stays on the table."
+ },
+ {
+  "slug": "polsstrekkers-rekken",
+  "naam": "Polsstrekkers rekken – arm gestrekt",
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the side, facing left. Her right arm is stretched straight forward at shoulder height, palm facing DOWN, wrist straight, fingers pointing forward. Her left hand rests on the back of her right hand. The arrow is a curved arrow at the right hand pointing DOWNWARD, showing the hand being pressed down so the fingers point toward the floor.",
+  "eind_en": "END position: the right arm is still straight forward at shoulder height, the wrist is bent fully downward so the fingers point to the floor, the left hand presses gently on the back of the right hand."
+ },
+ {
+  "slug": "pols-achterover-met-hulp",
+  "naam": "Pols achterover buigen – met hulp op tafel",
+  "ref": "287",
+  "pose_en": "She sits on a chair at a table, seen from the side, facing right. Her right forearm lies flat on the table with the WRIST exactly at the table edge, so the whole right hand sticks out FREELY in the air beyond the edge, palm facing DOWN, wrist straight and level. Her left hand is under the fingertips of the right hand, supporting them from below. The arrow is a curved arrow at the right hand pointing UPWARD, showing the hand being lifted up at the wrist while the forearm stays on the table.",
+  "eind_en": "END position: the right forearm still lies flat on the table, the right hand is bent upward at the wrist (fingers pointing up), lifted by the left hand under the fingers."
+ },
+ {
+  "slug": "pols-zijwaarts-op-tafel",
+  "naam": "Pols zijwaarts schuiven op tafel",
+  "ref": "287",
+  "pose_en": "She sits on a chair at a table, seen from the FRONT and slightly from above so the whole table top is visible. Her ENTIRE right forearm and right hand lie flat ON the table top, pointing straight forward away from her body (forearm parallel to the table edge's perpendicular), palm down, wrist straight, fingers together; the hand does NOT hang over any edge. Her right hand appears on the LEFT side of the image; its thumb points toward the middle of her body. The arrow is a short curved arrow at the fingertips pointing toward the THUMB side, i.e. toward her body's midline (to the RIGHT in the image), showing the hand sliding sideways over the table while the forearm stays still. Her left hand rests in her lap.",
+  "eind_en": "END position: the right forearm is unchanged on the table, the right hand is slid sideways at the wrist toward the thumb side, palm still flat on the table."
+ },
+ {
+  "slug": "supinatie-elastiek",
+  "naam": "Handpalm naar boven draaien tegen elastiek",
+  "ref": "287",
+  "pose_en": "She sits on a chair at a table, seen from the FRONT. Her right forearm rests on the table, elbow bent at 90 degrees and close to her body, right palm facing DOWN. A flat elastic resistance band is looped around her right hand; her left hand holds the other end of the band on the table, keeping it slightly taut. The arrow is a curved arrow around the right forearm showing the forearm turning so the palm turns UP.",
+  "eind_en": "END position: same pose, the right forearm has rotated so the right palm faces UP, the elastic band is stretched and taut, the left hand still holds its end."
+ },
+ {
+  "slug": "zenuw-ulnaris-glijden",
+  "naam": "Zenuwglijden pinkkant (n. ulnaris)",
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT. Her right arm is held out to the side with the elbow bent and pointing sideways slightly below shoulder height; her right thumb and index finger touch to form a circle (OK sign), the other fingers straight, and the right hand is at ear height next to her head, palm facing forward. Her left arm hangs relaxed. The arrow is a curved arrow from the right hand toward her right eye, showing the hand turning so the circle moves over the eye.",
+  "eind_en": "END position: the right elbow is raised out to the side at shoulder height, the circle of thumb and index finger is placed over the right eye like a mask, the other fingers point backwards along the side of the head, palm facing forward."
+ }
+]
