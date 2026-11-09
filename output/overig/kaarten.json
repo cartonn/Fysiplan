@@ -1,0 +1,623 @@
+[
+ {
+  "naam": "Herstel na covid: ademhalen (vroege en late fase)",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Ademhalingsoefeningen om rustiger en dieper te ademen tijdens het herstel na covid.",
+  "oefeningen": [
+   "Diafragma-ademhaling – zittend",
+   "360 graden ademhaling – eerste fase rustig",
+   "Lippenremademhaling – zittend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Herstel na covid: uithoudingsvermogen, vroege fase",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Conditie rustig opbouwen met wandelen, traplopen en lichte oefeningen na covid.",
+  "fase": 1,
+  "oefeningen": [
+   "Stevig doorwandelen – buiten",
+   "Fiets",
+   "Traplopen met leuning – trede voor trede"
+  ],
+  "dosering": {
+   "s": "1",
+   "h": "10 min"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Ontspanning: hele lichaam",
+  "categorie": "Algemeen en sport",
+  "sub": "Ontspannen met rustig ademen en het aan- en ontspannen van spieren.",
+  "oefeningen": [
+   "Diafragma-ademhaling – zittend",
+   "Schouderblad naar achteren – actief",
+   "Enkel wegduwen – zittend actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Algemeen: circuit hele lichaam",
+  "categorie": "Algemeen en sport",
+  "sub": "Kort circuit met oefeningen voor benen, romp en armen.",
+  "oefeningen": [
+   "Uitvalspas achterwaarts – met halters",
+   "Military press",
+   "Mountain climber"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Sport: hamstringblessure fase 1",
+  "categorie": "Algemeen en sport",
+  "sub": "Eerste fase na een hamstringblessure: licht aanspannen, bruggen en rustig verlengen.",
+  "fase": 1,
+  "oefeningen": [
+   "Fiets",
+   "Chair squat",
+   "Glute bridges",
+   "Hiel in de grond drukken – ruglig (zonder bewegen)",
+   "Eenbenige kniebuiging – staand",
+   "Hamstring curl – liggend",
+   "Knie strekken met heup gebogen – ruglig",
+   "Heupscharnier – functioneel op één been",
+   "Been naar achteren laten glijden – met handdoek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Sport: hamstringblessure fase 3",
+  "categorie": "Algemeen en sport",
+  "sub": "Zware kracht en lengte voor de hamstrings als voorbereiding op sprinten en sport.",
+  "fase": 3,
+  "oefeningen": [
+   "Knie strekken met heup gebogen – ruglig",
+   "Heupscharnier – functioneel op één been",
+   "Been naar achteren laten glijden – met handdoek",
+   "Bruggen 1 been liften",
+   "Brug op één been – voet op een step",
+   "Hamstring en kuit rekken – ruglig met band",
+   "Hamstring curl – met elastiek",
+   "Hamstring curl – liggend",
+   "Squat"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Zwangerschap: eerste trimester",
+  "categorie": "Rug en bekken",
+  "sub": "Bekkenbodem, diepe buikspieren en benen sterk houden in het begin van de zwangerschap.",
+  "oefeningen": [
+   "Bekkenbodem en diepe buik aanspannen – staand",
+   "Diepe buikactivatie – liggend",
+   "Chair squat"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Werk: rekken vóór de dienst – nek en schouders",
+  "categorie": "Algemeen en sport",
+  "sub": "Korte rek- en losmaakoefeningen voor nek, schouders en armen voordat het werk begint.",
+  "oefeningen": [
+   "Seated chest opener",
+   "Schouderblad naar achteren – actief",
+   "Armen kruisen boven je hoofd en voor je borst",
+   "Nek zijwaarts buigen – zittend actief",
+   "Seated shoulder stretch",
+   "Achterkant bovenarm rekken – hand achter je hoofd",
+   "Polsstrekkers rekken – arm gestrekt",
+   "Bovenste trapezius rek – zittend actief",
+   "Levator scapulae rek – functioneel staand",
+   "Schouder pendelen – actief",
+   "Ellebogen naar achteren trekken – zittend zonder gewicht",
+   "Seated shoulder roll"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Werk: rekken vóór de dienst – romp",
+  "categorie": "Algemeen en sport",
+  "sub": "De rug in alle richtingen losmaken en rekken voordat het werk begint.",
+  "oefeningen": [
+   "Romp voorover buigen – staand",
+   "Bovenrug rekken – handen gevouwen naar voren",
+   "Zijwaarts rekken met arm boven het hoofd – staand",
+   "Rug strekken – staand",
+   "Bovenrug rekken – zittend voorover",
+   "Romp draaien – zittend",
+   "Romp heupscharnier – staand",
+   "Good mornings"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Werk: rekken vóór de dienst – benen",
+  "categorie": "Algemeen en sport",
+  "sub": "Benen, heupen en kuiten opwarmen en rekken voordat het werk begint.",
+  "oefeningen": [
+   "Binnenkant bovenbeen rekken – zijwaarts uitstappen",
+   "Standing chair leg curl",
+   "Brede kniebuiging – tenen naar buiten",
+   "Chair squat",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Op de plaats marcheren – zonder steun",
+   "Knie strekken – zittend",
+   "Kuitheffing – op een verhoging",
+   "Seated hamstring stretch",
+   "Achterkant benen rekken – voeten gekruist",
+   "Kuitrek gebogen knie – staand met steun",
+   "Calf raises"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hartrevalidatie: circuit fase 1 niveau 1",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Eenvoudig circuit van fiets, opstappen en armoefeningen met evenveel rust als inspanning.",
+  "fase": 1,
+  "oefeningen": [
+   "Uitvalspas achterwaarts – met halters",
+   "Upright row",
+   "Marcheren op een minitrampoline",
+   "Biceps curl",
+   "Fiets",
+   "Triceps dumbell kickbacks",
+   "Step up tempo",
+   "Lateral raises"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Hartrevalidatie: circuit fase 1 niveau 2",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Circuit met iets meer stations, inspanning en rust wisselen elkaar af.",
+  "fase": 1,
+  "oefeningen": [
+   "Uitvalspas achterwaarts – met halters",
+   "Upright row",
+   "Marcheren op een minitrampoline",
+   "Biceps curl",
+   "Fiets",
+   "Triceps dumbell kickbacks",
+   "Step up tempo",
+   "Lateral raises",
+   "Op de plaats marcheren – zonder steun",
+   "Hamstring curl – staand met steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Hartrevalidatie: circuit fase 1 niveau 3",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Uitgebreid circuit met zijwaarts stappen en marcheren erbij.",
+  "fase": 1,
+  "oefeningen": [
+   "Uitvalspas achterwaarts – met halters",
+   "Upright row",
+   "Marcheren op een minitrampoline",
+   "Biceps curl",
+   "Fiets",
+   "Triceps dumbell kickbacks",
+   "Step up tempo",
+   "Lateral raises",
+   "Op de plaats marcheren – zonder steun",
+   "Hamstring curl – staand met steun",
+   "Chair squat",
+   "Zijwaarts stappen – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Hartrevalidatie: circuit fase 2 niveau 1",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Langere inspanningsblokken met korte actieve rust.",
+  "fase": 2,
+  "oefeningen": [
+   "Uitvalspas achterwaarts – met halters",
+   "Upright row",
+   "Marcheren op een minitrampoline",
+   "Biceps curl",
+   "Fiets",
+   "Triceps dumbell kickbacks",
+   "Step up tempo",
+   "Lateral raises",
+   "Lopen en omkeren",
+   "Pully press double"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Hartrevalidatie: circuit fase 2 niveau 2",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Circuit met marcheren en armkracht, langere inspanning per station.",
+  "fase": 2,
+  "oefeningen": [
+   "Uitvalspas achterwaarts – met halters",
+   "Upright row",
+   "Op de plaats marcheren – zonder steun",
+   "Marcheren op een minitrampoline",
+   "Biceps curl",
+   "Fiets",
+   "Triceps dumbell kickbacks",
+   "Hamstring curl – staand met steun",
+   "Step up tempo",
+   "Lateral raises",
+   "Lopen en omkeren",
+   "Pully press double"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Hartrevalidatie: circuit fase 2 niveau 3",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Zwaarste circuit: conditie en kracht afwisselen met korte rustmomenten.",
+  "fase": 2,
+  "oefeningen": [
+   "Uitvalspas achterwaarts – met halters",
+   "Upright row",
+   "Op de plaats marcheren – zonder steun",
+   "Marcheren op een minitrampoline",
+   "Biceps curl",
+   "Fiets",
+   "Triceps dumbell kickbacks",
+   "Hamstring curl – staand met steun",
+   "Step up tempo",
+   "Lateral raises",
+   "Zijwaarts stappen – zonder steun",
+   "Pully press double"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Hartrevalidatie: sportschool niveau 1",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Rustige start met loopband, fiets, roeier en lichte armoefeningen.",
+  "fase": 1,
+  "oefeningen": [
+   "Loopband",
+   "Lateral raises",
+   "Roeier",
+   "Upright row",
+   "Fiets",
+   "Biceps curl"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Hartrevalidatie: sportschool niveau 3",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Conditie en kracht op toestellen in de laatste fase van hartrevalidatie.",
+  "fase": 3,
+  "oefeningen": [
+   "Loopband",
+   "Roeier",
+   "Fiets",
+   "Dumbell bench press",
+   "Lat pull front",
+   "Leg press",
+   "Upright row"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Herstel na covid: eerste 6 weken",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Lichte oefeningen voor armen en benen om weer op gang te komen.",
+  "fase": 1,
+  "oefeningen": [
+   "Seated leg extension",
+   "Functioneel opstaan – functioneel",
+   "Calf raises",
+   "Glute bridges",
+   "Biceps curl",
+   "Seated dumbell press up",
+   "Anteflexie armen",
+   "French press",
+   "Standing chair calfs raises"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Herstel na covid: na 6 weken",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Kracht en conditie verder uitbreiden voor armen en benen.",
+  "fase": 2,
+  "oefeningen": [
+   "Functioneel opstaan – functioneel",
+   "Standing chair knee lift",
+   "Standing chair abductie",
+   "Standing chair half squat",
+   "Lunges",
+   "Step up tempo",
+   "Biceps curl",
+   "Seated dumbell press up",
+   "Anteflexie armen",
+   "French press"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Algemeen: kracht voor het hele lichaam",
+  "categorie": "Algemeen en sport",
+  "sub": "Basisoefeningen voor kracht en uithoudingsvermogen van armen, benen en romp.",
+  "oefeningen": [
+   "Triceps dips",
+   "Military press",
+   "Lunges",
+   "Chair squat",
+   "Plank basis"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Werk: rekken nek, rug en benen",
+  "categorie": "Algemeen en sport",
+  "sub": "Korte rekoefeningen om stijfheid door werk te verminderen.",
+  "oefeningen": [
+   "Pols buigen en strekken – duim omhoog",
+   "Levator scapulae rek – zittend actief",
+   "Bovenste trapezius rek – zittend actief",
+   "Bovenrug rekken – handen gevouwen naar voren",
+   "Rug strekken – staand",
+   "Seated hamstring stretch",
+   "Kuitrek gestrekte knie – staand met steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Nek: beeldschermwerk",
+  "categorie": "Nek",
+  "sub": "Rekken en houding verbeteren voor nek en schouders bij schermwerk.",
+  "oefeningen": [
+   "Bovenste trapezius rek – zittend actief",
+   "Levator scapulae rek – zittend actief",
+   "Bekken kantelen – zittend",
+   "Schouderblad liften en ontspannen – functioneel staand",
+   "Kin intrekken – zittend actief",
+   "Schouderblad naar achteren – actief",
+   "Pully row"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Bovenrug: beeldschermwerk",
+  "categorie": "Rug en bekken",
+  "sub": "Bewegen en versterken van de bovenrug voor wie veel achter een scherm zit.",
+  "oefeningen": [
+   "Romp draaien – zittend",
+   "Rug bol en hol – zittend",
+   "Bekken kantelen – zittend",
+   "Rug strekken – staand",
+   "Schouderblad naar achteren – actief",
+   "Rug extensie",
+   "Pully row"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Rug: onderste gekruist syndroom",
+  "categorie": "Rug en bekken",
+  "sub": "Bil- en rugspieren activeren en heupen rekken bij een holle-rughouding.",
+  "oefeningen": [
+   "Bekken kantelen – zittend",
+   "Yoga extended child's pose",
+   "Glute bridges",
+   "Mob lower back",
+   "Heupflexor rek – staand met steun",
+   "Superman",
+   "Chair squat",
+   "Lunges",
+   "Quadriceps stretch"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Sport: hamstringblessure fase 2",
+  "categorie": "Algemeen en sport",
+  "sub": "Bilspieren en achterkant bovenbeen weer belasten na een verrekking.",
+  "fase": 2,
+  "oefeningen": [
+   "Glute bridges",
+   "Hiel in de grond drukken – ruglig (zonder bewegen)",
+   "Eenbenige kniebuiging – staand",
+   "Hamstring curl – liggend",
+   "Knie strekken met heup gebogen – ruglig",
+   "Heupscharnier – functioneel op één been",
+   "Been naar achteren laten glijden – met handdoek",
+   "Bruggen 1 been liften",
+   "Brug op één been – voet op een step",
+   "Hamstring en kuit rekken – ruglig met band",
+   "Hamstring curl – met elastiek",
+   "Squat"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Been: kracht na beroerte fase 1",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Opstaan, traplopen en squatten om het aangedane been sterker te maken.",
+  "fase": 1,
+  "oefeningen": [
+   "Functioneel opstaan – functioneel",
+   "Chair squat",
+   "Step up tempo",
+   "Step-up – op verhoging",
+   "Lunges"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Been: kracht na beroerte fase 2",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Het aangedane been verder belasten in squat en uitvalspas.",
+  "fase": 2,
+  "oefeningen": [
+   "Step-up – op verhoging",
+   "Swiss ball wall squat",
+   "Functioneel opstaan – functioneel",
+   "Lunges"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Arm: krachttraining na neurologische aandoening niveau 3",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Arm- en polsspieren verder versterken met lichte gewichten.",
+  "fase": 3,
+  "oefeningen": [
+   "Seated dumbell press up",
+   "Seated biceps curl",
+   "French press",
+   "Wrist flexion",
+   "Wrist extension"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Balans: niveau 1",
+  "categorie": "Ouderen en balans",
+  "sub": "Eenvoudige oefeningen om stevig te leren staan en stappen.",
+  "fase": 1,
+  "oefeningen": [
+   "Reiken in stand – zonder steun",
+   "Tandemstand – zonder steun",
+   "Op de plaats marcheren – zonder steun",
+   "Zijwaarts stappen – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Balans: niveau 2",
+  "categorie": "Ouderen en balans",
+  "sub": "Evenwicht oefenen tijdens bewegen, zoals uitvalspas en grote stappen.",
+  "fase": 2,
+  "oefeningen": [
+   "Lunges",
+   "Calf raises",
+   "Grote stappen – met ritmische cue",
+   "Tandemstand – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "aanvullen"
+ }
+]
