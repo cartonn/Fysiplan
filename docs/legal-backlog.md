@@ -8,7 +8,7 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 
 | Gebied | Laatst gecontroleerd |
 |---|---|
-| (a) privacyverklaring (art. 13/14 AVG) | 2026-11-07 (team, akkoord, Mijn gegevens, Railway-logs) |
+| (a) privacyverklaring (art. 13/14 AVG) | 2026-11-09 09u (art. 9-uitzondering, "Als je stopt", proefpraktijk zonder abonnement echt gewist, WhatsApp-link) |
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-07 (eigen login per therapeut, één akkoord) |
 | (c) algemene voorwaarden | 2026-11-09 05u (opzeggen in de app, einde abonnement; `AV_VERSIE` 2026-11-09) |
 | (d) code tegen tekst | 2026-11-09 05u (einde abonnement: wissen 30 dagen na het einde gebouwd) |
@@ -18,10 +18,31 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (h) WGBO en KNGF-beroepsregels | 2026-11-08 21u (werknotitie mee naar het dossier, dossierlabel vervalt bij nieuwe praktijkregels, datum heet nu "laatst opgeslagen") |
 | (i) begrijpelijkheid (B1) | 2026-11-08 09u (VWO en voorwaarden: "In het kort", VWO als concept gemarkeerd; /v2/gegevens-tekst) |
 
-Volgende run: (a) privacyverklaring, dan (b) verwerkersovereenkomst. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (b) verwerkersovereenkomst, dan (i) begrijpelijkheid. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **MIDDEL — privacyverklaring + code (2026-11-09 09u): een proefpraktijk zonder abonnement werd nooit gewist.**
+  De proefaanmelding verdween 90 dagen na de proef, maar het praktijkaccount (teamleden met naam en e-mail,
+  wachtwoordhashes, profiel met logo, sjablonen, eigen oefeningen, logboek) bleef voor altijd staan. Voorwaarden art. 3
+  zegt "Word je geen klant, dan wissen we je proefgegevens zoals in de privacyverklaring staat", en die zei alleen
+  "zolang de praktijk Fysiplan gebruikt" (art. 5 lid 1e en art. 13 lid 2a AVG).
+  OPGELOST 2026-11-09 (deze PR): `proefZonderAbonnementWissen` (server.js, uurlijkse proefronde) wist via
+  `praktijkAllesWissen` een praktijk waarvan de aanmelding weg is, de proef meer dan 90 dagen voorbij is en er geen
+  gedeelde kaarten meer zijn; met kaarten blijft het account tot de laatste kaart verloopt (praktijk moet ze nog kunnen
+  inzien). Eerste mogelijke wissing: eind januari 2027. /privacy heeft nu "Als je stopt" (#einde), de rijen verwijzen
+  ernaar. Test `scripts/test-proef-einde-wissen.mjs` (faalt zonder fix, in test:privacy en CI).
+  Rest (LAAG): een praktijk die Ahmed met de hand klant maakte en daarna zelf "Mijn proef" wiste, zit al op slot en
+  wordt nu ook na 90 dagen gewist als er geen kaarten meer zijn; dat volgt het slot, maar check bij handmatige klanten.
+- **MIDDEL — privacyverklaring noemde de uitzondering voor gezondheidsgegevens niet (2026-11-09 09u).**
+  Alleen de behandelovereenkomst (art. 6) stond er; art. 13 lid 1c vraagt de grondslag, en voor gezondheidsgegevens
+  hoort de uitzondering van art. 9 lid 2 onder h AVG met art. 30 lid 3 UAVG (zorgverlener met beroepsgeheim) erbij.
+  OPGELOST 2026-11-09 (deze PR). Bron: AVG art. 9; UAVG art. 30 (wetten.overheid.nl).
+- **LAAG — delen via WhatsApp (2026-11-09 09u).** De app heeft wa.me-links om de kaartlink te sturen; WhatsApp is
+  geen subverwerker (de praktijk kiest en verstuurt zelf), maar dat stond nergens. OPGELOST 2026-11-09 (deze PR):
+  één zin onder de subverwerkers. Gecontroleerd zonder gat: alle externe hosts in code (api.anthropic.com,
+  api.resend.com, api.mollie.com, api.cloudflare.com/videodelivery.net, youtube-nocookie.com) staan in de lijst.
 
 - **HOOG — code tegen tekst (2026-11-09 05u): een opgezegd abonnement stopte nooit en er werd nooit gewist.**
   Voorwaarden art. 5 en verwerkersovereenkomst art. 10 beloven: na het einde worden de kaarten van de praktijk binnen

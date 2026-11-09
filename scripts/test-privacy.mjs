@@ -244,6 +244,12 @@ try {
   assert.match(privacy, /Versie 9 november 2026/);
   assert.match(privacy, /hoe vaak, hoeveel of hoe zwaar je oefent/, "privacyverklaring noemt dat doseringsvragen niet naar de AI-dienst gaan");
   assert.match(privacy, /Foutlog/);
+  assert.match(privacy, /artikel 9 lid 2 onder h AVG/, "privacyverklaring noemt de uitzondering voor gezondheidsgegevens");
+  assert.match(privacy, /id="einde"/, "privacyverklaring zegt wat er gebeurt als een praktijk stopt");
+  assert.match(privacy, /30 dagen na het einde van je abonnement/);
+  assert.match(privacy, /zodra ook je laatste gedeelde kaart is verlopen/);
+  assert.doesNotMatch(privacy, /__[A-Z_]+__/, "geen open plekhouders");
+  assert.match(privacy, /WhatsApp/);
   // de foutlog belooft "zonder kaartlink": controleer de functie die het pad inkort
   const serverBron = await readFile(join(root, "server.js"), "utf8");
   const logPadBron = serverBron.match(/function logPad\(url\) \{[\s\S]*?\n\}/);
