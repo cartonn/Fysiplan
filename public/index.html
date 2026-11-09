@@ -1222,44 +1222,39 @@ bridge2.jpg</div>
     return "<span class='fp-av"+(klas?' '+klas:'')+"' aria-hidden='true' style='background:"+k[0]+";color:"+k[1]+"'>"+esc(avInitialen(naam))+"</span>";
   }
   function zbIcoon(d){return "<svg viewBox='0 0 24 24' width='17' height='17' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'>"+d+"</svg>";}
+  // Linkerpaneel (Ahmed, 2026-11-09): de navigatiebalk links herhaalde wat al boven de
+  // kaart staat (Sjablonen, Kaarten). Die balk is weg; links staan alleen nog
+  // categorieën en oefeningen. Wat alleen in de balk stond, zit nu in de kopbalk:
+  // de praktijk (opent Kaarten met account en Team) en een Hulp-menu met Help,
+  // Wat is er nieuw en de juridische links.
   function bouwZijbalk(){
-    if(document.getElementById('fpZij'))return;
+    if(document.getElementById('zb_praktijk'))return;
     var klik=function(id){return function(){var b=document.getElementById(id);if(b)b.click();};};
-    var items=[
-      {k:'kaart',t:'Trainingskaart',i:"<rect x='3' y='4' width='18' height='16' rx='2'/><path d='M3 9h18M9 9v11'/>",f:function(){window.scrollTo({top:0,behavior:'smooth'});},aan:true},
-      {k:'kaarten',t:'Kaarten en patiënten',i:"<path d='M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20'/><circle cx='10' cy='8' r='3.5'/><path d='M20 20v-1.5a3.5 3.5 0 0 0-2.5-3.35M15.5 4.6a3.5 3.5 0 0 1 0 6.8'/>",f:klik('kaartenBtn')},
-      {k:'sjab',t:'Sjablonen',i:"<path d='M12 3l9 5-9 5-9-5z'/><path d='M3 13l9 5 9-5'/>",f:klik('sjabBtn')},
-      {k:'team',t:'Team',i:"<circle cx='9' cy='8' r='3.5'/><path d='M2.5 20v-1a5 5 0 0 1 5-5h3a5 5 0 0 1 5 5v1'/><path d='M17 11h5M19.5 8.5v5'/>",f:function(){if(PRAKSLOT&&PRAKSLOT.ingelogd)openTeam();else document.getElementById('kaartenBtn').click();}}
-    ];
+    var hb=document.querySelector('header.topbar');
+    var pk=document.createElement('button');pk.type='button';pk.className='zb-praktijk no-print';pk.id='zb_praktijk';
+    pk.title='Je praktijk: inloggen, team en gedeelde kaarten';
+    pk.innerHTML="<span class='zb-pav' id='zb_pav'>?</span><span class='zb-ptekst'><b id='zb_pnaam'>Je praktijk</b><small id='zb_pstat'>Open Kaarten om in te loggen</small></span>";
+    hb.insertBefore(pk,hb.querySelector('.menu'));
+    pk.addEventListener('click',klik('kaartenBtn'));
     var hulp=[
-      {k:'help',t:'Help',i:"<circle cx='12' cy='12' r='9'/><path d='M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17h.01'/>",f:klik('menuHelp')},
-      {k:'updates',t:'Wat is er nieuw',i:"<path d='M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1'/>",f:function(){var m=[].slice.call(document.querySelectorAll('.topbar .menu .mi')).filter(function(b){return /Updates/.test(b.textContent);})[0];if(m)m.click();}}
+      {t:'Help',f:klik('menuHelp')},
+      {t:'Wat is er nieuw',f:function(){var m=[].slice.call(document.querySelectorAll('.topbar .menu .mi')).filter(function(b){return /Updates/.test(b.textContent);})[0];if(m)m.click();}}
     ];
-    var rij=function(it){return "<button type='button' class='zb-item"+(it.aan?' aan':'')+"' title='"+it.t+"' data-zb='"+it.k+"'"+(it.aan?" aria-current='page'":"")+">"+zbIcoon(it.i)+"<span>"+it.t+"</span>"+(it.k==='kaarten'?"<b class='zb-tel' id='zb_sein' hidden></b>":"")+"</button>";};
-    var z=document.createElement('aside');z.id='fpZij';z.className='fp-zij no-print';z.setAttribute('aria-label','Navigatie');
-    z.innerHTML="<div class='zb-merk'><span class='mark'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='M3 12h4l2 5 4-12 2 7h6'/></svg></span><b>fysiplan<i>.</i></b></div>"+
-      "<button type='button' class='zb-praktijk' id='zb_praktijk' title='Je praktijk: inloggen, team en gedeelde kaarten'><span class='zb-pav' id='zb_pav'>?</span><span class='zb-ptekst'><b id='zb_pnaam'>Je praktijk</b><small id='zb_pstat'>Open Kaarten om in te loggen</small></span></button>"+
-      "<div class='zb-label'>Werkruimte</div><nav class='zb-nav'>"+items.map(rij).join('')+"</nav>"+
-      "<div class='zb-label'>Hulp</div><nav class='zb-nav'>"+hulp.map(rij).join('')+"</nav>"+
-      "<div class='zb-ruimte'></div>"+
-      "<div class='zb-tip'><b>Tip</b>Begin met een sjabloon: één klik en de kaart staat klaar. Daarna pas je hem aan.</div>"+
-      "<div class='zb-voet'><a href='/privacy' target='_blank' rel='noopener'>Privacy</a><a href='/voorwaarden' target='_blank' rel='noopener'>Voorwaarden</a><a href='/verwerkersovereenkomst' target='_blank' rel='noopener'>Verwerkersovereenkomst</a></div>";
-    document.body.insertBefore(z,document.body.firstChild);
-    var alle=items.concat(hulp);
-    z.querySelectorAll('[data-zb]').forEach(function(b){var it=alle.filter(function(x){return x.k===b.getAttribute('data-zb');})[0];b.addEventListener('click',it.f);});
-    document.getElementById('zb_praktijk').addEventListener('click',klik('kaartenBtn'));
-    // broodkruimel links in de kopbalk
-    var kr=document.createElement('div');kr.className='fp-kruimel no-print';
-    kr.innerHTML="<button type='button' class='kr-knop' id='zbToggle' aria-label='Zijbalk in- of uitklappen' title='Zijbalk in- of uitklappen'>"+zbIcoon("<rect x='3' y='4' width='18' height='16' rx='2'/><path d='M9 4v16'/>")+"</button><span>Werkruimte</span><i>/</i><b>Trainingskaart</b>";
-    var hb=document.querySelector('header.topbar');hb.insertBefore(kr,hb.querySelector('.menu'));
-    // standaard smal (alleen iconen): zo krijgen de kaart en de oefeningen de ruimte
-    var zk='1';try{zk=localStorage.getItem('fp_zij_klein')||'1';}catch(e){}
-    if(zk==='1')document.documentElement.classList.add('zij-klein');
-    document.getElementById('zbToggle').addEventListener('click',function(){
-      var k=document.documentElement.classList.toggle('zij-klein');
-      try{localStorage.setItem('fp_zij_klein',k?'1':'0');}catch(e){}
-      setTimeout(pasA4,200);
-    });
+    var hw=document.createElement('div');hw.className='fp-hulp no-print';
+    hw.innerHTML="<button type='button' class='fp-hulpknop' id='fpHulpKnop' aria-haspopup='true' aria-expanded='false' aria-controls='fpHulpMenu' title='Help, nieuws en voorwaarden'>"+
+      zbIcoon("<circle cx='12' cy='12' r='9'/><path d='M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17h.01'/>")+"<span>Hulp</span></button>"+
+      "<div class='fp-hulpmenu' id='fpHulpMenu' role='menu' hidden>"+hulp.map(function(h,i){return "<button type='button' role='menuitem' data-hulp='"+i+"'>"+h.t+"</button>";}).join('')+
+      "<div class='fp-hulpvoet'><a role='menuitem' href='/privacy' target='_blank' rel='noopener'>Privacy</a><a role='menuitem' href='/voorwaarden' target='_blank' rel='noopener'>Voorwaarden</a><a role='menuitem' href='/verwerkersovereenkomst' target='_blank' rel='noopener'>Verwerkersovereenkomst</a></div></div>";
+    hb.insertBefore(hw,document.getElementById('printBtn'));
+    var hk=document.getElementById('fpHulpKnop'),hm=document.getElementById('fpHulpMenu');
+    var zetHulp=function(open){hm.hidden=!open;hk.setAttribute('aria-expanded',open?'true':'false');};
+    hk.addEventListener('click',function(e){e.stopPropagation();zetHulp(hm.hidden);});
+    hm.addEventListener('click',function(e){var b=e.target.closest('[data-hulp]');if(b){zetHulp(false);hulp[+b.getAttribute('data-hulp')].f();}});
+    document.addEventListener('click',function(e){if(!hm.hidden&&!hw.contains(e.target))zetHulp(false);});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!hm.hidden){zetHulp(false);hk.focus();}});
+    // de kop "Kies oefening" kost een regel; de teller staat voortaan naast de snelfilters
+    var sf=document.querySelector('.smart-filters'),cn=document.getElementById('cnt');
+    if(sf&&cn){cn.className='sf-tel';cn.removeAttribute('style');cn.title='Aantal oefeningen in deze selectie';sf.appendChild(cn);}
     // paginakop boven het werkvlak
     var kop=document.createElement('div');kop.className='fp-kop no-print';kop.id='fpKop';
     kop.innerHTML="<div><div class='fp-eyebrow'>Werkruimte <i>·</i> <span id='fk_pr'>Trainingskaart maken</span></div><h2>Een kaart in twee minuten.</h2>"+
@@ -1300,7 +1295,7 @@ bridge2.jpg</div>
     wrap.style.setProperty('--a4z',z);
   }
   function tekenZijbalk(){
-    if(!document.getElementById('fpZij'))return;
+    if(!document.getElementById('zb_praktijk'))return;
     var P=PRAKSLOT||{};
     var pr=(SET.praktijk||'').trim(),nm=document.getElementById('zb_pnaam'),st=document.getElementById('zb_pstat'),av=document.getElementById('zb_pav');
     nm.textContent=pr||'Je praktijk';
