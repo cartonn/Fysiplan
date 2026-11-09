@@ -97,7 +97,7 @@ assert.equal((await haal(`/api/kaart?id=${BLIJFT}`)).status, 200, "storing: laat
 
 // ---- de kaartpagina ruimt bij 'niet gevonden' ook haar eigen geheugen op ----
 const kaart = await readFile(join(root, "public/kaart.html"), "utf8");
-assert.match(kaart, /status===404\)\{document\.getElementById\('fout'\)\.style\.display='block';vergeetKaartHier\(\);\}/);
+assert.match(kaart, /status===404\)\{toonNietGevonden\(\);vergeetKaartHier\(\);\}/);
 const fn = kaart.match(/function vergeetKaartHier\(\)\{[^\n]*\}/);
 assert.ok(fn, "vergeetKaartHier staat in kaart.html");
 for (const sleutel of ["fp_oefdaan_", "fp_zwaar_", "fp_priv_"]) assert.ok(fn[0].includes(`'${sleutel}'`), sleutel);

@@ -80,3 +80,5 @@ jobs:
       - run: npm run test:inboxmijn
       - run: npm run test:dubbelklikoverzicht
       - run: npm run test:kaart200taal
+      - run: npm run test:roepnaamander
+      - run: npm run test:kaartladen

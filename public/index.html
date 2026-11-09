@@ -2136,7 +2136,7 @@ bridge2.jpg</div>
     var l=w[w.length-1];
     return l.length>=3&&!/\.$/.test(l);
   }
-  var NAAM_OK='',OVERSCHRIJF='',HERNOEM_VOOR='',NA_BEVEILIG=null;
+  var NAAM_OK='',OVERSCHRIJF='',HERNOEM_VOOR='',ROEP_VOOR='',NA_BEVEILIG=null;
   // wat er naar de server gaat: zonder leeftijd en Casus (die blijven op papier en in
   // deze browser) en in v2 met het id van de kaart die deze editor bewerkt
   function serverKaart(naam){
@@ -2154,7 +2154,10 @@ bridge2.jpg</div>
        String(c.client.c_naam).trim().toLowerCase()!==String(naam).trim().toLowerCase())c.client.c_naam=String(naam).trim();
     if(IS_V2){c.kaartId=KAART_ID||'';if(KAART_ID)c.basisTs=KAART_TS||0;if(OVERSCHRIJF&&OVERSCHRIJF===String(naam).toLowerCase())c.overschrijf=true;
       // gekozen: zelfde patiënt, alleen de naam van de open kaart verbeteren (zelfde QR)
-      if(KAART_ID&&HERNOEM_VOOR&&HERNOEM_VOOR===String(naam).toLowerCase())c.hernoem=true;}
+      if(KAART_ID&&HERNOEM_VOOR&&HERNOEM_VOOR===String(naam).toLowerCase())c.hernoem=true;
+      // roepnaamvoorstel: de server hernoemt alleen bij dezelfde voornaam, anders vraagt hij
+      // eerst "andere patiënt of naam verbeteren?" (sweep 2026-11-09, Sanne)
+      else if(KAART_ID&&ROEP_VOOR&&ROEP_VOOR===String(naam).toLowerCase())c.roepnaamHernoem=true;}
     return c;
   }
   // de hint bij een serverweigering: beveiligen, botsende naam of andermans praktijk
@@ -2187,7 +2190,7 @@ bridge2.jpg</div>
   function roepnaamToepassen(){
     var cn=document.getElementById('c_naam');if(!cn)return;
     var oud=cn.value.trim(),nieuw=kaartLabelVan(oud),pr=(SET.praktijk||'').trim();
-    var zet=function(){HERNOEM_VOOR=nieuw.toLowerCase();cn.value=nieuw;cn.dispatchEvent(new Event('input',{bubbles:true}));laatsteDeel='';deelNu();};
+    var zet=function(){ROEP_VOOR=nieuw.toLowerCase();cn.value=nieuw;cn.dispatchEvent(new Event('input',{bubbles:true}));laatsteDeel='';deelNu();};
     fetch('api/kaarten?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){return r.ok?r.json():[];})
       .then(function(l){
@@ -4498,7 +4501,7 @@ bridge2.jpg</div>
         // anders stond de volledige naam daar toch (en vroeg de QR er opnieuw om)
         var cnv=document.getElementById('c_naam');
         if(cnv&&cnv.value.trim().toLowerCase()===naam.toLowerCase()){cnv.value=vs;cnv.dispatchEvent(new Event('input',{bubbles:true}));}
-        naam=vs;kn.value=vs;HERNOEM_VOOR=vs.toLowerCase();
+        naam=vs;kn.value=vs;ROEP_VOOR=vs.toLowerCase();
       }
       else NAAM_OK=naam.toLowerCase();
     }
