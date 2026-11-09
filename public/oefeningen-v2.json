@@ -319,7 +319,10 @@
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/been-pendelen.jpg",
   "kaartImg": "images/onderste-extremiteit/been-pendelen-avatar-v7.jpg",
-  "uitleg": "Sta rechtop naast een steunpunt en houd je vast. Zwaai je been ontspannen naar voren en naar achteren, terwijl je romp stil blijft."
+  "uitleg": "Sta rechtop naast een steunpunt en houd je vast. Zwaai je been ontspannen naar voren en naar achteren, terwijl je romp stil blijft.",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Bridges kicker",
@@ -375,7 +378,10 @@
   "groep": "Onderste extremiteit",
   "img": "images/onderste-extremiteit/glute-bridges.jpg",
   "kaartImg": "images/onderste-extremiteit/glute-bridges-avatar-v7.jpg",
-  "uitleg": "Lig op je rug met gebogen knieen en voeten plat op de grond. Duw je heupen omhoog tot je lichaam een rechte lijn vormt en laat rustig zakken."
+  "uitleg": "Lig op je rug met gebogen knieen en voeten plat op de grond. Duw je heupen omhoog tot je lichaam een rechte lijn vormt en laat rustig zakken.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "Hack squat",
@@ -588,35 +594,50 @@
   "groep": "Core",
   "img": "images/core/bruggen-1-been-liften.jpg",
   "kaartImg": "images/core/bruggen-1-been-liften-avatar-v7.jpg",
-  "uitleg": "Lig op je rug met één knie gebogen en je voet plat op de grond. Strek je andere been schuin omhoog. Duw je heupen omhoog via je voet op de grond, houd je heupen recht en laat ze rustig zakken. Wissel na de herhalingen van been."
+  "uitleg": "Lig op je rug met één knie gebogen en je voet plat op de grond. Strek je andere been schuin omhoog. Duw je heupen omhoog via je voet op de grond, houd je heupen recht en laat ze rustig zakken. Wissel na de herhalingen van been.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Bruggen beginner",
   "groep": "Core",
   "img": "images/core/bruggen-beginner.jpg",
   "kaartImg": "images/core/bruggen-beginner-avatar-v7.jpg",
-  "uitleg": "Lig op je rug met gebogen knieen en voeten plat op de grond. Til je heupen op tot je lichaam een rechte lijn vormt en laat ze rustig weer zakken."
+  "uitleg": "Lig op je rug met gebogen knieen en voeten plat op de grond. Til je heupen op tot je lichaam een rechte lijn vormt en laat ze rustig weer zakken.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Bruggen met halter",
   "groep": "Core",
   "img": "images/core/bruggen-met-halter.jpg",
   "kaartImg": "images/core/bruggen-met-halter-avatar-v7.jpg",
-  "uitleg": "Lig op je rug met gebogen knieen en de halter op je heupen. Duw je heupen omhoog tot een rechte lijn en laat ze langzaam weer zakken."
+  "uitleg": "Lig op je rug met gebogen knieen en de halter op je heupen. Duw je heupen omhoog tot een rechte lijn en laat ze langzaam weer zakken.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Bruggen met halter op bank",
   "groep": "Core",
   "img": "images/core/bruggen-met-halter-op-bank.jpg",
   "kaartImg": "images/core/bruggen-met-halter-op-bank-avatar-v7.jpg",
-  "uitleg": "Leun met je bovenrug op de bank, voeten op de grond en de halter op je heupen. Duw je heupen omhoog tot een rechte lijn en zak rustig terug."
+  "uitleg": "Leun met je bovenrug op de bank, voeten op de grond en de halter op je heupen. Duw je heupen omhoog tot een rechte lijn en zak rustig terug.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Bruggen op bal",
   "groep": "Core",
   "img": "images/core/bruggen-op-bal.jpg",
   "kaartImg": "images/core/bruggen-op-bal-avatar-v7.jpg",
-  "uitleg": "Lig op je rug met je knieën gebogen en je voeten bovenop de bal. Duw je heupen omhoog tot je lichaam een rechte lijn vormt, houd de bal stil en laat je heupen langzaam weer zakken."
+  "uitleg": "Lig op je rug met je knieën gebogen en je voeten bovenop de bal. Duw je heupen omhoog tot je lichaam een rechte lijn vormt, houd de bal stil en laat je heupen langzaam weer zakken.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Crunch",
@@ -644,7 +665,11 @@
   "groep": "Core",
   "img": "images/core/good-mornings.jpg",
   "kaartImg": "images/core/good-mornings-avatar-v7.jpg",
-  "uitleg": "Sta rechtop met je handen achter je hoofd en licht gebogen knieen. Buig je romp voorover vanuit je heupen met een rechte rug en kom weer omhoog."
+  "uitleg": "Sta rechtop met je handen achter je hoofd en licht gebogen knieen. Buig je romp voorover vanuit je heupen met een rechte rug en kom weer omhoog.",
+  "ook": [
+   "Rug",
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Knee elbow",
@@ -664,7 +689,8 @@
   "naam": "Mobilisatie rotatie rug",
   "groep": "Core",
   "ook": [
-   "Rug"
+   "Rug",
+   "Mobiliteit"
   ],
   "img": "images/core/mobilisatie-rotatie-rug.jpg",
   "kaartImg": "images/core/mobilisatie-rotatie-rug-avatar-v7.jpg",
@@ -765,21 +791,30 @@
   "groep": "Core",
   "img": "images/core/stick-twist.jpg",
   "kaartImg": "images/core/stick-twist-avatar-v7.jpg",
-  "uitleg": "Sta rechtop met een stok op je schouders achter je nek. Draai je romp rustig afwisselend naar links en naar rechts, je heupen blijven naar voren gericht."
+  "uitleg": "Sta rechtop met een stok op je schouders achter je nek. Draai je romp rustig afwisselend naar links en naar rechts, je heupen blijven naar voren gericht.",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Superman",
   "groep": "Core",
   "img": "images/core/superman.jpg",
   "kaartImg": "images/core/superman-avatar-v7.jpg",
-  "uitleg": "Zet je handen onder je schouders en je knieën onder je heupen, je rug is recht. Strek één arm naar voren en tegelijk het andere been naar achteren, houd je romp stil en wissel daarna van kant."
+  "uitleg": "Zet je handen onder je schouders en je knieën onder je heupen, je rug is recht. Strek één arm naar voren en tegelijk het andere been naar achteren, houd je romp stil en wissel daarna van kant.",
+  "ook": [
+   "Rug"
+  ]
  },
  {
   "naam": "Fiets",
   "groep": "Cardio",
   "img": "images/cardio/fiets.jpg",
   "kaartImg": "images/cardio/fiets-avatar-v7.jpg",
-  "uitleg": "Stel het zadel zo in dat je knie licht gebogen blijft als je trapper onderaan staat. Fiets in een rustig en gelijkmatig tempo."
+  "uitleg": "Stel het zadel zo in dat je knie licht gebogen blijft als je trapper onderaan staat. Fiets in een rustig en gelijkmatig tempo.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Jumping jacks",
@@ -807,14 +842,21 @@
   "groep": "Cardio",
   "img": "images/cardio/squat-jumps.jpg",
   "kaartImg": "images/cardio/squat-jumps-avatar-v7.jpg",
-  "uitleg": "Sta voor een lage box met je voeten op heupbreedte. Zak in een squat, spring op de box en land zacht met gebogen knieën. Stap daarna rustig weer naar beneden."
+  "uitleg": "Sta voor een lage box met je voeten op heupbreedte. Zak in een squat, spring op de box en land zacht met gebogen knieën. Stap daarna rustig weer naar beneden.",
+  "ook": [
+   "Onderste extremiteit",
+   "Wendbaarheid"
+  ]
  },
  {
   "naam": "Stairs",
   "groep": "Cardio",
   "img": "images/cardio/stairs.jpg",
   "kaartImg": "images/cardio/stairs-avatar-v7.jpg",
-  "uitleg": "Ga rechtop op de pedalen van de stepper staan en houd de leuning licht vast. Duw in een rustig tempo afwisselend je linker- en rechtervoet omlaag."
+  "uitleg": "Ga rechtop op de pedalen van de stepper staan en houd de leuning licht vast. Duw in een rustig tempo afwisselend je linker- en rechtervoet omlaag.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Balans op 1 been",
@@ -828,161 +870,234 @@
   "groep": "Bosu",
   "img": "images/bosu/bosu-brigdes.jpg",
   "kaartImg": "images/bosu/bosu-brigdes-avatar-v7.jpg",
-  "uitleg": "Lig op je rug met je voeten op de bosu en je knieen gebogen. Duw je heupen omhoog tot je lichaam een rechte lijn vormt en zak rustig terug."
+  "uitleg": "Lig op je rug met je voeten op de bosu en je knieen gebogen. Duw je heupen omhoog tot je lichaam een rechte lijn vormt en zak rustig terug.",
+  "ook": [
+   "Onderste extremiteit",
+   "Core"
+  ]
  },
  {
   "naam": "Bosu brigdes single leg",
   "groep": "Bosu",
   "img": "images/bosu/bosu-brigdes-single-leg.jpg",
   "kaartImg": "images/bosu/bosu-brigdes-single-leg-avatar-v7.jpg",
-  "uitleg": "Lig op je rug met één voet op de bolle kant van de bosu en je andere been gestrekt omhoog. Duw je heupen omhoog tot je schouders, heupen en knie één lijn vormen en zak rustig terug."
+  "uitleg": "Lig op je rug met één voet op de bolle kant van de bosu en je andere been gestrekt omhoog. Duw je heupen omhoog tot je schouders, heupen en knie één lijn vormen en zak rustig terug.",
+  "ook": [
+   "Onderste extremiteit",
+   "Core"
+  ]
  },
  {
   "naam": "Bosu chest press dumbell",
   "groep": "Bosu",
   "img": "images/bosu/bosu-chest-press-dumbell.jpg",
   "kaartImg": "images/bosu/bosu-chest-press-dumbell-avatar-v7.jpg",
-  "uitleg": "Lig met je bovenrug op de bosu, je voeten op de vloer en je heupen omhoog. Houd in elke hand een dumbbell bij je borst met je handpalmen richting je voeten. Duw de dumbbells recht omhoog en laat ze rustig terugzakken."
+  "uitleg": "Lig met je bovenrug op de bosu, je voeten op de vloer en je heupen omhoog. Houd in elke hand een dumbbell bij je borst met je handpalmen richting je voeten. Duw de dumbbells recht omhoog en laat ze rustig terugzakken.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Bosu leg pull in",
   "groep": "Bosu",
   "img": "images/bosu/bosu-leg-pull-in.jpg",
   "kaartImg": "images/bosu/bosu-leg-pull-in-avatar-v7.jpg",
-  "uitleg": "Zit op de bosu, leun iets naar achteren en steun met je handen. Trek je knieen naar je borst en strek je benen daarna weer uit."
+  "uitleg": "Zit op de bosu, leun iets naar achteren en steun met je handen. Trek je knieen naar je borst en strek je benen daarna weer uit.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "Bosu mountain climber",
   "groep": "Bosu",
   "img": "images/bosu/bosu-mountain-climber.jpg",
   "kaartImg": "images/bosu/bosu-mountain-climber-avatar-v7.jpg",
-  "uitleg": "Draai de bosu om en pak de randen vast in een plankhouding. Trek om de beurt een knie naar je borst en houd je rug recht."
+  "uitleg": "Draai de bosu om en pak de randen vast in een plankhouding. Trek om de beurt een knie naar je borst en houd je rug recht.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "Bosu plank",
   "groep": "Bosu",
   "img": "images/bosu/bosu-plank.jpg",
   "kaartImg": "images/bosu/bosu-plank-avatar-v7.jpg",
-  "uitleg": "Draai de bosu om en pak met gestrekte armen de randen vast, zet je voeten naar achteren. Houd je lichaam in een rechte lijn van hoofd tot hielen."
+  "uitleg": "Draai de bosu om en pak met gestrekte armen de randen vast, zet je voeten naar achteren. Houd je lichaam in een rechte lijn van hoofd tot hielen.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "Bosu plank leg lift",
   "groep": "Bosu",
   "img": "images/bosu/bosu-plank-leg-lift.jpg",
   "kaartImg": "images/bosu/bosu-plank-leg-lift-avatar-v7.jpg",
-  "uitleg": "Steun met je onderarmen op de bosu in een plankhouding. Til om de beurt een gestrekt been iets omhoog en houd je heupen stil."
+  "uitleg": "Steun met je onderarmen op de bosu in een plankhouding. Til om de beurt een gestrekt been iets omhoog en houd je heupen stil.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "Bosu squat",
   "groep": "Bosu",
   "img": "images/bosu/bosu-squat.jpg",
   "kaartImg": "images/bosu/bosu-squat-avatar-v7.jpg",
-  "uitleg": "Ga met beide voeten op de bosu staan. Zak met een rechte rug door je knieen alsof je gaat zitten en kom daarna rustig weer omhoog."
+  "uitleg": "Ga met beide voeten op de bosu staan. Zak met een rechte rug door je knieen alsof je gaat zitten en kom daarna rustig weer omhoog.",
+  "ook": [
+   "Onderste extremiteit",
+   "Balans en valpreventie"
+  ]
  },
  {
   "naam": "Bosu v ups",
   "groep": "Bosu",
   "img": "images/bosu/bosu-v-ups.jpg",
   "kaartImg": "images/bosu/bosu-v-ups-avatar-v7.jpg",
-  "uitleg": "Zit op de bosu en leun iets naar achteren met je benen gestrekt voor je. Breng je bovenlichaam en benen tegelijk naar elkaar toe en strek daarna weer uit."
+  "uitleg": "Zit op de bosu en leun iets naar achteren met je benen gestrekt voor je. Breng je bovenlichaam en benen tegelijk naar elkaar toe en strek daarna weer uit.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "Bosu zijw plank",
   "groep": "Bosu",
   "img": "images/bosu/bosu-zijw-plank.jpg",
   "kaartImg": "images/bosu/bosu-zijw-plank-avatar-v7.jpg",
-  "uitleg": "Steun met een gestrekte arm met je hand op de bosu, je voeten op elkaar en je andere hand op je heup. Til je heupen op tot je lichaam een rechte lijn vormt en houd deze houding vast."
+  "uitleg": "Steun met een gestrekte arm met je hand op de bosu, je voeten op elkaar en je andere hand op je heup. Til je heupen op tot je lichaam een rechte lijn vormt en houd deze houding vast.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "TRX ab roll out",
   "groep": "TRX",
   "img": "images/trx/trx-ab-roll-out.jpg",
   "kaartImg": "images/trx/trx-ab-roll-out-avatar-v7.jpg",
-  "uitleg": "Sta met je rug naar het ophangpunt, zet je voeten iets naar achteren en houd de handvatten met gestrekte armen voor je heupen. Laat je armen gestrekt naar voren en omhoog gaan terwijl je hele lichaam als een plank voorover leunt. Trek jezelf met je buikspieren terug naar de start."
+  "uitleg": "Sta met je rug naar het ophangpunt, zet je voeten iets naar achteren en houd de handvatten met gestrekte armen voor je heupen. Laat je armen gestrekt naar voren en omhoog gaan terwijl je hele lichaam als een plank voorover leunt. Trek jezelf met je buikspieren terug naar de start.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "TRX biceps curl",
   "groep": "TRX",
   "img": "images/trx/trx-biceps-curl.jpg",
   "kaartImg": "images/trx/trx-biceps-curl-avatar-v7.jpg",
-  "uitleg": "Sta met je gezicht naar het ophangpunt en leun achterover met gestrekte armen. Trek je handen naar je voorhoofd door je ellebogen te buigen en strek daarna rustig weer."
+  "uitleg": "Sta met je gezicht naar het ophangpunt en leun achterover met gestrekte armen. Trek je handen naar je voorhoofd door je ellebogen te buigen en strek daarna rustig weer.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "TRX chest press",
   "groep": "TRX",
   "img": "images/trx/trx-chest-press.jpg",
   "kaartImg": "images/trx/trx-chest-press-avatar-v7.jpg",
-  "uitleg": "Sta met je rug naar het ophangpunt en leun voorover op de handvatten, met je armen gestrekt voor je borst. Buig je ellebogen en laat je borst tussen je handen zakken. Duw jezelf weer omhoog tot je armen gestrekt zijn."
+  "uitleg": "Sta met je rug naar het ophangpunt en leun voorover op de handvatten, met je armen gestrekt voor je borst. Buig je ellebogen en laat je borst tussen je handen zakken. Duw jezelf weer omhoog tot je armen gestrekt zijn.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "TRX flyes I",
   "groep": "TRX",
   "img": "images/trx/trx-flyes-i.jpg",
   "kaartImg": "images/trx/trx-flyes-i-avatar-v7.jpg",
-  "uitleg": "Sta met je gezicht naar het ophangpunt en leun achterover met gestrekte armen en de handvatten bij elkaar voor je. Trek je gestrekte armen schuin omhoog en uit elkaar tot een Y boven je hoofd, zodat je lichaam rechtop komt. Laat je daarna rustig terug zakken."
+  "uitleg": "Sta met je gezicht naar het ophangpunt en leun achterover met gestrekte armen en de handvatten bij elkaar voor je. Trek je gestrekte armen schuin omhoog en uit elkaar tot een Y boven je hoofd, zodat je lichaam rechtop komt. Laat je daarna rustig terug zakken.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "TRX flyes II",
   "groep": "TRX",
   "img": "images/trx/trx-flyes-ii.jpg",
   "kaartImg": "images/trx/trx-flyes-ii-avatar-v7.jpg",
-  "uitleg": "Sta met je gezicht naar het ophangpunt en leun achterover met gestrekte armen voor je. Open je armen zijwaarts en trek jezelf zo omhoog, kom daarna rustig terug."
+  "uitleg": "Sta met je gezicht naar het ophangpunt en leun achterover met gestrekte armen voor je. Open je armen zijwaarts en trek jezelf zo omhoog, kom daarna rustig terug.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "TRX glute bridge",
   "groep": "TRX",
   "img": "images/trx/trx-glute-bridge.jpg",
   "kaartImg": "images/trx/trx-glute-bridge-avatar-v7.jpg",
-  "uitleg": "Lig op je rug met je hielen in de lussen en je knieen gebogen. Duw je heupen omhoog tot ze op een lijn zijn met je knieen en schouders en zak rustig terug."
+  "uitleg": "Lig op je rug met je hielen in de lussen en je knieen gebogen. Duw je heupen omhoog tot ze op een lijn zijn met je knieen en schouders en zak rustig terug.",
+  "ook": [
+   "Onderste extremiteit",
+   "Core"
+  ]
  },
  {
   "naam": "TRX lunge",
   "groep": "TRX",
   "img": "images/trx/trx-lunge.jpg",
   "kaartImg": "images/trx/trx-lunge-avatar-v7.jpg",
-  "uitleg": "Sta op een been met je andere voet achter je in de lus. Zak door je standbeen tot je knie ongeveer haaks staat en kom weer omhoog."
+  "uitleg": "Sta op een been met je andere voet achter je in de lus. Zak door je standbeen tot je knie ongeveer haaks staat en kom weer omhoog.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "TRX lunge lateral high",
   "groep": "TRX",
   "img": "images/trx/trx-lunge-lateral-high.jpg",
   "kaartImg": "images/trx/trx-lunge-lateral-high-avatar-v7.jpg",
-  "uitleg": "Sta breed met je gezicht naar het ophangpunt en houd de handvatten voor je borst vast. Verplaats je gewicht naar één kant en zak door die knie, terwijl je andere been gestrekt blijft. Duw jezelf terug naar het midden."
+  "uitleg": "Sta breed met je gezicht naar het ophangpunt en houd de handvatten voor je borst vast. Verplaats je gewicht naar één kant en zak door die knie, terwijl je andere been gestrekt blijft. Duw jezelf terug naar het midden.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "TRX lunge lateral low",
   "groep": "TRX",
   "img": "images/trx/trx-lunge-lateral-low.jpg",
   "kaartImg": "images/trx/trx-lunge-lateral-low-avatar-v7.jpg",
-  "uitleg": "Sta rechtop met je voeten op schouderbreedte en je gezicht naar het ophangpunt. Houd de handvatten met gestrekte armen voor je op borsthoogte. Stap zijwaarts uit en zak door die knie terwijl je andere been gestrekt blijft. Duw jezelf terug naar het midden."
+  "uitleg": "Sta rechtop met je voeten op schouderbreedte en je gezicht naar het ophangpunt. Houd de handvatten met gestrekte armen voor je op borsthoogte. Stap zijwaarts uit en zak door die knie terwijl je andere been gestrekt blijft. Duw jezelf terug naar het midden.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "TRX lunge reverse",
   "groep": "TRX",
   "img": "images/trx/trx-lunge-reverse.jpg",
   "kaartImg": "images/trx/trx-lunge-reverse-avatar-v7.jpg",
-  "uitleg": "Sta rechtop met de handvatten voor je. Stap met een been naar achteren en zak tot beide knieen ongeveer haaks staan, kom daarna terug naar stand."
+  "uitleg": "Sta rechtop met de handvatten voor je. Stap met een been naar achteren en zak tot beide knieen ongeveer haaks staan, kom daarna terug naar stand.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "TRX mountain climber",
   "groep": "TRX",
   "img": "images/trx/trx-mountain-climber.jpg",
   "kaartImg": "images/trx/trx-mountain-climber-avatar-v7.jpg",
-  "uitleg": "Steun op je handen met je voeten in de lussen, je lichaam in een rechte lijn. Trek om de beurt een knie richting je borst en strek het been weer."
+  "uitleg": "Steun op je handen met je voeten in de lussen, je lichaam in een rechte lijn. Trek om de beurt een knie richting je borst en strek het been weer.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "TRX plank",
   "groep": "TRX",
   "img": "images/trx/trx-plank.jpg",
   "kaartImg": "images/trx/trx-plank-avatar-v7.jpg",
-  "uitleg": "Steun op je handen onder je schouders met je voeten in de lussen. Houd je lichaam van hoofd tot hielen in een rechte lijn en span je buik aan."
+  "uitleg": "Steun op je handen onder je schouders met je voeten in de lussen. Houd je lichaam van hoofd tot hielen in een rechte lijn en span je buik aan.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "TRX plank side",
   "groep": "TRX",
   "img": "images/trx/trx-plank-side.jpg",
   "kaartImg": "images/trx/trx-plank-side-avatar-v7.jpg",
-  "uitleg": "Lig op je zij met je voeten op elkaar in de lussen en steun op je hand onder je schouder. Til je heupen op tot je lichaam een rechte lijn vormt en houd dit vast."
+  "uitleg": "Lig op je zij met je voeten op elkaar in de lussen en steun op je hand onder je schouder. Til je heupen op tot je lichaam een rechte lijn vormt en houd dit vast.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "TRX pull up",
@@ -996,91 +1111,137 @@
   "groep": "TRX",
   "img": "images/trx/trx-row.jpg",
   "kaartImg": "images/trx/trx-row-avatar-v7.jpg",
-  "uitleg": "Leun achterover met gestrekte armen en je lichaam in een rechte lijn. Trek je borst naar de handvatten door je ellebogen langs je lichaam te buigen en strek weer."
+  "uitleg": "Leun achterover met gestrekte armen en je lichaam in een rechte lijn. Trek je borst naar de handvatten door je ellebogen langs je lichaam te buigen en strek weer.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "TRX saw pikes",
   "groep": "TRX",
   "img": "images/trx/trx-saw-pikes.jpg",
   "kaartImg": "images/trx/trx-saw-pikes-avatar-v7.jpg",
-  "uitleg": "Steun op je handen met je voeten in de lussen. Duw je heupen omhoog tot een omgekeerde V en kom terug naar de rechte lijn."
+  "uitleg": "Steun op je handen met je voeten in de lussen. Duw je heupen omhoog tot een omgekeerde V en kom terug naar de rechte lijn.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "TRX squat",
   "groep": "TRX",
   "img": "images/trx/trx-squat.jpg",
   "kaartImg": "images/trx/trx-squat-avatar-v7.jpg",
-  "uitleg": "Sta rechtop met de handvatten voor je en je voeten op heupbreedte. Zak door je knieen tot je bovenbenen ongeveer horizontaal zijn en kom weer omhoog."
+  "uitleg": "Sta rechtop met de handvatten voor je en je voeten op heupbreedte. Zak door je knieen tot je bovenbenen ongeveer horizontaal zijn en kom weer omhoog.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "TRX squat overhead",
   "groep": "TRX",
   "img": "images/trx/trx-squat-overhead.jpg",
   "kaartImg": "images/trx/trx-squat-overhead-avatar-v7.jpg",
-  "uitleg": "Houd de handvatten gestrekt boven je hoofd en sta met je voeten op heupbreedte. Zak door je knieen in een squat terwijl je armen omhoog blijven en kom weer omhoog."
+  "uitleg": "Houd de handvatten gestrekt boven je hoofd en sta met je voeten op heupbreedte. Zak door je knieen in een squat terwijl je armen omhoog blijven en kom weer omhoog.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "TRX squat pistol",
   "groep": "TRX",
   "img": "images/trx/trx-squat-pistol.jpg",
   "kaartImg": "images/trx/trx-squat-pistol-avatar-v7.jpg",
-  "uitleg": "Pak de TRX-handvatten vast, sta rechtop en til een been gestrekt naar voren. Zak op het standbeen door de knie naar een diepe hurkzit en kom weer omhoog."
+  "uitleg": "Pak de TRX-handvatten vast, sta rechtop en til een been gestrekt naar voren. Zak op het standbeen door de knie naar een diepe hurkzit en kom weer omhoog.",
+  "ook": [
+   "Onderste extremiteit",
+   "Balans en valpreventie"
+  ]
  },
  {
   "naam": "TRX triceps extension",
   "groep": "TRX",
   "img": "images/trx/trx-triceps-extension.jpg",
   "kaartImg": "images/trx/trx-triceps-extension-avatar-v7.jpg",
-  "uitleg": "Sta met je rug naar het ophangpunt, leun voorover en houd de handvatten met gestrekte armen voor je op hoofdhoogte. Buig alleen je ellebogen zodat je handen naar je voorhoofd komen en je lichaam verder voorover zakt. Strek je armen weer en duw jezelf terug."
+  "uitleg": "Sta met je rug naar het ophangpunt, leun voorover en houd de handvatten met gestrekte armen voor je op hoofdhoogte. Buig alleen je ellebogen zodat je handen naar je voorhoofd komen en je lichaam verder voorover zakt. Strek je armen weer en duw jezelf terug.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "TRX triceps extension II",
   "groep": "TRX",
   "img": "images/trx/trx-triceps-extension-ii.jpg",
   "kaartImg": "images/trx/trx-triceps-extension-ii-avatar-v7.jpg",
-  "uitleg": "Sta met je rug naar het ophangpunt en leun voorover, met je ellebogen gebogen en je handen boven je hoofd. Strek je armen schuin omhoog en duw jezelf zo terug. Buig je ellebogen weer langzaam."
+  "uitleg": "Sta met je rug naar het ophangpunt en leun voorover, met je ellebogen gebogen en je handen boven je hoofd. Strek je armen schuin omhoog en duw jezelf zo terug. Buig je ellebogen weer langzaam.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Yoga butterfly stretch",
   "groep": "Yoga",
   "img": "images/yoga/yoga-butterfly-stretch.jpg",
   "kaartImg": "images/yoga/yoga-butterfly-stretch-avatar-v7.jpg",
-  "uitleg": "Zit rechtop met de voetzolen tegen elkaar en de knieën naar buiten. Laat de knieën richting de grond zakken en buig eventueel licht naar voren."
+  "uitleg": "Zit rechtop met de voetzolen tegen elkaar en de knieën naar buiten. Laat de knieën richting de grond zakken en buig eventueel licht naar voren.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga camel",
   "groep": "Yoga",
   "img": "images/yoga/yoga-camel.jpg",
   "kaartImg": "images/yoga/yoga-camel-avatar-v7.jpg",
-  "uitleg": "Kniel rechtop met de heupen boven de knieën. Leun rustig naar achteren, duw de heupen naar voren en pak je hielen vast."
+  "uitleg": "Kniel rechtop met de heupen boven de knieën. Leun rustig naar achteren, duw de heupen naar voren en pak je hielen vast.",
+  "ook": [
+   "Rug",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga cat tail",
   "groep": "Yoga",
   "img": "images/yoga/yoga-cat-tail.jpg",
   "kaartImg": "images/yoga/yoga-cat-tail-avatar-v7.jpg",
-  "uitleg": "Lig op je zij en buig je bovenste knie naar voren. Pak met de bovenste hand de enkel van je onderste been achter je vast en draai je bovenlichaam rustig open."
+  "uitleg": "Lig op je zij en buig je bovenste knie naar voren. Pak met de bovenste hand de enkel van je onderste been achter je vast en draai je bovenlichaam rustig open.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga cobra",
   "groep": "Yoga",
   "img": "images/yoga/yoga-cobra.jpg",
   "kaartImg": "images/yoga/yoga-cobra-avatar-v7.jpg",
-  "uitleg": "Lig op je buik met de handen onder je schouders. Duw je bovenlichaam omhoog, strek je armen en houd je heupen op de grond."
+  "uitleg": "Lig op je buik met de handen onder je schouders. Duw je bovenlichaam omhoog, strek je armen en houd je heupen op de grond.",
+  "ook": [
+   "Rug",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga deep squat",
   "groep": "Yoga",
   "img": "images/yoga/yoga-deep-squat.jpg",
   "kaartImg": "images/yoga/yoga-deep-squat-avatar-v7.jpg",
-  "uitleg": "Sta met de voeten iets breder dan heupbreedte. Zak in een diepe hurkzit, houd de hielen op de grond en duw met de ellebogen de knieën licht naar buiten."
+  "uitleg": "Sta met de voeten iets breder dan heupbreedte. Zak in een diepe hurkzit, houd de hielen op de grond en duw met de ellebogen de knieën licht naar buiten.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga downward dog",
   "groep": "Yoga",
   "img": "images/yoga/yoga-downward-dog.jpg",
   "kaartImg": "images/yoga/yoga-downward-dog-avatar-v7.jpg",
-  "uitleg": "Start op handen en knieën. Duw je heupen omhoog en naar achteren tot je lichaam een omgekeerde V vormt, met gestrekte armen en benen."
+  "uitleg": "Start op handen en knieën. Duw je heupen omhoog en naar achteren tot je lichaam een omgekeerde V vormt, met gestrekte armen en benen.",
+  "ook": [
+   "Mobiliteit",
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Yoga ear pressure",
@@ -1094,84 +1255,131 @@
   "groep": "Yoga",
   "img": "images/yoga/yoga-extended-child-s-pose.jpg",
   "kaartImg": "images/yoga/yoga-extended-child-s-pose-avatar-v7.jpg",
-  "uitleg": "Kniel met je billen op je hielen. Schuif je armen gestrekt naar voren en laat je borst en voorhoofd richting de grond zakken."
+  "uitleg": "Kniel met je billen op je hielen. Schuif je armen gestrekt naar voren en laat je borst en voorhoofd richting de grond zakken.",
+  "ook": [
+   "Rug",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga extended puppy",
   "groep": "Yoga",
   "img": "images/yoga/yoga-extended-puppy.jpg",
   "kaartImg": "images/yoga/yoga-extended-puppy-avatar-v7.jpg",
-  "uitleg": "Start op handen en knieën met de heupen boven de knieën. Loop je handen naar voren en laat je borst richting de grond zakken, armen gestrekt."
+  "uitleg": "Start op handen en knieën met de heupen boven de knieën. Loop je handen naar voren en laat je borst richting de grond zakken, armen gestrekt.",
+  "ook": [
+   "Rug",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga extended triangle",
   "groep": "Yoga",
   "img": "images/yoga/yoga-extended-triangle.jpg",
   "kaartImg": "images/yoga/yoga-extended-triangle-avatar-v7.jpg",
-  "uitleg": "Sta met je voeten wijd uit elkaar, draai je voorste voet naar buiten en je achterste voet iets naar binnen. Schuif je heupen opzij en laat je hand langs je voorste been zakken tot bij je enkel, terwijl je andere arm recht omhoog wijst."
+  "uitleg": "Sta met je voeten wijd uit elkaar, draai je voorste voet naar buiten en je achterste voet iets naar binnen. Schuif je heupen opzij en laat je hand langs je voorste been zakken tot bij je enkel, terwijl je andere arm recht omhoog wijst.",
+  "ook": [
+   "Mobiliteit",
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Yoga frog",
   "groep": "Yoga",
   "img": "images/yoga/yoga-frog.jpg",
   "kaartImg": "images/yoga/yoga-frog-avatar-v7.jpg",
-  "uitleg": "Steun op je onderarmen en knieën op een mat. Schuif je knieën naar buiten tot je rek voelt aan de binnenkant van je bovenbenen, en laat je heupen rustig naar achteren zakken richting je hielen."
+  "uitleg": "Steun op je onderarmen en knieën op een mat. Schuif je knieën naar buiten tot je rek voelt aan de binnenkant van je bovenbenen, en laat je heupen rustig naar achteren zakken richting je hielen.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga full boat",
   "groep": "Yoga",
   "img": "images/yoga/yoga-full-boat.jpg",
   "kaartImg": "images/yoga/yoga-full-boat-avatar-v7.jpg",
-  "uitleg": "Zit op de grond en leun licht achterover. Til je gestrekte benen op en strek je armen naar voren, zodat je lichaam een V vormt."
+  "uitleg": "Zit op de grond en leun licht achterover. Til je gestrekte benen op en strek je armen naar voren, zodat je lichaam een V vormt.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "Yoga glute stretch",
   "groep": "Yoga",
   "img": "images/yoga/yoga-glute-stretch.jpg",
   "kaartImg": "images/yoga/yoga-glute-stretch-avatar-v7.jpg",
-  "uitleg": "Lig op je rug en leg een enkel op de andere knie. Pak het onderste bovenbeen vast en trek het rustig naar je borst."
+  "uitleg": "Lig op je rug en leg een enkel op de andere knie. Pak het onderste bovenbeen vast en trek het rustig naar je borst.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga half monkey",
   "groep": "Yoga",
   "img": "images/yoga/yoga-half-monkey.jpg",
   "kaartImg": "images/yoga/yoga-half-monkey-avatar-v7.jpg",
-  "uitleg": "Kniel op een been en strek het andere been naar voren met de hiel op de grond. Schuif je heupen naar achteren en buig met een rechte rug over het gestrekte been."
+  "uitleg": "Kniel op een been en strek het andere been naar voren met de hiel op de grond. Schuif je heupen naar achteren en buig met een rechte rug over het gestrekte been.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga hamstring stretch",
   "groep": "Yoga",
   "img": "images/yoga/yoga-hamstring-stretch.jpg",
   "kaartImg": "images/yoga/yoga-hamstring-stretch-avatar-v7.jpg",
-  "uitleg": "Zit op de grond met een been gestrekt voor je en zet de voet van je andere been tegen de binnenkant van je gestrekte been. Buig vanuit je heupen naar voren en reik met je handen naar de voet van het gestrekte been."
+  "uitleg": "Zit op de grond met een been gestrekt voor je en zet de voet van je andere been tegen de binnenkant van je gestrekte been. Buig vanuit je heupen naar voren en reik met je handen naar de voet van het gestrekte been.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga happy baby",
   "groep": "Yoga",
   "img": "images/yoga/yoga-happy-baby.jpg",
   "kaartImg": "images/yoga/yoga-happy-baby-avatar-v7.jpg",
-  "uitleg": "Lig op je rug en trek je knieën naar je oksels. Pak de buitenkant van je voeten vast en houd je onderrug op de grond."
+  "uitleg": "Lig op je rug en trek je knieën naar je oksels. Pak de buitenkant van je voeten vast en houd je onderrug op de grond.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga hip flexor stretch",
   "groep": "Yoga",
   "img": "images/yoga/yoga-hip-flexor-stretch.jpg",
   "kaartImg": "images/yoga/yoga-hip-flexor-stretch-avatar-v7.jpg",
-  "uitleg": "Kniel met een voet voor je op de grond. Schuif je heupen naar voren tot je rek voelt aan de voorkant van je achterste heup, houd je romp rechtop."
+  "uitleg": "Kniel met een voet voor je op de grond. Schuif je heupen naar voren tot je rek voelt aan de voorkant van je achterste heup, houd je romp rechtop.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga knee to chest hip stretch",
   "groep": "Yoga",
   "img": "images/yoga/yoga-knee-to-chest-hip-stretch.jpg",
   "kaartImg": "images/yoga/yoga-knee-to-chest-hip-stretch-avatar-v7.jpg",
-  "uitleg": "Zit rechtop op een stoel met beide voeten plat op de grond en je schouders naar achteren en omlaag. Pak één knie met beide handen vast en trek hem rustig naar je borst tot je een rek voelt in je bil en onderrug. Houd even vast, zet je voet weer neer en wissel van been."
+  "uitleg": "Zit rechtop op een stoel met beide voeten plat op de grond en je schouders naar achteren en omlaag. Pak één knie met beide handen vast en trek hem rustig naar je borst tot je een rek voelt in je bil en onderrug. Houd even vast, zet je voet weer neer en wissel van been.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga Marichi’s III",
   "groep": "Yoga",
   "img": "images/yoga/yoga-marichi-s-iii.jpg",
   "kaartImg": "images/yoga/yoga-marichi-s-iii-avatar-v7.jpg",
-  "uitleg": "Zit met een been gestrekt en zet de andere voet plat naast je knie. Draai je romp naar de gebogen knie en zet je elleboog tegen de buitenkant van die knie."
+  "uitleg": "Zit met een been gestrekt en zet de andere voet plat naast je knie. Draai je romp naar de gebogen knie en zet je elleboog tegen de buitenkant van die knie.",
+  "ook": [
+   "Rug",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga noose",
@@ -1185,133 +1393,201 @@
   "groep": "Yoga",
   "img": "images/yoga/yoga-pigeon.jpg",
   "kaartImg": "images/yoga/yoga-pigeon-avatar-v7.jpg",
-  "uitleg": "Schuif vanuit handen en knieën een gebogen been naar voren en strek het andere been naar achteren. Zak met je heupen richting de grond en houd ze recht naar voren."
+  "uitleg": "Schuif vanuit handen en knieën een gebogen been naar voren en strek het andere been naar achteren. Zak met je heupen richting de grond en houd ze recht naar voren.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga plow",
   "groep": "Yoga",
   "img": "images/yoga/yoga-plow.jpg",
   "kaartImg": "images/yoga/yoga-plow-avatar-v7.jpg",
-  "uitleg": "Lig op je rug met je armen naast je lichaam. Breng je gestrekte benen over je hoofd naar achteren tot je tenen achter je hoofd de grond raken, en houd je armen gestrekt op de grond met de handen in elkaar."
+  "uitleg": "Lig op je rug met je armen naast je lichaam. Breng je gestrekte benen over je hoofd naar achteren tot je tenen achter je hoofd de grond raken, en houd je armen gestrekt op de grond met de handen in elkaar.",
+  "ook": [
+   "Rug",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Yoga reverse warrior",
   "groep": "Yoga",
   "img": "images/yoga/yoga-reverse-warrior.jpg",
   "kaartImg": "images/yoga/yoga-reverse-warrior-avatar-v7.jpg",
-  "uitleg": "Sta in een wijde stand met je voorste knie gebogen. Laat je achterste hand op je achterste been rusten en strek je voorste arm omhoog terwijl je zijwaarts achterover buigt."
+  "uitleg": "Sta in een wijde stand met je voorste knie gebogen. Laat je achterste hand op je achterste been rusten en strek je voorste arm omhoog terwijl je zijwaarts achterover buigt.",
+  "ook": [
+   "Mobiliteit",
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Yoga revolved downward facing dog",
   "groep": "Yoga",
   "img": "images/yoga/yoga-revolved-downward-facing-dog.jpg",
   "kaartImg": "images/yoga/yoga-revolved-downward-facing-dog-avatar-v7.jpg",
-  "uitleg": "Sta in de omgekeerde V met je handen en voeten op de grond. Pak met een hand je tegenovergestelde enkel of onderbeen en draai je romp mee."
+  "uitleg": "Sta in de omgekeerde V met je handen en voeten op de grond. Pak met een hand je tegenovergestelde enkel of onderbeen en draai je romp mee.",
+  "ook": [
+   "Mobiliteit",
+   "Rug"
+  ]
  },
  {
   "naam": "Yoga snake",
   "groep": "Yoga",
   "img": "images/yoga/yoga-snake.jpg",
   "kaartImg": "images/yoga/yoga-snake-avatar-v7.jpg",
-  "uitleg": "Lig op je buik met je voorhoofd op de mat en je armen langs je lichaam, handpalmen naar boven. Til rustig je hoofd en borst een stukje op en trek je schouders naar achteren, terwijl je benen op de grond blijven. Kom langzaam terug."
+  "uitleg": "Lig op je buik met je voorhoofd op de mat en je armen langs je lichaam, handpalmen naar boven. Til rustig je hoofd en borst een stukje op en trek je schouders naar achteren, terwijl je benen op de grond blijven. Kom langzaam terug.",
+  "ook": [
+   "Rug"
+  ]
  },
  {
   "naam": "Yoga warrior II",
   "groep": "Yoga",
   "img": "images/yoga/yoga-warrior-ii.jpg",
   "kaartImg": "images/yoga/yoga-warrior-ii-avatar-v7.jpg",
-  "uitleg": "Sta in een wijde stand en buig je voorste knie boven je enkel. Strek beide armen zijwaarts op schouderhoogte en kijk over je voorste hand."
+  "uitleg": "Sta in een wijde stand en buig je voorste knie boven je enkel. Strek beide armen zijwaarts op schouderhoogte en kijk over je voorste hand.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Yoga warrior III",
   "groep": "Yoga",
   "img": "images/yoga/yoga-warrior-iii.jpg",
   "kaartImg": "images/yoga/yoga-warrior-iii-avatar-v7.jpg",
-  "uitleg": "Sta met je ene voet een grote stap achter de andere en strek je armen boven je hoofd. Kantel vanuit je heupen naar voren en til je achterste been op, tot je lichaam van je handen tot je hiel een rechte lijn vormt."
+  "uitleg": "Sta met je ene voet een grote stap achter de andere en strek je armen boven je hoofd. Kantel vanuit je heupen naar voren en til je achterste been op, tot je lichaam van je handen tot je hiel een rechte lijn vormt.",
+  "ook": [
+   "Balans en valpreventie",
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Yoga wide angle seated forward bend",
   "groep": "Yoga",
   "img": "images/yoga/yoga-wide-angle-seated-forward-bend.jpg",
   "kaartImg": "images/yoga/yoga-wide-angle-seated-forward-bend-avatar-v7.jpg",
-  "uitleg": "Zit met je benen wijd gestrekt op de grond. Buig met een rechte rug vanuit je heupen naar voren en laat je handen naar voren schuiven."
+  "uitleg": "Zit met je benen wijd gestrekt op de grond. Buig met een rechte rug vanuit je heupen naar voren en laat je handen naar voren schuiven.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Kettlebell swing",
   "groep": "Kettlebell",
   "img": "images/kettlebell/kettlebell-swing.jpg",
   "kaartImg": "images/kettlebell/kettlebell-swing-avatar-v7.jpg",
-  "uitleg": "Sta met je voeten op heupbreedte en houd de kettlebell met twee handen tussen je benen. Zwaai hem met gestrekte armen naar voren door je heupen krachtig te strekken."
+  "uitleg": "Sta met je voeten op heupbreedte en houd de kettlebell met twee handen tussen je benen. Zwaai hem met gestrekte armen naar voren door je heupen krachtig te strekken.",
+  "ook": [
+   "Onderste extremiteit",
+   "Core"
+  ]
  },
  {
   "naam": "Kettlebelle swing one arm",
   "groep": "Kettlebell",
   "img": "images/kettlebell/kettlebelle-swing-one-arm.jpg",
   "kaartImg": "images/kettlebell/kettlebelle-swing-one-arm-avatar-v7.jpg",
-  "uitleg": "Sta met je voeten op heupbreedte en houd de kettlebell in een hand tussen je benen. Zwaai hem naar voren door je heupen krachtig te strekken, houd je rug recht."
+  "uitleg": "Sta met je voeten op heupbreedte en houd de kettlebell in een hand tussen je benen. Zwaai hem naar voren door je heupen krachtig te strekken, houd je rug recht.",
+  "ook": [
+   "Onderste extremiteit",
+   "Core"
+  ]
  },
  {
   "naam": "Bodyblade back",
   "groep": "Bodyblade",
   "img": "images/bodyblade/bodyblade-back.jpg",
   "kaartImg": "images/bodyblade/bodyblade-back-avatar-v7.jpg",
-  "uitleg": "Sta rechtop en houd de bodyblade achter je rug vast. Beweeg hem met korte snelle bewegingen heen en weer terwijl je romp stil blijft."
+  "uitleg": "Sta rechtop en houd de bodyblade achter je rug vast. Beweeg hem met korte snelle bewegingen heen en weer terwijl je romp stil blijft.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Bodyblade diagonaal",
   "groep": "Bodyblade",
   "img": "images/bodyblade/bodyblade-diagonaal.jpg",
   "kaartImg": "images/bodyblade/bodyblade-diagonaal-avatar-v7.jpg",
-  "uitleg": "Sta rechtop en houd de bodyblade met beide handen schuin voor je lichaam. Beweeg hem met korte snelle bewegingen langs de diagonale lijn heen en weer."
+  "uitleg": "Sta rechtop en houd de bodyblade met beide handen schuin voor je lichaam. Beweeg hem met korte snelle bewegingen langs de diagonale lijn heen en weer.",
+  "ook": [
+   "Bovenste extremiteit",
+   "Core"
+  ]
  },
  {
   "naam": "Bodyblade front bovengreep",
   "groep": "Bodyblade",
   "img": "images/bodyblade/bodyblade-front-bovengreep.jpg",
   "kaartImg": "images/bodyblade/bodyblade-front-bovengreep-avatar-v7.jpg",
-  "uitleg": "Sta rechtop en houd de bodyblade met een bovengreep voor je op schouderhoogte. Beweeg hem met korte snelle bewegingen heen en weer, houd je romp stil."
+  "uitleg": "Sta rechtop en houd de bodyblade met een bovengreep voor je op schouderhoogte. Beweeg hem met korte snelle bewegingen heen en weer, houd je romp stil.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Bodyblade front ondergreep",
   "groep": "Bodyblade",
   "img": "images/bodyblade/bodyblade-front-ondergreep.jpg",
   "kaartImg": "images/bodyblade/bodyblade-front-ondergreep-avatar-v7.jpg",
-  "uitleg": "Sta rechtop en houd de bodyblade met een ondergreep voor je borst, armen licht gebogen. Laat het blad snel heen en weer trillen terwijl je romp stil blijft."
+  "uitleg": "Sta rechtop en houd de bodyblade met een ondergreep voor je borst, armen licht gebogen. Laat het blad snel heen en weer trillen terwijl je romp stil blijft.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Bodyblade front squat",
   "groep": "Bodyblade",
   "img": "images/bodyblade/bodyblade-front-squat.jpg",
   "kaartImg": "images/bodyblade/bodyblade-front-squat-avatar-v7.jpg",
-  "uitleg": "Sta met je voeten op heupbreedte en houd de trillende bodyblade voor je uit. Zak in een squat door je knieen te buigen en kom rustig weer omhoog."
+  "uitleg": "Sta met je voeten op heupbreedte en houd de trillende bodyblade voor je uit. Zak in een squat door je knieen te buigen en kom rustig weer omhoog.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Bodyblade front uitstap",
   "groep": "Bodyblade",
   "img": "images/bodyblade/bodyblade-front-uitstap.jpg",
   "kaartImg": "images/bodyblade/bodyblade-front-uitstap-avatar-v7.jpg",
-  "uitleg": "Houd de trillende bodyblade voor je borst. Stap met een been naar voren in een uitvalspas, buig beide knieen en stap terug naar de beginhouding."
+  "uitleg": "Houd de trillende bodyblade voor je borst. Stap met een been naar voren in een uitvalspas, buig beide knieen en stap terug naar de beginhouding.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Bodyblade high",
   "groep": "Bodyblade",
   "img": "images/bodyblade/bodyblade-high.jpg",
   "kaartImg": "images/bodyblade/bodyblade-high-avatar-v7.jpg",
-  "uitleg": "Sta rechtop en strek je armen omhoog met de bodyblade boven je hoofd. Laat het blad heen en weer trillen terwijl je romp en armen stabiel blijven."
+  "uitleg": "Sta rechtop en strek je armen omhoog met de bodyblade boven je hoofd. Laat het blad heen en weer trillen terwijl je romp en armen stabiel blijven.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Foam rol glutes stretch",
   "groep": "Foam roller",
   "img": "images/foam-roller/foam-rol-glutes-stretch.jpg",
   "kaartImg": "images/foam-roller/foam-rol-glutes-stretch-avatar-v7.jpg",
-  "uitleg": "Ga met één bil op de foam roller zitten en leg de enkel van dat been op je andere knie. Steun met je hand achter je en rol langzaam heen en weer over je bilspier."
+  "uitleg": "Ga met één bil op de foam roller zitten en leg de enkel van dat been op je andere knie. Steun met je hand achter je en rol langzaam heen en weer over je bilspier.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Foam rol quat stretch",
   "groep": "Foam roller",
   "img": "images/foam-roller/foam-rol-quat-stretch.jpg",
   "kaartImg": "images/foam-roller/foam-rol-quat-stretch-avatar-v7.jpg",
-  "uitleg": "Lig op je buik met de foam roller onder je bovenbenen en steun op je handen met gestrekte armen. Rol langzaam heen en weer van vlak boven je knie tot je heup."
+  "uitleg": "Lig op je buik met de foam roller onder je bovenbenen en steun op je handen met gestrekte armen. Rol langzaam heen en weer van vlak boven je knie tot je heup.",
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Foam rol upper back stretch",
@@ -1325,7 +1601,11 @@
   "groep": "Speedladder",
   "img": "images/speedladder/voor-zijwaarts.jpg",
   "kaartImg": "images/speedladder/voor-zijwaarts-avatar-v7.jpg",
-  "uitleg": "Sta naast de speedladder, die in de lengte voor je ligt. Zet snel de ene en dan de andere voet in het eerste vak en stap aan de overkant weer uit. Kom zo terug in het volgende vak en beweeg vak voor vak zijwaarts langs de ladder, licht op je voorvoeten."
+  "uitleg": "Sta naast de speedladder, die in de lengte voor je ligt. Zet snel de ene en dan de andere voet in het eerste vak en stap aan de overkant weer uit. Kom zo terug in het volgende vak en beweeg vak voor vak zijwaarts langs de ladder, licht op je voorvoeten.",
+  "ook": [
+   "Wendbaarheid",
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Abdominal (apparaat)",
@@ -1346,21 +1626,30 @@
   "groep": "Apparaten",
   "img": "images/apparaten/backextensie-apparaat.jpg",
   "kaartImg": "images/apparaten/backextensie-apparaat-avatar-v7.jpg",
-  "uitleg": "Stel het kussen ter hoogte van je heupen in en haak je voeten vast. Buig je romp naar voren en kom omhoog tot je lichaam een rechte lijn vormt."
+  "uitleg": "Stel het kussen ter hoogte van je heupen in en haak je voeten vast. Buig je romp naar voren en kom omhoog tot je lichaam een rechte lijn vormt.",
+  "ook": [
+   "Rug"
+  ]
  },
  {
   "naam": "Chest press (apparaat)",
   "groep": "Apparaten",
   "img": "images/apparaten/chest-press-apparaat.jpg",
   "kaartImg": "images/apparaten/chest-press-apparaat-avatar-v7.jpg",
-  "uitleg": "Ga zitten met de handgrepen op borsthoogte. Duw de grepen naar voren tot je armen bijna gestrekt zijn en laat ze rustig terugkomen."
+  "uitleg": "Ga zitten met de handgrepen op borsthoogte. Duw de grepen naar voren tot je armen bijna gestrekt zijn en laat ze rustig terugkomen.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Chin-dip (apparaat)",
   "groep": "Apparaten",
   "img": "images/apparaten/chin-dip-apparaat.jpg",
   "kaartImg": "images/apparaten/chin-dip-apparaat-avatar-v7.jpg",
-  "uitleg": "Steun met gestrekte armen op de dipgrepen en laat je benen vrij hangen. Buig je ellebogen tot ongeveer 90 graden en laat je rustig zakken. Duw jezelf daarna weer omhoog tot je armen gestrekt zijn."
+  "uitleg": "Steun met gestrekte armen op de dipgrepen en laat je benen vrij hangen. Buig je ellebogen tot ongeveer 90 graden en laat je rustig zakken. Duw jezelf daarna weer omhoog tot je armen gestrekt zijn.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Circle (apparaat)",
@@ -1401,49 +1690,70 @@
   "groep": "Apparaten",
   "img": "images/apparaten/endy-beenstrekker.jpg",
   "kaartImg": "images/apparaten/endy-beenstrekker-avatar-v7.jpg",
-  "uitleg": "Ga zitten met je rug tegen de leuning en zet je voeten tegen de voetplaat, met gebogen knieën. Duw de plaat weg door je benen te strekken en laat hem rustig terugkomen."
+  "uitleg": "Ga zitten met je rug tegen de leuning en zet je voeten tegen de voetplaat, met gebogen knieën. Duw de plaat weg door je benen te strekken en laat hem rustig terugkomen.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Endy Buikmachine",
   "groep": "Apparaten",
   "img": "images/apparaten/endy-buikmachine.jpg",
   "kaartImg": "images/apparaten/endy-buikmachine-avatar-v7.jpg",
-  "uitleg": "Ga zitten in het apparaat met je rug tegen de leuning en pak de handgrepen vast. Buig je romp rustig naar voren en kom daarna gecontroleerd terug omhoog."
+  "uitleg": "Ga zitten in het apparaat met je rug tegen de leuning en pak de handgrepen vast. Buig je romp rustig naar voren en kom daarna gecontroleerd terug omhoog.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "Endy Fly",
   "groep": "Apparaten",
   "img": "images/apparaten/endy-fly.jpg",
   "kaartImg": "images/apparaten/endy-fly-avatar-v7.jpg",
-  "uitleg": "Ga zitten met je rug tegen de leuning en je onderarmen tegen de kussens. Beweeg je armen rustig naar elkaar toe voor je borst en laat ze daarna gecontroleerd terugkomen."
+  "uitleg": "Ga zitten met je rug tegen de leuning en je onderarmen tegen de kussens. Beweeg je armen rustig naar elkaar toe voor je borst en laat ze daarna gecontroleerd terugkomen.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Endy Heup abductie",
   "groep": "Apparaten",
   "img": "images/apparaten/endy-heup-abductie.jpg",
   "kaartImg": "images/apparaten/endy-heup-abductie-avatar-v7.jpg",
-  "uitleg": "Sta rechtop naast het apparaat met de enkelband om je buitenste been; de kabel zit laag aan de kant van je standbeen. Houd je zo nodig vast en beweeg je gestrekte been rustig zijwaarts naar buiten tot ongeveer 45 graden. Laat het daarna gecontroleerd terugkomen naast je standbeen."
+  "uitleg": "Sta rechtop naast het apparaat met de enkelband om je buitenste been; de kabel zit laag aan de kant van je standbeen. Houd je zo nodig vast en beweeg je gestrekte been rustig zijwaarts naar buiten tot ongeveer 45 graden. Laat het daarna gecontroleerd terugkomen naast je standbeen.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Endy Leg curl",
   "groep": "Apparaten",
   "img": "images/apparaten/endy-leg-curl.jpg",
   "kaartImg": "images/apparaten/endy-leg-curl-avatar-v7.jpg",
-  "uitleg": "Ga zitten met je onderbenen op het kussen en stel de leuning goed af. Buig je knieen en trek je hielen rustig naar achteren, kom daarna gecontroleerd terug."
+  "uitleg": "Ga zitten met je onderbenen op het kussen en stel de leuning goed af. Buig je knieen en trek je hielen rustig naar achteren, kom daarna gecontroleerd terug.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Endy Leg ext",
   "groep": "Apparaten",
   "img": "images/apparaten/endy-leg-ext.jpg",
   "kaartImg": "images/apparaten/endy-leg-ext-avatar-v7.jpg",
-  "uitleg": "Ga zitten met je onderbenen achter het kussen en je knieen op de draaias van het apparaat. Strek je benen rustig naar voren en laat ze daarna gecontroleerd zakken."
+  "uitleg": "Ga zitten met je onderbenen achter het kussen en je knieen op de draaias van het apparaat. Strek je benen rustig naar voren en laat ze daarna gecontroleerd zakken.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Endy Pulldown",
   "groep": "Apparaten",
   "img": "images/apparaten/endy-pulldown.jpg",
   "kaartImg": "images/apparaten/endy-pulldown-avatar-v7.jpg",
-  "uitleg": "Ga zitten en pak de stang boven je hoofd vast. Trek de stang rustig naar beneden richting je borst en laat hem daarna gecontroleerd terug omhoog gaan."
+  "uitleg": "Ga zitten en pak de stang boven je hoofd vast. Trek de stang rustig naar beneden richting je borst en laat hem daarna gecontroleerd terug omhoog gaan.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Endy Rotator",
@@ -1457,21 +1767,28 @@
   "groep": "Apparaten",
   "img": "images/apparaten/endy-rugmachine.jpg",
   "kaartImg": "images/apparaten/endy-rugmachine-avatar-v7.jpg",
-  "uitleg": "Ga zitten met je rug tegen het kussen en je voeten stevig op de steunen. Duw je romp rustig naar achteren en kom daarna gecontroleerd terug naar de beginstand."
+  "uitleg": "Ga zitten met je rug tegen het kussen en je voeten stevig op de steunen. Duw je romp rustig naar achteren en kom daarna gecontroleerd terug naar de beginstand.",
+  "ook": [
+   "Rug"
+  ]
  },
  {
   "naam": "Endy Triceps dips",
   "groep": "Apparaten",
   "img": "images/apparaten/endy-triceps-dips.jpg",
   "kaartImg": "images/apparaten/endy-triceps-dips-avatar-v7.jpg",
-  "uitleg": "Ga zitten en pak de handgrepen naast je lichaam vast. Duw de grepen rustig naar beneden tot je armen gestrekt zijn en buig ze daarna gecontroleerd terug."
+  "uitleg": "Ga zitten en pak de handgrepen naast je lichaam vast. Duw de grepen rustig naar beneden tot je armen gestrekt zijn en buig ze daarna gecontroleerd terug.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Fiets (apparaat)",
   "groep": "Apparaten",
   "img": "images/apparaten/fiets-apparaat.jpg",
   "ook": [
-   "Cardio"
+   "Cardio",
+   "Onderste extremiteit"
   ],
   "kaartImg": "images/apparaten/fiets-apparaat-avatar-v7.jpg",
   "uitleg": "Stel het zadel zo af dat je knie licht gebogen blijft als de trapper onderaan staat. Fiets in een rustig en gelijkmatig tempo."
@@ -1481,14 +1798,20 @@
   "groep": "Apparaten",
   "img": "images/apparaten/gluteus-kick-apparaat.jpg",
   "kaartImg": "images/apparaten/gluteus-kick-apparaat-avatar-v7.jpg",
-  "uitleg": "Sta rechtop met je gezicht naar het kabelapparaat en houd het apparaat vast. Doe de manchet om de enkel van je werkbeen en zet je voeten naast elkaar, knieën licht gebogen. Breng je werkbeen gestrekt naar achteren zonder je onderrug hol te trekken en kom gecontroleerd terug."
+  "uitleg": "Sta rechtop met je gezicht naar het kabelapparaat en houd het apparaat vast. Doe de manchet om de enkel van je werkbeen en zet je voeten naast elkaar, knieën licht gebogen. Breng je werkbeen gestrekt naar achteren zonder je onderrug hol te trekken en kom gecontroleerd terug.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Leg press (apparaat)",
   "groep": "Apparaten",
   "img": "images/apparaten/leg-press-apparaat.jpg",
   "kaartImg": "images/apparaten/leg-press-apparaat-avatar-v7.jpg",
-  "uitleg": "Ga zitten met je rug tegen de leuning en je voeten op heupbreedte op de plaat. Duw de plaat rustig weg tot je benen bijna gestrekt zijn en buig ze daarna gecontroleerd terug."
+  "uitleg": "Ga zitten met je rug tegen de leuning en je voeten op heupbreedte op de plaat. Duw de plaat rustig weg tot je benen bijna gestrekt zijn en buig ze daarna gecontroleerd terug.",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Loopband (apparaat)",
@@ -1522,7 +1845,8 @@
   "groep": "Apparaten",
   "img": "images/apparaten/stairs-apparaat.jpg",
   "ook": [
-   "Cardio"
+   "Cardio",
+   "Onderste extremiteit"
   ],
   "kaartImg": "images/apparaten/stairs-apparaat-avatar-v7.jpg",
   "uitleg": "Ga op de treden staan en houd zo nodig de leuning licht vast. Stap in een rustig en gelijkmatig tempo omhoog en blijf rechtop staan."
@@ -1532,7 +1856,10 @@
   "groep": "Apparaten",
   "img": "images/apparaten/vertical-row-apparaat.jpg",
   "kaartImg": "images/apparaten/vertical-row-apparaat-avatar-v7.jpg",
-  "uitleg": "Ga zitten met je borst tegen het steunkussen en pak de handgrepen. Trek de grepen rustig naar je toe met je ellebogen langs je lichaam en kom daarna gecontroleerd terug."
+  "uitleg": "Ga zitten met je borst tegen het steunkussen en pak de handgrepen. Trek de grepen rustig naar je toe met je ellebogen langs je lichaam en kom daarna gecontroleerd terug.",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Schouder voorwaarts heffen – met stok",
@@ -2932,7 +3259,10 @@
   "img": "images/nek/levator-scapulae-rek-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_28822e943fd23d8a",
   "uitleg": "Zit rechtop op een stoel met je handen op je bovenbenen en ontspannen schouders. Draai je hoofd schuin naar je oksel en laat je kin rustig zakken tot je rek voelt van je achterhoofd tot je schouderblad. Houd dit even vast, kom langzaam terug en wissel van kant.",
-  "kaartImg": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg"
+  "kaartImg": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Levator scapulae rek – functioneel staand",
@@ -2940,7 +3270,10 @@
   "img": "images/nek/levator-scapulae-rek-functioneel-staand-line-v1.png",
   "coreExerciseId": "fc_eb1fe221f6163084",
   "uitleg": "Sta rechtop met ontspannen schouders en je armen langs je lichaam. Draai je hoofd schuin naar je oksel en laat je kin zakken; leg zo nodig je hand op je achterhoofd en trek je hoofd zacht verder mee tot je rek voelt van je achterhoofd tot je schouderblad. Houd dit even vast, kom langzaam terug en wissel van kant.",
-  "kaartImg": "images/nek/levator-scapulae-rek-functioneel-staand-avatar-v8.jpg"
+  "kaartImg": "images/nek/levator-scapulae-rek-functioneel-staand-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Bovenste trapezius rek – zittend actief",
@@ -2948,7 +3281,10 @@
   "img": "images/nek/bovenste-trapezius-rek-zittend-actief-line-v1.png",
   "coreExerciseId": "fc_900ad9e6b6170739",
   "uitleg": "Zit rechtop op een stoel met je handen op je bovenbenen en ontspannen schouders. Laat je hoofd rustig opzij zakken, met je oor richting je schouder; leg zo nodig de hand van die kant over je hoofd voor een iets diepere rek. Houd dit even vast, kom langzaam terug naar het midden en wissel van kant.",
-  "kaartImg": "images/nek/bovenste-trapezius-rek-zittend-actief-avatar-v8.jpg"
+  "kaartImg": "images/nek/bovenste-trapezius-rek-zittend-actief-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Bovenste trapezius rek – functioneel staand",
@@ -2956,7 +3292,10 @@
   "img": "images/nek/bovenste-trapezius-rek-functioneel-staand-line-v1.png",
   "coreExerciseId": "fc_afeec71f0b902609",
   "uitleg": "Sta rechtop en laat je schouders ontspannen hangen. Laat je hoofd rustig opzij zakken, met je oor richting je schouder, en houd de rek even vast. Kom langzaam terug naar het midden en wissel van kant.",
-  "kaartImg": "images/nek/bovenste-trapezius-rek-functioneel-staand-avatar-v8.jpg"
+  "kaartImg": "images/nek/bovenste-trapezius-rek-functioneel-staand-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Rug bol en hol – op handen en knieën",
@@ -2964,7 +3303,10 @@
   "img": "images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png",
   "coreExerciseId": "fc_43e2f46134f44243",
   "uitleg": "Ga op handen en knieën staan met je handen onder je schouders. Maak je rug rustig bol en laat hem daarna langzaam weer hol worden.",
-  "kaartImg": "images/rug/rug-bol-en-hol-op-handen-en-knieen-avatar-v8.jpg"
+  "kaartImg": "images/rug/rug-bol-en-hol-op-handen-en-knieen-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Rug bol en hol – zittend",
@@ -2972,7 +3314,10 @@
   "img": "images/rug/rug-bol-en-hol-zittend-line-v1.png",
   "coreExerciseId": "fc_6446c0caa826b384",
   "uitleg": "Zit rechtop op een stoel met je handen op je knieën. Maak je rug rustig bol door je kin naar je borst te brengen en beweeg daarna langzaam terug naar een holle rug.",
-  "kaartImg": "images/rug/rug-bol-en-hol-zittend-avatar-v8.jpg"
+  "kaartImg": "images/rug/rug-bol-en-hol-zittend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Rug bol en hol – staand",
@@ -2980,7 +3325,10 @@
   "img": "images/rug/rug-bol-en-hol-staand-line-v1.png",
   "coreExerciseId": "fc_b5a0b1955195b0c4",
   "uitleg": "Sta rechtop en steun met je handen op je bovenbenen. Maak je rug rustig bol en beweeg daarna langzaam terug naar een holle rug.",
-  "kaartImg": "images/rug/rug-bol-en-hol-staand-avatar-v8.jpg"
+  "kaartImg": "images/rug/rug-bol-en-hol-staand-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Rug bol en hol – met lichte weerstand",
@@ -2988,7 +3336,10 @@
   "img": "images/rug/rug-bol-en-hol-met-lichte-weerstand-line-v1.png",
   "coreExerciseId": "fc_7638a0e78e3d6adf",
   "uitleg": "Ga op handen en knieën staan met je handen plat onder je schouders. Adem uit en maak je rug rustig bol, adem in en laat je rug langzaam hol worden. Beweeg mee op het ritme van je adem.",
-  "kaartImg": "images/rug/rug-bol-en-hol-met-lichte-weerstand-avatar-v8.jpg"
+  "kaartImg": "images/rug/rug-bol-en-hol-met-lichte-weerstand-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Romp draaien – liggend",
@@ -2996,7 +3347,10 @@
   "img": "images/rug/romp-draaien-liggend-line-v1.png",
   "coreExerciseId": "fc_f21f66686859c3da",
   "uitleg": "Ga op je rug liggen met gebogen knieën en je armen gespreid. Laat je knieën rustig samen naar één kant zakken en breng ze langzaam terug naar het midden. Wissel daarna van kant.",
-  "kaartImg": "images/rug/romp-draaien-liggend-avatar-v8.jpg"
+  "kaartImg": "images/rug/romp-draaien-liggend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Romp draaien – op handen en knieën",
@@ -3004,7 +3358,10 @@
   "img": "images/rug/romp-draaien-op-handen-en-knieen-line-v1.png",
   "coreExerciseId": "fc_689fa673a9e89631",
   "uitleg": "Ga op handen en knieën staan. Schuif één arm rustig onder je lichaam door zodat je romp meedraait en draai dezelfde arm daarna langzaam open naar het plafond. Wissel van arm.",
-  "kaartImg": "images/rug/romp-draaien-op-handen-en-knieen-avatar-v8.jpg"
+  "kaartImg": "images/rug/romp-draaien-op-handen-en-knieen-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Romp draaien – zittend",
@@ -3012,7 +3369,10 @@
   "img": "images/rug/romp-draaien-zittend-line-v1.png",
   "coreExerciseId": "fc_e71478262a4e04f1",
   "uitleg": "Zit rechtop op een stoel met je armen gekruist voor je borst. Draai je bovenlichaam rustig naar één kant en kom langzaam terug naar het midden. Wissel daarna van kant.",
-  "kaartImg": "images/rug/romp-draaien-zittend-avatar-v8.jpg"
+  "kaartImg": "images/rug/romp-draaien-zittend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Romp draaien – staand",
@@ -3020,7 +3380,10 @@
   "img": "images/rug/romp-draaien-staand-line-v1.png",
   "coreExerciseId": "fc_cf93c6434e719c36",
   "uitleg": "Sta rechtop met je voeten op heupbreedte en je armen gekruist voor je borst. Draai je romp rustig naar één kant en kom langzaam terug naar het midden. Wissel daarna van kant.",
-  "kaartImg": "images/rug/romp-draaien-staand-avatar-v8.jpg"
+  "kaartImg": "images/rug/romp-draaien-staand-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Romp zijwaarts buigen – liggend",
@@ -3028,7 +3391,10 @@
   "img": "images/rug/romp-zijwaarts-buigen-liggend-line-v1.png",
   "coreExerciseId": "fc_5976aa5b0e4528dc",
   "uitleg": "Ga op je rug liggen met je benen gestrekt. Schuif één hand rustig langs je zij richting je knie zodat je romp opzij buigt, en kom langzaam terug naar het midden. Wissel van kant.",
-  "kaartImg": "images/rug/romp-zijwaarts-buigen-liggend-avatar-v8.jpg"
+  "kaartImg": "images/rug/romp-zijwaarts-buigen-liggend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Romp zijwaarts buigen – zittend",
@@ -3036,7 +3402,10 @@
   "img": "images/rug/romp-zijwaarts-buigen-zittend-line-v1.png",
   "coreExerciseId": "fc_759af88530d52e67",
   "uitleg": "Zit rechtop op een stoel met je armen langs je lichaam. Laat één hand rustig langs de zijkant van de stoel naar beneden glijden en kom langzaam terug omhoog. Wissel daarna van kant.",
-  "kaartImg": "images/rug/romp-zijwaarts-buigen-zittend-avatar-v8.jpg"
+  "kaartImg": "images/rug/romp-zijwaarts-buigen-zittend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Romp zijwaarts buigen – staand",
@@ -3044,7 +3413,10 @@
   "img": "images/rug/romp-zijwaarts-buigen-staand-line-v1.png",
   "coreExerciseId": "fc_c2151d6081411f27",
   "uitleg": "Sta rechtop met je voeten op heupbreedte en je armen langs je lichaam. Laat één hand rustig langs de zijkant van je been naar beneden glijden en kom langzaam terug omhoog. Wissel van kant.",
-  "kaartImg": "images/rug/romp-zijwaarts-buigen-staand-avatar-v8.jpg"
+  "kaartImg": "images/rug/romp-zijwaarts-buigen-staand-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Rug strekken – liggend",
@@ -3052,7 +3424,10 @@
   "img": "images/rug/rug-strekken-liggend-line-v1.png",
   "coreExerciseId": "fc_991986ebdb21d76c",
   "uitleg": "Ga op je buik liggen met je handen naast je schouders. Duw je bovenlichaam rustig omhoog terwijl je heupen op de grond blijven, en zak langzaam weer terug.",
-  "kaartImg": "images/rug/rug-strekken-liggend-avatar-v8.jpg"
+  "kaartImg": "images/rug/rug-strekken-liggend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Rug strekken – op handen en knieën",
@@ -3060,7 +3435,10 @@
   "img": "images/rug/rug-strekken-op-handen-en-knieen-line-v1.png",
   "coreExerciseId": "fc_fad9de92160ed800",
   "uitleg": "Ga op handen en knieën staan. Schuif je billen rustig richting je hielen terwijl je handen ver naar voren op de grond blijven, en kom langzaam weer terug.",
-  "kaartImg": "images/rug/rug-strekken-op-handen-en-knieen-avatar-v8.jpg"
+  "kaartImg": "images/rug/rug-strekken-op-handen-en-knieen-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Rug strekken – zittend",
@@ -3068,7 +3446,10 @@
   "img": "images/rug/rug-strekken-zittend-line-v1.png",
   "coreExerciseId": "fc_7acabb5963687c38",
   "uitleg": "Zit rechtop op een stoel met je handen in je zij. Strek je rug rustig achterover terwijl je iets omhoog kijkt, en kom langzaam terug naar rechtop.",
-  "kaartImg": "images/rug/rug-strekken-zittend-avatar-v8.jpg"
+  "kaartImg": "images/rug/rug-strekken-zittend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Rug strekken – staand",
@@ -3076,7 +3457,10 @@
   "img": "images/rug/rug-strekken-staand-line-v1.png",
   "coreExerciseId": "fc_075d2bba44bc1907",
   "uitleg": "Sta rechtop met je handen in je zij op je onderrug. Strek je rug rustig achterover en kom daarna langzaam terug naar rechtop.",
-  "kaartImg": "images/rug/rug-strekken-staand-avatar-v8.jpg"
+  "kaartImg": "images/rug/rug-strekken-staand-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Knie naar borst – liggend",
@@ -3084,7 +3468,10 @@
   "img": "images/rug/knie-naar-borst-liggend-line-v1.png",
   "coreExerciseId": "fc_0301bc5a1a722f6e",
   "uitleg": "Ga op je rug liggen met je benen gestrekt. Buig één knie en pak je been met beide handen onder de knie achter je bovenbeen vast. Trek de knie rustig naar je borst, houd even vast en laat je been langzaam weer zakken; wissel van been.",
-  "kaartImg": "images/rug/knie-naar-borst-liggend-avatar-v8.jpg"
+  "kaartImg": "images/rug/knie-naar-borst-liggend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Knie naar borst – zittend",
@@ -3092,7 +3479,10 @@
   "img": "images/rug/knie-naar-borst-zittend-line-v1.png",
   "coreExerciseId": "fc_0d76c61d33323777",
   "uitleg": "Zit rechtop op een stoel. Pak één knie met beide handen vast, trek hem rustig richting je borst en zet je voet daarna langzaam weer neer. Wissel van been.",
-  "kaartImg": "images/rug/knie-naar-borst-zittend-avatar-v8.jpg"
+  "kaartImg": "images/rug/knie-naar-borst-zittend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Knie naar borst – staand",
@@ -3100,7 +3490,10 @@
   "img": "images/rug/knie-naar-borst-staand-line-v1.png",
   "coreExerciseId": "fc_c9d9fbe08c7182eb",
   "uitleg": "Sta rechtop op één been. Trek je andere knie rustig met beide handen richting je borst en zet je voet daarna langzaam weer neer. Wissel van been.",
-  "kaartImg": "images/rug/knie-naar-borst-staand-avatar-v8.jpg"
+  "kaartImg": "images/rug/knie-naar-borst-staand-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Open boek – liggend",
@@ -3108,7 +3501,10 @@
   "img": "images/rug/open-boek-liggend-line-v1.png",
   "coreExerciseId": "fc_3a97462d2cbbf47f",
   "uitleg": "Ga op je zij liggen met gebogen knieën en je armen gestrekt voor je op elkaar. Draai je bovenste arm rustig open naar de andere kant, zoals een boek dat opengaat, en breng hem langzaam terug.",
-  "kaartImg": "images/rug/open-boek-liggend-avatar-v8.jpg"
+  "kaartImg": "images/rug/open-boek-liggend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Open boek – op handen en knieën",
@@ -3116,7 +3512,10 @@
   "img": "images/rug/open-boek-op-handen-en-knieen-line-v1.png",
   "coreExerciseId": "fc_486c10a52135ebc7",
   "uitleg": "Ga op handen en knieën staan en leg één hand op je achterhoofd. Draai je elleboog rustig open naar het plafond, zoals een boek dat opengaat, en kom langzaam terug. Wissel van arm.",
-  "kaartImg": "images/rug/open-boek-op-handen-en-knieen-avatar-v8.jpg"
+  "kaartImg": "images/rug/open-boek-op-handen-en-knieen-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Open boek – zittend",
@@ -3124,7 +3523,10 @@
   "img": "images/rug/open-boek-zittend-line-v1.png",
   "coreExerciseId": "fc_848f0080a86e171f",
   "uitleg": "Zit rechtop op een stoel met je armen gestrekt voor je tegen elkaar. Beweeg één arm rustig zijwaarts naar achteren terwijl je hoofd meedraait, en breng hem langzaam terug. Wissel van arm.",
-  "kaartImg": "images/rug/open-boek-zittend-avatar-v8.jpg"
+  "kaartImg": "images/rug/open-boek-zittend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Thoracale extensie – liggend",
@@ -3132,7 +3534,10 @@
   "img": "images/rug/thoracale-extensie-liggend-line-v1.png",
   "coreExerciseId": "fc_41e4b01b4311cd5e",
   "uitleg": "Ga op je rug liggen met een opgerolde handdoek dwars onder je bovenrug en je handen achter je hoofd. Laat je bovenrug rustig over de rol strekken en kom langzaam weer terug omhoog.",
-  "kaartImg": "images/rug/thoracale-extensie-liggend-avatar-v8.jpg"
+  "kaartImg": "images/rug/thoracale-extensie-liggend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Thoracale extensie – op handen en knieën",
@@ -3140,7 +3545,10 @@
   "img": "images/rug/thoracale-extensie-op-handen-en-knieen-line-v1.png",
   "coreExerciseId": "fc_00b729ad9cfba568",
   "uitleg": "Ga op handen en knieën zitten en loop met je handen een stuk naar voren. Houd je heupen boven je knieën en laat je borst rustig richting de vloer zakken. Houd dit even vast en kom langzaam terug.",
-  "kaartImg": "images/rug/thoracale-extensie-op-handen-en-knieen-avatar-v8.jpg"
+  "kaartImg": "images/rug/thoracale-extensie-op-handen-en-knieen-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Thoracale extensie – zittend",
@@ -3148,7 +3556,10 @@
   "img": "images/rug/thoracale-extensie-zittend-line-v1.png",
   "coreExerciseId": "fc_85d97a6b4b4625d3",
   "uitleg": "Zit rechtop op een stevige stoel met een opgerolde handdoek tussen je bovenrug en de rugleuning. Leg je handen achter je nek met je ellebogen naar voren. Buig je bovenrug rustig naar achteren over de handdoek en kom langzaam terug.",
-  "kaartImg": "images/rug/thoracale-extensie-zittend-avatar-v8.jpg"
+  "kaartImg": "images/rug/thoracale-extensie-zittend-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Thoracale extensie – staand",
@@ -3156,7 +3567,10 @@
   "img": "images/rug/thoracale-extensie-staand-line-v1.png",
   "coreExerciseId": "fc_12fda57fdacad3dc",
   "uitleg": "Sta rechtop met je handen achter je hoofd. Strek je bovenrug rustig achterover terwijl je iets omhoog kijkt, en kom langzaam terug naar rechtop.",
-  "kaartImg": "images/rug/thoracale-extensie-staand-avatar-v8.jpg"
+  "kaartImg": "images/rug/thoracale-extensie-staand-avatar-v8.jpg",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "Voeten naast elkaar staan – met steun",
@@ -3387,7 +3801,10 @@
   "img": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-line-v1.png",
   "coreExerciseId": "fc_b8171927f278788b",
   "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond en leg ongeveer 3 meter voor je een markering. Sta op zonder je handen te gebruiken en loop rustig naar de markering. Draai daar om, loop terug en ga langzaam weer zitten.",
-  "kaartImg": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-avatar-v8.jpg"
+  "kaartImg": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-avatar-v8.jpg",
+  "ook": [
+   "Werk en dagelijkse handelingen"
+  ]
  },
  {
   "naam": "Dubbele taak lopen – met cognitieve taak",
@@ -3603,7 +4020,10 @@
   "img": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-line-v1.png",
   "coreExerciseId": "fc_032b55a53dbdab28",
   "uitleg": "Sta rechtop voor een licht voorwerp op de vloer. Zak rustig door je knieën met een rechte rug, pak het voorwerp dicht bij je lichaam en kom langzaam weer omhoog.",
-  "kaartImg": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-avatar-v8.jpg"
+  "kaartImg": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-ergonomische-basis-avatar-v8.jpg",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Voorwerp van vloer tillen – licht en dichtbij",
@@ -3611,7 +4031,10 @@
   "img": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-line-v1.png",
   "coreExerciseId": "fc_135ada4abb4d2796",
   "uitleg": "Sta rechtop met een licht voorwerp vlak voor je voeten op de vloer. Zak rustig door je knieën, pak het voorwerp dicht bij je lichaam en kom langzaam weer omhoog.",
-  "kaartImg": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-avatar-v8.jpg"
+  "kaartImg": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-avatar-v8.jpg",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Voorwerp van tafel pakken – licht en dichtbij",
@@ -3626,7 +4049,10 @@
   "img": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-ergonomische-basis-line-v1.png",
   "coreExerciseId": "fc_aac28a0ab28bbd7c",
   "uitleg": "Sta rechtop en dicht bij een plank of kast. Til een licht voorwerp met beide handen rustig tot boven schouderhoogte, plaats het neer en breng je armen langzaam terug omlaag.",
-  "kaartImg": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-ergonomische-basis-avatar-v8.jpg"
+  "kaartImg": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-ergonomische-basis-avatar-v8.jpg",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Boven schouderhoogte plaatsen – licht en dichtbij",
@@ -3634,7 +4060,10 @@
   "img": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-licht-en-dichtbij-line-v1.png",
   "coreExerciseId": "fc_755ad3fa6b77945f",
   "uitleg": "Sta rechtop vlak voor een plank. Houd een licht voorwerp dicht bij je lichaam, plaats het rustig boven schouderhoogte en pak het daarna langzaam weer terug.",
-  "kaartImg": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-licht-en-dichtbij-avatar-v8.jpg"
+  "kaartImg": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-licht-en-dichtbij-avatar-v8.jpg",
+  "ook": [
+   "Bovenste extremiteit"
+  ]
  },
  {
   "naam": "Duwen – licht en dichtbij",
@@ -3710,14 +4139,20 @@
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/diepe-buikactivatie-liggend-line-v1.png",
   "coreExerciseId": "fc_13a93af892cd15ed",
-  "uitleg": "Ga op je rug liggen met je knieën gebogen en je voeten plat op heupbreedte. Trek je bekkenbodem zacht naar binnen en omhoog en breng tegelijk je onderbuik iets naar binnen. Adem rustig door, houd even vast en laat langzaam los."
+  "uitleg": "Ga op je rug liggen met je knieën gebogen en je voeten plat op heupbreedte. Trek je bekkenbodem zacht naar binnen en omhoog en breng tegelijk je onderbuik iets naar binnen. Adem rustig door, houd even vast en laat langzaam los.",
+  "ook": [
+   "Core"
+  ]
  },
  {
   "naam": "Bekkenmobiliteit – liggend",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/bekkenmobiliteit-liggend-line-v1.png",
   "coreExerciseId": "fc_0c0c1d08d20d8deb",
-  "uitleg": "Ga op je rug liggen met je knieën gebogen. Kantel je bekken rustig naar voren en langzaam weer naar achteren, zodat je onderrug afwisselend hol en plat wordt."
+  "uitleg": "Ga op je rug liggen met je knieën gebogen. Kantel je bekken rustig naar voren en langzaam weer naar achteren, zodat je onderrug afwisselend hol en plat wordt.",
+  "ook": [
+   "Mobiliteit"
+  ]
  },
  {
   "naam": "360 graden ademhaling – eerste fase rustig",
@@ -3740,7 +4175,11 @@
   "img": "images/bekken-postpartum/functioneel-opstaan-functioneel-line-v1.png",
   "coreExerciseId": "fc_c59dde6438e9269d",
   "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Buig licht naar voren, sta rustig op tot je helemaal rechtop staat en ga daarna langzaam weer zitten.",
-  "kaartImg": "images/bekken-postpartum/functioneel-opstaan-functioneel-avatar-v8.jpg"
+  "kaartImg": "images/bekken-postpartum/functioneel-opstaan-functioneel-avatar-v8.jpg",
+  "ook": [
+   "Onderste extremiteit",
+   "Werk en dagelijkse handelingen"
+  ]
  },
  {
   "naam": "Zijlig heupkracht – zijlig",
@@ -3748,7 +4187,10 @@
   "img": "images/bekken-postpartum/zijlig-heupkracht-zijlig-line-v1.png",
   "coreExerciseId": "fc_2b6821717468e1cd",
   "uitleg": "Ga op je zij liggen met je benen gestrekt op elkaar. Hef je bovenste been rustig omhoog en laat het daarna langzaam weer zakken.",
-  "kaartImg": "images/bekken-postpartum/zijlig-heupkracht-zijlig-avatar-v8.jpg"
+  "kaartImg": "images/bekken-postpartum/zijlig-heupkracht-zijlig-avatar-v8.jpg",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Hop vooruit – techniek langzaam",
@@ -3756,7 +4198,10 @@
   "img": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-line-v1.png",
   "coreExerciseId": "fc_5b1d066a138ccdf3",
   "uitleg": "Sta rechtop op één been vlak achter een lijn op de vloer. Hop over de lijn naar voren, land zacht op hetzelfde been en blijf even stil staan tot je stevig staat. Hop daarna op dezelfde manier achteruit terug over de lijn.",
-  "kaartImg": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-avatar-v8.jpg"
+  "kaartImg": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-avatar-v8.jpg",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Landing op twee benen – techniek langzaam",
@@ -3764,7 +4209,10 @@
   "img": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-line-v1.png",
   "coreExerciseId": "fc_289895d1214071bf",
   "uitleg": "Sta rechtop op een lage step met je voeten op heupbreedte. Stap er rustig af en land zacht op beide voeten tegelijk, met je knieën gebogen boven je tenen. Blijf even stil staan in de landing en kom dan rustig omhoog.",
-  "kaartImg": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-avatar-v8.jpg"
+  "kaartImg": "images/sportrevalidatie/landing-op-twee-benen-techniek-langzaam-avatar-v8.jpg",
+  "ook": [
+   "Onderste extremiteit"
+  ]
  },
  {
   "naam": "Landing op één been – techniek langzaam",
@@ -3772,7 +4220,11 @@
   "img": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-line-v1.png",
   "coreExerciseId": "fc_503d65aa09365e1d",
   "uitleg": "Ga op een lage step staan met je voeten op heupbreedte. Buig licht door je knieën, spring rustig van de step en land zacht op één been op de mat, met je enkel, knie en heup gebogen.",
-  "kaartImg": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-avatar-v8.jpg"
+  "kaartImg": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-avatar-v8.jpg",
+  "ook": [
+   "Onderste extremiteit",
+   "Balans en valpreventie"
+  ]
  },
  {
   "naam": "Laterale shuffle – submaximaal",
@@ -3780,7 +4232,10 @@
   "img": "images/sportrevalidatie/laterale-shuffle-submaximaal-line-v1.png",
   "coreExerciseId": "fc_3c918288d1699acf",
   "uitleg": "Leg twee pionnen een stukje uit elkaar en sta bij één pion met je knieën licht gebogen. Beweeg met kleine, vlotte zijpasjes naar de andere pion, tik hem aan en shuffle terug.",
-  "kaartImg": "images/sportrevalidatie/laterale-shuffle-submaximaal-avatar-v8.jpg"
+  "kaartImg": "images/sportrevalidatie/laterale-shuffle-submaximaal-avatar-v8.jpg",
+  "ook": [
+   "Wendbaarheid"
+  ]
  },
  {
   "naam": "Richtingsverandering – techniek langzaam",
@@ -3788,7 +4243,10 @@
   "img": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-line-v1.png",
   "coreExerciseId": "fc_cd28b12babdbd052",
   "uitleg": "Zet twee pionnen een paar meter uit elkaar en sta rechtop bij de eerste pion. Loop of jog rustig vooruit naar de andere pion en ga daarna achteruit joggend terug naar het begin. Maak het tempo daarna langzaam wat hoger.",
-  "kaartImg": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-avatar-v8.jpg"
+  "kaartImg": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-avatar-v8.jpg",
+  "ook": [
+   "Wendbaarheid"
+  ]
  },
  {
   "naam": "Sprinttechniek marcheren – techniek langzaam",
@@ -3804,7 +4262,10 @@
   "img": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-line-v1.png",
   "coreExerciseId": "fc_34255e8d091ea3c2",
   "uitleg": "Sta rechtop met ruimte voor je. Loop of ren naar voren en versnel geleidelijk tot een vlot, niet maximaal tempo. Rem daarna gecontroleerd af en kom in ongeveer drie stappen tot stilstand.",
-  "kaartImg": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-avatar-v8.jpg"
+  "kaartImg": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-avatar-v8.jpg",
+  "ook": [
+   "Wendbaarheid"
+  ]
  },
  {
   "naam": "Alternating lunge jumps",
@@ -3819,6 +4280,10 @@
   "searchAliases": [
    "springen",
    "sprong"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Conditie"
   ]
  },
  {
@@ -3834,6 +4299,9 @@
   "searchAliases": [
    "springen",
    "sprong"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -3849,6 +4317,9 @@
   "searchAliases": [
    "springen",
    "sprong"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -3864,6 +4335,10 @@
   "searchAliases": [
    "springen",
    "sprong"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Balans en valpreventie"
   ]
  },
  {
@@ -3879,6 +4354,10 @@
   "searchAliases": [
    "springen",
    "sprong"
+  ],
+  "ook": [
+   "Conditie",
+   "Onderste extremiteit"
   ]
  },
  {
@@ -3894,6 +4373,9 @@
   "searchAliases": [
    "springen",
    "sprong"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -3910,6 +4392,10 @@
    "springen",
    "sprong",
    "touwtjespringen"
+  ],
+  "ook": [
+   "Conditie",
+   "Onderste extremiteit"
   ]
  },
  {
@@ -3929,6 +4415,9 @@
    "oefenbal",
    "kniebuiging",
    "squat"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -3947,6 +4436,9 @@
    "gymbal",
    "oefenbal",
    "plank"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -3966,6 +4458,10 @@
    "oefenbal",
    "heup",
    "heffen"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Core"
   ]
  },
  {
@@ -3987,6 +4483,9 @@
    "been",
    "buigen",
    "heffen"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -4005,6 +4504,9 @@
    "gymbal",
    "oefenbal",
    "samenknijpen"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -4024,6 +4526,9 @@
    "oefenbal",
    "borst",
    "borstspieren"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -4044,6 +4549,9 @@
    "borst",
    "borstspieren",
    "knie"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -4062,6 +4570,9 @@
    "gymbal",
    "oefenbal",
    "uitrollen"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -4080,6 +4591,9 @@
    "gymbal",
    "oefenbal",
    "buikspieren"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -4098,6 +4612,9 @@
    "gymbal",
    "oefenbal",
    "rug"
+  ],
+  "ook": [
+   "Rug"
   ]
  },
  {
@@ -4116,6 +4633,10 @@
    "gymbal",
    "oefenbal",
    "opdrukken"
+  ],
+  "ook": [
+   "Bovenste extremiteit",
+   "Core"
   ]
  },
  {
@@ -4135,6 +4656,9 @@
    "oefenbal",
    "been",
    "heffen"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -4152,6 +4676,9 @@
    "fitnessbal",
    "gymbal",
    "oefenbal"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -4173,6 +4700,9 @@
    "buigen",
    "één been",
    "balans"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -4193,6 +4723,9 @@
    "halter",
    "vlinderslag",
    "borst"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {
@@ -4214,6 +4747,9 @@
    "borstspieren",
    "drukken",
    "halter"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {
@@ -4235,6 +4771,9 @@
    "armbuiger",
    "buigen",
    "halter"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {
@@ -4253,6 +4792,9 @@
    "gymbal",
    "oefenbal",
    "draaien"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -4270,6 +4812,10 @@
    "schuimrol",
    "bil",
    "bilspieren"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -4287,6 +4833,10 @@
    "schuimrol",
    "bil",
    "bilspieren"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -4304,6 +4854,10 @@
    "schuimrol",
    "bovenbeen",
    "quadriceps"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -4321,6 +4875,10 @@
    "schuimrol",
    "hamstrings",
    "achterkant bovenbeen"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -4338,6 +4896,10 @@
    "schuimrol",
    "kuit",
    "kuiten"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -4354,6 +4916,10 @@
    "foamroller",
    "schuimrol",
    "buitenkant bovenbeen"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -4392,6 +4958,10 @@
    "rekken",
    "latissimus",
    "brede rugspier"
+  ],
+  "ook": [
+   "Bovenste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -4407,6 +4977,10 @@
   "searchAliases": [
    "foamroller",
    "schuimrol"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -4424,6 +4998,10 @@
    "schuimrol",
    "arm",
    "onderarm"
+  ],
+  "ook": [
+   "Bovenste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -4462,7 +5040,8 @@
   "naam": "Foam roller back extension",
   "groep": "Foam Roller",
   "ook": [
-   "Rug"
+   "Rug",
+   "Mobiliteit"
   ],
   "img": "images/foam-roller/foam-roller-back-extension-line-v1.png",
   "kaartImg": "images/foam-roller/foam-roller-back-extension-avatar-v8.jpg",
@@ -4491,6 +5070,10 @@
   "searchAliases": [
    "medicijnbal",
    "werpen"
+  ],
+  "ook": [
+   "Core",
+   "Conditie"
   ]
  },
  {
@@ -4507,6 +5090,9 @@
    "medicijnbal",
    "werpen",
    "gooien"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {
@@ -4524,6 +5110,9 @@
    "borst",
    "borstspieren",
    "drukken"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {
@@ -4539,6 +5128,9 @@
   "searchAliases": [
    "medicijnbal",
    "drukken"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {
@@ -4554,6 +5146,9 @@
   "searchAliases": [
    "medicijnbal",
    "draaien"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -4570,6 +5165,9 @@
    "medicijnbal",
    "knie",
    "draaien"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -4586,6 +5184,9 @@
    "medicijnbal",
    "arm",
    "opdrukken"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {
@@ -4601,6 +5202,9 @@
   "searchAliases": [
    "medicijnbal",
    "opdrukken"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {
@@ -4616,6 +5220,9 @@
   "searchAliases": [
    "medicijnbal",
    "werpen"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -4647,6 +5254,9 @@
    "medicijnbal",
    "werpen",
    "gooien"
+  ],
+  "ook": [
+   "Conditie"
   ]
  },
  {
@@ -4677,6 +5287,10 @@
   "searchAliases": [
    "medicijnbal",
    "draaien"
+  ],
+  "ook": [
+   "Bovenste extremiteit",
+   "Core"
   ]
  },
  {
@@ -4707,6 +5321,9 @@
   "searchAliases": [
    "medicijnbal",
    "buikspieren"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -4724,6 +5341,9 @@
    "losmaken",
    "heup",
    "strekken"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -4741,6 +5361,9 @@
    "losmaken",
    "heup",
    "openen"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -4775,6 +5398,9 @@
   "searchAliases": [
    "mobilisatie",
    "losmaken"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -4790,6 +5416,9 @@
   "searchAliases": [
    "rekoefening",
    "rekken"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -4861,6 +5490,9 @@
    "losmaken",
    "heup",
    "draaien"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -4878,6 +5510,9 @@
    "rekken",
    "bil",
    "bilspieren"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -4895,6 +5530,9 @@
    "rekken",
    "hamstrings",
    "achterkant bovenbeen"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -4915,6 +5553,9 @@
    "been",
    "één been",
    "balans"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -4932,6 +5573,9 @@
    "rekken",
    "bovenbeen",
    "quadriceps"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -4967,13 +5611,17 @@
    "rekoefening",
    "rekken",
    "buikspieren"
+  ],
+  "ook": [
+   "Rug"
   ]
  },
  {
   "naam": "Seated side leans",
   "groep": "Seated Chair",
   "ook": [
-   "Rug"
+   "Rug",
+   "Mobiliteit"
   ],
   "img": "images/seated-chair/seated-side-leans-line-v1.png",
   "kaartImg": "images/seated-chair/seated-side-leans-avatar-v8.jpg",
@@ -5004,13 +5652,17 @@
    "rekken",
    "latissimus",
    "brede rugspier"
+  ],
+  "ook": [
+   "Mobiliteit"
   ]
  },
  {
   "naam": "Seated lumbar rotations",
   "groep": "Seated Chair",
   "ook": [
-   "Rug"
+   "Rug",
+   "Mobiliteit"
   ],
   "img": "images/seated-chair/seated-lumbar-rotations-line-v1.png",
   "kaartImg": "images/seated-chair/seated-lumbar-rotations-avatar-v8.jpg",
@@ -5030,7 +5682,8 @@
   "naam": "Seated cat-cow",
   "groep": "Seated Chair",
   "ook": [
-   "Rug"
+   "Rug",
+   "Mobiliteit"
   ],
   "img": "images/seated-chair/seated-cat-cow-line-v1.png",
   "kaartImg": "images/seated-chair/seated-cat-cow-avatar-v8.jpg",
@@ -5080,6 +5733,10 @@
    "stoeloefening",
    "enkel",
    "draaien"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -5098,6 +5755,9 @@
    "kuit",
    "kuiten",
    "heffen"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -5115,6 +5775,9 @@
    "stoeloefening",
    "knie",
    "heffen"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -5132,6 +5795,9 @@
    "stoeloefening",
    "been",
    "strekken"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -5149,6 +5815,9 @@
    "stoeloefening",
    "elastiek",
    "weerstandsband"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -5187,6 +5856,10 @@
    "rekken",
    "hamstrings",
    "achterkant bovenbeen"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -5204,6 +5877,9 @@
    "stoeloefening",
    "buikspieren",
    "aanspannen"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -5220,6 +5896,9 @@
    "zittend",
    "stoeloefening",
    "buikspieren"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -5236,6 +5915,9 @@
    "zittend",
    "stoeloefening",
    "knie"
+  ],
+  "ook": [
+   "Core"
   ]
  },
  {
@@ -5274,6 +5956,10 @@
    "rekoefening",
    "rekken",
    "schouder"
+  ],
+  "ook": [
+   "Bovenste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -5291,6 +5977,9 @@
    "stoeloefening",
    "schouder",
    "draaien"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {
@@ -5308,6 +5997,9 @@
    "stoeloefening",
    "arm",
    "draaien"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {
@@ -5325,6 +6017,9 @@
    "stoeloefening",
    "marcheren",
    "op de plaats lopen"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -5343,6 +6038,10 @@
    "borst",
    "borstspieren",
    "openen"
+  ],
+  "ook": [
+   "Bovenste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -5360,13 +6059,17 @@
    "stoeloefening",
    "been",
    "buigen"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
   "naam": "Seated cervical stretch",
   "groep": "Seated Chair",
   "ook": [
-   "Nek"
+   "Nek",
+   "Mobiliteit"
   ],
   "img": "images/seated-chair/seated-cervical-stretch-line-v1.png",
   "kaartImg": "images/seated-chair/seated-cervical-stretch-avatar-v8.jpg",
@@ -5399,6 +6102,10 @@
    "rekoefening",
    "rekken",
    "enkel"
+  ],
+  "ook": [
+   "Onderste extremiteit",
+   "Mobiliteit"
   ]
  },
  {
@@ -5418,6 +6125,9 @@
    "drukken",
    "elastiek",
    "weerstandsband"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -5436,6 +6146,9 @@
    "kuit",
    "kuiten",
    "heffen"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -5470,6 +6183,9 @@
    "stoeloefening",
    "kniebuiging",
    "squat"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -5485,6 +6201,9 @@
   "searchAliases": [
    "staand met stoelsteun",
    "stoeloefening"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -5502,6 +6221,9 @@
    "stoeloefening",
    "heup",
    "strekken"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -5520,6 +6242,9 @@
    "rug",
    "been",
    "heffen"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
@@ -5537,13 +6262,17 @@
    "stoeloefening",
    "knie",
    "heffen"
+  ],
+  "ook": [
+   "Onderste extremiteit"
   ]
  },
  {
   "naam": "One leg standing",
   "groep": "Standing Chair",
   "ook": [
-   "Balans en valpreventie"
+   "Balans en valpreventie",
+   "Onderste extremiteit"
   ],
   "img": "images/seated-chair/standing-chair-shoulder-rotations-line-v1.png",
   "kaartImg": "images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg",
@@ -5573,6 +6302,9 @@
    "stoeloefening",
    "schouder",
    "draaien"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {
@@ -5590,6 +6322,9 @@
    "stoeloefening",
    "drukken",
    "halter"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {
@@ -5608,6 +6343,9 @@
    "biceps",
    "armbuiger",
    "buigen"
+  ],
+  "ook": [
+   "Bovenste extremiteit"
   ]
  },
  {

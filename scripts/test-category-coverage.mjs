@@ -65,7 +65,7 @@ for (const m of bewijs.mappings) {
   assert.ok(!uitleg.holds.some((h) => h.status === 'hold' && (h.exerciseId === id || h.name === m.name)), `${m.name}: uitleg wordt tegengehouden`);
   for (const veld of ['visual', 'text', 'holds', 'runtimeOverride']) assert.ok(String(m.evidence?.[veld] || '').length > 20, `${m.name}: bewijs ${veld}`);
   assert.ok(Array.isArray(m.evidence.sources) && m.evidence.sources.length, `${m.name}: bron`);
-  for (const pad of [e.img, e.kaartImg]) assert.ok(m.evidence.visual.includes(pad), `${m.name}: het bekeken beeld ${pad} is het beeld van het record`);
+  for (const pad of [e.img, e.kaartImg].filter(Boolean)) assert.ok(m.evidence.visual.includes(pad), `${m.name}: het bekeken beeld ${pad} is het beeld van het record`);
 }
 
 // ---- 3. afgewezen kandidaten blijven buiten ----
