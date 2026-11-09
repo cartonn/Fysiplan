@@ -66,9 +66,8 @@ for(const v of verwacht){
 // lijntekening en de goedgekeurde video. Daarna Crunch, Knee elbow en Leg raises (herkansing pakket 3).
 // Op 2026-11-08, na de Physitrack-crosscheck (output/physitrack-crosscheck/), de uitleg van 98
 // V2-oefeningen (waarvan 60 gedeeld met V1) in dezelfde richting als Physitrack gezet en daarna
-// 10 bijgesteld na een tweede, onafhankelijke controle.
-// Op 2026-11-09 (akkoord Ahmed) nog 20 uitleggen gelijk getrokken met Physitrack en de nieuwe pijlstijl-tekening
-// (output/physitrack-crosscheck/beelden/pijlstijl/ronde2/nieuwe-uitleg.csv).
+// 10 bijgesteld na een tweede, onafhankelijke controle. Op 2026-11-09 nog 20 uitleggen (V1 en V2)
+// aangepast aan de nieuwe pijlstijl-tekeningen, ook volgens Physitrack (output/physitrack-crosscheck/).
 // Elke andere wijziging van dit bestand laat deze test falen.
 assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'2616e7585af5c6ec02cba4b4e05b5b8e583bf35aab48d9a100c32da98c6de5bd','public/oefeningen.json is ongewijzigd');
 assert.notEqual(v2.find(x=>x.exerciseId==='fp_514654a0d4181742').kaartImg,v2.find(x=>x.exerciseId==='fp_5319c4700561725d').kaartImg);

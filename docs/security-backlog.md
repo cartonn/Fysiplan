@@ -25,6 +25,9 @@ Sanity 2026-11-09 00u op #109–#111 (videoquotum, werknotitie mee naar dossier,
 reist alleen mee in het praktijkoverzicht (achter de praktijkpoort), niet in de patiëntroute (allowlist); de nieuwe
 `innerHTML` in de app is vaste tekst. Geen gat.
 
+Te controleren (gemeld door de gebruikers-sweep 2026-11-09 06u, Mark): `/api/opname/start` met doel "oefening" geeft zonder
+beheerdersrechten 200; de server zet het stil om naar doel "kaart". Vermoedelijk onschuldig; bevestigen en eventueel 400 geven.
+
 Audit (e) 2026-11-09 00u:
 - **OPGELOST 2026-11-09 (deze PR) — MIDDEL — praktijkprofiel en logo van een praktijk zonder wachtwoord
   overschrijfbaar door iedereen.** `POST /api/praktijken` gebruikte `eisPraktijk`, die bij een niet-geclaimde praktijk

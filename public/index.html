@@ -270,6 +270,8 @@
     html.safari-print #a4wrap{position:relative;width:197mm;height:276mm;overflow:visible}
     html.safari-print #a4{position:absolute;top:0;left:197mm;width:276mm;height:197mm;min-height:197mm;max-height:197mm;transform:rotate(90deg);transform-origin:top left}
   }
+  /* × in het Kaarten-venster: tikdoel van 44 px (sweep 2026-11-09) */
+  #k_srv_lijst [data-sdel]{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
 </style>
 </head>
 <body>
@@ -4522,6 +4524,8 @@ bridge2.jpg</div>
         .catch(function(){sel.disabled=false;alert('Oefendoel opslaan is niet gelukt: geen verbinding.');});
     }
   });
+  // bezig-slot per actie en kaart (Kopie, ×): een dubbelklik geeft één vraag en één verzoek
+  var KAARTEN_BEZIG={};
   document.getElementById('k_srv_lijst').addEventListener('click',function(e){
     var m=e.target.closest('[data-mtoon]');
     if(m){var h=document.getElementById('mh_'+m.dataset.mtoon);if(h)h.style.display=h.style.display==='none'?'':'none';return;}
@@ -4729,6 +4733,11 @@ bridge2.jpg</div>
     // de app het als een níeuwe kaart (de originele kaart blijft ongemoeid).
     var kp=e.target.closest('[data-skopie]');
     if(kp){
+      // dubbelklik: één kopie, één vraag (de tweede klik valt binnen het slot)
+      var kpSlot='kopie:'+kp.dataset.skopie;
+      if(KAARTEN_BEZIG[kpSlot])return;
+      KAARTEN_BEZIG[kpSlot]=1;
+      var kpVrij=function(){delete KAARTEN_BEZIG[kpSlot];};
       fetch(praktijkKaartUrl(kp.dataset.skopie),PGET())
         .then(function(r){return r.json();})
         .then(function(d){
@@ -4742,7 +4751,8 @@ bridge2.jpg</div>
           document.getElementById('k_result').textContent='';
           var cn=document.getElementById('c_naam');if(cn)cn.focus();
         })
-        .catch(function(){alert('Kaart kopiëren is niet gelukt: geen verbinding.');});
+        .catch(function(){alert('Kaart kopiëren is niet gelukt: geen verbinding.');})
+        .then(function(){setTimeout(kpVrij,400);});
       return;
     }
     var sn=e.target.closest('[data-sein]');
@@ -4782,11 +4792,19 @@ bridge2.jpg</div>
         .catch(function(){alert('Kaart openen is niet gelukt: geen verbinding.');});
     }else if(x){
       var nm=x.dataset.sdel;
-      if(!confirm('Gedeelde kaart “'+nm+'” voor de hele praktijk verwijderen?'))return;
+      // dubbelklik: één vraag en één verwijderverzoek; de tweede klik van een
+      // dubbelklik komt pas na de vraag binnen en valt dan binnen het slot
+      var delSlot='del:'+nm;
+      if(KAARTEN_BEZIG[delSlot])return;
+      KAARTEN_BEZIG[delSlot]=1;
+      var delVrij=function(){setTimeout(function(){delete KAARTEN_BEZIG[delSlot];},400);};
+      if(!confirm('Gedeelde kaart “'+nm+'” voor de hele praktijk verwijderen?')){delVrij();return;}
+      x.disabled=true;
       fetch('api/kaarten/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',naam:nm})})
         .then(function(r){return r.json();})
-        .then(function(d){if(d.ok){toonSrvKaarten();ping('kaart-verwijderd');}else alert(d.fout||'Verwijderen is niet gelukt.');})
-        .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding.');});
+        .then(function(d){if(d.ok){toonSrvKaarten();ping('kaart-verwijderd');}else{x.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
+        .catch(function(){x.disabled=false;alert('Verwijderen is niet gelukt: geen verbinding.');})
+        .then(delVrij);
     }
   });
   document.getElementById('k_close').addEventListener('click',function(){

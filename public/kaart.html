@@ -164,6 +164,10 @@
   .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
   .chip{font:600 12.5px/1 var(--disp);color:var(--grijs);background:var(--chip);border:1px solid var(--lijn);
     padding:5px 10px;border-radius:999px;white-space:nowrap}
+  /* grote systeemtekst (200 %): een chip breder dan de kaart breekt af in plaats van
+     de dosering weg te knippen; de naam breekt lange woorden af (sweep 2026-11-09) */
+  .chip{max-width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:1.25}
+  .naam{overflow-wrap:anywhere}
   .chip b{color:var(--inkt)}
   /* afvinken per oefening: een tik "gedaan vandaag" terwijl je je set afwerkt.
      Lokaal per kaart per dag; vult zichzelf 's nachts weer leeg. Alle oefeningen
@@ -2473,7 +2477,7 @@
         .then(function(d){
           dank.style.display='block';
           var nudge=document.getElementById('mnudge');
-          if(!d.ok){dank.textContent=d.fout||tr('mfout');if(nudge)nudge.style.display='none';return;}
+          if(!d.ok){dank.textContent=(TAAL==='nl'&&d.fout)?d.fout:tr('mfout');if(nudge)nudge.style.display='none';return;}
           K.kaart.metingen=d.metingen||[];
           tekenMeting();
           dank.textContent=tr('mdank');
@@ -2533,7 +2537,7 @@
       stuur('/api/kaart/psk',{id:id,score:Number(pb.dataset.psk)})
         .then(function(d){var dank=document.getElementById('pskdank');
           if(d&&d.ok){K.kaart.psk=d.psk||[];tekenPsk();dank.textContent=trpsk('dank');}
-          else dank.textContent=(d&&d.fout)||trpsk('fout');
+          else dank.textContent=(TAAL==='nl'&&d&&d.fout)?d.fout:trpsk('fout');
           dank.style.display='block';})
         .catch(function(e){var dank=document.getElementById('pskdank');dank.textContent=e&&e.wacht?trw('een'):trpsk('fout');dank.style.display='block';});
     });

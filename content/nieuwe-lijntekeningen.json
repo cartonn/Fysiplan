@@ -20,7 +20,7 @@
       "naam": "Tandemstand – met steun",
       "groep": "Balans en valpreventie",
       "img": "images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png",
-      "sha256": "f7f062ba37ac0c8ac56de9a6d73ab401eae15a0e898c2b6b2294b0741d8a61d7",
+      "sha256": "cebc31d53069200b0c17ddfa5f3a239e3bc0407e3d0259be3fe84bdce83bb7e0",
       "bron": null,
       "bronTitel": "voorbeeldset"
     },
@@ -53,12 +53,12 @@
       "naam": "Symmetrisch opstaan – met fysieke steun",
       "groep": "Neurologische revalidatie",
       "img": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-line-v1.png",
-      "sha256": "ce1596950000d32b0c4095f58ca30e7f55751d91b04c06062b47a9c7912e9f5d",
+      "sha256": "e83dce1a8c3459a77d1f3673fea5ef3df9b181fbec63bd896ef4a858fc87f1ba",
       "bron": null,
       "bronTitel": "voorbeeldset",
       "kaartImg": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-avatar-v8.jpg",
-      "kaartSha256": "0f1a533ffacc6ba815df78a2a2aefe1a29c585355820327385ca711646d4c1aa",
-      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/05-avatar.png"
+      "kaartSha256": "35964017f13850434cea8eaba2387f96c6d095569451e72198a4a2f4b8fc1467",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars (Physitrack-crosscheck 2026-11-08)"
     },
     {
       "exerciseId": "fp_6ef74f256a43157c",
@@ -113,7 +113,7 @@
       "naam": "Nek buigen – liggend ondersteund",
       "groep": "Nek",
       "img": "images/nek/nek-buigen-liggend-ondersteund-line-v1.png",
-      "sha256": "6b1d998ec04327a7a5117d3c8ed18bd20bf6407b245d30df4e89788fd8789e0c",
+      "sha256": "9b1c63ce1699d27694ecb61d3b78d8916b7a27c4b6d55b13b8e2b70feb4dafdc",
       "bron": "https://ca.physitrack.com/home-exercise-video/head-lift-in-supine",
       "bronTitel": "Head lift in supine (Cervical flexion strengthening with head lifts, supine)",
       "kaartImg": "images/nek/nek-buigen-liggend-ondersteund-avatar-v8.jpg",
@@ -225,8 +225,8 @@
       "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilisation-%28horizontal%29-in-sitting",
       "bronTitel": "Gaze stabilisation (horizontal) in sitting (\"VRT gaze stabilization\" Eyes fixed turning head right/left, in sitting; 01)",
       "kaartImg": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar-v8.jpg",
-      "kaartSha256": "0ce26dd05f9e5cbfb11b931bef486bba8c4cc42079cce821e64d671d1bd21a13",
-      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar.png"
+      "kaartSha256": "9812888609f2d76fd94e746f34640cbec0d7d2284477dd5ab23f7ed75bf1132f",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars (Physitrack-crosscheck 2026-11-08)"
     },
     {
       "exerciseId": "fp_7f1f560bb10c6e1f",
@@ -237,8 +237,8 @@
       "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilization-during-head-rotation-%28vestibular-ocular-reflex%29",
       "bronTitel": "Gaze Stabilization during Head Rotation (vestibular ocular reflex)",
       "kaartImg": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v8.jpg",
-      "kaartSha256": "fb80d4a8a2f765b87bd0b31d551ef62ee368818aa284ac0b0dddeb1330d0d64e",
-      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v2.png"
+      "kaartSha256": "37a678bc84095838afb0b5db91cfd01327fa5ffc67702771535708023a93e194",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars (Physitrack-crosscheck 2026-11-08)"
     },
     {
       "exerciseId": "fp_e3f3ef70eda326a1",
@@ -273,8 +273,8 @@
       "bron": "https://us.physitrack.com/home-exercise-video/levator-scapula-stretching",
       "bronTitel": "Levator scapula stretching (Levator scapulae stretch, arm behind back, sitting; 02)",
       "kaartImg": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg",
-      "kaartSha256": "091f7e6ce2086c747496e9951567f7f94b2844fe3d746154cec12cd983810d73",
-      "kaartBron": "output/lege-categorieen-voorbeelden/avatars/nek/levator-scapulae-rek-zittend-actief-avatar.png"
+      "kaartSha256": "09071d4ab1a4d506e218a01db61b43c1346daefa40b3c4e647294c1c11faf895",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars (Physitrack-crosscheck 2026-11-08)"
     },
     {
       "exerciseId": "fp_f3b0887dee8f2c28",
@@ -551,7 +551,7 @@
       "naam": "Draaien op de plaats – met steun",
       "groep": "Balans en valpreventie",
       "img": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-line-v1.png",
-      "sha256": "ae14d24b33833d90c6eb87fa758bf31ba36585a34027e3d6194b121753767966",
+      "sha256": "87c4ec67759be8635bd9db3b950fbd2ca890c819c598314e92f084a5d3bfaa12",
       "bron": "https://us.physitrack.com/home-exercise-video/360-degree-turn",
       "bronTitel": "360 degree turn (Balance, standing, turning 360°)"
     },
@@ -713,7 +713,7 @@
       "naam": "Blikstabilisatie horizontaal – staand langzaam",
       "groep": "Vestibulair",
       "img": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-line-v1.png",
-      "sha256": "103a8cb6d3656674074e145a2ac52d56025f51184fa59f4c4d64bf28d0941530",
+      "sha256": "c4d2b8d6e95b63b0627b2337efd754cc7fa7392c271f8cda8e11f4d8ace18f34",
       "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilisation-%2528horizontal%2529-in-standing",
       "bronTitel": "Gaze stabilisation (horizontal) in standing"
     },

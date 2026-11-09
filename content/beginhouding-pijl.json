@@ -11,7 +11,7 @@
       "id": "002",
       "naam": "Barbell front press",
       "source": "images/bovenste-extremiteit/barbell-front-press.jpg",
-      "img": "images/beginhouding-pijl-r2/002.webp"
+      "img": "images/beginhouding-pijl-v2/002.webp"
     },
     {
       "id": "003",
@@ -47,7 +47,7 @@
       "id": "008",
       "naam": "Biceps pull",
       "source": "images/bovenste-extremiteit/biceps-pull.jpg",
-      "img": "images/beginhouding-pijl-r2/008.webp"
+      "img": "images/beginhouding-pijl-v2/008.webp"
     },
     {
       "id": "009",
@@ -83,7 +83,7 @@
       "id": "014",
       "naam": "Duplex pull",
       "source": "images/bovenste-extremiteit/duplex-pull.jpg",
-      "img": "images/beginhouding-pijl-r2/014.webp"
+      "img": "images/beginhouding-pijl-v2/014.webp"
     },
     {
       "id": "015",
@@ -95,7 +95,7 @@
       "id": "016",
       "naam": "Exo pull",
       "source": "images/bovenste-extremiteit/exo-pull.jpg",
-      "img": "images/beginhouding-pijl-r2/016.webp"
+      "img": "images/beginhouding-pijl-v2/016.webp"
     },
     {
       "id": "017",
@@ -107,13 +107,13 @@
       "id": "018",
       "naam": "French press",
       "source": "images/bovenste-extremiteit/french-press.jpg",
-      "img": "images/beginhouding-pijl-r2/018.webp"
+      "img": "images/beginhouding-pijl-v2/018.webp"
     },
     {
       "id": "019",
       "naam": "Front pully row",
       "source": "images/bovenste-extremiteit/front-pully-row.jpg",
-      "img": "images/beginhouding-pijl-r2/019.webp"
+      "img": "images/beginhouding-pijl-v2/019.webp"
     },
     {
       "id": "020",
@@ -149,7 +149,7 @@
       "id": "025",
       "naam": "Military press",
       "source": "images/bovenste-extremiteit/military-press.jpg",
-      "img": "images/beginhouding-pijl-r2/025.webp"
+      "img": "images/beginhouding-pijl-v2/025.webp"
     },
     {
       "id": "026",
@@ -167,31 +167,31 @@
       "id": "028",
       "naam": "Pully cross down",
       "source": "images/bovenste-extremiteit/pully-cross-down.jpg",
-      "img": "images/beginhouding-pijl-r2/028.webp"
+      "img": "images/beginhouding-pijl-v2/028.webp"
     },
     {
       "id": "029",
       "naam": "Pully cross over",
       "source": "images/bovenste-extremiteit/pully-cross-over.jpg",
-      "img": "images/beginhouding-pijl-r2/029.webp"
+      "img": "images/beginhouding-pijl-v2/029.webp"
     },
     {
       "id": "030",
       "naam": "Pully cross up",
       "source": "images/bovenste-extremiteit/pully-cross-up.jpg",
-      "img": "images/beginhouding-pijl-r2/030.webp"
+      "img": "images/beginhouding-pijl-v2/030.webp"
     },
     {
       "id": "031",
       "naam": "Pully dips",
       "source": "images/bovenste-extremiteit/pully-dips.jpg",
-      "img": "images/beginhouding-pijl-r2/031.webp"
+      "img": "images/beginhouding-pijl-v2/031.webp"
     },
     {
       "id": "032",
       "naam": "Pully down",
       "source": "images/bovenste-extremiteit/pully-down.jpg",
-      "img": "images/beginhouding-pijl-r2/032.webp"
+      "img": "images/beginhouding-pijl-v2/032.webp"
     },
     {
       "id": "033",
@@ -239,7 +239,7 @@
       "id": "040",
       "naam": "Triceps dips",
       "source": "images/bovenste-extremiteit/triceps-dips.jpg",
-      "img": "images/beginhouding-pijl-r2/040.webp"
+      "img": "images/beginhouding-pijl-v2/040.webp"
     },
     {
       "id": "041",
@@ -263,13 +263,13 @@
       "id": "044",
       "naam": "Wrist extension",
       "source": "images/bovenste-extremiteit/wrist-extension.jpg",
-      "img": "images/beginhouding-pijl-r2/044.webp"
+      "img": "images/beginhouding-pijl-v2/044.webp"
     },
     {
       "id": "045",
       "naam": "Wrist flexion",
       "source": "images/bovenste-extremiteit/wrist-flexion.jpg",
-      "img": "images/beginhouding-pijl-r2/045.webp"
+      "img": "images/beginhouding-pijl-v2/045.webp"
     },
     {
       "id": "046",
@@ -305,13 +305,13 @@
       "id": "051",
       "naam": "Dead lift",
       "source": "images/onderste-extremiteit/dead-lift.jpg",
-      "img": "images/beginhouding-pijl-r2/051.webp"
+      "img": "images/beginhouding-pijl-v2/051.webp"
     },
     {
       "id": "052",
       "naam": "Extension squat",
       "source": "images/onderste-extremiteit/extension-squat.jpg",
-      "img": "images/beginhouding-pijl-r2/052.webp"
+      "img": "images/beginhouding-pijl-v2/052.webp"
     },
     {
       "id": "053",
@@ -341,7 +341,7 @@
       "id": "057",
       "naam": "Kick back",
       "source": "images/onderste-extremiteit/kick-back.jpg",
-      "img": "images/beginhouding-pijl-r2/057.webp"
+      "img": "images/beginhouding-pijl-v2/057.webp"
     },
     {
       "id": "058",
@@ -389,13 +389,13 @@
       "id": "065",
       "naam": "Single leg squat",
       "source": "images/onderste-extremiteit/single-leg-squat.jpg",
-      "img": "images/beginhouding-pijl-r2/065.webp"
+      "img": "images/beginhouding-pijl-v2/065.webp"
     },
     {
       "id": "066",
       "naam": "Squat",
       "source": "images/onderste-extremiteit/squat.jpg",
-      "img": "images/beginhouding-pijl-r2/066.webp"
+      "img": "images/beginhouding-pijl-v2/066.webp"
     },
     {
       "id": "067",
@@ -479,7 +479,7 @@
       "id": "080",
       "naam": "Barbell twist",
       "source": "images/core/barbell-twist.jpg",
-      "img": "images/beginhouding-pijl-r2/080.webp"
+      "img": "images/beginhouding-pijl-v2/080.webp"
     },
     {
       "id": "081",
@@ -503,7 +503,7 @@
       "id": "084",
       "naam": "Bruggen 1 been liften",
       "source": "images/core/bruggen-1-been-liften.jpg",
-      "img": "images/beginhouding-pijl-r2/084.webp"
+      "img": "images/beginhouding-pijl-v2/084.webp"
     },
     {
       "id": "085",
@@ -533,13 +533,13 @@
       "id": "089",
       "naam": "Crunch",
       "source": "images/core/crunch.jpg",
-      "img": "images/beginhouding-pijl-r2/089.webp"
+      "img": "images/beginhouding-pijl-v2/089.webp"
     },
     {
       "id": "090",
       "naam": "Curl up",
       "source": "images/core/curl-up.jpg",
-      "img": "images/beginhouding-pijl-r2/090.webp"
+      "img": "images/beginhouding-pijl-v2/090.webp"
     },
     {
       "id": "091",
@@ -551,19 +551,19 @@
       "id": "092",
       "naam": "Good mornings",
       "source": "images/core/good-mornings.jpg",
-      "img": "images/beginhouding-pijl-r2/092.webp"
+      "img": "images/beginhouding-pijl-v2/092.webp"
     },
     {
       "id": "093",
       "naam": "Knee elbow",
       "source": "images/core/knee-elbow.jpg",
-      "img": "images/beginhouding-pijl-r2/093.webp"
+      "img": "images/beginhouding-pijl-v2/093.webp"
     },
     {
       "id": "094",
       "naam": "Leg raises",
       "source": "images/core/leg-raises.jpg",
-      "img": "images/beginhouding-pijl-r2/094.webp"
+      "img": "images/beginhouding-pijl-v2/094.webp"
     },
     {
       "id": "095",
@@ -593,7 +593,7 @@
       "id": "099",
       "naam": "Plank high",
       "source": "images/core/plank-high.jpg",
-      "img": "images/beginhouding-pijl-r2/099.webp"
+      "img": "images/beginhouding-pijl-v2/099.webp"
     },
     {
       "id": "100",
@@ -611,7 +611,7 @@
       "id": "102",
       "naam": "Reversed crunch",
       "source": "images/core/reversed-crunch.jpg",
-      "img": "images/beginhouding-pijl-r2/102.webp"
+      "img": "images/beginhouding-pijl-v2/102.webp"
     },
     {
       "id": "103",
@@ -635,7 +635,7 @@
       "id": "106",
       "naam": "Scissors 2",
       "source": "images/core/scissors-2.jpg",
-      "img": "images/beginhouding-pijl-r2/106.webp"
+      "img": "images/beginhouding-pijl-v2/106.webp"
     },
     {
       "id": "107",
@@ -653,7 +653,7 @@
       "id": "109",
       "naam": "Superman",
       "source": "images/core/superman.jpg",
-      "img": "images/beginhouding-pijl-r2/109.webp"
+      "img": "images/beginhouding-pijl-v2/109.webp"
     },
     {
       "id": "110",
@@ -725,13 +725,13 @@
       "id": "121",
       "naam": "Squat jumps",
       "source": "images/cardio/squat-jumps.jpg",
-      "img": "images/beginhouding-pijl-r2/121.webp"
+      "img": "images/beginhouding-pijl-v2/121.webp"
     },
     {
       "id": "122",
       "naam": "Stairs",
       "source": "images/cardio/stairs.jpg",
-      "img": "images/beginhouding-pijl-r2/122.webp"
+      "img": "images/beginhouding-pijl-v2/122.webp"
     },
     {
       "id": "123",
@@ -881,7 +881,7 @@
       "id": "147",
       "naam": "Bosu plank",
       "source": "images/bosu/bosu-plank.jpg",
-      "img": "images/beginhouding-pijl-r2/147.webp"
+      "img": "images/beginhouding-pijl-v2/147.webp"
     },
     {
       "id": "148",
@@ -929,7 +929,7 @@
       "id": "155",
       "naam": "TRX flyes I",
       "source": "images/trx/trx-flyes-i.jpg",
-      "img": "images/beginhouding-pijl-r2/155.webp"
+      "img": "images/beginhouding-pijl-v2/155.webp"
     },
     {
       "id": "156",
@@ -959,7 +959,7 @@
       "id": "160",
       "naam": "TRX lunge lateral low",
       "source": "images/trx/trx-lunge-lateral-low.jpg",
-      "img": "images/beginhouding-pijl-r2/160.webp"
+      "img": "images/beginhouding-pijl-v2/160.webp"
     },
     {
       "id": "161",
@@ -977,7 +977,7 @@
       "id": "163",
       "naam": "TRX plank",
       "source": "images/trx/trx-plank.jpg",
-      "img": "images/beginhouding-pijl-r2/163.webp"
+      "img": "images/beginhouding-pijl-v2/163.webp"
     },
     {
       "id": "164",
@@ -1025,7 +1025,7 @@
       "id": "171",
       "naam": "TRX triceps extension",
       "source": "images/trx/trx-triceps-extension.jpg",
-      "img": "images/beginhouding-pijl-r2/171.webp"
+      "img": "images/beginhouding-pijl-v2/171.webp"
     },
     {
       "id": "172",
@@ -1068,6 +1068,12 @@
       "naam": "Yoga downward dog",
       "source": "images/yoga/yoga-downward-dog.jpg",
       "img": "images/beginhouding-pijl-v1/178.webp"
+    },
+    {
+      "id": "179",
+      "naam": "Yoga ear pressure",
+      "source": "images/yoga/yoga-ear-pressure.jpg",
+      "img": "images/beginhouding-pijl-v2/179.webp"
     },
     {
       "id": "180",
@@ -1115,7 +1121,7 @@
       "id": "187",
       "naam": "Yoga hamstring stretch",
       "source": "images/yoga/yoga-hamstring-stretch.jpg",
-      "img": "images/beginhouding-pijl-r2/187.webp"
+      "img": "images/beginhouding-pijl-v2/187.webp"
     },
     {
       "id": "188",
@@ -1133,13 +1139,19 @@
       "id": "190",
       "naam": "Yoga knee to chest hip stretch",
       "source": "images/yoga/yoga-knee-to-chest-hip-stretch.jpg",
-      "img": "images/beginhouding-pijl-r2/190.webp"
+      "img": "images/beginhouding-pijl-v2/190.webp"
     },
     {
       "id": "191",
       "naam": "Yoga Marichi’s III",
       "source": "images/yoga/yoga-marichi-s-iii.jpg",
       "img": "images/beginhouding-pijl-v1/191.webp"
+    },
+    {
+      "id": "192",
+      "naam": "Yoga noose",
+      "source": "images/yoga/yoga-noose.jpg",
+      "img": "images/beginhouding-pijl-v2/192.webp"
     },
     {
       "id": "193",
@@ -1163,13 +1175,13 @@
       "id": "196",
       "naam": "Yoga revolved downward facing dog",
       "source": "images/yoga/yoga-revolved-downward-facing-dog.jpg",
-      "img": "images/beginhouding-pijl-r2/196.webp"
+      "img": "images/beginhouding-pijl-v2/196.webp"
     },
     {
       "id": "197",
       "naam": "Yoga snake",
       "source": "images/yoga/yoga-snake.jpg",
-      "img": "images/beginhouding-pijl-r2/197.webp"
+      "img": "images/beginhouding-pijl-v2/197.webp"
     },
     {
       "id": "198",
@@ -1241,7 +1253,7 @@
       "id": "209",
       "naam": "Bodyblade high",
       "source": "images/bodyblade/bodyblade-high.jpg",
-      "img": "images/beginhouding-pijl-r2/209.webp"
+      "img": "images/beginhouding-pijl-v2/209.webp"
     },
     {
       "id": "210",
@@ -1298,16 +1310,34 @@
       "img": "images/beginhouding-pijl-v1/218.webp"
     },
     {
+      "id": "219",
+      "naam": "Circle (apparaat)",
+      "source": "images/apparaten/circle-apparaat.jpg",
+      "img": "images/beginhouding-pijl-v2/219.webp"
+    },
+    {
       "id": "220",
       "naam": "Crosstrainer (apparaat)",
       "source": "images/apparaten/crosstrainer-apparaat.jpg",
       "img": "images/beginhouding-pijl-v1/220.webp"
     },
     {
+      "id": "221",
+      "naam": "Dorsi-pecto (apparaat)",
+      "source": "images/apparaten/dorsi-pecto-apparaat.jpg",
+      "img": "images/beginhouding-pijl-v2/221.webp"
+    },
+    {
+      "id": "222",
+      "naam": "Endy Armstrekker",
+      "source": "images/apparaten/endy-armstrekker.jpg",
+      "img": "images/beginhouding-pijl-v2/222.webp"
+    },
+    {
       "id": "223",
       "naam": "Endy Beenstrekker",
       "source": "images/apparaten/endy-beenstrekker.jpg",
-      "img": "images/beginhouding-pijl-r2/223.webp"
+      "img": "images/beginhouding-pijl-v2/223.webp"
     },
     {
       "id": "224",
@@ -1325,13 +1355,13 @@
       "id": "226",
       "naam": "Endy Heup abductie",
       "source": "images/apparaten/endy-heup-abductie.jpg",
-      "img": "images/beginhouding-pijl-r2/226.webp"
+      "img": "images/beginhouding-pijl-v2/226.webp"
     },
     {
       "id": "227",
       "naam": "Endy Leg curl",
       "source": "images/apparaten/endy-leg-curl.jpg",
-      "img": "images/beginhouding-pijl-r2/227.webp"
+      "img": "images/beginhouding-pijl-v2/227.webp"
     },
     {
       "id": "228",
@@ -1344,6 +1374,12 @@
       "naam": "Endy Pulldown",
       "source": "images/apparaten/endy-pulldown.jpg",
       "img": "images/beginhouding-pijl-v1/229.webp"
+    },
+    {
+      "id": "230",
+      "naam": "Endy Rotator",
+      "source": "images/apparaten/endy-rotator.jpg",
+      "img": "images/beginhouding-pijl-v2/230.webp"
     },
     {
       "id": "231",
@@ -1367,7 +1403,7 @@
       "id": "234",
       "naam": "Gluteus kick (apparaat)",
       "source": "images/apparaten/gluteus-kick-apparaat.jpg",
-      "img": "images/beginhouding-pijl-r2/234.webp"
+      "img": "images/beginhouding-pijl-v2/234.webp"
     },
     {
       "id": "235",
@@ -1388,6 +1424,12 @@
       "img": "images/beginhouding-pijl-v1/237.webp"
     },
     {
+      "id": "238",
+      "naam": "Rotator (apparaat)",
+      "source": "images/apparaten/rotator-apparaat.jpg",
+      "img": "images/beginhouding-pijl-v2/238.webp"
+    },
+    {
       "id": "239",
       "naam": "Stairs (apparaat)",
       "source": "images/apparaten/stairs-apparaat.jpg",
@@ -1403,7 +1445,7 @@
       "id": "241",
       "naam": "Foam roller glute med.",
       "source": "images/foam-roller/foam-roller-glute-med-line-v1.png",
-      "img": "images/beginhouding-pijl-r2/241.webp"
+      "img": "images/beginhouding-pijl-v2/241.webp"
     },
     {
       "id": "242",
@@ -1458,6 +1500,18 @@
       "naam": "Foam roller fore arm",
       "source": "images/foam-roller/foam-roller-fore-arm-line-v1.png",
       "img": "images/beginhouding-pijl-v1/250.webp"
+    },
+    {
+      "id": "251",
+      "naam": "Foam roller back lower cross",
+      "source": "images/foam-roller/foam-roller-back-lower-cross-line-v1.png",
+      "img": "images/beginhouding-pijl-v2/251.webp"
+    },
+    {
+      "id": "252",
+      "naam": "Foam roller back lower",
+      "source": "images/foam-roller/foam-roller-back-lower-line-v1.png",
+      "img": "images/beginhouding-pijl-v2/252.webp"
     },
     {
       "id": "253",
@@ -1547,13 +1601,13 @@
       "id": "267",
       "naam": "Med ball lunge overhead press",
       "source": "images/medicine-ball/medicine-ball-lunge-overhead-press-line-v1.png",
-      "img": "images/beginhouding-pijl-r2/267.webp"
+      "img": "images/beginhouding-pijl-v2/267.webp"
     },
     {
       "id": "268",
       "naam": "Med ball V-ups",
       "source": "images/medicine-ball/medicine-ball-v-ups-line-v1.png",
-      "img": "images/beginhouding-pijl-r2/268.webp"
+      "img": "images/beginhouding-pijl-v2/268.webp"
     },
     {
       "id": "269",
@@ -1727,7 +1781,7 @@
       "id": "297",
       "naam": "Seated chair crunches",
       "source": "images/seated-chair/seated-chair-crunches-line-v1.png",
-      "img": "images/beginhouding-pijl-r2/297.webp"
+      "img": "images/beginhouding-pijl-v2/297.webp"
     },
     {
       "id": "298",
@@ -1817,7 +1871,7 @@
       "id": "312",
       "naam": "Standing chair abductie",
       "source": "images/seated-chair/standing-chair-abduction-line-v1.png",
-      "img": "images/beginhouding-pijl-v1/312.webp"
+      "img": "images/beginhouding-pijl-v2/312.webp"
     },
     {
       "id": "313",
@@ -1860,107 +1914,7 @@
       "naam": "Seated biceps curl",
       "source": "images/seated-chair/seated-biceps-curl-line-v1.png",
       "img": "images/beginhouding-pijl-v1/319.webp"
-    },
-    {
-      "id": "r2-153",
-      "naam": "Yoga ear pressure",
-      "source": "images/yoga/yoga-ear-pressure.jpg",
-      "img": "images/beginhouding-pijl-r2/r2-153.webp"
-    },
-    {
-      "id": "r2-166",
-      "naam": "Yoga noose",
-      "source": "images/yoga/yoga-noose.jpg",
-      "img": "images/beginhouding-pijl-r2/r2-166.webp"
-    },
-    {
-      "id": "r2-193",
-      "naam": "Circle (apparaat)",
-      "source": "images/apparaten/circle-apparaat.jpg",
-      "img": "images/beginhouding-pijl-r2/r2-193.webp"
-    },
-    {
-      "id": "r2-195",
-      "naam": "Dorsi-pecto (apparaat)",
-      "source": "images/apparaten/dorsi-pecto-apparaat.jpg",
-      "img": "images/beginhouding-pijl-r2/r2-195.webp"
-    },
-    {
-      "id": "r2-196",
-      "naam": "Endy Armstrekker",
-      "source": "images/apparaten/endy-armstrekker.jpg",
-      "img": "images/beginhouding-pijl-r2/r2-196.webp"
-    },
-    {
-      "id": "r2-212",
-      "naam": "Rotator (apparaat)",
-      "source": "images/apparaten/rotator-apparaat.jpg",
-      "img": "images/beginhouding-pijl-r2/r2-212.webp"
-    },
-    {
-      "id": "r2-535",
-      "naam": "Foam roller back lower cross",
-      "source": "images/foam-roller/foam-roller-back-lower-cross-line-v1.png",
-      "img": "images/beginhouding-pijl-r2/r2-535.webp"
-    },
-    {
-      "id": "r2-536",
-      "naam": "Foam roller back lower",
-      "source": "images/foam-roller/foam-roller-back-lower-line-v1.png",
-      "img": "images/beginhouding-pijl-r2/r2-536.webp"
-    },
-    {
-      "id": "r2-204",
-      "naam": "Endy Rotator",
-      "source": "images/apparaten/endy-rotator.jpg",
-      "img": "images/beginhouding-pijl-r2/r2-204.webp"
     }
   ],
-  "withheld": [
-    {
-      "id": "179",
-      "naam": "Yoga ear pressure",
-      "reason": "De pijl toont alleen de eerste rolrichting. Het buigen van de knieën naast de oren en de nekbelasting zijn niet afdoende uitgelegd met één pijl. Uitvoering en geschiktheid door therapeut laten bevestigen."
-    },
-    {
-      "id": "192",
-      "naam": "Yoga noose",
-      "reason": "De pijl toont alleen rompdraaiing. Arm om knieën en handbinding achter de rug ontbreken als vervolgstap. Bevestig of een korte tekst of een tweede detailbeeld nodig is."
-    },
-    {
-      "id": "219",
-      "naam": "Circle (apparaat)",
-      "reason": "Bron lijkt een apparaat met twee zwaaiarmen; nieuw concept is een armcrank. Niet als hetzelfde apparaat goedgekeurd. Foto of model van Circle nodig."
-    },
-    {
-      "id": "221",
-      "naam": "Dorsi-pecto (apparaat)",
-      "reason": "Bron toont borst-fly, uitleg beschrijft neerwaarts trekken. Concept toont borst-fly op generiek toestel, geen geverifieerd Dorsi-pecto-model. Bevestig uitvoering en apparaat."
-    },
-    {
-      "id": "222",
-      "naam": "Endy Armstrekker",
-      "reason": "Bron toont voorwaarts drukken; uitleg beschrijft triceps strekken naar beneden. Concept volgt voorwaartse druk. Bevestig bedoelde Endy-uitvoering."
-    },
-    {
-      "id": "230",
-      "naam": "Endy Rotator",
-      "reason": "Bron toont onderarm omhoog met andere apparaatstand; tekst beschrijft buitenwaartse rotatie met bovenarm langs romp. Concept volgt tekst. Foto of model nodig."
-    },
-    {
-      "id": "238",
-      "naam": "Rotator (apparaat)",
-      "reason": "Bron toont romprotatie; uitleg beschrijft schouderrotatie. Concept volgt romprotatie. Bevestig correctie van uitleg vóór gebruik."
-    },
-    {
-      "id": "251",
-      "naam": "Foam roller back lower cross",
-      "reason": "Veiligheidspunt: roller direct onder lendenwervels. Niet vrijgegeven en geen rolpijl toegevoegd. Kies met therapeut een andere uitvoering of verwijder deze kaart."
-    },
-    {
-      "id": "252",
-      "naam": "Foam roller back lower",
-      "reason": "Veiligheidspunt: rollen direct over lage rug. Niet vrijgegeven en geen rolpijl toegevoegd. Kies met therapeut een andere uitvoering of verwijder deze kaart."
-    }
-  ]
+  "withheld": []
 }

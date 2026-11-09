@@ -1,0 +1,1361 @@
+{
+  "datum": "2026-11-09",
+  "bron": "branch claude/project-thread-i8kbtd, output/physitrack-crosscheck/beelden/",
+  "akkoord": "Ahmed, \"Akkoord app\" (2026-11-09)",
+  "tekeningen": [
+    {
+      "nr": 1,
+      "naam": "Barbell front press",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/002.webp",
+      "sha256": "1c89204c7ff0fd4756cfa8e33e7204e9eed53b406546ecf98fce98182dcf3495",
+      "bron": "pijlstijl/ronde2/nieuw/1-barbell-front-press.png"
+    },
+    {
+      "nr": 7,
+      "naam": "Biceps pull",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/008.webp",
+      "sha256": "3552ac43df08ae23ee22904940e83b67366b7829742dc7b3ec5d48c5610a367a",
+      "bron": "pijlstijl/ronde2/nieuw/7-biceps-pull.png"
+    },
+    {
+      "nr": 13,
+      "naam": "Duplex pull",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/014.webp",
+      "sha256": "e564fae24a4cf0c406cb22d306783bf99dba3eb2734f2854912c1f34c2bb9ac5",
+      "bron": "pijlstijl/ronde2/nieuw/13-duplex-pull.png"
+    },
+    {
+      "nr": 15,
+      "naam": "Exo pull",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/016.webp",
+      "sha256": "5e6a027e01f84def4db476e860786bef11c65d730f2238cb5fa238d9f5bc8788",
+      "bron": "pijlstijl/ronde2/nieuw/15-exo-pull.png"
+    },
+    {
+      "nr": 17,
+      "naam": "French press",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/018.webp",
+      "sha256": "433c6737fdffc7d1a3844e99dc9fa46ae283c207871246ac931a742d0336cd43",
+      "bron": "pijlstijl/ronde2/nieuw/17-french-press.png"
+    },
+    {
+      "nr": 18,
+      "naam": "Front pully row",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/019.webp",
+      "sha256": "d90be3d4fd13925545348776951cb764dea0f8a4527aeb6d9f83e06198398368",
+      "bron": "pijlstijl/ronde2/nieuw/18-front-pully-row.png"
+    },
+    {
+      "nr": 24,
+      "naam": "Military press",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/025.webp",
+      "sha256": "5227d21d7825878053b7a1aad8d6c22127b5f2dd08a1b681a59bf2810e10c8dc",
+      "bron": "pijlstijl/ronde2/nieuw/24-military-press.png"
+    },
+    {
+      "nr": 27,
+      "naam": "Pully cross down",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/028.webp",
+      "sha256": "4efc9577ca42fd5f5f9bd57590171904bbae8c599068ce28b52646c17470f09e",
+      "bron": "pijlstijl/ronde2/nieuw/27-pully-cross-down.png"
+    },
+    {
+      "nr": 28,
+      "naam": "Pully cross over",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/029.webp",
+      "sha256": "a78fa1b7e3a48d04a563e5227483c6294a354172a4bbeb38c6caa6bcd600d768",
+      "bron": "pijlstijl/ronde2/nieuw/28-pully-cross-over.png"
+    },
+    {
+      "nr": 29,
+      "naam": "Pully cross up",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/030.webp",
+      "sha256": "cf6bb2e888fe2265bbdd0ccd15e53eea41c26ca680cebaa7a6561321bf591c24",
+      "bron": "pijlstijl/ronde2/nieuw/29-pully-cross-up.png"
+    },
+    {
+      "nr": 30,
+      "naam": "Pully dips",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/031.webp",
+      "sha256": "d4f1d0baf32cad88f1f3f37671ab0852c9f96ec8a24617a9338b79ea4951c33d",
+      "bron": "pijlstijl/ronde2/nieuw/30-pully-dips.png"
+    },
+    {
+      "nr": 31,
+      "naam": "Pully down",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/032.webp",
+      "sha256": "237c86592c4fd8380ab752f67b549a34a655e747519487de090e1fc71eba42e5",
+      "bron": "pijlstijl/ronde2/nieuw/31-pully-down.png"
+    },
+    {
+      "nr": 39,
+      "naam": "Triceps dips",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/040.webp",
+      "sha256": "e4323157d0a9d287081a4f216c7ee48c8e1730787ac7196ad797ee346e801a70",
+      "bron": "pijlstijl/ronde2/nieuw/39-triceps-dips.png"
+    },
+    {
+      "nr": 43,
+      "naam": "Wrist extension",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/044.webp",
+      "sha256": "23c81129b373cdab371a489ff022c9a6678bda846933ba3f85962466251e44e5",
+      "bron": "pijlstijl/ronde2/nieuw/43-wrist-extension.png"
+    },
+    {
+      "nr": 44,
+      "naam": "Wrist flexion",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/045.webp",
+      "sha256": "0b324b17db17e6cbeddec1869c93b7870a9f743372051ffb986da6e6f660295b",
+      "bron": "pijlstijl/ronde2/nieuw/44-wrist-flexion.png"
+    },
+    {
+      "nr": 50,
+      "naam": "Dead lift",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/051.webp",
+      "sha256": "638b6b28b0b7d7de0ae70cc986c857c1a3e3cf0f1f4cf91e6569c7c20894be8f",
+      "bron": "pijlstijl/ronde2/nieuw/50-dead-lift.png"
+    },
+    {
+      "nr": 51,
+      "naam": "Extension squat",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/052.webp",
+      "sha256": "be56f1dd3597b97bfe232cbb2b2a6293e43973ee23cf6d6224f4a28693463bee",
+      "bron": "pijlstijl/ronde2/nieuw/51-extension-squat.png"
+    },
+    {
+      "nr": 56,
+      "naam": "Kick back",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/057.webp",
+      "sha256": "804ce50a402ecc4c65ddb67e7210d05f2b8866d6bb311110dc596b534da0a787",
+      "bron": "pijlstijl/ronde2/nieuw/56-kick-back-r2.png"
+    },
+    {
+      "nr": 64,
+      "naam": "Single leg squat",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/065.webp",
+      "sha256": "7e79f0e438a5ab956807ecadf8500b774870dcb0decb26b45d0d50c37bc1878b",
+      "bron": "pijlstijl/ronde2/nieuw/64-single-leg-squat.png"
+    },
+    {
+      "nr": 65,
+      "naam": "Squat",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/066.webp",
+      "sha256": "97fd9191a3dd3ceffa74db2cf427aa1b68625f7e60fd9571f56530b15a5f3d0b",
+      "bron": "pijlstijl/ronde2/nieuw/65-squat.png"
+    },
+    {
+      "nr": 79,
+      "naam": "Barbell twist",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/080.webp",
+      "sha256": "ed61bf46169679412aa388f455e51aba3f2b9e111f67541e502342b581e2192c",
+      "bron": "pijlstijl/ronde2/nieuw/79-barbell-twist.png"
+    },
+    {
+      "nr": 83,
+      "naam": "Bruggen 1 been liften",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/084.webp",
+      "sha256": "bb3542a3d64e69d038cf322d2e2d8b22f18e0ccea2a448feedb87835b300fd38",
+      "bron": "pijlstijl/ronde2/nieuw/83-bruggen-1-been-liften.png"
+    },
+    {
+      "nr": 88,
+      "naam": "Crunch",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/089.webp",
+      "sha256": "09e775b188ee638bec39069e69efe5a09cee4fbc206d19a3d924de59a03d24d0",
+      "bron": "pijlstijl/ronde2/nieuw/88-crunch.png"
+    },
+    {
+      "nr": 89,
+      "naam": "Curl up",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/090.webp",
+      "sha256": "83809637ed305bfe8bbb6276e10f78caf441a05d281e7f364d4a69e8def145f3",
+      "bron": "pijlstijl/ronde2/nieuw/89-curl-up.png"
+    },
+    {
+      "nr": 91,
+      "naam": "Good mornings",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/092.webp",
+      "sha256": "c14055e4f3972a085024e0ad77ca5e49f662e967de1d7a4f80ac5c984e74c000",
+      "bron": "pijlstijl/ronde2/nieuw/91-good-mornings.png"
+    },
+    {
+      "nr": 92,
+      "naam": "Knee elbow",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/093.webp",
+      "sha256": "8336cbb1d552529b6cea47fc1ca62ca413868eb8606c7cddca50af451ca95fe0",
+      "bron": "pijlstijl/ronde2/nieuw/92-knee-elbow.png"
+    },
+    {
+      "nr": 93,
+      "naam": "Leg raises",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/094.webp",
+      "sha256": "6c77ee13fa47f2812f0baa08f4b1d9d28722b26cea44c22398f6fb5112ee047c",
+      "bron": "pijlstijl/ronde2/nieuw/93-leg-raises.png"
+    },
+    {
+      "nr": 98,
+      "naam": "Plank high",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/099.webp",
+      "sha256": "20f6f380f9c0431f4a36447548fc4418ebc86dc2790a3b2acbf3b44e24dda5b7",
+      "bron": "pijlstijl/ronde2/nieuw/98-plank-high-r2.png"
+    },
+    {
+      "nr": 101,
+      "naam": "Reversed crunch",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/102.webp",
+      "sha256": "b187fbbc971607c7b20c2a198c05d999c21807345e68db305982c70aa7397fad",
+      "bron": "pijlstijl/ronde2/nieuw/101-reversed-crunch.png"
+    },
+    {
+      "nr": 105,
+      "naam": "Scissors 2",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/106.webp",
+      "sha256": "22f5483cab34f3381bb32b91a15cf2cdc6c05aeb62ec0dacc5c62caf9a14b961",
+      "bron": "pijlstijl/ronde2/nieuw/105-scissors-2.png"
+    },
+    {
+      "nr": 108,
+      "naam": "Superman",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/109.webp",
+      "sha256": "6cac1153d6b843ddef3b48f0586dede7aa50bdf314952555a6a75fdfa98af094",
+      "bron": "pijlstijl/ronde2/nieuw/108-superman.png"
+    },
+    {
+      "nr": 113,
+      "naam": "Squat jumps",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/121.webp",
+      "sha256": "e45be9056c4bca6b167c47ad73cea42dcf27b5064fe8f415f58b2a9325c6e15f",
+      "bron": "pijlstijl/ronde2/nieuw/113-squat-jumps.png"
+    },
+    {
+      "nr": 114,
+      "naam": "Stairs",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/122.webp",
+      "sha256": "520d72709b74ec60858f156c61a50770d371f4fd625bbe30abee052565f664f5",
+      "bron": "pijlstijl/ronde2/nieuw/114-stairs.png"
+    },
+    {
+      "nr": 121,
+      "naam": "Bosu plank",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/147.webp",
+      "sha256": "1454985c10c153af92f0650e01d38f74ef4297d5e0e6052b24c60fcb97ac1142",
+      "bron": "pijlstijl/ronde2/nieuw/121-bosu-plank.png"
+    },
+    {
+      "nr": 129,
+      "naam": "TRX flyes I",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/155.webp",
+      "sha256": "de90d04334bf72364ee1a8caa9106c38dc1a231a581a8daad03c9571639af15a",
+      "bron": "pijlstijl/ronde2/nieuw/129-trx-flyes-i.png"
+    },
+    {
+      "nr": 134,
+      "naam": "TRX lunge lateral low",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/160.webp",
+      "sha256": "20b3e055328da71e5e22d40a7b2dab8a0a1c24c0e940951e4ddadb6ee8990306",
+      "bron": "pijlstijl/ronde2/nieuw/134-trx-lunge-lateral-low-r2.png"
+    },
+    {
+      "nr": 137,
+      "naam": "TRX plank",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/163.webp",
+      "sha256": "a32a1d383376c01728b0991704b3a2787ed676278b3ccc2ae8b8f0bfd9104284",
+      "bron": "pijlstijl/ronde2/nieuw/137-trx-plank.png"
+    },
+    {
+      "nr": 145,
+      "naam": "TRX triceps extension",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/171.webp",
+      "sha256": "4fbc704c2a658d2d57f89b73c3a363071e4b3d41d75f7121a079b1618ca6cbaf",
+      "bron": "pijlstijl/ronde2/nieuw/145-trx-triceps-extension.png"
+    },
+    {
+      "nr": 153,
+      "naam": "Yoga ear pressure",
+      "soort": "pijl (was tegengehouden)",
+      "img": "images/beginhouding-pijl-v2/179.webp",
+      "sha256": "cfa9c264606d2d963856839b53c6de9ab0e68f80e782b0f698548894f7607632",
+      "bron": "pijlstijl/nieuw/153-yoga-ear-pressure.png"
+    },
+    {
+      "nr": 161,
+      "naam": "Yoga hamstring stretch",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/187.webp",
+      "sha256": "2d7ef2a52f3ba6808d446f4527fa9918d42f49883b22f61b0054475f0d763c3f",
+      "bron": "pijlstijl/ronde2/nieuw/161-yoga-hamstring-stretch.png"
+    },
+    {
+      "nr": 164,
+      "naam": "Yoga knee to chest hip stretch",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/190.webp",
+      "sha256": "8d78b304beab352ae9826c541a0ad6a1ea3f0e5851cab48197115e1f4016b5bb",
+      "bron": "pijlstijl/ronde2/nieuw/164-yoga-knee-to-chest-hip-stretch.png"
+    },
+    {
+      "nr": 166,
+      "naam": "Yoga noose",
+      "soort": "pijl (was tegengehouden)",
+      "img": "images/beginhouding-pijl-v2/192.webp",
+      "sha256": "89e001bd86d5a8b9e9c6b8c418be771580e61168c92368af7861c88d2d1a7a12",
+      "bron": "pijlstijl/nieuw/166-yoga-noose.png"
+    },
+    {
+      "nr": 170,
+      "naam": "Yoga revolved downward facing dog",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/196.webp",
+      "sha256": "315c2a40f63c2ea9e15f3b4770807f22c82093f4274ff8493335f1f6aec21e4a",
+      "bron": "pijlstijl/ronde2/nieuw/170-yoga-revolved-downward-facing-dog.png"
+    },
+    {
+      "nr": 171,
+      "naam": "Yoga snake",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/197.webp",
+      "sha256": "531b2a82fd4533a8a15841605142ce0cb3b008b148ceecd47d5b2f82e7173865",
+      "bron": "pijlstijl/ronde2/nieuw/171-yoga-snake.png"
+    },
+    {
+      "nr": 183,
+      "naam": "Bodyblade high",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/209.webp",
+      "sha256": "31e86c19708d895d6902da1dc3ebc0a51946a96894d5969338cda3505c53fc53",
+      "bron": "pijlstijl/ronde2/nieuw/183-bodyblade-high.png"
+    },
+    {
+      "nr": 193,
+      "naam": "Circle (apparaat)",
+      "soort": "pijl (was tegengehouden)",
+      "img": "images/beginhouding-pijl-v2/219.webp",
+      "sha256": "4f33b5f63adb286db9a1efe791dc38b5de0e97d4638437df5e3ce516121e5968",
+      "bron": "pijlstijl/nieuw/193-circle-apparaat.png"
+    },
+    {
+      "nr": 195,
+      "naam": "Dorsi-pecto (apparaat)",
+      "soort": "pijl (was tegengehouden)",
+      "img": "images/beginhouding-pijl-v2/221.webp",
+      "sha256": "a5de04d7e35df193de9ce86cfab88979480dcec98ccccb9b8232a302b5eada0f",
+      "bron": "pijlstijl/nieuw/195-dorsi-pecto-apparaat.png"
+    },
+    {
+      "nr": 196,
+      "naam": "Endy Armstrekker",
+      "soort": "pijl (was tegengehouden)",
+      "img": "images/beginhouding-pijl-v2/222.webp",
+      "sha256": "2c31f96ec3c80c23686496fc45bd9b2f5a02c2ea17a8c9a6fa7a3dddfed0d326",
+      "bron": "pijlstijl/nieuw/196-endy-armstrekker.png"
+    },
+    {
+      "nr": 197,
+      "naam": "Endy Beenstrekker",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/223.webp",
+      "sha256": "9915effbc8a056ff4daec365ad0eb3531ddf4ff5a8c3f1eb72f2645ab13cc005",
+      "bron": "pijlstijl/ronde2/nieuw/197-endy-beenstrekker.png"
+    },
+    {
+      "nr": 200,
+      "naam": "Endy Heup abductie",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/226.webp",
+      "sha256": "c3073e1995546b5f149505d7ac4d833c7273fcc1ce023c48f76306c7f7bef39d",
+      "bron": "pijlstijl/ronde2/nieuw/200-endy-heup-abductie.png"
+    },
+    {
+      "nr": 201,
+      "naam": "Endy Leg curl",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/227.webp",
+      "sha256": "d793c1ec2d5bca72b24cea72c51093efccfba15074f90378ff63ff5819658623",
+      "bron": "pijlstijl/ronde2/nieuw/201-endy-leg-curl.png"
+    },
+    {
+      "nr": 204,
+      "naam": "Endy Rotator",
+      "soort": "pijl (was tegengehouden)",
+      "img": "images/beginhouding-pijl-v2/230.webp",
+      "sha256": "96560b943e17e5eff276fd608781848a8d9f063c6da8af95d8fa70cfa0a6d4aa",
+      "bron": "pijlstijl/ronde2/nieuw/204-endy-rotator.png"
+    },
+    {
+      "nr": 208,
+      "naam": "Gluteus kick (apparaat)",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/234.webp",
+      "sha256": "fe5a4d51d0a194b6c12e1e3efb07f61f04e9666f89bebcf832b6dbcfad63fedc",
+      "bron": "pijlstijl/ronde2/nieuw/208-gluteus-kick-apparaat.png"
+    },
+    {
+      "nr": 212,
+      "naam": "Rotator (apparaat)",
+      "soort": "pijl (was tegengehouden)",
+      "img": "images/beginhouding-pijl-v2/238.webp",
+      "sha256": "e6c3a355f5f60ae2602628e7418d75f0b2e691b89f22c99f6bbe7209797f411e",
+      "bron": "pijlstijl/nieuw/212-rotator-apparaat.png"
+    },
+    {
+      "nr": 376,
+      "naam": "Nek buigen – liggend ondersteund",
+      "soort": "nieuwe lijntekening (zelfde pad)",
+      "img": "images/nek/nek-buigen-liggend-ondersteund-line-v1.png",
+      "sha256": "9b1c63ce1699d27694ecb61d3b78d8916b7a27c4b6d55b13b8e2b70feb4dafdc",
+      "bron": "tekeningen/376-nek-buigen-liggend-ondersteund.png"
+    },
+    {
+      "nr": 378,
+      "naam": "Nek strekken – functioneel staand",
+      "soort": "nieuwe lijntekening (zelfde pad)",
+      "img": "images/nek/nek-strekken-functioneel-staand-line-v1.png",
+      "sha256": "00cf9d4c7f7b3fe061af40dadf732c1564ec8a1047545dc50861aad21d77226c",
+      "bron": "pijlstijl/ronde2/nieuw/378-nek-strekken-functioneel-staand.png"
+    },
+    {
+      "nr": 401,
+      "naam": "Romp zijwaarts buigen – liggend",
+      "soort": "nieuwe lijntekening (zelfde pad)",
+      "img": "images/rug/romp-zijwaarts-buigen-liggend-line-v1.png",
+      "sha256": "b2d8121dc22dd47fdb876f69e0d5d0601e242dfaed6cee6d6803e62ab7c34d85",
+      "bron": "pijlstijl/ronde2/nieuw/401-romp-zijwaarts-buigen-liggend.png"
+    },
+    {
+      "nr": 424,
+      "naam": "Tandemstand – met steun",
+      "soort": "nieuwe lijntekening (zelfde pad)",
+      "img": "images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png",
+      "sha256": "cebc31d53069200b0c17ddfa5f3a239e3bc0407e3d0259be3fe84bdce83bb7e0",
+      "bron": "tekeningen/424-tandemstand-met-steun-r3.png"
+    },
+    {
+      "nr": 444,
+      "naam": "Draaien op de plaats – met steun",
+      "soort": "nieuwe lijntekening (zelfde pad)",
+      "img": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-line-v1.png",
+      "sha256": "87c4ec67759be8635bd9db3b950fbd2ca890c819c598314e92f084a5d3bfaa12",
+      "bron": "tekeningen/444-draaien-op-de-plaats-met-steun.png"
+    },
+    {
+      "nr": 452,
+      "naam": "Symmetrisch opstaan – met fysieke steun",
+      "soort": "nieuwe lijntekening (zelfde pad)",
+      "img": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-line-v1.png",
+      "sha256": "e83dce1a8c3459a77d1f3673fea5ef3df9b181fbec63bd896ef4a858fc87f1ba",
+      "bron": "tekeningen/452-symmetrisch-opstaan-met-fysieke-steun.png"
+    },
+    {
+      "nr": 460,
+      "naam": "Grote stappen – met ritmische cue",
+      "soort": "nieuwe lijntekening (zelfde pad)",
+      "img": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-line-v1.png",
+      "sha256": "3603c9502e525e420768bb64d271859cfb11fa7a5f8afd1b6a2a7db0577ffc38",
+      "bron": "pijlstijl/ronde2/nieuw/460-grote-stappen-met-ritmische-cue.png"
+    },
+    {
+      "nr": 461,
+      "naam": "Grote stappen – functionele combinatie",
+      "soort": "nieuwe lijntekening (zelfde pad)",
+      "img": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-line-v1.png",
+      "sha256": "23bbe0c17a1d83b6d1e18416db902a42fd49dc856dddf047f05c85489448bc26",
+      "bron": "pijlstijl/ronde2/nieuw/461-grote-stappen-functionele-combinatie.png"
+    },
+    {
+      "nr": 464,
+      "naam": "Blikstabilisatie horizontaal – staand langzaam",
+      "soort": "nieuwe lijntekening (zelfde pad)",
+      "img": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-line-v1.png",
+      "sha256": "c4d2b8d6e95b63b0627b2337efd754cc7fa7392c271f8cda8e11f4d8ace18f34",
+      "bron": "tekeningen/464-blikstabilisatie-horizontaal-staand-langzaam-r3.png"
+    },
+    {
+      "nr": 489,
+      "naam": "360 graden ademhaling – eerste fase rustig",
+      "soort": "nieuwe lijntekening (zelfde pad)",
+      "img": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-line-v1.png",
+      "sha256": "35d2a2e3f5f298253c232f7d6053d90cfcc8482111caf66d753a161745deaf0c",
+      "bron": "pijlstijl/ronde2/nieuw/489-360-graden-ademhaling-eerste-fase-rustig.png"
+    },
+    {
+      "nr": 525,
+      "naam": "Foam roller glute med.",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/241.webp",
+      "sha256": "185fd1c5f116347e3894d7c2d4aa9474967149e4730c5d75ba45c903c140c85c",
+      "bron": "pijlstijl/ronde2/nieuw/525-foam-roller-glute-med.png"
+    },
+    {
+      "nr": 535,
+      "naam": "Foam roller back lower cross",
+      "soort": "pijl (was tegengehouden)",
+      "img": "images/beginhouding-pijl-v2/251.webp",
+      "sha256": "bda020fe69c16d0dad201c361b77850b3b695f632d2dcf0ed2dc1dd4755b9147",
+      "bron": "pijlstijl/ronde2/nieuw/535-foam-roller-back-lower-cross.png"
+    },
+    {
+      "nr": 536,
+      "naam": "Foam roller back lower",
+      "soort": "pijl (was tegengehouden)",
+      "img": "images/beginhouding-pijl-v2/252.webp",
+      "sha256": "cf49326fd3bb8c2127b17c089ee5525284d52eaad38c1de2a05fa39ba285e8fb",
+      "bron": "pijlstijl/ronde2/nieuw/536-foam-roller-back-lower.png"
+    },
+    {
+      "nr": 551,
+      "naam": "Med ball lunge overhead press",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/267.webp",
+      "sha256": "7c5d1c86f8cad7071137feb350b3cd9c65b303f0212f9af6709f8f2ac4dbf4d9",
+      "bron": "pijlstijl/ronde2/nieuw/551-med-ball-lunge-overhead-press.png"
+    },
+    {
+      "nr": 552,
+      "naam": "Med ball V-ups",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/268.webp",
+      "sha256": "487e51ff5252a0a827ec4af67199817400f354517d1c4bc3eb3b516937738f66",
+      "bron": "pijlstijl/ronde2/nieuw/552-med-ball-v-ups.png"
+    },
+    {
+      "nr": 581,
+      "naam": "Seated chair crunches",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/297.webp",
+      "sha256": "2e3817f1a694ccc813f8fd003dee87eec61d55fde3b410fdd41b92eb305abd6b",
+      "bron": "pijlstijl/ronde2/nieuw/581-seated-chair-crunches.png"
+    },
+    {
+      "nr": 596,
+      "naam": "Standing chair abductie",
+      "soort": "pijl",
+      "img": "images/beginhouding-pijl-v2/312.webp",
+      "sha256": "74d8f9130e75f0994c82d33e41f3d446cfb59e9937adca730495a0c53331d036",
+      "bron": "tekeningen/596-standing-chair-abductie-r2.png"
+    }
+  ],
+  "avatars": [
+    {
+      "nr": 1,
+      "naam": "Barbell front press",
+      "kaartImg": "images/bovenste-extremiteit/barbell-front-press-avatar-v7.jpg",
+      "sha256": "15d8e6bbac70640d5e10b55d32539589e65d175303e8016e1b60a41e5f6b4cf3",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/1-barbell-front-press-avatar.png"
+    },
+    {
+      "nr": 2,
+      "naam": "Barbell neck press",
+      "kaartImg": "images/bovenste-extremiteit/barbell-neck-press-avatar-v7.jpg",
+      "sha256": "91132620af6fa51dba90c0914296e84ade5d13a5eb76c15621754876c49a2ee8",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/2-barbell-neck-press-avatar.png"
+    },
+    {
+      "nr": 7,
+      "naam": "Biceps pull",
+      "kaartImg": "images/bovenste-extremiteit/biceps-pull-avatar-v7.jpg",
+      "sha256": "227f1b34a5685b19707ca2d2635b3b062f30c6a24e58071218baf675b160732a",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/7-biceps-pull-avatar.png"
+    },
+    {
+      "nr": 13,
+      "naam": "Duplex pull",
+      "kaartImg": "images/bovenste-extremiteit/duplex-pull-avatar-v7.jpg",
+      "sha256": "89c910f54d423003fdf566fccd034a539b5dc95ecf82689b8b67a47dd8a44466",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/13-duplex-pull-avatar.png"
+    },
+    {
+      "nr": 14,
+      "naam": "Endo pull",
+      "kaartImg": "images/bovenste-extremiteit/endo-pull-avatar-v7.jpg",
+      "sha256": "ccd3baf0571698a8b0a1379fefe442620c51678258e1d261f5021f82827e260e",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/14-endo-pull-avatar.png"
+    },
+    {
+      "nr": 18,
+      "naam": "Front pully row",
+      "kaartImg": "images/bovenste-extremiteit/front-pully-row-avatar-v7.jpg",
+      "sha256": "9d2e1c3b170a2f1b69aa43404fa391a1be7d7a0dfcc208e7c5af32bb3fa42ad5",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/18-front-pully-row-avatar.png"
+    },
+    {
+      "nr": 23,
+      "naam": "Lateral raises",
+      "kaartImg": "images/bovenste-extremiteit/lateral-raises-avatar-v7.jpg",
+      "sha256": "d69ffc1313aaec1f0d502157c6d4b8cd69762fe18e188557f3916a80f2f51ee8",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/23-lateral-raises-avatar.png"
+    },
+    {
+      "nr": 24,
+      "naam": "Military press",
+      "kaartImg": "images/bovenste-extremiteit/military-press-avatar-v7.jpg",
+      "sha256": "97dc821a17efc583fcca6977634c8602945a170880c4f760f509c7b74242c112",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/24-military-press-avatar.png"
+    },
+    {
+      "nr": 27,
+      "naam": "Pully cross down",
+      "kaartImg": "images/bovenste-extremiteit/pully-cross-down-avatar-v7.jpg",
+      "sha256": "fa18d0ad1d7453047468e95a7e360991b9449aecb175af39c455c945508e8182",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/27-pully-cross-down-avatar.png"
+    },
+    {
+      "nr": 28,
+      "naam": "Pully cross over",
+      "kaartImg": "images/bovenste-extremiteit/pully-cross-over-avatar-v7.jpg",
+      "sha256": "2aac32b93236530ebb41bd32d7a7c140b4b3f9fe806cb6799ce2c47c26f79887",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/28-pully-cross-over-avatar.png"
+    },
+    {
+      "nr": 29,
+      "naam": "Pully cross up",
+      "kaartImg": "images/bovenste-extremiteit/pully-cross-up-avatar-v7.jpg",
+      "sha256": "ab638f3f4d416e6ace99fa3cf5b57c538ba7925f0f0ba298150bd527f28b669d",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/29-pully-cross-up-avatar.png"
+    },
+    {
+      "nr": 30,
+      "naam": "Pully dips",
+      "kaartImg": "images/bovenste-extremiteit/pully-dips-avatar-v7.jpg",
+      "sha256": "b4b274ca1883367a3e3b1ceb1a72cdad8fe5fb6fde7445609d7011a75933ecd7",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/30-pully-dips-avatar.png"
+    },
+    {
+      "nr": 31,
+      "naam": "Pully down",
+      "kaartImg": "images/bovenste-extremiteit/pully-down-avatar-v7.jpg",
+      "sha256": "fbd4d1433ed9813dc0eed0996abc7f20243256d8b7ab9f0e5f5d488d21aeedd9",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/31-pully-down-avatar.png"
+    },
+    {
+      "nr": 34,
+      "naam": "Pully pull over",
+      "kaartImg": "images/bovenste-extremiteit/pully-pull-over-avatar-v7.jpg",
+      "sha256": "5457387a8ffa6ea355952decb66ba7196348317d2b3960d025e0bf239b92796f",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/34-pully-pull-over-avatar.png"
+    },
+    {
+      "nr": 40,
+      "naam": "Triceps dumbell kickbacks",
+      "kaartImg": "images/bovenste-extremiteit/triceps-dumbell-kickbacks-avatar-v7.jpg",
+      "sha256": "e937212a6825e5b72a4cc085871f0877dd1ac79626ad856fadcf7724541537c0",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/40-triceps-dumbell-kickbacks-avatar.png"
+    },
+    {
+      "nr": 42,
+      "naam": "Upright row",
+      "kaartImg": "images/bovenste-extremiteit/upright-row-avatar-v7.jpg",
+      "sha256": "a34d2c01aa35522d56f43b9f4c49f9dd1584b7eb0dcf151785819e11757aa307",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/42-upright-row-avatar.png"
+    },
+    {
+      "nr": 44,
+      "naam": "Wrist flexion",
+      "kaartImg": "images/bovenste-extremiteit/wrist-flexion-avatar-v7.jpg",
+      "sha256": "2b672f15f5bb364f9bab278b07dcbe1865224ced7cdc7b291f29953b0531997a",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/44-wrist-flexion-avatar.png"
+    },
+    {
+      "nr": 45,
+      "naam": "Been pendelen",
+      "kaartImg": "images/onderste-extremiteit/been-pendelen-avatar-v7.jpg",
+      "sha256": "6396da46412df338d3812be79cab2cf3a4934e19e26b45fb194b19ad91eaf38a",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/45-been-pendelen-avatar.png"
+    },
+    {
+      "nr": 50,
+      "naam": "Dead lift",
+      "kaartImg": "images/onderste-extremiteit/dead-lift-avatar-v7.jpg",
+      "sha256": "f9e17fe8852961cf5c11ae35facdb7b8c8af2dd0390d10f5e319037180761244",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/50-dead-lift-avatar.png"
+    },
+    {
+      "nr": 54,
+      "naam": "Hack squat",
+      "kaartImg": "images/onderste-extremiteit/hack-squat-avatar-v7.jpg",
+      "sha256": "ffd6523303e7b123374ed85dcc21b44c71d4ab2279a345046372400c5ce99b27",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/54-hack-squat-avatar.png"
+    },
+    {
+      "nr": 56,
+      "naam": "Kick back",
+      "kaartImg": "images/onderste-extremiteit/kick-back-avatar-v7.jpg",
+      "sha256": "c85c3cf21dfbf23c39365bbcb812438f6c039d6380847d44f590b998908cf83e",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/56-kick-back-avatar.png"
+    },
+    {
+      "nr": 64,
+      "naam": "Single leg squat",
+      "kaartImg": "images/onderste-extremiteit/single-leg-squat-avatar-v7.jpg",
+      "sha256": "a4e65d501826179417368b5e7edc28ff7a3c226a43d9c787aba339162339e1de",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/64-single-leg-squat-avatar.png"
+    },
+    {
+      "nr": 66,
+      "naam": "Squat lunges",
+      "kaartImg": "images/onderste-extremiteit/squat-lunges-avatar-v7.jpg",
+      "sha256": "f5447e3a8586447b31ed6df78efc193d21486623ac2905c32e04d57c7b086326",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/66-squat-lunges-avatar.png"
+    },
+    {
+      "nr": 67,
+      "naam": "Standing abduction",
+      "kaartImg": "images/onderste-extremiteit/standing-abduction-avatar-v7.jpg",
+      "sha256": "193d61ae6ede926d76517630907fa762b3c0121a8abb4f00abb7c4e3c7a9731a",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/67-standing-abduction-avatar.png"
+    },
+    {
+      "nr": 68,
+      "naam": "Standing adduction",
+      "kaartImg": "images/onderste-extremiteit/standing-adduction-avatar-v7.jpg",
+      "sha256": "010f303fabf93019bb9394ee9ce9c3c45536678a65fc1f59ad7b078283af238c",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/68-standing-adduction-avatar.png"
+    },
+    {
+      "nr": 70,
+      "naam": "Step up",
+      "kaartImg": "images/onderste-extremiteit/step-up-avatar-v7.jpg",
+      "sha256": "cda9141aea3c4850e28ca8d63f373aed047360df2e0ec983dd69551eae9955b9",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/70-step-up-avatar.png"
+    },
+    {
+      "nr": 71,
+      "naam": "Step up tempo",
+      "kaartImg": "images/onderste-extremiteit/step-up-tempo-avatar-v7.jpg",
+      "sha256": "92119e471abc87c3c5744a9e1681f2b4c652ceae473f83502caff15316ba6bce",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/71-step-up-tempo-avatar.png"
+    },
+    {
+      "nr": 75,
+      "naam": "Abroller",
+      "kaartImg": "images/core/abroller-avatar-v7.jpg",
+      "sha256": "adcbdbe51eb55fe0e4b6b9a158009115ec8c2800d4bb80f6769de4ba65d59e79",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/75-abroller-avatar.png"
+    },
+    {
+      "nr": 79,
+      "naam": "Barbell twist",
+      "kaartImg": "images/core/barbell-twist-avatar-v7.jpg",
+      "sha256": "cf95be74d4cb5e065f4b842772ad1ea8f3c15e2ceb632929487ecf2d7e956441",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/79-barbell-twist-avatar.png"
+    },
+    {
+      "nr": 80,
+      "naam": "Bear crawls",
+      "kaartImg": "images/core/bear-crawls-avatar-v7.jpg",
+      "sha256": "affa815e210b343f2afbf4758154f3b2f9a398886fbdfff9815404a02518a6db",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/80-bear-crawls-avatar.png"
+    },
+    {
+      "nr": 83,
+      "naam": "Bruggen 1 been liften",
+      "kaartImg": "images/core/bruggen-1-been-liften-avatar-v7.jpg",
+      "sha256": "39870cbcc570e50e6231799d2b6700e2201e41cb34ae3929d41f51aa25e510f9",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/83-bruggen-1-been-liften-avatar.png"
+    },
+    {
+      "nr": 87,
+      "naam": "Bruggen op bal",
+      "kaartImg": "images/core/bruggen-op-bal-avatar-v7.jpg",
+      "sha256": "838f1d600058e7e52fe6c9a14314f063bacd13c61c4596d75518648b71783649",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/87-bruggen-op-bal-avatar.png"
+    },
+    {
+      "nr": 88,
+      "naam": "Crunch",
+      "kaartImg": "images/core/crunch-avatar-v7.jpg",
+      "sha256": "2876426c7e19fbeac257930c0efe09daddb57a9e2e97a74759bb43371914cefc",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/88-crunch-avatar.png"
+    },
+    {
+      "nr": 91,
+      "naam": "Good mornings",
+      "kaartImg": "images/core/good-mornings-avatar-v7.jpg",
+      "sha256": "0e4f4035db6120f92c28371de1b65f160d0e4ef7633d991fa4bb070cbccf473f",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/91-good-mornings-avatar.png"
+    },
+    {
+      "nr": 92,
+      "naam": "Knee elbow",
+      "kaartImg": "images/core/knee-elbow-avatar-v7.jpg",
+      "sha256": "5ae9caf87e28ff7c9265abb35413b039b8fd49ef37437e6e8a50db8dc0562029",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/92-knee-elbow-avatar.png"
+    },
+    {
+      "nr": 98,
+      "naam": "Plank high",
+      "kaartImg": "images/core/plank-high-avatar-v7.jpg",
+      "sha256": "bc2a24ae88fbc153612add8cd96a622762ef3239f1fc1094abfc84e97c8bb4ec",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/98-plank-high-avatar.png"
+    },
+    {
+      "nr": 99,
+      "naam": "Plank jacks",
+      "kaartImg": "images/core/plank-jacks-avatar-v7.jpg",
+      "sha256": "21e8b58113d7ae241a1537a13b613263d0a7acdf1dbb5bdc5ca7f7a3304eb708",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/99-plank-jacks-avatar.png"
+    },
+    {
+      "nr": 101,
+      "naam": "Reversed crunch",
+      "kaartImg": "images/core/reversed-crunch-avatar-v7.jpg",
+      "sha256": "d06b772a53e3b36f79ce94e44a02a1b4b2ff6f06e678d41b4d9a5fd013a9f1b0",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/101-reversed-crunch-avatar.png"
+    },
+    {
+      "nr": 105,
+      "naam": "Scissors 2",
+      "kaartImg": "images/core/scissors-2-avatar-v7.jpg",
+      "sha256": "619d68ed4e817ccee640e1785126a63022348f83ccad097b3f561061cb0c4319",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/105-scissors-2-avatar.png"
+    },
+    {
+      "nr": 107,
+      "naam": "Stick twist",
+      "kaartImg": "images/core/stick-twist-avatar-v7.jpg",
+      "sha256": "250ee3f0f79fb5ad424d197e81ee4d791e8c4bc19d684713c7153d6ef768124e",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/107-stick-twist-avatar.png"
+    },
+    {
+      "nr": 111,
+      "naam": "Loopband",
+      "kaartImg": "images/cardio/loopband-avatar-v7.jpg",
+      "sha256": "465b1ff3ba4dd02a04c8fae790cc16e90542a494c68a023579dcbc4e11737436",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/111-loopband-avatar.png"
+    },
+    {
+      "nr": 113,
+      "naam": "Squat jumps",
+      "kaartImg": "images/cardio/squat-jumps-avatar-v7.jpg",
+      "sha256": "ed204ae6b6d006a84057b59951bd3e33f5e739229a368e07eac495b0e77d6b19",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/113-squat-jumps-avatar.png"
+    },
+    {
+      "nr": 114,
+      "naam": "Stairs",
+      "kaartImg": "images/cardio/stairs-avatar-v7.jpg",
+      "sha256": "ec06a78f3b65121c61f8e3afe5bf65cc73efdac189635269813ea74bb0b2013e",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/114-stairs-avatar.png"
+    },
+    {
+      "nr": 116,
+      "naam": "Bosu brigdes",
+      "kaartImg": "images/bosu/bosu-brigdes-avatar-v7.jpg",
+      "sha256": "a1bdce207f4d31fa94deb884a6601d28dee1331889c1fcbe1cf8b42155f9410c",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/116-bosu-brigdes-avatar.png"
+    },
+    {
+      "nr": 119,
+      "naam": "Bosu leg pull in",
+      "kaartImg": "images/bosu/bosu-leg-pull-in-avatar-v7.jpg",
+      "sha256": "69e6620048b361de82e36b030b6fac07cec4b378c24693de2ef8e83028a6903e",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/119-bosu-leg-pull-in-avatar.png"
+    },
+    {
+      "nr": 124,
+      "naam": "Bosu v ups",
+      "kaartImg": "images/bosu/bosu-v-ups-avatar-v7.jpg",
+      "sha256": "8165e4c92250ddc6a4a8b6f077c05c6b225a674ae28bfde8e9d0d1a86dff74b5",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/124-bosu-v-ups-avatar.png"
+    },
+    {
+      "nr": 127,
+      "naam": "TRX biceps curl",
+      "kaartImg": "images/trx/trx-biceps-curl-avatar-v7.jpg",
+      "sha256": "695ca40971d324ebe839289bbfa9a6df148bde1170397e7ea3b303173daa70ce",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/127-trx-biceps-curl-avatar.png"
+    },
+    {
+      "nr": 128,
+      "naam": "TRX chest press",
+      "kaartImg": "images/trx/trx-chest-press-avatar-v7.jpg",
+      "sha256": "7e34837e4081b2eb2a860cc424ed5c298b268a115b1e378b29d7dab1b0c39938",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/128-trx-chest-press-avatar.png"
+    },
+    {
+      "nr": 129,
+      "naam": "TRX flyes I",
+      "kaartImg": "images/trx/trx-flyes-i-avatar-v7.jpg",
+      "sha256": "f56c995f2621475697ad2922eb9ab5c7796ba76d66d2a7a30d01ba3e9ef56f1f",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/129-trx-flyes-i-avatar.png"
+    },
+    {
+      "nr": 130,
+      "naam": "TRX flyes II",
+      "kaartImg": "images/trx/trx-flyes-ii-avatar-v7.jpg",
+      "sha256": "4dfcbe576f462384277193e33c9019aa11568b3856aa532258c7ffe66008d273",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/130-trx-flyes-ii-avatar.png"
+    },
+    {
+      "nr": 132,
+      "naam": "TRX lunge",
+      "kaartImg": "images/trx/trx-lunge-avatar-v7.jpg",
+      "sha256": "a8f0af2f0b1d983ef916976bac7df331b5dc6598173ae40fc1ed6e477a1a3288",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/132-trx-lunge-avatar.png"
+    },
+    {
+      "nr": 139,
+      "naam": "TRX pull up",
+      "kaartImg": "images/trx/trx-pull-up-avatar-v7.jpg",
+      "sha256": "49afb148464fec31462d2c56a023b48ea1d29c601118c7f83cc7e507ff53aa60",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/139-trx-pull-up-avatar.png"
+    },
+    {
+      "nr": 153,
+      "naam": "Yoga ear pressure",
+      "kaartImg": "images/yoga/yoga-ear-pressure-avatar-v7.jpg",
+      "sha256": "c990bfcabec6cb549e7a390deaa1674c6f41b0b0cbe45255eba3b7b3c06d0ab8",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/153-yoga-ear-pressure-avatar.png"
+    },
+    {
+      "nr": 157,
+      "naam": "Yoga frog",
+      "kaartImg": "images/yoga/yoga-frog-avatar-v7.jpg",
+      "sha256": "bc3fa8575f6a5e5ab385c866913e9ad9f976c92ddc5ad48c104446894152b53c",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/157-yoga-frog-avatar.png"
+    },
+    {
+      "nr": 187,
+      "naam": "Voor zijwaarts",
+      "kaartImg": "images/speedladder/voor-zijwaarts-avatar-v7.jpg",
+      "sha256": "716920029a37d3305e0e7501c1569c31aba45e47d065f70e4048e12dd62a0f15",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/187-voor-zijwaarts-avatar.png"
+    },
+    {
+      "nr": 192,
+      "naam": "Chin-dip (apparaat)",
+      "kaartImg": "images/apparaten/chin-dip-apparaat-avatar-v7.jpg",
+      "sha256": "9d022f0401df820bf99d5381431fefa7323cc74ecf7b7e244906b25b37808bda",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/192-chin-dip-apparaat-avatar.png"
+    },
+    {
+      "nr": 197,
+      "naam": "Endy Beenstrekker",
+      "kaartImg": "images/apparaten/endy-beenstrekker-avatar-v7.jpg",
+      "sha256": "c08432872dfdb5511b62967613b2510a9f459ae2ff7988d1c3cece9a30f263d1",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/197-endy-beenstrekker-avatar.png"
+    },
+    {
+      "nr": 200,
+      "naam": "Endy Heup abductie",
+      "kaartImg": "images/apparaten/endy-heup-abductie-avatar-v7.jpg",
+      "sha256": "45b58ae1cc426136ca4ad431069362928573b5c4c1e655b84e54d0ed80a4fa87",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/200-endy-heup-abductie-avatar.png"
+    },
+    {
+      "nr": 201,
+      "naam": "Endy Leg curl",
+      "kaartImg": "images/apparaten/endy-leg-curl-avatar-v7.jpg",
+      "sha256": "4857afba38ec56507f2a155910bcef37bacd7874e38cecf99f902eb09e71dd9c",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/201-endy-leg-curl-avatar.png"
+    },
+    {
+      "nr": 204,
+      "naam": "Endy Rotator",
+      "kaartImg": "images/apparaten/endy-rotator-avatar-v7.jpg",
+      "sha256": "c3b0b5b6f7ea81060e971577ef846c9c64498d0fe308a715311b40640fe4d194",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/204-endy-rotator-avatar.png"
+    },
+    {
+      "nr": 205,
+      "naam": "Endy Rugmachine",
+      "kaartImg": "images/apparaten/endy-rugmachine-avatar-v7.jpg",
+      "sha256": "dae3aa194e08dfbf3f86a705778d260cf9ecd4bfad346b8d6a7ed8802f5968a8",
+      "v2": 1,
+      "v1": 1,
+      "bron": "avatars/205-endy-rugmachine-avatar.png"
+    },
+    {
+      "nr": 385,
+      "naam": "Nekrotatie met oogfixatie – zittend actief",
+      "kaartImg": "images/nek/nekrotatie-met-oogfixatie-zittend-actief-avatar-v8.jpg",
+      "sha256": "9812888609f2d76fd94e746f34640cbec0d7d2284477dd5ab23f7ed75bf1132f",
+      "v2": 1,
+      "v1": 0,
+      "bron": "avatars/385-nekrotatie-met-oogfixatie-zittend-actief-avatar.png"
+    },
+    {
+      "nr": 386,
+      "naam": "Nekrotatie met oogfixatie – functioneel staand",
+      "kaartImg": "images/nek/nekrotatie-met-oogfixatie-functioneel-staand-avatar-v8.jpg",
+      "sha256": "37a678bc84095838afb0b5db91cfd01327fa5ffc67702771535708023a93e194",
+      "v2": 1,
+      "v1": 0,
+      "bron": "avatars/386-nekrotatie-met-oogfixatie-functioneel-staand-avatar.png"
+    },
+    {
+      "nr": 389,
+      "naam": "Levator scapulae rek – zittend actief",
+      "kaartImg": "images/nek/levator-scapulae-rek-zittend-actief-avatar-v8.jpg",
+      "sha256": "09071d4ab1a4d506e218a01db61b43c1346daefa40b3c4e647294c1c11faf895",
+      "v2": 1,
+      "v1": 0,
+      "bron": "avatars/389-levator-scapulae-rek-zittend-actief-avatar.png"
+    },
+    {
+      "nr": 452,
+      "naam": "Symmetrisch opstaan – met fysieke steun",
+      "kaartImg": "images/neurologische-revalidatie/symmetrisch-opstaan-met-fysieke-steun-avatar-v8.jpg",
+      "sha256": "35964017f13850434cea8eaba2387f96c6d095569451e72198a4a2f4b8fc1467",
+      "v2": 1,
+      "v1": 0,
+      "bron": "avatars/452-symmetrisch-opstaan-met-fysieke-steun-avatar.png"
+    },
+    {
+      "nr": 514,
+      "naam": "Swiss ball rollout",
+      "kaartImg": "images/exercise-ball/swiss-ball-rollout-avatar-v8.jpg",
+      "sha256": "ec487e5a9592a14f91740fe5b8794ea93eb033b0f8431317cb500f7d588ab8aa",
+      "v2": 1,
+      "v1": 0,
+      "bron": "avatars/514-swiss-ball-rollout-avatar.png"
+    },
+    {
+      "nr": 525,
+      "naam": "Foam roller glute med.",
+      "kaartImg": "images/foam-roller/foam-roller-glute-med-avatar-v8.jpg",
+      "sha256": "1eaa608c60d93eea869330e8e160fdc4cf877a9022b8b2cdfd542eaa33fcaca4",
+      "v2": 1,
+      "v1": 0,
+      "bron": "avatars/525-foam-roller-glute-med-avatar.png"
+    },
+    {
+      "nr": 535,
+      "naam": "Foam roller back lower cross",
+      "kaartImg": "images/foam-roller/foam-roller-back-lower-cross-avatar-v8.jpg",
+      "sha256": "c37b709a113fda6b19f892154b0d4c741acf979604c198a7ae3c41d99fd715f2",
+      "v2": 1,
+      "v1": 0,
+      "bron": "avatars/535-foam-roller-back-lower-cross-avatar.png"
+    },
+    {
+      "nr": 540,
+      "naam": "Med ball chest press",
+      "kaartImg": "images/medicine-ball/medicine-ball-chest-press-avatar-v8.jpg",
+      "sha256": "fbdf99550f3ea638e0dc1f2478f1a4738a1a70739a0362d660713ddc40ccb740",
+      "v2": 1,
+      "v1": 0,
+      "bron": "avatars/540-med-ball-chest-press-avatar.png"
+    },
+    {
+      "nr": 581,
+      "naam": "Seated chair crunches",
+      "kaartImg": "images/seated-chair/seated-chair-crunches-avatar-v8.jpg",
+      "sha256": "31cabbd8bff31b556d1bdef20ef88fec6105b589683b753d4eb9f3720d651bb4",
+      "v2": 1,
+      "v1": 0,
+      "bron": "avatars/581-seated-chair-crunches-avatar.png"
+    },
+    {
+      "nr": 596,
+      "naam": "Standing chair abductie",
+      "kaartImg": "images/seated-chair/standing-chair-abduction-avatar-v8.jpg",
+      "sha256": "ad79928b2f7f5150d1e56e53f87005d043bc3b1f7af06a2ae3064ebf87b7ae9f",
+      "v2": 1,
+      "v1": 0,
+      "bron": "avatars/596-standing-chair-abductie-avatar.png"
+    }
+  ],
+  "avatarsNietOvergenomen": {
+    "reden": "past niet bij de nieuwe tekening of uitleg, of zelf afwijkend",
+    "nrs": [
+      17,
+      43,
+      51,
+      55,
+      65,
+      93,
+      164,
+      166,
+      376
+    ]
+  },
+  "avatarsLaterApart": {
+    "reden": "vastgelegde hold of V2-uitzondering; eerst die opheffen",
+    "nrs": [
+      8,
+      39,
+      48,
+      601
+    ]
+  },
+  "uitleg": [
+    {
+      "nr": 17,
+      "naam": "French press",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 24,
+      "naam": "Military press",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 28,
+      "naam": "Pully cross over",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 30,
+      "naam": "Pully dips",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 31,
+      "naam": "Pully down",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 43,
+      "naam": "Wrist extension",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 44,
+      "naam": "Wrist flexion",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 50,
+      "naam": "Dead lift",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 51,
+      "naam": "Extension squat",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 64,
+      "naam": "Single leg squat",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 79,
+      "naam": "Barbell twist",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 88,
+      "naam": "Crunch",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 89,
+      "naam": "Curl up",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 92,
+      "naam": "Knee elbow",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 101,
+      "naam": "Reversed crunch",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 105,
+      "naam": "Scissors 2",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 134,
+      "naam": "TRX lunge lateral low",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 171,
+      "naam": "Yoga snake",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 208,
+      "naam": "Gluteus kick (apparaat)",
+      "v2": 1,
+      "v1": 1
+    },
+    {
+      "nr": 581,
+      "naam": "Seated chair crunches",
+      "v2": 1,
+      "v1": 1
+    }
+  ]
+}
