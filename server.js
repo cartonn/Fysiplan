@@ -1438,12 +1438,17 @@ function schrijfLimiet(req, res) {
 // de header (oudere browser, geen browser), dan laten we door: geen gedragswijziging.
 function kruisSite(req) {
   const sfs = String(req.headers["sec-fetch-site"] || "");
-  if (sfs) return sfs === "cross-site";
+  if (sfs === "cross-site") return true;
+  // "same-site" is ook een subdomein (x.fysiplan.nl) of een andere app op hetzelfde
+  // registreerbare domein. De proefcookie (SameSite=Lax) gaat daar gewoon mee, dus zo'n
+  // pagina kon /v2/proef/opzeggen, wissen of doorgaan laten posten. Fysiplan post nooit
+  // tussen subdomeinen: same-site telt alleen als de Origin precies deze host is.
+  if (sfs && sfs !== "same-site") return false;
   // Oudere browsers (o.a. Safari vóór 16.4) sturen geen Sec-Fetch-Site; dan beslist
   // Origin. Een Origin van een andere host (of "null" uit een sandbox-iframe) is van
   // een andere website. Geen Origin (curl, oude GET-formulieren) blijft toegestaan.
   const origin = req.headers.origin;
-  if (origin === undefined) return false;
+  if (origin === undefined) return sfs === "same-site";
   if (String(origin) === "null") return true;
   let host = "";
   try { host = new URL(String(origin)).host.toLowerCase(); } catch { return true; }
