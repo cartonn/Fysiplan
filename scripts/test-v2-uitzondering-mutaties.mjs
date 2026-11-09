@@ -110,8 +110,8 @@ try {
   const houdGevallen = [
     ['controle: exacte bron', {}, null],
     ...bronkeuzeGevallen,
-    ['Chair squat: ander pad', {bestanden: metV2((c) => { naam(c, 'Chair squat').kaartImg = anderBeeld; })}, /Tijdelijke hold voor Chair squat past niet meer/],
-    ['Chair squat: andere bytes', {beelden: {'images/onderste-extremiteit/chair-squat-avatar-v7.jpg': herschreven}}, /Tijdelijke hold voor Chair squat past niet meer/],
+    // Chair squat: hold op 2026-11-09 opgeheven met een nieuwe avatar (Physitrack-crosscheck).
+    ['Step up with knee raise: ander pad', {bestanden: metV2((c) => { naam(c, 'Step up with knee raise').kaartImg = anderBeeld; })}, /Tijdelijke hold voor Step up with knee raise past niet meer/],
     ['ander pad', {bestanden: metV2((c) => { naam(c, 'Dips').kaartImg = anderBeeld; })}, /Tijdelijke hold voor Dips past niet meer/],
     ['andere bytes op hetzelfde pad', {beelden: {[dips.kaartImg]: herschreven}}, /Tijdelijke hold voor Dips past niet meer/],
     ['andere naam bij hetzelfde id', {bestanden: metV2((c) => { naam(c, 'Dips').naam = 'Dips aan de bank'; })}, /Tijdelijke hold voor Dips past niet meer/],
@@ -126,8 +126,8 @@ try {
     if (!verwacht) {
       assert.equal(r.code, 0, label + ': ' + r.fout);
       const review = JSON.parse(fs.readFileSync(path.join(r.root, 'public/mobile-media-review.json'), 'utf8'));
-      assert.equal(review.summary.rejected, 12, label);
-      assert.equal(review.entries.filter((e) => e.hold?.temporary).length, 7, label);
+      assert.equal(review.summary.rejected, 10, label);
+      assert.equal(review.entries.filter((e) => e.hold?.temporary).length, 5, label);
       assert.deepEqual(review.entries.filter((e) => e.hold?.kind === 'source-choice-pending').map((e) => e.exerciseId).sort(),
         ['fp_7b07f346644f9c17', 'fp_a0a18c0c13673d38'], label);
       // de wegwerpmap levert exact dezelfde beoordeling als de repo: het harnas zelf verandert niets
@@ -246,4 +246,4 @@ try {
   fs.rmSync(werk, {recursive: true, force: true});
 }
 assert.deepEqual(BEWAAKT.map(sha), voor, 'echte catalogi, beoordeling, pijlen en beelden byte-gelijk');
-console.log('Uitzonderingen smal: 7 bron-houds; Dips-, Back extension- en Rug extensie-mutaties op pad/bytes/naam/id en Chair squat-mutaties op pad/bytes falen; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug; houdingvolgorde Dumbell bench press faalt bij andere bytes/uitleg/naam/pad/id/uitsnede/as en zonder regel verandert alleen die volgorde.');
+console.log('Uitzonderingen smal: 5 bron-houds; Dips-, Back extension- en Rug extensie-mutaties op pad/bytes/naam/id en een Step up-mutatie op pad falen; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug; houdingvolgorde Dumbell bench press faalt bij andere bytes/uitleg/naam/pad/id/uitsnede/as en zonder regel verandert alleen die volgorde.');

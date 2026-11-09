@@ -39,10 +39,8 @@ const observations = new Map([
 // vervalt of op ander beeld blijft gelden.
 const HOLD_BEWIJS = 'Onafhankelijke beoordeling op oorspronkelijke resolutie en visuele controle door de coördinator (2026-11-03); eerder gesignaleerd in de statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md).';
 const sourceHolds = new Map([
-  ['fp_295fd35a63d44ef8', {name:'Chair squat', source:'images/onderste-extremiteit/chair-squat-avatar-v7.jpg',
-    assetSha256:'a4d98858e15a11f54fa84e98cacf73603a302c0ff8dc632fd62d0bdd9bd96418',
-    evidence:'Onafhankelijke visuele controle op originele resolutie (2026-11-03), live bronbytes gelijk aan deze SHA256: stoel ontbreekt; bestaande startuitsnede toont de lage squat en einduitsnede rechtop, tegengesteld aan de beschreven beginhouding. Tijdelijke visuele bronhold, geen klinisch oordeel.',
-    reason:'Tijdelijk tegengehouden: de stoel uit de uitleg ontbreekt en de begin- en eindhouding zijn omgekeerd weergegeven.'}],
+  // 2026-11-09: holds op Chair squat en Standing chair shoulder rotations opgeheven; beide hebben een
+  // nieuwe avatar uit de Physitrack-crosscheck (content/physitrack-crosscheck-beelden.json, holdsOpgeheven).
   ['fp_013ba6ad937cc9d9', {name:'Dips', source:'images/bovenste-extremiteit/dips-avatar-v7.jpg',
     assetSha256:'ae7ea9bc2bcf7646e69832179c1ada68c42f1fb39af8e05effe15c6758bf7298',
     reason:'Tijdelijk tegengehouden: de steunen zijn onvolledig en er is geen dip afgebeeld; de figuur staat met de voeten op de grond.'}],
@@ -52,11 +50,6 @@ const sourceHolds = new Map([
   ['fp_7dc1478e2b3c17b0', {name:'Step up with knee raise', source:'images/onderste-extremiteit/step-up-with-knee-raise-avatar-v7.jpg',
     assetSha256:'2dbad9164159e9602e62bdf374a58ed5bdd2f55b2a2160c83a68ee13528149c3',
     reason:'Tijdelijk tegengehouden: losse, zwevende fragmenten in plaats van een verhoging om op te stappen.'}],
-  // 2026-11-06: beelden van One leg standing en deze oefening omgewisseld (content/v2-avatar-overrides.json).
-  // Het nieuwe kaartbeeld toont de armen goed, maar de figuur staat op één been: de hold blijft, op het nieuwe bestand.
-  ['fp_4b99c5f11b42a30d', {name:'Standing chair shoulder rotations', source:'images/seated-chair/one-leg-standing-avatar-v8.jpg',
-    assetSha256:'9f6d3a68fac3385d0177134f1fb00f025ca5d820a9aa95b1cbb9d2e1f449a14f',
-    reason:'Tijdelijk tegengehouden: de armen staan goed (ellebogen gebogen, onderarmen naar buiten), maar de figuur staat op één been zonder de stoel; dat hoort niet bij deze oefening.'}],
   // Bronkeuze open (2026-11-03): beeld en eigen uitleg beschrijven een andere variant. Welke
   // bedoeld is, beslist de eigenaar/behandelaar; tot dan hetzelfde tegenhoudspoor als hierboven.
   // Geen klinisch oordeel en geen afkeuring van de oefening. Zie output/back-source-holds-20261103.json.

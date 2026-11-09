@@ -81,7 +81,7 @@
       "exerciseId": "fp_4b99c5f11b42a30d",
       "name": "Standing chair shoulder rotations",
       "kaartImg": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
-      "assetSha256": "9f6d3a68fac3385d0177134f1fb00f025ca5d820a9aa95b1cbb9d2e1f449a14f",
+      "assetSha256": "779afde6b3af12ea96d532f2d24af220b692cc138bc83227360705dbc760514f",
       "previousKaartImg": "images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg",
       "previousAssetSha256": "8290b9e1fe168d92837c72a096dbc84276ec0e70f40de714b6e265b83e7f4e0b",
       "lineImg": "images/seated-chair/one-leg-standing-line-v1.png",
@@ -100,7 +100,9 @@
       "previousShowed": "op één been naast de stoel (balans), geen schouderrotatie",
       "nowShows": "lijnbeeld: armen in goalpost-houding op beide voeten; kaartbeeld: armen goed maar staat op één been (blijft tijdelijk tegengehouden)",
       "reason": "Beeldbestanden van One leg standing en Standing chair shoulder rotations waren onderling verwisseld; de tekst hoort bij het andere beeld. Besluit eigenaar (2026-11-06, 'volg advies'): lijntekening leidend, tekeningen omwisselen.",
-      "date": "2026-11-06"
+      "date": "2026-11-06",
+      "previousAssetSha256AvatarFix": "9f6d3a68fac3385d0177134f1fb00f025ca5d820a9aa95b1cbb9d2e1f449a14f",
+      "avatarFix": "2026-11-09: avatar opnieuw gemaakt (Physitrack-crosscheck): staand op twee benen voor de stoel, ellebogen gebogen, onderarmen draaien naar buiten. Tijdelijke hold opgeheven."
     }
   ],
   "evidence": [

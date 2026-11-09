@@ -18,13 +18,13 @@
   ],
   "summary": {
     "total": 446,
-    "rejected": 12,
-    "unreviewed": 434,
+    "rejected": 10,
+    "unreviewed": 436,
     "approved": 0,
-    "poseGeometryApproved": 169,
-    "poseStatic": 277,
-    "brandMarkCovered": 146,
-    "brandMarkAbsent": 300
+    "poseGeometryApproved": 170,
+    "poseStatic": 276,
+    "brandMarkCovered": 145,
+    "brandMarkAbsent": 301
   },
   "entries": [
     {
@@ -2538,46 +2538,33 @@
       "exerciseId": "fp_295fd35a63d44ef8",
       "name": "Chair squat",
       "source": "images/onderste-extremiteit/chair-squat-avatar-v7.jpg",
-      "assetSha256": "a4d98858e15a11f54fa84e98cacf73603a302c0ff8dc632fd62d0bdd9bd96418",
+      "assetSha256": "9af974d2e80f1ab109e3d8e1e2cdabff489efafecc7f1d33c62b29280a02ce98",
       "explanationSha256": "6aec89c0ff2d34dcd23bed64df1dde9b34107619cf47971c5f4c247db4cbd928",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 422,
-        "visuallyInspected": true
+        "chromaticPixels": 523,
+        "visuallyInspected": false
       },
       "width": 800,
       "height": 1200,
-      "status": "rejected",
+      "status": "unreviewed",
       "clinicalApproved": false,
-      "presentation": "withhold",
+      "presentation": "static",
       "allowAutomaticPoseSplit": false,
       "reasons": [
-        "Tijdelijk tegengehouden: de stoel uit de uitleg ontbreekt en de begin- en eindhouding zijn omgekeerd weergegeven."
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
       ],
       "observations": [],
-      "hold": {
-        "temporary": true,
-        "kind": "source-defect",
-        "source": "images/onderste-extremiteit/chair-squat-avatar-v7.jpg",
-        "assetSha256": "a4d98858e15a11f54fa84e98cacf73603a302c0ff8dc632fd62d0bdd9bd96418",
-        "evidence": "Onafhankelijke visuele controle op originele resolutie (2026-11-03), live bronbytes gelijk aan deze SHA256: stoel ontbreekt; bestaande startuitsnede toont de lage squat en einduitsnede rechtop, tegengesteld aan de beschreven beginhouding. Tijdelijke visuele bronhold, geen klinisch oordeel.",
-        "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
-      },
       "poses": [],
       "poseGeometry": {
-        "status": "withheld",
-        "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
       },
       "brandMark": {
-        "present": true,
-        "cover": {
-          "x": 14,
-          "y": 14,
-          "w": 178,
-          "h": 58
-        },
-        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -20359,38 +20346,59 @@
       "exerciseId": "fp_4b99c5f11b42a30d",
       "name": "Standing chair shoulder rotations",
       "source": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
-      "assetSha256": "9f6d3a68fac3385d0177134f1fb00f025ca5d820a9aa95b1cbb9d2e1f449a14f",
+      "assetSha256": "779afde6b3af12ea96d532f2d24af220b692cc138bc83227360705dbc760514f",
       "explanationSha256": "448199725c246d0e00d9f226506c0cb799b50f4af125bc8e4eb701b85a2e680d",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 492,
+        "chromaticPixels": 287,
         "visuallyInspected": true
       },
       "width": 800,
       "height": 1200,
-      "status": "rejected",
+      "status": "unreviewed",
       "clinicalApproved": false,
-      "presentation": "withhold",
+      "presentation": "static",
       "allowAutomaticPoseSplit": false,
       "reasons": [
-        "Tijdelijk tegengehouden: de armen staan goed (ellebogen gebogen, onderarmen naar buiten), maar de figuur staat op één been zonder de stoel; dat hoort niet bij deze oefening."
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
       ],
       "observations": [
         "Kaartbeeld gecorrigeerd op 2026-11-06: het vorige V2-kaartbeeld (images/seated-chair/standing-chair-shoulder-rotations-avatar-v8.jpg) toonde op één been naast de stoel (balans), geen schouderrotatie; dit beeld toont lijnbeeld: armen in goalpost-houding op beide voeten; kaartbeeld: armen goed maar staat op één been (blijft tijdelijk tegengehouden), zoals de eigen uitleg. Het V2-lijnbeeld is op dezelfde manier gecorrigeerd. Zie content/v2-avatar-overrides.json. Het V1-lijnbeeld is niet aangepast en toont nog de andere beweging. Geen klinische goedkeuring."
       ],
-      "hold": {
-        "temporary": true,
-        "kind": "source-defect",
-        "source": "images/seated-chair/one-leg-standing-avatar-v8.jpg",
-        "assetSha256": "9f6d3a68fac3385d0177134f1fb00f025ca5d820a9aa95b1cbb9d2e1f449a14f",
-        "evidence": "Onafhankelijke beoordeling op oorspronkelijke resolutie en visuele controle door de coördinator (2026-11-03); eerder gesignaleerd in de statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md).",
-        "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
-      },
-      "poses": [],
+      "poses": [
+        {
+          "label": "start",
+          "crop": {
+            "x": 216,
+            "y": 16,
+            "w": 396,
+            "h": 580
+          }
+        },
+        {
+          "label": "end",
+          "crop": {
+            "x": 172,
+            "y": 600,
+            "w": 440,
+            "h": 568
+          }
+        }
+      ],
       "poseGeometry": {
-        "status": "withheld",
-        "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
+        "status": "geometry-approved",
+        "axis": "y",
+        "reviewer": "Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02",
+        "reviewDate": "2026-11-02",
+        "reviewKind": "geometric-visual-only",
+        "visuallyInspected": true,
+        "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
+        "foreignInkPixels": 0,
+        "silhouetteIoU": 0.838,
+        "brandingBoxesOutsideCrop": 0,
+        "clinicalApproved": false,
+        "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
       },
       "brandMark": {
         "present": false,
