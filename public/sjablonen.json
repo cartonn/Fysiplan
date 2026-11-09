@@ -3525,5 +3525,604 @@
     "h": "5 × 15 sec"
    }
   ]
+ },
+ {
+  "naam": "Elleboog: tenniselleboog fase 1",
+  "sub": "Tenniselleboog in de prikkelbare fase: de polsstrekkers rekken en rustig belasten.",
+  "categorie": "Elleboog, pols en hand",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Polsstrekkers rekken – arm gestrekt",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Bal knijpen",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Wrist extension",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Elleboog: tenniselleboog fase 2",
+  "sub": "Tenniselleboog: de onderarm sterker maken met gewicht en elastiek.",
+  "categorie": "Elleboog, pols en hand",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Zenuwglijden duimkant (n. radialis)",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Polsstrekkers rekken – arm gestrekt",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Handpalm naar boven draaien tegen elastiek",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Wrist extension",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Handpalm naar beneden draaien tegen elastiek",
+    "s": "3",
+    "h": "15"
+   }
+  ]
+ },
+ {
+  "naam": "Elleboog: golferselleboog fase 1",
+  "sub": "Golferselleboog in de prikkelbare fase: de polsbuigers rekken en rustig belasten.",
+  "categorie": "Elleboog, pols en hand",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Pols naar de duimkant optillen met gewicht",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Wrist flexion",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pols achterover buigen – met hulp op tafel",
+    "s": "3",
+    "h": "5 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Elleboog: golferselleboog fase 2",
+  "sub": "Golferselleboog: de onderarm sterker maken met gewicht en elastiek.",
+  "categorie": "Elleboog, pols en hand",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Wrist flexion",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Handpalm naar boven draaien tegen elastiek",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Handpalm naar beneden draaien tegen elastiek",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Zenuwglijden pinkkant (n. ulnaris)",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Elleboog: ulnaris-klachten (cubitaal tunnel)",
+  "sub": "Tintelingen in de pink en ringvinger: de zenuw laten glijden en nek en pols soepel houden.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Levator scapulae rek – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Bovenste trapezius rek – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek draaien – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Zenuwglijden pinkkant (n. ulnaris)",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pols achterover buigen – met hulp op tafel",
+    "s": "3",
+    "h": "5 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Elleboog: na een elleboogbreuk",
+  "sub": "Na het gips of de mitella: de elleboog weer buigen, strekken en draaien.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Elleboog buigen en strekken met hulp",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Onderarm draaien – handpalm op en neer",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Biceps alternate dumbell",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Pols: carpaal tunnel syndroom",
+  "sub": "Tintelingen in duim en vingers: pezen en zenuw laten glijden en de pols soepel houden.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Haakvuist maken",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Bal knijpen",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Polsstrekkers rekken – arm gestrekt",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Wrist extension",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pols omhoog duwen tegen je hand (zonder bewegen)",
+    "s": "3",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Pols buigen en strekken – duim omhoog",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Pols: algemene polsklachten",
+  "sub": "Pols soepel houden en de knijpkracht op peil brengen.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Polsstrekkers rekken – arm gestrekt",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Pols buigen en strekken – duim omhoog",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Polsbuigers rekken – arm gestrekt",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Bal knijpen",
+    "s": "3",
+    "h": "10 × 5 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Pols: verstuiking fase 1",
+  "sub": "Na een verzwikte pols: rustig weer alle kanten op bewegen.",
+  "categorie": "Elleboog, pols en hand",
+  "fase": 1,
+  "oefeningen": [
+   {
+    "n": "Onderarm draaien – handpalm op en neer",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pols buigen en strekken – duim omhoog",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pols voorover buigen – met hulp op tafel",
+    "s": "3",
+    "h": "5 × 20 sec"
+   },
+   {
+    "n": "Vuist maken en hand openen",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Bal knijpen",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Pols achterover buigen – met hulp op tafel",
+    "s": "3",
+    "h": "5 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Pols: verstuiking fase 2",
+  "sub": "Na een verzwikte pols: de onderarm weer sterker maken.",
+  "categorie": "Elleboog, pols en hand",
+  "fase": 2,
+  "oefeningen": [
+   {
+    "n": "Wrist extension",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Flexbar wringen",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Handpalm naar boven draaien tegen elastiek",
+    "s": "3",
+    "h": "15"
+   },
+   {
+    "n": "Wrist flexion",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Handpalm naar beneden draaien tegen elastiek",
+    "s": "3",
+    "h": "15"
+   }
+  ]
+ },
+ {
+  "naam": "Pols: na een polsbreuk",
+  "sub": "Na het gips: beweeglijkheid terugwinnen en de onderarm opbouwen.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Polsbuigers rekken – arm gestrekt",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Handpalmen tegen elkaar zakken (gebedsrek)",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Wrist extension",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Wrist flexion",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pols naar de duimkant optillen met gewicht",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Bal knijpen",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Pols voorover buigen – met hulp op tafel",
+    "s": "3",
+    "h": "5 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Pols: na een breuk van het handwortelbeentje (scaphoïd)",
+  "sub": "Na het gips: pols rekken en draaien, daarna de onderarm sterker maken.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Onderarm draaien met een halter of hamer",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Wrist flexion",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pols naar de duimkant optillen met gewicht",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Wrist extension",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Handpalmen tegen elkaar zakken (gebedsrek)",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Polsbuigers rekken – arm gestrekt",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Polsstrekkers rekken – arm gestrekt",
+    "s": "3",
+    "h": "30 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Pols: ganglion (peesknobbel)",
+  "sub": "Bij een peesknobbel aan de pols: soepel bewegen en zonder pijn belasten.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Wrist extension",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pols voorover buigen – met hulp op tafel",
+    "s": "3",
+    "h": "5 × 20 sec"
+   },
+   {
+    "n": "Pols omhoog duwen tegen je hand (zonder bewegen)",
+    "s": "3",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Pols buigen tegen je hand (zonder bewegen)",
+    "s": "3",
+    "h": "5 × 10 sec"
+   },
+   {
+    "n": "Bal knijpen",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Pols achterover buigen – met hulp op tafel",
+    "s": "3",
+    "h": "5 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Hand: handartrose",
+  "sub": "Stijve, pijnlijke vingers: dagelijks bewegen en de knijpkracht onderhouden.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Vuist maken en hand openen",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Vingers buigen en strekken met hulp",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Vingers spreiden tegen elastiek",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Bal knijpen",
+    "s": "3",
+    "h": "10 × 5 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Hand: ziekte van Dupuytren",
+  "sub": "Na behandeling van Dupuytren: vingers en handpalm zo ver mogelijk strekken.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Handpalmen tegen elkaar zakken (gebedsrek)",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Vingers buigen en strekken met hulp",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pols achterover buigen – met hulp op tafel",
+    "s": "3",
+    "h": "5 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Hand: na een middenhandsbreuk",
+  "sub": "Na een gebroken middenhandsbeentje: vingers weer volledig buigen en kracht opbouwen.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Vingers buigen en strekken met hulp",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Bal knijpen",
+    "s": "3",
+    "h": "10 × 5 sec"
+   },
+   {
+    "n": "Haakvuist maken",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Zenuw: n. medianus (arm en nek)",
+  "sub": "Uitstralende klachten naar duim en vingers: de zenuw laten glijden en de nek soepel houden.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Zenuwglijden handpalm (n. medianus)",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek draaien – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek zijwaarts buigen – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Levator scapulae rek – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Kin intrekken – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek buigen – zittend actief",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Zenuw: n. ulnaris (arm en nek)",
+  "sub": "Uitstralende klachten naar pink en ringvinger: de zenuw laten glijden en de nek soepel houden.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Zenuwglijden pinkkant (n. ulnaris)",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek draaien – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek zijwaarts buigen – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Levator scapulae rek – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Kin intrekken – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek buigen – zittend actief",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Zenuw: n. radialis (arm en nek)",
+  "sub": "Uitstralende klachten aan de duimkant van de onderarm: de zenuw laten glijden en de nek soepel houden.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Zenuwglijden duimkant (n. radialis)",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek draaien – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek zijwaarts buigen – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Levator scapulae rek – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Kin intrekken – zittend actief",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Nek buigen – zittend actief",
+    "s": "3",
+    "h": "10"
+   }
+  ]
  }
 ]

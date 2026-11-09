@@ -525,7 +525,11 @@ const [legacyLibrary, legacyProduction] = await Promise.all([
 const productionByName = new Map(legacyProduction.exercises.map((entry) => [entry.sourceName, entry]));
 const expansionBlueprint = buildExpansion();
 const expansionById = new Map(expansionBlueprint.map((entry) => [entry.exerciseId, entry]));
-const coreLibrary = legacyLibrary.filter((exercise) => exercise.v1Source !== "carla");
+// Nieuwe oefeningen (nieuweOefening in content/nieuwe-lijntekeningen.json, sinds 2026-11-09) horen
+// niet bij de vaste Core-1000-blauwdruk.
+const nieuweOefeningen = new Set(JSON.parse(await readFile(new URL("../content/nieuwe-lijntekeningen.json", import.meta.url), "utf8"))
+  .lijntekeningen.filter((entry) => entry.nieuweOefening).map((entry) => entry.naam));
+const coreLibrary = legacyLibrary.filter((exercise) => exercise.v1Source !== "carla" && !nieuweOefeningen.has(exercise.naam));
 const publicEntries = coreLibrary.map((exercise, index) => {
   if (!exercise.coreExerciseId) return legacyEntry(exercise, productionByName, index);
   const source = expansionById.get(exercise.coreExerciseId);

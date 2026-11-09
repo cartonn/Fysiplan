@@ -47,7 +47,14 @@ async function execute(node, results) {
   if (node.kind === "v2-gate") {
     const v1 = results.get("catalog:v1").entries;
     const v2 = results.get("catalog:v2").entries;
-    assert(v2.length === 604, `v2-broncatalogus moet exact 604 oefeningen bevatten; gevonden ${v2.length}`);
+    const register = JSON.parse(await readFile(join(root, "content", "nieuwe-lijntekeningen.json"), "utf8")).lijntekeningen;
+    // Nieuwe oefeningen (nieuweOefening: true in content/nieuwe-lijntekeningen.json, sinds 2026-11-09)
+    // staan los van de vaste 604; ze zijn volledig met pad en sha256 vastgelegd en hebben geen coreExerciseId.
+    const nieuweOefeningen = new Set(register.filter((entry) => entry.nieuweOefening).map((entry) => entry.naam));
+    const basis = v2.filter((entry) => !nieuweOefeningen.has(entry.naam));
+    assert(basis.length === 604, `v2-broncatalogus moet exact 604 oefeningen bevatten (plus vastgelegde nieuwe oefeningen); gevonden ${basis.length}`);
+    assert(v2.length === basis.length + nieuweOefeningen.size, "vastgelegde nieuwe oefening ontbreekt in oefeningen-v2.json");
+    assert(v2.every((entry) => !nieuweOefeningen.has(entry.naam) || !entry.coreExerciseId), "nieuwe oefening mag geen coreExerciseId hebben");
     assert(new Set(v2.map((entry) => entry.naam)).size === v2.length, "v2 bevat dubbele oefeningnamen");
     const v2Names = new Set(v2.map((entry) => entry.naam));
     const v1Core = v1.filter((entry) => !String(entry.img || "").endsWith("-line-v1.png"));
@@ -63,12 +70,11 @@ async function execute(node, results) {
     for (const override of overrides.values()) await assertV2Override(root, override, v2, v1, arrows);
     // nieuwe lijntekeningen zonder avatarkaart (content/nieuwe-lijntekeningen.json): bewust
     // geen kaartImg, wel exact het vastgelegde lijnbeeld; geen half paar maar een lijn-alleen-stand
-    const nieuweLijn = new Map(JSON.parse(await readFile(join(root, "content", "nieuwe-lijntekeningen.json"), "utf8"))
-      .lijntekeningen.map((entry) => [entry.naam, entry]));
+    const nieuweLijn = new Map(register.map((entry) => [entry.naam, entry]));
     const pathErrors = v2.filter((entry) => {
       const nieuwe = nieuweLijn.get(entry.naam);
       // met vastgelegde avatar: kaartImg exact het geregistreerde pad; zonder: geen kaartImg
-      if (nieuwe) return (entry.kaartImg ?? null) !== (nieuwe.kaartImg ?? null) || !entry.coreExerciseId || entry.img !== nieuwe.img;
+      if (nieuwe) return (entry.kaartImg ?? null) !== (nieuwe.kaartImg ?? null) || (!entry.coreExerciseId && !nieuwe.nieuweOefening) || entry.img !== nieuwe.img;
       if (!entry.kaartImg) return true;
       const override = !entry.coreExerciseId && overrides.get(entry.exerciseId);
       if (override) return entry.img !== override.lineImg || v1ByName.get(entry.naam)?.img !== override.v1LineImg;

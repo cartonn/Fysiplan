@@ -212,7 +212,9 @@ try {
   // Alleen legacykaarten in de wegwerpcatalogus: daarvoor maakt de graph nooit nieuwe
   // lijnbeelden, hij herschrijft alleen het img-veld. Precies dat moet de correctie overleven.
   {
-    const legacy = v2.filter((e) => !e.coreExerciseId);
+    // nieuwe oefeningen (nieuweOefening in content/nieuwe-lijntekeningen.json) staan niet in V1
+    const nieuweOefeningen = new Set(JSON.parse(fs.readFileSync('content/nieuwe-lijntekeningen.json', 'utf8')).lijntekeningen.filter((e) => e.nieuweOefening).map((e) => e.naam));
+    const legacy = v2.filter((e) => !e.coreExerciseId && !nieuweOefeningen.has(e.naam));
     const root = wegwerp({bestanden: {'public/oefeningen-v2.json': JSON.stringify(legacy, null, 1) + '\n'}});
     const r = await draai(root, 'v2-line-art-graph.mjs', ['run', '--execute']);
     assert.equal(r.code, 0, r.fout);
