@@ -1,0 +1,287 @@
+[
+ {
+  "nr": 10,
+  "slug": "dumbell-front-press",
+  "stijl": "stoel",
+  "lijn": "images/beginhouding-pijl-v1/011.webp",
+  "physitrack": {
+   "pagina": "Shoulder press with dumbbells (seated)",
+   "start": "rechtop zittend op een bank, in elke hand een dumbbell op schouderhoogte, ellebogen gebogen en naar voren gericht",
+   "beweging": "beide dumbbells recht boven het hoofd uitdrukken en weer terug laten zakken naar schouderhoogte",
+   "materiaal": "bank en twee dumbbells",
+   "greep": "pagina noemt geen greep; ellebogen naar voren past bij handpalmen naar elkaar (neutrale greep), zoals de uitleg"
+  },
+  "eind": "Both figures in three-quarter front view, SITTING upright on a flat weight bench that is clearly visible under her (the bench seat, legs and her buttocks on the seat must be shown; she is NOT floating in the air, NOT standing). Feet flat on the floor, knees bent about 90 degrees. One dumbbell in each hand with a NEUTRAL grip: palms facing EACH OTHER, the dumbbells pointing front-to-back (NOT held crosswise with palms facing forward). TOP: dumbbells just in front of the shoulders at shoulder height, elbows bent and pointing FORWARD. BOTTOM: both arms pressed straight up above the shoulders, elbows almost straight, palms still facing each other, dumbbells above the head, trunk upright and still seated on the bench.",
+  "opmerking": "Lijntekening klopt qua houding en bank, maar toont de dumbbells dwars met handpalmen naar voren. De avatar volgt hier bewust de uitleg (handpalmen naar elkaar, ellebogen naar voren) en wijkt op de greep af van de tekening. Oude avatar: geen bank zichtbaar."
+ },
+ {
+  "nr": 14,
+  "slug": "endo-pull",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v1/015.webp",
+  "physitrack": {
+   "pagina": "Shoulder internal rotation (cable machine)",
+   "start": "kabelkatrol op ellebooghoogte, werkende elleboog tegen de zij en 90 graden gebogen, handvat in één hand",
+   "beweging": "schouder naar binnen draaien zodat de hand naar de buik komt, elleboog blijft 90 graden en tegen de zij; rustig terug",
+   "materiaal": "kabelapparaat met handvat",
+   "greep": "handvat in één hand; pagina noemt geen handstand"
+  },
+  "eind": "Both figures in front view, standing upright with the side of her body toward a cable machine; the pulley is at ELBOW height on the SAME side as the working arm. She holds a single handle in the hand nearest the machine. The working elbow stays tucked against her side and bent at 90 degrees, the other arm hangs relaxed. TOP: forearm rotated OUTWARD toward the machine, hand pointing sideways away from the belly, cable taut. BOTTOM: forearm rotated INWARD so the hand is in front of her belly, elbow still against her side at 90 degrees, trunk not twisted. The hand is NOT already in front of the belly in the TOP image; the difference between TOP and BOTTOM must clearly show the forearm swinging inward.",
+  "opmerking": "Twijfel: de lijntekening toont een elastiek aan een paal i.p.v. een kabelapparaat (houding en pijl kloppen wel). Ik volg Physitrack en de uitleg ('naast het apparaat') met een kabelapparaat; dan wijkt het materiaal af van de tekening. Als avatar en tekening gelijk moeten blijven: elastiek aan een paal gebruiken."
+ },
+ {
+  "nr": 15,
+  "slug": "exo-pull",
+  "stijl": "staand",
+  "lijn": null,
+  "physitrack": {
+   "pagina": "Cable machine external rotation",
+   "start": "zijwaarts naast het kabelapparaat, katrol op ellebooghoogte, elleboog 90 graden tegen de zij, onderarm tegen de buik",
+   "beweging": "onderarm zo ver mogelijk naar buiten draaien, weg van het lichaam, zonder de romp te draaien; rustig terug",
+   "materiaal": "kabelapparaat met handvat",
+   "greep": "handvat in één hand; pagina noemt geen handstand"
+  },
+  "eind": "Both figures in front view, standing upright with a cable machine beside her; the pulley is at ELBOW height on the OPPOSITE side from the working arm (machine on her left, working arm is her right arm, or mirrored). The cable runs from the machine across the front of her belly to the single handle in the working hand. Working elbow tucked against her side and bent at 90 degrees; the free arm hangs relaxed. TOP: the working forearm lies across the front of her belly, hand near the navel, cable taut toward the machine. BOTTOM: the forearm has rotated OUTWARD, away from the belly and away from the machine, hand pointing forward-outward, elbow still against her side at 90 degrees, trunk not twisted. ONE arm and ONE cable only: NOT a band held between both hands, NOT the machine on the side of the working arm.",
+  "opmerking": "Tekening wordt hertekend (apparaat stond aan de kant van de werkende arm). Physitrack noemt de kant niet expliciet; apparaat aan de andere kant is de enige opstelling waarin de kabel weerstand geeft bij naar buiten draaien, en past bij de nieuwe uitleg. Oude avatar: band tussen beide handen."
+ },
+ {
+  "nr": 27,
+  "slug": "pully-cross-down",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v2/028.webp",
+  "physitrack": {
+   "pagina": "Cable woodchops",
+   "start": "zijwaarts naast het apparaat, katrol op de hoogste stand, handvat boven je met één hand vast",
+   "beweging": "arm diagonaal omlaag voor het lichaam langs trekken, weg van het apparaat; gecontroleerd terug",
+   "materiaal": "kabelapparaat met handvat, katrol hoog",
+   "greep": "één hand aan het handvat"
+  },
+  "eind": "Both figures in three-quarter front view, standing upright with her side toward a tall cable machine whose pulley is at the HIGHEST position. She holds ONE handle with ONE hand only (the hand nearest the machine); the other hand hangs free at her side. TOP: the holding arm reaches up and out toward the high pulley, hand at the handle ABOVE head height next to the machine, cable taut. BOTTOM: the same hand has pulled the handle diagonally DOWN across the front of her body to just outside the OPPOSITE hip, arm nearly straight, feet unchanged. NOT starting with the handle low at the hip, NOT both hands on the handle.",
+  "opmerking": "Physitrack-woodchop beschrijft ook romprotatie en vaak twee handen; tekening en uitleg kiezen één hand diagonaal omlaag, de avatar volgt de tekening."
+ },
+ {
+  "nr": 28,
+  "slug": "pully-cross-over",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v2/029.webp",
+  "physitrack": {
+   "pagina": "Incline cable chest fly",
+   "start": "tussen twee hoge katrollen, handvat in elke hand, stap naar voren voor spanning, ellebogen licht gebogen",
+   "beweging": "handen in een boog omlaag en naar voren brengen tot voor de onderbuik, borst aanspannen; rustig terug",
+   "materiaal": "kabelapparaat met twee hoge katrollen",
+   "greep": "in elke hand een handvat, handpalmen naar voren"
+  },
+  "eind": "Both figures in front view, standing upright BETWEEN two tall cable towers with the pulleys at the HIGHEST position, one foot a step in front of the other. One handle in each hand, elbows slightly bent throughout. TOP: both arms reach diagonally UP and OUT to the sides toward the high pulleys, hands above shoulder height and wide apart, cables taut. BOTTOM: both hands have swept down in an arc and meet in front of her LOWER BELLY, elbows still slightly bent, feet unchanged. In the TOP image the hands are NOT crossed and NOT in front of the hips; TOP and BOTTOM must look clearly different.",
+  "opmerking": ""
+ },
+ {
+  "nr": 32,
+  "slug": "pully-press-double",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v1/033.webp",
+  "physitrack": {
+   "pagina": "Cable press standing - single arm",
+   "start": "rechtop met de rug naar het ankerpunt op schouderhoogte, stap naar voren voor spanning, romp recht en stil",
+   "beweging": "arm horizontaal recht naar voren drukken tot gestrekt, rustig terug; romp niet draaien",
+   "materiaal": "kabelapparaat",
+   "greep": "handvat net voor de schouder, vuist naar voren"
+  },
+  "eind": "Both figures in strict side profile, standing upright with her BACK toward a cable machine, one foot a step forward. TWO cables come from BEHIND her at SHOULDER height, one handle in EACH hand. TOP: both hands just in front of the shoulders, elbows bent and pointing back, cables running straight back to the machine behind her. BOTTOM: both arms pressed straight FORWARD at shoulder height, parallel to the floor, one handle in each hand, trunk still. NOT a cable coming from the side, NOT both hands sharing one handle.",
+  "opmerking": "Physitrack-pagina is de enkelarmsversie; de dubbele variant is hetzelfde patroon met twee armen, zoals de tekening."
+ },
+ {
+  "nr": 33,
+  "slug": "pully-press-single",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v1/034.webp",
+  "physitrack": {
+   "pagina": "Cable press standing - single arm",
+   "start": "rechtop met de rug naar het ankerpunt op schouderhoogte, been tegenover de werkende arm een stap naar voren, romp recht",
+   "beweging": "werkende arm horizontaal recht naar voren drukken tot gestrekt, rustig terug; romp niet draaien",
+   "materiaal": "kabelapparaat",
+   "greep": "handvat in de werkende hand net voor de schouder"
+  },
+  "eind": "Both figures in strict side profile, standing upright with her BACK toward a cable machine, the leg opposite the working arm a step forward. ONE cable comes from BEHIND her at SHOULDER height to a single handle in the working hand; the other arm hangs relaxed. TOP: handle just in front of the working shoulder, elbow bent and pointing back. BOTTOM: the working arm pressed straight FORWARD at shoulder height, parallel to the floor, hips and shoulders square, no trunk rotation. The arm does NOT push across the body to the other side and the cable does NOT run sideways in front of her.",
+  "opmerking": ""
+ },
+ {
+  "nr": 34,
+  "slug": "pully-pull-over",
+  "stijl": "mat",
+  "lijn": "images/beginhouding-pijl-v1/035.webp",
+  "physitrack": {
+   "pagina": "Supine pullover",
+   "start": "op de rug liggend met gebogen benen",
+   "beweging": "armen naar de bovenbenen trekken met een stabiele rug",
+   "materiaal": "weerstandsapparaat of gewicht",
+   "greep": "pagina noemt geen greep; tekening: beide handen aan één handvat"
+  },
+  "eind": "Both figures in strict side profile, LYING FLAT on her back on a FLAT horizontal bench (NOT an incline bench, NOT half sitting), knees bent, feet flat on the floor. Her head is toward a low cable pulley behind the end of the bench. Both hands hold one handle together. TOP: arms straight and extended BEHIND her head, roughly in line with the body, cable taut toward the pulley. BOTTOM: arms swung in an arc over her face and forward, still nearly straight, hands above her thighs, back flat on the bench. The movement goes FROM behind the head TO the thighs, NOT the reverse, and the elbows are NOT bent at the start.",
+  "opmerking": "Physitrack zegt 'ruglig met gebogen benen'; tekening toont vlakke bank, die wordt gevolgd."
+ },
+ {
+  "nr": 38,
+  "slug": "shoulder-rotation-shrugs",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v1/039.webp",
+  "physitrack": {
+   "pagina": "Shoulder shrugs with weights",
+   "start": "rechtop staand, armen gestrekt langs het lichaam, in elke hand een gewicht",
+   "beweging": "schouders optrekken richting de oren en gecontroleerd laten zakken",
+   "materiaal": "twee dumbbells",
+   "greep": "pagina noemt geen greep; tekening: handpalmen naar het lichaam"
+  },
+  "eind": "Both figures in front view, standing upright, feet hip-width apart, arms straight and hanging at her sides, one dumbbell in each hand, palms facing her thighs. Arms stay straight throughout (NOT bending the elbows). TOP: shoulders relaxed and LOW, neck long. BOTTOM: shoulders pulled STRAIGHT UP as high as possible toward the ears, neck visibly shorter, dumbbells raised a few centimetres with straight arms. The shoulder height difference between TOP and BOTTOM must be clearly visible; NOT two nearly identical images.",
+  "opmerking": "Twijfel (zie reden): naam zegt 'rotation'; Physitrack-shrug is recht op en neer. Avatar toont recht op en neer volgens de nieuwe uitleg; als de draai naar achteren bewust is, moet het eindbeeld ook schouders naar achteren tonen."
+ },
+ {
+  "nr": 40,
+  "slug": "triceps-dumbell-kickbacks",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v1/041.webp",
+  "physitrack": {
+   "pagina": "Triceps extension - bent over single arm with dumbbell",
+   "start": "staand voorovergebogen vanuit de heupen, dumbbell in één hand, vrije hand op een steun op heuphoogte",
+   "beweging": "elleboog vanuit minstens 90 graden buiging strekken tot de arm naar achteren wijst, bovenarm evenwijdig aan de grond; per kant",
+   "materiaal": "dumbbell (steun op heuphoogte)",
+   "greep": "pagina noemt geen greep"
+  },
+  "eind": "Both figures in strict side profile, STANDING on both feet, knees slightly bent, hinged forward at the hips with a straight back almost horizontal. The free hand rests on the front of her knee for support (as in the line drawing). One dumbbell in the other hand, upper arm held still alongside the trunk, parallel to the floor. TOP: elbow bent about 90 degrees, forearm hanging straight down, dumbbell below the elbow. BOTTOM: elbow fully straightened, the whole arm pointing straight BACK in line with the trunk, upper arm unchanged. NOT kneeling on a bench, NO knee or hand on a bench.",
+  "opmerking": "Physitrack noemt een steun op heuphoogte; tekening laat de hand op de knie steunen. Avatar volgt de tekening (hand op knie); de nieuwe uitleg staat beide toe."
+ },
+ {
+  "nr": 44,
+  "slug": "wrist-flexion",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v2/045.webp",
+  "physitrack": {
+   "pagina": "Wrist flexion with weight",
+   "start": "half geknield, onderarm op een kruk met de handpalm omhoog en de pols over de rand",
+   "beweging": "pols over de rand laten zakken, dan omhoog buigen om het gewicht op te tillen, gecontroleerd terug; onderarm blijft liggen",
+   "materiaal": "kruk en klein gewicht",
+   "greep": "gewicht in de hand, handpalm naar boven"
+  },
+  "eind": "Both figures in strict side profile, HALF-KNEELING on a mat: ONE knee on the floor, the other foot flat in front (NOT kneeling on both knees). A stool beside her; her forearm lies flat on the stool seat, palm facing UP, the wrist and hand reaching just beyond the edge, a small dumbbell in the hand. The forearm stays in full contact with the stool in both images and the elbow does NOT bend. TOP: wrist bent DOWN over the edge, hand lower than the forearm. BOTTOM: only the wrist curled UP, hand raised toward the forearm, forearm still lying on the stool. NOT a biceps curl, the forearm does NOT lift off.",
+  "opmerking": "Stijl 'staand' gekozen omdat de houding half geknield en rechtop is (geen lig- of grondoefening in de zin van 'mat'); twijfelgeval qua stijlreferentie."
+ },
+ {
+  "nr": 49,
+  "slug": "crabwalk",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v1/050.webp",
+  "physitrack": {
+   "pagina": "Band-resisted crab walks",
+   "start": "band om de benen, band op spanning brengen",
+   "beweging": "zijwaarts stappen terwijl de band strak blijft, voeten niet te dicht bij elkaar, tenen en knieën naar voren",
+   "materiaal": "weerstandsband (Physitrack: om de enkels)",
+   "greep": "geen; tekening: handen gevouwen voor de borst"
+  },
+  "eind": "Both figures in front view, in a HALF SQUAT: knees clearly bent, hips back, back straight, hands clasped in front of the chest. A wide, clearly visible loop band around both legs just ABOVE the knees (as in the line drawing), stretched taut. Toes and knees point forward. TOP: feet about hip-width apart, band taut. BOTTOM: one foot has stepped wide to the side, feet wider apart, band visibly stretched more, still in the same half squat. NOT standing with straight knees, the band is NOT hidden or thin at the ankles.",
+  "opmerking": "Twijfel: Physitrack plaatst de band om de enkels, de tekening boven de knieën. Avatar volgt de tekening (zoals de reden vraagt). Als Physitrack strikt leidend moet zijn: band om de enkels, dan ook de tekening aanpassen."
+ },
+ {
+  "nr": 50,
+  "slug": "dead-lift",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v2/051.webp",
+  "physitrack": {
+   "pagina": "Deadlift met barbell",
+   "start": "rechtop staand met licht gebogen knieën, stang vast voor de bovenbenen",
+   "beweging": "vanuit de heupen voorover scharnieren met rechte rug, stang zakt naar de schenen; billen en hamstrings aanspannen om terug omhoog te komen",
+   "materiaal": "halterstang met schijven",
+   "greep": "bovenhandse greep (handpalmen naar je toe/omlaag)"
+  },
+  "eind": "Both figures in strict side profile, feet hip-width apart. A barbell with plates held in both hands with an OVERHAND grip, hands just outside the thighs, arms straight. TOP: STANDING upright, knees slightly bent, bar hanging in front of the thighs. BOTTOM: hinged forward FROM THE HIPS with a straight flat back, hips pushed back, knees only slightly more bent, bar slid down close along the legs to just below the knees at shin height, plates NOT touching the floor. The order is standing first, hinge second; NOT starting with the bar on the floor, NOT a deep squat.",
+  "opmerking": ""
+ },
+ {
+  "nr": 54,
+  "slug": "hack-squat",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v1/055.webp",
+  "physitrack": {
+   "pagina": "Hack squat",
+   "start": "voeten op de plaat op schouderbreedte, rug tegen het kussen, omhoog drukken tot staan en de veiligheidsvergrendeling losmaken",
+   "beweging": "naar beneden zakken in een squat, kort pauzeren, via hielen en benen terug omhoog, knieën niet op slot",
+   "materiaal": "hack-squatapparaat",
+   "greep": "tekening: handen aan de handgrepen bij de schoudersteunen"
+  },
+  "eind": "Both figures in strict side profile, inside an angled HACK SQUAT MACHINE (as in the line drawing): back flat against the inclined back pad, shoulders under the shoulder pads, hands on the handles beside the shoulders, feet shoulder-width apart on the angled foot platform. TOP: legs almost straight (knees NOT locked), body high on the sled. BOTTOM: knees bent to about 90 degrees, the back pad and body slid down along the rails, back still against the pad, heels on the platform. NOT a free barbell, NOT a bar held behind the legs.",
+  "opmerking": ""
+ },
+ {
+  "nr": 57,
+  "slug": "leg-curl",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v1/058.webp",
+  "physitrack": {
+   "pagina": "Resisted hamstrings in standing",
+   "start": "rechtop staand, knieën naast elkaar, hand op een stoel voor balans",
+   "beweging": "knie van het oefenbeen buigen, hiel naar de bil tegen de band in, rustig laten zakken",
+   "materiaal": "weerstandsband en stoel",
+   "greep": "één hand op de stoelleuning; band om de enkel en onder de voet van het andere been"
+  },
+  "eind": "Both figures in strict side profile, standing upright with one hand on the top of the backrest of a chair beside her for balance. A resistance band is looped around the ankle of the working leg and runs down under the foot of the standing leg (no anchor behind her, no cable). TOP: both feet on the floor side by side, knees together, band slightly taut. BOTTOM: the working knee bent so the heel comes up toward the buttock, thigh stays vertical and next to the other knee, band stretched between the ankle and the standing foot. NOT a leg stretched backward at the start, NOT an anchor behind her, NOT without chair support.",
+  "opmerking": "Twijfel: lijntekening (blijft) toont een kabel naar een anker op de grond i.p.v. een band onder de andere voet. Avatar volgt Physitrack en de nieuwe uitleg; daardoor wijkt het materiaal af van de tekening. Overweeg de tekening alsnog te laten hertekenen."
+ },
+ {
+  "nr": 66,
+  "slug": "squat-lunges",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v1/067.webp",
+  "physitrack": {
+   "pagina": "Split squat",
+   "start": "rechtop staan en één grote stap naar voren zetten",
+   "beweging": "beide knieën buigen (ongeveer 45 graden), voorste knie niet naar binnen; bil- en bovenbeenspieren aanspannen om weer rechtop te komen, zonder van been te wisselen",
+   "materiaal": "geen (gewicht alleen als optie)",
+   "greep": "geen; armen ontspannen langs het lichaam"
+  },
+  "eind": "Both figures in strict side profile, in a wide split stance: one foot well forward, the other foot behind on the ball of the foot, arms relaxed at her sides, trunk upright. NO barbell, NO weights. TOP: standing TALL in the split stance, both knees almost straight. BOTTOM: both knees bent, body lowered straight DOWN, front knee above the front foot, back knee toward the floor, trunk still upright, feet in exactly the same place. NOT a barbell on the upper back, NOT already half bent in the TOP image, NOT stepping or switching legs.",
+  "opmerking": "Beslispunt: split squat ZONDER stang."
+ },
+ {
+  "nr": 74,
+  "slug": "wall-sit",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v1/075.webp",
+  "physitrack": {
+   "pagina": "Isometric wall sit",
+   "start": "rechtop met rug en billen tegen de muur, voeten een stuk naar voren",
+   "beweging": "langs de muur omlaag glijden tot heupen en knieën 90 graden zijn, rug en billen blijven tegen de muur; vasthouden",
+   "materiaal": "muur",
+   "greep": "geen; armen niet gespecificeerd"
+  },
+  "eind": "Both figures in strict side profile, with a clearly visible flat WALL directly behind her; her back and buttocks touch the wall in both images, arms relaxed at her sides. TOP: standing upright against the wall, feet placed a step forward from the wall. BOTTOM: slid down the wall until hips and knees are at 90 degrees, THIGHS HORIZONTAL, shins vertical, knees above the ankles, back flat against the wall, as if sitting on an invisible chair. NOT without a wall, NOT stopping higher than 90 degrees.",
+  "opmerking": ""
+ },
+ {
+  "nr": 76,
+  "slug": "alternate-heel-touchers",
+  "stijl": "mat",
+  "lijn": "images/beginhouding-pijl-v1/077.webp",
+  "physitrack": {
+   "pagina": "Sit-up/crunches with diagonal reach",
+   "start": "ruglig met gebogen knieën en voeten plat op de grond",
+   "beweging": "romp opkrullen en zijwaarts reiken richting de hiel aan dezelfde kant, daarna de andere kant",
+   "materiaal": "mat",
+   "greep": "geen"
+  },
+  "eind": "Both figures in three-quarter view from the side, lying on her back on a mat, knees bent, feet flat on the floor about hip-width apart, arms straight alongside the body. TOP: head and shoulders resting on the mat, arms by her sides. BOTTOM: head and shoulders lifted slightly off the mat and the trunk bent SIDEWAYS, with ONE hand sliding down along the floor to touch the HEEL on the SAME side; the other arm stays near the body. NOT a straight forward crunch, NOT both hands reaching between the knees.",
+  "opmerking": ""
+ },
+ {
+  "nr": 77,
+  "slug": "back-extension",
+  "stijl": "mat",
+  "lijn": "images/beginhouding-pijl-v1/078.webp",
+  "physitrack": {
+   "pagina": "Prone back extension on bench",
+   "start": "op de buik op een rugstrekbank, benen gestrekt, romp in lijn met de benen",
+   "beweging": "borst richting de grond laten zakken en met onderrug, billen en hamstrings terug omhoog komen, niet overstrekken",
+   "materiaal": "rugstrekbank",
+   "greep": "armen gekruist voor de borst"
+  },
+  "eind": "Both figures in strict side profile, lying FACE DOWN on a back extension bench: hips on the hip pad, legs straight, ankles hooked under the ankle rollers, arms crossed over the chest. TOP: upper body hanging clearly DOWN over the front of the pad, trunk pointing toward the floor at a steep angle, head low. BOTTOM: trunk raised with a straight back until head, trunk and legs form ONE straight line, NOT arched higher than the legs. TOP and BOTTOM must look clearly different.",
+  "opmerking": "Physitrack beschrijft de rechte lijn als start; tekening en uitleg beginnen hangend. Voor de avatar is dat equivalent (beweging tussen hangend en rechte lijn)."
+ }
+]

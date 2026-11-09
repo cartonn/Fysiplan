@@ -1,0 +1,227 @@
+[
+ {
+  "nr": 15,
+  "slug": "exo-pull",
+  "stijl": "001",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Cable machine external rotation (mid position, standing)",
+   "start": "Zijwaarts naast het kabelapparaat staan, katrol op ellebooghoogte, elleboog 90 graden gebogen tegen de zij, onderarm voor de buik",
+   "beweging": "Onderarm naar buiten draaien, weg van het lichaam, elleboog blijft tegen de zij, romp draait niet mee; rustig terug",
+   "materiaal": "Kabelapparaat met één handvat",
+   "greep": "Eén hand om het handvat; welke kant het apparaat staat noemt Physitrack niet, voor weerstand bij naar buiten draaien staat het aan de kant van de andere arm"
+  },
+  "pose_en": "Front view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style), standing upright with feet hip-width apart, sideways next to a cable machine that stands on HER RIGHT side (viewer's left). The pulley is set at elbow height. She works with her LEFT arm (the arm farthest from the machine): left elbow tucked against her left side, bent at 90 degrees, left forearm horizontal across the front of her belly with the hand near her navel, holding one D-handle. The cable runs from the handle across the front of her body to the pulley on her right side. Her right arm hangs relaxed at her side. NOT an elastic band between two hands, NOT the machine on the side of the working arm, NOT the forearm already turned out. One curved arrow starting right at her left hand points OUTWARD to her left, away from the belly, in a horizontal arc.",
+  "opmerking": "Apparaat aan de kant van de niet-werkende arm, pijl direct bij de hand naar buiten. Linker/rechter arm is een keuze; spiegelen mag zolang apparaat en werkende arm aan tegengestelde kanten staan."
+ },
+ {
+  "nr": 67,
+  "slug": "standing-abduction",
+  "stijl": "001",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Cable hip abductor in standing",
+   "start": "Zijwaarts naast het kabelapparaat staan, lus om de enkel, lichaam en benen gestrekt, met een hand steun aan het apparaat",
+   "beweging": "Gestrekt been zijwaarts heffen met aangespannen bilspieren, langzaam terug; romp niet laten zwaaien of draaien",
+   "materiaal": "Kabelapparaat met enkelband, kabel laag",
+   "greep": "Hand aan het apparaat voor balans"
+  },
+  "pose_en": "Front view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style), standing upright and tall, sideways next to a cable machine that is on HER LEFT side (viewer's right), the pulley at its LOWEST point near the floor. She stands on her LEFT leg (closest to the machine) and holds the machine frame with her left hand for balance. A padded ankle cuff is around her RIGHT ankle; the cable runs low across the front of her standing ankle to the low pulley. Both legs straight, feet together, trunk upright, right arm relaxed at her side or on her hip. NOT an elastic loop around both ankles, NOT holding a chair, NOT the leg already raised. One straight arrow just outside her right ankle points SIDEWAYS OUTWARD, away from the machine.",
+  "opmerking": "Kabel laag vanaf de kant van het standbeen (zoals uitleg); Physitrack noemt het bevestigingspunt niet, maar dat volgt uit de weerstandsrichting."
+ },
+ {
+  "nr": 102,
+  "slug": "rug-extensie",
+  "stijl": "085",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Prone back extension - Superman",
+   "start": "Op de buik op de mat liggen, armen gestrekt naar voren boven het hoofd, benen gestrekt",
+   "beweging": "Armen en benen tegelijk van de vloer tillen, even vasthouden, rustig terug",
+   "materiaal": "Mat",
+   "greep": "Geen; armen blijven gestrekt naar voren"
+  },
+  "pose_en": "Side view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style), lying face down (prone) flat on an exercise mat, forehead facing the mat, body in one straight line. Both arms fully straight and stretched forward past the head, resting on the mat, palms down. Both legs straight and together, resting on the mat. NOT hands beside the head, NOT on hands and knees, NOT already lifted. One single straight arrow above the middle of her back points UP toward the ceiling, showing arms, chest and legs lifting together.",
+  "opmerking": "Reden noemde pijlen bij armen en benen; instructie zegt precies één pijl, daarom één pijl boven het midden van de rug."
+ },
+ {
+  "nr": 128,
+  "slug": "trx-chest-press",
+  "stijl": "001",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Chest press with suspension straps",
+   "start": "Rechtop met de armen voor je in de lussen van de ophangbanden",
+   "beweging": "Physitrack laat de armen zijwaarts uit elkaar gaan zodat het lichaam ertussen zakt en brengt ze weer samen (fly-achtig); app-uitleg: ellebogen buigen, borst tussen de handen laten zakken en terugduwen",
+   "materiaal": "Ophangbanden (suspension trainer)",
+   "greep": "Physitrack: onderarmen in de lussen; uitleg: handvatten vast"
+  },
+  "pose_en": "Side view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style), facing AWAY from the suspension anchor point, which is high on the wall/ceiling behind her. She leans forward in one straight rigid line from heels to head at about 30 degrees from vertical, feet together on the floor, weight on the balls of the feet. Both arms are FULLY STRAIGHT and parallel, held forward at chest height, hands shoulder-width apart, each hand gripping one suspension-strap handle, palms facing down; both straps run from her hands up and back over her shoulders to the anchor. NOT one arm bent and one straight, NOT arms spread to the sides like a fly, NOT elbows already bent. One straight arrow beside her chest points DOWN and FORWARD toward her hands, showing the chest lowering between the hands.",
+  "opmerking": "TWIJFEL: de Physitrack-pagina beschrijft eigenlijk een fly-beweging (armen zijwaarts, onderarmen in lussen). Spec volgt naam/reden/uitleg (press, beide armen gestrekt evenwijdig voor de borst, handvatten)."
+ },
+ {
+  "nr": 157,
+  "slug": "yoga-frog",
+  "stijl": "085",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Kneeling hip adductor stretch (frog)",
+   "start": "Geknield met de onderarmen plat op de vloer voor je, rug recht",
+   "beweging": "Knieën naar buiten schuiven tot rek aan de binnenkant van de bovenbenen; voor meer rek de heupen naar achteren richting de hielen laten zakken",
+   "materiaal": "Mat",
+   "greep": "Geen; steun op de onderarmen"
+  },
+  "pose_en": "Three-quarter rear-side view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style) on an exercise mat, resting on BOTH FOREARMS flat on the mat (elbows under the shoulders, palms down), back straight and flat. Her knees are spread WIDE apart to the sides, much wider than the hips, knees bent at about 90 degrees, shins on the mat, inner feet/ankles in line with the knees, hips raised level above the knees. NOT on straight arms or hands, NOT knees hip-width, NOT sitting back on the heels yet. One straight arrow just behind her hips points BACKWARD toward the heels.",
+  "opmerking": "Schuin achter-zijaanzicht gekozen zodat de wijde kniestand zichtbaar is en de pijl naar achteren leesbaar blijft."
+ },
+ {
+  "nr": 183,
+  "slug": "bodyblade-high",
+  "stijl": "001",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Shoulder abduction with bodyblade (dichtstbij; opgegeven pagina)",
+   "start": "Rechtop, voeten heupbreedte, de aangedane arm gestrekt zijwaarts tot horizontaal met de bodyblade in de hand",
+   "beweging": "Schouder stil houden en met kleine elleboogbewegingen het blad laten trillen, vasthouden",
+   "materiaal": "Bodyblade",
+   "greep": "Eén hand in het midden van het blad"
+  },
+  "pose_en": "Front view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style), standing upright with feet hip-width apart, knees soft, trunk upright. BOTH arms are fully straight and raised straight OVERHEAD, hands together above the head, both hands gripping the middle handle of one long flexible bodyblade that is held horizontally (side to side) above the head. NOT one arm out to the side, NOT the blade held low in front of the hips. One short double-headed arrow at the blade tips shows the blade VIBRATING up and down (oscillation only), no lifting arrow.",
+  "opmerking": "TWIJFEL: opgegeven Physitrack-pagina is een eenarmige abductievariant; spec volgt naam en uitleg ('high': beide armen boven het hoofd). Variantkeuze nog bevestigen."
+ },
+ {
+  "nr": 187,
+  "slug": "voor-zijwaarts",
+  "stijl": "001",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Ladder runs lateral quick step",
+   "start": "Rechtop naast de ladder, die plat op de vloer voor je ligt",
+   "beweging": "Eén voet zijwaarts in het eerste vak, andere voet snel erbij, aan de verre kant uitstappen, dan het volgende vak in en terug; zo zijwaarts langs de ladder",
+   "materiaal": "Speedladder",
+   "greep": "Geen"
+  },
+  "pose_en": "Front-elevated view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style), standing upright on the balls of her feet, knees slightly bent, arms bent at her sides in a ready stance. A flat agility ladder lies on the floor directly IN FRONT of her and runs SIDEWAYS (left to right) across the image, its long side parallel to her shoulders; she stands next to the long side, in front of the first box at one end of the ladder. NOT standing at the short end of the ladder, NOT facing along the ladder. One straight arrow on the floor along the ladder points SIDEWAYS, parallel to the ladder, in the direction of the next boxes.",
+  "opmerking": ""
+ },
+ {
+  "nr": 192,
+  "slug": "chin-dip-apparaat",
+  "stijl": "001",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Shoulder dips on bar",
+   "start": "Niet beschreven; steun op de stangen",
+   "beweging": "Lichaam laten zakken en weer omhoog duwen, niet dieper dan 90 graden in de schouder, ellebogen naar achteren, schouders niet naar voren",
+   "materiaal": "Dipstang",
+   "greep": "Handen op de stangen"
+  },
+  "pose_en": "Three-quarter side view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style) in a chin-dip machine, supporting her body weight on two parallel dip handles with both arms FULLY STRAIGHT, hands gripping the handles beside the hips, shoulders down, trunk upright. Her legs hang FREELY below her, knees slightly bent, feet off the floor; the knee pad of the machine is folded away and NOT used. NOT kneeling on a pad, NOT standing on the floor, NOT elbows already bent. One straight arrow beside her torso points DOWN.",
+  "opmerking": "TWIJFEL: tekening toonde het geassisteerde (knielende) apparaat; spec kiest vrij hangende benen zoals uitleg, avatar en Physitrack. Physitrack-pagina is summier (mobility bar, beginhouding niet beschreven)."
+ },
+ {
+  "nr": 212,
+  "slug": "rotator-apparaat",
+  "stijl": "287",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Seated trunk rotation on machine",
+   "start": "Rechtop in het rompdraaiapparaat zitten, handgrepen vast",
+   "beweging": "Bovenlichaam naar één kant draaien tegen de weerstand in, heupen blijven vast, rustig terug en andere kant",
+   "materiaal": "Rompdraaiapparaat met gewichten",
+   "greep": "Beide handen om de handgrepen"
+  },
+  "pose_en": "Front view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style) sitting upright on the seat of a seated trunk-rotation machine, feet flat on the footrest, knees bent at 90 degrees and held between two fixed knee pads, hips and seat facing straight forward. Both hands grip the two upright handles in front of her chest, elbows bent, upper arms close to the body, chest against the chest pad. The seat and knee pads are FIXED and do NOT rotate. NOT the hips or seat turning. One curved horizontal arrow at chest/shoulder height (NOT at the hips) shows the upper body rotating to one side together with the handles.",
+  "opmerking": "Beslispunt: bovenlichaam draait met de grepen, heupen/zitting staan stil."
+ },
+ {
+  "nr": 415,
+  "slug": "thoracale-extensie-op-handen-en-knieen",
+  "stijl": "085",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Puppy dog pose (dichtstbij)",
+   "start": "Op handen en knieën, handen een stuk naar voren gelopen",
+   "beweging": "Heupen omhoog richting plafond houden en de borst rustig richting de vloer laten zakken, schouders stabiel, vasthouden",
+   "materiaal": "Mat",
+   "greep": "Handen plat op de mat ver voor de schouders"
+  },
+  "pose_en": "Side view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style) on an exercise mat, kneeling on both knees with the thighs vertical and the hips directly ABOVE the knees. Both hands are placed flat on the mat FAR in front of the shoulders, arms straight and reaching forward, head between the arms. The chest is still above the floor, upper back level. NOT hands under the shoulders, NOT sitting back on the heels, NOT the lower back sagging. One straight arrow just under/in front of her CHEST points DOWN toward the floor.",
+  "opmerking": "Geen exacte Physitrack-match; puppy dog pose gebruikt. Pijl bij de borstkas, niet bij de buik."
+ },
+ {
+  "nr": 440,
+  "slug": "achterwaarts-stappen-met-steun",
+  "stijl": "001",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Backwards walking with support",
+   "start": "Zijwaarts naast een stevige steun (aanrecht of bureau) staan",
+   "beweging": "Tien kleine stappen achteruit, van teen naar hiel afrollen, rug recht, blik vooruit; daarna andere kant",
+   "materiaal": "Aanrecht of tafel",
+   "greep": "Hand op de steun (welke hand noemt Physitrack niet)"
+  },
+  "pose_en": "Side view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style), standing upright with feet hip-width apart, looking straight ahead. A long kitchen counter runs ALONGSIDE her, on her far side, parallel to the direction she faces; her far hand rests on the countertop next to her hip, her near arm relaxed at her side. NOT a table in front of her, NOT facing the counter. One straight arrow at floor level behind her heels points BACKWARD, parallel to the counter.",
+  "opmerking": ""
+ },
+ {
+  "nr": 493,
+  "slug": "hop-vooruit-techniek-langzaam",
+  "stijl": "001",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Hop and hold, forwards and backwards over a line",
+   "start": "Rechtop achter een lijn op de vloer, op het aangedane been, andere voet van de vloer",
+   "beweging": "Vooruit over de lijn hoppen, licht landen op hetzelfde been en balans hervinden; dan achteruit terug over de lijn",
+   "materiaal": "Lijn op de vloer",
+   "greep": "Geen"
+  },
+  "pose_en": "Side view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style), standing upright on ONE leg just behind a straight line taped on the floor; the standing knee slightly bent, the other foot lifted off the floor behind her with that knee bent, arms slightly out for balance. NOT standing on two feet, NO missing floor line. One curved arrow starting at the standing foot arcs FORWARD over the line.",
+  "opmerking": "Alleen de voorwaartse hop als pijl (één pijl); het terughoppen staat in de uitleg."
+ },
+ {
+  "nr": 497,
+  "slug": "richtingsverandering-techniek-langzaam",
+  "stijl": "001",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Change of direction - straight line running with jog backwards (intermediate)",
+   "start": "Bij de eerste pion, kijkend langs een rechte rij pionnen",
+   "beweging": "Vooruit sprinten naar een pion, achteruit joggend terug naar de eerste; steeds een pion verder; geen draai",
+   "materiaal": "Pionnen (Physitrack vier, uitleg twee)",
+   "greep": "Geen"
+  },
+  "pose_en": "Side view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style), standing upright next to a first small cone on the floor, facing a second cone a few meters ahead in a straight line, one foot slightly forward in a ready stance. NOT running around a cone, NO curved path. One straight double-headed arrow on the floor between the two cones shows moving FORWARD to the far cone and straight BACK to the start.",
+  "opmerking": "TWIJFEL: draai om de pion is functioneel ook richtingsverandering; spec volgt Physitrack (rechte lijn heen, achteruit terug). Twee pionnen zoals de uitleg (Physitrack gebruikt er vier)."
+ },
+ {
+  "nr": 531,
+  "slug": "foam-roller-back-upper",
+  "stijl": "085",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Thoracic paraspinal foam roll",
+   "start": "Op de rug met de foamroller dwars onder de bovenrug, heupen opgetild, handen ondersteunen het hoofd",
+   "beweging": "Met de voeten duwen en de bovenrug over de roller op en neer rollen",
+   "materiaal": "Foamroller",
+   "greep": "Handen achter het hoofd"
+  },
+  "pose_en": "Side view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style) lying on her back with one foam roller placed crosswise under her UPPER back, just below the shoulder blades. Knees bent, feet flat on the floor hip-width apart, HIPS LIFTED off the floor so the body forms a straight line from knees to shoulders. Both hands interlaced behind the head supporting it, elbows pointing forward. NOT buttocks on the mat, NOT the roller under the lower or middle back. One straight double-headed arrow parallel to the floor beside her torso shows rolling back and forth.",
+  "opmerking": ""
+ },
+ {
+  "nr": 572,
+  "slug": "seated-foreward-reach",
+  "stijl": "287",
+  "content_ref": null,
+  "physitrack": {
+   "pagina": "Sitting balance - arm reaching forwards (adaptive)",
+   "start": "Op een stoel zitten met beide voeten plat op de vloer",
+   "beweging": "Naar voren reiken en het gewicht mee naar voren brengen, terug naar de beginhouding",
+   "materiaal": "Stoel",
+   "greep": "Geen; Physitrack reikt met beide armen"
+  },
+  "pose_en": "Side view of one woman with a ponytail, short-sleeved T-shirt, long trousers and sneakers (same person as the house style) sitting upright on a chair WITHOUT leaning on the backrest, feet flat on the floor, knees at 90 degrees, back straight. ONE arm is fully straight and raised forward at SHOULDER height, hand open, fingers pointing forward; the other hand rests on her thigh. NOT hands resting on the knee or the seat, NOT reaching upward. One straight HORIZONTAL arrow just in front of the outstretched hand points FORWARD.",
+  "opmerking": "TWIJFEL: Physitrack reikt met beide armen; spec volgt uitleg/reden/avatar (één arm)."
+ }
+]
