@@ -34,3 +34,10 @@ Uitgangspunt: 569 standaard-sjablonen in Physitrack (EN, FR en NL), waarvan 1 zo
 - Elleboog, pols en hand: gevuld met 21 kaarten. Daarvoor kwamen 29 nieuwe oefeningen in de bibliotheek (lijntekening, avatar en omschrijving in de richting van Physitrack; `scripts/importeer-elleboog-pols-hand.mjs`, gemarkeerd als `nieuweOefening` in `content/nieuwe-lijntekeningen.json`). Nog niet: strekpees middenkootje (central slip), die nog 2 vingerkootjesoefeningen mist. Knijpen in klei blijft buiten de app tot de avatar de beweging duidelijk laat zien.
 - Enkel en voet en Schouder hebben weinig kaarten om dezelfde reden (bijv. elastiekoefeningen voor de rotator cuff, enkelmobilisatie).
 - Kaarten met weinig oefeningen (3-4) zijn bruikbaar als start, maar worden sterker zodra de ontbrekende oefeningen als avatar/lijntekening beschikbaar zijn.
+
+## Aanvulling per regio (vanaf 9 november 2026)
+
+Nieuwe oefeningen en kaarten per regio komen erin met `scripts/importeer-regio-oefeningen.mjs` (alleen beelden met oordeel "goed"; een kaart komt er pas bij minstens 3 gepubliceerde oefeningen) en `scripts/na-oefening-import.mjs`. De actuele aantallen per categorie staan in de app; de tabel hierboven is de stand van de eerste ronde.
+
+- Schouder: 25 oefeningen (20 nieuw, 5 bestaande records kregen beeld), 18 nieuwe kaarten.
+- Voet en enkel: 16 nieuwe oefeningen, 9 nieuwe kaarten. Negen enkel- en achilleskaarten wachten nog op basisoefeningen die wel een record maar nog geen beeld hebben (voet naar binnen/buiten, kuitrek, kuitheffing).
