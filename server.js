@@ -804,6 +804,23 @@ async function proefRonde() {
     }
   }
   if (gewijzigd) await bewaarProeven().catch(() => {});
+  await proefZonderAbonnementWissen(nu);
+}
+// Proef zonder abonnement: de aanmelding verdwijnt PROEF_BEWAAR_DAGEN na de proef, maar het
+// praktijkaccount (team met namen en e-mail, profiel, sjablonen, eigen oefeningen, logboek)
+// bleef daarna voor altijd staan, terwijl voorwaarden art. 3 en de privacyverklaring zeggen
+// dat we het wissen als je geen klant wordt (art. 5 lid 1e AVG). Zodra de aanmelding weg is,
+// de bewaartermijn voorbij is en er geen gedeelde kaarten meer zijn, gaat de rest ook weg.
+// Zolang er nog kaarten zijn, blijft het account: de praktijk moet die nog kunnen inzien.
+async function proefZonderAbonnementWissen(nu = Date.now()) {
+  for (const [pk, acc] of Object.entries(praktijkAccounts)) {
+    const k = acc && acc.proef;
+    if (!k || Object.hasOwn(proeven, String(k.id))) continue; // proef loopt, klant, of nog binnen de termijn
+    if (!(nu >= Number(k.verloopt || 0) + PROEF_BEWAAR_DAGEN * 86400000)) continue;
+    if (Object.keys(kaarten[pk] || {}).length) continue;
+    await praktijkAllesWissen(pk).then(() => auditLog("(gewist)", "praktijk-gewist-na-proef", null))
+      .catch((e) => console.error("wissen na proef:", e.message));
+  }
 }
 setTimeout(() => proefRonde().catch(() => {}), 5000).unref();
 setInterval(() => proefRonde().catch(() => {}), 3600e3).unref();
@@ -5938,7 +5955,7 @@ async function afhandelen(request, response) {
         CONTACT_HTML: contact ? '<p>Vragen over privacy: <a href="mailto:' + htmlEsc(contact) + '">' + htmlEsc(contact) + "</a></p>" : "",
         HOSTING: FYSIPLAN_ID.hosting || "nog niet vastgelegd",
         STIL: String(BEWAAR_STIL_DAGEN), AFGEROND: String(BEWAAR_AFGEROND_DAGEN),
-        PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN), PROEF_DAGEN: String(PROEF_DAGEN),
+        PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN), PROEF_DAGEN: String(PROEF_DAGEN), NA_EINDE: String(NA_EINDE_WISSEN_DAGEN),
         // Mollie staat alleen in de privacyverklaring als online betalen echt aan staat
         BETAAL_RIJ_HTML: mollieAan() ? '<tr id="betalen"><td>Betaling: naam van de praktijk (of je eigen naam), e-mail, aantal therapeuten, bedrag, '
           + "en de kenmerken van klant, betaling en machtiging bij Mollie. Geen rekeningnummer of kaartgegevens; die vul je alleen bij Mollie in.</td>"

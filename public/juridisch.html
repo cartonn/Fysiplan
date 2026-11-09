@@ -114,17 +114,18 @@ __INHOUD__
     <thead><tr><th>Gegevens</th><th>Waarvoor</th><th>Hoe lang</th></tr></thead>
     <tbody>
       <tr><td>Oefenkaarten met roepnaam en wat de pati&euml;nt aantikt, berichten van de praktijk aan de pati&euml;nt, en een werknotitie die alleen de praktijk ziet</td><td>De pati&euml;nt laten oefenen en de praktijk laten zien wat de pati&euml;nt zelf meldt (verwerker, in opdracht van de praktijk)</td><td>__STIL__ dagen na de laatste activiteit, of __AFGEROND__ dagen na afronden; plus 7 dagen reservekopie</td></tr>
-      <tr><td>Praktijknaam, wachtwoord en herstelcode (alleen als onomkeerbare hash)</td><td>Alleen jouw praktijk toegang geven tot jouw kaarten</td><td>Zolang de praktijk Fysiplan gebruikt</td></tr>
-      <tr><td>Teamleden: naam, e-mail, rol (beheerder of therapeut), wachtwoord (alleen als hash), wanneer iemand het laatst inlogde, en een openstaande uitnodiging (alleen als hash, 7 dagen geldig)</td><td>Elke therapeut een eigen login geven, zodat te zien is wie wat deed (artikel 32 AVG)</td><td>Tot de beheerder iemand uit het team haalt; dan direct weg</td></tr>
+      <tr><td>Praktijknaam, wachtwoord en herstelcode (alleen als onomkeerbare hash)</td><td>Alleen jouw praktijk toegang geven tot jouw kaarten</td><td>Zolang de praktijk Fysiplan gebruikt; zie <a href="#einde">Als je stopt</a></td></tr>
+      <tr><td>Teamleden: naam, e-mail, rol (beheerder of therapeut), wachtwoord (alleen als hash), wanneer iemand het laatst inlogde, en een openstaande uitnodiging (alleen als hash, 7 dagen geldig)</td><td>Elke therapeut een eigen login geven, zodat te zien is wie wat deed (artikel 32 AVG)</td><td>Tot de beheerder iemand uit het team haalt; dan direct weg. Anders tot de praktijk stopt (zie <a href="#einde">Als je stopt</a>)</td></tr>
       <tr><td>Wie in de app iets afhandelde of naar het dossier zette (naam van de therapeut bij de kaart)</td><td>De praktijk laten zien wie een melding van een pati&euml;nt oppakte</td><td>Zolang de kaart bestaat</td></tr>
-      <tr><td>Akkoord met voorwaarden en verwerkersovereenkomst: versie, tijd en wie</td><td>Kunnen laten zien waarmee de praktijk akkoord ging</td><td>Zolang de praktijk Fysiplan gebruikt</td></tr>
+      <tr><td>Akkoord met voorwaarden en verwerkersovereenkomst: versie, tijd en wie</td><td>Kunnen laten zien waarmee de praktijk akkoord ging</td><td>Zolang de praktijk Fysiplan gebruikt; zie <a href="#einde">Als je stopt</a></td></tr>
       <tr><td>Accountactiviteit (inloggen, wijzigingen) met gemaskeerd IP-adres en de naam van wie het deed</td><td>Misbruik herkennen; de praktijk ziet dit zelf onder Activiteit</td><td>De laatste 500 gebeurtenissen</td></tr>
-      <tr><td>Proefaanmelding: e-mail, naam, telefoon, praktijknaam</td><td>De proef laten werken en je &eacute;&eacute;n keer benaderen over je ervaring</td><td>__PROEF_BEWAAR__ dagen na het einde van de proef. Word je klant, dan tot je praktijk stopt of alles wist; heb je online betaald, dan blijven daarna alleen naam, e-mail, praktijknaam en de betaling 7 jaar bewaard (fiscale bewaarplicht)</td></tr>
+      <tr><td>Proefaanmelding: e-mail, naam, telefoon, praktijknaam</td><td>De proef laten werken en je &eacute;&eacute;n keer benaderen over je ervaring</td><td>__PROEF_BEWAAR__ dagen na het einde van de proef. Word je klant, dan tot __NA_EINDE__ dagen na het einde van je abonnement, of tot je alles wist; heb je online betaald, dan blijven daarna alleen naam, e-mail, praktijknaam en de betaling 7 jaar bewaard (fiscale bewaarplicht)</td></tr>
       __BETAAL_RIJ_HTML__
       <tr><td>Tellingen per dag (bezoeken, geprinte kaarten)</td><td>Het product verbeteren; alleen aantallen, geen profielen</td><td>120 dagen</td></tr>
     </tbody>
   </table>
-  <p>De grondslag voor de kaarten is de behandelovereenkomst tussen praktijk en pati&euml;nt. Voor de proef en het praktijkaccount is dat de overeenkomst met de praktijk en ons gerechtvaardigd belang om de dienst veilig te houden.</p>
+  <p id="einde"><b>Als je stopt.</b> Stopt je abonnement, dan wissen we __NA_EINDE__ dagen na het einde alles van je praktijk. Word je na de proef geen klant, dan wissen we je proefaanmelding __PROEF_BEWAAR__ dagen na de proef, en de rest van je praktijk (account, team, profiel, sjablonen, eigen oefeningen en logboek) zodra ook je laatste gedeelde kaart is verlopen. Alleen gegevens van een online betaling blijven 7 jaar.</p>
+  <p>De grondslag voor de kaarten is de behandelovereenkomst tussen praktijk en pati&euml;nt. Het gaat om gezondheidsgegevens; de praktijk mag die gebruiken omdat ze nodig zijn voor de behandeling, en haar zorgverleners hebben een beroepsgeheim (artikel 9 lid 2 onder h AVG en artikel 30 lid 3 UAVG). Fysiplan gebruikt ze alleen in opdracht van de praktijk. Voor de proef en het praktijkaccount is dat de overeenkomst met de praktijk en ons gerechtvaardigd belang om de dienst veilig te houden.</p>
   <p>Voor de proef vragen we je e-mailadres, naam en telefoonnummer; zonder die gegevens kunnen we de proef niet starten. Een pati&euml;nt hoeft Fysiplan niets te geven: de kaart werkt ook zonder iets aan te tikken.</p>
   <p><b>Foutlog.</b> Gaat er op de server iets mis, dan schrijft hij kort op welke pagina het was en wat er misging, zonder kaartlink, naam of IP-adres. Die regels staan bij Railway, zijn alleen bedoeld om storingen te verhelpen en verdwijnen daar vanzelf na hooguit 30 dagen.</p>
 
@@ -158,6 +159,7 @@ __INHOUD__
     </tbody>
   </table>
   <p class="klein">Verandert deze lijst, dan melden we dat vooraf aan de praktijken (zie de verwerkersovereenkomst).</p>
+  <p class="klein">Deelt de praktijk een kaartlink via WhatsApp of e-mail, dan gaat dat bericht via die dienst van de praktijk zelf. Fysiplan stuurt daar niets naartoe; de praktijk kiest hoe ze de link deelt.</p>
   __BETAAL_PARTIJ_HTML__
 
   <h2 id="rechten">Je rechten</h2>
