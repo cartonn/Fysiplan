@@ -64,9 +64,9 @@ if (IS_PRODUCTIE && !ADMIN_KEY) console.warn("Beheer staat dicht: zet een eigen 
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-09";
+const VWO_VERSIE = "2026-11-10";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-09-2";
+const AV_VERSIE = "2026-11-09-3";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-09";
@@ -82,7 +82,9 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-07-3", tekst: "Prijs: elke persoon met een eigen login telt als één therapeut; een login delen met meerdere mensen mag niet." },
   { stuk: "av", versie: "2026-11-09", tekst: "Stoppen: opzeggen kan nu ook zelf in de app. Het abonnement stopt aan het einde van de betaalde maand; 30 dagen later wissen we alles van je praktijk." },
   { stuk: "av", versie: "2026-11-09-2", tekst: "Proef: word je geen klant, dan wissen we 90 dagen na de proef alles van je praktijk, ook de kaarten die je deelde." },
-  { stuk: "vwo", versie: "2026-11-09", tekst: "Einde: na de proef zonder abonnement wissen we alles na 90 dagen. Nieuw: een wettelijke vordering melden we vooraf, Fysiplan blijft verantwoordelijk voor subverwerkers, en de praktijk mag de afspraken laten controleren." }
+  { stuk: "vwo", versie: "2026-11-09", tekst: "Einde: na de proef zonder abonnement wissen we alles na 90 dagen. Nieuw: een wettelijke vordering melden we vooraf, Fysiplan blijft verantwoordelijk voor subverwerkers, en de praktijk mag de afspraken laten controleren." },
+  { stuk: "av", versie: "2026-11-09-3", tekst: "Proef: word je geen klant, dan wissen we al 30 dagen na de proef alles van je praktijk (was 90 dagen)." },
+  { stuk: "vwo", versie: "2026-11-10", tekst: "Einde: na een proef zonder abonnement wissen we alles 30 dagen na de proef, net als na opzeggen." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -224,6 +226,14 @@ function nieuweSessie(pk, lid) {
 function maakHerstelcode() {
   const hex = randomBytes(10).toString("hex");
   return "FP-" + [hex.slice(0, 5), hex.slice(5, 10), hex.slice(10, 15), hex.slice(15, 20)].join("-");
+}
+// overgetypte herstelcode terug naar de uitgegeven vorm: hoofdletters, spaties of
+// ontbrekende streepjes mogen geen 403 geven (en tellen anders mee voor het slot)
+function herstelcodeNormaal(v) {
+  const ruw = String(v || "").trim();
+  const kaal = ruw.toLowerCase().replace(/[\s\-\u2010-\u2015_.]/g, "").replace(/^fp/, "");
+  if (!/^[0-9a-f]{20}$/.test(kaal)) return ruw;
+  return "FP-" + [kaal.slice(0, 5), kaal.slice(5, 10), kaal.slice(10, 15), kaal.slice(15, 20)].join("-");
 }
 const praktijkGeclaimd = (pk) => !!pk && Object.hasOwn(praktijkAccounts, pk);
 
@@ -529,7 +539,7 @@ try { proeven = JSON.parse(await readFile(proefPath, "utf8")); } catch (err) {
   }
 }
 if (!proeven || typeof proeven !== "object" || Array.isArray(proeven)) { proeven = {}; proevenOnleesbaar = true; }
-const PROEF_BEWAAR_DAGEN = 90;
+const PROEF_BEWAAR_DAGEN = 30; // Ahmed koos 2026-11-09: 30 dagen, gelijk aan een opgezegd abonnement
 const proefTokenIndex = new Map(); // sha256(token) -> id
 for (const p of Object.values(proeven)) for (const h of p.tokens || []) proefTokenIndex.set(h, p.id);
 // wie krijgt een seintje bij een nieuwe aanmelding: eigen lijst, anders de accountbeheerders
@@ -2709,7 +2719,11 @@ async function afhandelen(request, response) {
       loginMisPraktijk.delete(nk); // geslaagd: teller schoon
       // account dat tijdens een proef van dit apparaat is gemaakt: alsnog koppelen
       const pr = proefVan(request);
-      if (pr && !pr.klant && Number(acc.gemaakt) >= Number(pr.gestart) && proefKoppel(acc, pr)) await saveJson(accountsPath, praktijkAccounts);
+      // alleen een account dat binnen díe proef is gemaakt (niet erna): een oude proefcookie
+      // op dit apparaat mag een gewone praktijk niet aan een verlopen proef hangen, want dan
+      // gaat die op slot en wist de proefronde 30 dagen later alles, ook de patiëntkaarten
+      if (pr && !pr.klant && Number(acc.gemaakt) >= Number(pr.gestart) && Number(acc.gemaakt) <= Number(pr.verloopt) &&
+        proefKoppel(acc, pr)) await saveJson(accountsPath, praktijkAccounts);
       const token = nieuweSessie(pk);
       auditLog(pk, "ingelogd", request);
       await sendJson(response, 200, { ok: true, sessie: token });
@@ -2991,7 +3005,7 @@ async function afhandelen(request, response) {
         return;
       }
       // bij meerdere praktijken met deze naam: de praktijk waarvan de herstelcode klopt
-      const code = String(b.herstelcode || "").trim();
+      const code = herstelcodeNormaal(b.herstelcode);
       const pk = code ? kandidaten.find((k) => praktijkAccounts[k].herstel && checkHash(code, praktijkAccounts[k].herstel)) : null;
       const acc = pk ? praktijkAccounts[pk] : null;
       if (!acc) {

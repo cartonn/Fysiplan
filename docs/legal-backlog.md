@@ -32,6 +32,8 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   praktijk, ook de kaarten. Een ontbrekend aanmeldingenbestand wist dus nooit kaarten. Voorwaarden art. 3, /privacy
   #einde, VWO "In het kort" en art. 10, en de herinneringsmail noemen de 90 dagen. Test
   `scripts/test-proef-einde-wissen.mjs` aangepast (faalt zonder fix). `AV_VERSIE` 2026-11-09-2, `VWO_VERSIE` 2026-11-09.
+  2026-11-09 14u: Ahmed koos 30 dagen in plaats van 90 (`PROEF_BEWAAR_DAGEN`, ook voor de aanmelding); `AV_VERSIE`
+  2026-11-09-3, `VWO_VERSIE` 2026-11-10.
   Rest (LAAG): wist een proefpraktijk zelf eerder haar aanmelding ("Mijn proef wissen"), dan geldt nog de oude route
   (account weg zodra de laatste kaart verloopt); begrenzen zou ook kaarten wissen als het aanmeldingenbestand ontbreekt.
 - **MIDDEL — verwerkersovereenkomst miste drie verplichte punten van art. 28 AVG (2026-11-09 13u).**

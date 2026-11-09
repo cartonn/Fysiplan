@@ -196,7 +196,7 @@
   /* alles-in-één-tik: de hele kaart gedaan zonder elke oefening los af te vinken */
   .ovalles{flex:0 0 auto;font:600 12.5px/1 var(--disp);padding:7px 12px;border-radius:999px;
     border:1.5px solid #3e8e5a;background:var(--vlak);color:#3e7a52;cursor:pointer}
-  .vbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:calc(100% - 28px);margin:0 14px 14px;
+  .vbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:calc(100% - 28px);margin:0 14px 14px;min-height:44px;
     font:600 15px/1 var(--disp);padding:13px 16px;border-radius:14px;cursor:pointer;
     border:1px solid var(--blauw-10);background:var(--blauw-05);color:var(--blauw);
     transition:background .15s,color .15s;-webkit-tap-highlight-color:transparent}
@@ -346,6 +346,8 @@
   .mschaal button.aan{background:var(--blauw);border-color:var(--blauw);color:#fff;
     box-shadow:0 2px 6px rgba(36,86,166,.28)}
   .mlabels{display:flex;justify-content:space-between;font:600 11.5px/1 var(--disp);color:var(--zacht);margin-top:8px}
+  .noormelding{margin:10px 0 0;white-space:pre-line;color:var(--ink,#1d2b36);background:#f3f6fa;border-color:#d9e2ec}
+  .vbtn+.noormelding,.vmeta+.noormelding{margin:0 14px 14px}
   .mdank{font:600 14px/1.4 var(--disp);color:#3e7a52;background:#eef6ef;border:1px solid #d7e8da;
     border-radius:10px;padding:10px 12px;margin-top:12px}
   /* rustige nudge bij een hoge pijnscore: alleen aandacht + de praktijk één tik weg,
@@ -488,6 +490,7 @@
       <button type="button" id="printBtn" title="Print of bewaar als PDF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg><span id="printTxt">Print</span></button>
       <button type="button" id="deelBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7l6.8-4.4M8.6 13.3l6.8 4.4"/></svg><span id="deelTxt">Deel</span></button>
     </div>
+    <div class="mdank noormelding" id="noorMelding" role="status" aria-live="polite" hidden></div>
     <div class="client" id="clientblok" style="display:none"></div>
   </header>
 
@@ -884,9 +887,10 @@
   // spoedregel onder de seintjes, wachtrij zonder internet en "Mijn gegevens"
   var TSPOED_ZONDER={nl:'Wacht niet op een antwoord. Bel je huisarts. Bij nood: 112.',en:'Do not wait for a reply. Call your GP. In an emergency: 112.',de:'Warte nicht auf eine Antwort. Ruf deinen Hausarzt an. Im Notfall: 112.',fr:'N’attendez pas de réponse. Appelez votre médecin. En cas d’urgence : 112.',es:'No esperes una respuesta. Llama a tu médico de cabecera. En caso de emergencia: 112.',pl:'Nie czekaj na odpowiedź. Zadzwoń do lekarza rodzinnego. W nagłym wypadku: 112.',tr:'Cevap bekleme. Aile hekimini ara. Acil durumda: 112.',ar:'لا تنتظر ردًا. اتصل بطبيبك العام. في حالة الطوارئ: 112.',uk:'Не чекай на відповідь. Зателефонуй своєму сімейному лікарю. У надзвичайній ситуації: 112.'};
   var TSPOED={nl:['Spoed?','Wacht niet op een antwoord. Bel de praktijk of je huisarts. Bij nood: 112.'],en:['Urgent?','Do not wait for a reply. Call the practice or your GP. In an emergency: 112.'],de:['Dringend?','Warte nicht auf eine Antwort. Ruf die Praxis oder deinen Hausarzt an. Im Notfall: 112.'],fr:['Urgent ?','N’attendez pas de réponse. Appelez le cabinet ou votre médecin. En cas d’urgence : 112.'],es:['¿Urgente?','No esperes una respuesta. Llama a la consulta o a tu médico de cabecera. En caso de emergencia: 112.'],pl:['Pilne?','Nie czekaj na odpowiedź. Zadzwoń do gabinetu lub do lekarza rodzinnego. W nagłym wypadku: 112.'],tr:['Acil mi?','Cevap bekleme. Kliniği veya aile hekimini ara. Acil durumda: 112.'],ar:['حالة عاجلة؟','لا تنتظر ردًا. اتصل بالعيادة أو بطبيبك العام. في حالة الطوارئ: 112.'],uk:['Терміново?','Не чекай на відповідь. Зателефонуй у практику або своєму сімейному лікарю. У надзвичайній ситуації: 112.']};
-  var TWACHT={nl:{een:'Opgeslagen op je telefoon. Gaat vanzelf mee zodra je internet hebt.',n:'Nog niet verstuurd: {n} keer opgeslagen op je telefoon. Gaat vanzelf mee zodra je internet hebt.',ok:'Verstuurd naar je fysiotherapeut ✓'},en:{een:'Saved on your phone. It will be sent once you are online.',n:'Not sent yet: {n} saved on your phone. They will be sent once you are online.',ok:'Sent to your physiotherapist ✓'},de:{een:'Auf deinem Handy gespeichert. Wird gesendet, sobald du online bist.',n:'Noch nicht gesendet: {n} auf deinem Handy gespeichert. Wird gesendet, sobald du online bist.',ok:'An deinen Physiotherapeuten gesendet ✓'},fr:{een:'Enregistré sur votre téléphone. Sera envoyé dès que vous serez en ligne.',n:'Pas encore envoyé : {n} enregistré(s) sur votre téléphone. Envoi dès que vous serez en ligne.',ok:'Envoyé à votre kinésithérapeute ✓'},es:{een:'Guardado en tu teléfono. Se enviará cuando tengas internet.',n:'Aún no enviado: {n} guardado(s) en tu teléfono. Se enviará cuando tengas internet.',ok:'Enviado a tu fisioterapeuta ✓'},pl:{een:'Zapisano w telefonie. Zostanie wysłane, gdy będziesz mieć internet.',n:'Jeszcze nie wysłano: {n} zapisano w telefonie. Zostanie wysłane, gdy będziesz mieć internet.',ok:'Wysłano do twojego fizjoterapeuty ✓'},tr:{een:'Telefonuna kaydedildi. İnternet gelince gönderilir.',n:'Henüz gönderilmedi: telefonunda {n} kayıt var. İnternet gelince gönderilir.',ok:'Fizyoterapistine gönderildi ✓'},ar:{een:'تم الحفظ على هاتفك. سيُرسل عند اتصالك بالإنترنت.',n:'لم يُرسل بعد: {n} محفوظ على هاتفك. سيُرسل عند اتصالك بالإنترنت.',ok:'أُرسل إلى أخصائي العلاج الطبيعي ✓'},uk:{een:'Збережено на телефоні. Надішлеться, щойно з’явиться інтернет.',n:'Ще не надіслано: {n} збережено на телефоні. Надішлеться, щойно з’явиться інтернет.',ok:'Надіслано твоєму фізіотерапевту ✓'}};
+  var TWACHT={nl:{druk:'Opgeslagen op je telefoon. Het is even druk; dit gaat over een paar minuten vanzelf mee.',drukN:'Nog niet verstuurd: {n} keer opgeslagen op je telefoon. Het is even druk; dit gaat over een paar minuten vanzelf mee.',een:'Opgeslagen op je telefoon. Gaat vanzelf mee zodra je internet hebt.',n:'Nog niet verstuurd: {n} keer opgeslagen op je telefoon. Gaat vanzelf mee zodra je internet hebt.',ok:'Verstuurd naar je fysiotherapeut ✓'},en:{druk:'Saved on your phone. It is busy right now; this will be sent automatically in a few minutes.',drukN:'Not sent yet: {n} saved on your phone. It is busy right now; they will be sent automatically in a few minutes.',een:'Saved on your phone. It will be sent once you are online.',n:'Not sent yet: {n} saved on your phone. They will be sent once you are online.',ok:'Sent to your physiotherapist ✓'},de:{druk:'Auf deinem Handy gespeichert. Gerade ist viel los; es wird in ein paar Minuten automatisch gesendet.',drukN:'Noch nicht gesendet: {n} auf deinem Handy gespeichert. Gerade ist viel los; es wird in ein paar Minuten automatisch gesendet.',een:'Auf deinem Handy gespeichert. Wird gesendet, sobald du online bist.',n:'Noch nicht gesendet: {n} auf deinem Handy gespeichert. Wird gesendet, sobald du online bist.',ok:'An deinen Physiotherapeuten gesendet ✓'},fr:{druk:'Enregistré sur votre téléphone. Le service est chargé ; envoi automatique dans quelques minutes.',drukN:'Pas encore envoyé : {n} enregistré(s) sur votre téléphone. Le service est chargé ; envoi automatique dans quelques minutes.',een:'Enregistré sur votre téléphone. Sera envoyé dès que vous serez en ligne.',n:'Pas encore envoyé : {n} enregistré(s) sur votre téléphone. Envoi dès que vous serez en ligne.',ok:'Envoyé à votre kinésithérapeute ✓'},es:{druk:'Guardado en tu teléfono. Ahora hay mucha carga; se enviará automáticamente en unos minutos.',drukN:'Aún no enviado: {n} guardado(s) en tu teléfono. Ahora hay mucha carga; se enviará automáticamente en unos minutos.',een:'Guardado en tu teléfono. Se enviará cuando tengas internet.',n:'Aún no enviado: {n} guardado(s) en tu teléfono. Se enviará cuando tengas internet.',ok:'Enviado a tu fisioterapeuta ✓'},pl:{druk:'Zapisano w telefonie. Teraz jest duży ruch; zostanie wysłane automatycznie za kilka minut.',drukN:'Jeszcze nie wysłano: {n} zapisano w telefonie. Teraz jest duży ruch; zostanie wysłane automatycznie za kilka minut.',een:'Zapisano w telefonie. Zostanie wysłane, gdy będziesz mieć internet.',n:'Jeszcze nie wysłano: {n} zapisano w telefonie. Zostanie wysłane, gdy będziesz mieć internet.',ok:'Wysłano do twojego fizjoterapeuty ✓'},tr:{druk:'Telefonuna kaydedildi. Şu an yoğunluk var; birkaç dakika içinde otomatik gönderilir.',drukN:'Henüz gönderilmedi: telefonunda {n} kayıt var. Şu an yoğunluk var; birkaç dakika içinde otomatik gönderilir.',een:'Telefonuna kaydedildi. İnternet gelince gönderilir.',n:'Henüz gönderilmedi: telefonunda {n} kayıt var. İnternet gelince gönderilir.',ok:'Fizyoterapistine gönderildi ✓'},ar:{druk:'تم الحفظ على هاتفك. هناك ضغط الآن؛ سيُرسل تلقائيًا خلال بضع دقائق.',drukN:'لم يُرسل بعد: {n} محفوظ على هاتفك. هناك ضغط الآن؛ سيُرسل تلقائيًا خلال بضع دقائق.',een:'تم الحفظ على هاتفك. سيُرسل عند اتصالك بالإنترنت.',n:'لم يُرسل بعد: {n} محفوظ على هاتفك. سيُرسل عند اتصالك بالإنترنت.',ok:'أُرسل إلى أخصائي العلاج الطبيعي ✓'},uk:{druk:'Збережено на телефоні. Зараз велике навантаження; надішлеться автоматично за кілька хвилин.',drukN:'Ще не надіслано: {n} збережено на телефоні. Зараз велике навантаження; надішлеться автоматично за кілька хвилин.',een:'Збережено на телефоні. Надішлеться, щойно з’явиться інтернет.',n:'Ще не надіслано: {n} збережено на телефоні. Надішлеться, щойно з’явиться інтернет.',ok:'Надіслано твоєму фізіотерапевту ✓'}};
   var TMG={nl:{kop:'Mijn gegevens',wat:'Wat staat er op deze kaart?',l1:'Je roepnaam, je oefeningen en wat je fysiotherapeut erbij schreef.',l2:'Wat je aantikt: pijnscores, gedaan, te zwaar en seintjes.',l3:'Je achternaam en je dossier staan niet op deze kaart.',hoelang:'Hoe lang?',tot:'Blijft bewaard tot minstens {d}. Blijf je oefenen, dan schuift dit op. Daarna wordt de kaart gewist.',waar:'Waar?',dos:'Je dossier staat bij je praktijk. Je fysiotherapeut zet daar wat nodig is. Vragen over je gegevens? Stel ze aan je praktijk.',dl:'Download mijn gegevens',wis:'Wis deze kaart van mijn telefoon',zeker:'Weet je het zeker? De kaart verdwijnt van deze telefoon. Bij je praktijk blijft hij bestaan.',gewist:'Gewist van deze telefoon. Bij je praktijk bestaat de kaart nog: scan de QR-code opnieuw om hem te openen. Staat de kaart als icoon op je beginscherm? Haal dat icoon dan ook weg.',wacht:'Let op: {n} keer aangetikt zonder internet is nog niet verstuurd naar je praktijk. Dat gaat dan verloren.'},en:{kop:'My data',wat:'What is on this card?',l1:'Your first name, your exercises and what your physiotherapist wrote with them.',l2:'What you tap: pain scores, done, too hard and messages.',l3:'Your surname and your medical record are not on this card.',hoelang:'How long?',tot:'Kept until at least {d}. If you keep exercising, this moves later. After that the card is deleted.',waar:'Where?',dos:'Your medical record is at your practice. Your physiotherapist adds what is needed there. Questions about your data? Ask your practice.',dl:'Download my data',wis:'Remove this card from my phone',zeker:'Are you sure? The card disappears from this phone. It stays at your practice.',gewist:'Removed from this phone. The card still exists at your practice: scan the QR code again to open it. Did you add the card as an icon to your home screen? Remove that icon too.',wacht:'Note: {n} taps made without internet have not been sent to your practice yet. They will be lost.'},de:{kop:'Meine Daten',wat:'Was steht auf dieser Karte?',l1:'Dein Vorname, deine Übungen und was dein Physiotherapeut dazu geschrieben hat.',l2:'Was du antippst: Schmerzwerte, erledigt, zu schwer und Nachrichten.',l3:'Dein Nachname und deine Akte stehen nicht auf dieser Karte.',hoelang:'Wie lange?',tot:'Gespeichert bis mindestens {d}. Wenn du weiter übst, verschiebt sich das. Danach wird die Karte gelöscht.',waar:'Wo?',dos:'Deine Akte liegt bei deiner Praxis. Dein Physiotherapeut trägt dort ein, was nötig ist. Fragen zu deinen Daten? Wende dich an deine Praxis.',dl:'Meine Daten herunterladen',wis:'Diese Karte von meinem Handy löschen',zeker:'Bist du sicher? Die Karte verschwindet von diesem Handy. Bei deiner Praxis bleibt sie bestehen.',gewist:'Von diesem Handy gelöscht. Bei deiner Praxis gibt es die Karte noch: Scanne den QR-Code erneut, um sie zu öffnen. Hast du die Karte als Symbol auf deinen Startbildschirm gelegt? Entferne auch dieses Symbol.',wacht:'Achtung: {n} Eingaben ohne Internet wurden noch nicht an deine Praxis gesendet. Sie gehen dann verloren.'},fr:{kop:'Mes données',wat:'Que contient cette carte ?',l1:'Votre prénom, vos exercices et ce que votre kinésithérapeute y a ajouté.',l2:'Ce que vous indiquez : scores de douleur, fait, trop difficile et messages.',l3:'Votre nom de famille et votre dossier ne sont pas sur cette carte.',hoelang:'Combien de temps ?',tot:'Conservée au moins jusqu’au {d}. Si vous continuez à vous exercer, cette date recule. Ensuite la carte est supprimée.',waar:'Où ?',dos:'Votre dossier est au cabinet. Votre kinésithérapeute y ajoute ce qui est nécessaire. Des questions sur vos données ? Adressez-vous au cabinet.',dl:'Télécharger mes données',wis:'Effacer cette carte de mon téléphone',zeker:'Vous êtes sûr ? La carte disparaît de ce téléphone. Elle reste au cabinet.',gewist:'Effacée de ce téléphone. La carte existe toujours au cabinet : scannez à nouveau le code QR pour l’ouvrir. Vous avez ajouté la carte en icône sur l’écran d’accueil ? Supprimez aussi cette icône.',wacht:'Attention : {n} saisies faites sans internet n’ont pas encore été envoyées au cabinet. Elles seront perdues.'},es:{kop:'Mis datos',wat:'¿Qué hay en esta tarjeta?',l1:'Tu nombre, tus ejercicios y lo que tu fisioterapeuta escribió con ellos.',l2:'Lo que marcas: dolor, hecho, demasiado difícil y avisos.',l3:'Tu apellido y tu historial no están en esta tarjeta.',hoelang:'¿Cuánto tiempo?',tot:'Se guarda al menos hasta el {d}. Si sigues haciendo ejercicio, se alarga. Después la tarjeta se borra.',waar:'¿Dónde?',dos:'Tu historial está en tu consulta. Tu fisioterapeuta anota allí lo necesario. ¿Preguntas sobre tus datos? Pregunta en tu consulta.',dl:'Descargar mis datos',wis:'Borrar esta tarjeta de mi teléfono',zeker:'¿Seguro? La tarjeta desaparece de este teléfono. En tu consulta sigue existiendo.',gewist:'Borrada de este teléfono. En tu consulta la tarjeta sigue existiendo: escanea de nuevo el código QR para abrirla. ¿Añadiste la tarjeta como icono a tu pantalla de inicio? Quita también ese icono.',wacht:'Atención: {n} marcas hechas sin internet aún no se han enviado a tu consulta. Se perderán.'},pl:{kop:'Moje dane',wat:'Co jest na tej karcie?',l1:'Twoje imię, ćwiczenia i to, co dopisał fizjoterapeuta.',l2:'To, co zaznaczasz: ból, zrobione, za trudne i wiadomości.',l3:'Twojego nazwiska i dokumentacji nie ma na tej karcie.',hoelang:'Jak długo?',tot:'Przechowywana co najmniej do {d}. Jeśli ćwiczysz dalej, termin się przesuwa. Potem karta zostaje usunięta.',waar:'Gdzie?',dos:'Twoja dokumentacja jest w gabinecie. Fizjoterapeuta wpisuje tam to, co potrzebne. Pytania o dane? Zapytaj w gabinecie.',dl:'Pobierz moje dane',wis:'Usuń tę kartę z mojego telefonu',zeker:'Na pewno? Karta zniknie z tego telefonu. W gabinecie zostaje.',gewist:'Usunięto z tego telefonu. W gabinecie karta nadal istnieje: zeskanuj kod QR ponownie, aby ją otworzyć. Masz kartę jako ikonę na ekranie głównym? Usuń też tę ikonę.',wacht:'Uwaga: {n} zaznaczeń bez internetu nie wysłano jeszcze do gabinetu. Przepadną.'},tr:{kop:'Verilerim',wat:'Bu kartta ne var?',l1:'Adın, egzersizlerin ve fizyoterapistinin bunlara eklediği notlar.',l2:'İşaretlediklerin: ağrı puanları, yapıldı, çok zor ve mesajlar.',l3:'Soyadın ve dosyan bu kartta yer almaz.',hoelang:'Ne kadar süre?',tot:'En az {d} tarihine kadar saklanır. Egzersize devam edersen bu tarih ileri kayar. Sonra kart silinir.',waar:'Nerede?',dos:'Dosyan kliniğinde durur. Fizyoterapistin gerekeni oraya yazar. Verilerinle ilgili soruların için kliniğine sor.',dl:'Verilerimi indir',wis:'Bu kartı telefonumdan sil',zeker:'Emin misin? Kart bu telefondan kaybolur. Klinikte kalmaya devam eder.',gewist:'Bu telefondan silindi. Kart kliniğinde hâlâ duruyor: açmak için QR kodunu yeniden tara. Kartı ana ekranına simge olarak eklediysen o simgeyi de kaldır.',wacht:'Dikkat: internetsiz yapılan {n} işaret henüz kliniğine gönderilmedi. Bunlar kaybolur.'},ar:{kop:'بياناتي',wat:'ماذا يوجد في هذه البطاقة؟',l1:'اسمك الأول وتمارينك وما كتبه أخصائي العلاج الطبيعي معها.',l2:'ما تضغط عليه: درجات الألم، تم، صعب جدًا والرسائل.',l3:'اسم عائلتك وملفك الطبي ليسا على هذه البطاقة.',hoelang:'إلى متى؟',tot:'تُحفظ حتى {d} على الأقل. إذا واصلت التمرين يتأخر هذا الموعد. بعد ذلك تُحذف البطاقة.',waar:'أين؟',dos:'ملفك الطبي موجود في عيادتك. يضيف أخصائي العلاج الطبيعي هناك ما يلزم. أسئلة عن بياناتك؟ اسأل عيادتك.',dl:'تنزيل بياناتي',wis:'احذف هذه البطاقة من هاتفي',zeker:'هل أنت متأكد؟ ستختفي البطاقة من هذا الهاتف. تبقى موجودة في عيادتك.',gewist:'حُذفت من هذا الهاتف. البطاقة ما زالت موجودة في عيادتك: امسح رمز QR مرة أخرى لفتحها. هل أضفت البطاقة كأيقونة على الشاشة الرئيسية؟ احذف تلك الأيقونة أيضًا.',wacht:'انتبه: {n} من الضغطات بدون إنترنت لم تُرسل بعد إلى عيادتك. ستضيع.'},uk:{kop:'Мої дані',wat:'Що є на цій картці?',l1:'Твоє ім’я, твої вправи та те, що до них дописав фізіотерапевт.',l2:'Те, що ти позначаєш: біль, виконано, заважко та повідомлення.',l3:'Твого прізвища та медичної картки на цій картці немає.',hoelang:'Як довго?',tot:'Зберігається щонайменше до {d}. Якщо продовжуєш вправи, термін зсувається. Потім картку буде видалено.',waar:'Де?',dos:'Твоя медична картка — у твоїй практиці. Фізіотерапевт вносить туди потрібне. Питання щодо даних? Звернися до практики.',dl:'Завантажити мої дані',wis:'Видалити цю картку з мого телефона',zeker:'Ти впевнений? Картка зникне з цього телефона. У практиці вона залишиться.',gewist:'Видалено з цього телефона. У практиці картка ще є: відскануй QR-код ще раз, щоб відкрити її. Додавав картку як значок на головний екран? Прибери і цей значок.',wacht:'Увага: {n} позначок без інтернету ще не надіслано до практики. Вони пропадуть.'}};
-  function trw(k){var d=TWACHT[TAAL]||TWACHT.nl;return d[k];}
+  // bij "even te druk" is er wél internet: dan niet "zodra je internet hebt" zeggen
+  function trw(k){var d=TWACHT[TAAL]||TWACHT.nl;if(WACHT_REDEN==='druk'&&(k==='een'||k==='n'))k=k==='een'?'druk':'drukN';return d[k];}
   function trmg(k){var d=TMG[TAAL]||TMG.nl;return d[k];}
   var TPRIV={
     nl:{r:'Deze kaart is van {p}. Wat je aantikt, gaat naar jouw fysiotherapeut. Deel de link alleen met wie je vertrouwt.',b:'Op deze kaart staan je roepnaam, je oefeningen, wat je fysiotherapeut erbij schreef en wat je aantikt. Een tijd na je behandeling wordt de kaart vanzelf gewist.',l:'Privacy',ok:'Begrepen'},
@@ -1571,11 +1575,28 @@
     else if(klaar){el.className='wachtrij klaar';el.textContent=trw('ok');el.style.display='block';setTimeout(function(){if(!Object.keys(leesWacht()).length)el.style.display='none';},6000);}
     else el.style.display='none';
   }
-  // POST naar de server; geen verbinding = in de wachtrij en een fout met .wacht
+  // POST naar de server; geen verbinding = in de wachtrij en een fout met .wacht.
+  // Ook bij "even te druk" (429) of een serverstoring (5xx) gaat de tik in de wachtrij en
+  // later vanzelf mee. Eerder slikte de kaart die stil: het vinkje stond aan, maar de
+  // therapeut zag nooit iets (sweep 2026-11-09, Jayden: snel tikken op de pijnscore zette de
+  // schrijfrem vol, daarna gingen "gedaan" en "doet te veel pijn" 5 minuten verloren).
+  var WACHT_REDEN='net',wachtKlok=null;
+  function later(seconden){
+    if(wachtKlok)return;
+    var s=Math.min(Math.max(Number(seconden)||60,5),300);
+    wachtKlok=setTimeout(function(){wachtKlok=null;verstuurWacht();},s*1000+500);
+  }
   function stuur(pad,body){
     return fetch(pad,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)})
-      .catch(function(){zetInWacht(pad,body);var e=new Error('wacht');e.wacht=true;throw e;})
-      .then(function(r){return r.json();});
+      .catch(function(){WACHT_REDEN='net';zetInWacht(pad,body);var e=new Error('wacht');e.wacht=true;throw e;})
+      .then(function(r){
+        if(r.status===429||r.status>=500){
+          WACHT_REDEN='druk';zetInWacht(pad,body);later(r.headers.get('retry-after'));
+          var e=new Error('wacht');e.wacht=true;e.druk=true;throw e;
+        }
+        WACHT_REDEN='net';
+        return r.json();
+      });
   }
   var WACHT_VELD={'/api/kaart/meting':['metingen','meting'],'/api/kaart/gedaan':['gedaan','gedaan'],'/api/kaart/psk':['psk','psk'],'/api/kaart/ervaring':['ervaring','herstel']};
   var wachtBezig=false;
@@ -1589,7 +1610,7 @@
       fetch(it.pad,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(it.body)})
         .then(function(r){
           // druk of serverfout: later nog eens; een afwijzing (4xx) heeft geen zin om te herhalen
-          if(r.status===429||r.status>=500)return null;
+          if(r.status===429||r.status>=500){wachtBezig=false;WACHT_REDEN='druk';later(r.headers.get('retry-after'));tekenWacht();throw 'druk';}
           var nu=leesWacht();delete nu[sleutels[i]];bewaarWacht(nu);verstuurd++;
           return r.json().catch(function(){return null;});
         })
@@ -1800,9 +1821,13 @@
   }
 
   // ---- voorlezen met de ingebouwde spraak van de telefoon (gratis, ook offline) ----
-  var bezigLezen=false,noorRequest=0;
+  var bezigLezen=false,noorRequest=0,noorBron=-1;
   function stopLezen(){
     noorRequest++;
+    // de knop per oefening die Noor startte, terug naar luisteren (zie zetNoorKnop)
+    var nk=noorBron>=0&&document.querySelector?document.querySelector('#oefs [data-noor="'+noorBron+'"]'):null;
+    if(nk){nk.textContent='Luister naar Noor';nk.setAttribute('aria-pressed','false');}
+    noorBron=-1;
     if(window.NoorAudio)NoorAudio.stop();
     if(window.speechSynthesis)speechSynthesis.cancel();
     bezigLezen=false;
@@ -1921,17 +1946,20 @@
     if(!NoorAudio.match(item.name,item.text))return;
     NoorAudio.play([item],null,function(){});
   }
-  async function speelNoor(items){
+  async function speelNoor(items,bron){
+    bron=typeof bron==='number'?bron:-1;
+    wisNoorMeld();
     // Pas stoppen als we ook echt iets gaan afspelen: anders eindigt een tik in een
     // kapotte toestand met een lopende video van de patiënt afgebroken en alleen een melding.
     if(!mediaReviewReady){
-      alert('De controle van de algemene uitleg kon niet laden. Ververs de kaart. Je persoonlijke dosering blijft op de kaart staan.');return;
+      noorMeld('De controle van de algemene uitleg kon niet laden. Ververs de kaart. Je persoonlijke dosering blijft op de kaart staan.',bron);return;
     }
-    if(!window.NoorAudio){alert('De natuurlijke stem kon niet laden. Ververs de kaart of lees de uitleg.');return;}
+    if(!window.NoorAudio){noorMeld('De natuurlijke stem kon niet laden. Ververs de kaart of lees de uitleg.',bron);return;}
     stopVideos();
     stopLezen();
     var request=noorRequest;
     bezigLezen=true;
+    noorBron=bron;zetNoorKnop(noorKnop(bron),true);
     document.getElementById('leesBtn').classList.add('aan');
     document.getElementById('leesBtn').setAttribute('aria-pressed','true');
     document.getElementById('leesTxt').textContent=tr('stop');
@@ -1954,16 +1982,16 @@
         else if(!NoorAudio.match(x.name,x.text))missing.push(x.name);
         else available.push(x);
       });
-      if(!available.length){stopLezen();meldOntbrekend(held,missing,0,beeldWacht);return;}
+      if(!available.length){stopLezen();meldOntbrekend(held,missing,0,beeldWacht,bron);return;}
       if(request!==noorRequest)return;
       // Eerst afspelen, daarna pas melden: een alert() blokkeert de pagina zo lang dat de
       // toestemming die bij de tik hoort verloopt, en dan start het geluid helemaal niet.
-      NoorAudio.play(available,stopLezen,function(message){stopLezen();alert(message);});
-      meldOntbrekend(held,missing,available.length,beeldWacht);
-    }catch(error){if(request!==noorRequest)return;stopLezen();alert('De natuurlijke stem kon niet laden. Probeer opnieuw of lees de beschikbare uitleg.');}
+      NoorAudio.play(available,stopLezen,function(message){stopLezen();noorMeld(message,bron);});
+      meldOntbrekend(held,missing,available.length,beeldWacht,bron);
+    }catch(error){if(request!==noorRequest)return;stopLezen();noorMeld('De natuurlijke stem kon niet laden. Probeer opnieuw of lees de beschikbare uitleg.',bron);}
   }
 
-  function meldOntbrekend(held,missing,beschikbaar,beeldWacht){
+  function meldOntbrekend(held,missing,beschikbaar,beeldWacht,bron){
     beeldWacht=beeldWacht||[];
     if(!held.length&&!missing.length&&!beeldWacht.length)return;
     var message=[];
@@ -1974,14 +2002,43 @@
       // overgeslagen vanwege een beeldcontrole is niet hetzelfde als geen opname: niet beweren dat die ontbreekt
       beeldWacht.length?'Er wordt nu niets voorgelezen voor deze selectie.':'Er is nu geen stemopname beschikbaar voor deze selectie.');
     message.push('Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.');
-    alert(message.join('\n\n'));
+    noorMeld(message.join('\n\n'),bron);
   }
+
+  // De knop "Luister naar Noor" bij een oefening is ook de stopknop: tijdens het luisteren
+  // heet hij "Stop" en stopt een tweede tik de stem (sweep 2026-11-09, Truus op iPhone SE:
+  // alleen de knop bovenaan werd Stop, buiten beeld, en een tweede tik begon opnieuw).
+  function noorKnop(i){return i>=0&&document.querySelector?document.querySelector('#oefs [data-noor="'+i+'"]'):null;}
+  function zetNoorKnop(knop,aan){
+    if(!knop)return;
+    knop.textContent=aan?tr('stop'):'Luister naar Noor';
+    knop.setAttribute('aria-pressed',aan?'true':'false');
+  }
+  // Meldingen bij het luisteren staan op de pagina, naast de knop die ze veroorzaakte, in
+  // plaats van een alert(): die blokkeert het scherm en is voor een oudere patiënt een schrik.
+  // Het element wordt één keer opgezocht en bewaard: hertekent de kaart de oefeningen terwijl
+  // de melding daar staat, dan zetten we hetzelfde element bij de volgende melding terug.
+  var NOOR_MELD=null;
+  function noorMeldEl(){return NOOR_MELD||(NOOR_MELD=document.getElementById('noorMelding'));}
+  function noorMeld(tekst,bron){
+    var el=noorMeldEl();
+    if(!el)return;
+    var knop=noorKnop(bron),boven=document.getElementById('clientblok');
+    if(knop&&knop.parentNode&&el.insertAdjacentElement){
+      var na=knop.nextElementSibling&&knop.nextElementSibling.classList.contains('vmeta')?knop.nextElementSibling:knop;
+      na.insertAdjacentElement('afterend',el);
+    }else if(boven&&boven.parentNode&&boven.insertAdjacentElement)boven.insertAdjacentElement('beforebegin',el);
+    el.textContent=tekst;el.hidden=false;
+  }
+  function wisNoorMeld(){var el=noorMeldEl();if(el){el.hidden=true;el.textContent='';}}
 
   // Eén plek voor de luisterregel bij een oefening, zodat tekenen en herstellen precies
   // dezelfde knop opleveren. Alleen voor een oefening waarvan beeld en uitleg niet worden
   // tegengehouden; dat bewaken tekenKaart en herstelNoorKnoppen.
   function noorRegel(o,idx){
-    if(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg))return '<button type="button" class="vbtn" data-noor="'+idx+'">Luister naar Noor</button>'+
+    // tekent de kaart opnieuw terwijl Noor bij deze oefening praat, dan blijft het een stopknop
+    var aan=bezigLezen&&noorBron===idx;
+    if(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg))return '<button type="button" class="vbtn" data-noor="'+idx+'"'+(aan?' aria-pressed="true"':'')+'>'+(aan?tr('stop'):'Luister naar Noor')+'</button>'+
       // De opname bevat de algemene uitvoering, niet de dosering of de opmerkingen
       // van de behandelaar. Dat hoort de patiënt te weten voordat hij luistert.
       '<div class="vmeta">De stem legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.</div>';
@@ -2355,7 +2412,9 @@
       if(noor){
         var x=(K.kaart.chosen||[])[Number(noor.dataset.noor)];
         if(!x)return;
-        speelNoor([noorItem(vindOefening(x),x)]);return;
+        var ni=Number(noor.dataset.noor);
+        if(bezigLezen&&noorBron===ni){stopLezen();return;}
+        speelNoor([noorItem(vindOefening(x),x)],ni);return;
       }
       // afvinken van een losse oefening ("gedaan vandaag")
       var od=e.target.closest('.oefdone');
