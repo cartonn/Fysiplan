@@ -531,6 +531,11 @@
     "n": "Seated shoulder roll",
     "s": "3",
     "h": "5"
+   },
+   {
+    "n": "Bovenste trapezius rek – zittend actief",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -558,6 +563,26 @@
     "n": "Diepe nekflexoren activeren – liggend ondersteund",
     "s": "3",
     "h": "10 × 10 sec"
+   },
+   {
+    "n": "Bovenste trapezius rek – zittend actief",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Handen achter het hoofd, ellebogen openen – ruglig",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Borstspier rekken tegen de muur",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Schouderblad naar achteren – actief",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -612,6 +637,26 @@
     "n": "Kin intrekken – zittend actief",
     "s": "3",
     "h": "10 × 5 sec"
+   },
+   {
+    "n": "Nek buigen – zittend actief",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Nek strekken – zittend actief",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Nek draaien – zittend actief",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Seated chest opener",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -956,6 +1001,16 @@
     "n": "Mob lower back",
     "s": "3",
     "h": "15 × 3 sec"
+   },
+   {
+    "n": "Armen omhoog langs de mat – liggend",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Schouderblad naar achteren – actief",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -978,6 +1033,11 @@
     "n": "Romp draaien – zittend",
     "s": "3",
     "h": "6 × 5 sec"
+   },
+   {
+    "n": "Yoga snake",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -1005,6 +1065,21 @@
     "n": "Plank basis",
     "s": "1",
     "h": "3 × 20 sec"
+   },
+   {
+    "n": "Rug strekken – staand",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Brug op de tenen – ruglig",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Brug – afwisselend knie optillen",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -1032,6 +1107,16 @@
     "n": "Knie naar borst – liggend",
     "s": "3",
     "h": "10 × 5 sec"
+   },
+   {
+    "n": "Zijwaarts rekken met arm boven het hoofd – staand",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Romp voorover buigen – staand",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -1091,6 +1176,11 @@
     "n": "Bekkenbodem aanspannen – liggend",
     "s": "3",
     "h": "10 × 5 sec"
+   },
+   {
+    "n": "Zijwaarts rekken met arm boven het hoofd – staand",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -1118,6 +1208,16 @@
     "n": "Kick back",
     "s": "3",
     "h": "10 × 3 sec"
+   },
+   {
+    "n": "Arm heffen – op handen en knieën",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Zijplank – op knieën",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1140,6 +1240,11 @@
     "n": "Knie naar borst – liggend",
     "s": "1",
     "h": "1"
+   },
+   {
+    "n": "Romp voorover buigen – staand",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -1209,6 +1314,11 @@
     "n": "Rug extensie",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Knie opzij laten zakken – liggend",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1236,6 +1346,11 @@
     "n": "Foam roller back lower",
     "s": "3",
     "h": "3"
+   },
+   {
+    "n": "Brug – afwisselend knie optillen",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1261,6 +1376,16 @@
    },
    {
     "n": "Rug extensie",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Brug – met bal tussen de knieën",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Knie opzij laten zakken – liggend",
     "s": "3",
     "h": "10"
    }
@@ -1354,6 +1479,11 @@
     "n": "Swiss ball back ext",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Zijwaarts rekken met arm boven het hoofd – staand",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -1382,6 +1512,21 @@
     "n": "Glute bridges",
     "s": "1",
     "h": "1"
+   },
+   {
+    "n": "Arm heffen – op handen en knieën",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Hiel tikken – ruglig met benen in de lucht",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Zijplank – op knieën",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1405,6 +1550,11 @@
     "n": "Mountain climber",
     "s": "1",
     "h": "1"
+   },
+   {
+    "n": "Benen op de bal opzij rollen – liggend",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1433,6 +1583,11 @@
     "n": "Bruggen 1 been liften",
     "s": "1",
     "h": "1"
+   },
+   {
+    "n": "Benen op de bal opzij rollen – liggend",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1455,6 +1610,11 @@
     "n": "Seated hamstring stretch",
     "s": "3",
     "h": "3 × 10 sec"
+   },
+   {
+    "n": "Brug – afwisselend knie optillen",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -1481,6 +1641,16 @@
    {
     "n": "Rug bol en hol – op handen en knieën",
     "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Mob Hip opener",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Romp draaien – zittend",
+    "s": "2",
     "h": "10"
    }
   ]
@@ -1546,6 +1716,11 @@
     "n": "Eenbeenstand – zonder steun",
     "s": "3",
     "h": "5 × 10 sec"
+   },
+   {
+    "n": "Heupflexor rek – staand met steun",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1583,6 +1758,11 @@
     "n": "Tandemstand – met steun",
     "s": "3",
     "h": "5 × 10 sec"
+   },
+   {
+    "n": "Heupflexor rek – staand met steun",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1667,6 +1847,11 @@
     "n": "Standing chair half squat",
     "s": "3",
     "h": "15"
+   },
+   {
+    "n": "Knie optillen tot 90 graden – ruglig",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1695,6 +1880,16 @@
     "n": "Standing chair abductie",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Zijwaarts opstappen op een step",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Heupflexor rek – staand met steun",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1721,6 +1916,11 @@
    },
    {
     "n": "Standing chair calfs raises",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lunges",
     "s": "3",
     "h": "10"
    }
@@ -5126,6 +5326,281 @@
   "dosering": {
    "s": "3",
    "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Zwangerschap: derde trimester",
+  "sub": "Rug en heupen soepel houden in de laatste maanden van de zwangerschap.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   "Rug bol en hol – op handen en knieën",
+   "Mob Hip opener",
+   "Romp draaien – zittend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Pilates: basis",
+  "sub": "Rustige pilatesoefeningen in lig voor romp, heupen en bekken.",
+  "categorie": "Algemeen en sport",
+  "oefeningen": [
+   "Bruggen beginner",
+   "Knie optillen tot 90 graden – ruglig",
+   "Zijlig heupkracht – zijlig"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Heup: avulsie voorste heupbot fase 1 (jeugd)",
+  "sub": "Rustig rekken na een afscheuring bij de aanhechting aan de voorkant van de heup bij jongeren.",
+  "categorie": "Heup en bovenbeen",
+  "fase": 1,
+  "oefeningen": [
+   "Quadriceps stretch",
+   "Yoga hip flexor stretch",
+   "Bilspier rekken – zittend op een stoel"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Heup: avulsie voorste heupbot fase 2 (jeugd)",
+  "sub": "De heupbuigers weer belasten, eerst zonder bewegen en daarna met elastiek.",
+  "categorie": "Heup en bovenbeen",
+  "fase": 2,
+  "oefeningen": [
+   "Heup buigen tegen je hand – ruglig (isometrisch)",
+   "Heup buigen – met elastiek",
+   "Gestrekt been naar voren – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Hamstring: verlengen",
+  "sub": "De hamstrings in een verlengde stand sterker maken, bijvoorbeeld na een verrekking.",
+  "categorie": "Heup en bovenbeen",
+  "oefeningen": [
+   "Knie strekken met heup gebogen – ruglig",
+   "Heupscharnier – functioneel op één been",
+   "Been naar achteren laten glijden – met handdoek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Rug: chronische lage rugpijn",
+  "sub": "Bewegen en romp- en bilspieren versterken bij langdurige lage rugpijn.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   "Glute bridges",
+   "Rug strekken – liggend",
+   "Brug – met bal tussen de knieën",
+   "Romp draaien – liggend",
+   "Rug extensie",
+   "Knie opzij laten zakken – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Rug: ischias",
+  "sub": "Bilspier rekken, de zenuw laten glijden en de diepe spieren aanspannen bij uitstraling in het been.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   "Gluteal stretch",
+   "Zenuw glijden been – ruglig",
+   "Bekkenbodem aanspannen – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Romp: stabiliteitstraining",
+  "sub": "De diepe buik- en rugspieren trainen met aanspannen en plankvarianten.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   "Bekkenbodem aanspannen – liggend",
+   "Plank basis",
+   "Zijplank – op knieën"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10 × 5 sec"
+  }
+ },
+ {
+  "naam": "Romp: stabiliteit fase 3",
+  "sub": "Zwaardere rompoefeningen als vervolg op fase 1 en 2 van de rompstabiliteit.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 3,
+  "oefeningen": [
+   "Plank basis",
+   "Bridges kicker",
+   "Schuin opkrullen – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Bovenrug: klachten",
+  "sub": "De bovenrug strekken, draaien en de schouderbladen activeren bij klachten tussen de schouderbladen.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   "Rug extensie",
+   "Mob lower back",
+   "Armen omhoog langs de mat – liggend",
+   "Schouderblad naar achteren – actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Nek: algemene nekklachten",
+  "sub": "Houding, nekspieren en schouderbladen trainen bij veelvoorkomende nekklachten.",
+  "categorie": "Nek",
+  "oefeningen": [
+   "Kin intrekken – zittend actief",
+   "Nek isometrisch – voor, achter en opzij",
+   "Bovenste trapezius rek – zittend actief",
+   "Schouderblad naar achteren – actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Nek: hernia, rustig opbouwen",
+  "sub": "Rustige beweegoefeningen voor de nek, in lig en in zit, bij een nekhernia.",
+  "categorie": "Nek",
+  "oefeningen": [
+   "Kin intrekken – zittend actief",
+   "Nek buigen – liggend ondersteund",
+   "Nek draaien – liggend ondersteund",
+   "Nek buigen – zittend actief",
+   "Nek strekken – zittend actief",
+   "Nek draaien – zittend actief",
+   "Nek zijwaarts buigen – zittend actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Nek: zelf mobiliseren",
+  "sub": "De nek zelf losser maken met een handdoek en elastiek.",
+  "categorie": "Nek",
+  "oefeningen": [
+   "Nek strekken – met elastiek",
+   "Nek draaien met handdoek – zittend",
+   "Nek draaien – zittend actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Nek: herstel na whiplash fase 1",
+  "sub": "Kort na een whiplash: de nek rustig in alle richtingen bewegen.",
+  "categorie": "Nek",
+  "fase": 1,
+  "oefeningen": [
+   "Nek buigen – zittend actief",
+   "Nek strekken – zittend actief",
+   "Nek draaien – zittend actief",
+   "Nek zijwaarts buigen – zittend actief",
+   "Kin intrekken – zittend actief",
+   "Nek buigen – liggend ondersteund"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Nek: herstel na whiplash, beginfase met zenuwglijden",
+  "sub": "Beginfase na een whiplash met liggend draaien en glijoefeningen voor de zenuwen van de arm.",
+  "categorie": "Nek",
+  "fase": 1,
+  "oefeningen": [
+   "Nek draaien – liggend ondersteund",
+   "Schouderblad naar achteren – actief",
+   "Zenuwglijden handpalm (n. medianus)",
+   "Zenuwglijden duimkant (n. radialis)",
+   "Zenuwglijden pinkkant (n. ulnaris)"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Nek: herstel na whiplash fase 2",
+  "sub": "Nekspieren aanspannen zonder bewegen en de nek-schouderspieren rekken na een whiplash.",
+  "categorie": "Nek",
+  "fase": 2,
+  "oefeningen": [
+   "Nek isometrisch – voor, achter en opzij",
+   "Bovenste trapezius rek – zittend actief",
+   "Levator scapulae rek – zittend actief"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Hoofdpijn met nek/schouder fase 2",
+  "sub": "Nek- en schouderbladspieren versterken en de borst rekken bij hoofdpijn vanuit de nek.",
+  "categorie": "Nek",
+  "fase": 2,
+  "oefeningen": [
+   "Levator scapulae rek – zittend actief",
+   "Front raises",
+   "Arm heffen – op handen en knieën",
+   "Nek buigen – liggend ondersteund",
+   "Borstspier rekken tegen de muur"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Rug: acute lage rugpijn",
+  "sub": "In beweging blijven met rustige oefeningen in lig bij plotselinge lage rugpijn.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   "Knie naar borst – liggend",
+   "Mob lower back",
+   "Romp draaien – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
   }
  }
 ]

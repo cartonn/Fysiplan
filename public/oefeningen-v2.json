@@ -6991,5 +6991,173 @@
   "img": "images/neurologische-revalidatie/duim-naar-neus-ruglig-line-v1.png",
   "uitleg": "Lig ontspannen op je rug en houd je arm gestrekt boven je gezicht met je duim omhoog. Breng je duim langzaam naar je neus en weer terug, en houd de duim steeds scherp in beeld.",
   "kaartImg": "images/neurologische-revalidatie/duim-naar-neus-ruglig-avatar-v8.jpg"
+ },
+ {
+  "naam": "Been naar achteren laten glijden – met handdoek",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/been-achteren-glijden-handdoek-line-v1.png",
+  "uitleg": "Sta met één voet op een handdoek op een gladde vloer en houd je met beide handen vast aan een stevige steun voor je. Houd je standbeen licht gebogen en laat de voet op de handdoek langzaam naar achteren glijden, tot je de achterkant van je standbeen voelt werken. Trek jezelf met je armen terug naar de beginhouding.",
+  "kaartImg": "images/onderste-extremiteit/been-achteren-glijden-handdoek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Knie optillen tot 90 graden – ruglig",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/knie-optillen-90-ruglig-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën en je voeten plat op de mat. Til één voet op en breng je knie omhoog tot je bovenbeen recht omhoog wijst, met je knie in een hoek; verder hoeft niet. Laat je voet rustig zakken tot je tenen de mat raken.",
+  "kaartImg": "images/onderste-extremiteit/knie-optillen-90-ruglig-avatar-v8.jpg"
+ },
+ {
+  "naam": "Renhouding op één been",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/renhouding-op-een-been-line-v1.png",
+  "uitleg": "Sta op één been met je armen langs je lichaam en de tenen van je andere voet licht op de grond. Breng die knie omhoog tot heuphoogte en zwaai tegelijk je armen zoals bij hardlopen: de tegenovergestelde arm naar voren, de andere naar achteren. Zet de voet weer neer; maak het zwaarder op een balanskussen of met je ogen dicht.",
+  "kaartImg": "images/onderste-extremiteit/renhouding-op-een-been-avatar-v8.jpg"
+ },
+ {
+  "naam": "Been opzij schuiven – ruglig",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/been-opzij-schuiven-ruglig-line-v1.png",
+  "uitleg": "Lig op je rug met gestrekte benen en je tenen naar het plafond. Schuif één been zo ver als prettig is opzij over de mat en breng het rustig terug naar het midden, niet verder. Je tenen blijven de hele tijd omhoog wijzen.",
+  "kaartImg": "images/onderste-extremiteit/been-opzij-schuiven-ruglig-avatar-v8.jpg"
+ },
+ {
+  "naam": "Zijwaarts opstappen op een step",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/zijwaarts-opstappen-step-line-v1.png",
+  "uitleg": "Sta met je zij naast een step. Stap met het been aan de kant van de step zijwaarts op de step en zet je andere voet ernaast. Stap aan dezelfde kant weer af en houd je romp rechtop.",
+  "kaartImg": "images/onderste-extremiteit/zijwaarts-opstappen-step-avatar-v8.jpg"
+ },
+ {
+  "naam": "Gestrekt been naar voren – met elastiek",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/gestrekt-been-voren-elastiek-line-v1.png",
+  "uitleg": "Maak een elastiek laag achter je vast en doe de lus om de enkel van je oefenbeen; houd je zo nodig vast. Zwaai je gestrekte been naar voren tegen het elastiek in, als een rustige schop. Laat het langzaam terugkomen.",
+  "kaartImg": "images/onderste-extremiteit/gestrekt-been-voren-elastiek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Heup buigen tegen je hand – ruglig (isometrisch)",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/heup-buigen-tegen-hand-ruglig-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën. Til één been op tot je bovenbeen recht omhoog wijst en leg je hand net boven die knie. Probeer je knie naar je borst te brengen terwijl je hand tegenhoudt, zodat er niets beweegt; houd vast en ontspan.",
+  "kaartImg": "images/onderste-extremiteit/heup-buigen-tegen-hand-ruglig-avatar-v8.jpg"
+ },
+ {
+  "naam": "Bilspier rekken – zittend op een stoel",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/bilspier-rekken-zittend-stoel-line-v1.png",
+  "uitleg": "Zit rechtop op een stoel en leg de enkel van het ene been op het andere bovenbeen, net boven de knie. Buig met een rechte rug vanuit je heupen naar voren en duw eventueel met je hand de knie zacht omlaag. Houd vast tot je rek voelt in je bil.",
+  "kaartImg": "images/onderste-extremiteit/bilspier-rekken-zittend-stoel-avatar-v8.jpg"
+ },
+ {
+  "naam": "Knie strekken met heup gebogen – ruglig",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/knie-strekken-heup-gebogen-ruglig-line-v1.png",
+  "uitleg": "Lig op je rug en buig één heup tot je bovenbeen recht omhoog wijst; houd het met beide handen achter je knie vast. Strek je knie zo ver als het gaat, tot je rek voelt aan de achterkant van je bovenbeen, en buig hem weer. Je andere been blijft gestrekt op de mat.",
+  "kaartImg": "images/onderste-extremiteit/knie-strekken-heup-gebogen-ruglig-avatar-v8.jpg"
+ },
+ {
+  "naam": "Zijwaarts rekken met arm boven het hoofd – staand",
+  "groep": "Rug",
+  "img": "images/rug/zijwaarts-rekken-arm-boven-hoofd-staand-line-v1.png",
+  "uitleg": "Sta met je voeten iets uit elkaar, één hand in je zij en de andere arm gestrekt omhoog. Buig je romp rustig opzij, weg van de geheven arm, en duw je heupen een klein stukje de andere kant op. Kom terug en wissel van kant.",
+  "kaartImg": "images/rug/zijwaarts-rekken-arm-boven-hoofd-staand-avatar-v8.jpg"
+ },
+ {
+  "naam": "Brug – afwisselend knie optillen",
+  "groep": "Rug",
+  "img": "images/rug/brug-afwisselend-knie-optillen-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën en duw je heupen omhoog tot een rechte lijn van schouders tot knieën. Til één voet een stukje van de grond met de knie gebogen en zet hem weer neer, dan de andere. Je heupen blijven hoog en recht.",
+  "kaartImg": "images/rug/brug-afwisselend-knie-optillen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Arm heffen – op handen en knieën",
+  "groep": "Rug",
+  "img": "images/rug/arm-heffen-handen-en-knieen-line-v1.png",
+  "uitleg": "Zet je handen onder je schouders en je knieën onder je heupen, met een vlakke rug. Til één gestrekte arm naar voren op tot schouderhoogte zonder dat je romp of heupen meebewegen. Houd even vast, zet terug en wissel van arm.",
+  "kaartImg": "images/rug/arm-heffen-handen-en-knieen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Brug – met bal tussen de knieën",
+  "groep": "Rug",
+  "img": "images/rug/brug-met-bal-tussen-knieen-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën en een zachte bal tussen je knieën. Knijp de bal licht samen en duw je heupen omhoog tot je lichaam een rechte lijn vormt. Laat je heupen rustig zakken en blijf de bal vasthouden.",
+  "kaartImg": "images/rug/brug-met-bal-tussen-knieen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Knie opzij laten zakken – liggend",
+  "groep": "Rug",
+  "img": "images/rug/knie-opzij-laten-zakken-liggend-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën en je voeten plat. Laat één knie rustig naar buiten zakken, terwijl je bekken stil en plat op de mat blijft. Breng de knie gecontroleerd terug en wissel van kant.",
+  "kaartImg": "images/rug/knie-opzij-laten-zakken-liggend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Zijplank – op knieën",
+  "groep": "Rug",
+  "img": "images/rug/zijplank-op-knieen-line-v1.png",
+  "uitleg": "Lig op je zij en steun op je onderarm met je elleboog onder je schouder, knieën gebogen. Duw je heupen omhoog zodat knieën, heupen en schouders op één lijn komen. Blijf zo even liggen en adem rustig door.",
+  "kaartImg": "images/rug/zijplank-op-knieen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Armen omhoog langs de mat – liggend",
+  "groep": "Rug",
+  "img": "images/rug/armen-omhoog-langs-de-mat-liggend-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën en druk je onderrug licht in de mat. Leg je armen in een W-vorm naast je, ellebogen gebogen en richting je middel. Schuif je armen zo ver mogelijk omhoog boven je hoofd zonder dat ze loskomen van de mat, en breng ze langzaam terug.",
+  "kaartImg": "images/rug/armen-omhoog-langs-de-mat-liggend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Benen op de bal opzij rollen – liggend",
+  "groep": "Rug",
+  "img": "images/rug/benen-op-bal-opzij-rollen-liggend-line-v1.png",
+  "uitleg": "Lig op je rug met je benen gestrekt op een grote oefenbal en je armen gekruist voor je borst. Rol de bal met je benen rustig naar één kant en weer terug naar het midden, en daarna naar de andere kant. Je schouders blijven op de mat.",
+  "kaartImg": "images/rug/benen-op-bal-opzij-rollen-liggend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Nek draaien met handdoek – zittend",
+  "groep": "Nek",
+  "img": "images/rug/nek-draaien-met-handdoek-zittend-line-v1.png",
+  "uitleg": "Zit rechtop met een opgerolde handdoek achter je nek en kruis je handen voor je, zodat elke hand het tegenoverliggende uiteinde vasthoudt. Draai je hoofd naar één kant en trek tegelijk met de hand aan die kant de handdoek mee dezelfde kant op; de andere hand houdt alleen vast. Draai rustig terug.",
+  "kaartImg": "images/rug/nek-draaien-met-handdoek-zittend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Nek draaien – liggend ondersteund",
+  "groep": "Nek",
+  "img": "images/rug/nek-draaien-liggend-ondersteund-line-v1.png",
+  "uitleg": "Lig op je rug met een opgevouwen handdoek onder je hoofd. Draai je hoofd rustig opzij en kijk over je schouder, terwijl je achterhoofd op de handdoek blijft. Kom terug naar het midden en draai naar de andere kant.",
+  "kaartImg": "images/rug/nek-draaien-liggend-ondersteund-avatar-v8.jpg"
+ },
+ {
+  "naam": "Romp voorover buigen – staand",
+  "groep": "Rug",
+  "img": "images/rug/romp-voorover-buigen-staand-line-v1.png",
+  "uitleg": "Sta rechtop met je voeten op heupbreedte en je handen op je bovenbenen. Laat je handen langs je benen naar beneden glijden en buig je rug rustig voorover, met gestrekte knieën, zo ver als prettig is. Kom langzaam weer omhoog.",
+  "kaartImg": "images/rug/romp-voorover-buigen-staand-avatar-v8.jpg"
+ },
+ {
+  "naam": "Ademen met arm heffen – liggend",
+  "groep": "Rug",
+  "img": "images/rug/ademen-met-arm-heffen-liggend-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën en leg je handen op je onderste ribben. Adem rustig in zodat je ribben opzij in je handen bewegen, en laat ze bij het uitademen zakken. Leg daarna je armen naast je en hef ze om de beurt omhoog tot ze naar het plafond wijzen, terwijl je ribben laag blijven.",
+  "kaartImg": "images/rug/ademen-met-arm-heffen-liggend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Been optillen met gebogen knie – liggend",
+  "groep": "Rug",
+  "img": "images/rug/been-optillen-gebogen-knie-liggend-line-v1.png",
+  "uitleg": "Lig op je rug met gebogen knieën en je voeten plat; span je buik en bekkenbodem licht aan. Til één voet op en breng de knie richting je buik, met dezelfde kniehoek. Zet de voet rustig terug en wissel af, terwijl je rug en heupen stil blijven.",
+  "kaartImg": "images/rug/been-optillen-gebogen-knie-liggend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Nek strekken – met elastiek",
+  "groep": "Nek",
+  "img": "images/rug/nek-strekken-met-elastiek-line-v1.png",
+  "uitleg": "Zit rechtop met een elastiek om de achterkant van je hoofd, met een opgevouwen handdoek ertussen, en houd de uiteinden voor je vast. Breng je hoofd rustig naar achteren en kijk omhoog, tegen het elastiek in. Kom langzaam terug; dit mag geen pijn doen.",
+  "kaartImg": "images/rug/nek-strekken-met-elastiek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Schuin opkrullen – met elastiek",
+  "groep": "Rug",
+  "img": "images/rug/schuin-opkrullen-elastiek-liggend-line-v1.png",
+  "uitleg": "Maak een elastiek achter je vast op vloerhoogte en lig op je rug met gebogen knieën; houd het elastiek in één hand bij je hoofd. Trek je kin in en krul je bovenlijf schuin op, terwijl je de hand met het elastiek naar je andere knie brengt. Houd kort vast en rol gecontroleerd terug.",
+  "kaartImg": "images/rug/schuin-opkrullen-elastiek-liggend-avatar-v8.jpg"
  }
 ]

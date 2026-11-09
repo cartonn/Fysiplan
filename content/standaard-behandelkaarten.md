@@ -43,3 +43,5 @@ Nieuwe oefeningen en kaarten per regio komen erin met `scripts/importeer-regio-o
 - Voet en enkel: 16 nieuwe oefeningen, 9 nieuwe kaarten. Negen enkel- en achilleskaarten wachten nog op basisoefeningen die wel een record maar nog geen beeld hebben (voet naar binnen/buiten, kuitrek, kuitheffing).
 - Knie: 15 nieuwe oefeningen, 14 nieuwe kaarten en 8 aanvullingen. Acht kniekaarten wachten nog op basisoefeningen zonder beeld.
 - Neurologie en duizeligheid: 11 nieuwe oefeningen, 11 nieuwe kaarten en 3 aanvullingen.
+- Heup: 9 nieuwe oefeningen, beeld bij 4 bestaande, 5 nieuwe kaarten en 6 aanvullingen.
+- Rug en nek: 15 nieuwe oefeningen, 13 nieuwe kaarten en 18 aanvullingen.

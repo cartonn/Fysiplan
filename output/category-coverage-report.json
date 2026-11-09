@@ -1,16 +1,16 @@
 {
  "scope": "Basiscatalogus in de repository (public/oefeningen-v2.json). Runtime-overrides op de server niet meegeteld; die gaan altijd voor.",
  "inputs": {
-  "public/oefeningen-v2.json": "d30045d69f122be1",
-  "public/mobile-media-review.json": "059cf263deb51668",
-  "public/mobile-narration-review.json": "615df3c8d44d3d52",
+  "public/oefeningen-v2.json": "98df98097361826c",
+  "public/mobile-media-review.json": "e30e932c1d5cb4a8",
+  "public/mobile-narration-review.json": "17221b46da4719f4",
   "public/index.html": "785ba562286c5cf7",
   "content/category-secondary-evidence.json": "1877ac95d64b6a66"
  },
  "totals": {
-  "records": 695,
-  "available": 542,
-  "withoutAsset": 153,
+  "records": 719,
+  "available": 570,
+  "withoutAsset": 149,
   "withSecondary": 246,
   "secondaryLabels": 315,
   "evidence": {
@@ -37,8 +37,8 @@
   },
   {
    "category": "Onderste extremiteit",
-   "missingAssets": 80,
-   "availableIncludingSecondary": 165,
+   "missingAssets": 76,
+   "availableIncludingSecondary": 178,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
@@ -57,13 +57,13 @@
    "storedLabels": [
     "Nek"
    ],
-   "records": 21,
-   "primary": 20,
-   "primaryAvailable": 20,
+   "records": 24,
+   "primary": 23,
+   "primaryAvailable": 23,
    "secondary": 1,
    "secondaryAvailable": 1,
-   "available": 21,
-   "availableClean": 21,
+   "available": 24,
+   "availableClean": 24,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [],
@@ -366,13 +366,13 @@
    "storedLabels": [
     "Rug"
    ],
-   "records": 52,
-   "primary": 25,
-   "primaryAvailable": 25,
+   "records": 64,
+   "primary": 37,
+   "primaryAvailable": 37,
    "secondary": 27,
    "secondaryAvailable": 27,
-   "available": 52,
-   "availableClean": 52,
+   "available": 64,
+   "availableClean": 64,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [],
@@ -576,30 +576,20 @@
    "storedLabels": [
     "Onderste extremiteit"
    ],
-   "records": 245,
-   "primary": 141,
-   "primaryAvailable": 61,
+   "records": 254,
+   "primary": 150,
+   "primaryAvailable": 74,
    "secondary": 104,
    "secondaryAvailable": 104,
-   "available": 165,
-   "availableClean": 164,
+   "available": 178,
+   "availableClean": 177,
    "mediaRejected": 1,
    "explanationHeld": 0,
    "missingAssets": [
     {
-     "name": "Heup buigen – liggend ondersteund",
-     "exerciseId": "fp_88cc523196e29c4c",
-     "coreExerciseId": "fc_11bd71d8611b1762"
-    },
-    {
      "name": "Heup buigen – staand met steun",
      "exerciseId": "fp_2442578ed434c991",
      "coreExerciseId": "fc_95baf5a1bc158012"
-    },
-    {
-     "name": "Heup buigen – met elastiek",
-     "exerciseId": "fp_b986978185f3fe17",
-     "coreExerciseId": "fc_83538ab797690eec"
     },
     {
      "name": "Heup strekken – staand met steun",
@@ -692,19 +682,9 @@
      "coreExerciseId": "fc_1f604a59f34b394e"
     },
     {
-     "name": "Heupscharnier – functioneel op één been",
-     "exerciseId": "fp_787572ce5cebf374",
-     "coreExerciseId": "fc_6b639ed423eb228e"
-    },
-    {
      "name": "Monster walk – met elastiek",
      "exerciseId": "fp_a76c2e853febd057",
      "coreExerciseId": "fc_8e5e5f492d29ec15"
-    },
-    {
-     "name": "Heupflexor rek – staand met steun",
-     "exerciseId": "fp_d6b2b579127ac459",
-     "coreExerciseId": "fc_d252ac90054d7c66"
     },
     {
      "name": "Piriformis rek – liggend ondersteund",
