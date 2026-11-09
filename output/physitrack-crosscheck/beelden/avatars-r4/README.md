@@ -23,3 +23,9 @@ vast en trek hem rustig naar je borst tot je een rek voelt in je bil en onderrug
 ## Kosten
 2 avatars x 5 credits = 10; met maximaal één herkansing per avatar maximaal 20 credits. Saldo nu 740.
 Akkoordzin: "Ja runway-runs voor 2 avatars mogen, maximaal 20 credits"
+
+## Resultaat (akkoord Ahmed 08:08, max 20 credits)
+Saldo 740 -> 730 (10 credits, geen herkansing nodig). Contactvel: _contactvel-avatars-r4.png (lijntekening | oude avatar | nieuw).
+- 43 Wrist extension: ok. Zittend aan tafel, onderarm blijft in begin en eind plat op tafel (andere hand houdt hem vast), handpalm omlaag, alleen de pols buigt omhoog.
+- 92 Knee elbow: ok. Begin: benen in tafelhouding, handen achter het hoofd, hoofd en schouders opgekruld. Eind: één been gestrekt, andere knie naar de borst, romp gedraaid met elleboog naar die knie.
+Niets in public/.
