@@ -48,6 +48,7 @@ jobs:
       - run: node scripts/test-dossier-contact.mjs
       - run: node scripts/test-wees-opnames.mjs
       - run: node scripts/test-proef-einde-wissen.mjs
+      - run: node scripts/test-juridisch-b1.mjs
       - run: npm run test:kaartversie
       - run: npm run test:hernoem
       - run: npm run test:topbar
