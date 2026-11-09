@@ -1,15 +1,15 @@
 {
  "scope": "Basiscatalogus in de repository (public/oefeningen-v2.json). Runtime-overrides op de server niet meegeteld; die gaan altijd voor.",
  "inputs": {
-  "public/oefeningen-v2.json": "46195ccf54f10c61",
-  "public/mobile-media-review.json": "88af9d02ea7e4aae",
-  "public/mobile-narration-review.json": "ba07a12ad0824544",
+  "public/oefeningen-v2.json": "d30045d69f122be1",
+  "public/mobile-media-review.json": "059cf263deb51668",
+  "public/mobile-narration-review.json": "615df3c8d44d3d52",
   "public/index.html": "785ba562286c5cf7",
-  "content/category-secondary-evidence.json": "a6a87d35c8ee16b1"
+  "content/category-secondary-evidence.json": "1877ac95d64b6a66"
  },
  "totals": {
-  "records": 669,
-  "available": 516,
+  "records": 695,
+  "available": 542,
   "withoutAsset": 153,
   "withSecondary": 246,
   "secondaryLabels": 315,
@@ -38,7 +38,7 @@
   {
    "category": "Onderste extremiteit",
    "missingAssets": 80,
-   "availableIncludingSecondary": 150,
+   "availableIncludingSecondary": 165,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
@@ -576,13 +576,13 @@
    "storedLabels": [
     "Onderste extremiteit"
    ],
-   "records": 230,
-   "primary": 126,
-   "primaryAvailable": 46,
+   "records": 245,
+   "primary": 141,
+   "primaryAvailable": 61,
    "secondary": 104,
    "secondaryAvailable": 104,
-   "available": 150,
-   "availableClean": 149,
+   "available": 165,
+   "availableClean": 164,
    "mediaRejected": 1,
    "explanationHeld": 0,
    "missingAssets": [
@@ -1148,7 +1148,7 @@
     "Rug bol en hol – op handen en knieën",
     "Rug bol en hol – zittend",
     "Rug bol en hol – staand",
-    "Rug bol en hol – met lichte weerstand",
+    "Rug bol en hol – op de adem",
     "Romp draaien – liggend",
     "Romp draaien – op handen en knieën",
     "Romp draaien – zittend",
@@ -1374,13 +1374,13 @@
    "storedLabels": [
     "Neurologische revalidatie"
    ],
-   "records": 15,
-   "primary": 15,
-   "primaryAvailable": 15,
+   "records": 26,
+   "primary": 26,
+   "primaryAvailable": 26,
    "secondary": 0,
    "secondaryAvailable": 0,
-   "available": 15,
-   "availableClean": 15,
+   "available": 26,
+   "availableClean": 26,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [],

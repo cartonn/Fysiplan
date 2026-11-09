@@ -6809,5 +6809,187 @@
   "img": "images/onderste-extremiteit/voeten-buiten-binnen-rollen-elastiek-line-v1.png",
   "uitleg": "Zit op een stoel met je voeten plat op de grond en een elastiek in een lus om je beide voorvoeten. Zet je voeten iets uit elkaar zodat het elastiek strak staat. Rol je voeten naar de buitenranden, zodat je voetbogen omhoog komen en je tenen de grond vasthouden, en rol daarna rustig terug.",
   "kaartImg": "images/onderste-extremiteit/voeten-buiten-binnen-rollen-elastiek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Hamstring rekken – staand met hiel vooruit",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/hamstring-rekken-staand-line-v1.png",
+  "uitleg": "Zet je ene voet een halve stap naar voren op je hiel, met je tenen omhoog en die knie gestrekt; je achterste knie buig je licht. Houd je rug lang en duw je billen naar achteren, zodat je vanuit je heupen voorover kantelt tot je rek voelt achter in je voorste bovenbeen. Houd vast en kom rustig weer rechtop.",
+  "kaartImg": "images/onderste-extremiteit/hamstring-rekken-staand-avatar-v8.jpg"
+ },
+ {
+  "naam": "Knie buigen – zittend met hulp van het andere been",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/knie-buigen-zittend-met-hulp-line-v1.png",
+  "uitleg": "Zit rechtop op een stoel en schuif je voet zo ver mogelijk naar achteren onder de stoel, zodat je knie buigt. Haak je andere enkel vóór je onderbeen en duw daarmee je voet nog een stukje verder naar achteren. Houd dit even vast en ontspan.",
+  "kaartImg": "images/onderste-extremiteit/knie-buigen-zittend-met-hulp-avatar-v8.jpg"
+ },
+ {
+  "naam": "Been heffen met voet naar buiten – half liggend op de ellebogen",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/been-heffen-voet-buiten-half-liggend-line-v1.png",
+  "uitleg": "Lig op je rug en steun op je ellebogen, met je ene knie gebogen en de voet plat. Draai je gestrekte been zo dat je tenen schuin naar buiten wijzen, span je bovenbeen aan en til het been een stukje op tot ongeveer de hoogte van je andere knie. Laat het rustig zakken, ontspan en draai je been terug.",
+  "kaartImg": "images/onderste-extremiteit/been-heffen-voet-buiten-half-liggend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Hoppen in vier richtingen – op één been",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/hoppen-vier-richtingen-een-been-line-v1.png",
+  "uitleg": "Sta op één been met je knie licht gebogen. Hop een klein stukje naar voren en land zacht op hetzelfde been: eerst de bal van je voet, dan je hiel, en vang de landing op met een gebogen knie. Hop daarna terug, en daarna op dezelfde manier naar opzij en weer terug.",
+  "kaartImg": "images/onderste-extremiteit/hoppen-vier-richtingen-een-been-avatar-v8.jpg"
+ },
+ {
+  "naam": "Brug op de tenen – ruglig",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/brug-op-tenen-ruglig-line-v1.png",
+  "uitleg": "Lig op je rug met je knieën gebogen en je voeten plat op de mat. Duw je billen omhoog tot je een rechte lijn vormt van schouders tot knieën en kom daarna ook op je tenen door je hielen op te tillen. Houd kort vast, zet je hielen neer en laat je billen rustig zakken.",
+  "kaartImg": "images/onderste-extremiteit/brug-op-tenen-ruglig-avatar-v8.jpg"
+ },
+ {
+  "naam": "Eenbeenstand – ogen dicht",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/eenbeenstand-ogen-dicht-line-v1.png",
+  "uitleg": "Sta rechtop en verplaats je gewicht naar je ene been. Til je andere voet op door je knie te buigen en gebruik je armen voor je evenwicht. Sluit je ogen en houd deze houding vast; open je ogen en zet je voet weer neer.",
+  "kaartImg": "images/onderste-extremiteit/eenbeenstand-ogen-dicht-avatar-v8.jpg"
+ },
+ {
+  "naam": "Hiel tikken – ruglig met benen in de lucht",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/hiel-tikken-ruglig-line-v1.png",
+  "uitleg": "Lig op je rug met je handen op je buik en span je buikspieren aan. Til je benen één voor één op tot je heupen en knieën in een rechte hoek staan. Laat één hiel rustig zakken tot hij de grond raakt en breng hem terug; wissel af en houd je onderrug rustig op de mat.",
+  "kaartImg": "images/onderste-extremiteit/hiel-tikken-ruglig-avatar-v8.jpg"
+ },
+ {
+  "naam": "Hamstring en kuit rekken – ruglig met band",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/hamstring-kuit-rekken-ruglig-band-line-v1.png",
+  "uitleg": "Lig op je rug en leg een band om de bal van je voet. Breng dat been gestrekt omhoog en trek met de band je voet en tenen rustig naar je toe, tot je rek voelt in je kuit en achter je bovenbeen. Houd vast en ontspan.",
+  "kaartImg": "images/onderste-extremiteit/hamstring-kuit-rekken-ruglig-band-avatar-v8.jpg"
+ },
+ {
+  "naam": "Hoppen op de plaats – op één been",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/hoppen-op-plaats-een-been-line-v1.png",
+  "uitleg": "Sta op één been met je knie licht gebogen. Spring een klein stukje recht omhoog en land zo zacht mogelijk: eerst de bal van je voet, dan je hiel, en buig daarna pas je knie om de landing op te vangen.",
+  "kaartImg": "images/onderste-extremiteit/hoppen-op-plaats-een-been-avatar-v8.jpg"
+ },
+ {
+  "naam": "Knie strekken – been op een stoel",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/knie-strekken-been-op-stoel-line-v1.png",
+  "uitleg": "Zit rechtop op een stoel en leg je been gestrekt op een tweede stoel tegenover je, met alleen je hiel op de zitting zodat je knie vrij hangt. Laat je knie ontspannen richting gestrekt zakken en blijf zo een paar minuten zitten, met ontspannen tenen. Haal je been daarna voorzichtig van de stoel.",
+  "kaartImg": "images/onderste-extremiteit/knie-strekken-been-op-stoel-avatar-v8.jpg"
+ },
+ {
+  "naam": "Voorkant bovenbeen rekken – buiklig met band",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/bovenbeen-voorkant-rekken-buiklig-band-line-v1.png",
+  "uitleg": "Lig op je buik met een band om je enkel en houd de uiteinden over je schouder vast. Buig je knie en trek met de band je hiel richting je bil, tot je rek voelt aan de voorkant van je bovenbeen. Houd vast en laat de band een beetje vieren zonder je been helemaal te laten zakken.",
+  "kaartImg": "images/onderste-extremiteit/bovenbeen-voorkant-rekken-buiklig-band-avatar-v8.jpg"
+ },
+ {
+  "naam": "Vooruit en achteruit springen – twee benen",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/vooruit-achteruit-springen-line-v1.png",
+  "uitleg": "Sta met je voeten naast elkaar en je knieën licht gebogen. Spring met beide benen een stukje naar voren en land zacht op de bal van je voeten in een lichte squat. Spring daarna terug naar je beginplek en land weer gecontroleerd.",
+  "kaartImg": "images/onderste-extremiteit/vooruit-achteruit-springen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Zenuw glijden been – ruglig",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/zenuw-glijden-been-ruglig-line-v1.png",
+  "uitleg": "Lig op je rug, trek je ene knie op en vouw je handen achter je bovenbeen. Strek rustig je knie tot je lichte spanning in je been voelt en ga niet verder. Laat dan je voet iets zakken terwijl je je kin naar je borst brengt, en til je voet weer op terwijl je je hoofd laat zakken, in één vloeiende beweging.",
+  "kaartImg": "images/onderste-extremiteit/zenuw-glijden-been-ruglig-avatar-v8.jpg"
+ },
+ {
+  "naam": "Knie langzaam strekken – buiklig met hulp",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/knie-langzaam-strekken-buiklig-met-hulp-line-v1.png",
+  "uitleg": "Lig op je buik met je benen gestrekt. Haak je goede enkel onder die van je andere been en buig samen je knieën tot je hiel bij je bil is. Haal je goede been weg en laat je andere onderbeen heel langzaam alleen terugzakken naar de mat.",
+  "kaartImg": "images/onderste-extremiteit/knie-langzaam-strekken-buiklig-met-hulp-avatar-v8.jpg"
+ },
+ {
+  "naam": "Uitvalspas met elastiek opzij – knie recht houden",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/uitvalspas-elastiek-opzij-line-v1.png",
+  "uitleg": "Maak een elastiek aan de kant van je goede been vast en leg de lus om je andere knie, zodat het elastiek die knie naar binnen trekt. Stap met dat been een grote pas naar voren en zak in een uitvalspas, terwijl je je knie tegen het elastiek in recht boven je voet houdt. Duw je weer terug.",
+  "kaartImg": "images/onderste-extremiteit/uitvalspas-elastiek-opzij-avatar-v8.jpg"
+ },
+ {
+  "naam": "Nek isometrisch – voor, achter en opzij",
+  "groep": "Neurologische revalidatie",
+  "img": "images/neurologische-revalidatie/nek-isometrisch-voor-achter-opzij-line-v1.png",
+  "uitleg": "Zit rechtop en leg je handpalm tegen je voorhoofd. Duw je hoofd zacht tegen je hand zonder dat het beweegt en houd een paar tellen vast. Doe hetzelfde met je hand tegen je achterhoofd en daarna tegen de zijkant van je hoofd, links en rechts.",
+  "kaartImg": "images/neurologische-revalidatie/nek-isometrisch-voor-achter-opzij-avatar-v8.jpg"
+ },
+ {
+  "naam": "Achtjes lopen om twee pionnen",
+  "groep": "Neurologische revalidatie",
+  "img": "images/neurologische-revalidatie/achtjes-lopen-pionnen-line-v1.png",
+  "uitleg": "Zet twee pionnen of flessen een paar meter uit elkaar op de vloer. Loop rustig in een achtje om beide pionnen heen. Gaat het goed, loop dan iets sneller of draai de richting om.",
+  "kaartImg": "images/neurologische-revalidatie/achtjes-lopen-pionnen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Bal opgooien en nakijken – staand",
+  "groep": "Neurologische revalidatie",
+  "img": "images/neurologische-revalidatie/bal-opgooien-nakijken-staand-line-v1.png",
+  "uitleg": "Sta rechtop met een bal in beide handen voor je borst. Gooi de bal recht omhoog, kijk hem na en vang hem weer. Houd je ogen steeds op de bal; gaat het goed, gooi dan wat hoger of sneller.",
+  "kaartImg": "images/neurologische-revalidatie/bal-opgooien-nakijken-staand-avatar-v8.jpg"
+ },
+ {
+  "naam": "Bal van hand naar hand gooien – zittend",
+  "groep": "Neurologische revalidatie",
+  "img": "images/neurologische-revalidatie/bal-hand-naar-hand-zittend-line-v1.png",
+  "uitleg": "Zit rechtop met je voeten plat op de grond en een bal in je ene hand. Gooi de bal in een boogje naar je andere hand en volg hem met je ogen en hoofd. Wacht tussen het gooien tot eventuele duizeligheid zakt.",
+  "kaartImg": "images/neurologische-revalidatie/bal-hand-naar-hand-zittend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Draaiende paraplu volgen – staand",
+  "groep": "Neurologische revalidatie",
+  "img": "images/neurologische-revalidatie/paraplu-draaien-staand-line-v1.png",
+  "uitleg": "Sta rechtop en houd een open paraplu met een duidelijk patroon voor je, met de binnenkant naar je toe. Draai de steel rustig rond tussen je handen en blijf naar het draaiende patroon kijken. Bouw de tijd langzaam op.",
+  "kaartImg": "images/neurologische-revalidatie/paraplu-draaien-staand-avatar-v8.jpg"
+ },
+ {
+  "naam": "Nek isometrisch buigen – hand op voorhoofd",
+  "groep": "Neurologische revalidatie",
+  "img": "images/neurologische-revalidatie/nek-isometrisch-buigen-voorhoofd-line-v1.png",
+  "uitleg": "Zit rechtop op een stoel en leg je handpalm tegen je voorhoofd. Duw je hoofd zacht naar voren tegen je hand, zonder dat je hoofd beweegt. Houd een paar tellen vast en ontspan.",
+  "kaartImg": "images/neurologische-revalidatie/nek-isometrisch-buigen-voorhoofd-avatar-v8.jpg"
+ },
+ {
+  "naam": "Ogen heen en weer – ruglig",
+  "groep": "Neurologische revalidatie",
+  "img": "images/neurologische-revalidatie/ogen-heen-en-weer-ruglig-line-v1.png",
+  "uitleg": "Lig op je rug met je armen ontspannen langs je lichaam. Houd je hoofd stil en kijk met alleen je ogen zo ver mogelijk naar links en daarna naar rechts. Bouw de snelheid rustig op.",
+  "kaartImg": "images/neurologische-revalidatie/ogen-heen-en-weer-ruglig-avatar-v8.jpg"
+ },
+ {
+  "naam": "Voeten samen op balansmat – hoofd op en neer",
+  "groep": "Neurologische revalidatie",
+  "img": "images/neurologische-revalidatie/voeten-samen-balansmat-hoofd-op-neer-line-v1.png",
+  "uitleg": "Sta met je voeten tegen elkaar op een balansmat en kijk naar een vast punt op de muur voor je. Beweeg je hoofd rustig op en neer terwijl je ogen op het punt gericht blijven. Houd ondertussen je evenwicht.",
+  "kaartImg": "images/neurologische-revalidatie/voeten-samen-balansmat-hoofd-op-neer-avatar-v8.jpg"
+ },
+ {
+  "naam": "Bukken en oprichten – zittend",
+  "groep": "Neurologische revalidatie",
+  "img": "images/neurologische-revalidatie/bukken-oprichten-zittend-line-v1.png",
+  "uitleg": "Zit rechtop op een stoel met een voorwerp voor je voeten op de grond. Buig naar voren, pak het voorwerp op en kom weer rechtop zitten. Wacht tot eventuele duizeligheid zakt en zet het daarna op dezelfde manier terug.",
+  "kaartImg": "images/neurologische-revalidatie/bukken-oprichten-zittend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Doel volgen verticaal – zittend",
+  "groep": "Neurologische revalidatie",
+  "img": "images/neurologische-revalidatie/doel-volgen-verticaal-zittend-line-v1.png",
+  "uitleg": "Zit rechtop op een stevige stoel en houd je duim voor je uit. Beweeg je duim langzaam op en neer en volg hem met je ogen, terwijl je hoofd stil blijft. Neem rust als je duizelig wordt.",
+  "kaartImg": "images/neurologische-revalidatie/doel-volgen-verticaal-zittend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Duim naar de neus – ruglig",
+  "groep": "Neurologische revalidatie",
+  "img": "images/neurologische-revalidatie/duim-naar-neus-ruglig-line-v1.png",
+  "uitleg": "Lig ontspannen op je rug en houd je arm gestrekt boven je gezicht met je duim omhoog. Breng je duim langzaam naar je neus en weer terug, en houd de duim steeds scherp in beeld.",
+  "kaartImg": "images/neurologische-revalidatie/duim-naar-neus-ruglig-avatar-v8.jpg"
  }
 ]
