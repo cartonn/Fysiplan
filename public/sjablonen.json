@@ -1966,6 +1966,21 @@
     "n": "Chair squat",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Quadriceps aanspannen – liggend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Knie buigen – liggend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Straight leg raise – liggend",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2007,6 +2022,11 @@
    },
    {
     "n": "Lunges",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Straight leg raise – liggend",
     "s": "3",
     "h": "10"
    }
@@ -2075,6 +2095,16 @@
     "n": "Fiets",
     "s": "1",
     "h": "15 min"
+   },
+   {
+    "n": "Terminal knee extension – met elastiek",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Kuitrek gestrekte knie – staand met steun",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2126,6 +2156,16 @@
    },
    {
     "n": "Hiel tikken – ruglig met benen in de lucht",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Brug – afwisselend knie optillen",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Clamshell – zijlig",
     "s": "3",
     "h": "10"
    }
@@ -2332,6 +2372,26 @@
     "n": "Chair squat",
     "s": "3",
     "h": "10 × 3 sec"
+   },
+   {
+    "n": "Knie buigen – zittend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Knie buigen – liggend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Knie buigen – staand met steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Clamshell – met elastiek",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2407,6 +2467,16 @@
     "n": "Brug op de tenen – ruglig",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Knie strekken – liggend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Terminal knee extension – met elastiek",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2450,6 +2520,11 @@
     "n": "Chair squat",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Heup zijwaarts heffen – met elastiek",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2491,6 +2566,11 @@
    },
    {
     "n": "Hinkelen in een X-patroon",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Heup zijwaarts heffen – met elastiek",
     "s": "3",
     "h": "10"
    }
@@ -2540,6 +2620,11 @@
    },
    {
     "n": "Hamstring rekken – staand met hiel vooruit",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Terminal knee extension – met elastiek",
     "s": "3",
     "h": "10"
    }
@@ -2607,6 +2692,11 @@
     "n": "Kettlebell swing",
     "s": "1",
     "h": "1"
+   },
+   {
+    "n": "Hamstring curl – liggend",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2635,6 +2725,16 @@
     "n": "Eenbeenstand – zonder steun",
     "s": "3",
     "h": "3 × 20 sec"
+   },
+   {
+    "n": "Knie strekken – liggend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Mini-squat – met elastiek",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2663,6 +2763,11 @@
     "n": "Eenbeenstand – zonder steun",
     "s": "3",
     "h": "4 × 20 sec"
+   },
+   {
+    "n": "Zijwaarts opstappen op een step",
+    "s": "3",
+    "h": "30 sec"
    }
   ]
  },
@@ -2725,6 +2830,21 @@
    },
    {
     "n": "Knie naar voren over voet – met elastiek om de enkel",
+    "s": "3",
+    "h": "12"
+   },
+   {
+    "n": "Voet naar binnen – met elastiek",
+    "s": "3",
+    "h": "12"
+   },
+   {
+    "n": "Kuitheffing – op één been",
+    "s": "3",
+    "h": "12"
+   },
+   {
+    "n": "Kuitrek gestrekte knie – op een verhoging",
     "s": "3",
     "h": "12"
    }
@@ -2866,6 +2986,16 @@
     "n": "Eenbeenstand – zonder steun",
     "s": "3",
     "h": "5 × 20 sec"
+   },
+   {
+    "n": "Knie buigen – zittend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Quadriceps aanspannen – liggend",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -3214,6 +3344,11 @@
    },
    {
     "n": "Armen naar voren schuiven over de tafel",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Kuitrek gestrekte knie – staand met steun",
     "s": "3",
     "h": "10"
    }
@@ -3782,6 +3917,16 @@
    {
     "n": "Achterwaarts stappen – zonder steun",
     "s": "5",
+    "h": "30 sec"
+   },
+   {
+    "n": "Kuitrek gestrekte knie – staand met steun",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Kuitrek gebogen knie – staand met steun",
+    "s": "3",
     "h": "30 sec"
    }
   ]
@@ -4518,7 +4663,8 @@
    "Onderarm naar buiten draaien in ruglig – met hulp (na operatie)",
    "Schouder naar buiten draaien – isometrisch tegen de muur",
    "Schouderblad naar achteren – actief",
-   "Seated shoulder roll"
+   "Seated shoulder roll",
+   "Schouder naar binnen draaien – isometrisch tegen de muur"
   ],
   "dosering": {
    "s": "2",
@@ -4574,7 +4720,8 @@
    "Swiss ball plank",
    "Schouderbladen laten zakken en duwen – handen en knieën",
    "Arm voorwaarts laten zakken – met stok (excentrisch)",
-   "Arm zijwaarts laten zakken – met stok (excentrisch)"
+   "Arm zijwaarts laten zakken – met stok (excentrisch)",
+   "Schouder naar binnen draaien – met elastiek"
   ],
   "dosering": {
    "s": "3",
@@ -4610,7 +4757,8 @@
    "Schouder naar buiten draaien met stok – ruglig",
    "Sleeper stretch – zijlig",
    "Armen naar voren schuiven over de tafel",
-   "Vingers langs de muur omhoog lopen"
+   "Vingers langs de muur omhoog lopen",
+   "Schouder zijwaarts heffen – actief"
   ],
   "dosering": {
    "s": "2",
@@ -4644,7 +4792,9 @@
    "Schouder naar buiten draaien in 90 graden – met elastiek",
    "Arm voorwaarts laten zakken – met stok (excentrisch)",
    "Arm zijwaarts laten zakken – met stok (excentrisch)",
-   "Arm schuin omlaag trekken – met elastiek"
+   "Arm schuin omlaag trekken – met elastiek",
+   "Schouder naar binnen draaien – met elastiek",
+   "Schouderblad omhoog draaien – met elastiek"
   ],
   "dosering": {
    "s": "3",
@@ -4677,7 +4827,8 @@
    "Arm schuin omhoog trekken – met elastiek",
    "Military press",
    "Arm zijwaarts laten zakken – met stok (excentrisch)",
-   "Arm voorwaarts laten zakken – met stok (excentrisch)"
+   "Arm voorwaarts laten zakken – met stok (excentrisch)",
+   "Schouder naar binnen draaien – met elastiek"
   ],
   "dosering": {
    "s": "3",
@@ -4692,7 +4843,8 @@
   "oefeningen": [
    "Schouder naar buiten draaien – isometrisch tegen de muur",
    "Schouder naar buiten draaien – zijlig",
-   "Schouderblad naar achteren – actief"
+   "Schouderblad naar achteren – actief",
+   "Schouder naar buiten draaien – actief"
   ],
   "dosering": {
    "s": "3",
@@ -4708,7 +4860,8 @@
    "Schouder naar buiten draaien in 90 graden – met elastiek",
    "Arm schuin omhoog trekken – met elastiek",
    "Arm zijwaarts laten zakken – met stok (excentrisch)",
-   "Arm voorwaarts laten zakken – met stok (excentrisch)"
+   "Arm voorwaarts laten zakken – met stok (excentrisch)",
+   "Schouder naar binnen draaien – met elastiek"
   ],
   "dosering": {
    "s": "3",
@@ -4819,7 +4972,8 @@
   "oefeningen": [
    "Eenbeenstand – zonder steun",
    "Enkel alfabet schrijven – zittend",
-   "Hinkelen in een X-patroon"
+   "Hinkelen in een X-patroon",
+   "Kuitheffing – op één been"
   ],
   "dosering": {
    "s": "3",
@@ -4849,7 +5003,11 @@
   "oefeningen": [
    "Standing chair calfs raises",
    "Op je tenen lopen",
-   "Eenbeenstand – zonder steun"
+   "Eenbeenstand – zonder steun",
+   "Voet naar binnen – met elastiek",
+   "Voet naar buiten – met elastiek",
+   "Kuitheffing – op één been",
+   "Hoppen op de plaats – op één been"
   ],
   "dosering": {
    "s": "3",
@@ -4866,7 +5024,10 @@
    "Standing chair calfs raises",
    "Voet naar binnen en omlaag – met elastiek, been over de knie",
    "Tandemstand – zonder steun",
-   "Eenbeenstand – zonder steun"
+   "Eenbeenstand – zonder steun",
+   "Kuitrek gestrekte knie – op een verhoging",
+   "Kuitrek gebogen knie – op een verhoging",
+   "Voet naar buiten – met elastiek"
   ],
   "dosering": {
    "s": "3",
@@ -4880,7 +5041,9 @@
   "oefeningen": [
    "Voetzool rekken – tenen naar je toe trekken",
    "Voetzool rollen – over een koude fles",
-   "Voetzool rekken – tenen tegen de muur"
+   "Voetzool rekken – tenen tegen de muur",
+   "Kuitrek gestrekte knie – op een verhoging",
+   "Kuitrek gebogen knie – op een verhoging"
   ],
   "dosering": {
    "s": "3",
@@ -4910,7 +5073,9 @@
    "Huppelen op de voorvoeten – gestrekte knieën",
    "Op je tenen lopen",
    "Eenbeenstand – been zijwaarts zwaaien",
-   "Balans op 1 been"
+   "Balans op 1 been",
+   "Renhouding op één been",
+   "Kuitheffing – op een verhoging"
   ],
   "dosering": {
    "s": "3",
@@ -4927,7 +5092,9 @@
    "Op je tenen lopen",
    "Balans op 1 been",
    "Huppelen op de voorvoeten – gestrekte knieën",
-   "Eenbeenstand – been zijwaarts zwaaien"
+   "Eenbeenstand – been zijwaarts zwaaien",
+   "Kuitheffing – op een verhoging",
+   "Renhouding op één been"
   ],
   "dosering": {
    "s": "3",
@@ -4958,7 +5125,9 @@
    "Knie buigen – zittend met hulp van het andere been",
    "Knie strekken – been op een stoel",
    "Seated hamstring stretch",
-   "Glute bridges"
+   "Glute bridges",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Straight leg raise – liggend"
   ],
   "dosering": {
    "s": "2",
@@ -4989,7 +5158,9 @@
    "Knie strekken – been op een stoel",
    "Swiss ball wall squat",
    "Glute bridges",
-   "Hamstring rekken – staand met hiel vooruit"
+   "Hamstring rekken – staand met hiel vooruit",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Terminal knee extension – met elastiek"
   ],
   "dosering": {
    "s": "3",
@@ -5003,7 +5174,8 @@
   "oefeningen": [
    "Glute bridges",
    "Voorkant bovenbeen rekken – buiklig met band",
-   "Been heffen met voet naar buiten – half liggend op de ellebogen"
+   "Been heffen met voet naar buiten – half liggend op de ellebogen",
+   "Quadriceps aanspannen – liggend"
   ],
   "dosering": {
    "s": "3",
@@ -5018,7 +5190,8 @@
   "oefeningen": [
    "Been heffen met voet naar buiten – half liggend op de ellebogen",
    "Foam roller glute med.",
-   "Quadriceps stretch"
+   "Quadriceps stretch",
+   "Terminal knee extension – met elastiek"
   ],
   "dosering": {
    "s": "3",
@@ -5092,7 +5265,8 @@
   "oefeningen": [
    "Foam roller hamstring",
    "Hamstring en kuit rekken – ruglig met band",
-   "Yoga pigeon"
+   "Yoga pigeon",
+   "Straight leg raise – liggend"
   ],
   "dosering": {
    "s": "3",
@@ -5122,7 +5296,8 @@
   "oefeningen": [
    "Knie buigen – zittend met hulp van het andere been",
    "Seated leg extension",
-   "Glute bridges"
+   "Glute bridges",
+   "Kuitrek gestrekte knie – staand met steun"
   ],
   "dosering": {
    "s": "2",
@@ -5138,7 +5313,8 @@
    "Seated ankle rotations",
    "Been heffen met voet naar buiten – half liggend op de ellebogen",
    "Glute bridges",
-   "Knie buigen – zittend met hulp van het andere been"
+   "Knie buigen – zittend met hulp van het andere been",
+   "Knie buigen – liggend"
   ],
   "dosering": {
    "s": "2",
@@ -5600,6 +5776,254 @@
   ],
   "dosering": {
    "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Enkel na acuut letsel fase 2",
+  "sub": "De enkel weer belasten en de eerste kracht terugwinnen na een blessure.",
+  "categorie": "Enkel en voet",
+  "fase": 2,
+  "oefeningen": [
+   "Enkel alfabet schrijven – zittend",
+   "Enkel optrekken – zittend actief",
+   "Enkel wegduwen – zittend actief",
+   "Kuitheffing – op een verhoging",
+   "Eenbeenstand – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  }
+ },
+ {
+  "naam": "Enkelverstuiking fase 1",
+  "sub": "Na een verzwikte enkel: bewegen in alle richtingen, kuit rekken en de eerste balans.",
+  "categorie": "Enkel en voet",
+  "fase": 1,
+  "oefeningen": [
+   "Voet naar buiten – zittend actief",
+   "Enkel wegduwen – zittend actief",
+   "Enkel optrekken – zittend actief",
+   "Eenbeenstand – zonder steun",
+   "Kuitrek gestrekte knie – staand met steun"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Voetbreuk",
+  "sub": "Kuit en enkel soepel en sterk maken na een breuk in de voet.",
+  "categorie": "Enkel en voet",
+  "oefeningen": [
+   "Eenbeenstand – met hoofdbeweging",
+   "Kuitrek gebogen knie – staand met steun",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Voet naar buiten – met elastiek",
+   "Voet naar binnen – met elastiek",
+   "Kuitheffing – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  }
+ },
+ {
+  "naam": "Achillespees fase 2-3",
+  "sub": "Kuitkracht opbouwen bij achillespeesklachten met kuitheffingen op twee benen en op één been.",
+  "categorie": "Enkel en voet",
+  "fase": 2,
+  "oefeningen": [
+   "Kuitheffing – op een verhoging",
+   "Kuitheffing – op één been",
+   "Seated calfs raises"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "15"
+  }
+ },
+ {
+  "naam": "Achillespees fase 4",
+  "sub": "Zware kuitbelasting voor de achillespees, met langzaam laten zakken op een verhoging.",
+  "categorie": "Enkel en voet",
+  "fase": 4,
+  "oefeningen": [
+   "Kuit laten zakken op een verhoging – excentrisch",
+   "Kuitheffing – op een verhoging",
+   "Kuitheffing – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "15"
+  }
+ },
+ {
+  "naam": "Enkelartrose",
+  "sub": "De enkel soepel en de kuit sterk houden bij slijtage van het enkelgewricht.",
+  "categorie": "Enkel en voet",
+  "oefeningen": [
+   "Seated ankle rotations",
+   "Voet naar binnen – met elastiek",
+   "Kuitrek gestrekte knie – staand met steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  }
+ },
+ {
+  "naam": "Kind: hielpijn in de groei",
+  "sub": "Kuit rekken en rustig versterken voor kinderen met hielpijn tijdens de groei.",
+  "categorie": "Enkel en voet",
+  "oefeningen": [
+   "Kuitrek gestrekte knie – staand met steun",
+   "Kuitrek gebogen knie – staand met steun",
+   "Kuitheffing – op een verhoging"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Knie: knieschijf loopt niet goed fase 2",
+  "sub": "Kracht van bovenbeen en heup opbouwen voor een knieschijf die beter spoort.",
+  "categorie": "Knie",
+  "fase": 2,
+  "oefeningen": [
+   "Glute bridges",
+   "Mini-squat – met elastiek",
+   "Clamshell – zijlig",
+   "Foam roller quadriceps"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: pijn voor de knie fase 1",
+  "sub": "Pijn aan de voorkant van de knie: losmaken, rekken en de knie leren uitstrekken tegen elastiek.",
+  "categorie": "Knie",
+  "fase": 1,
+  "oefeningen": [
+   "Foam roller glute med.",
+   "Quadriceps stretch",
+   "Terminal knee extension – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: pijn voor de knie fase 2",
+  "sub": "Heup- en bovenbeenkracht opbouwen bij pijn aan de voorkant van de knie.",
+  "categorie": "Knie",
+  "fase": 2,
+  "oefeningen": [
+   "Glute bridges",
+   "Mini-squat – met elastiek",
+   "Clamshell – zijlig",
+   "Foam roller quadriceps"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: pijn voor de knie voorkomen",
+  "sub": "Bovenbeen en heup sterk en soepel houden om pijn aan de voorkant van de knie te voorkomen.",
+  "categorie": "Knie",
+  "oefeningen": [
+   "Quadriceps stretch",
+   "Quadriceps aanspannen – liggend",
+   "Terminal knee extension – met elastiek",
+   "Brug – met bal tussen de knieën",
+   "Mini-squat – met elastiek",
+   "Foam roller tractus"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: patellapeesklachten fase 1",
+  "sub": "Prikkelbare kniepees: het bovenbeen losmaken en licht aanspannen zonder de pees te overbelasten.",
+  "categorie": "Knie",
+  "fase": 1,
+  "oefeningen": [
+   "Foam roller quadriceps",
+   "Terminal knee extension – met elastiek",
+   "Straight leg raise – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: hamstringklachten fase 3",
+  "sub": "Krachttraining voor de hamstrings met bal, elastiek en liggend buigen.",
+  "categorie": "Knie",
+  "fase": 3,
+  "oefeningen": [
+   "Swiss ball leg curl hip raise",
+   "Seated band leg curl",
+   "Hamstring curl – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: knieprothese fase 1",
+  "sub": "Eerste dagen na een knieprothese: de enkel bewegen, de knie buigen en het been gestrekt heffen.",
+  "categorie": "Knie",
+  "fase": 1,
+  "oefeningen": [
+   "Seated ankle rotations",
+   "Straight leg raise – liggend",
+   "Knie buigen – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Knie: meniscus na operatie",
+  "sub": "Na een meniscusoperatie de knie weer buigen en het bovenbeen sterker maken.",
+  "categorie": "Knie",
+  "oefeningen": [
+   "Knie buigen – liggend",
+   "Quadriceps aanspannen – liggend",
+   "Swiss ball wall squat"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Rotator cuff fase 2",
+  "sub": "De rotator cuff sterker maken met elastiek en oefeningen voor de schouderbladen.",
+  "categorie": "Schouder",
+  "fase": 2,
+  "oefeningen": [
+   "Horizontaal openen – met elastiek",
+   "Exo pull",
+   "Schouder naar buiten draaien – arm zijwaarts op tafel",
+   "Schouder naar binnen draaien – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
    "h": "10"
   }
  }
