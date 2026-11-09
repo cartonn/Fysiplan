@@ -71,7 +71,7 @@ for (const s of specs.filter((s) => (only.length ? only.includes(s.slug) : !exis
   try {
     const task = await rw.textToImage.create({
       model: "gpt_image_2",
-      promptText: cmd === "lijn" ? `${LIJN} ${s.pose_en}${s.zoom ? ZOOM_L : ""}${process.env.EXTRA ? " " + process.env.EXTRA : ""}` : `${s.static ? STATIC_A(AVATAR) : AVATAR} ${s.eind_en}${s.zoom ? ZOOM_A : ""}${process.env.EXTRA ? " " + process.env.EXTRA : ""}`,
+      promptText: cmd === "lijn" ? `${LIJN} ${s.pose_en}${s.zoom ? ZOOM_L : ""}${process.env.EXTRA ? " " + process.env.EXTRA : ""}` : `${s.static ? STATIC_A(AVATAR) : AVATAR} ${s.eind_en}${s.extra_avatar ? " IMPORTANT: " + s.extra_avatar : s.zoom ? ZOOM_A : ""}${process.env.EXTRA ? " " + process.env.EXTRA : ""}`,
       referenceImages: cmd === "lijn" ? [{ uri: await uri(join(main, "public/images/beginhouding-pijl-v1", `${s.ref}.webp`)) }] : [{ uri: await uri(lijn) }, { uri: await uri(join(main, AV[s.ref])) }],
       ratio: "1280:1920", quality: "medium", background: "opaque", outputCount: 1,
     }).waitForTaskOutput({ timeout: 10 * 60_000 });

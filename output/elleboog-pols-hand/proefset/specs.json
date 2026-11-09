@@ -29,7 +29,8 @@
   "ref": "287",
   "pose_en": "She sits on a chair at a table, seen from the FRONT and slightly from above so the whole table top is visible. Her ENTIRE right forearm and right hand lie flat ON the table top, pointing straight forward away from her body (forearm parallel to the table edge's perpendicular), palm down, wrist straight, fingers together; the hand does NOT hang over any edge. Her right hand appears on the LEFT side of the image; its thumb points toward the middle of her body. The arrow is a short curved arrow at the fingertips pointing toward the THUMB side, i.e. toward her body's midline (to the RIGHT in the image), showing the hand sliding sideways over the table while the forearm stays still. Her left hand rests in her lap.",
   "eind_en": "END position: the right forearm is unchanged on the table, the right hand is slid sideways at the wrist toward the thumb side, palm still flat on the table.",
-  "zoom": true
+  "zoom": true,
+  "extra_avatar": "CLOSE-UP from the front and above at an angle (three-quarter high view): only her forearms and hands on a white table, with her torso cut off at the top edge. Both forearms lie flat on the table pointing forward, palms flat down. TOP: wrists straight, fingers pointing straight forward. BOTTOM: the forearms have not moved; ONLY the hands are turned flat over the table at the wrist toward the thumb side (fingers now point clearly inward at about 30 degrees), palms still flat on the table. Make the angle difference obvious."
  },
  {
   "slug": "supinatie-elastiek",
@@ -85,7 +86,8 @@
   "ref": "287",
   "zoom": true,
   "pose_en": "Seen from the front, she sits upright. Both forearms are held in front of her, elbows bent, hands relaxed, wrists straight, palms facing down. ONE circular arrow around the right hand shows the hand drawing circles at the wrist.",
-  "eind_en": "END position: same, the hands have turned at the wrists and are now bent to the side and up in the circle; forearms stay still."
+  "eind_en": "END position: same, the hands have turned at the wrists and are now bent to the side and up in the circle; forearms stay still.",
+  "extra_avatar": "CLOSER view from the front, waist up, she sits on a chair. Both elbows are bent and close to her sides, forearms raised in front of her chest, hands relaxed with the fingers loosely open. TOP: wrists straight, hands in line with the forearms, palms facing each other. BOTTOM: the forearms have not moved; both hands are clearly bent at the wrists (tilted outward and backward, one point of the circle), so the change at the wrist is obvious."
  },
  {
   "slug": "onderarm-draaien-met-hulp",
@@ -159,7 +161,8 @@
   "ref": "287",
   "zoom": true,
   "pose_en": "Close side view, she sits facing right. Her right elbow rests on the table with the forearm pointing UP, wrist straight, fingers straight and together pointing up, palm facing her. The arrow is a curved arrow at the fingers showing them bending forward ONLY at the knuckles toward her.",
-  "eind_en": "END position: same forearm; the fingers are bent 90 degrees at the knuckles while the fingers themselves stay straight (like a small table top), thumb relaxed."
+  "eind_en": "END position: same forearm; the fingers are bent 90 degrees at the knuckles while the fingers themselves stay straight (like a small table top), thumb relaxed.",
+  "extra_avatar": "Exact SIDE view (profile), she faces right, sits at a white table, waist up. Her right elbow rests on the table, the forearm vertical, the hand above it with the palm facing her face. TOP: the hand is a straight continuation of the forearm, fingers pointing straight up. BOTTOM: the forearm AND the back of the hand stay exactly vertical (the wrist does NOT bend); the hand forms an upside-down L: the four straight fingers stick out horizontally toward her face, bent 90 degrees only at the knuckles, with the thumb pointing up along the hand. The palm still faces her face, not the ceiling."
  },
  {
   "slug": "haakvuist",
@@ -191,7 +194,8 @@
   "ref": "287",
   "zoom": true,
   "pose_en": "Close side view. Her right elbow rests on a table with the forearm pointing up, wrist straight. A small lump of therapy putty is held between the thumb tip and the fingertips, fingers straight. Draw ONE small arrow at the thumb pointing toward the fingertips, showing the squeeze.",
-  "eind_en": "END position: same forearm, the putty squeezed flat between thumb and straight fingertips."
+  "eind_en": "END position: same forearm, the putty squeezed flat between thumb and straight fingertips.",
+  "extra_avatar": "Exact SIDE view (profile), she faces right, sits upright, waist up. Her right elbow is bent at her side, forearm raised forward so the hand is in front of her chest. She pinches a small pink foam cube between the pad of her thumb and the pads of her straight fingers. TOP: the cube is a full cube, loosely held. BOTTOM: the same cube is squeezed to half its width between thumb and fingertips, the fingers stay straight; the compressed foam is clearly visible."
  },
  {
   "slug": "duim-buigen-strekken",
@@ -207,7 +211,8 @@
   "ref": "287",
   "zoom": true,
   "pose_en": "Close view FROM ABOVE of her right hand and forearm lying completely flat ON the table top (not over any edge), palm facing UP, fingers straight and together, the THUMB lying flat against the side of the index finger. Only her forearm and hand, plus a little of her body at the top edge, are visible. The arrow is a short curved arrow next to the thumb tip, in the plane of the table, pointing sideways AWAY from the index finger.",
-  "eind_en": "END position: same close view from above, hand still flat on the table palm up, fingers straight together; the thumb has slid sideways over the table surface, wide away from the index finger, staying flat in the plane of the table (it does NOT lift up toward the ceiling)."
+  "eind_en": "END position: same close view from above, hand still flat on the table palm up, fingers straight together; the thumb has slid sideways over the table surface, wide away from the index finger, staying flat in the plane of the table (it does NOT lift up toward the ceiling).",
+  "extra_avatar": "View from the front and slightly above, she sits at a white table, waist up, both forearms resting on the table, both palms facing UP. TOP: the right thumb lies against the side of the right index finger. BOTTOM: the forearms and hands have not moved; ONLY the right thumb is moved far sideways in the plane of the table, away from the index finger (a clear wide gap), the thumb stays flat and does not point up. The left hand stays still as a comparison."
  },
  {
   "slug": "duim-optillen",
