@@ -12718,7 +12718,7 @@
     },
     {
       "exerciseId": "fp_4ecc3fa3dbce246b",
-      "name": "Rug bol en hol – met lichte weerstand",
+      "name": "Rug bol en hol – op de adem",
       "source": "images/rug/rug-bol-en-hol-met-lichte-weerstand-avatar-v8.jpg",
       "assetSha256": "b5eaa90dd19234670f7c906b6e35d29c87ff1ae1f7b7a216f5a102de1cf08598",
       "explanationSha256": "da9b3ca447a0b545dca8c0c7037471ec78d7ab5e77c748b2824df02ac66bf276",
@@ -14105,13 +14105,13 @@
     {
       "exerciseId": "fp_182cfe1a8137acad",
       "name": "Zijwaarts stappen – met steun",
-      "source": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-line-v1.png",
-      "assetSha256": "6230915fac2850dd649c21b890fe4d53afdbda7691a1d5496f34b316642dbb91",
+      "source": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-avatar-v8.jpg",
+      "assetSha256": "8ea68cf1b3db03a7757c7ad413b410f4e3ec7fa4a454c9e38f655aa6d959d4cf",
       "explanationSha256": "fae31eebea8d8c7d308b8777a87f6b135865f455c141421bf5bd620db74979c6",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 229,
         "visuallyInspected": false
       },
       "width": 800,
@@ -14127,7 +14127,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -15623,13 +15623,13 @@
     {
       "exerciseId": "fp_af9cd35496058ede",
       "name": "Bekkenbodem ontspannen – liggend",
-      "source": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-line-v1.png",
-      "assetSha256": "e7a235a4f92c66bcc7a665d88e97bb392d38ff91da0e87e5f69493a730891bc8",
+      "source": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-avatar-v8.jpg",
+      "assetSha256": "b14deb6e6b0581d1ee1c0e3189b138a381e95f4aeb496d401ed0c19b3287f494",
       "explanationSha256": "157ea32d619185bb4c512fe175801767cc1f5f1828f3dc9dd835cff711b1f217",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 516,
         "visuallyInspected": false
       },
       "width": 800,
@@ -15645,7 +15645,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 92%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -15656,13 +15656,13 @@
     {
       "exerciseId": "fp_96a6630928d93cd2",
       "name": "Bekkenbodem snel aanspannen – zittend",
-      "source": "images/bekken-postpartum/bekkenbodem-snel-aanspannen-zittend-line-v1.png",
-      "assetSha256": "d0ec386e79cd774067d9a1db393a0e61b88ac6747c4cf4850aa76a5ab04a01f5",
+      "source": "images/bekken-postpartum/bekkenbodem-snel-aanspannen-zittend-avatar-v8.jpg",
+      "assetSha256": "b989a067e31a444ee3b2ea4416ca9d5830718bf9dacb6539b62d2f9ec7b825c4",
       "explanationSha256": "f1d54142867c47d077e6bb691525e353fa68ea3586c7be76631cbb24706c9896",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 679,
         "visuallyInspected": false
       },
       "width": 800,
@@ -15678,7 +15678,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
       },
       "brandMark": {
         "present": false,
@@ -15689,13 +15689,13 @@
     {
       "exerciseId": "fp_94a35e31779075e4",
       "name": "Bekkenbodem met uitademing – liggend",
-      "source": "images/bekken-postpartum/bekkenbodem-met-uitademing-liggend-line-v1.png",
-      "assetSha256": "06cafa9c10589cbd360f8866975fc2596bb9785bcfffabc4dbfec7f0d3a7df84",
+      "source": "images/bekken-postpartum/bekkenbodem-met-uitademing-liggend-avatar-v8.jpg",
+      "assetSha256": "c803f6dc0f262b32aa6377fddf21aca5af8cb4ce2093420c0cdd523f52dc1340",
       "explanationSha256": "e810ffef9f0dfd59ac0a0c1b9ccc87138956b537ccdf774d41997f5002d6a530",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 582,
         "visuallyInspected": false
       },
       "width": 800,
@@ -15711,7 +15711,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 94%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -15722,13 +15722,13 @@
     {
       "exerciseId": "fp_24237e101a2c77ad",
       "name": "Diepe buikactivatie – liggend",
-      "source": "images/bekken-postpartum/diepe-buikactivatie-liggend-line-v1.png",
-      "assetSha256": "849814d6478a123fb533198d404813a7ee7763db58d6e8d24d6f7ad28d4d8c10",
+      "source": "images/bekken-postpartum/diepe-buikactivatie-liggend-avatar-v8.jpg",
+      "assetSha256": "c0f20550b4728749326edfea4f1e1e1d40dfdcef6e225449a9dddc989eb9a61d",
       "explanationSha256": "549ce9d40df148a7bcfc0b572fb3f311512ef0aae78fc924509a31fc90fb384c",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 564,
         "visuallyInspected": false
       },
       "width": 800,
@@ -15744,7 +15744,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 89%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -15755,13 +15755,13 @@
     {
       "exerciseId": "fp_0474f0286832320f",
       "name": "Bekkenmobiliteit – liggend",
-      "source": "images/bekken-postpartum/bekkenmobiliteit-liggend-line-v1.png",
-      "assetSha256": "28353244789675c79938ca404966e31b8682074bebf4adce691d2800ec7fc1b0",
+      "source": "images/bekken-postpartum/bekkenmobiliteit-liggend-avatar-v8.jpg",
+      "assetSha256": "12ded747cb2013d5bc260cfed53e179a348bde8697464cf367cf2e3c8071cfef",
       "explanationSha256": "a09e41c1ae985ad0a6b068c6a94a38827d040b830f5d7e13d612dff5a336e7bc",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 586,
         "visuallyInspected": false
       },
       "width": 800,
@@ -15777,7 +15777,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 91%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,
@@ -15788,13 +15788,13 @@
     {
       "exerciseId": "fp_8d4fb0f3f39ab16e",
       "name": "360 graden ademhaling – eerste fase rustig",
-      "source": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-line-v1.png",
-      "assetSha256": "35d2a2e3f5f298253c232f7d6053d90cfcc8482111caf66d753a161745deaf0c",
+      "source": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-avatar-v8.jpg",
+      "assetSha256": "c76b18032582f1d0fd9d3daf52d1e59bd3027a6caf3664838e62cf731c1dd339",
       "explanationSha256": "b3fb8c05b1c7e97bb97bb22edd2b136ad32b3b565ac16e478fbcafe75aac98db",
-      "mediaType": "line_drawing_candidate",
+      "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 0,
+        "chromaticPixels": 500,
         "visuallyInspected": false
       },
       "width": 800,
@@ -15810,7 +15810,7 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+        "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,

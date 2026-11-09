@@ -2331,7 +2331,7 @@
     "naamvoorstel": {
       "nr": 396,
       "naam": "Rug bol en hol – op de adem",
-      "status": "nog niet doorgevoerd"
+      "status": "doorgevoerd 2026-11-09 (oude naam: Rug bol en hol – met lichte weerstand; tekening toont geen weerstand, uitleg volgt de adem)"
     }
   },
   "avatarsRonde3b": {
@@ -2883,23 +2883,57 @@
         "naam": "Richtingsverandering – techniek langzaam",
         "kaartImg": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-avatar-v8.jpg",
         "herkansing": true
+      },
+      {
+        "nr": 438,
+        "naam": "Zijwaarts stappen – met steun",
+        "kaartImg": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-avatar-v8.jpg",
+        "herkansing": false
+      },
+      {
+        "nr": 484,
+        "naam": "Bekkenbodem ontspannen – liggend",
+        "kaartImg": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-avatar-v8.jpg",
+        "herkansing": false,
+        "pijl": true
+      },
+      {
+        "nr": 485,
+        "naam": "Bekkenbodem snel aanspannen – zittend",
+        "kaartImg": "images/bekken-postpartum/bekkenbodem-snel-aanspannen-zittend-avatar-v8.jpg",
+        "herkansing": false,
+        "pijl": true
+      },
+      {
+        "nr": 486,
+        "naam": "Bekkenbodem met uitademing – liggend",
+        "kaartImg": "images/bekken-postpartum/bekkenbodem-met-uitademing-liggend-avatar-v8.jpg",
+        "herkansing": false,
+        "pijl": true
+      },
+      {
+        "nr": 487,
+        "naam": "Diepe buikactivatie – liggend",
+        "kaartImg": "images/bekken-postpartum/diepe-buikactivatie-liggend-avatar-v8.jpg",
+        "herkansing": false,
+        "pijl": true
+      },
+      {
+        "nr": 488,
+        "naam": "Bekkenmobiliteit – liggend",
+        "kaartImg": "images/bekken-postpartum/bekkenmobiliteit-liggend-avatar-v8.jpg",
+        "herkansing": false,
+        "pijl": true
+      },
+      {
+        "nr": 489,
+        "naam": "360 graden ademhaling – eerste fase rustig",
+        "kaartImg": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-avatar-v8.jpg",
+        "herkansing": false,
+        "pijl": true
       }
     ],
     "nietInDeApp": {
-      "onvoldoende": [
-        438
-      ],
-      "inwendigeBeweging": {
-        "nrs": [
-          484,
-          485,
-          486,
-          487,
-          488,
-          489
-        ],
-        "advies": "pijl intekenen in plaats van opnieuw genereren"
-      },
       "vergrendeld": {
         "nrs": [
           475
@@ -2924,6 +2958,11 @@
         495,
         497
       ]
+    },
+    "afronding": {
+      "datum": "2026-11-09",
+      "credits": 10,
+      "toelichting": "438 derde poging goed; 484-489 kregen een pijl in de eindstand (zelfde plek en richting als de lijntekening, zonder Runway)."
     }
   }
 }
