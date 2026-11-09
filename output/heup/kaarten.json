@@ -1,0 +1,273 @@
+[
+ {
+  "naam": "Heupprothese fase 1",
+  "categorie": "Heup en bovenbeen",
+  "sub": "Eerste dagen na een heupprothese: bovenbeen en billen aanspannen en de heup rustig buigen.",
+  "fase": 1,
+  "oefeningen": [
+   "Quadriceps aanspannen – liggend",
+   "Heup buigen – liggend ondersteund",
+   "Billen aanspannen – ruglig"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Heupprothese fase 1 – in bed",
+  "categorie": "Heup en bovenbeen",
+  "sub": "Oefeningen in bed direct na een heupprothese om de doorbloeding en de heupspieren op gang te brengen.",
+  "fase": 1,
+  "oefeningen": [
+   "Been opzij schuiven – ruglig",
+   "Billen aanspannen – ruglig",
+   "Seated ankle rotations"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Heupprothese fase 3 – kracht",
+  "categorie": "Heup en bovenbeen",
+  "sub": "Beenkracht opbouwen in de laatste fase na een heupprothese.",
+  "fase": 3,
+  "oefeningen": [
+   "Lunges",
+   "Mini-squat – met elastiek",
+   "Wall sit"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Heup: labrumletsel fase 1",
+  "categorie": "Heup en bovenbeen",
+  "sub": "Rustig bewegen en bil- en bovenbeenspieren activeren bij een beschadigde kraakbeenring van de heup.",
+  "fase": 1,
+  "oefeningen": [
+   "Been opzij schuiven – ruglig",
+   "Glute bridges",
+   "Straight leg raise – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Zwangerschap: derde trimester",
+  "categorie": "Rug en bekken",
+  "sub": "Rug en heupen soepel houden in de laatste maanden van de zwangerschap.",
+  "oefeningen": [
+   "Rug bol en hol – op handen en knieën",
+   "Mob Hip opener",
+   "Romp draaien – zittend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Pilates: basis",
+  "categorie": "Algemeen en sport",
+  "sub": "Rustige pilatesoefeningen in lig voor romp, heupen en bekken.",
+  "oefeningen": [
+   "Bruggen beginner",
+   "Knie optillen tot 90 graden – ruglig",
+   "Zijlig heupkracht – zijlig"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Heup: avulsie voorste heupbot fase 1 (jeugd)",
+  "categorie": "Heup en bovenbeen",
+  "sub": "Rustig rekken na een afscheuring bij de aanhechting aan de voorkant van de heup bij jongeren.",
+  "fase": 1,
+  "oefeningen": [
+   "Quadriceps stretch",
+   "Yoga hip flexor stretch",
+   "Bilspier rekken – zittend op een stoel"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Heup: avulsie voorste heupbot fase 2 (jeugd)",
+  "categorie": "Heup en bovenbeen",
+  "sub": "De heupbuigers weer belasten, eerst zonder bewegen en daarna met elastiek.",
+  "fase": 2,
+  "oefeningen": [
+   "Heup buigen tegen je hand – ruglig (isometrisch)",
+   "Heup buigen – met elastiek",
+   "Gestrekt been naar voren – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hamstring: verlengen",
+  "categorie": "Heup en bovenbeen",
+  "sub": "De hamstrings in een verlengde stand sterker maken, bijvoorbeeld na een verrekking.",
+  "oefeningen": [
+   "Knie strekken met heup gebogen – ruglig",
+   "Heupscharnier – functioneel op één been",
+   "Been naar achteren laten glijden – met handdoek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Heup: totale heupprothese fase 2",
+  "categorie": "Heup en bovenbeen",
+  "sub": "Opstaan, fietsen en heupspieren trainen in de mobiliserende fase.",
+  "fase": 2,
+  "oefeningen": [
+   "Functioneel opstaan – functioneel",
+   "Fiets",
+   "Knie optillen tot 90 graden – ruglig",
+   "Glute bridges",
+   "Standing chair hip extension",
+   "Clamshell – zijlig",
+   "Standing chair half squat"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Heup: totale heupprothese fase 2 (staand)",
+  "categorie": "Heup en bovenbeen",
+  "sub": "Staande oefeningen voor heupkracht en stappen na een heupprothese.",
+  "fase": 2,
+  "oefeningen": [
+   "Op de plaats marcheren – zonder steun",
+   "Zijwaarts opstappen op een step",
+   "Step up tempo",
+   "Glute bridges",
+   "Heupflexor rek – staand met steun",
+   "Standing chair abductie"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Heup: artrose, kracht met stoel",
+  "categorie": "Heup en bovenbeen",
+  "sub": "Heupspieren staand met stoel sterker maken bij (beginnende) heupartrose.",
+  "oefeningen": [
+   "Standing chair knee lift",
+   "Standing chair abductie",
+   "Standing chair hip extension",
+   "Glute bridges",
+   "Functioneel opstaan – functioneel",
+   "Eenbeenstand – zonder steun",
+   "Heupflexor rek – staand met steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Heup: artrose, oefenprogramma",
+  "categorie": "Heup en bovenbeen",
+  "sub": "Heupkracht, opstaan en balans bij klachten van heupartrose.",
+  "oefeningen": [
+   "Standing chair knee lift",
+   "Standing chair abductie",
+   "Standing chair hip extension",
+   "Glute bridges",
+   "Functioneel opstaan – functioneel",
+   "Heupflexor rek – staand met steun",
+   "Tandemstand – met steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Zwangerschap: tweede trimester",
+  "categorie": "Rug en bekken",
+  "sub": "Bekkenbodem, heup en rug in beweging houden tijdens de zwangerschap.",
+  "oefeningen": [
+   "Bekkenbodem aanspannen – liggend",
+   "Lying abduction",
+   "Bruggen op bal",
+   "Mob Hip opener",
+   "Rug bol en hol – op handen en knieën",
+   "Romp draaien – zittend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Heup: totale heupprothese fase 3",
+  "categorie": "Heup en bovenbeen",
+  "sub": "Balans en heupkracht verder opbouwen in de late herstelfase.",
+  "fase": 3,
+  "oefeningen": [
+   "Lunges",
+   "Lying abduction",
+   "Eenbeenstand – zonder steun",
+   "Standing chair abductie",
+   "Standing chair calfs raises"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Been: kracht met eigen lichaamsgewicht",
+  "categorie": "Heup en bovenbeen",
+  "sub": "Benen en heupen thuis sterker maken met weinig of geen materiaal.",
+  "oefeningen": [
+   "Crabwalk",
+   "Bridges kicker",
+   "Yoga deep squat",
+   "Squat lunges",
+   "Kuitheffing – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ }
+]
