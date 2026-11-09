@@ -98,8 +98,8 @@ for(const [id,hash] of BRONKEUZE){
   assert.ok(inspected.get(hash)?.source===e.source,e.name+': eerdere uitsnedecontrole niet weggehaald');
 }
 assert.equal(manifest.summary.approved,0);assert.equal(manifest.summary.rejected,12);assert.equal(manifest.summary.unreviewed,307+NIEUW);
-// 2026-11-09 Physitrack-crosscheck: 71 nieuwe avatars; 58 gemeten paren op een contactvel bekeken (+15 t.o.v. 153).
-assert.equal(manifest.summary.poseGeometryApproved,168);assert.equal(manifest.summary.poseStatic,151+NIEUW);
+// 2026-11-09 Physitrack-crosscheck: 71 nieuwe avatars; later rondes 3 en 4; gemeten paren op een contactvel bekeken (169).
+assert.equal(manifest.summary.poseGeometryApproved,169);assert.equal(manifest.summary.poseStatic,150+NIEUW);
 // afgekeurde beelden leveren nooit houdingen, ook niet als de meting een paar vindt
 for(const e of manifest.entries.filter(e=>e.status==='rejected')){
   assert.equal(e.poseGeometry.status,'withheld',e.name);assert.deepEqual(e.poses,[],e.name);
@@ -158,10 +158,10 @@ for(const r of manifest.entries){
   }else assert.equal(r.brandMark.cover,null,'afdekking zonder bewezen vrij vlak: '+r.name);
   assert.equal(r.brandMark.present,m.present,r.name);
 }
-// 2026-11-09: 61 legacy-avatars vervangen door nieuwe avatars uit de Physitrack-crosscheck, zonder ingebakken merk.
-assert.equal(afgedekt,154,'154 beelden met een afdekbaar ingebakken merk');
-assert.equal(manifest.summary.brandMarkCovered,154);
-assert.equal(manifest.summary.brandMarkAbsent,165+NIEUW); // nieuwe lijntekeningen hebben geen ingebakken merk
+// 2026-11-09: 61 (ronde 3: nog 7, ronde 4: nog 1) legacy-avatars vervangen door nieuwe avatars uit de Physitrack-crosscheck, zonder ingebakken merk.
+assert.equal(afgedekt,146,'146 beelden met een afdekbaar ingebakken merk');
+assert.equal(manifest.summary.brandMarkCovered,146);
+assert.equal(manifest.summary.brandMarkAbsent,173+NIEUW); // nieuwe lijntekeningen hebben geen ingebakken merk
 // de drie beelden waar het ingebakken witte vak een hoekje uit de haren snijdt: het
 // afdekvlak ligt binnen dat vak en maakt het niet groter
 for(const naam of ['Front raises','Shoulder rotation (shrugs)','Yoga deep squat'])
@@ -169,4 +169,4 @@ for(const naam of ['Front raises','Shoulder rotation (shrugs)','Yoga deep squat'
 // een beeld zonder merk krijgt nooit een vlak, ook niet als er linksboven haar staat
 for(const naam of ['Foam roller hamstring','Foam roller calf','Standing chair heel/toe','Alternating lunge jumps'])
   assert.equal(manifest.entries.find(r=>r.name===naam).brandMark.cover,null,naam);
-console.log('PASS: '+(319+NIEUW)+' source-linked assets, hashes, twelve rejections (five content, seven temporary source holds: five source defects, two pending source choices); '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 154 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');
+console.log('PASS: '+(319+NIEUW)+' source-linked assets, hashes, twelve rejections (five content, seven temporary source holds: five source defects, two pending source choices); '+approvedPoses.length+' visueel gecontroleerde uitsnedes, 146 ingebakken merken opnieuw gemeten en afdekbaar, geen klinische goedkeuring afgeleid.');

@@ -13,20 +13,27 @@ daaruit tot en met 2026-11-06.
 | (c) proef-tokens en verlopen proeven | 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP, patiëntroute met allowlist, praktijkroutes alleen eigen map) |
 | (e) uploads (video, logo, opname /o) | 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
-| (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-07 (runtime: payloads in alle kaartvelden, /k in nl/en/ar met vertaling, overzicht, sjablonen, eigen oefeningen, serverpagina's; geen gat) |
-| (g) security-headers, CSP, cookies, CSRF | 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat) |
+| (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-09 08u (runtime met Chromium: payloads in teamnaam, uitnodiging, eigen oefening, teamsjabloon, alle kaartvelden, bericht, notitie, behandelaar, doel; app-start, Kaarten-paneel, inbox, Team, Activiteit, Rapport, Sjablonen, /k in nl/en/ar: niets geïnjecteerd, geen CSP-melding. CSV-exports met formule-escape, afspraak-ICS zonder regelinjectie. Geen gat) |
+| (g) security-headers, CSP, cookies, CSRF | 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat); 2026-11-09 08u: `kruisSite` liet same-site door, opgelost) |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
 | (j) npm audit | 2026-11-08 20u (0 meldingen, ook dev) |
 
-Volgende run: (f) injectie/XSS, daarna (a) beheer.
+Volgende run: (a) beheer, daarna (b) accountlaag.
 
 Sanity 2026-11-09 00u op #109–#111 (videoquotum, werknotitie mee naar dossier, lightbox/proefvenster): `notitieT`
 reist alleen mee in het praktijkoverzicht (achter de praktijkpoort), niet in de patiëntroute (allowlist); de nieuwe
 `innerHTML` in de app is vaste tekst. Geen gat.
 
-Te controleren (gemeld door de gebruikers-sweep 2026-11-09 06u, Mark): `/api/opname/start` met doel "oefening" geeft zonder
-beheerdersrechten 200; de server zet het stil om naar doel "kaart". Vermoedelijk onschuldig; bevestigen en eventueel 400 geven.
+Sanity 2026-11-09 08u op #112–#119 (abonnement opzeggen, automatisch wissen na einde, behandelaar bij nieuwe kaart,
+doseringsvraag in de vraaghulp, Physitrack-beelden): `/v2/proef/opzeggen` heeft `kruisSite` + proefcookie (SameSite=Lax);
+`MIJN_KOP` gaat door `htmlEsc`; `behandelaarVanSessie` neemt alleen de naam van het eigen lid (s.pk === pk, stuurtekens
+weg, 40 tekens); automatisch wissen zoekt de praktijk op het proef-id van het account. Geen gat. Wel: opzeggen maakt
+`kruisSite` belangrijker (een geslaagde CSRF zegt op en wist 30 dagen later alles), zie hieronder.
+
+AFGESLOTEN 2026-11-09 (geen gat): `/api/opname/start` met doel "oefening" zonder beheerdersrechten (sweep 06u, Mark) geeft
+200 maar maakt altijd een kaartopname (`doel === "oefening" && isAdmin`), met dezelfde praktijkpoort; er is geen
+bibliotheekschrijfpad zonder beheersleutel.
 
 Audit (e) 2026-11-09 00u:
 - **OPGELOST 2026-11-09 (deze PR) — MIDDEL — praktijkprofiel en logo van een praktijk zonder wachtwoord
@@ -177,7 +184,10 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 - **LAAG (sweep 14u, Jayden) — bericht van de therapeut laat tekst-omkeertekens (U+202E e.d.) door** naar /k; alleen
   \u0000–\u001f wordt gefilterd (server.js r. ~4333). Geen XSS (platte tekst), wel misleidende weergave.
 
-- **LAAG — `kruisSite` laat `Sec-Fetch-Site: same-site` door** (audit (c) 2026-11-08). Een subdomein (of een andere
+- **OPGELOST 2026-11-09 (deze PR) — LAAG→MIDDEL — `kruisSite` laat `Sec-Fetch-Site: same-site` door** (audit (c) 2026-11-08).
+  Sinds #115/#116 zwaarder: met de proefcookie kan zo'n post het abonnement opzeggen, en 30 dagen na het einde wist
+  Fysiplan alles van de praktijk. Nu telt same-site alleen met een Origin die precies deze host is; zonder Origin
+  geweigerd. same-origin en none blijven toegestaan. Test: `npm run test:kruissite`. Oorspronkelijke melding: Een subdomein (of een andere
   app op `*.up.railway.app`, als dat domein niet op de Public Suffix List staat) telt zo als dezelfde site en mag
   POST'en met de proefcookie (`/v2/proef/wissen`, `doorgaan`). Geen bekend subdomein in handen van een ander. Fix:
   alleen `same-origin` en `none` toestaan, na een check dat geen eigen route van `same-site` afhangt.

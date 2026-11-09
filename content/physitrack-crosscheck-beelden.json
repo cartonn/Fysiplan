@@ -1215,17 +1215,7 @@
   ],
   "avatarsNietOvergenomen": {
     "reden": "past niet bij de nieuwe tekening of uitleg, of zelf afwijkend",
-    "nrs": [
-      17,
-      43,
-      51,
-      55,
-      65,
-      93,
-      164,
-      166,
-      376
-    ]
+    "nrs": []
   },
   "avatarsLaterApart": {
     "reden": "vastgelegde hold of V2-uitzondering; eerst die opheffen",
@@ -1356,6 +1346,114 @@
       "naam": "Seated chair crunches",
       "v2": 1,
       "v1": 1
+    },
+    {
+      "nr": 164,
+      "naam": "Yoga knee to chest hip stretch",
+      "v2": 1,
+      "v1": 1,
+      "reden": "zittend, zoals de tekening en de avatar"
     }
-  ]
+  ],
+  "avatarsRonde3": {
+    "datum": "2026-11-09",
+    "akkoord": "Ahmed: \"Ja runway-runs voor 9 avatars mogen, maximaal 60 credits\"",
+    "avatars": [
+      {
+        "nr": 17,
+        "naam": "French press",
+        "kaartImg": "images/bovenste-extremiteit/french-press-avatar-v7.jpg",
+        "sha256": "e7cfe9f7c215bc681f0650af2734dac897739b3d815cb9a1262aca9b27d9acfa",
+        "bron": "avatars-r3/17-french-press-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 51,
+        "naam": "Extension squat",
+        "kaartImg": "images/onderste-extremiteit/extension-squat-avatar-v7.jpg",
+        "sha256": "ad74c150441d7243094d4da6192a06b5c260bd8e11ce160394e2e44fa0d89168",
+        "bron": "avatars-r3/51-extension-squat-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 55,
+        "naam": "Jefferson squat",
+        "kaartImg": "images/onderste-extremiteit/jefferson-squat-avatar-v7.jpg",
+        "sha256": "da819e405ae9debe1d47d3c463d1d9f82dda7c03c675b2f5ef796389f64294ea",
+        "bron": "avatars-r3/55-jefferson-squat-avatar-r2.png",
+        "pose": "foreign-ink-in-crop",
+        "reden": "Binnen de uitsnedes staat 80 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      {
+        "nr": 65,
+        "naam": "Squat",
+        "kaartImg": "images/onderste-extremiteit/squat-avatar-v7.jpg",
+        "sha256": "49611c85c1d7a1a619dc1ba9824462f43cb07b8a27a68877861ab3523edc9aae",
+        "bron": "avatars-r3/65-squat-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 93,
+        "naam": "Leg raises",
+        "kaartImg": "images/core/leg-raises-avatar-v7.jpg",
+        "sha256": "cb11f2e6564d4280bf7468271113a9333e6645dbc32611d2fb9889cede2eb3f8",
+        "bron": "avatars-r3/93-leg-raises-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 164,
+        "naam": "Yoga knee to chest hip stretch",
+        "kaartImg": "images/yoga/yoga-knee-to-chest-hip-stretch-avatar-v7.jpg",
+        "sha256": "880976eb36f40170bb1f112cf6e294af5d792f6e8d2bcf474ba3ef927803f44f",
+        "bron": "avatars-r3/164-yoga-knee-to-chest-hip-stretch-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 166,
+        "naam": "Yoga noose",
+        "kaartImg": "images/yoga/yoga-noose-avatar-v7.jpg",
+        "sha256": "0de98d8386472006cd52c1629d3f629f77c3f6b4506727174793cd7968acb9a5",
+        "bron": "avatars-r3/166-yoga-noose-avatar.png",
+        "pose": "pair-candidate"
+      },
+      {
+        "nr": 376,
+        "naam": "Nek buigen – liggend ondersteund",
+        "kaartImg": "images/nek/nek-buigen-liggend-ondersteund-avatar-v8.jpg",
+        "sha256": "05cb487841b3852a94c60b455b988f3f6fef3734d3c0a989801cfe47a27e05ce",
+        "bron": "avatars-r3/376-nek-buigen-liggend-ondersteund-avatar-r2.png",
+        "pose": "pair-candidate"
+      }
+    ],
+    "nietBruikbaar": [
+      {
+        "nr": 43,
+        "naam": "Wrist extension",
+        "reden": "hele onderarm komt van de tafel in plaats van alleen de pols"
+      }
+    ]
+  },
+  "avatarsRonde4": {
+    "datum": "2026-11-09",
+    "akkoord": "Ahmed: \"Ja runway-runs voor 2 avatars mogen, maximaal 20 credits\"",
+    "avatars": [
+      {
+        "nr": 43,
+        "naam": "Wrist extension",
+        "kaartImg": "images/bovenste-extremiteit/wrist-extension-avatar-v7.jpg",
+        "sha256": "ec430344728a1d93d7fb85f787836e03e69cc798b6b0fd2803f5e71e6ea49a2e",
+        "bron": "avatars-r4/43-wrist-extension-avatar.png",
+        "pose": "foreign-ink-in-crop",
+        "reden": "Binnen de uitsnedes staat 112 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      {
+        "nr": 92,
+        "naam": "Knee elbow",
+        "kaartImg": "images/core/knee-elbow-avatar-v7.jpg",
+        "sha256": "db532dd7bb334aeb46d7a197e9acb21495aaa7bca1c4f6199c8590838406644c",
+        "bron": "avatars-r4/92-knee-elbow-avatar.png",
+        "pose": "pair-candidate"
+      }
+    ]
+  }
 }

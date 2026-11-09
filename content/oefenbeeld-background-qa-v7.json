@@ -186,8 +186,9 @@
       "output": "images/bovenste-extremiteit/french-press-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.78412,
-      "sha256": "c6f9c1655b002a6c288c7e7ac04ffb48c73b2ac056069330646e198b5d5954d2"
+      "nearWhiteRatio": 0.85,
+      "sha256": "e7cfe9f7c215bc681f0650af2734dac897739b3d815cb9a1262aca9b27d9acfa",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck, ronde 3 (output/physitrack-crosscheck/beelden/avatars-r3)."
     },
     {
       "order": 19,
@@ -457,8 +458,9 @@
       "output": "images/bovenste-extremiteit/wrist-extension-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.69873,
-      "sha256": "2329571e8fb4c2f38b8a0e4fd576c07a5793965f6dbe2337c73967e47acd4346"
+      "nearWhiteRatio": 0.69927,
+      "sha256": "ec430344728a1d93d7fb85f787836e03e69cc798b6b0fd2803f5e71e6ea49a2e",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck, ronde 4 (output/physitrack-crosscheck/beelden/avatars-r4)."
     },
     {
       "order": 45,
@@ -540,8 +542,9 @@
       "output": "images/onderste-extremiteit/extension-squat-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.7661,
-      "sha256": "5c176ae52a7a5c504a2278d76dd654a9896b480b3c6de7d638d7a5eada707935"
+      "nearWhiteRatio": 0.88938,
+      "sha256": "ad74c150441d7243094d4da6192a06b5c260bd8e11ce160394e2e44fa0d89168",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck, ronde 3 (output/physitrack-crosscheck/beelden/avatars-r3)."
     },
     {
       "order": 53,
@@ -581,8 +584,9 @@
       "output": "images/onderste-extremiteit/jefferson-squat-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.79844,
-      "sha256": "445ddcb57b10b5b6c7c9a3044423e61d9ace2b33c0e618cdd66ee9c1c8626330"
+      "nearWhiteRatio": 0.85667,
+      "sha256": "da819e405ae9debe1d47d3c463d1d9f82dda7c03c675b2f5ef796389f64294ea",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck, ronde 3 (output/physitrack-crosscheck/beelden/avatars-r3)."
     },
     {
       "order": 57,
@@ -683,8 +687,9 @@
       "output": "images/onderste-extremiteit/squat-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.72933,
-      "sha256": "928156faa0d4ea1b827080fa36132575f669758a549e30817d6d0a63e90aec23"
+      "nearWhiteRatio": 0.85885,
+      "sha256": "49611c85c1d7a1a619dc1ba9824462f43cb07b8a27a68877861ab3523edc9aae",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck, ronde 3 (output/physitrack-crosscheck/beelden/avatars-r3)."
     },
     {
       "order": 67,
@@ -965,9 +970,9 @@
       "output": "images/core/knee-elbow-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.78073,
-      "sha256": "5ae9caf87e28ff7c9265abb35413b039b8fd49ef37437e6e8a50db8dc0562029",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.74865,
+      "sha256": "db532dd7bb334aeb46d7a197e9acb21495aaa7bca1c4f6199c8590838406644c",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck, ronde 4 (output/physitrack-crosscheck/beelden/avatars-r4)."
     },
     {
       "order": 94,
@@ -976,8 +981,9 @@
       "output": "images/core/leg-raises-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.86687,
-      "sha256": "a9b033dacbdae0c67a6337e0623a9674e26edb2e8f3c092acf87170493ecebf2"
+      "nearWhiteRatio": 0.77156,
+      "sha256": "cb11f2e6564d4280bf7468271113a9333e6645dbc32611d2fb9889cede2eb3f8",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck, ronde 3 (output/physitrack-crosscheck/beelden/avatars-r3)."
     },
     {
       "order": 95,
@@ -1705,8 +1711,9 @@
       "output": "images/yoga/yoga-knee-to-chest-hip-stretch-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.83101,
-      "sha256": "23078cfdace6379fe85d578037b5f813b477032b3bf51cd6702e5cc9053d333a"
+      "nearWhiteRatio": 0.79125,
+      "sha256": "880976eb36f40170bb1f112cf6e294af5d792f6e8d2bcf474ba3ef927803f44f",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck, ronde 3 (output/physitrack-crosscheck/beelden/avatars-r3)."
     },
     {
       "order": 166,
@@ -1725,8 +1732,9 @@
       "output": "images/yoga/yoga-noose-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.77146,
-      "sha256": "861293ce74f6699d6f7bbffd260642e142b7105cbe100e8340c7017b2d016835"
+      "nearWhiteRatio": 0.72865,
+      "sha256": "0de98d8386472006cd52c1629d3f629f77c3f6b4506727174793cd7968acb9a5",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck, ronde 3 (output/physitrack-crosscheck/beelden/avatars-r3)."
     },
     {
       "order": 168,
