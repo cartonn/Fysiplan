@@ -13,7 +13,7 @@ import { extname, join, resolve } from "node:path";
 
 const dir = resolve(new URL("./", import.meta.url).pathname);
 const root = resolve(dir, "../../../");
-const out = join(dir, "avatars");
+const out = join(dir, process.env.OUT || "avatars");
 const MIN_SALDO = Number(process.env.MIN_SALDO || 150);
 const specs = JSON.parse(readFileSync(join(dir, process.env.SPECS || "avatar-specs.json"), "utf8"));
 const cat = JSON.parse(readFileSync(join(root, "public/oefeningen-v2.json"), "utf8"));
@@ -39,6 +39,7 @@ const STYLE = [
 const mime = { ".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp" };
 const dataUri = async (abs) => `data:${mime[extname(abs)]};base64,${(await readFile(abs)).toString("base64")}`;
 function lijnVoor(nr) {
+  const sp = specs.find((s) => s.nr === nr); if (sp && sp.lijn) return join(root, "public", sp.lijn);
   const t = tekSpecs.find((s) => s.nr === nr);
   if (t) for (const sfx of ["-r2", ""]) { const p = join(dir, "tekeningen", `${nr}-${t.slug}${sfx}.png`); if (existsSync(p)) return p; }
   return join(root, "public", cat[nr].img);
