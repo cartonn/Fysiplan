@@ -1,0 +1,673 @@
+[
+ {
+  "naam": "Rug: chronische lage rugpijn",
+  "categorie": "Rug en bekken",
+  "sub": "Bewegen en romp- en bilspieren versterken bij langdurige lage rugpijn.",
+  "oefeningen": [
+   "Glute bridges",
+   "Bekken kantelen – zittend",
+   "Rug strekken – liggend",
+   "Brug – met bal tussen de knieën",
+   "Romp draaien – liggend",
+   "Rug extensie",
+   "Knie opzij laten zakken – liggend",
+   "Kuitheffing – op een verhoging"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Rug: ischias",
+  "categorie": "Rug en bekken",
+  "sub": "Bilspier rekken, de zenuw laten glijden en de diepe spieren aanspannen bij uitstraling in het been.",
+  "oefeningen": [
+   "Gluteal stretch",
+   "Zenuw glijden been – ruglig",
+   "Bekkenbodem aanspannen – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Romp: stabiliteitstraining",
+  "categorie": "Rug en bekken",
+  "sub": "De diepe buik- en rugspieren trainen met aanspannen en plankvarianten.",
+  "oefeningen": [
+   "Bekkenbodem en diepe buik aanspannen – staand",
+   "Bekkenbodem aanspannen – liggend",
+   "Plank basis",
+   "Zijplank – op knieën"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10 × 5 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Romp: stabiliteit fase 3",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Zwaardere rompoefeningen als vervolg op fase 1 en 2 van de rompstabiliteit.",
+  "fase": 3,
+  "oefeningen": [
+   "Plank basis",
+   "Bridges kicker",
+   "Schuin opkrullen – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Bovenrug: klachten",
+  "categorie": "Rug en bekken",
+  "sub": "De bovenrug strekken, draaien en de schouderbladen activeren bij klachten tussen de schouderbladen.",
+  "oefeningen": [
+   "Rug extensie",
+   "Mob lower back",
+   "Armen omhoog langs de mat – liggend",
+   "Schouderblad naar achteren – actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nek: algemene nekklachten",
+  "categorie": "Nek",
+  "sub": "Houding, nekspieren en schouderbladen trainen bij veelvoorkomende nekklachten.",
+  "oefeningen": [
+   "Kin intrekken – zittend actief",
+   "Nek isometrisch – voor, achter en opzij",
+   "Bovenste trapezius rek – zittend actief",
+   "Ellebogen naar achteren trekken – zittend zonder gewicht",
+   "Schouderblad naar achteren – actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nek: hernia, rustig opbouwen",
+  "categorie": "Nek",
+  "sub": "Rustige beweegoefeningen voor de nek, in lig en in zit, bij een nekhernia.",
+  "oefeningen": [
+   "Kin intrekken – zittend actief",
+   "Nek buigen – liggend ondersteund",
+   "Nek draaien – liggend ondersteund",
+   "Nek buigen – zittend actief",
+   "Nek strekken – zittend actief",
+   "Nek draaien – zittend actief",
+   "Nek zijwaarts buigen – zittend actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nek: zelf mobiliseren",
+  "categorie": "Nek",
+  "sub": "De nek zelf losser maken met een handdoek en elastiek.",
+  "oefeningen": [
+   "Nek strekken – met elastiek",
+   "Nek draaien met handdoek – zittend",
+   "Nek draaien – zittend actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nek: herstel na whiplash fase 1",
+  "categorie": "Nek",
+  "sub": "Kort na een whiplash: de nek rustig in alle richtingen bewegen.",
+  "fase": 1,
+  "oefeningen": [
+   "Nek buigen – zittend actief",
+   "Nek strekken – zittend actief",
+   "Nek draaien – zittend actief",
+   "Nek zijwaarts buigen – zittend actief",
+   "Kin intrekken – zittend actief",
+   "Nek buigen – liggend ondersteund"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nek: herstel na whiplash, beginfase met zenuwglijden",
+  "categorie": "Nek",
+  "sub": "Beginfase na een whiplash met liggend draaien en glijoefeningen voor de zenuwen van de arm.",
+  "fase": 1,
+  "oefeningen": [
+   "Nek draaien – liggend ondersteund",
+   "Schouderblad naar achteren – actief",
+   "Zenuwglijden handpalm (n. medianus)",
+   "Zenuwglijden duimkant (n. radialis)",
+   "Zenuwglijden pinkkant (n. ulnaris)"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nek: herstel na whiplash fase 2",
+  "categorie": "Nek",
+  "sub": "Nekspieren aanspannen zonder bewegen en de nek-schouderspieren rekken na een whiplash.",
+  "fase": 2,
+  "oefeningen": [
+   "Nek isometrisch – voor, achter en opzij",
+   "Bovenste trapezius rek – zittend actief",
+   "Levator scapulae rek – zittend actief"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nek: herstel na whiplash fase 3",
+  "categorie": "Nek",
+  "sub": "De nek sterker maken tegen elastiek en verder mobiliseren na een whiplash.",
+  "fase": 3,
+  "oefeningen": [
+   "Nek buigen – met elastiek",
+   "Nek zijwaarts buigen – zittend actief",
+   "Nek draaien met handdoek – zittend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hoofdpijn met nek/schouder fase 2",
+  "categorie": "Nek",
+  "sub": "Nek- en schouderbladspieren versterken en de borst rekken bij hoofdpijn vanuit de nek.",
+  "fase": 2,
+  "oefeningen": [
+   "Levator scapulae rek – zittend actief",
+   "Front raises",
+   "Arm heffen – op handen en knieën",
+   "Nek buigen – liggend ondersteund",
+   "Borstspier rekken tegen de muur"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Bekken: bekkenpijn bij zwangerschap",
+  "categorie": "Rug en bekken",
+  "sub": "Rustige oefeningen voor bekken en heupen bij bekkenpijn tijdens de zwangerschap.",
+  "oefeningen": [
+   "Rug bol en hol – op handen en knieën",
+   "Been optillen met gebogen knie – liggend",
+   "Clamshell – zijlig"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Ademhaling: basis",
+  "categorie": "Hart, vaten en longen",
+  "sub": "Rustig leren ademen naar buik en flanken, zittend en liggend.",
+  "oefeningen": [
+   "Diafragma-ademhaling – zittend",
+   "360 graden ademhaling – eerste fase rustig",
+   "Ademen met arm heffen – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Rug: acute lage rugpijn",
+  "categorie": "Rug en bekken",
+  "sub": "In beweging blijven met rustige oefeningen in lig bij plotselinge lage rugpijn.",
+  "oefeningen": [
+   "Knie naar borst – liggend",
+   "Mob lower back",
+   "Romp draaien – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Rug: lage rugpijn subacuut",
+  "categorie": "Rug en bekken",
+  "sub": "Rustig bewegen en de rug- en bilspieren activeren als de eerste pijn wat gezakt is.",
+  "oefeningen": [
+   "Glute bridges",
+   "Bekken kantelen – zittend",
+   "Rug strekken – liggend",
+   "Brug – met bal tussen de knieën",
+   "Romp draaien – liggend",
+   "Rug extensie",
+   "Knie opzij laten zakken – liggend",
+   "Kuitheffing – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Rug: lage rugklachten subacuut (uitgebreid)",
+  "categorie": "Rug en bekken",
+  "sub": "Strekken, mobiliseren en de rug weer belasten bij subacute klachten.",
+  "oefeningen": [
+   "Rug extensie",
+   "Rug strekken – liggend",
+   "Brug – afwisselend knie optillen",
+   "Good mornings",
+   "Foam roller back lower"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Rug: uitstralende pijn in het been",
+  "categorie": "Rug en bekken",
+  "sub": "Rug strekken en hamstrings los maken in de latere fase van zenuwpijn.",
+  "oefeningen": [
+   "Brug – afwisselend knie optillen",
+   "Rug extensie",
+   "Foam roller hamstring",
+   "Seated hamstring stretch"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Rug: chronische discusklachten",
+  "categorie": "Rug en bekken",
+  "sub": "Mobiliteit van de lage rug bij langdurige slijtage van de tussenwervelschijf.",
+  "oefeningen": [
+   "Rug strekken – liggend",
+   "Knie naar borst – liggend",
+   "Romp draaien – liggend",
+   "Rug extensie",
+   "Knie opzij laten zakken – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Rug: acute lumbale hernia",
+  "categorie": "Rug en bekken",
+  "sub": "Rustige strekoefeningen en ontspanning voor de lage rug in de acute fase.",
+  "oefeningen": [
+   "Yoga cobra",
+   "Rug strekken – staand",
+   "Knie naar borst – liggend",
+   "Romp voorover buigen – staand"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Rug: scoliose",
+  "categorie": "Rug en bekken",
+  "sub": "Romp zijwaarts en in strekking trainen bij een scoliose.",
+  "oefeningen": [
+   "Romp zijwaarts buigen – staand",
+   "Zijwaarts rekken met arm boven het hoofd – staand",
+   "Bekken kantelen met benen in tafelhouding – liggend",
+   "Rug extensie",
+   "Swiss ball back ext"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Rug: spondylolyse en spondylolisthesis niveau 1",
+  "categorie": "Rug en bekken",
+  "sub": "Basis voor rompstabiliteit met bekkenbodem, rug- en buikspieren.",
+  "fase": 1,
+  "oefeningen": [
+   "Bekkenbodem aanspannen – liggend",
+   "Arm heffen – op handen en knieën",
+   "Superman",
+   "Hiel tikken – ruglig met benen in de lucht",
+   "Curl up",
+   "Glute bridges",
+   "Clamshell – zijlig",
+   "Zijplank – op knieën"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Rug: spondylolyse en spondylolisthesis niveau 2",
+  "categorie": "Rug en bekken",
+  "sub": "Romp en bilspieren zwaarder belasten, met behoud van een neutrale rug.",
+  "fase": 2,
+  "oefeningen": [
+   "Superman",
+   "Bruggen 1 been liften",
+   "Mountain climber",
+   "Benen op de bal opzij rollen – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Rug: spondylolyse en spondylolisthesis niveau 3",
+  "categorie": "Rug en bekken",
+  "sub": "Dynamische rompstabiliteit met bal en eenbenige oefeningen.",
+  "fase": 3,
+  "oefeningen": [
+   "Swiss ball knee to chest",
+   "Swiss ball leg curl hip raise",
+   "Curl up",
+   "Bruggen 1 been liften",
+   "Benen op de bal opzij rollen – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Lage rug: beeldschermwerk",
+  "categorie": "Rug en bekken",
+  "sub": "Lage rug soepel en stabiel houden bij veel zitten.",
+  "oefeningen": [
+   "Rug bol en hol – op handen en knieën",
+   "Rug strekken – staand",
+   "Rug strekken – liggend",
+   "Bekkenbodem aanspannen – liggend",
+   "Bekken kantelen met benen in tafelhouding – liggend",
+   "Plank basis",
+   "Brug op de tenen – ruglig",
+   "Brug – afwisselend knie optillen"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Lage rug: beweeglijkheid",
+  "categorie": "Rug en bekken",
+  "sub": "Lage rug buigen, strekken en draaien om soepel te blijven.",
+  "oefeningen": [
+   "Rug strekken – staand",
+   "Zijwaarts rekken met arm boven het hoofd – staand",
+   "Yoga wide angle seated forward bend",
+   "Romp voorover buigen – staand",
+   "Romp draaien – liggend",
+   "Knie naar borst – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Lage rug: mobiliteit in lig",
+  "categorie": "Rug en bekken",
+  "sub": "Rustige oefeningen in rugligging om de lage rug soepel te maken.",
+  "oefeningen": [
+   "Glute bridges",
+   "Kuitheffing – op één been",
+   "Bekken kantelen met benen in tafelhouding – liggend",
+   "Romp draaien – liggend",
+   "Knie naar borst – liggend",
+   "Rug strekken – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Lage rug: preventie bij zittend werk",
+  "categorie": "Rug en bekken",
+  "sub": "Lage rug bewegen en ontspannen om klachten door zitten te voorkomen.",
+  "oefeningen": [
+   "Bekken kantelen – zittend",
+   "Romp draaien – zittend",
+   "Seated hamstring stretch",
+   "Zijwaarts rekken met arm boven het hoofd – staand",
+   "Romp draaien – liggend",
+   "Rug strekken – liggend",
+   "Bekkenbodem aanspannen – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Romp: basis stabiliteit",
+  "categorie": "Rug en bekken",
+  "sub": "Rompspieren sterker maken met plank, bal en rugstrekking.",
+  "oefeningen": [
+   "Arm heffen – op handen en knieën",
+   "Rug extensie",
+   "Zijplank – op knieën",
+   "Plank high",
+   "Swiss ball plank",
+   "Kick back"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Bovenrug: stijfheid",
+  "categorie": "Rug en bekken",
+  "sub": "Bovenrug mobiliseren en strekken bij stijfheid en pijn tussen de schouderbladen.",
+  "oefeningen": [
+   "Rug extensie",
+   "Knie naar borst – liggend",
+   "Romp draaien – zittend",
+   "Thoracale extensie – liggend",
+   "Romp draaien – op handen en knieën",
+   "Mob lower back",
+   "Armen omhoog langs de mat – liggend",
+   "Schouderblad naar achteren – actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Bovenrug: beweeglijkheid",
+  "categorie": "Rug en bekken",
+  "sub": "Bovenrug in alle richtingen bewegen om soepel te blijven.",
+  "oefeningen": [
+   "Seated shoulder roll",
+   "Thoracale extensie – zittend",
+   "Romp draaien – zittend",
+   "Romp zijwaarts buigen – zittend",
+   "Hoofd en armen draaien met armen zijwaarts – zittend",
+   "Thoracale extensie – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Bovenrug: preventie bij zittend werk",
+  "categorie": "Rug en bekken",
+  "sub": "Bovenrug en schouders los houden tijdens een werkdag achter het bureau.",
+  "oefeningen": [
+   "Hoofd en armen draaien met armen zijwaarts – zittend",
+   "Romp draaien – zittend",
+   "Thoracale extensie – zittend",
+   "Romp zijwaarts buigen – zittend",
+   "Seated shoulder roll",
+   "Foam roller back extension"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Nek: beweeglijkheid",
+  "categorie": "Nek",
+  "sub": "Nek rustig in alle richtingen bewegen.",
+  "oefeningen": [
+   "Nek buigen – zittend actief",
+   "Nek strekken – zittend actief",
+   "Nek zijwaarts buigen – zittend actief",
+   "Nek draaien – zittend actief",
+   "Hoofd en armen draaien met armen zijwaarts – zittend",
+   "Seated shoulder roll",
+   "Bovenste trapezius rek – zittend actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Nek: bovenste gekruist syndroom",
+  "categorie": "Nek",
+  "sub": "Diepe nekspieren activeren en bovenrug openen bij een naar voren hangende houding.",
+  "oefeningen": [
+   "Seated shoulder roll",
+   "Bovenste trapezius rek – zittend actief",
+   "Handen achter het hoofd, ellebogen openen – ruglig",
+   "Romp draaien – zittend",
+   "Hoofd en armen draaien met armen zijwaarts – zittend",
+   "Borstspier rekken tegen de muur",
+   "Schouderblad naar achteren – actief",
+   "Diepe nekflexoren activeren – zittend actief",
+   "Diepe nekflexoren activeren – liggend ondersteund",
+   "Schouderbladen naar achteren – buiklig met armen heffen"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Bovenrug: thoracale hernia",
+  "categorie": "Rug en bekken",
+  "sub": "Voorzichtig strekken en draaien van de bovenrug bij discusklachten.",
+  "oefeningen": [
+   "Thoracale extensie – liggend",
+   "Rug extensie",
+   "Romp draaien – zittend",
+   "Yoga snake"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Nek: preventie bij zittend werk",
+  "categorie": "Nek",
+  "sub": "Nek en bovenrug bewegen om nekklachten achter het bureau te voorkomen.",
+  "oefeningen": [
+   "Nek buigen – zittend actief",
+   "Nek strekken – zittend actief",
+   "Nek draaien – zittend actief",
+   "Nek zijwaarts buigen – zittend actief",
+   "Levator scapulae rek – zittend actief",
+   "Thoracale extensie – zittend",
+   "Thoracale extensie – liggend",
+   "Seated chest opener",
+   "Kin intrekken – zittend actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Rug: lumbale hernia",
+  "categorie": "Rug en bekken",
+  "sub": "Strekken, draaien en ontlasten van de lage rug bij een hernia.",
+  "oefeningen": [
+   "Knie naar borst – liggend",
+   "Romp draaien – liggend",
+   "Rug strekken – liggend",
+   "Rug extensie",
+   "Romp zijwaarts buigen – staand",
+   "Bekken kantelen – zittend",
+   "Rug strekken – staand"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ }
+]
