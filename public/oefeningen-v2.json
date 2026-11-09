@@ -3011,7 +3011,8 @@
   "groep": "Rug",
   "img": "images/rug/romp-draaien-zittend-line-v1.png",
   "coreExerciseId": "fc_e71478262a4e04f1",
-  "uitleg": "Zit rechtop op een stoel met je armen gekruist voor je borst. Draai je bovenlichaam rustig naar één kant en kom langzaam terug naar het midden. Wissel daarna van kant."
+  "uitleg": "Zit rechtop op een stoel met je armen gekruist voor je borst. Draai je bovenlichaam rustig naar één kant en kom langzaam terug naar het midden. Wissel daarna van kant.",
+  "kaartImg": "images/rug/romp-draaien-zittend-avatar-v8.jpg"
  },
  {
   "naam": "Romp draaien – staand",
@@ -3250,7 +3251,8 @@
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-line-v1.png",
   "coreExerciseId": "fc_260474f39a0df7c1",
-  "uitleg": "Sta rechtop op je ene been, met je andere voet los van de grond. Draai je hoofd rustig naar links en daarna langzaam naar rechts, terwijl je in balans blijft."
+  "uitleg": "Sta rechtop op je ene been, met je andere voet los van de grond. Draai je hoofd rustig naar links en daarna langzaam naar rechts, terwijl je in balans blijft.",
+  "kaartImg": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-avatar-v8.jpg"
  },
  {
   "naam": "Gewicht verplaatsen voor-achter – met steun",
@@ -3281,7 +3283,8 @@
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-line-v1.png",
   "coreExerciseId": "fc_aa25189df7f2b3d1",
-  "uitleg": "Sta rechtop met je voeten op heupbreedte, zonder steun. Verplaats je gewicht rustig van je ene been naar je andere been en beweeg langzaam weer terug, met je voeten plat op de grond."
+  "uitleg": "Sta rechtop met je voeten op heupbreedte, zonder steun. Verplaats je gewicht rustig van je ene been naar je andere been en beweeg langzaam weer terug, met je voeten plat op de grond.",
+  "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-avatar-v8.jpg"
  },
  {
   "naam": "Reiken in stand – met steun",
@@ -3351,21 +3354,24 @@
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-line-v1.png",
   "coreExerciseId": "fc_627a00c690415086",
-  "uitleg": "Sta rechtop voor een laag obstakel, zoals een opgerolde handdoek, en houd met één hand een stevige stoel vast. Stap met één been over het obstakel heen terwijl je andere been blijft staan. Stap daarna met hetzelfde been terug naar je beginhouding."
+  "uitleg": "Sta rechtop voor een laag obstakel, zoals een opgerolde handdoek, en houd met één hand een stevige stoel vast. Stap met één been over het obstakel heen terwijl je andere been blijft staan. Stap daarna met hetzelfde been terug naar je beginhouding.",
+  "kaartImg": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-avatar-v8.jpg"
  },
  {
   "naam": "Over een obstakel stappen – zonder steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-line-v1.png",
   "coreExerciseId": "fc_b1763a1f5e6f37b6",
-  "uitleg": "Leg een laag obstakel, zoals een opgerolde handdoek, een paar passen voor je op de grond en sta rechtop zonder steun. Loop in je gewone tempo naar het obstakel en stap eroverheen zonder af te remmen. Draai om, loop terug en stap er nu met je andere voet eerst overheen."
+  "uitleg": "Leg een laag obstakel, zoals een opgerolde handdoek, een paar passen voor je op de grond en sta rechtop zonder steun. Loop in je gewone tempo naar het obstakel en stap eroverheen zonder af te remmen. Draai om, loop terug en stap er nu met je andere voet eerst overheen.",
+  "kaartImg": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-avatar-v8.jpg"
  },
  {
   "naam": "Draaien op de plaats – met steun",
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-line-v1.png",
   "coreExerciseId": "fc_93b7f045f74e310c",
-  "uitleg": "Sta rechtop met je voeten op heupbreedte, naast een aanrecht of stevige tafel die je met één hand kunt vastpakken. Draai met kleine stapjes een heel rondje op de plaats en pak de steun weer vast zodra dat nodig is. Draai daarna ook een rondje de andere kant op."
+  "uitleg": "Sta rechtop met je voeten op heupbreedte, naast een aanrecht of stevige tafel die je met één hand kunt vastpakken. Draai met kleine stapjes een heel rondje op de plaats en pak de steun weer vast zodra dat nodig is. Draai daarna ook een rondje de andere kant op.",
+  "kaartImg": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-avatar-v8.jpg"
  },
  {
   "naam": "Draaien op de plaats – zonder steun",
@@ -3404,7 +3410,8 @@
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/reiken-met-aangedane-arm-functionele-combinatie-line-v1.png",
   "coreExerciseId": "fc_cfc59cb0beb2fdd6",
-  "uitleg": "Zit rechtop aan een tafel. Reik met je aangedane arm rustig naar een voorwerp, pak het op en zet het op een andere plek. Breng je arm daarna langzaam terug."
+  "uitleg": "Zit rechtop aan een tafel. Reik met je aangedane arm rustig naar een voorwerp, pak het op en zet het op een andere plek. Breng je arm daarna langzaam terug.",
+  "kaartImg": "images/neurologische-revalidatie/reiken-met-aangedane-arm-functionele-combinatie-avatar-v8.jpg"
  },
  {
   "naam": "Hand openen na grijpen – bilateraal",
@@ -3419,7 +3426,8 @@
   "groep": "Neurologische revalidatie",
   "img": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-line-v1.png",
   "coreExerciseId": "fc_b8ee989efbfcfab7",
-  "uitleg": "Zit rechtop op een stoel met je armen gekruist voor je borst. Draai je romp rustig naar één kant, kom langzaam terug en draai daarna naar de andere kant."
+  "uitleg": "Zit rechtop op een stoel met je armen gekruist voor je borst. Draai je romp rustig naar één kant, kom langzaam terug en draai daarna naar de andere kant.",
+  "kaartImg": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-avatar-v8.jpg"
  },
  {
   "naam": "Symmetrisch opstaan – met fysieke steun",
@@ -3530,7 +3538,8 @@
   "groep": "Vestibulair",
   "img": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-line-v1.png",
   "coreExerciseId": "fc_bfb33b0593c691bb",
-  "uitleg": "Sta rechtop en kies een doel op ooghoogte, bijvoorbeeld een punt op de muur. Loop rustig vooruit en draai je hoofd langzaam van links naar rechts terwijl je naar het doel blijft kijken."
+  "uitleg": "Sta rechtop en kies een doel op ooghoogte, bijvoorbeeld een punt op de muur. Loop rustig vooruit en draai je hoofd langzaam van links naar rechts terwijl je naar het doel blijft kijken.",
+  "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-avatar-v8.jpg"
  },
  {
   "naam": "Blikstabilisatie verticaal – zittend langzaam",
@@ -3762,7 +3771,8 @@
   "groep": "Sportrevalidatie",
   "img": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-line-v1.png",
   "coreExerciseId": "fc_503d65aa09365e1d",
-  "uitleg": "Ga op een lage step staan met je voeten op heupbreedte. Buig licht door je knieën, spring rustig van de step en land zacht op één been op de mat, met je enkel, knie en heup gebogen."
+  "uitleg": "Ga op een lage step staan met je voeten op heupbreedte. Buig licht door je knieën, spring rustig van de step en land zacht op één been op de mat, met je enkel, knie en heup gebogen.",
+  "kaartImg": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-avatar-v8.jpg"
  },
  {
   "naam": "Laterale shuffle – submaximaal",
@@ -3777,7 +3787,8 @@
   "groep": "Sportrevalidatie",
   "img": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-line-v1.png",
   "coreExerciseId": "fc_cd28b12babdbd052",
-  "uitleg": "Zet twee pionnen een paar meter uit elkaar en sta rechtop bij de eerste pion. Loop of jog rustig vooruit naar de andere pion en ga daarna achteruit joggend terug naar het begin. Maak het tempo daarna langzaam wat hoger."
+  "uitleg": "Zet twee pionnen een paar meter uit elkaar en sta rechtop bij de eerste pion. Loop of jog rustig vooruit naar de andere pion en ga daarna achteruit joggend terug naar het begin. Maak het tempo daarna langzaam wat hoger.",
+  "kaartImg": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-avatar-v8.jpg"
  },
  {
   "naam": "Sprinttechniek marcheren – techniek langzaam",
