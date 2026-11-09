@@ -29,6 +29,11 @@ assert.match(TPRIV.nl.b, /fysiotherapeut erbij schreef/);
 assert.match(TMG.nl.l1, /fysiotherapeut erbij schreef/, "Mijn gegevens noemt ook doel en opmerking");
 assert.doesNotMatch(html, /\.privregel\{[^}]*color:var\(--zacht\)/, "privacyregel met leesbaar contrast");
 assert.match(html, /replaceState\(null,'','\/k\?gewist=1'\)/);
+// Legal 2026-11-09: ook de oefenbeelden van deze kaart uit de offline-cache, en de hele
+// cache als er geen andere kaart op de telefoon staat.
+assert.match(html, /wisOfflineKopie\(\)\.then\(klaar,klaar\)/, "wissen gebruikt wisOfflineKopie");
+assert.match(html, /if\(!anderen\)return caches\.delete\(n\)/, "geen andere kaart: hele cache weg");
+assert.match(html, /beelden\[u\.pathname\]/, "beelden van deze kaart gaan mee");
 console.log("test-kaart-wis-telefoon: statisch OK");
 
 let pw = null;
@@ -68,6 +73,9 @@ if (pw) {
       localStorage.setItem("fp_wacht_" + i, JSON.stringify({ a: { pad: "/api/kaart/meting", body: {} } }));
       localStorage.setItem("fp_oefdaan_ander12345678", "{}");
     }, id);
+    // offline-cache gevuld (service worker) plus een gedeeld plaatje en de bibliotheek
+    await page.waitForFunction(async (i) => { const ns = await caches.keys(); for (const n of ns) { const c = await caches.open(n); if (await c.match("/k/" + i)) return true; } return false; }, id, { timeout: 15000, polling: 250 });
+    await page.evaluate(async () => { const c = await caches.open("fysiplan-kaart-v2"); await c.put("/oefeningen.json", new Response("[]")); await c.put("/beelden/test-oefening.png", new Response("x")); });
     let vraag = "";
     page.once("dialog", (d) => { vraag = d.message(); d.accept(); });
     await page.click("#mgblok summary");
@@ -77,6 +85,8 @@ if (pw) {
     const over = await page.evaluate(() => Object.keys(localStorage).filter((k) => k.startsWith("fp_")).sort());
     assert.deepEqual(over, ["fp_oefdaan_ander12345678"], "alleen de andere kaart blijft");
     assert.match(page.url(), /\/k\?gewist=1$/);
+    const restCache = await page.evaluate(async () => { const uit = []; for (const n of await caches.keys()) { const c = await caches.open(n); for (const r of await c.keys()) uit.push(r.url); } return uit; });
+    assert.deepEqual(restCache, [], "geen andere kaart: niets meer in de offline-cache (ook geen beelden of bibliotheek)");
     await page.reload();
     await page.waitForSelector("#mg_weg", { state: "visible", timeout: 5000 });
     assert.equal(await page.isVisible("#wrap"), false, "herladen opent de kaart niet opnieuw");
