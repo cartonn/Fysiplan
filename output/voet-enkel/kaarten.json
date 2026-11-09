@@ -1,0 +1,373 @@
+[
+ {
+  "naam": "Enkel na acuut letsel fase 1",
+  "categorie": "Enkel en voet",
+  "sub": "Eerste dagen na een enkelblessure: de enkel rustig bewegen binnen de pijngrens.",
+  "fase": 1,
+  "oefeningen": [
+   "Enkel alfabet schrijven – zittend",
+   "Voet naar buiten – zittend actief",
+   "Voet naar binnen – zittend actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Enkel na acuut letsel fase 2",
+  "categorie": "Enkel en voet",
+  "sub": "De enkel weer belasten en de eerste kracht terugwinnen na een blessure.",
+  "fase": 2,
+  "oefeningen": [
+   "Enkel alfabet schrijven – zittend",
+   "Enkel optrekken – zittend actief",
+   "Enkel wegduwen – zittend actief",
+   "Kuitheffing – op een verhoging",
+   "Eenbeenstand – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Enkel na acuut letsel fase 3",
+  "categorie": "Enkel en voet",
+  "sub": "Kracht, balans en de eerste sprongen opbouwen na een enkelblessure.",
+  "fase": 3,
+  "oefeningen": [
+   "Eenbeenstand – zonder steun",
+   "Kuitheffing – op één been",
+   "Enkel alfabet schrijven – zittend",
+   "Hinkelen in een X-patroon"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Enkel na acuut letsel fase 4-5",
+  "categorie": "Enkel en voet",
+  "sub": "Lopen op de tenen, hinkelen en springen als voorbereiding op sport na een enkelblessure.",
+  "fase": 4,
+  "oefeningen": [
+   "Hinkelen in een X-patroon",
+   "Op je tenen lopen",
+   "Eenbeenstand – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Enkelverstuiking fase 1",
+  "categorie": "Enkel en voet",
+  "sub": "Na een verzwikte enkel: bewegen in alle richtingen, kuit rekken en de eerste balans.",
+  "fase": 1,
+  "oefeningen": [
+   "Voet naar binnen – zittend actief",
+   "Voet naar buiten – zittend actief",
+   "Enkel wegduwen – zittend actief",
+   "Enkel optrekken – zittend actief",
+   "Eenbeenstand – zonder steun",
+   "Kuitrek gestrekte knie – staand met steun"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Enkelverstuiking fase 2",
+  "categorie": "Enkel en voet",
+  "sub": "Kracht met elastiek, kuitheffingen en balans na een verzwikte enkel.",
+  "fase": 2,
+  "oefeningen": [
+   "Voet naar binnen – met elastiek",
+   "Voet naar buiten – met elastiek",
+   "Standing chair calfs raises",
+   "Op je tenen lopen",
+   "Kuitheffing – op één been",
+   "Eenbeenstand – zonder steun",
+   "Hoppen op de plaats – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Enkelbreuk",
+  "categorie": "Enkel en voet",
+  "sub": "Beweeglijkheid en kuitkracht terugwinnen na een gebroken enkel, als belasten weer mag.",
+  "oefeningen": [
+   "Knie naar voren over voet – met elastiek om de enkel",
+   "Kuitrek gestrekte knie – op een verhoging",
+   "Kuitrek gebogen knie – op een verhoging",
+   "Kuit laten zakken op een verhoging – excentrisch",
+   "Standing chair calfs raises",
+   "Voet naar binnen en omlaag – met elastiek, been over de knie",
+   "Voet naar buiten – met elastiek",
+   "Tandemstand – zonder steun",
+   "Eenbeenstand – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Voetbreuk",
+  "categorie": "Enkel en voet",
+  "sub": "Kuit en enkel soepel en sterk maken na een breuk in de voet.",
+  "oefeningen": [
+   "Eenbeenstand – met hoofdbeweging",
+   "Kuitrek gebogen knie – staand met steun",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Voet naar buiten – met elastiek",
+   "Voet naar binnen – met elastiek",
+   "Kuitheffing – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Achillespees fase 1",
+  "categorie": "Enkel en voet",
+  "sub": "Prikkelbare achillespees: rustig bewegen en de kuit licht belasten.",
+  "fase": 1,
+  "oefeningen": [
+   "Enkelpomp – ruglig",
+   "Standing chair calfs raises",
+   "Seated calfs raises"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Achillespees fase 2-3",
+  "categorie": "Enkel en voet",
+  "sub": "Kuitkracht opbouwen bij achillespeesklachten met kuitheffingen op twee benen en op één been.",
+  "fase": 2,
+  "oefeningen": [
+   "Kuitheffing – op een verhoging",
+   "Kuitheffing – op één been",
+   "Seated calfs raises"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "15"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Achillespees fase 4",
+  "categorie": "Enkel en voet",
+  "sub": "Zware kuitbelasting voor de achillespees, met langzaam laten zakken op een verhoging.",
+  "fase": 4,
+  "oefeningen": [
+   "Kuit laten zakken op een verhoging – excentrisch",
+   "Kuitheffing – op een verhoging",
+   "Kuitheffing – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "15"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Voetzoolpijn (fasciitis plantaris)",
+  "categorie": "Enkel en voet",
+  "sub": "Voetzool en kuit rekken en losmaken bij pijn onder de hiel.",
+  "oefeningen": [
+   "Voetzool rekken – tenen naar je toe trekken",
+   "Voetzool rollen – over een koude fles",
+   "Voetzool rekken – tenen tegen de muur",
+   "Kuitrek gestrekte knie – op een verhoging",
+   "Kuitrek gebogen knie – op een verhoging"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Scheenbeenklachten",
+  "categorie": "Enkel en voet",
+  "sub": "Spieren van onderbeen en voet sterker en soepeler maken bij pijn langs het scheenbeen.",
+  "oefeningen": [
+   "Voeten naar buiten en binnen rollen – met elastiek",
+   "Voet naar binnen en omlaag – met elastiek, been over de knie",
+   "Buitenkant onderbeen rollen – foamroller"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Enkelartrose",
+  "categorie": "Enkel en voet",
+  "sub": "De enkel soepel en de kuit sterk houden bij slijtage van het enkelgewricht.",
+  "oefeningen": [
+   "Seated ankle rotations",
+   "Voet naar binnen – met elastiek",
+   "Kuitrek gestrekte knie – staand met steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Enkel sterker maken – basis",
+  "categorie": "Enkel en voet",
+  "sub": "Balans, lopen op de tenen en lichte sprongen om de enkel sterker en stabieler te maken.",
+  "oefeningen": [
+   "Eenbenige kniebuiging – met armzwaai",
+   "Renhouding op één been",
+   "Huppelen op de voorvoeten – gestrekte knieën",
+   "Op je tenen lopen",
+   "Eenbeenstand – been zijwaarts zwaaien",
+   "Kuitheffing – op een verhoging",
+   "Balans op 1 been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Enkel sterker maken – vervolg",
+  "categorie": "Enkel en voet",
+  "sub": "Zwaardere balans- en sprongoefeningen voor wie de basis voor de enkel onder de knie heeft.",
+  "oefeningen": [
+   "Eenbenige kniebuiging – met armzwaai",
+   "Kuitheffing – op een verhoging",
+   "Eenbeenstand – zonder steun",
+   "Op je tenen lopen",
+   "Renhouding op één been",
+   "Balans op 1 been",
+   "Huppelen op de voorvoeten – gestrekte knieën",
+   "Eenbeenstand – been zijwaarts zwaaien"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Kind: hielpijn in de groei",
+  "categorie": "Enkel en voet",
+  "sub": "Kuit rekken en rustig versterken voor kinderen met hielpijn tijdens de groei.",
+  "oefeningen": [
+   "Kuitrek gestrekte knie – staand met steun",
+   "Kuitrek gebogen knie – staand met steun",
+   "Kuitheffing – op een verhoging"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Voet: disfunctie tibialis posterior – balans en beenkracht",
+  "categorie": "Enkel en voet",
+  "sub": "Vervolg op de basiskaart: balans op één been, lopen op de tenen en beenkracht voor een stabiele voetboog.",
+  "oefeningen": [
+   "Op je tenen lopen",
+   "Eenbenige kniebuiging – en op de tenen komen",
+   "Eenbeenstand – been zijwaarts zwaaien",
+   "Eenbenige kniebuiging – met armzwaai",
+   "Uitvalspas achterwaarts – met halters"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Voet: disfunctie tibialis posterior",
+  "categorie": "Enkel en voet",
+  "sub": "Kuit en voetboog sterker maken bij klachten aan de binnenkant van enkel en voet.",
+  "oefeningen": [
+   "Foam roller calf",
+   "Voetzool rekken – tenen tegen de muur",
+   "Voet naar binnen – met elastiek",
+   "Seated calfs raises",
+   "Standing chair calfs raises",
+   "Calf raises",
+   "Kuitheffing – op één been",
+   "Kuit laten zakken op een verhoging – excentrisch",
+   "Knie naar voren over voet – met elastiek om de enkel",
+   "Kuitrek gestrekte knie – op een verhoging"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Kind: lopen op de tenen",
+  "categorie": "Algemeen en sport",
+  "sub": "Balans en voetafwikkeling oefenen voor kinderen die op hun tenen lopen.",
+  "oefeningen": [
+   "Kuitrek gestrekte knie – staand met steun",
+   "Kuitrek gebogen knie – staand met steun",
+   "Tandemstand – zonder steun",
+   "Bear crawls",
+   "Achterwaarts stappen – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Valpreventie: kracht en balans",
+  "categorie": "Ouderen en balans",
+  "sub": "Opstaan, stappen en evenwicht oefenen om vallen te voorkomen.",
+  "oefeningen": [
+   "Bruggen beginner",
+   "Functioneel opstaan – functioneel",
+   "Step up tempo",
+   "Calf raises",
+   "Voeten naast elkaar staan – zonder steun",
+   "Voeten naast elkaar staan – met steun",
+   "Zijwaarts stappen – zonder steun",
+   "Reiken in stand – zonder steun",
+   "Tandemstand – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "aanvullen"
+ }
+]
