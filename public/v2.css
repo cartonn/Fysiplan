@@ -743,4 +743,21 @@ html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
   html.v2 #a4 .pic .vid,html.v2 #a4 .pic .rm{width:calc(24px / var(--a4z,1));height:calc(24px / var(--a4z,1))}
   html.v2 #a4 .pic .rm{line-height:calc(23px / var(--a4z,1));font-size:calc(15px / var(--a4z,1))}
   html.v2 #a4 .pic .vid::after,html.v2 #a4 .pic .rm::after{inset:calc(-10px / var(--a4z,1))}
+/* Laptop- en iPad-schermen (Ahmed, 2026-11-09): alles blijft goed zichtbaar.
+   - Tablet liggend/kleine laptop (921-1099px): de toetsenbordhint paste niet in de
+     smalle kolom en viel rechts weg; die hint is op een iPad ook niet nodig.
+   - Categorieblok tot 1099px: geen half afgesneden rij meer, maar volle rijen met een
+     zachte vervaging onderaan, zodat duidelijk is dat er meer staat (scrollen). */
+@media screen and (min-width:921px) and (max-width:1099px){
+  html.v2 .search-hint{display:none}
+  html.v2 #filters{max-height:112px}
+}
+@media screen and (max-width:1099px){
+  html.v2 #filters{padding-bottom:14px;
+    -webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 22px),transparent);
+    mask-image:linear-gradient(180deg,#000 calc(100% - 22px),transparent)}
+}
+/* Aanraakschermen (iPad): de logoknop op de kaart was te klein om te tikken. */
+@media screen and (pointer:coarse){
+  html.v2 #logoBtn{min-height:30px;padding:6px 14px;font-size:13px}
 }
