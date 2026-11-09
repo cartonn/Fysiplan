@@ -77,3 +77,5 @@ jobs:
       - run: npm run test:profielovername
       - run: npm run test:vensterterug
       - run: npm run test:inboxmijn
+      - run: npm run test:dubbelklikoverzicht
+      - run: npm run test:kaart200taal
