@@ -72,3 +72,17 @@ Per oefening: `<slug>.png` = lijntekening, `<slug>-avatar.png` = avatar (begin b
 
 Totaal: goed 25, matig 3, fout 1.
 Kosten schouder totaal: ca. 330 credits (proefset 130 + rest ca. 200).
+
+## Catalogusoefeningen zonder beeld (aanvulling)
+
+| slug | oefening | **oordeel** | opmerking |
+|---|---|---|---|
+| schouder-naar-binnen-draaien-isometrisch-tegen-de-muur | Schouder naar binnen draaien – isometrisch tegen de muur | **goed** | catalogus; statisch |
+| schouder-naar-binnen-draaien-met-elastiek | Schouder naar binnen draaien – met elastiek | **goed** | catalogus; vervangt oefening 3 (fout) |
+| schouder-zijwaarts-heffen-actief | Schouder zijwaarts heffen – actief | **goed** | catalogus |
+| schouderblad-omhoog-draaien-met-elastiek | Schouderblad omhoog draaien – met elastiek | **goed** | catalogus |
+| schouder-naar-buiten-draaien-actief | Schouder naar buiten draaien – actief | **goed** | catalogus |
+| horizontaal-openen-met-elastiek | Horizontaal openen – met elastiek | **goed** | catalogus |
+| schouder-pendelen-actief | Schouder pendelen – actief | **matig** | catalogus; slingerbeweging klein zichtbaar |
+
+Catalogusaanvulling: goed 6, matig 1. Kosten ca. 70 credits.
