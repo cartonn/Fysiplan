@@ -538,31 +538,6 @@
       }
     },
     {
-      "name": "Squat lunges",
-      "text": "Squat lunges. Sta in een ruime spreidstand met een been voor en de stang op je bovenrug. Zak recht naar beneden door beide knieën en duw jezelf rustig weer omhoog zonder van stand te wisselen.",
-      "src": "/audio/noor/e3e4512b74a4876069754cbe2b09f3974e0817fc471aaa0bc62929bbbf768d52.mp3",
-      "duration": 11.493878,
-      "provenance": {
-        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
-        "requestId": "6204d21a-7147-4182-8955-773b53f58619",
-        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
-        "providerVoice": "Marieke",
-        "requestedEngine": "heygen_voice",
-        "speed": 0.95,
-        "language": "nl",
-        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
-        "sourceSha256": "e71fc4c3002ca62f4c28a203ecc7c3ac3dfb82478712a3b5acd493fe25a28875",
-        "mp3Sha256": "6a8ba89b9f776acc8bad6ab202c3b87daa99fff8d0e4c032d2c5aaa34230e813",
-        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
-        "exactCatalogTextMatch": true,
-        "userListeningApproval": null,
-        "agentListeningReviewed": false,
-        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"Squat lunges\" als \"Squadlunches\", \"spreidstand\" als \"sprijtstand\")",
-        "clinicalApproved": false,
-        "previousSrc": "/audio/noor/6afe6423b0fdfd64258c85941c87b87ce63f9929c58128f268874b2ad05fa96f.mp3"
-      }
-    },
-    {
       "name": "Standing abduction",
       "text": "Standing abduction. Sta rechtop met een enkelband om je enkel, laag vastgemaakt aan de kant van je standbeen, en houd je vast aan een rek. Beweeg je gestrekte been zijwaarts van je af en breng het rustig weer terug.",
       "src": "/audio/noor/799a8cfdc3cf1a24a250b9906e7e47b0dde9d87a5af387fda4f15c853dc3cb60.mp3",
@@ -983,31 +958,6 @@
         "userListeningApproval": null,
         "agentListeningReviewed": false,
         "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt (naam als \"reverse flyers\")",
-        "clinicalApproved": false,
-        "previousSrc": null
-      }
-    },
-    {
-      "name": "Shoulder rotation (shrugs)",
-      "text": "Shoulder rotation (shrugs). Sta rechtop met in elke hand een gewicht, armen gestrekt langs je lichaam en handpalmen naar je toe. Trek je schouders op richting je oren, draai ze naar achteren en laat ze rustig zakken.",
-      "src": "/audio/noor/86981341cf861b268503c8e9403ecc18136d404bad78502e5f0ba95f44cfb988.mp3",
-      "duration": 13.949388,
-      "provenance": {
-        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
-        "requestId": "a53a50a88d984a84a10266c7eff40a6c",
-        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
-        "providerVoice": "Marieke",
-        "requestedEngine": "heygen_voice",
-        "speed": 0.95,
-        "language": "nl",
-        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
-        "sourceSha256": "53e5effc6ac233bdb440eb89b78c2b975af9bcfeece480bcaba424983a3068d1",
-        "mp3Sha256": "3ded7c016ebe350f2a9389f3fd6552bd50a3b96adb745a6ec3e58e74e7d986ad",
-        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
-        "exactCatalogTextMatch": true,
-        "userListeningApproval": null,
-        "agentListeningReviewed": false,
-        "asrCheck": "Whisper small (nl): volledige tekst herkend, einde niet afgekapt",
         "clinicalApproved": false,
         "previousSrc": null
       }

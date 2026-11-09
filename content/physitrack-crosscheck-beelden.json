@@ -1672,6 +1672,20 @@
         "v2": 1,
         "v1": 1,
         "reden": "Avatar houdt maar één hand achter het hoofd en legt de andere hand op de opgetilde knie; beide handen horen achter het hoofd, zoals in tekening en Physitrack"
+      },
+      {
+        "nr": 38,
+        "naam": "Shoulder rotation (shrugs)",
+        "v2": 1,
+        "v1": 1,
+        "reden": "recht omhoog en omlaag, zoals tekening en Physitrack (shrug); keuze volgens advies, Ahmed 10:40 \"volg je eigen advies\""
+      },
+      {
+        "nr": 66,
+        "naam": "Squat lunges",
+        "v2": 1,
+        "v1": 1,
+        "reden": "zonder stang, zoals tekening en Physitrack (split squat); avatar met stang wordt opnieuw gemaakt"
       }
     ],
     "wachtOpTekening": [
@@ -1687,8 +1701,6 @@
       497
     ],
     "openVraag": [
-      38,
-      66,
       212,
       390,
       551

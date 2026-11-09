@@ -71,8 +71,8 @@ for(const v of verwacht){
 // en Dips met de voeten los tussen de leggers,
 // en Yoga knee to chest hip stretch zittend, zoals tekening, avatar en Physitrack (Seated knee hugs).
 // Elke andere wijziging van dit bestand laat deze test falen.
-// 2026-11-09 ronde 3: 15 V1-uitleggen volgens Physitrack (content/physitrack-crosscheck-beelden.json uitlegRonde3).
-assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'394e0cd35c5ae5f1d6e6b6b7c44057b334131658ebc01f349303bb37baed2a7e','public/oefeningen.json is ongewijzigd');
+// 2026-11-09 ronde 3: 17 V1-uitleggen volgens Physitrack (content/physitrack-crosscheck-beelden.json uitlegRonde3).
+assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'3ea7efbda96af3a8d825eebe35f6cf04d9aaa51b4317fe5d4f133ff35ba4a7a2','public/oefeningen.json is ongewijzigd');
 assert.notEqual(v2.find(x=>x.exerciseId==='fp_514654a0d4181742').kaartImg,v2.find(x=>x.exerciseId==='fp_5319c4700561725d').kaartImg);
 // geen bestand verplaatst, hernoemd of overschreven
 assert.equal(sha(HEUP),BEELD_KNIEHEFFING);assert.equal(sha(KNIE),BEELD_HEUPEXTENSIE);
