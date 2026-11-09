@@ -9,7 +9,7 @@ import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
-import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, MAX_THERAPEUTEN } from "./lib/mollie.js";
+import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, MAX_THERAPEUTEN } from "./lib/mollie.js";
 import { volgendFactuurNr, factuurHtml, isFactuur } from "./lib/factuur.js";
 
 const port = Number(process.env.PORT || 3000);
@@ -619,6 +619,9 @@ function proefVars(p, extra = {}) {
   const d = dagenOver(p.verloopt);
   return { NAAM: (p.naam || "").split(" ")[0], EMAIL: p.email, TEL: telefoonWeergave(p.tel), EINDDATUM: datumNl(p.verloopt),
     DAGEN_TEKST: d <= 1 ? "vandaag nog" : d + " dagen", TITEL: "Proef voorbij",
+    MIJN_KOP: p.klant ? "Hoi " + (p.naam || "").split(" ")[0] + ", fijn dat je Fysiplan gebruikt." : "Hoi " + (p.naam || "").split(" ")[0] + ", je proef loopt nog " + (d <= 1 ? "vandaag nog" : d + " dagen") + ".",
+    MIJN_LEAD_HTML: p.klant ? "Je account staat op " + htmlEsc(p.email) + "."
+      : "Tot en met <b>" + htmlEsc(datumNl(p.verloopt)) + "</b> gebruik je Fysiplan gratis. Je proef staat op " + htmlEsc(p.email) + ".",
     AFREKENEN: mollieAan() ? "Liever meteen geregeld? Reken de eerste maand hieronder online af." : "Online afrekenen is niet nodig.",
     BETAAL_HTML: betaalBlok(p), ...extra };
 }
@@ -633,12 +636,10 @@ const mollieAan = () => !!MOLLIE_SLEUTEL;
 const mollieBetaalIndex = new Map(); // tr_… -> proef-id: de webhook zoekt alleen eigen betalingen op
 for (const p of Object.values(proeven)) if (p.betaling?.id) mollieBetaalIndex.set(p.betaling.id, p.id);
 function betaalBlok(p) {
-  if (!mollieAan() || !p) return "";
+  if (!p) return "";
   const a = p.abonnement;
-  if (a && a.status === "actief") return '<p class="klein" style="margin-top:16px">Je abonnement is actief voor ' + a.aantal +
-    (a.aantal === 1 ? " therapeut" : " therapeuten") + ", betaald tot en met " + htmlEsc(datumNl(a.betaaldTot)) +
-    '. <a href="/v2/proef/factuur">' + (isFactuur(FYSIPLAN_ID) ? "Factuur" : "Betaalbewijs") + " bekijken en printen</a></p>";
-  if (p.klant) return "";
+  if (a && (a.status === "actief" || a.status === "opgezegd")) return abonnementBlok(a);
+  if (!mollieAan() || p.klant) return "";
   return '<form method="post" action="/v2/proef/betalen" class="blad" style="margin-top:18px">' +
     '<h2>Direct online afrekenen</h2><p class="klein" style="font-size:14.5px">&euro; 9,99 per therapeut per maand, exclusief btw, maandelijks opzegbaar. ' +
     "Je betaalt nu de eerste maand met iDEAL of je bankkaart; daarna gaat Fysiplan meteen verder.</p>" +
@@ -647,6 +648,23 @@ function betaalBlok(p) {
     '<div class="veld" style="margin-top:12px"><label for="b_aantal">Aantal therapeuten</label>' +
     '<input id="b_aantal" name="aantal" type="number" inputmode="numeric" min="1" max="' + MAX_THERAPEUTEN + '" value="1" required/></div>' +
     '<div class="knoppen"><button class="knop oranje" type="submit">Eerste maand betalen</button></div></form>';
+}
+// Mijn abonnement: status, factuur, en zelf opzeggen (of de opzegging intrekken) in de app.
+// Opzeggen gaat in per het einde van de al betaalde maand; er wordt niets teruggeboekt.
+function abonnementBlok(a) {
+  const therapeuten = a.aantal + (a.aantal === 1 ? " therapeut" : " therapeuten");
+  const tot = htmlEsc(datumNl(a.betaaldTot));
+  const factuur = '<a href="/v2/proef/factuur">' + (isFactuur(FYSIPLAN_ID) ? "Factuur" : "Betaalbewijs") + " bekijken en printen</a>";
+  if (a.status === "opgezegd") return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement is opgezegd</h2>' +
+    '<p class="klein" style="font-size:14.5px">Je kunt Fysiplan nog gebruiken tot en met <b>' + tot + "</b> (" + therapeuten + "). " +
+    "Daarna schrijven we niets meer af. Je kaarten kun je tot die tijd downloaden of wissen op <a href=\"/v2/gegevens\">Mijn gegevens</a>. " + factuur + ".</p>" +
+    '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="intrekken"/>' +
+    '<div class="knoppen"><button class="knop oranje" type="submit">Toch doorgaan</button></div></form></div>';
+  return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement</h2>' +
+    '<p class="klein" style="font-size:14.5px">Actief voor ' + therapeuten + ", betaald tot en met " + tot + ". " + factuur + ".</p>" +
+    '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="opzeggen"/>' +
+    '<label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, zeg mijn abonnement op per ' + tot + ".</span></label>" +
+    '<div class="knoppen"><button class="knop omlijnd" type="submit">Abonnement opzeggen</button></div></form></div>';
 }
 // haal de betaling zelf op bij Mollie (de webhook is niet ondertekend) en verwerk hem
 async function mollieVerwerk(id) {
@@ -5362,11 +5380,54 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try { await readBody(request, 2048); } catch {}
     const p = proefVan(request);
-    if (p) { proefWis(p.id); await bewaarProeven(); }
+    // na een online betaling blijft wat de fiscale bewaarplicht vraagt (7 jaar); de rest gaat weg
+    if (p) { proefNaPraktijkWissen(p.id); await bewaarProeven(); }
     response.setHeader("set-cookie", proefCookie("", request));
     await serveerProef(request, response, "bericht", { TITEL: "Gegevens gewist", ETIKET: "Gewist", KOP: "Je gegevens zijn gewist.",
       TEKST: "We bewaren niets meer van je aanmelding en je proef is gestopt. Kaarten die je met patiënten deelde blijven werken tot hun bewaartermijn afloopt.",
       KNOP_HTML: '<a class="knop omlijnd" href="/v2">Terug naar de site</a>' });
+    return;
+  }
+  // abonnement opzeggen of de opzegging intrekken, met de eigen proefcookie
+  if (urlPath === "/v2/proef/opzeggen" && request.method === "POST") {
+    response.setHeader("cache-control", "no-store");
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    let b = {};
+    try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
+    const p = proefVan(request);
+    if (!p || !p.abonnement) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
+    const a = p.abonnement, naam = p.praktijk || p.naam, tot = datumNl(a.betaaldTot);
+    const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Terug naar mijn abonnement</a>';
+    if (b.actie === "intrekken") {
+      if (trekOpzeggingIn(p)) {
+        await bewaarProeven();
+        proefMeldAhmed("Opzegging ingetrokken: " + naam, p, "Deze praktijk heeft de opzegging zelf ingetrokken; het abonnement loopt door.");
+      }
+      await serveerProef(request, response, "bericht", { TITEL: "Abonnement", ETIKET: "Abonnement",
+        KOP: a.status === "actief" ? "Fijn, je abonnement loopt door." : "Intrekken kan niet meer.",
+        TEKST: a.status === "actief" ? "Er verandert niets aan je kaarten." : "De betaalde maand is voorbij. Wil je weer verder, druk dan op 'Ja, ik wil doorgaan'.",
+        KNOP_HTML: '<a class="knop oranje" href="/v2/app">Naar mijn kaarten</a> ' + terug });
+      return;
+    }
+    if (b.actie !== "opzeggen" || b.zeker !== "1") {
+      await serveerProef(request, response, "bericht", { TITEL: "Abonnement", ETIKET: "Abonnement", KOP: "Vink eerst aan dat je wilt opzeggen.",
+        TEKST: "Er is niets veranderd aan je abonnement.", KNOP_HTML: terug }, 422);
+      return;
+    }
+    if (markeerOpgezegd(p)) {
+      await bewaarProeven();
+      proefMeldAhmed("Opgezegd: " + naam, p, "Deze praktijk heeft het abonnement zelf opgezegd in de app, per " + tot +
+        ". Zet een eventuele maandincasso bij Mollie stop als die al loopt.");
+      proefMail(p.email, "Bevestiging: je Fysiplan-abonnement is opgezegd", "Hoi " + (p.naam || "").split(" ")[0] + ",\n\n" +
+        "We hebben je opzegging ontvangen. Je kunt Fysiplan nog gebruiken tot en met " + tot + "; daarna schrijven we niets meer af.\n\n" +
+        "Bedacht? Tot die datum trek je de opzegging in via https://fysiplan.nl/v2/proef?mijn=1\n" +
+        "Je kaarten downloaden of wissen kan op https://fysiplan.nl/v2/gegevens\n\nGroet,\nFysiplan");
+    }
+    await serveerProef(request, response, "bericht", { TITEL: "Opgezegd", ETIKET: "Opgezegd",
+      KOP: "Je abonnement is opgezegd.",
+      TEKST: "Je kunt Fysiplan nog gebruiken tot en met " + tot + ". Daarna schrijven we niets meer af." +
+        (mailIngesteld() ? " Je krijgt een bevestiging per e-mail." : ""),
+      KNOP_HTML: '<a class="knop oranje" href="/v2/app">Naar mijn kaarten</a> ' + terug });
     return;
   }
   if (urlPath === "/v2/proef/doorgaan" && request.method === "POST") {

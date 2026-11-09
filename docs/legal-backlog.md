@@ -23,6 +23,13 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **MIDDEL — voorwaarden (2026-11-09, gemeld door de praktijk-routine): opzeggen kan nu ook in de app.**
+  `public/juridisch.html` (abonnement) zegt "Opzeggen doe je per e-mail. Je krijgt een bevestiging." en "Opzegtermijn:
+  in te vullen". Sinds PR "praktijk: abonnement zelf opzeggen" kan een betalende praktijk op /v2/proef?mijn=1 zelf
+  opzeggen; dat gaat in per het einde van de al betaalde maand (`abonnement.betaaldTot`), tot dan kan ze het intrekken,
+  en met mail ingesteld krijgt ze een bevestiging. Voorstel: "Opzeggen doe je in de app (Mijn proef) of per e-mail;
+  het abonnement stopt aan het einde van de betaalde maand." Opzegtermijn blijft een keuze van Ahmed (zie mensenwerk).
+
 - **HOOG — MDR (2026-11-09 01u): de AI-vraaghulp op /k kon een dosering invullen.**
   Een vraag als "Hoeveel herhalingen moet ik doen?", "Hoe vaak per dag?" of "Mag ik zwaarder?" ging naar de AI-dienst,
   die de dosering van de kaart niet meekrijgt en hem dus zelf moest bedenken. Dat is doseringsadvies per patiënt,
