@@ -22,7 +22,10 @@
       "img": "images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png",
       "sha256": "cebc31d53069200b0c17ddfa5f3a239e3bc0407e3d0259be3fe84bdce83bb7e0",
       "bron": null,
-      "bronTitel": "voorbeeldset"
+      "bronTitel": "voorbeeldset",
+      "kaartImg": "images/balans-en-valpreventie/tandemstand-met-steun-avatar-v8.jpg",
+      "kaartSha256": "79066ca1db092ecf2dcb2f5a2aedf1740b5c16b9bbde104721938d5eb6b75d6b",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/424-tandemstand-met-steun-avatar.png"
     },
     {
       "exerciseId": "fp_e0a02c06b8fd582d",
@@ -355,7 +358,10 @@
       "img": "images/balans-en-valpreventie/semi-tandemstand-met-steun-line-v1.png",
       "sha256": "9b78908a842860e9ebbae1047bedd6a931b4c9eb36b74cb3dfed314d592138b4",
       "bron": "https://us.physitrack.com/home-exercise-video/semi-tandem-foot-balance",
-      "bronTitel": "Semi-tandem foot balance (Balance, tandem semi stance)"
+      "bronTitel": "Semi-tandem foot balance (Balance, tandem semi stance)",
+      "kaartImg": "images/balans-en-valpreventie/semi-tandemstand-met-steun-avatar-v8.jpg",
+      "kaartSha256": "35eaf5f47f886a901ebd9c63cb35d2302699f448fa36f0203d8516c16dabaea6",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/421-semi-tandemstand-met-steun-avatar.png"
     },
     {
       "exerciseId": "fp_4ecd3a7fcc64821b",
@@ -364,7 +370,10 @@
       "img": "images/balans-en-valpreventie/semi-tandemstand-zonder-steun-line-v1.png",
       "sha256": "d96a4db8fe8464d6e253b5982bfc62718146508836a73d27848ae1d7ec01f067",
       "bron": "https://au.physitrack.com/home-exercise-video/semi-tandem-stand",
-      "bronTitel": "Semi-Tandem Stand"
+      "bronTitel": "Semi-Tandem Stand",
+      "kaartImg": "images/balans-en-valpreventie/semi-tandemstand-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "9d7eff2cb12aaedb70185101a79d543e22434feb92229407cbb9d099127a0788",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/422-semi-tandemstand-zonder-steun-avatar.png"
     },
     {
       "exerciseId": "fp_1dcd242ec123ba55",
@@ -373,7 +382,10 @@
       "img": "images/balans-en-valpreventie/semi-tandemstand-met-hoofdbeweging-line-v1.png",
       "sha256": "5bf1710652130745687cfda8f80552d3113f6c9ce94f54753e74f27efb37fa95",
       "bron": "https://us.physitrack.com/home-exercise-video/semi-tandem-foot-balance",
-      "bronTitel": "Semi-tandem foot balance (Balance, tandem semi stance)"
+      "bronTitel": "Semi-tandem foot balance (Balance, tandem semi stance)",
+      "kaartImg": "images/balans-en-valpreventie/semi-tandemstand-met-hoofdbeweging-avatar-v8.jpg",
+      "kaartSha256": "7827d493d3f694ce86e05b2c8bd71d8a37848ea6e1177f265ca404453028303b",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/423-semi-tandemstand-met-hoofdbeweging-avatar.png"
     },
     {
       "exerciseId": "fp_08de342719d46ef9",
@@ -382,7 +394,10 @@
       "img": "images/balans-en-valpreventie/tandemstand-zonder-steun-line-v1.png",
       "sha256": "281770b76ee99fc4789cda2e1b0bdb4b87a2d7730f5ff87580ed7e4da8de6c13",
       "bron": "https://us.physitrack.com/home-exercise-video/tandem-stance-balance---version-2",
-      "bronTitel": "Tandem stance balance - version 2"
+      "bronTitel": "Tandem stance balance - version 2",
+      "kaartImg": "images/balans-en-valpreventie/tandemstand-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "d3c4dc7eabe37b3dea86e1c57d09248e970c7efd716e194ad9550836ba2af920",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/425-tandemstand-zonder-steun-avatar.png"
     },
     {
       "exerciseId": "fp_506c830510bf31ca",
@@ -391,7 +406,10 @@
       "img": "images/balans-en-valpreventie/tandemstand-met-hoofdbeweging-line-v1.png",
       "sha256": "1a5dfffda3094ba533ace975c14b602e962a44aaca5f92660a0b97e732edae89",
       "bron": "https://us.physitrack.com/home-exercise-video/tandem-with-head-turns",
-      "bronTitel": "Tandem with head turns (Balance, tandem stance, turning head, arms out to side, beside chair)"
+      "bronTitel": "Tandem with head turns (Balance, tandem stance, turning head, arms out to side, beside chair)",
+      "kaartImg": "images/balans-en-valpreventie/tandemstand-met-hoofdbeweging-avatar-v8.jpg",
+      "kaartSha256": "07c39d3ee027e5f93bb0013937fcb93b1b57f8f4308f7c1433a1982ff3fb504f",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/426-tandemstand-met-hoofdbeweging-avatar-r2.png"
     },
     {
       "exerciseId": "fp_a542ed0f07059b4c",
@@ -400,7 +418,10 @@
       "img": "images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png",
       "sha256": "bcf8d09e18fc31feb513afd007e50c45ddf9787db9bbcb445261d37c7297541e",
       "bron": "https://us.physitrack.com/home-exercise-video/single-leg-stance-close-to-support",
-      "bronTitel": "Single-leg stance close to support"
+      "bronTitel": "Single-leg stance close to support",
+      "kaartImg": "images/balans-en-valpreventie/eenbeenstand-met-steun-avatar-v8.jpg",
+      "kaartSha256": "38be9814bf759bcbdfc3b24355fa9a3f5806ca23cb4422ab9c1a334164ec67b2",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/427-eenbeenstand-met-steun-avatar.png"
     },
     {
       "exerciseId": "fp_f493363db578c800",
@@ -409,7 +430,10 @@
       "img": "images/balans-en-valpreventie/eenbeenstand-zonder-steun-line-v1.png",
       "sha256": "30386f999302840f81a980e33d5b3f35a4fcaedb37182aada5252c6707f85262",
       "bron": "https://au.physitrack.com/home-exercise-video/simple-single-leg-stand",
-      "bronTitel": "Simple single-leg stand"
+      "bronTitel": "Simple single-leg stand",
+      "kaartImg": "images/balans-en-valpreventie/eenbeenstand-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "cceae566f01d3444b4fc96dc896a7c3025932588d425bc7f17ac548c3e0ccabc",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/428-eenbeenstand-zonder-steun-avatar.png"
     },
     {
       "exerciseId": "fp_1a79b62494a25ff5",
@@ -427,7 +451,10 @@
       "img": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png",
       "sha256": "e9f955f4b5eaa4b3f9d735c4e68b3dbb5ed17e1aa4c7d55de3e02a128e09273c",
       "bron": "https://uk.physitrack.com/home-exercise-video/weight-shift-backwards-forwards-(hands-on-hips)",
-      "bronTitel": "Weight Shift Backwards-Forwards (hands on hips)"
+      "bronTitel": "Weight Shift Backwards-Forwards (hands on hips)",
+      "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-avatar-v8.jpg",
+      "kaartSha256": "47316eb566097390f82632f94a1ff0befa894bde0bdbeed9b1d0f392a5ac96f7",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/430-gewicht-verplaatsen-voor-achter-met-steun-avatar-r2.png"
     },
     {
       "exerciseId": "fp_ff9bb036c4fdae80",
@@ -436,7 +463,10 @@
       "img": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-zonder-steun-line-v1.png",
       "sha256": "c54de32c03f3bd34eda399f6008c196cce137318fcba3a5504898172a7a8da8a",
       "bron": "https://uk.physitrack.com/home-exercise-video/weight-shift-backwards-forwards-(hands-on-hips)",
-      "bronTitel": "Weight Shift Backwards-Forwards (hands on hips)"
+      "bronTitel": "Weight Shift Backwards-Forwards (hands on hips)",
+      "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "40613ccd447183c5609201988be4b7b8ce60140b953233267ba2d40e6bdaea1f",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/431-gewicht-verplaatsen-voor-achter-zonder-steun-avatar-r2.png"
     },
     {
       "exerciseId": "fp_08c86a2068731a1d",
@@ -445,7 +475,10 @@
       "img": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png",
       "sha256": "9dc92e9f81e6c0626cda316b00e3fb7bdef1f75ad7ac3dbc430511cf19e84425",
       "bron": "https://us.physitrack.com/home-exercise-video/weight-shift-side-to-side",
-      "bronTitel": "Weight shifting side-to-side close to support"
+      "bronTitel": "Weight shifting side-to-side close to support",
+      "kaartImg": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-avatar-v8.jpg",
+      "kaartSha256": "907b2456fc466254870cb394af693e6faa210796e1242941508d6f7fd85981ee",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/432-gewicht-verplaatsen-zijwaarts-met-steun-avatar.png"
     },
     {
       "exerciseId": "fp_0f3a9b39b0d96f9b",
@@ -463,7 +496,10 @@
       "img": "images/balans-en-valpreventie/reiken-in-stand-met-steun-line-v1.png",
       "sha256": "a7ae7c96d042def591a3a50b9f81759491965337bc393f3ce64d6fe19991171d",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/balans-en-valpreventie/reiken-in-stand-met-steun-avatar-v8.jpg",
+      "kaartSha256": "bfa98812b199bdee15f64ca5ab0e4af8a816601b5f82713bcf2497aa5352168f",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/434-reiken-in-stand-met-steun-avatar.png"
     },
     {
       "exerciseId": "fp_b79de58eeff05195",
@@ -472,7 +508,10 @@
       "img": "images/balans-en-valpreventie/reiken-in-stand-zonder-steun-line-v1.png",
       "sha256": "0bd771c83245b7036b91928a84659108909d3acbae162024119541c3da3915a4",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/balans-en-valpreventie/reiken-in-stand-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "16deab09e86e6af2ae7bbdb5348e58d4f46b04d0f14b55d467763904985ff559",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/435-reiken-in-stand-zonder-steun-avatar.png"
     },
     {
       "exerciseId": "fp_391ce36b8dd87d72",
@@ -481,7 +520,10 @@
       "img": "images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png",
       "sha256": "080ca25b97e5dc2b9feb3b9b9540983dd1c621224d6f567af364e31c98381fdd",
       "bron": "https://ca.physitrack.com/home-exercise-video/marching-on-spot---close-to-a-stable-surface",
-      "bronTitel": "Marching on spot - close to a stable surface"
+      "bronTitel": "Marching on spot - close to a stable surface",
+      "kaartImg": "images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-avatar-v8.jpg",
+      "kaartSha256": "a10875eff58ac1ae041e6bfdad2f9a0c5f415e7d8f78e9b00fb4c2c9688b6ff4",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/436-op-de-plaats-marcheren-met-steun-avatar.png"
     },
     {
       "exerciseId": "fp_40f7cb3117001639",
@@ -490,7 +532,10 @@
       "img": "images/balans-en-valpreventie/op-de-plaats-marcheren-zonder-steun-line-v1.png",
       "sha256": "6cad15354ba0b8c3c5e3679d7e2d082d98f596c6d7529687bdbda922de49d032",
       "bron": "https://ca.physitrack.com/home-exercise-video/standing-marching",
-      "bronTitel": "Standing marching (Marching, on the spot; 01)"
+      "bronTitel": "Standing marching (Marching, on the spot; 01)",
+      "kaartImg": "images/balans-en-valpreventie/op-de-plaats-marcheren-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "991c62cbf9aadf49374dc32811281f943c8e63a5a6967d11eaba05302828f4dc",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/437-op-de-plaats-marcheren-zonder-steun-avatar.png"
     },
     {
       "exerciseId": "fp_182cfe1a8137acad",
@@ -508,7 +553,10 @@
       "img": "images/balans-en-valpreventie/zijwaarts-stappen-zonder-steun-line-v1.png",
       "sha256": "01b661a202a57576ec16937102baaf6f9d4561f5d31102ce391c27a725eb7517",
       "bron": "https://us.physitrack.com/home-exercise-video/alternate-side-stepping",
-      "bronTitel": "Alternate side stepping"
+      "bronTitel": "Alternate side stepping",
+      "kaartImg": "images/balans-en-valpreventie/zijwaarts-stappen-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "d5e249348339f481c2b62e9e3e63eaeff4449f225faf2847006527388a73819e",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/439-zijwaarts-stappen-zonder-steun-avatar.png"
     },
     {
       "exerciseId": "fp_b60ee077e227abfd",
@@ -517,7 +565,10 @@
       "img": "images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png",
       "sha256": "44ed8fa0306197ac462e05575f3cbdcfa706294a3236b7c050699ab5550924dd",
       "bron": "https://us.physitrack.com/home-exercise-video/backwards-walking-with-support",
-      "bronTitel": "Backwards Walking with support"
+      "bronTitel": "Backwards Walking with support",
+      "kaartImg": "images/balans-en-valpreventie/achterwaarts-stappen-met-steun-avatar-v8.jpg",
+      "kaartSha256": "ba9e7999db97b238c72404f779c026bd6d861b04a34f3a3b8e4b4c90a5ebaba3",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/440-achterwaarts-stappen-met-steun-avatar.png"
     },
     {
       "exerciseId": "fp_b8ae27860ce750fa",
@@ -526,7 +577,10 @@
       "img": "images/balans-en-valpreventie/achterwaarts-stappen-zonder-steun-line-v1.png",
       "sha256": "0caceaddd02d6d309544d98570742b9df1c54d3a2308348efdf9f3d1841e2a31",
       "bron": "https://us.physitrack.com/home-exercise-video/backwards-walking",
-      "bronTitel": "Backwards walking (Balance, walking backward, toes touching first - slow)"
+      "bronTitel": "Backwards walking (Balance, walking backward, toes touching first - slow)",
+      "kaartImg": "images/balans-en-valpreventie/achterwaarts-stappen-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "11e79842903368e3452de64815b75af12e150a8e9288cadbd7e6af308d577d66",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/441-achterwaarts-stappen-zonder-steun-avatar-r2.png"
     },
     {
       "exerciseId": "fp_a5cb52ef07f5f9a4",
@@ -562,7 +616,10 @@
       "img": "images/balans-en-valpreventie/draaien-op-de-plaats-zonder-steun-line-v1.png",
       "sha256": "5052c306c38aaa2b38f9238e293513790832e751de5c0b72743caa97a2479a6d",
       "bron": "https://us.physitrack.com/home-exercise-video/360-degree-turn",
-      "bronTitel": "360 degree turn (Balance, standing, turning 360°)"
+      "bronTitel": "360 degree turn (Balance, standing, turning 360°)",
+      "kaartImg": "images/balans-en-valpreventie/draaien-op-de-plaats-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "6b4317a39349914a4f2fe95599d24424376f531c706945a5d080bdec72dfbf11",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/445-draaien-op-de-plaats-zonder-steun-avatar.png"
     },
     {
       "exerciseId": "fp_b35dc7ba09862f87",
@@ -571,7 +628,10 @@
       "img": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-line-v1.png",
       "sha256": "9ed4e2048d4f3f5f0f3df27719dca59b7d32e4df527ee70bcb128712324ce9d6",
       "bron": "https://us.physitrack.com/home-exercise-video/timed-up-and-go",
-      "bronTitel": "Timed up and go (\"Timed up and go TUG\" Gait balance/mobility)"
+      "bronTitel": "Timed up and go (\"Timed up and go TUG\" Gait balance/mobility)",
+      "kaartImg": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-avatar-v8.jpg",
+      "kaartSha256": "d2519265415f5e7a05521435bf747b7df381bf456bd399f0f885b2206e1e9ba6",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/446-stoel-opstaan-en-lopen-zonder-steun-avatar.png"
     },
     {
       "exerciseId": "fp_f945420fa1df4047",
@@ -580,7 +640,10 @@
       "img": "images/balans-en-valpreventie/dubbele-taak-lopen-met-cognitieve-taak-line-v1.png",
       "sha256": "4fe75a956165018ef074f443a4f582bb8263ab56938d80f83cf75341b914bf0a",
       "bron": "https://us.physitrack.com/home-exercise-video/timed-up-and-go-%2528cognitive-task%253a-counting%2529",
-      "bronTitel": "Timed up and go (cognitive task: counting) (\"Timed up and go TUG\" Gait balance/mobility, with cognitive task, counting backwards)"
+      "bronTitel": "Timed up and go (cognitive task: counting) (\"Timed up and go TUG\" Gait balance/mobility, with cognitive task, counting backwards)",
+      "kaartImg": "images/balans-en-valpreventie/dubbele-taak-lopen-met-cognitieve-taak-avatar-v8.jpg",
+      "kaartSha256": "6b59a6f9c6e65e12dc41509fa812b9d409cf646780b5bd11fe014964d9b02213",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/447-dubbele-taak-lopen-met-cognitieve-taak-avatar.png"
     },
     {
       "exerciseId": "fp_6607290919450db5",
@@ -589,7 +652,10 @@
       "img": "images/neurologische-revalidatie/reiken-met-aangedane-arm-met-visueel-doel-line-v1.png",
       "sha256": "e10799a2223ab40a713237f0508833b869fccbf5fc97b054cd989f015de3a6cc",
       "bron": "https://uk.physitrack.com/home-exercise-video/sitting-balance---arm-reaching-forwards-%2528adaptive%2529",
-      "bronTitel": "Sitting balance - arm reaching forwards (adaptive)"
+      "bronTitel": "Sitting balance - arm reaching forwards (adaptive)",
+      "kaartImg": "images/neurologische-revalidatie/reiken-met-aangedane-arm-met-visueel-doel-avatar-v8.jpg",
+      "kaartSha256": "2b7d85fcc5a8b3619b692f75b7f03acf115aed85dd6800142178c58b5a57cfc1",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/448-reiken-met-aangedane-arm-met-visueel-doel-avatar.png"
     },
     {
       "exerciseId": "fp_6a6f541af1ebba77",
@@ -607,7 +673,10 @@
       "img": "images/neurologische-revalidatie/hand-openen-na-grijpen-bilateraal-line-v1.png",
       "sha256": "90d130ae544789799995250e9b2b9ac268dbcb8fe6e5f9b772452d3d6e05c08d",
       "bron": "https://us.physitrack.com/home-exercise-video/grabbing-a-cup",
-      "bronTitel": "Grabbing a cup ('ADL' Dining - grasping a cup)"
+      "bronTitel": "Grabbing a cup ('ADL' Dining - grasping a cup)",
+      "kaartImg": "images/neurologische-revalidatie/hand-openen-na-grijpen-bilateraal-avatar-v8.jpg",
+      "kaartSha256": "a86e204fede5c7a6851c33447baff1e0d646c1cdec57362d8ac00483d84457cf",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/450-hand-openen-na-grijpen-bilateraal-avatar.png"
     },
     {
       "exerciseId": "fp_6d61735a537b3098",
@@ -625,7 +694,10 @@
       "img": "images/neurologische-revalidatie/symmetrisch-opstaan-met-ritmische-cue-line-v1.png",
       "sha256": "c7979e954b8c8541853b5cf02c49e15f1948995f029e9da7a668e1c7aa24817d",
       "bron": "https://us.physitrack.com/home-exercise-video/sit-to-stand",
-      "bronTitel": "Sit to stand - hands on thighs"
+      "bronTitel": "Sit to stand - hands on thighs",
+      "kaartImg": "images/neurologische-revalidatie/symmetrisch-opstaan-met-ritmische-cue-avatar-v8.jpg",
+      "kaartSha256": "f716fd817bb8f922070885071e78e417f340d28c912a9e35e6398faf968da85b",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/453-symmetrisch-opstaan-met-ritmische-cue-avatar.png"
     },
     {
       "exerciseId": "fp_fca8d4dac2fb58b9",
@@ -634,7 +706,10 @@
       "img": "images/neurologische-revalidatie/stap-initieren-met-visueel-doel-line-v1.png",
       "sha256": "f45c9baebd181b4d0eb0567afb1410acba4df94b9a90a821e88b56f32d0ea592",
       "bron": "https://us.physitrack.com/home-exercise-video/increasing-stride-length-with-markers-%2528step-to%2529",
-      "bronTitel": "Increasing stride length with markers (step-to)"
+      "bronTitel": "Increasing stride length with markers (step-to)",
+      "kaartImg": "images/neurologische-revalidatie/stap-initieren-met-visueel-doel-avatar-v8.jpg",
+      "kaartSha256": "4bcfbecd8a6b4ee86bb632e10e6f0fad7e8204c13db6c2e6ee32847a45935b83",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/454-stap-initieren-met-visueel-doel-avatar.png"
     },
     {
       "exerciseId": "fp_1f28916d68f07669",
@@ -643,7 +718,10 @@
       "img": "images/neurologische-revalidatie/stap-initieren-met-ritmische-cue-line-v1.png",
       "sha256": "6f49aa52129fe34ecdb0278b3245b71d3c6d24d415ffcc8a29053264430128f3",
       "bron": "https://au.physitrack.com/home-exercise-video/step-forward",
-      "bronTitel": "One full step forward and back"
+      "bronTitel": "One full step forward and back",
+      "kaartImg": "images/neurologische-revalidatie/stap-initieren-met-ritmische-cue-avatar-v8.jpg",
+      "kaartSha256": "b8b6e90690f667664a79ec4bf0fbc22e8fb5c129f1d304ac6422b9f2439b5738",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/455-stap-initieren-met-ritmische-cue-avatar.png"
     },
     {
       "exerciseId": "fp_41ff90180014238c",
@@ -652,7 +730,10 @@
       "img": "images/neurologische-revalidatie/zijwaarts-verplaatsen-in-zit-met-visueel-doel-line-v1.png",
       "sha256": "5cedd1a4584e3f199550879ab491f61856c13978ef11405405593716ea7a8901",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/neurologische-revalidatie/zijwaarts-verplaatsen-in-zit-met-visueel-doel-avatar-v8.jpg",
+      "kaartSha256": "8f04d9c8408cc2b165b57cd59cd1c20bc34b2e1221267a9fcdf425b40149338a",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/456-zijwaarts-verplaatsen-in-zit-met-visueel-doel-avatar.png"
     },
     {
       "exerciseId": "fp_30cc83735513cb0c",
@@ -661,7 +742,10 @@
       "img": "images/neurologische-revalidatie/hiel-plaatsen-met-visueel-doel-line-v1.png",
       "sha256": "26d3ed017740a2644b73174aae687cc6c304466e8a88f0b1e63635f7dea9d71c",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/neurologische-revalidatie/hiel-plaatsen-met-visueel-doel-avatar-v8.jpg",
+      "kaartSha256": "7ea8ac60dc8a994be93226f838939eaf675d1c6ae7450322e3826b7c68a0d49f",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/457-hiel-plaatsen-met-visueel-doel-avatar.png"
     },
     {
       "exerciseId": "fp_222ab9d7a5d5687a",
@@ -670,7 +754,10 @@
       "img": "images/neurologische-revalidatie/voet-naar-marker-met-visueel-doel-line-v1.png",
       "sha256": "36381800ecfc9dd7bb4b2683daf81adc85375456a66263543511406d42d8e6df",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/neurologische-revalidatie/voet-naar-marker-met-visueel-doel-avatar-v8.jpg",
+      "kaartSha256": "18f949292e724a7fb870f363c866fda2f2a2fe235ea6f3bd06e9e092ade8b353",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/458-voet-naar-marker-met-visueel-doel-avatar.png"
     },
     {
       "exerciseId": "fp_adcfb76849642ec7",
@@ -679,7 +766,10 @@
       "img": "images/neurologische-revalidatie/ritmisch-marcheren-met-ritmische-cue-line-v1.png",
       "sha256": "60fbe4715682c249b3952465ffd8e4740915a15e79e88d913f782322c8b578b2",
       "bron": "https://ca.physitrack.com/home-exercise-video/marching-on-spot",
-      "bronTitel": "Marching on spot with arms"
+      "bronTitel": "Marching on spot with arms",
+      "kaartImg": "images/neurologische-revalidatie/ritmisch-marcheren-met-ritmische-cue-avatar-v8.jpg",
+      "kaartSha256": "811d54b9b28d6a240a97ab56537065bc45a3f2b74bb6f1f06e30f8562ea25059",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/459-ritmisch-marcheren-met-ritmische-cue-avatar.png"
     },
     {
       "exerciseId": "fp_975632f0f95c824e",
@@ -688,7 +778,10 @@
       "img": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-line-v1.png",
       "sha256": "3603c9502e525e420768bb64d271859cfb11fa7a5f8afd1b6a2a7db0577ffc38",
       "bron": "https://us.physitrack.com/home-exercise-video/increasing-stride-length-with-markers-%2528step-through%2529",
-      "bronTitel": "Increasing stride length with markers (step through)"
+      "bronTitel": "Increasing stride length with markers (step through)",
+      "kaartImg": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-avatar-v8.jpg",
+      "kaartSha256": "8152420810c22c0ed83b448544db02d4dccc215e8ef4e5637c00ad7fabe6aeaf",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/460-grote-stappen-met-ritmische-cue-avatar.png"
     },
     {
       "exerciseId": "fp_4b4cdf03e92ccf3f",
@@ -697,7 +790,10 @@
       "img": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-line-v1.png",
       "sha256": "23bbe0c17a1d83b6d1e18416db902a42fd49dc856dddf047f05c85489448bc26",
       "bron": "https://us.physitrack.com/home-exercise-video/increasing-stride-length-with-markers-%2528step-through%2529",
-      "bronTitel": "Increasing stride length with markers (step through)"
+      "bronTitel": "Increasing stride length with markers (step through)",
+      "kaartImg": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-avatar-v8.jpg",
+      "kaartSha256": "061396308e56a1fa2b4b10c84286cf312203875c5efaa03f6e072e6605b4ce2c",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/461-grote-stappen-functionele-combinatie-avatar.png"
     },
     {
       "exerciseId": "fp_9b0d3a17a5ed8f8c",
@@ -706,7 +802,10 @@
       "img": "images/neurologische-revalidatie/brug-met-symmetrie-bilateraal-line-v1.png",
       "sha256": "b7feef5ed16293475131900809263d5b4ea0a3963f27f82082c4e997cc699615",
       "bron": "https://au.physitrack.com/home-exercise-video/bridging-in-supine",
-      "bronTitel": "Bridging in Supine"
+      "bronTitel": "Bridging in Supine",
+      "kaartImg": "images/neurologische-revalidatie/brug-met-symmetrie-bilateraal-avatar-v8.jpg",
+      "kaartSha256": "fee18dafeaf27093feba5467f8c08c56bcb999c6fb447989bb0d845e8c2b82e9",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/462-brug-met-symmetrie-bilateraal-avatar.png"
     },
     {
       "exerciseId": "fp_f3f6f383c940f974",
@@ -715,7 +814,10 @@
       "img": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-line-v1.png",
       "sha256": "c4d2b8d6e95b63b0627b2337efd754cc7fa7392c271f8cda8e11f4d8ace18f34",
       "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilisation-%2528horizontal%2529-in-standing",
-      "bronTitel": "Gaze stabilisation (horizontal) in standing"
+      "bronTitel": "Gaze stabilisation (horizontal) in standing",
+      "kaartImg": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-avatar-v8.jpg",
+      "kaartSha256": "81d676590c34f73fc04314e5573c38a7e19ada60ac80fa22e16fde4013c91501",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/464-blikstabilisatie-horizontaal-staand-langzaam-avatar-r2.png"
     },
     {
       "exerciseId": "fp_11de8f0fea486d2d",
@@ -733,7 +835,10 @@
       "img": "images/vestibulair/blikstabilisatie-verticaal-zittend-langzaam-line-v1.png",
       "sha256": "993c48b6c21c24f2128e723a2d451685e0db177a3a970fdcedf5244f271889d6",
       "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilisation-%2528vertical%2529-in-sitting",
-      "bronTitel": "Gaze stabilisation (vertical) in sitting"
+      "bronTitel": "Gaze stabilisation (vertical) in sitting",
+      "kaartImg": "images/vestibulair/blikstabilisatie-verticaal-zittend-langzaam-avatar-v8.jpg",
+      "kaartSha256": "752e85a6ebb9c4394c5ada1b175c9b26205002171108eca007411734d99e8c33",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/466-blikstabilisatie-verticaal-zittend-langzaam-avatar.png"
     },
     {
       "exerciseId": "fp_fa5accf2e385cd64",
@@ -742,7 +847,10 @@
       "img": "images/vestibulair/blikstabilisatie-verticaal-staand-langzaam-line-v1.png",
       "sha256": "b2c373a737d5d32451a8ad0e7f3078e71c1507ab8f965c9219a34487a8d20062",
       "bron": "https://us.physitrack.com/home-exercise-video/gaze-stabilisation-%2528vertical%2529-in-standing",
-      "bronTitel": "Gaze stabilisation (vertical) in standing"
+      "bronTitel": "Gaze stabilisation (vertical) in standing",
+      "kaartImg": "images/vestibulair/blikstabilisatie-verticaal-staand-langzaam-avatar-v8.jpg",
+      "kaartSha256": "50c93fb61507b079e098ec1d3d1e90d63bf8061ed9399635ab2683cffea01c37",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/467-blikstabilisatie-verticaal-staand-langzaam-avatar.png"
     },
     {
       "exerciseId": "fp_b1505367e016178b",
@@ -751,7 +859,10 @@
       "img": "images/vestibulair/ogen-naar-doelen-zittend-langzaam-line-v1.png",
       "sha256": "de6494ee81e97519c99dcfcb7c74609b3c76c50973557532280edcee11e078f8",
       "bron": "https://uk.physitrack.com/home-exercise-video/saccades",
-      "bronTitel": "Saccades - Plain Background"
+      "bronTitel": "Saccades - Plain Background",
+      "kaartImg": "images/vestibulair/ogen-naar-doelen-zittend-langzaam-avatar-v8.jpg",
+      "kaartSha256": "eb0ce052f61d36666803a77e38b39f02eacaa5c7bdda38830a81240da98c3124",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/468-ogen-naar-doelen-zittend-langzaam-avatar-r2.png"
     },
     {
       "exerciseId": "fp_66207732613fd2eb",
@@ -760,7 +871,10 @@
       "img": "images/vestibulair/ogen-naar-doelen-staand-langzaam-line-v1.png",
       "sha256": "1bc26ffb2ddbcd7d2272c96c3833998c4a148505280c58114678c87747f43af0",
       "bron": "https://uk.physitrack.com/home-exercise-video/saccades",
-      "bronTitel": "Saccades - Plain Background"
+      "bronTitel": "Saccades - Plain Background",
+      "kaartImg": "images/vestibulair/ogen-naar-doelen-staand-langzaam-avatar-v8.jpg",
+      "kaartSha256": "1dcb95e7d22d27dc7de12d62cc49e2bd145d13272d6292a22fc2e650780151cc",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/469-ogen-naar-doelen-staand-langzaam-avatar-r2.png"
     },
     {
       "exerciseId": "fp_886a77c60aebc20f",
@@ -769,7 +883,10 @@
       "img": "images/vestibulair/doel-volgen-zittend-langzaam-line-v1.png",
       "sha256": "988dce4ae4950d355fd0bc027372aa96cdb02521224e22769a6262791c469c51",
       "bron": "https://au.physitrack.com/home-exercise-video/smooth-pursuit---horizontal",
-      "bronTitel": "Smooth Pursuit - Horizontal"
+      "bronTitel": "Smooth Pursuit - Horizontal",
+      "kaartImg": "images/vestibulair/doel-volgen-zittend-langzaam-avatar-v8.jpg",
+      "kaartSha256": "149f3d03c906d2938e6936de69179ed138d9fc2e3f282211e2b09a19beb23e41",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/470-doel-volgen-zittend-langzaam-avatar.png"
     },
     {
       "exerciseId": "fp_e2a07d5f662d49ad",
@@ -778,7 +895,10 @@
       "img": "images/vestibulair/hoofd-draaien-in-stand-staand-langzaam-line-v1.png",
       "sha256": "1fbaa49d9bc83384133ca90c1c8c7e20d3d1c9bdf60612647715f4cea98d4975",
       "bron": "https://uk.physitrack.com/home-exercise-video/head-turns-in-standing",
-      "bronTitel": "Head turns in standing"
+      "bronTitel": "Head turns in standing",
+      "kaartImg": "images/vestibulair/hoofd-draaien-in-stand-staand-langzaam-avatar-v8.jpg",
+      "kaartSha256": "839c1f34d49596b8d3a4f9014937395041b9cb3db665b8ea504f2c325ad6d1fa",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/471-hoofd-draaien-in-stand-staand-langzaam-avatar.png"
     },
     {
       "exerciseId": "fp_1eb8973666577356",
@@ -787,7 +907,10 @@
       "img": "images/vestibulair/buigen-en-oprichten-staand-langzaam-line-v1.png",
       "sha256": "476c09c1ef6e80afbd6f794cc9aa014d830af0a898eb98622e0613049a9d6e01",
       "bron": "https://au.physitrack.com/home-exercise-video/bending-forwards---vestibular-habituation",
-      "bronTitel": "Bending forwards - vestibular habituation"
+      "bronTitel": "Bending forwards - vestibular habituation",
+      "kaartImg": "images/vestibulair/buigen-en-oprichten-staand-langzaam-avatar-v8.jpg",
+      "kaartSha256": "eef5324286954e1161e3cde0d05fe5e53b8e24063ed6e394616b8dd33ccf387d",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/472-buigen-en-oprichten-staand-langzaam-avatar.png"
     },
     {
       "exerciseId": "fp_5323aabf47e9f41c",
@@ -796,7 +919,10 @@
       "img": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-line-v1.png",
       "sha256": "70ecec4927297081a2c2b1da282c1d72c9d98698fd27e686a0198f3cbcdc5f59",
       "bron": "https://us.physitrack.com/home-exercise-video/picking-objects-from-floor",
-      "bronTitel": "Picking objects from floor"
+      "bronTitel": "Picking objects from floor",
+      "kaartImg": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-avatar-v8.jpg",
+      "kaartSha256": "0f82278b2730e46bd7f9f1854b611cc69c9fd45b8c29d2cdc12ca627fe687a55",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/474-voorwerp-van-vloer-tillen-licht-en-dichtbij-avatar.png"
     },
     {
       "exerciseId": "fp_98960414a8cfcb5d",
@@ -814,7 +940,10 @@
       "img": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-ergonomische-basis-line-v1.png",
       "sha256": "06712dc2e280c11cb110b8a8244b2d6e89d28c0cef752fc7067c9355ab5bab9f",
       "bron": "https://us.physitrack.com/home-exercise-video/standing-overhead-reach",
-      "bronTitel": "Standing overhead reach"
+      "bronTitel": "Standing overhead reach",
+      "kaartImg": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-ergonomische-basis-avatar-v8.jpg",
+      "kaartSha256": "0339485b79470e12bf9df3e11c8a041baa33955c488098b08ba3dcc7e36f6d4d",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/476-boven-schouderhoogte-plaatsen-ergonomische-basis-avatar.png"
     },
     {
       "exerciseId": "fp_1066da8dd15f9fec",
@@ -823,7 +952,10 @@
       "img": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-licht-en-dichtbij-line-v1.png",
       "sha256": "985072478654e5510694bad31f4abf434598437f87a79db54379fcc99a11101e",
       "bron": "https://us.physitrack.com/home-exercise-video/standing-overhead-reach",
-      "bronTitel": "Standing overhead reach"
+      "bronTitel": "Standing overhead reach",
+      "kaartImg": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-licht-en-dichtbij-avatar-v8.jpg",
+      "kaartSha256": "fe8fcff0f90c5de64fa61f1b1c717ef7afc4d2865cc6d16c8f9667b450345a1e",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/477-boven-schouderhoogte-plaatsen-licht-en-dichtbij-avatar.png"
     },
     {
       "exerciseId": "fp_e971ce59b89cb228",
@@ -832,7 +964,10 @@
       "img": "images/werk-en-dagelijkse-handelingen/duwen-licht-en-dichtbij-line-v1.png",
       "sha256": "655865b1323cfcd55e3657b38546bbb5007aae5d9de9969e5819a10e6586a494",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/werk-en-dagelijkse-handelingen/duwen-licht-en-dichtbij-avatar-v8.jpg",
+      "kaartSha256": "ef445d76d4d72a8cd01364064903b020f4774bc65ef228834eb55158e4452a6b",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/478-duwen-licht-en-dichtbij-avatar.png"
     },
     {
       "exerciseId": "fp_c4137e59a9ec24cd",
@@ -841,7 +976,10 @@
       "img": "images/werk-en-dagelijkse-handelingen/duwen-met-stapverplaatsing-line-v1.png",
       "sha256": "ee7ecf9fe7010306a51c6567a7e960620eba38b9c9adb49b38bbefcb55265c5a",
       "bron": "https://us.physitrack.com/home-exercise-video/weighted-push---%22power-sled-push%22",
-      "bronTitel": "Weighted push - \"Power sled push\""
+      "bronTitel": "Weighted push - \"Power sled push\"",
+      "kaartImg": "images/werk-en-dagelijkse-handelingen/duwen-met-stapverplaatsing-avatar-v8.jpg",
+      "kaartSha256": "ea02f2b93d2ee4814c6758f846c92b9d76872f6354223b45e0da29991a0ee120",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/479-duwen-met-stapverplaatsing-avatar.png"
     },
     {
       "exerciseId": "fp_c06068464b11826d",
@@ -850,7 +988,10 @@
       "img": "images/werk-en-dagelijkse-handelingen/trekken-licht-en-dichtbij-line-v1.png",
       "sha256": "3afdea7ca74a45427b166122ae585d566e659e3d52e7e20b90b2c326da83510e",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/werk-en-dagelijkse-handelingen/trekken-licht-en-dichtbij-avatar-v8.jpg",
+      "kaartSha256": "aaea321db918104201ac5d9652776bdd93836af1baacddec172490ec1a88bd3c",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/480-trekken-licht-en-dichtbij-avatar.png"
     },
     {
       "exerciseId": "fp_04ca0d67787dca33",
@@ -859,7 +1000,10 @@
       "img": "images/werk-en-dagelijkse-handelingen/draaien-en-plaatsen-met-stapverplaatsing-line-v1.png",
       "sha256": "ef69c8703488e30bbd457b18fe0ab01bffc48fc6263a85780023ba4742323b58",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/werk-en-dagelijkse-handelingen/draaien-en-plaatsen-met-stapverplaatsing-avatar-v8.jpg",
+      "kaartSha256": "c8d29ad6d1290852284615e61b1906a24df1db1acc355a2824d71ba7f4b2b28b",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/481-draaien-en-plaatsen-met-stapverplaatsing-avatar.png"
     },
     {
       "exerciseId": "fp_1122c98c2308639e",
@@ -868,7 +1012,10 @@
       "img": "images/werk-en-dagelijkse-handelingen/langdurig-zitten-onderbreken-met-tempo-of-herhaling-line-v1.png",
       "sha256": "80dde533c80bfc565c97476dabb2685defffa057f3693a2d60709acc95931845",
       "bron": "https://us.physitrack.com/home-exercise-video/sit-to-stand-without-arms",
-      "bronTitel": "Sit to stand without arms"
+      "bronTitel": "Sit to stand without arms",
+      "kaartImg": "images/werk-en-dagelijkse-handelingen/langdurig-zitten-onderbreken-met-tempo-of-herhaling-avatar-v8.jpg",
+      "kaartSha256": "d27e39369a15dfcf9b3827e8e96448daed89aabeeb4da9e4361eff5c0a675084",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/482-langdurig-zitten-onderbreken-met-tempo-of-herhaling-avatar.png"
     },
     {
       "exerciseId": "fp_b161e58d4bafea63",
@@ -877,7 +1024,10 @@
       "img": "images/bekken-postpartum/bekkenbodem-aanspannen-liggend-line-v1.png",
       "sha256": "6486658e364b634d011b235cf5765f8b26bcf20568b8e8c46ba540e6ebc2fab3",
       "bron": "https://us.physitrack.com/home-exercise-video/pelvic-floor-contraction-in-crook-lying",
-      "bronTitel": "Pelvic floor contraction in crook lying"
+      "bronTitel": "Pelvic floor contraction in crook lying",
+      "kaartImg": "images/bekken-postpartum/bekkenbodem-aanspannen-liggend-avatar-v8.jpg",
+      "kaartSha256": "0adc2b578d1181f0e88e35d731965a1c630105450d9f2820365692db4a5d112d",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/483-bekkenbodem-aanspannen-liggend-avatar-r2.png"
     },
     {
       "exerciseId": "fp_af9cd35496058ede",
@@ -940,7 +1090,10 @@
       "img": "images/bekken-postpartum/functioneel-opstaan-functioneel-line-v1.png",
       "sha256": "3a2ea15684093fec590175d7b1719b243659cb3de3be155d03db7c98ccbd8c30",
       "bron": "https://us.physitrack.com/home-exercise-video/sit-to-stand-without-arms",
-      "bronTitel": "Sit to stand without arms"
+      "bronTitel": "Sit to stand without arms",
+      "kaartImg": "images/bekken-postpartum/functioneel-opstaan-functioneel-avatar-v8.jpg",
+      "kaartSha256": "6d8cc4f350cade29446286d46d18b8fb7b0d8763740ec4fd489fa6d6341bcf49",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/491-functioneel-opstaan-functioneel-avatar.png"
     },
     {
       "exerciseId": "fp_24995dde850e82a4",
@@ -949,7 +1102,10 @@
       "img": "images/bekken-postpartum/zijlig-heupkracht-zijlig-line-v1.png",
       "sha256": "f3e5055bcc6ce64b14b79e21cfea4d27c14a0784e4d292e7c9a0ee2d61e29afd",
       "bron": "https://us.physitrack.com/home-exercise-video/arom-hip-abduction-side-lying",
-      "bronTitel": "AROM hip abduction side lying"
+      "bronTitel": "AROM hip abduction side lying",
+      "kaartImg": "images/bekken-postpartum/zijlig-heupkracht-zijlig-avatar-v8.jpg",
+      "kaartSha256": "27f2c29e288d3a963ad63672c26d8f4e50245a23d7d7a178aeff9e2d9a743367",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/492-zijlig-heupkracht-zijlig-avatar.png"
     },
     {
       "exerciseId": "fp_2edd9e3a8bf351cb",
@@ -958,7 +1114,10 @@
       "img": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-line-v1.png",
       "sha256": "0e0a97d4f6e6881f4b71239e7da0b770bb561344d3b74e50e9f8db7424241d88",
       "bron": "https://us.physitrack.com/home-exercise-video/hop---forwards-and-backwards-over-a-line",
-      "bronTitel": "Hop and hold - forwards and backwards over a line"
+      "bronTitel": "Hop and hold - forwards and backwards over a line",
+      "kaartImg": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-avatar-v8.jpg",
+      "kaartSha256": "1d1d72c94a80e5ee7e0e14efc51b9d1b0ac1c782c1307661e013ce22bd2d2de1",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/493-hop-vooruit-techniek-langzaam-avatar.png"
     },
     {
       "exerciseId": "fp_5ab728e004c4f52f",
@@ -976,7 +1135,10 @@
       "img": "images/sportrevalidatie/laterale-shuffle-submaximaal-line-v1.png",
       "sha256": "0276a4472a97c281f56974086ffc8214de8fe3a2189c5255817a72956fe6eb3a",
       "bron": "https://na.physitrack.com/home-exercise-video/lateral-shuffle",
-      "bronTitel": "Agility - acceleration / deceleration with lateral shuffle"
+      "bronTitel": "Agility - acceleration / deceleration with lateral shuffle",
+      "kaartImg": "images/sportrevalidatie/laterale-shuffle-submaximaal-avatar-v8.jpg",
+      "kaartSha256": "d945a96e11054df0eeadd1f0f97c7418d5189d741c78b3a08026ac28256e5b09",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/496-laterale-shuffle-submaximaal-avatar.png"
     },
     {
       "exerciseId": "fp_7cc6fd169d060ebc",
@@ -994,7 +1156,10 @@
       "img": "images/sportrevalidatie/sprinttechniek-marcheren-techniek-langzaam-line-v1.png",
       "sha256": "193a67f321a39d7b3b6302c42834ad30c95fa8c127e15fc61589002aa5bb4d35",
       "bron": "https://ca.physitrack.com/home-exercise-video/slow-walking-alternating-high-knee-march-with-knee-extension-sweep-%28arm-swing%29",
-      "bronTitel": "Slow walking alternating high knee march with knee extension sweep (arm swing)"
+      "bronTitel": "Slow walking alternating high knee march with knee extension sweep (arm swing)",
+      "kaartImg": "images/sportrevalidatie/sprinttechniek-marcheren-techniek-langzaam-avatar-v8.jpg",
+      "kaartSha256": "a7875f8655096f270b6395100a237868cb7f8c151f162cc479c1880abb86b65b",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/498-sprinttechniek-marcheren-techniek-langzaam-avatar.png"
     },
     {
       "exerciseId": "fp_de33f5404b293a39",
@@ -1003,7 +1168,10 @@
       "img": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-line-v1.png",
       "sha256": "6e75eef5299affd8232da7c36b1ad89cd778279fd49ffca60adfb4fc8f59738d",
       "bron": "https://na.physitrack.com/home-exercise-video/lateral-shuffle",
-      "bronTitel": "Agility - acceleration / deceleration with lateral shuffle"
+      "bronTitel": "Agility - acceleration / deceleration with lateral shuffle",
+      "kaartImg": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-avatar-v8.jpg",
+      "kaartSha256": "d70bb11924260512d8d0e50c3f3099987d0a044e3519a358ca5aeb96c434eb8e",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/499-versnellen-en-afremmen-submaximaal-avatar.png"
     },
     {
       "exerciseId": "fp_1eb30dd39734edc7",
@@ -1012,7 +1180,10 @@
       "img": "images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png",
       "sha256": "b3da39673a5f7179f69dff1b463fc8e89a5baf2099850a6d91d0740dbfc82554",
       "bron": "https://us.physitrack.com/home-exercise-video/cat-camel-pose",
-      "bronTitel": "Cat camel pose (\"Cat and camel\" Trunk flexion/extension AROM, quadruped; 04)"
+      "bronTitel": "Cat camel pose (\"Cat and camel\" Trunk flexion/extension AROM, quadruped; 04)",
+      "kaartImg": "images/rug/rug-bol-en-hol-op-handen-en-knieen-avatar-v8.jpg",
+      "kaartSha256": "32b1a227796c790ea9093d5eade2652c17cabbc15b37eea4e78671d14c84108e",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/393-rug-bol-en-hol-op-handen-en-knieen-avatar.png"
     },
     {
       "exerciseId": "fp_52dcbb8df86523fe",
@@ -1021,7 +1192,10 @@
       "img": "images/rug/rug-bol-en-hol-zittend-line-v1.png",
       "sha256": "264d7a2bfc9eacd7abd608c8974951b71e6114592ac77dc599eceb3a50c73415",
       "bron": "https://us.physitrack.com/home-exercise-video/seated-cat-and-camel",
-      "bronTitel": "Seated cat and camel (\"Cat and camel\" Trunk flexion/extension AROM, sitting)"
+      "bronTitel": "Seated cat and camel (\"Cat and camel\" Trunk flexion/extension AROM, sitting)",
+      "kaartImg": "images/rug/rug-bol-en-hol-zittend-avatar-v8.jpg",
+      "kaartSha256": "a8fd3f399f2ebe4ff9eb8c21d02c1625259234f374897193781db7833b6b53b1",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/394-rug-bol-en-hol-zittend-avatar.png"
     },
     {
       "exerciseId": "fp_44df2bee2b128f87",
@@ -1030,7 +1204,10 @@
       "img": "images/rug/rug-bol-en-hol-staand-line-v1.png",
       "sha256": "350de28f6cad98c12f76f8124373fd2cb211b0d83a8509aed0461948d9cdd1a3",
       "bron": "https://us.physitrack.com/home-exercise-video/standing-cat-and-camel",
-      "bronTitel": "Standing cat and camel (\"Cat and camel\" Trunk flexion/extension AROM, standing)"
+      "bronTitel": "Standing cat and camel (\"Cat and camel\" Trunk flexion/extension AROM, standing)",
+      "kaartImg": "images/rug/rug-bol-en-hol-staand-avatar-v8.jpg",
+      "kaartSha256": "ce65f1fe9bebb27fbb60a1598d6083038773dad2f6aab8da13d7e01eb4327b79",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/395-rug-bol-en-hol-staand-avatar.png"
     },
     {
       "exerciseId": "fp_4ecc3fa3dbce246b",
@@ -1039,7 +1216,10 @@
       "img": "images/rug/rug-bol-en-hol-met-lichte-weerstand-line-v1.png",
       "sha256": "7d7d3cbb91dda52eb09ffa12b556e8c4bbab82e0aab828b133ba0c10f1dc1917",
       "bron": "https://us.physitrack.com/home-exercise-video/cat-and-camel-with-hands-flat",
-      "bronTitel": "Cat and camel with hands flat (\"Cat and camel\" Trunk flexion/extension AROM, leading with breath, hands flat, quadruped)"
+      "bronTitel": "Cat and camel with hands flat (\"Cat and camel\" Trunk flexion/extension AROM, leading with breath, hands flat, quadruped)",
+      "kaartImg": "images/rug/rug-bol-en-hol-met-lichte-weerstand-avatar-v8.jpg",
+      "kaartSha256": "b5eaa90dd19234670f7c906b6e35d29c87ff1ae1f7b7a216f5a102de1cf08598",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/396-rug-bol-en-hol-met-lichte-weerstand-avatar.png"
     },
     {
       "exerciseId": "fp_2721d206afbd57fa",
@@ -1048,7 +1228,10 @@
       "img": "images/rug/romp-draaien-liggend-line-v1.png",
       "sha256": "a1203e6925eb04bfe2eba38bb52838e6db24ed0d9ed6932571a7adc4e53dc72f",
       "bron": "https://us.physitrack.com/home-exercise-video/lumbar-rolling-stretch",
-      "bronTitel": "Lumbar rolling stretch - knee rocks (Lower trunk rotation AROM, supine feet standing)"
+      "bronTitel": "Lumbar rolling stretch - knee rocks (Lower trunk rotation AROM, supine feet standing)",
+      "kaartImg": "images/rug/romp-draaien-liggend-avatar-v8.jpg",
+      "kaartSha256": "58e4169013b309013dce2599a7a919dddb7e72c036cbd0fc987d57d993dff436",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/397-romp-draaien-liggend-avatar.png"
     },
     {
       "exerciseId": "fp_6b15af42d869f74e",
@@ -1057,7 +1240,10 @@
       "img": "images/rug/romp-draaien-op-handen-en-knieen-line-v1.png",
       "sha256": "a6570951ae453b590b9c888338e3937e489bcce56ae0894d4d144c7190d780c6",
       "bron": "https://au.physitrack.com/home-exercise-video/thread-the-needle-with-rotation",
-      "bronTitel": "Thread the Needle with Rotation"
+      "bronTitel": "Thread the Needle with Rotation",
+      "kaartImg": "images/rug/romp-draaien-op-handen-en-knieen-avatar-v8.jpg",
+      "kaartSha256": "3a5b46c0b9ed95e69566d947c3fa3bc4fc88887755d2ef23d076e0f3d1a3a4d5",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/398-romp-draaien-op-handen-en-knieen-avatar.png"
     },
     {
       "exerciseId": "fp_5447d54e26b5bfb4",
@@ -1075,7 +1261,10 @@
       "img": "images/rug/romp-draaien-staand-line-v1.png",
       "sha256": "a7192b23b2dd792f2abf9b0d2d85429a795bc4b800ef406752c43ce11830dd9b",
       "bron": "https://us.physitrack.com/home-exercise-video/trunk-rotations-in-standing",
-      "bronTitel": "Trunk Rotations in Standing"
+      "bronTitel": "Trunk Rotations in Standing",
+      "kaartImg": "images/rug/romp-draaien-staand-avatar-v8.jpg",
+      "kaartSha256": "d513c29ae80680e88dd7726abbc36f39eefc0b3c12214207222e484a3af2b9a9",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/400-romp-draaien-staand-avatar.png"
     },
     {
       "exerciseId": "fp_134b8284155c79c7",
@@ -1084,7 +1273,10 @@
       "img": "images/rug/romp-zijwaarts-buigen-liggend-line-v1.png",
       "sha256": "b2d8121dc22dd47fdb876f69e0d5d0601e242dfaed6cee6d6803e62ab7c34d85",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/rug/romp-zijwaarts-buigen-liggend-avatar-v8.jpg",
+      "kaartSha256": "7b480d42e1825613a1f17b59647c4d58f73c8c88276ab76e85ef58c8dbdc9926",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/401-romp-zijwaarts-buigen-liggend-avatar.png"
     },
     {
       "exerciseId": "fp_63808d0727800855",
@@ -1093,7 +1285,10 @@
       "img": "images/rug/romp-zijwaarts-buigen-zittend-line-v1.png",
       "sha256": "36d03f0aedef72b87e3d49af4f424ea22e8e536915ee79caea0e77fbe2025848",
       "bron": "https://ca.physitrack.com/home-exercise-video/seated-side-bend",
-      "bronTitel": "Seated Side Bend"
+      "bronTitel": "Seated Side Bend",
+      "kaartImg": "images/rug/romp-zijwaarts-buigen-zittend-avatar-v8.jpg",
+      "kaartSha256": "c1ebeb3eed602c941da471190e83759443bf5a410e3ba2fc361fda1b522fe0da",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/402-romp-zijwaarts-buigen-zittend-avatar.png"
     },
     {
       "exerciseId": "fp_2cdbcd6a461f6ee2",
@@ -1102,7 +1297,10 @@
       "img": "images/rug/romp-zijwaarts-buigen-staand-line-v1.png",
       "sha256": "8866093b1f4d046a68a8850c37984144d0280d1fc4dec40d69e25e114a7b6ba5",
       "bron": "https://us.physitrack.com/home-exercise-video/standing-side-flexion-stretch",
-      "bronTitel": "Standing side flexion stretch (Trunk side bending stretch - progression arm overhead, standing; 01)"
+      "bronTitel": "Standing side flexion stretch (Trunk side bending stretch - progression arm overhead, standing; 01)",
+      "kaartImg": "images/rug/romp-zijwaarts-buigen-staand-avatar-v8.jpg",
+      "kaartSha256": "a69157d8422c7d85ac61dd939cf2bd72b84db0d2c030dcbe41df4dc3e9a52562",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/403-romp-zijwaarts-buigen-staand-avatar.png"
     },
     {
       "exerciseId": "fp_cc40c4b9a82decac",
@@ -1111,7 +1309,10 @@
       "img": "images/rug/rug-strekken-liggend-line-v1.png",
       "sha256": "59bc8dbb9bd0a693efbfea94d7c3700163bc52be5bc197fa83b64c430e7fa088",
       "bron": "https://us.physitrack.com/home-exercise-video/lumbar-extension-in-prone",
-      "bronTitel": "Lumbar extension in prone (\"Prone press up\" Trunk extension passive; 03)"
+      "bronTitel": "Lumbar extension in prone (\"Prone press up\" Trunk extension passive; 03)",
+      "kaartImg": "images/rug/rug-strekken-liggend-avatar-v8.jpg",
+      "kaartSha256": "23eb8bac9487963df0126936d2abad62c175a5b62b2f2e91730acd7d710df724",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/404-rug-strekken-liggend-avatar.png"
     },
     {
       "exerciseId": "fp_c0b6c7ac3cecbcc7",
@@ -1120,7 +1321,10 @@
       "img": "images/rug/rug-strekken-op-handen-en-knieen-line-v1.png",
       "sha256": "9f1cce085af107c1e9ef9fda24f3b11581c74190b2e5946a37d4fc36f3310ae5",
       "bron": "https://us.physitrack.com/home-exercise-video/prayer-stretch",
-      "bronTitel": "Prayer stretch (\"Prayer stretch\" Shoulder/trunk extensors stretch, with side bending, quadruped)"
+      "bronTitel": "Prayer stretch (\"Prayer stretch\" Shoulder/trunk extensors stretch, with side bending, quadruped)",
+      "kaartImg": "images/rug/rug-strekken-op-handen-en-knieen-avatar-v8.jpg",
+      "kaartSha256": "f08095c20f55efd03154f8eae9b25ac320ac09f7f27773359cf61e832d432ebf",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/405-rug-strekken-op-handen-en-knieen-avatar.png"
     },
     {
       "exerciseId": "fp_2644209935d93785",
@@ -1129,7 +1333,10 @@
       "img": "images/rug/rug-strekken-zittend-line-v1.png",
       "sha256": "1ad0761ebab0f1f17a067f64e9dd8520ad96eaf7a77eb97a01bed9e82f6b9309",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/rug/rug-strekken-zittend-avatar-v8.jpg",
+      "kaartSha256": "0750149e26782cc194cfa814dfaf586deb55558c00de5fef46cbda86258d38ec",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/406-rug-strekken-zittend-avatar.png"
     },
     {
       "exerciseId": "fp_ab474868a73074c7",
@@ -1138,7 +1345,10 @@
       "img": "images/rug/rug-strekken-staand-line-v1.png",
       "sha256": "6a6b890a4c4a121cda586d1b5cb3207a0acfdd735564ebea602d655dfda0c91a",
       "bron": "https://au.physitrack.com/home-exercise-video/lumbar-extension-in-standing",
-      "bronTitel": "Lumbar extension in standing"
+      "bronTitel": "Lumbar extension in standing",
+      "kaartImg": "images/rug/rug-strekken-staand-avatar-v8.jpg",
+      "kaartSha256": "c4e0be35d3d59dc6e8c98ef4447564cb664d5bc72ac9b6e57b08144cfa5c0362",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/407-rug-strekken-staand-avatar.png"
     },
     {
       "exerciseId": "fp_d2795a94a7d11698",
@@ -1147,7 +1357,10 @@
       "img": "images/rug/knie-naar-borst-liggend-line-v1.png",
       "sha256": "df7782fb31d0d0a8cd1a51d535c3b9b3aa08e9aca84de3c218e46b57be969a4a",
       "bron": "https://ca.physitrack.com/home-exercise-video/single-knee-to-chest",
-      "bronTitel": "Single knee to chest"
+      "bronTitel": "Single knee to chest",
+      "kaartImg": "images/rug/knie-naar-borst-liggend-avatar-v8.jpg",
+      "kaartSha256": "3759456151e713112ac193249c6471b24b6d88a850547636b7e75cc3cb5377c9",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/408-knie-naar-borst-liggend-avatar.png"
     },
     {
       "exerciseId": "fp_df9d4c0dce89c045",
@@ -1156,7 +1369,10 @@
       "img": "images/rug/knie-naar-borst-zittend-line-v1.png",
       "sha256": "a0b966c6ccfdeff220591d4f0b01ea4aebbcc70f9deba222530b0d7992fbf091",
       "bron": "https://us.physitrack.com/home-exercise-video/seated-knee-hugs",
-      "bronTitel": "Seated knee hugs 3 (\"Knee hugs\" Hip/lumbar extensors stretch (alternate), sitting; 01)"
+      "bronTitel": "Seated knee hugs 3 (\"Knee hugs\" Hip/lumbar extensors stretch (alternate), sitting; 01)",
+      "kaartImg": "images/rug/knie-naar-borst-zittend-avatar-v8.jpg",
+      "kaartSha256": "88cb02c212c67de66b2bbd399852a0c9fd1b6e6b8ddedb3f6e3fcd5e2a47a1f2",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/409-knie-naar-borst-zittend-avatar.png"
     },
     {
       "exerciseId": "fp_6f6adc087b95e514",
@@ -1165,7 +1381,10 @@
       "img": "images/rug/knie-naar-borst-staand-line-v1.png",
       "sha256": "d43fae52193392ba6ad1d71813e0d03b13bb31a7f2917816aa7ef17584c9db83",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/rug/knie-naar-borst-staand-avatar-v8.jpg",
+      "kaartSha256": "966784311d29db179dbf9b5f51034c25a5d16e9dd375acdc97c634d56d05baed",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/410-knie-naar-borst-staand-avatar.png"
     },
     {
       "exerciseId": "fp_b2900afa943e315b",
@@ -1174,7 +1393,10 @@
       "img": "images/rug/open-boek-liggend-line-v1.png",
       "sha256": "e6a08ad37c8f13bedc0cc7fadadf0eeeb775bbbe73ea5ebee60f5fd7df7e019a",
       "bron": "https://uk.physitrack.com/home-exercise-video/thoracic-rotations-in-side-lying-(open-book)---version-1",
-      "bronTitel": "Thoracic rotations in side lying (open book) - Version 1"
+      "bronTitel": "Thoracic rotations in side lying (open book) - Version 1",
+      "kaartImg": "images/rug/open-boek-liggend-avatar-v8.jpg",
+      "kaartSha256": "3e06f37f5b7e8541f357140a538c96f6123d536b5e6420f69c90933e3fe2d479",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/411-open-boek-liggend-avatar.png"
     },
     {
       "exerciseId": "fp_3484904185da85ed",
@@ -1183,7 +1405,10 @@
       "img": "images/rug/open-boek-op-handen-en-knieen-line-v1.png",
       "sha256": "141b4135ad77a2a744d055d271fdf4ce7dcccdd9b41498af4c9fba325400ec79",
       "bron": "https://ca.physitrack.com/home-exercise-video/thoracic-rotation-in-quadruped---hand-behind-head",
-      "bronTitel": "Thoracic rotation in quadruped - hand behind head"
+      "bronTitel": "Thoracic rotation in quadruped - hand behind head",
+      "kaartImg": "images/rug/open-boek-op-handen-en-knieen-avatar-v8.jpg",
+      "kaartSha256": "09c399e573de75fb0968bbded62e74bb54410603b9a369323096af13ede0a3d7",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/412-open-boek-op-handen-en-knieen-avatar.png"
     },
     {
       "exerciseId": "fp_d66473bfb49dfb81",
@@ -1192,7 +1417,10 @@
       "img": "images/rug/open-boek-zittend-line-v1.png",
       "sha256": "ac7a411fd6f2dda4f99afdeb31cdfd4eaaae17f317beffd3cc54b6be5580014f",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/rug/open-boek-zittend-avatar-v8.jpg",
+      "kaartSha256": "e1ca00b05aa5a7b91692ef142032dbb6b00c95f34886a1cc700e42bb414aeb23",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/413-open-boek-zittend-avatar.png"
     },
     {
       "exerciseId": "fp_009ab760836a2b01",
@@ -1201,7 +1429,10 @@
       "img": "images/rug/thoracale-extensie-liggend-line-v1.png",
       "sha256": "1951f2f76eacc30149998e8eb46438d398264145716956045987107f1c2f82da",
       "bron": "https://us.physitrack.com/home-exercise-video/thoracic-extension-mobilisation-with-towel-roll",
-      "bronTitel": "Thoracic extension mobilisation with towel roll (Thoracic extension ROM, mobilization with movement, over towel, supine)"
+      "bronTitel": "Thoracic extension mobilisation with towel roll (Thoracic extension ROM, mobilization with movement, over towel, supine)",
+      "kaartImg": "images/rug/thoracale-extensie-liggend-avatar-v8.jpg",
+      "kaartSha256": "6cbcdac364b25804c5d1fda4f40a77231f3394d1724686f3bca98bf6f0feccdf",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/414-thoracale-extensie-liggend-avatar.png"
     },
     {
       "exerciseId": "fp_8beb83b36e02ea73",
@@ -1210,7 +1441,10 @@
       "img": "images/rug/thoracale-extensie-op-handen-en-knieen-line-v1.png",
       "sha256": "9688ec7de2ef9935345cdf61be212fe5fb5dd73f9a0bf9826493febb7979247c",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/rug/thoracale-extensie-op-handen-en-knieen-avatar-v8.jpg",
+      "kaartSha256": "97029b1358b1404f25563ecf3409a11f2b0ec538c9fee3d4b322ee01b465067c",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/415-thoracale-extensie-op-handen-en-knieen-avatar.png"
     },
     {
       "exerciseId": "fp_3e968c19f6cf90c7",
@@ -1219,7 +1453,10 @@
       "img": "images/rug/thoracale-extensie-zittend-line-v1.png",
       "sha256": "363982c3c684830c8df5648a91769345ef08260e36f0b2c92b37d5c63ac3a707",
       "bron": "https://us.physitrack.com/home-exercise-video/thoracic-extension-in-chair-with-towel",
-      "bronTitel": "Thoracic extension in chair with towel (Thoracic extension stretch, over back of sturdy chair, hands behind head; 01)"
+      "bronTitel": "Thoracic extension in chair with towel (Thoracic extension stretch, over back of sturdy chair, hands behind head; 01)",
+      "kaartImg": "images/rug/thoracale-extensie-zittend-avatar-v8.jpg",
+      "kaartSha256": "54b628821442572fb1a1842a753feb28304e69cdc361e7c8f0ec4e28159f2b22",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/416-thoracale-extensie-zittend-avatar.png"
     },
     {
       "exerciseId": "fp_bb5b9d2dc2a52e5e",
@@ -1228,7 +1465,10 @@
       "img": "images/rug/thoracale-extensie-staand-line-v1.png",
       "sha256": "af7e9d100caf9a57c613a63b25639729fa765a36a0583c3a3eab2d022c6721b4",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/rug/thoracale-extensie-staand-avatar-v8.jpg",
+      "kaartSha256": "7a97095a4b0f0eeb363668d1ab4480c5f9053ed6dc383f47e4ebe0951dedf8d1",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/417-thoracale-extensie-staand-avatar.png"
     }
   ]
 }
