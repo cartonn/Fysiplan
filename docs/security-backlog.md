@@ -8,8 +8,8 @@ daaruit tot en met 2026-11-06.
 
 | Gebied | Laatst geaudit |
 |---|---|
-| (a) beheer-endpoints en de admin-sleutel | 2026-11-08 (runtime: rem op foute sleutels hield raden niet tegen, opgelost; alle beheerroutes eisen `isAdmin`) |
-| (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
+| (a) beheer-endpoints en de admin-sleutel | 2026-11-09 12u (statisch: 17 `isAdmin`-routes, /aanmeldingen en /medewerkers alleen `ACCOUNT_BEHEER_EMAILS`, geen admin88 in publieke bestanden, productie zonder eigen `ADMIN_KEY` dicht, rem vóór sleutel. Geen gat) |
+| (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-09 12u (team: eigen login, uitnodigen, verwijderen, rol, gedeeld uit; uitnodiging verzilveren; wachtwoord per lid; v1-login/registratie. Nieuw: LAAG uitnodigingsmail als spamkanaal, zie Open) · 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
 | (c) proef-tokens en verlopen proeven | 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP, patiëntroute met allowlist, praktijkroutes alleen eigen map) |
 | (e) uploads (video, logo, opname /o) | 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
@@ -19,7 +19,12 @@ daaruit tot en met 2026-11-06.
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
 | (j) npm audit | 2026-11-08 20u (0 meldingen, ook dev) |
 
-Volgende run: (a) beheer, daarna (b) accountlaag.
+Volgende run: (h) foutmeldingen, daarna (c) proef-tokens.
+
+Sanity 2026-11-09 12u op #120–#128 (proefpraktijk zonder abonnement wissen, roepnaamvoorstel alleen bij dezelfde voornaam,
+duidelijke foutmeldingen bij inloggen, Physitrack-beelden): `proefZonderAbonnementWissen` laat klanten staan zolang hun
+aanmelding bestaat; de nieuwe `denied`-teksten verraden niet welk veld fout is; `roepOk` werkt alleen binnen de eigen map.
+Wel gevonden: was `proef-aanmeldingen.json` onleesbaar, dan wiste het uurrondje ook klanten zonder kaarten (opgelost, zie Open).
 
 Sanity 2026-11-09 00u op #109–#111 (videoquotum, werknotitie mee naar dossier, lightbox/proefvenster): `notitieT`
 reist alleen mee in het praktijkoverzicht (achter de praktijkpoort), niet in de patiëntroute (allowlist); de nieuwe
@@ -169,7 +174,19 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
-- **MIDDEL (gebruikers-sweep 2026-11-09 10u, Mark) — verlopen proef houdt kaarten onbeperkt in leven via `/api/kaart/archief`.**
+- **OPGELOST 2026-11-09 (deze PR) — MIDDEL — onleesbaar `proef-aanmeldingen.json` wist klanten** (sanity #123). Bij een
+  kapot bestand startte de server met `proeven = {}`; het rondje van 5 s na de start zag dan bij elk account met een oude
+  proef "aanmelding weg" en wiste het (team, profiel, sjablonen) zodra er geen kaarten waren, ook bij betalende klanten.
+  De eerste nieuwe aanmelding overschreef daarna het kapotte bestand. Nu: onleesbaar ≠ leeg; het automatisch wissen na
+  de proef staat dan uit en het kapotte bestand wordt apart bewaard (`.onleesbaar-<tijd>`). Test: `npm run test:proefarchief`.
+- **LAAG (audit (b) 2026-11-09) — uitnodigingsmail als spamkanaal.** Iedereen kan een praktijk claimen (5 per IP per dag)
+  en per praktijk 50 collega's uitnodigen: Fysiplan mailt dan willekeurige adressen met een zelfgekozen praktijknaam in het
+  onderwerp (`mailOpSlot` remt alleen per adres). Max ~250 mails per IP per dag; slecht voor de mailreputatie. Voorgestelde
+  fix: uitnodigingen per praktijk per dag begrenzen (bv. 10) en tijdens een proef pas mailen na de eerste gedeelde kaart.
+- **OPGELOST 2026-11-09 (deze PR) — MIDDEL (gebruikers-sweep 2026-11-09 10u, Mark) — verlopen proef houdt kaarten onbeperkt in leven via `/api/kaart/archief`.**
+  Nu: na een verlopen proef blijven archiveren en terugzetten open, maar alleen als de kaart daardoor niet later verloopt;
+  anders 403 `proefVerlopen` met de datum tot wanneer de kaart blijft. `/api/praktijk/akkoord` na de proef: geen gat
+  (alleen het akkoord met nieuwe voorwaarden, geen patiëntgegevens). Test: `npm run test:proefarchief`. Oorspronkelijke melding:
   Aan/uit zetten van het archief zet `verloopt` van de kaart opnieuw; de route staat niet in `PROEF_SCHRIJFROUTES`. Ook
   `/api/praktijk/akkoord` schrijft nog bij een verlopen proef. Dossier en archief zijn bewust open; beoordelen of archief de
   bewaartermijn mag verlengen. Server lokaal 4611 met verlopen `verloopt`.
@@ -177,7 +194,9 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   `<script>…` en volledige namen gewoon als kaartnaam mee (escaped op /k, CSV maakt formules onschadelijk); `cleanName`
   (server.js r. ~1850) doet alleen trim en slice. Geen gat, wel dataminimalisatie alleen in de client.
 
-- **MIDDEL (gebruikers-sweep 2026-11-08 18u, Mark) — verlopen proef: seintje afhandelen werkt nog.** Een collega met een verlopen
+- **AFGESLOTEN 2026-11-09 (geen beveiligingsgat) — verlopen proef: seintje afhandelen werkt nog.** "Gezien" en afhandelen
+  zijn bewust open (alleen de eigen inbox, geen nieuwe gegevens naar de patiënt); dat de app `inboxGezien` ook na een 403 op
+  het antwoord zet, is een app-fout voor de gebruikers-sweep (docs/routine-backlog.md). Oorspronkelijke melding (MIDDEL, 2026-11-08 18u, Mark): Een collega met een verlopen
   proef krijgt bij antwoorden netjes 403, maar `/api/praktijk/inbox/afgehandeld` en `/api/kaart/seintje/gezien` staan niet in
   `PROEF_SCHRIJFROUTES` (server.js r. ~541): het seintje verdwijnt uit de inbox zonder antwoord aan de patiënt. De app zet
   `inboxGezien` ook na een 403 op het antwoord (index.html r. ~3786). iPad.

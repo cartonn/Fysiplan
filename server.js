@@ -514,7 +514,19 @@ function instelLink(request, token) {
 // de aanmelder kan alles zelf wissen. Inzage alleen voor ACCOUNT_BEHEER_EMAILS.
 const proefPath = join(dataDir, "proef-aanmeldingen.json");
 let proeven = {}; // { id: { id, email, naam, tel, praktijk, gestart, verloopt, akkoord, tokens:[sha256], klant?, doorgaan?, herinnerd?, kaarten? } }
-try { proeven = JSON.parse(await readFile(proefPath, "utf8")); } catch {}
+// Onleesbaar (kapot of half geschreven) is iets anders dan "nog geen aanmeldingen": dan
+// weet de server niet wie klant is, en mag het automatisch wissen van praktijken na een
+// proef niet draaien (anders verdween een betalende praktijk zonder kaarten). Het kapotte
+// bestand gaat apart, zodat de eerste nieuwe aanmelding het niet stil overschrijft.
+let proevenOnleesbaar = false;
+try { proeven = JSON.parse(await readFile(proefPath, "utf8")); } catch (err) {
+  if (err && err.code !== "ENOENT") {
+    proevenOnleesbaar = true;
+    console.error("proef-aanmeldingen.json onleesbaar; automatisch wissen na de proef staat uit tot een herstart met een goed bestand.");
+    await copyFile(proefPath, proefPath + ".onleesbaar-" + Date.now()).catch(() => {});
+  }
+}
+if (!proeven || typeof proeven !== "object" || Array.isArray(proeven)) { proeven = {}; proevenOnleesbaar = true; }
 const PROEF_BEWAAR_DAGEN = 90;
 const proefTokenIndex = new Map(); // sha256(token) -> id
 for (const p of Object.values(proeven)) for (const h of p.tokens || []) proefTokenIndex.set(h, p.id);
@@ -813,6 +825,7 @@ async function proefRonde() {
 // de bewaartermijn voorbij is en er geen gedeelde kaarten meer zijn, gaat de rest ook weg.
 // Zolang er nog kaarten zijn, blijft het account: de praktijk moet die nog kunnen inzien.
 async function proefZonderAbonnementWissen(nu = Date.now()) {
+  if (proevenOnleesbaar) return;
   for (const [pk, acc] of Object.entries(praktijkAccounts)) {
     const k = acc && acc.proef;
     if (!k || Object.hasOwn(proeven, String(k.id))) continue; // proef loopt, klant, of nog binnen de termijn
@@ -4829,10 +4842,24 @@ async function afhandelen(request, response) {
       const map = kaarten[pk] || {};
       const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+      // Archiveren en terugzetten blijven open na een verlopen proef, maar mogen de bewaartermijn
+      // dan niet meer oprekken: aan/uit/aan zette `gearchiveerdOp` steeds op nu, zodat een
+      // praktijk zonder abonnement haar kaarten onbeperkt kon laten leven (gebruikers-sweep
+      // 2026-11-09, Mark). Zou de wijziging de kaart later laten verlopen dan nu, dan 403.
+      const voorArchief = { gearchiveerd: kaart.gearchiveerd, gearchiveerdOp: kaart.gearchiveerdOp };
+      const verlooptVoor = verlooptOp(kaart);
       if (b.archief) {
         if (!kaart.gearchiveerd) kaart.gearchiveerdOp = Date.now();
         kaart.gearchiveerd = true;
       } else { delete kaart.gearchiveerd; delete kaart.gearchiveerdOp; }
+      const proefVoorbij = !(ADMIN_KEY_EIGEN && isAdmin(request)) &&
+        (proefVerlopen(proefVan(request)) || praktijkProefVerlopen(pk));
+      if (proefVoorbij && verlooptOp(kaart) > verlooptVoor) {
+        for (const [veld, waarde] of Object.entries(voorArchief)) { if (waarde === undefined) delete kaart[veld]; else kaart[veld] = waarde; }
+        await sendJson(response, 403, { ok: false, proefVerlopen: true,
+          fout: "De gratis proef van je praktijk is voorbij. Deze kaart blijft tot " + datumNl(verlooptVoor) + " bewaard; langer kan niet zonder abonnement." });
+        return;
+      }
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, gearchiveerd: !!kaart.gearchiveerd, verloopt: verlooptOp(kaart) });
     } catch {
