@@ -5609,5 +5609,208 @@
    "armbuiger",
    "buigen"
   ]
+ },
+ {
+  "naam": "Bal knijpen",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/bal-knijpen-line-v1.png",
+  "uitleg": "Zit rechtop met een zachte bal in je hand. Knijp de bal zo stevig als prettig is in, houd even vast en laat langzaam los.",
+  "kaartImg": "images/bovenste-extremiteit/bal-knijpen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Polsstrekkers rekken – arm gestrekt",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/polsstrekkers-rekken-line-v1.png",
+  "uitleg": "Strek je arm voor je uit met de handrug naar boven. Duw met je andere hand de hand rustig naar beneden tot je rek voelt aan de bovenkant van de onderarm.",
+  "kaartImg": "images/bovenste-extremiteit/polsstrekkers-rekken-avatar-v8.jpg"
+ },
+ {
+  "naam": "Pols achterover buigen – met hulp op tafel",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/pols-achterover-met-hulp-line-v1.png",
+  "uitleg": "Leg je onderarm op tafel met de hand over de rand. Til met je andere hand de hand rustig omhoog naar achteren en houd de onderarm op tafel.",
+  "kaartImg": "images/bovenste-extremiteit/pols-achterover-met-hulp-avatar-v8.jpg"
+ },
+ {
+  "naam": "Handpalm naar boven draaien tegen elastiek",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/supinatie-elastiek-line-v1.png",
+  "uitleg": "Houd een elastiek vast met je onderarm op tafel en de handpalm naar beneden. Draai de handpalm naar boven tegen de weerstand in.",
+  "kaartImg": "images/bovenste-extremiteit/supinatie-elastiek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Zenuwglijden pinkkant (n. ulnaris)",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/zenuw-ulnaris-glijden-line-v1.png",
+  "uitleg": "Maak een rondje met duim en wijsvinger en houd de hand bij je oor. Breng de elleboog zijwaarts omhoog tot je lichte spanning voelt en ga terug.",
+  "kaartImg": "images/bovenste-extremiteit/zenuw-ulnaris-glijden-avatar-v8.jpg"
+ },
+ {
+  "naam": "Polsbuigers rekken – arm gestrekt",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/polsbuigers-rekken-line-v1.png",
+  "uitleg": "Strek je arm voor je uit met de handpalm naar voren. Trek met je andere hand de vingers rustig naar je toe tot je rek voelt aan de binnenkant van de onderarm.",
+  "kaartImg": "images/bovenste-extremiteit/polsbuigers-rekken-avatar-v8.jpg"
+ },
+ {
+  "naam": "Pols voorover buigen – met hulp op tafel",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/pols-voorover-met-hulp-line-v1.png",
+  "uitleg": "Leg je onderarm op tafel met de handpalm naar boven en de hand over de rand. Til met je andere hand de hand rustig omhoog en houd even vast.",
+  "kaartImg": "images/bovenste-extremiteit/pols-voorover-met-hulp-avatar-v8.jpg"
+ },
+ {
+  "naam": "Handpalmen tegen elkaar zakken (gebedsrek)",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/handpalmen-tegen-elkaar-line-v1.png",
+  "uitleg": "Zet je handpalmen tegen elkaar voor je borst. Laat je handen langzaam zakken terwijl de handpalmen plat tegen elkaar blijven.",
+  "kaartImg": "images/bovenste-extremiteit/handpalmen-tegen-elkaar-avatar-v8.jpg"
+ },
+ {
+  "naam": "Pols buigen en strekken – duim omhoog",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/pols-buigen-strekken-duim-boven-line-v1.png",
+  "uitleg": "Leg je onderarm op tafel met de duim naar boven. Buig de pols naar voren en daarna naar achteren, met ontspannen vingers.",
+  "kaartImg": "images/bovenste-extremiteit/pols-buigen-strekken-duim-boven-avatar-v8.jpg"
+ },
+ {
+  "naam": "Onderarm draaien – handpalm op en neer",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/onderarm-draaien-met-hulp-line-v1.png",
+  "uitleg": "Leg je onderarm op tafel. Draai de handpalm naar boven en daarna naar beneden; help eventueel met je andere hand. Je bovenlichaam blijft stil.",
+  "kaartImg": "images/bovenste-extremiteit/onderarm-draaien-met-hulp-avatar-v8.jpg"
+ },
+ {
+  "naam": "Onderarm draaien met een halter of hamer",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/onderarm-draaien-met-halter-line-v1.png",
+  "uitleg": "Houd een halter of hamer aan één uiteinde vast met de onderarm op tafel. Draai de handpalm langzaam naar boven en daarna naar beneden.",
+  "kaartImg": "images/bovenste-extremiteit/onderarm-draaien-met-halter-avatar-v8.jpg"
+ },
+ {
+  "naam": "Handpalm naar beneden draaien tegen elastiek",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/pronatie-elastiek-line-v1.png",
+  "uitleg": "Houd een elastiek vast met je onderarm op tafel en de handpalm naar boven. Draai de handpalm naar beneden tegen de weerstand in.",
+  "kaartImg": "images/bovenste-extremiteit/pronatie-elastiek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Pols omhoog duwen tegen je hand (zonder bewegen)",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/pols-strekken-isometrisch-line-v1.png",
+  "uitleg": "Leg je onderarm op tafel met de handpalm naar beneden. Duw de hand omhoog tegen je andere hand, zonder dat er iets beweegt. Houd vast.",
+  "kaartImg": "images/bovenste-extremiteit/pols-strekken-isometrisch-avatar-v8.jpg"
+ },
+ {
+  "naam": "Pols buigen tegen je hand (zonder bewegen)",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/pols-buigen-isometrisch-line-v1.png",
+  "uitleg": "Leg je onderarm op tafel met de handpalm naar boven. Duw de hand omhoog tegen je andere hand, zonder dat er iets beweegt. Houd vast.",
+  "kaartImg": "images/bovenste-extremiteit/pols-buigen-isometrisch-avatar-v8.jpg"
+ },
+ {
+  "naam": "Pols naar de duimkant optillen met gewicht",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/pols-duimkant-omhoog-gewicht-line-v1.png",
+  "uitleg": "Houd een halter of hamer vast met de duim naar boven en de onderarm op tafel. Til de hand op naar de duimkant en laat langzaam zakken.",
+  "kaartImg": "images/bovenste-extremiteit/pols-duimkant-omhoog-gewicht-avatar-v8.jpg"
+ },
+ {
+  "naam": "Flexbar wringen",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/flexbar-wringen-line-v1.png",
+  "uitleg": "Houd een flexbar verticaal voor je met beide handen. Buig de ene pols en strek de andere, alsof je een handdoek uitwringt, en laat langzaam terugkomen.",
+  "kaartImg": "images/bovenste-extremiteit/flexbar-wringen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Vuist maken en hand openen",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/vuist-maken-openen-line-v1.png",
+  "uitleg": "Leg je hand op tafel. Maak rustig een vuist en strek daarna je vingers helemaal.",
+  "kaartImg": "images/bovenste-extremiteit/vuist-maken-openen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Haakvuist maken",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/haakvuist-line-v1.png",
+  "uitleg": "Houd je onderarm omhoog met de pols recht. Buig de top- en middenkootjes terwijl de knokkels recht blijven, en strek weer.",
+  "kaartImg": "images/bovenste-extremiteit/haakvuist-avatar-v8.jpg"
+ },
+ {
+  "naam": "Vingers spreiden tegen elastiek",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/vingers-spreiden-elastiek-line-v1.png",
+  "uitleg": "Doe een elastiekje om je duim en vingertoppen. Spreid je vingers en duim zo ver als lukt en laat langzaam terugkomen.",
+  "kaartImg": "images/bovenste-extremiteit/vingers-spreiden-elastiek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Vingers buigen en strekken met hulp",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/vingers-buigen-met-hulp-line-v1.png",
+  "uitleg": "Buig met je andere hand rustig de vingers van de aangedane hand helemaal en strek ze daarna weer; houd elke stand even vast.",
+  "kaartImg": "images/bovenste-extremiteit/vingers-buigen-met-hulp-avatar-v8.jpg"
+ },
+ {
+  "naam": "Duim buigen en strekken",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/duim-buigen-strekken-line-v1.png",
+  "uitleg": "Leg je hand op tafel. Buig de duim over de handpalm richting de pink en strek hem weer helemaal; de vingers blijven stil.",
+  "kaartImg": "images/bovenste-extremiteit/duim-buigen-strekken-avatar-v8.jpg"
+ },
+ {
+  "naam": "Duim optillen van de tafel",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/duim-optillen-line-v1.png",
+  "uitleg": "Leg je hand plat op tafel. Til alleen de duim zo ver mogelijk op en leg hem gecontroleerd terug.",
+  "kaartImg": "images/bovenste-extremiteit/duim-optillen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Elleboog buigen en strekken met hulp",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/elleboog-buigen-strekken-line-v1.png",
+  "uitleg": "Buig je elleboog zo ver mogelijk, met de handpalm naar boven, en help met je andere hand. Strek daarna de arm zo ver mogelijk.",
+  "kaartImg": "images/bovenste-extremiteit/elleboog-buigen-strekken-avatar-v8.jpg"
+ },
+ {
+  "naam": "Zenuwglijden duimkant (n. radialis)",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/zenuw-radialis-glijden-line-v1.png",
+  "uitleg": "Hang je arm langs het lichaam, maak een vuist, buig de pols en draai de arm naar binnen. Breng de arm naar achteren tot je lichte spanning voelt en ga terug.",
+  "kaartImg": "images/bovenste-extremiteit/zenuw-radialis-glijden-avatar-v8.jpg"
+ },
+ {
+  "naam": "Zenuwglijden handpalm (n. medianus)",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/zenuw-medianus-glijden-line-v1.png",
+  "uitleg": "Strek je arm zijwaarts met de handpalm omhoog, alsof je een dienblad draagt. Strek de pols tot je lichte spanning voelt en ga terug.",
+  "kaartImg": "images/bovenste-extremiteit/zenuw-medianus-glijden-avatar-v8.jpg"
+ },
+ {
+  "naam": "Pols zijwaarts schuiven op tafel",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/pols-zijwaarts-op-tafel-line-v1.png",
+  "uitleg": "Leg je hand plat op tafel. Schuif de hand naar de duimkant en daarna naar de pinkkant, met de onderarm stil. Help eventueel met je andere hand om iets verder te komen.",
+  "kaartImg": "images/bovenste-extremiteit/pols-zijwaarts-op-tafel-avatar-v8.jpg"
+ },
+ {
+  "naam": "Polsrondjes",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/polsrondjes-line-v1.png",
+  "uitleg": "Draai je polsen rustig rondjes, eerst de ene kant op en dan de andere. Alleen de pols beweegt, de onderarm blijft stil.",
+  "kaartImg": "images/bovenste-extremiteit/polsrondjes-avatar-v8.jpg"
+ },
+ {
+  "naam": "Knokkels buigen met rechte vingers (tafelstand)",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/tafelstand-vingers-line-v1.png",
+  "uitleg": "Houd je onderarm omhoog met de pols recht. Buig de knokkels terwijl de vingers zelf recht blijven, en strek weer.",
+  "kaartImg": "images/bovenste-extremiteit/tafelstand-vingers-avatar-v8.jpg"
+ },
+ {
+  "naam": "Duim zijwaarts van de hand bewegen",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/duim-spreiden-line-v1.png",
+  "uitleg": "Leg je hand met de handpalm naar boven op tafel. Beweeg de duim zijwaarts van de hand af en weer terug; help eventueel met je andere hand.",
+  "kaartImg": "images/bovenste-extremiteit/duim-spreiden-avatar-v8.jpg"
  }
 ]

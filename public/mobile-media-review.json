@@ -17,14 +17,14 @@
     }
   ],
   "summary": {
-    "total": 446,
+    "total": 475,
     "rejected": 6,
-    "unreviewed": 440,
+    "unreviewed": 469,
     "approved": 0,
     "poseGeometryApproved": 170,
-    "poseStatic": 276,
+    "poseStatic": 305,
     "brandMarkCovered": 115,
-    "brandMarkAbsent": 331
+    "brandMarkAbsent": 360
   },
   "entries": [
     {
@@ -20284,6 +20284,963 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_cd4ca369a8de4c6b",
+      "name": "Bal knijpen",
+      "source": "images/bovenste-extremiteit/bal-knijpen-avatar-v8.jpg",
+      "assetSha256": "f3023506d91b239eefa4ee45382c387231bda2dc165ec96eed2778469a7d8beb",
+      "explanationSha256": "6f2d690708ccea8665e1f6543fba2ad5d1b6311fd45a1c28659ca293ba524254",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1343,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 95%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_bd8689726e7126b3",
+      "name": "Polsstrekkers rekken – arm gestrekt",
+      "source": "images/bovenste-extremiteit/polsstrekkers-rekken-avatar-v8.jpg",
+      "assetSha256": "537b0a8bdc6bcac9a36f798628a4cf90b7fc4d0a982fb98076f4dccfdcfec50b",
+      "explanationSha256": "755bd77c2bfd8407d561619dea1f2a5a3cc761684cf8d96a9b972c0d3d317b6f",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 252,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_1ab0a553a84e31e4",
+      "name": "Pols achterover buigen – met hulp op tafel",
+      "source": "images/bovenste-extremiteit/pols-achterover-met-hulp-avatar-v8.jpg",
+      "assetSha256": "fa7ef0c45f3b72ffe4bd39f5de8bb43864f4621798b42c01116a475461987718",
+      "explanationSha256": "a46b566d5b7d60df78fdcb7483cbeb48de8fae4bcbef69b78c3baab827e140ae",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1687,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_402be771c43f52f3",
+      "name": "Handpalm naar boven draaien tegen elastiek",
+      "source": "images/bovenste-extremiteit/supinatie-elastiek-avatar-v8.jpg",
+      "assetSha256": "13f63bc66b8f6b77278326033a8b3bbb6706f444e419e1284f1c1ef535145b1d",
+      "explanationSha256": "101a04f7663bdc06cdbf2c7e8999609fefe5f2f715adc9ca67d75ed25d14e83c",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1296,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_4231962d363b25e8",
+      "name": "Zenuwglijden pinkkant (n. ulnaris)",
+      "source": "images/bovenste-extremiteit/zenuw-ulnaris-glijden-avatar-v8.jpg",
+      "assetSha256": "cd7eb5d27fdc0e4858dfa00ae32c2220f3c8ba5747e5e72c9a5ca0aab6ef5953",
+      "explanationSha256": "bb5c57994c7dbc05c175cf420abcfdef310f7a89dd8cd22f1b82744a72925d0d",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1247,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_7574fa925d44c364",
+      "name": "Polsbuigers rekken – arm gestrekt",
+      "source": "images/bovenste-extremiteit/polsbuigers-rekken-avatar-v8.jpg",
+      "assetSha256": "97e3892a237ce811957210edb809f5da77be32a09b106fcaefa8c00dc4fb4cbf",
+      "explanationSha256": "bf3fa721518438fffd8b31d113612bd4cfb36c581887cc447300cce15188a3f6",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 308,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_92a54c40b5c3132a",
+      "name": "Pols voorover buigen – met hulp op tafel",
+      "source": "images/bovenste-extremiteit/pols-voorover-met-hulp-avatar-v8.jpg",
+      "assetSha256": "9d31d1e3c6f7dada64ec859d3d21bfe2aad96f2d07af7b3cb337ab558cb17500",
+      "explanationSha256": "7fad18a7245478e2126626ed7f35fdfb0478883195ac4ba9ba43497cd37079fc",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 2513,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_3fd677eac0f8cbfb",
+      "name": "Handpalmen tegen elkaar zakken (gebedsrek)",
+      "source": "images/bovenste-extremiteit/handpalmen-tegen-elkaar-avatar-v8.jpg",
+      "assetSha256": "debe929dec873953fba5407ee35be89e3b5697994f50756796e2ab292569acec",
+      "explanationSha256": "d2e0d68ab9d93e52e0431c1191ffc3b3eab63cd668f1c0a15aa8495962f3d33e",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1358,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_5f779577c2323f84",
+      "name": "Pols buigen en strekken – duim omhoog",
+      "source": "images/bovenste-extremiteit/pols-buigen-strekken-duim-boven-avatar-v8.jpg",
+      "assetSha256": "1ba9e785aa25863e95b9005eb9556f180d730bd8bbd43b7fe40952ffb06cb145",
+      "explanationSha256": "5b0b0bebf45f0ea3a4b1824eb9d4aefc1efda266f9b0e30b7119a11814ccc1aa",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1332,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_62a725643a1e1bc5",
+      "name": "Onderarm draaien – handpalm op en neer",
+      "source": "images/bovenste-extremiteit/onderarm-draaien-met-hulp-avatar-v8.jpg",
+      "assetSha256": "0ede2325d670f23a75ab07004f77fbc7243654dc86e228e83b8a61ad1efaa914",
+      "explanationSha256": "6ad08d8da8741f65e5bc6bfa03a2a4b15e2d22511ed89b30ae08c021911b2c4d",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1883,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_884af43c681cb3f8",
+      "name": "Onderarm draaien met een halter of hamer",
+      "source": "images/bovenste-extremiteit/onderarm-draaien-met-halter-avatar-v8.jpg",
+      "assetSha256": "5574a6cd2e7a40954ffcd0f150da8735d62cbefc8cc6d56d7feed93865aed5a3",
+      "explanationSha256": "63178f239f6e300772654bf479f14bb200fb995b116e4fd55049e20e0e15bbdf",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1629,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_446e41ad86b07ee3",
+      "name": "Handpalm naar beneden draaien tegen elastiek",
+      "source": "images/bovenste-extremiteit/pronatie-elastiek-avatar-v8.jpg",
+      "assetSha256": "e6047681d5bc59ee9498afcdd0afc38efce608b1c4862e238292d9a7bde67242",
+      "explanationSha256": "772829d44f8ddb332b914087b5d016bea8c5f66555332d1a2cd5e0bcf66453cf",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1582,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_a60811e3c06a0136",
+      "name": "Pols omhoog duwen tegen je hand (zonder bewegen)",
+      "source": "images/bovenste-extremiteit/pols-strekken-isometrisch-avatar-v8.jpg",
+      "assetSha256": "58df02a9844da47d686fa9b1357fe1a5850951c5d02731805ad83864445f8304",
+      "explanationSha256": "1e629c677534cd8d75d48fad5dfece2e654ddbc812588df7785de1ae5846ed45",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 2569,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_9b5ac0675be66f99",
+      "name": "Pols buigen tegen je hand (zonder bewegen)",
+      "source": "images/bovenste-extremiteit/pols-buigen-isometrisch-avatar-v8.jpg",
+      "assetSha256": "b269230ab8aa5221d970f3543774d68a7d284353a6ba9d2c874bceaa481ce098",
+      "explanationSha256": "365f0b2719067609f976bff9fd6f6e9e6b99117b9768fa26f364a486f22b1762",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1882,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_725acc23f700af84",
+      "name": "Pols naar de duimkant optillen met gewicht",
+      "source": "images/bovenste-extremiteit/pols-duimkant-omhoog-gewicht-avatar-v8.jpg",
+      "assetSha256": "4057748773ef2a2620a6822f155bab0602fb7bb4282765c65408eb4382991335",
+      "explanationSha256": "464212ff8741eb7e80aae14bf8b15a8fb7033d27df5498b7036d57dae1283127",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1386,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_fc40111da578f42a",
+      "name": "Flexbar wringen",
+      "source": "images/bovenste-extremiteit/flexbar-wringen-avatar-v8.jpg",
+      "assetSha256": "2f9b3f178e1329cb8ed6d939766835ef57706f36ea89159e69d3d323fc35da3b",
+      "explanationSha256": "9803ab9cd87ef8a57a415b91b7614b558364cd4cf1b7d9ed1f68ee9ea80ca18a",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1583,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_a2fd6affcf5de706",
+      "name": "Vuist maken en hand openen",
+      "source": "images/bovenste-extremiteit/vuist-maken-openen-avatar-v8.jpg",
+      "assetSha256": "02c9981bc432fa94ac72ce333199dadf95031c6c9dc9b416b73c8de87aef6819",
+      "explanationSha256": "6d34f849b16c996e960c710e87072d7515987fe2d89dce3a7472e250f80fb955",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1854,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 97%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_cede0757d553da4d",
+      "name": "Haakvuist maken",
+      "source": "images/bovenste-extremiteit/haakvuist-avatar-v8.jpg",
+      "assetSha256": "e9238b3c9a2f0d3ac889c618147e2db6f13842a544fef253d4bd8c7d9a5c0404",
+      "explanationSha256": "d6edf9610680c7e2834e443fb0674a5163fb5bec40be30fbde2f14e8b94b125d",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 2005,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_16b44eae7736224e",
+      "name": "Vingers spreiden tegen elastiek",
+      "source": "images/bovenste-extremiteit/vingers-spreiden-elastiek-avatar-v8.jpg",
+      "assetSha256": "ab1c386125a0981d10471c97aaad1160860181906adbcf46f03b0831c772b0eb",
+      "explanationSha256": "6c701482c6e955dce220c51f1b29eadcda240094dd4ca0296dee4a718c7d4567",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1659,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_65d1349e84a5971a",
+      "name": "Vingers buigen en strekken met hulp",
+      "source": "images/bovenste-extremiteit/vingers-buigen-met-hulp-avatar-v8.jpg",
+      "assetSha256": "98e8be188df6ca80ca3ee2d4473ee1d49b5d56e9f26a447af6d2be06577492e7",
+      "explanationSha256": "61116d16fb3ec302d5d7706ffa8abfd2b50839760cdc99fbd7132dc72787447f",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1912,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 90%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_67504ae2e569d2e4",
+      "name": "Duim buigen en strekken",
+      "source": "images/bovenste-extremiteit/duim-buigen-strekken-avatar-v8.jpg",
+      "assetSha256": "9fc2ce9758876cb9101b1b60160919713617fcd389944f13f33ce35d0df4ac01",
+      "explanationSha256": "0f2b72928d9abf4297ed6409bc9963e2d8962dff026c9fe494942fcb75753d1c",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1311,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 736 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_24b02bf8e68e35c2",
+      "name": "Duim optillen van de tafel",
+      "source": "images/bovenste-extremiteit/duim-optillen-avatar-v8.jpg",
+      "assetSha256": "b6d51b0bece2a7516f306ee360b4dabb5eb83d9008fc231b33177a0192a8cb35",
+      "explanationSha256": "d2e4409ffc269c99cf4285643265b7cc25daa3a07fa63b861f8efdfa9f797ba8",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1803,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_b745cabca0cc019c",
+      "name": "Elleboog buigen en strekken met hulp",
+      "source": "images/bovenste-extremiteit/elleboog-buigen-strekken-avatar-v8.jpg",
+      "assetSha256": "33e0cec5e07a2b7feb450ef3b89124d0619a9c0780e610c023fe7fa357f5fdd8",
+      "explanationSha256": "208d11391919cf7c8998c73c91a83f6f0d3599929393f8f421534ec6572767b0",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1248,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_2f9acd1e91be02c4",
+      "name": "Zenuwglijden duimkant (n. radialis)",
+      "source": "images/bovenste-extremiteit/zenuw-radialis-glijden-avatar-v8.jpg",
+      "assetSha256": "03a4896f14ae86b9184cd760b1299883dcbcaebfb947792315769047f4bb1396",
+      "explanationSha256": "b11d051c351a955f54c7b0f832173d4363a73d64c46168972e70f36dc332d6ce",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 844,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_54c3af0c79895b37",
+      "name": "Zenuwglijden handpalm (n. medianus)",
+      "source": "images/bovenste-extremiteit/zenuw-medianus-glijden-avatar-v8.jpg",
+      "assetSha256": "ac6cdeab9cea6c721f99dc5ecc2c578a2968eed2c83fb006032b6476051cfef1",
+      "explanationSha256": "b6b751216df7a807977afb89218b2305af2a555c6b4c6f923985b6b9bbf42d45",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1045,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_bd2236dc22edad01",
+      "name": "Pols zijwaarts schuiven op tafel",
+      "source": "images/bovenste-extremiteit/pols-zijwaarts-op-tafel-avatar-v8.jpg",
+      "assetSha256": "4a39f9b67c1d5d7fc76f201f28a172dac9fcbe1d58b281669a5c44783c2ad956",
+      "explanationSha256": "557d598c961c385ecb1398fc667f4eb8a4e4416d6d178095ece2171ab656a7f7",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1847,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_b247db4379a17a28",
+      "name": "Polsrondjes",
+      "source": "images/bovenste-extremiteit/polsrondjes-avatar-v8.jpg",
+      "assetSha256": "c297d02a3150ed7e7ae8c270456d53e4566afa4779f5481fd0dba80c2130e571",
+      "explanationSha256": "df4c21a3ede21b2ddc7d3027cd8cd8dcba42d8785bbdac6604433cd59f940028",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 598,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_dfbbea2a59f46d92",
+      "name": "Knokkels buigen met rechte vingers (tafelstand)",
+      "source": "images/bovenste-extremiteit/tafelstand-vingers-avatar-v8.jpg",
+      "assetSha256": "0346b3b4fd4ca3501b9775bda81d206efe8b3b3f57caa9d0c7fe78231428afb4",
+      "explanationSha256": "09465b05a0bfdf936c66f4c828ee657832ff12700727db0d4c21c1cceb763615",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1250,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 91%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c74ac1cafca59ce5",
+      "name": "Duim zijwaarts van de hand bewegen",
+      "source": "images/bovenste-extremiteit/duim-spreiden-avatar-v8.jpg",
+      "assetSha256": "7e1ec9fe2fde4ef2cb39156658acd0db3cfeb50a39be6f8657473afc77430ae7",
+      "explanationSha256": "7c32bec39385d38bdc27bdfcf0f33181e16020f814b6751669f406cfb57f84b8",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1435,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,

@@ -155,6 +155,8 @@
   #a4 table.mon input{border:none;width:100%;height:18px;text-align:center;font-size:9.5px;padding:0;background:transparent;font-family:inherit;color:#101828}
   #a4 table.mon input:focus{outline:none;background:var(--brand-50);border-radius:2px}
   #a4 table.mon input.drow{font-size:9px}
+  /* lange dosering uit een behandelkaart (4×20″) past nog in het smalle H-vakje */
+  #a4 table.mon input.kl{font-size:8px;letter-spacing:-.04em}
   #a4 table.mon thead tr:nth-child(1){height:17px}
   #a4 table.mon thead tr:nth-child(3){height:22px}
   #a4 table.mon thead tr:nth-child(4){height:22px}
@@ -296,6 +298,13 @@
   </div>
   <button class="btn primary" id="printBtn">Print trainingsschema (PDF)</button>
 </header>
+<div id="sjBewerk" class="sjb-bewerk no-print" role="status" hidden>
+  <span class="sjb-bewerk-tekst">Je past <b id="sjb_bnaam"></b> aan. Wijzig oefeningen en dosering op de kaart en bewaar hem als je eigen behandelkaart.</span>
+  <span class="sjb-bewerk-ok">Bewaard onder <b>Mijn kaarten</b> in Sjablonen.</span>
+  <span class="pb-ruimte"></span>
+  <button class="btn primary" id="sjb_bbewaar">Bewaar als mijn kaart</button>
+  <button class="btn" id="sjb_bstop">Stoppen</button>
+</div>
 <div id="proefBalk" class="proefbalk no-print" role="status" hidden>
   <span><b>Gratis proef</b> <span id="pb_tekst"></span></span>
   <span class="pb-tel" id="pb_teller" title="Er passen maximaal 12 oefeningen op één A4">0 / 12 oefeningen</span>
@@ -544,7 +553,7 @@ bridge2.jpg</div>
       Je eerste trainingskaart staat in ongeveer een minuut:
       <ol style="margin:8px 0 0 18px;padding:0">
         <li>Vul de <b>naam van je praktijk</b> in; die komt boven op elke kaart.</li>
-        <li>Kies een <b>sjabloon</b> per klacht, of klik links oefeningen aan.</li>
+        <li>Kies een <b>standaard behandelkaart</b> per klacht (knop Sjablonen), of klik links oefeningen aan.</li>
         <li>Zet een <b>wachtwoord op je praktijk</b> (knop Kaarten) en vul een <b>roepnaam</b> in, zoals Jan K. De QR-code naar de digitale kaart komt er dan vanzelf op.</li>
         <li><b>Print</b> de A4 of deel de link via WhatsApp.</li>
       </ol>
@@ -567,18 +576,30 @@ bridge2.jpg</div>
 </datalist>
 <datalist id="behSugg"></datalist>
 
-<!-- kaartsjablonen (v2) -->
+<!-- standaard behandelkaarten (v2): bibliotheek met categorieën links, lijst in het midden
+     en een voorbeeld rechts. Eerst zien wat erop staat, dan op de kaart zetten of als eigen
+     kaart aanpassen (richting Physitrack: categorie → sjabloon → voorbeeld → toepassen). -->
 <div class="ov" id="ovSjab">
-  <div class="modal">
-    <h3>Kaartsjablonen</h3>
-    <div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5">
-      Kies een startpunt per klacht: de oefeningen komen direct op de kaart en zijn daarna
-      gewoon aan te passen. Cli&euml;ntgegevens en ingevulde vakjes blijven staan.
+  <div class="modal sjb" role="dialog" aria-labelledby="sj_titel">
+    <div class="sjb-kop">
+      <div class="sjb-kop-tekst">
+        <small>Standaard behandelkaarten</small>
+        <h3 id="sj_titel">Kies een behandelkaart</h3>
+        <p>Een kant-en-klaar startpunt per klacht. Bekijk wat erop staat, zet hem op de kaart en pas hem aan zoals je wilt.</p>
+      </div>
+      <button type="button" class="sjb-dicht" id="sj_x" aria-label="Sluiten">&times;</button>
     </div>
-    <input id="sj_zoek" type="search" placeholder="Zoek op klacht of oefening (knie, rug, squat&hellip;)" autocomplete="off"
-      style="width:100%;box-sizing:border-box;margin:0 0 8px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px"/>
-    <div id="sj_lijst" style="max-height:340px;overflow:auto"></div>
-    <div class="acts"><button class="btn" id="sj_bewaar" title="Bewaar de oefeningen en dosering van de huidige kaart als je eigen sjabloon (alleen op dit apparaat)">Huidige kaart als sjabloon</button><button class="btn" id="sj_close">Sluiten</button></div>
+    <div class="sjb-zoek"><input id="sj_zoek" type="search" placeholder="Zoek op klacht of oefening (knie, rug, squat&hellip;)" autocomplete="off" aria-label="Zoek een behandelkaart"/></div>
+    <div class="sjb-body">
+      <nav class="sjb-cats" id="sj_cats" aria-label="Categorie&euml;n"></nav>
+      <div class="sjb-lijst" id="sj_lijst" role="listbox" aria-label="Behandelkaarten"></div>
+      <aside class="sjb-voorbeeld" id="sj_voorbeeld" aria-live="polite"></aside>
+    </div>
+    <div class="acts sjb-voet">
+      <span class="sjb-voet-tip">Al een kaart gemaakt die je vaker gebruikt? Bewaar hem als eigen behandelkaart.</span>
+      <button class="btn" id="sj_bewaar" title="Bewaar de oefeningen en dosering van de huidige kaart als je eigen behandelkaart (alleen op dit apparaat)">Huidige kaart bewaren</button>
+      <button class="btn" id="sj_close">Sluiten</button>
+    </div>
   </div>
 </div>
 
@@ -1254,15 +1275,20 @@ bridge2.jpg</div>
   // (alleen het scherm; de print gebruikt altijd de echte maat). Smal: acties boven het werkvlak.
   var BREED=window.matchMedia?window.matchMedia('(min-width:1100px)'):null;
   var PASBREED=window.matchMedia?window.matchMedia('(min-width:921px)'):null;
+  var TABLETSTAAND=window.matchMedia?window.matchMedia('(min-width:700px) and (max-width:920px)'):null;
   function pasA4(){
     var kop=document.getElementById('fpKop'),wrap=document.getElementById('a4wrap'),a4=document.getElementById('a4');
     if(!kop||!wrap||!a4)return;
     var breed=BREED&&BREED.matches;
     if(breed&&kop.parentNode!==wrap)wrap.insertBefore(kop,wrap.firstChild);
     if(!breed&&kop.parentNode===wrap){var wr=document.querySelector('.wrap');wr.parentNode.insertBefore(kop,wr);}
-    if(!(PASBREED&&PASBREED.matches)){wrap.style.removeProperty('--a4z');return;}
+    var staand=!(PASBREED&&PASBREED.matches)&&TABLETSTAAND&&TABLETSTAAND.matches;
+    if(!(PASBREED&&PASBREED.matches)&&!staand){wrap.style.removeProperty('--a4z');return;}
     var cs=getComputedStyle(wrap),padX=parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight),padY=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom);
     var bw=wrap.clientWidth-padX-4;
+    // iPad staand: de kaart staat onder de oefeningenlijst; pas hem op de breedte in, zodat
+    // het hele blad zichtbaar is zonder opzij te vegen (inzoomen met twee vingers kan altijd)
+    if(staand){wrap.style.setProperty('--a4z',Math.max(.5,Math.floor(Math.min(1,bw/1122)*100)/100));return;}
     var top=wrap.getBoundingClientRect().top+window.scrollY;
     var bh=window.innerHeight-top-padY-kop.offsetHeight-14;
     // Op het scherm staan boven de tabel nog tips en de startdosering (niet op de print); de kaart
@@ -1592,7 +1618,7 @@ bridge2.jpg</div>
     head+="</tr></thead>";
     function dateRow(r){
       var tr="<tr><td class='dd'><input class='drow' data-row='"+r+"' value='"+esc(GRID.rows[r]||'')+"' placeholder='__-__'/></td>";
-      colKeys.forEach(function(ck){['S','H','W'].forEach(function(f){var key=ck+'|'+r+'|'+f;tr+="<td><input data-k='"+key+"' value='"+esc(GRID.cells[key]||'')+"'/></td>";});});
+      colKeys.forEach(function(ck){['S','H','W'].forEach(function(f){var key=ck+'|'+r+'|'+f;var gv=String(GRID.cells[key]||'');tr+="<td><input data-k='"+key+"'"+(gv.length>4?" class='kl'":"")+" value='"+esc(gv)+"'/></td>";});});
       return tr+"</tr>";
     }
     function labelRow(lbl,r){
@@ -2521,51 +2547,131 @@ bridge2.jpg</div>
     fetch('sjablonen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];})
       .then(function(l){SJABLONEN=Array.isArray(l)?l:[];}).catch(function(){});
   }
+  // De bibliotheek werkt met één platte lijst items {bron,i,s}: bron 'eigen' (dit apparaat),
+  // 'praktijk' (gedeeld met het team) of 'std' (standaard behandelkaart). Links kies je een
+  // categorie, in het midden een kaart, rechts zie je vooraf wat erop staat.
+  var SJ_VOLGORDE=['Nek','Schouder','Elleboog, pols en hand','Rug en bekken','Heup en bovenbeen','Knie','Enkel en voet',
+    'Ouderen en balans','Neurologie en duizeligheid','Hart, vaten en longen','Algemeen en sport'];
+  var SJ_STAAT={cat:'alle',sel:null};
+  function sjItems(){
+    var uit=[];
+    leesEigenSjab().forEach(function(s,i){uit.push({bron:'eigen',i:i,s:s});});
+    ((IS_V2&&Array.isArray(PRAKSJAB))?PRAKSJAB:[]).forEach(function(s,i){uit.push({bron:'praktijk',i:i,s:s});});
+    SJABLONEN.forEach(function(s,i){uit.push({bron:'std',i:i,s:s});});
+    return uit;
+  }
+  function sjSleutel(it){return it.bron+':'+it.i;}
+  function sjCat(it){return it.bron==='eigen'?'eigen':it.bron==='praktijk'?'praktijk':(it.s.categorie||'Overig');}
+  function sjOefeningen(s){
+    return (s.oefeningen||[]).map(function(n){var id=byNorm[normEx(sjabNaam(n))];return (id!=null&&OEF[id])?{id:id,o:OEF[id],item:n}:null;}).filter(Boolean);
+  }
+  function sjDosTekst(item,s){
+    var od=(item&&typeof item==='object')?item:null,dz=s.dosering||{};
+    var se=(od&&od.s)||dz.s||'',he=(od&&od.h)||dz.h||'',we=(od&&od.w)||dz.w||'';
+    // "10 × 5 sec" = 10 herhalingen van 5 seconden vasthouden; in het voorbeeld voluit
+    var vast=/^(\d+) × (\d+ (?:sec|min))$/.exec(he);
+    if(vast)he=vast[1]+', '+vast[2]+' vasthouden';
+    var t=se&&he?se+' × '+he:(se?se+' series':(he||''));
+    return t+(we?' · '+we:'');
+  }
+  function sjPast(it,term){
+    if(!term)return true;
+    var s=it.s,tekst=(s.naam||'')+' '+(s.sub||'')+' '+(s.categorie||'')+' '+(s.oefeningen||[]).map(sjabNaam).join(' ');
+    return tekst.toLowerCase().indexOf(term)>=0;
+  }
   function renderSjabLijst(){
-    var el=document.getElementById('sj_lijst');
-    // één rij per sjabloon; toont vooraf de oefeningnamen die nog écht in de
-    // bibliotheek staan, zodat de therapeut ziet wat hij krijgt vóór "Gebruik".
-    var rij=function(s,attr){
-      var namen=(s.oefeningen||[]).map(sjabNaam).filter(function(nm){return byNorm[normEx(nm)]!=null;});
-      var besch=namen.length;
-      return "<div style='display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line)'>"+
-        "<div style='flex:1;min-width:0'><b>"+esc(s.naam)+"</b> <small style='color:var(--muted)'>&middot; "+besch+" oefeningen</small>"+
-        "<br/><small style='color:var(--muted)'>"+esc(s.sub||'')+"</small>"+
-        (besch?"<br/><small style='color:var(--muted);opacity:.85'>"+namen.map(esc).join(' &middot; ')+"</small>":"")+
-        "</div>"+attr+"</div>";
-    };
-    var eigen=leesEigenSjab();
-    // v2: gedeelde praktijksjablonen — protocollen die één collega deelt en waar
-    // het hele team op elk apparaat mee werkt (concurrenten noemen dit "vaste
-    // protocollen per klacht", maar dan mét app en account)
-    var vanPraktijk=(IS_V2&&Array.isArray(PRAKSJAB))?PRAKSJAB:[];
-    if(!SJABLONEN.length&&!eigen.length&&!vanPraktijk.length){el.innerHTML="<div class='hint'>Geen sjablonen gevonden.</div>";return;}
-    // zoekfilter over naam, omschrijving én oefeningnamen; de knoppen houden de
-    // oorspronkelijke index vast, dus filteren gebeurt op (sjabloon, index)-paren
+    var lijstEl=document.getElementById('sj_lijst'),catEl=document.getElementById('sj_cats');
+    if(!lijstEl||!catEl)return;
     var term=String((document.getElementById('sj_zoek')||{}).value||'').trim().toLowerCase();
-    var past=function(s){ if(!term)return true;
-      var tekst=(s.naam||'')+' '+(s.sub||'')+' '+(s.oefeningen||[]).map(sjabNaam).join(' ');
-      return tekst.toLowerCase().indexOf(term)>=0; };
-    var metIndex=function(lijst){return lijst.map(function(s,i){return {s:s,i:i};}).filter(function(p){return past(p.s);});};
-    var eigenF=metIndex(eigen),prakF=metIndex(vanPraktijk),stdF=metIndex(SJABLONEN);
+    var alle=sjItems();
+    // categorieën met tellers (de tellers volgen de zoekterm, zodat je ziet waar de treffers zitten)
+    var tel={},totaal=0;
+    alle.forEach(function(it){if(!sjPast(it,term))return;var c=sjCat(it);tel[c]=(tel[c]||0)+1;totaal++;});
+    var stdCats=SJ_VOLGORDE.slice();
+    SJABLONEN.forEach(function(s){var c=s.categorie||'Overig';if(stdCats.indexOf(c)<0)stdCats.push(c);});
+    if(SJ_STAAT.cat!=='alle'&&!tel[SJ_STAAT.cat]&&!(SJ_STAAT.cat==='eigen'||SJ_STAAT.cat==='praktijk'))SJ_STAAT.cat='alle';
+    var catKnop=function(k,label,n,extra){
+      return "<button type='button' class='sjb-cat"+(SJ_STAAT.cat===k?' aan':'')+(n?'':' leeg')+"' data-sjcat='"+esc(k)+"'"+(SJ_STAAT.cat===k?" aria-current='true'":"")+">"+
+        "<span>"+esc(label)+"</span><b>"+(n||0)+"</b></button>"+(extra||'');
+    };
+    var c='';
+    c+=catKnop('alle','Alle behandelkaarten',totaal);
+    c+="<div class='sjb-catlabel'>Van jou en je team</div>";
+    c+=catKnop('eigen','Mijn kaarten',tel.eigen||0);
+    if(IS_V2&&(SET.praktijk||'').trim())c+=catKnop('praktijk','Van de praktijk',tel.praktijk||0);
+    c+="<div class='sjb-catlabel'>Standaard per regio</div>";
+    stdCats.forEach(function(k){if(SJABLONEN.some(function(s){return (s.categorie||'Overig')===k;}))c+=catKnop(k,k,tel[k]||0);});
+    catEl.innerHTML=c;
+    // de lijst: in "alle" gegroepeerd per categorie, anders alleen de gekozen categorie
+    var zicht=alle.filter(function(it){return sjPast(it,term)&&(SJ_STAAT.cat==='alle'||sjCat(it)===SJ_STAAT.cat);});
+    var rij=function(it){
+      var s=it.s,oe=sjOefeningen(s),sl=sjSleutel(it);
+      var dz=s.dosering?sjDosTekst(null,s):'';
+      return "<button type='button' class='sjb-rij"+(SJ_STAAT.sel===sl?' aan':'')+"' role='option' aria-selected='"+(SJ_STAAT.sel===sl)+"' data-sjsel='"+sl+"'>"+
+        "<span class='sjb-rij-beeld'>"+oe.slice(0,3).map(function(x){return imgRender(x.o.imgs[0],38);}).join('')+"</span>"+
+        "<span class='sjb-rij-tekst'><b>"+esc(s.naam)+"</b>"+
+        "<small>"+oe.length+" oefening"+(oe.length===1?'':'en')+(dz?" · "+esc(dz):"")+(it.bron==='eigen'?" · alleen op dit apparaat":it.bron==='praktijk'?" · gedeeld met de praktijk":"")+"</small>"+
+        (s.sub&&it.bron==='std'?"<span class='sjb-rij-sub'>"+esc(s.sub)+"</span>":"")+
+        "</span></button>";
+    };
     var h='';
-    if(eigenF.length){
-      h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:2px 0 4px'>Jouw sjablonen</div>";
-      h+=eigenF.map(function(p){return rij(p.s,"<button class='btn primary' data-esjab='"+p.i+"'>Gebruik</button>"+
-        (IS_V2&&(SET.praktijk||'').trim()?"<button class='btn' data-edeel='"+p.i+"' title='Deel dit sjabloon met de hele praktijk: elke collega kan het dan op elk apparaat gebruiken'>Deel</button>":"")+
-        "<button class='btn' data-edit-own='"+p.i+"'>Aanpassen</button><button class='btn' data-edel='"+p.i+"' title='verwijderen' aria-label='verwijderen'>&times;</button>");}).join("");
+    if(!zicht.length){
+      h=SJ_STAAT.cat==='eigen'&&!term?"<div class='sjb-leeg'><b>Nog geen eigen behandelkaarten</b>Kies een standaardkaart en klik op <i>Aanpassen als mijn kaart</i>, of maak een kaart en bewaar hem onderaan met <i>Huidige kaart bewaren</i>.</div>":
+        SJ_STAAT.cat==='praktijk'&&!term?"<div class='sjb-leeg'><b>Nog niets gedeeld</b>Deel een van je eigen kaarten met de praktijk; dan kan elke collega hem op elk apparaat gebruiken.</div>":
+        "<div class='sjb-leeg'><b>Niets gevonden"+(term?" voor “"+esc(term)+"”":"")+"</b>Zoek op klacht (knie, rug) of op een oefening.</div>";
+    }else if(SJ_STAAT.cat==='alle'){
+      var groepen=['eigen','praktijk'].concat(stdCats);
+      var opVolgorde=[];
+      groepen.forEach(function(g){
+        var deel=zicht.filter(function(it){return sjCat(it)===g;});
+        if(!deel.length)return;
+        opVolgorde=opVolgorde.concat(deel);
+        h+="<div class='sjb-groep'>"+esc(g==='eigen'?'Mijn kaarten':g==='praktijk'?'Van de praktijk':g)+"</div>"+deel.map(rij).join('');
+      });
+      zicht=opVolgorde;
+    }else h=zicht.map(rij).join('');
+    lijstEl.innerHTML=h;
+    // altijd een voorbeeld rechts: houd de keuze vast als die nog zichtbaar is, anders de eerste
+    if(!zicht.some(function(it){return sjSleutel(it)===SJ_STAAT.sel;}))SJ_STAAT.sel=zicht.length?sjSleutel(zicht[0]):null;
+    var aan=lijstEl.querySelector("[data-sjsel='"+SJ_STAAT.sel+"']");
+    if(aan){aan.classList.add('aan');aan.setAttribute('aria-selected','true');}
+    renderSjabVoorbeeld();
+  }
+  function sjZoekItem(sl){var r=null;sjItems().forEach(function(it){if(sjSleutel(it)===sl)r=it;});return r;}
+  function renderSjabVoorbeeld(){
+    var el=document.getElementById('sj_voorbeeld');if(!el)return;
+    var it=SJ_STAAT.sel?sjZoekItem(SJ_STAAT.sel):null;
+    if(!it){el.innerHTML="<div class='sjb-leeg'>Kies links een behandelkaart om te zien wat erop staat.</div>";return;}
+    var s=it.s,oe=sjOefeningen(s),mist=(s.oefeningen||[]).length-oe.length;
+    var label=it.bron==='eigen'?'Mijn kaart · alleen op dit apparaat':it.bron==='praktijk'?'Gedeeld met de praktijk':(s.categorie||'Standaard');
+    var h="<div class='sjb-vb-kop'><span class='sjb-chip'>"+esc(label)+"</span><h4>"+esc(s.naam)+"</h4>"+(s.sub?"<p>"+esc(s.sub)+"</p>":"")+"</div>";
+    h+="<ol class='sjb-vb-oef'>"+oe.map(function(x){
+      var d=sjDosTekst(x.item,s);
+      return "<li>"+imgRender(x.o.imgs[0],48)+"<span><b>"+esc(x.o.naam)+"</b>"+(d?"<small>"+esc(d)+"</small>":"")+"</span></li>";
+    }).join('')+"</ol>";
+    if(mist>0)h+="<p class='sjb-vb-noot'>"+mist+" oefening"+(mist===1?' staat':'en staan')+" niet meer in de bibliotheek en "+(mist===1?'wordt':'worden')+" overgeslagen.</p>";
+    if(oe.length>12)h+="<p class='sjb-vb-noot'>Een kaart past 12 oefeningen; de eerste 12 komen erop.</p>";
+    var sl=sjSleutel(it);
+    h+="<div class='sjb-vb-acties'>";
+    h+="<button class='btn primary' data-sjdo='gebruik' data-sj='"+sl+"'>"+(chosen.length?'Vervang de kaart':'Op de kaart zetten')+"</button>";
+    if(chosen.length)h+="<button class='btn' data-sjdo='erbij' data-sj='"+sl+"' title='Zet deze oefeningen erbij, achter wat er al op de kaart staat'>Toevoegen aan kaart</button>";
+    h+="<button class='btn' data-sjdo='aanpassen' data-sj='"+sl+"'>"+(it.bron==='eigen'?'Aanpassen':'Aanpassen als mijn kaart')+"</button>";
+    h+="</div>";
+    var klein='';
+    if(it.bron==='eigen'){
+      if(IS_V2&&(SET.praktijk||'').trim())klein+="<button class='sjb-link' data-sjdo='deel' data-sj='"+sl+"' title='Deel deze kaart met de hele praktijk: elke collega kan hem dan op elk apparaat gebruiken'>Delen met de praktijk</button>";
+      klein+="<button class='sjb-link rood' data-sjdo='weg' data-sj='"+sl+"'>Verwijderen</button>";
     }
-    if(prakF.length){
-      h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:"+(eigenF.length?12:2)+"px 0 4px'>Sjablonen van de praktijk</div>";
-      h+=prakF.map(function(p){return rij({naam:p.s.naam,sub:'Gedeeld met de hele praktijk',oefeningen:p.s.oefeningen||[]},
-        "<button class='btn primary' data-psjab='"+p.i+"'>Gebruik</button><button class='btn' data-edit-shared='"+p.i+"'>Aanpassen als kopie</button><button class='btn' data-pdel='"+p.i+"' title='verwijderen voor de hele praktijk' aria-label='verwijderen'>&times;</button>");}).join("");
-    }
-    if((eigenF.length||prakF.length)&&stdF.length){
-      h+="<div style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:12px 0 4px'>Standaardsjablonen</div>";
-    }
-    h+=stdF.map(function(p){return rij(p.s,"<button class='btn primary' data-sjab='"+p.i+"'>Gebruik</button><button class='btn' data-edit-standard='"+p.i+"'>Aanpassen als kopie</button>");}).join("");
-    if(!h){el.innerHTML="<div class='hint'>Geen sjabloon gevonden voor &ldquo;"+esc(term)+"&rdquo;. Zoek op klacht (knie, rug) of op een oefening.</div>";return;}
+    if(it.bron==='praktijk')klein+="<button class='sjb-link rood' data-sjdo='weg' data-sj='"+sl+"' title='Verwijdert deze kaart voor de hele praktijk'>Verwijderen voor de praktijk</button>";
+    if(klein)h+="<div class='sjb-vb-klein'>"+klein+"</div>";
+    if(it.bron==='std')h+="<p class='sjb-vb-noot'>Een standaardkaart blijft altijd zoals hij is. Wat je aanpast bewaar je als je eigen kaart.</p>";
     el.innerHTML=h;
+  }
+  function openSjab(){
+    var z=document.getElementById('sj_zoek');if(z)z.value='';
+    SJ_STAAT.cat='alle';SJ_STAAT.sel=null;
+    renderSjabLijst();laadPrakSjab();openOv('ovSjab');
+    setTimeout(function(){if(z&&z.focus)z.focus();},60);
   }
   // tikken in het zoekveld filtert live; bij het openen begint de lijst leeg-gefilterd
   (function(){var z=document.getElementById('sj_zoek');if(z)z.addEventListener('input',function(){renderSjabLijst();});})();
@@ -2584,7 +2690,7 @@ bridge2.jpg</div>
       })
       .catch(function(){});
   }
-  document.getElementById('sjabBtn').addEventListener('click',function(){var z=document.getElementById('sj_zoek');if(z)z.value='';renderSjabLijst();laadPrakSjab();openOv('ovSjab');});
+  document.getElementById('sjabBtn').addEventListener('click',openSjab);
   // eenmalig welkom (v2): wie vers van de landing komt, landt niet koud in de app
   // maar krijgt de kaart-in-één-minuut-route. Eén keer ooit, daarna nooit meer;
   // bestaande gebruikers (met opgeslagen kaartstaat) zien hem ook niet.
@@ -2604,7 +2710,7 @@ bridge2.jpg</div>
       el.value=nm;el.dispatchEvent(new Event('input'));el.dispatchEvent(new Event('change'));
     };
     document.getElementById('welkom_zelf').addEventListener('click',function(){welkomPraktijk();closeOv('ovWelkom');});
-    document.getElementById('welkom_sjab').addEventListener('click',function(){welkomPraktijk();closeOv('ovWelkom');var z=document.getElementById('sj_zoek');if(z)z.value='';renderSjabLijst();openOv('ovSjab');});
+    document.getElementById('welkom_sjab').addEventListener('click',function(){welkomPraktijk();closeOv('ovWelkom');openSjab();});
   }
   // ---- gratis proef (v2): balk, voorbeeldkaart en de QR-test op de eigen telefoon ----
   function proefTeller(){
@@ -2716,21 +2822,29 @@ bridge2.jpg</div>
   });
   document.getElementById('qt_dicht').addEventListener('click',function(){closeOv('ovQrTest');});
   document.getElementById('sj_close').addEventListener('click',function(){closeOv('ovSjab');});
+  document.getElementById('sj_x').addEventListener('click',function(){closeOv('ovSjab');});
   // een oefening-item in een sjabloon is óf een naam (string) óf een object met een
-  // eigen dosering {n,s,h,w} — dat laatste bij eigen sjablonen die de exacte
-  // dosering meenemen. sjabNaam/sjabDos halen naam en dosering er veilig uit.
+  // eigen dosering {n,s,h,w} — dat laatste bij eigen sjablonen en bij standaardkaarten
+  // met een dosering per oefening. sjabNaam haalt de naam er veilig uit.
   function sjabNaam(n){return (typeof n==='string')?n:(n&&n.n)||'';}
+  // het H-vakje op de A4 is maar een paar tekens breed: "4 × 20 sec" wordt 4×20″, "60 sec" 60″, "5 min" 5′
+  function sjKortH(h){
+    return String(h).replace(/^(\d+) × (\d+) sec$/,'$1×$2″').replace(/^(\d+) × (\d+) min$/,'$1×$2′')
+      .replace(/^(\d+) sec$/,'$1″').replace(/^(\d+) min$/,'$1′');
+  }
   var sjabloonBewerkNaam='';
-  function pasSjabloonToe(s){
+  // erbij: de oefeningen komen achter wat er al op de kaart staat (dubbele overgeslagen);
+  // anders vervangt de behandelkaart de hele kaart (eerst vragen als er al iets op staat)
+  function pasSjabloonToe(s,erbij){
     if(!s)return;
-    // een sjabloon vervangt de hele selectie; had de therapeut al oefeningen gekozen,
-    // vraag dan eerst — anders raakt dat werk stil kwijt
-    if(chosen.length&&!confirm('Je hebt al '+chosen.length+' oefening'+(chosen.length===1?'':'en')+' gekozen. Vervangen door het sjabloon "'+s.naam+'"?'))return;
-    sjabloonBewerkNaam='';document.getElementById('sj_bewaar').textContent='Huidige kaart als sjabloon';
-    var missing=[];
-    chosen=[];
-    // een sjabloon vervangt de héle kaart: begin met een schone dosering-grid
-    GRID={rows:{},cells:{}};
+    if(!erbij&&chosen.length&&!confirm('Je hebt al '+chosen.length+' oefening'+(chosen.length===1?'':'en')+' gekozen. Vervangen door "'+s.naam+'"?'))return;
+    stopSjabBewerk();
+    var missing=[],vol=0;
+    if(!erbij){
+      chosen=[];
+      // een sjabloon vervangt de héle kaart: begin met een schone dosering-grid
+      GRID={rows:{},cells:{}};
+    }
     // startdosering: per oefening (eigen sjabloon) of de sjabloon-default. Scheelt de
     // therapeut het handmatig invullen van elke serie/herhaling — een startpunt.
     var dz=s.dosering||null;
@@ -2738,23 +2852,38 @@ bridge2.jpg</div>
       var naam=sjabNaam(n),od=(n&&typeof n==='object')?n:null;
       var id=byNorm[normEx(naam)];
       if(id!=null&&OEF[id]){
+        if(erbij&&chosen.some(function(c){return c.o===id;}))return;
         if(chosen.length<12){
           chosen.push({o:id,i:0});
           var sv=(od&&od.s)||(dz&&dz.s)||'',hv=(od&&od.h)||(dz&&dz.h)||'',wv=(od&&od.w)||(dz&&dz.w)||'';
           if(sv)GRID.cells['e'+id+'.0|r0|S']=sv;
-          if(hv)GRID.cells['e'+id+'.0|r0|H']=hv;
+          if(hv)GRID.cells['e'+id+'.0|r0|H']=sjKortH(hv);
           if(wv)GRID.cells['e'+id+'.0|r0|W']=wv;
-        }
+        }else vol++;
       }
       else missing.push(naam);
     });
     closeOv('ovSjab');render();
     if(missing.length)alert('Niet meer in de oefeningenlijst (overgeslagen): '+missing.join(', '));
+    if(vol)alert('De kaart is vol (12 oefeningen): '+vol+' oefening'+(vol===1?' is':'en zijn')+' niet toegevoegd.');
     return true;
+  }
+  // aanpassen: de kaart komt erop en een balk boven de kaart houdt bij welke kaart je aanpast,
+  // met één knop om hem als eigen behandelkaart te bewaren (geen pop-up met uitleg meer)
+  function startSjabBewerk(naam){
+    sjabloonBewerkNaam=naam;
+    var b=document.getElementById('sjBewerk');if(!b)return;
+    b.classList.remove('ok');
+    document.getElementById('sjb_bnaam').textContent='“'+naam+'”';
+    b.hidden=false;
+  }
+  function stopSjabBewerk(){
+    sjabloonBewerkNaam='';
+    var b=document.getElementById('sjBewerk');if(b)b.hidden=true;
   }
   // eigen sjablonen van de therapeut (alleen op dit apparaat, localStorage)
   function leesEigenSjab(){try{var m=JSON.parse(localStorage.getItem('fysiplan_eigen_sjablonen')||'[]');return Array.isArray(m)?m:[];}catch(e){return [];}}
-  function bewaarEigenSjab(l){try{localStorage.setItem('fysiplan_eigen_sjablonen',JSON.stringify(l.slice(0,50)));return true;}catch(e){alert('Het sjabloon is niet opgeslagen: de lokale opslag is vol of niet beschikbaar. Je kaart blijft open.');return false;}}
+  function bewaarEigenSjab(l){try{localStorage.setItem('fysiplan_eigen_sjablonen',JSON.stringify(l.slice(0,50)));return true;}catch(e){alert('De behandelkaart is niet opgeslagen: de lokale opslag is vol of niet beschikbaar. Je kaart blijft open.');return false;}}
   function huidigAlsSjabloon(naam){
     var oef=chosen.map(function(c){var o=OEF[c.o];if(!o)return null;
       var pre='e'+c.o+'.'+c.i,it={n:o.naam};
@@ -2762,69 +2891,85 @@ bridge2.jpg</div>
       if(s)it.s=s;if(h)it.h=h;if(w)it.w=w;
       return it;
     }).filter(Boolean);
-    return {naam:naam,sub:'Jouw sjabloon (alleen op dit apparaat)',oefeningen:oef,persoonlijk:true};
+    return {naam:naam,sub:'Jouw behandelkaart (alleen op dit apparaat)',oefeningen:oef,persoonlijk:true};
   }
-  document.getElementById('sj_lijst').addEventListener('click',function(e){
-    var edit=e.target.closest('[data-edit-own],[data-edit-shared],[data-edit-standard]');
-    if(edit){
-      var own=edit.hasAttribute('data-edit-own');
-      var bron=own?leesEigenSjab()[+edit.dataset.editOwn]:edit.hasAttribute('data-edit-shared')?(PRAKSJAB||[])[+edit.dataset.editShared]:SJABLONEN[+edit.dataset.editStandard];
-      if(bron&&pasSjabloonToe(bron)){
-        sjabloonBewerkNaam=bron.naam+(own?'':' — eigen variant');
-        document.getElementById('sj_bewaar').textContent='Aangepaste kaart bewaren';
-        alert('Pas de oefeningen en dosering op de kaart aan. Open daarna Sjablonen en kies Aangepaste kaart bewaren. Een standaard- of praktijksjabloon blijft ongewijzigd; je bewaart een eigen variant.');
-      }
-      return;
-    }
-    var eb=e.target.closest('[data-edel]');
-    if(eb){var lst=leesEigenSjab();lst.splice(+eb.dataset.edel,1);bewaarEigenSjab(lst);renderSjabLijst();return;}
-    // eigen sjabloon delen met de hele praktijk (v2)
-    var dl=e.target.closest('[data-edeel]');
-    if(dl){
-      var sj=leesEigenSjab()[+dl.dataset.edeel];
-      if(!sj)return;
-      dl.disabled=true;dl.textContent='Bezig…';
-      fetch('api/praktijk/sjablonen',{method:'POST',headers:PJSON(),
-        body:JSON.stringify({praktijk:SET.praktijk||'',naam:sj.naam,oefeningen:sj.oefeningen||[]})})
-        .then(function(r){return r.json();})
-        .then(function(d){
-          if(d.ok){PRAKSJAB=d.sjablonen;renderSjabLijst();}
-          else{dl.disabled=false;dl.textContent='Deel';alert(d.fout||'Delen is niet gelukt.'+(d.login?' Log eerst in bij de praktijk (via Kaarten).':''));}
-        })
-        .catch(function(){dl.disabled=false;dl.textContent='Deel';alert('Delen is niet gelukt: geen verbinding.');});
-      return;
-    }
-    // gedeeld praktijksjabloon gebruiken of (voor iedereen) verwijderen
-    var pg=e.target.closest('[data-psjab]');
-    if(pg){var ps=(PRAKSJAB||[])[+pg.dataset.psjab];if(ps)pasSjabloonToe({naam:ps.naam,oefeningen:ps.oefeningen||[]});return;}
-    var pd=e.target.closest('[data-pdel]');
-    if(pd){
-      var wp=(PRAKSJAB||[])[+pd.dataset.pdel];
-      if(!wp)return;
-      if(!confirm('Sjabloon "'+wp.naam+'" voor de hele praktijk verwijderen?'))return;
-      fetch('api/praktijk/sjablonen/verwijder',{method:'POST',headers:PJSON(),
-        body:JSON.stringify({praktijk:SET.praktijk||'',naam:wp.naam})})
-        .then(function(r){return r.json();})
-        .then(function(d){if(d.ok){PRAKSJAB=d.sjablonen;renderSjabLijst();}else alert(d.fout||'Verwijderen is niet gelukt.');})
-        .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding.');});
-      return;
-    }
-    var pb=e.target.closest('[data-esjab]');
-    if(pb){pasSjabloonToe(leesEigenSjab()[+pb.dataset.esjab]);return;}
-    var b=e.target.closest('[data-sjab]');if(!b)return;
-    pasSjabloonToe(SJABLONEN[+b.dataset.sjab]);
-  });
-  document.getElementById('sj_bewaar').addEventListener('click',function(){
-    if(!chosen.length){alert('Kies eerst oefeningen (en vul eventueel de dosering in) om ze als eigen sjabloon te bewaren.');return;}
-    var naam=(window.prompt('Naam voor je eigen sjabloon:',sjabloonBewerkNaam)||'').trim();
-    if(!naam)return;
+  function bewaarHuidigeKaart(){
+    if(!chosen.length){alert('Zet eerst oefeningen op de kaart (en vul eventueel de dosering in) om hem als eigen behandelkaart te bewaren.');return false;}
+    var naam=(window.prompt('Naam voor je eigen behandelkaart:',sjabloonBewerkNaam)||'').trim();
+    if(!naam)return false;
     var lst=leesEigenSjab();
     var idx=lst.findIndex(function(x){return String(x.naam||'').toLowerCase()===naam.toLowerCase();});
     var sj=huidigAlsSjabloon(naam);
-    if(idx>-1){if(!confirm('Bestaand eigen sjabloon "'+naam+'" vervangen?'))return;lst[idx]=sj;}else lst.unshift(sj);
-    if(!bewaarEigenSjab(lst))return;
-    sjabloonBewerkNaam='';document.getElementById('sj_bewaar').textContent='Huidige kaart als sjabloon';
-    renderSjabLijst();
+    if(idx>-1){if(!confirm('Bestaande eigen kaart "'+naam+'" vervangen?'))return false;lst[idx]=sj;}else lst.unshift(sj);
+    if(!bewaarEigenSjab(lst))return false;
+    stopSjabBewerk();
+    return true;
+  }
+  var sjbOkTimer=null;
+  document.getElementById('sjb_bbewaar').addEventListener('click',function(){
+    if(!bewaarHuidigeKaart())return;
+    // korte bevestiging op dezelfde plek, daarna weer weg
+    var b=document.getElementById('sjBewerk');
+    b.classList.add('ok');b.hidden=false;
+    clearTimeout(sjbOkTimer);sjbOkTimer=setTimeout(function(){b.classList.remove('ok');if(!sjabloonBewerkNaam)b.hidden=true;},3500);
+  });
+  document.getElementById('sjb_bstop').addEventListener('click',stopSjabBewerk);
+  document.getElementById('sj_cats').addEventListener('click',function(e){
+    var k=e.target.closest('[data-sjcat]');if(!k)return;
+    SJ_STAAT.cat=k.dataset.sjcat;SJ_STAAT.sel=null;renderSjabLijst();
+  });
+  document.getElementById('sj_lijst').addEventListener('click',function(e){
+    var r=e.target.closest('[data-sjsel]');if(!r)return;
+    SJ_STAAT.sel=r.dataset.sjsel;
+    Array.prototype.forEach.call(this.querySelectorAll('.sjb-rij.aan'),function(x){x.classList.remove('aan');x.setAttribute('aria-selected','false');});
+    r.classList.add('aan');r.setAttribute('aria-selected','true');
+    renderSjabVoorbeeld();
+  });
+  // dubbelklik op een kaart in de lijst = direct op de kaart zetten
+  document.getElementById('sj_lijst').addEventListener('dblclick',function(e){
+    var r=e.target.closest('[data-sjsel]');if(!r)return;
+    var it=sjZoekItem(r.dataset.sjsel);if(it)pasSjabloonToe(it.s);
+  });
+  document.getElementById('sj_voorbeeld').addEventListener('click',function(e){
+    var k=e.target.closest('[data-sjdo]');if(!k)return;
+    var it=sjZoekItem(k.dataset.sj);if(!it)return;
+    var wat=k.dataset.sjdo,s=it.s;
+    if(wat==='gebruik'){pasSjabloonToe(s);return;}
+    if(wat==='erbij'){pasSjabloonToe(s,true);return;}
+    if(wat==='aanpassen'){
+      if(pasSjabloonToe(s))startSjabBewerk(it.bron==='eigen'?s.naam:s.naam+' (mijn variant)');
+      return;
+    }
+    if(wat==='weg'&&it.bron==='eigen'){
+      if(!confirm('Je eigen kaart "'+s.naam+'" verwijderen?'))return;
+      var lst=leesEigenSjab();lst.splice(it.i,1);bewaarEigenSjab(lst);SJ_STAAT.sel=null;renderSjabLijst();return;
+    }
+    // eigen kaart delen met de hele praktijk (v2)
+    if(wat==='deel'){
+      k.disabled=true;k.textContent='Bezig…';
+      fetch('api/praktijk/sjablonen',{method:'POST',headers:PJSON(),
+        body:JSON.stringify({praktijk:SET.praktijk||'',naam:s.naam,oefeningen:s.oefeningen||[]})})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(d.ok){PRAKSJAB=d.sjablonen;renderSjabLijst();}
+          else{k.disabled=false;k.textContent='Delen met de praktijk';alert(d.fout||'Delen is niet gelukt.'+(d.login?' Log eerst in bij de praktijk (via Kaarten).':''));}
+        })
+        .catch(function(){k.disabled=false;k.textContent='Delen met de praktijk';alert('Delen is niet gelukt: geen verbinding.');});
+      return;
+    }
+    // gedeelde praktijkkaart (voor iedereen) verwijderen
+    if(wat==='weg'&&it.bron==='praktijk'){
+      if(!confirm('"'+s.naam+'" voor de hele praktijk verwijderen?'))return;
+      fetch('api/praktijk/sjablonen/verwijder',{method:'POST',headers:PJSON(),
+        body:JSON.stringify({praktijk:SET.praktijk||'',naam:s.naam})})
+        .then(function(r){return r.json();})
+        .then(function(d){if(d.ok){PRAKSJAB=d.sjablonen;SJ_STAAT.sel=null;renderSjabLijst();}else alert(d.fout||'Verwijderen is niet gelukt.');})
+        .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding.');});
+      return;
+    }
+  });
+  document.getElementById('sj_bewaar').addEventListener('click',function(){
+    if(bewaarHuidigeKaart()){SJ_STAAT.cat='eigen';SJ_STAAT.sel='eigen:0';renderSjabLijst();}
   });
 
   // ---- zoekhulp (v2): oefeningen zoeken op lichaamsdeel en doel, zelf kiezen ----

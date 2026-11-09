@@ -1,15 +1,15 @@
 {
  "scope": "Basiscatalogus in de repository (public/oefeningen-v2.json). Runtime-overrides op de server niet meegeteld; die gaan altijd voor.",
  "inputs": {
-  "public/oefeningen-v2.json": "739e5d561b837828",
-  "public/mobile-media-review.json": "afa87ca5218e3f97",
-  "public/mobile-narration-review.json": "e31b3b5c8f6d2c2c",
-  "public/index.html": "44331c4f02d45b3c",
+  "public/oefeningen-v2.json": "187a052c139316e5",
+  "public/mobile-media-review.json": "9af7b05864999732",
+  "public/mobile-narration-review.json": "1e61cfcf26612e6e",
+  "public/index.html": "5d3c61b65113e952",
   "content/category-secondary-evidence.json": "5eb5e3167a827ec2"
  },
  "totals": {
-  "records": 604,
-  "available": 446,
+  "records": 633,
+  "available": 475,
   "withoutAsset": 158,
   "withSecondary": 23,
   "secondaryLabels": 23,
@@ -24,7 +24,7 @@
   {
    "category": "Bovenste extremiteit",
    "missingAssets": 50,
-   "availableIncludingSecondary": 45,
+   "availableIncludingSecondary": 74,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
@@ -85,8 +85,8 @@
    "secondary": 13,
    "secondaryAvailable": 13,
    "available": 38,
-   "availableClean": 36,
-   "mediaRejected": 2,
+   "availableClean": 38,
+   "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [],
    "secondaryRecords": [
@@ -113,14 +113,14 @@
    "storedLabels": [
     "Bovenste extremiteit"
    ],
-   "records": 95,
-   "primary": 95,
-   "primaryAvailable": 45,
+   "records": 124,
+   "primary": 124,
+   "primaryAvailable": 74,
    "secondary": 0,
    "secondaryAvailable": 0,
-   "available": 45,
-   "availableClean": 43,
-   "mediaRejected": 2,
+   "available": 74,
+   "availableClean": 74,
+   "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [
     {
@@ -390,8 +390,8 @@
    "secondary": 0,
    "secondaryAvailable": 0,
    "available": 30,
-   "availableClean": 28,
-   "mediaRejected": 2,
+   "availableClean": 29,
+   "mediaRejected": 1,
    "explanationHeld": 0,
    "missingAssets": [
     {
@@ -811,8 +811,8 @@
    "secondary": 0,
    "secondaryAvailable": 0,
    "available": 34,
-   "availableClean": 32,
-   "mediaRejected": 2,
+   "availableClean": 34,
+   "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [
     {
@@ -1386,8 +1386,8 @@
    "secondary": 0,
    "secondaryAvailable": 0,
    "available": 10,
-   "availableClean": 8,
-   "mediaRejected": 1,
+   "availableClean": 9,
+   "mediaRejected": 0,
    "explanationHeld": 1,
    "missingAssets": [],
    "secondaryRecords": [],
