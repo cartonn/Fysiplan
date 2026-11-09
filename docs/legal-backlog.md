@@ -26,7 +26,7 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 - **LAAG (doorgezet door de gebruikers-sweep 2026-11-09 18u) — "Wis deze kaart van mijn telefoon" laat avatarbeelden van precies
   deze oefeningen en `oefeningen.json` in Cache Storage (`fysiplan-kaart-v2`)**; op een gedeelde telefoon verraadt dat welke
   oefeningen iemand doet. kaart.html r. ~1794 wist alleen URL's met het kaart-id. Toets tegen de tekst op /privacy (Truus, iPhone SE).
-  OPGELOST 2026-11-09 (deze PR): `wisOfflineKopie` wist de hele offline-cache als er geen andere kaart op de telefoon
+  OPGELOST 2026-11-09 PR #142: `wisOfflineKopie` wist de hele offline-cache als er geen andere kaart op de telefoon
   staat; staan er wel andere kaarten, dan gaan de gegevens van deze kaart en alle beelden die deze kaart laadde weg.
   /privacy#opslag noemt de plaatjes nu. Test in `scripts/test-kaart-wis-telefoon.mjs` (faalt zonder fix).
   Rest (LAAG): wist de praktijk de kaart (404), dan haalt de service worker alleen kaartgegevens weg, niet de beelden.
