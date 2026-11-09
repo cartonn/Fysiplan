@@ -5,7 +5,7 @@
 // sha256 in content/nieuwe-lijntekeningen.json.
 //
 // Bron: map output/elleboog-pols-hand/ van de werkbranch (specs.json, omschrijvingen.csv, PNG's).
-// Ahmed koos op 2026-11-09 "De 25 goede nu, 5 later": 4, 11, 20, 24 en 26 blijven buiten de app.
+// Ahmed koos op 2026-11-09 "De 25 goede nu, 5 later" en daarna "4, 11, 20 en 26": alleen 24 (klei) blijft buiten de app.
 //
 //   node scripts/importeer-elleboog-pols-hand.mjs --bron <map>           # controle
 //   node scripts/importeer-elleboog-pols-hand.mjs --bron <map> --write
@@ -21,7 +21,22 @@ const bron = arg("--bron");
 if (!bron) throw new Error("Gebruik: --bron <map met specs.json en omschrijvingen.csv>");
 const schrijf = process.argv.includes("--write");
 
-const LATER = new Set(["pols-zijwaarts-op-tafel", "polsrondjes", "tafelstand-vingers", "knijpen-klei", "duim-spreiden"]);
+const LATER = new Set(["knijpen-klei"]);
+// Close-ups van bovenaf met een lichtgrijs tafelblad over bijna het hele beeld: dat bijna-witte,
+// kleurloze vlak wordt wit, zodat de avatar dezelfde witte achtergrond heeft als de rest
+// (validate-exercise-backgrounds eist minstens 30 % wit). Huid en schaduw blijven ongemoeid.
+const LICHT_TAFELBLAD = new Set(["pols-zijwaarts-op-tafel"]);
+async function maakTafelbladWit(beeld) {
+  const { data, info } = await beeld.removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  for (let o = 0; o < data.length; o += info.channels) {
+    const min = Math.min(data[o], data[o + 1], data[o + 2]);
+    const max = Math.max(data[o], data[o + 1], data[o + 2]);
+    if (max - min > 14 || min < 218) continue;
+    const t = Math.min(1, (min - 218) / 14); // 218 blijft, vanaf 232 volledig wit
+    for (let c = 0; c < 3; c++) data[o + c] = Math.round(data[o + c] + (255 - data[o + c]) * t);
+  }
+  return sharp(data, { raw: info });
+}
 const GROEP = "Bovenste extremiteit";
 const MAP = "bovenste-extremiteit";
 
@@ -64,9 +79,10 @@ for (const spec of specs) {
   const lijn = await sharp(lijnBron).flatten({ background: "#fff" })
     .resize(800, 1200, { fit: "contain", background: "#fff" })
     .png({ compressionLevel: 9, palette: true, colours: 64 }).toBuffer();
-  const avatar = await sharp(avatarBron).flatten({ background: "#fff" })
-    .resize(800, 1200, { fit: "contain", background: "#fff" })
-    .jpeg({ quality: 86, mozjpeg: true }).toBuffer();
+  let avatarBeeld = sharp(avatarBron).flatten({ background: "#fff" })
+    .resize(800, 1200, { fit: "contain", background: "#fff" });
+  if (LICHT_TAFELBLAD.has(spec.slug)) avatarBeeld = await maakTafelbladWit(avatarBeeld);
+  const avatar = await avatarBeeld.jpeg({ quality: 86, mozjpeg: true }).toBuffer();
 
   const bestaand = catalogus.find((e) => e.naam === spec.naam);
   if (bestaand && bestaand.img !== img) throw new Error(`${spec.naam} bestaat al met een ander beeld`);

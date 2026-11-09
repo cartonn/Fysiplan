@@ -17,14 +17,14 @@
     }
   ],
   "summary": {
-    "total": 471,
+    "total": 475,
     "rejected": 6,
-    "unreviewed": 465,
+    "unreviewed": 469,
     "approved": 0,
     "poseGeometryApproved": 170,
-    "poseStatic": 301,
+    "poseStatic": 305,
     "brandMarkCovered": 115,
-    "brandMarkAbsent": 356
+    "brandMarkAbsent": 360
   },
   "entries": [
     {
@@ -21109,6 +21109,138 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_bd2236dc22edad01",
+      "name": "Pols zijwaarts schuiven op tafel",
+      "source": "images/bovenste-extremiteit/pols-zijwaarts-op-tafel-avatar-v8.jpg",
+      "assetSha256": "4a39f9b67c1d5d7fc76f201f28a172dac9fcbe1d58b281669a5c44783c2ad956",
+      "explanationSha256": "557d598c961c385ecb1398fc667f4eb8a4e4416d6d178095ece2171ab656a7f7",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1847,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_b247db4379a17a28",
+      "name": "Polsrondjes",
+      "source": "images/bovenste-extremiteit/polsrondjes-avatar-v8.jpg",
+      "assetSha256": "c297d02a3150ed7e7ae8c270456d53e4566afa4779f5481fd0dba80c2130e571",
+      "explanationSha256": "df4c21a3ede21b2ddc7d3027cd8cd8dcba42d8785bbdac6604433cd59f940028",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 598,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_dfbbea2a59f46d92",
+      "name": "Knokkels buigen met rechte vingers (tafelstand)",
+      "source": "images/bovenste-extremiteit/tafelstand-vingers-avatar-v8.jpg",
+      "assetSha256": "0346b3b4fd4ca3501b9775bda81d206efe8b3b3f57caa9d0c7fe78231428afb4",
+      "explanationSha256": "09465b05a0bfdf936c66f4c828ee657832ff12700727db0d4c21c1cceb763615",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1250,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 91%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c74ac1cafca59ce5",
+      "name": "Duim zijwaarts van de hand bewegen",
+      "source": "images/bovenste-extremiteit/duim-spreiden-avatar-v8.jpg",
+      "assetSha256": "7e1ec9fe2fde4ef2cb39156658acd0db3cfeb50a39be6f8657473afc77430ae7",
+      "explanationSha256": "7c32bec39385d38bdc27bdfcf0f33181e16020f814b6751669f406cfb57f84b8",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1435,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
       },
       "brandMark": {
         "present": false,

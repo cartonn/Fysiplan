@@ -1,6 +1,6 @@
 # Standaard-behandelkaarten
 
-116 eigen Fysiplan-behandelkaarten (97 in de eerste ronde, 19 voor elleboog, pols en hand op 9 november 2026). Opbouw en fasering volgen de richting van de standaard-oefenprogramma's in Physitrack (stand 9 november 2026), maar namen, omschrijvingen en oefeningen zijn van Fysiplan zelf. Elke oefening is een gepubliceerde oefening uit `public/oefeningen-v2.json`; dosering (sets en herhalingen of tijd) per oefening.
+118 eigen Fysiplan-behandelkaarten (97 in de eerste ronde, 21 voor elleboog, pols en hand op 9 november 2026). Opbouw en fasering volgen de richting van de standaard-oefenprogramma's in Physitrack (stand 9 november 2026), maar namen, omschrijvingen en oefeningen zijn van Fysiplan zelf. Elke oefening is een gepubliceerde oefening uit `public/oefeningen-v2.json`; dosering (sets en herhalingen of tijd) per oefening.
 
 ## Aantal kaarten per categorie
 
@@ -8,7 +8,7 @@
 |---|---:|
 | Nek | 9 |
 | Schouder | 2 |
-| Elleboog, pols en hand | 19 |
+| Elleboog, pols en hand | 21 |
 | Rug en bekken | 24 |
 | Heup en bovenbeen | 8 |
 | Knie | 19 |
@@ -17,7 +17,7 @@
 | Neurologie en duizeligheid | 11 |
 | Hart, vaten en longen | 10 |
 | Algemeen en sport | 5 |
-| **Totaal** | **116** |
+| **Totaal** | **118** |
 
 ## Wat is overgeslagen en waarom
 
@@ -31,6 +31,6 @@ Uitgangspunt: 569 standaard-sjablonen in Physitrack (EN, FR en NL), waarvan 1 zo
 
 ## Gaten om later te vullen
 
-- Elleboog, pols en hand: gevuld met 19 kaarten. Daarvoor kwamen 25 nieuwe oefeningen in de bibliotheek (lijntekening, avatar en omschrijving in de richting van Physitrack; `scripts/importeer-elleboog-pols-hand.mjs`, gemarkeerd als `nieuweOefening` in `content/nieuwe-lijntekeningen.json`). Nog niet: De Quervain, skiduim en strekpees middenkootje (central slip). Die wachten op 5 oefeningen waarvan de avatar nog niet goed genoeg was: pols zijwaarts schuiven, polsrondjes, knokkels buigen met rechte vingers, knijpen in klei en duim zijwaarts bewegen.
+- Elleboog, pols en hand: gevuld met 21 kaarten. Daarvoor kwamen 29 nieuwe oefeningen in de bibliotheek (lijntekening, avatar en omschrijving in de richting van Physitrack; `scripts/importeer-elleboog-pols-hand.mjs`, gemarkeerd als `nieuweOefening` in `content/nieuwe-lijntekeningen.json`). Nog niet: strekpees middenkootje (central slip), die nog 2 vingerkootjesoefeningen mist. Knijpen in klei blijft buiten de app tot de avatar de beweging duidelijk laat zien.
 - Enkel en voet en Schouder hebben weinig kaarten om dezelfde reden (bijv. elastiekoefeningen voor de rotator cuff, enkelmobilisatie).
 - Kaarten met weinig oefeningen (3-4) zijn bruikbaar als start, maar worden sterker zodra de ontbrekende oefeningen als avatar/lijntekening beschikbaar zijn.

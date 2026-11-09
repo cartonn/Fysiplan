@@ -5784,5 +5784,33 @@
   "img": "images/bovenste-extremiteit/zenuw-medianus-glijden-line-v1.png",
   "uitleg": "Strek je arm zijwaarts met de handpalm omhoog, alsof je een dienblad draagt. Strek de pols tot je lichte spanning voelt en ga terug.",
   "kaartImg": "images/bovenste-extremiteit/zenuw-medianus-glijden-avatar-v8.jpg"
+ },
+ {
+  "naam": "Pols zijwaarts schuiven op tafel",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/pols-zijwaarts-op-tafel-line-v1.png",
+  "uitleg": "Leg je hand plat op tafel. Schuif de hand naar de duimkant en daarna naar de pinkkant, met de onderarm stil. Help eventueel met je andere hand om iets verder te komen.",
+  "kaartImg": "images/bovenste-extremiteit/pols-zijwaarts-op-tafel-avatar-v8.jpg"
+ },
+ {
+  "naam": "Polsrondjes",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/polsrondjes-line-v1.png",
+  "uitleg": "Draai je polsen rustig rondjes, eerst de ene kant op en dan de andere. Alleen de pols beweegt, de onderarm blijft stil.",
+  "kaartImg": "images/bovenste-extremiteit/polsrondjes-avatar-v8.jpg"
+ },
+ {
+  "naam": "Knokkels buigen met rechte vingers (tafelstand)",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/tafelstand-vingers-line-v1.png",
+  "uitleg": "Houd je onderarm omhoog met de pols recht. Buig de knokkels terwijl de vingers zelf recht blijven, en strek weer.",
+  "kaartImg": "images/bovenste-extremiteit/tafelstand-vingers-avatar-v8.jpg"
+ },
+ {
+  "naam": "Duim zijwaarts van de hand bewegen",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/duim-spreiden-line-v1.png",
+  "uitleg": "Leg je hand met de handpalm naar boven op tafel. Beweeg de duim zijwaarts van de hand af en weer terug; help eventueel met je andere hand.",
+  "kaartImg": "images/bovenste-extremiteit/duim-spreiden-avatar-v8.jpg"
  }
 ]

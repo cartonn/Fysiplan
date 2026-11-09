@@ -3639,6 +3639,11 @@
   "categorie": "Elleboog, pols en hand",
   "oefeningen": [
    {
+    "n": "Pols zijwaarts schuiven op tafel",
+    "s": "3",
+    "h": "10"
+   },
+   {
     "n": "Levator scapulae rek – zittend actief",
     "s": "3",
     "h": "10"
@@ -3764,6 +3769,11 @@
    },
    {
     "n": "Pols buigen en strekken – duim omhoog",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pols zijwaarts schuiven op tafel",
     "s": "3",
     "h": "10"
    },
@@ -3903,6 +3913,11 @@
     "n": "Polsstrekkers rekken – arm gestrekt",
     "s": "3",
     "h": "30 sec"
+   },
+   {
+    "n": "Pols zijwaarts schuiven op tafel",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -3932,6 +3947,11 @@
     "h": "5 × 10 sec"
    },
    {
+    "n": "Polsrondjes",
+    "s": "3",
+    "h": "10"
+   },
+   {
     "n": "Bal knijpen",
     "s": "3",
     "h": "10 × 5 sec"
@@ -3940,6 +3960,28 @@
     "n": "Pols achterover buigen – met hulp op tafel",
     "s": "3",
     "h": "5 × 20 sec"
+   }
+  ]
+ },
+ {
+  "naam": "Pols: peesschedeontsteking duimkant (De Quervain)",
+  "sub": "Pijn aan de duimkant van de pols: duim en pols rustig laten bewegen zonder te forceren.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Duim zijwaarts van de hand bewegen",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Duim optillen van de tafel",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Pols zijwaarts schuiven op tafel",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -3967,6 +4009,11 @@
     "n": "Bal knijpen",
     "s": "3",
     "h": "10 × 5 sec"
+   },
+   {
+    "n": "Polsrondjes",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -4003,12 +4050,39 @@
     "h": "10"
    },
    {
+    "n": "Knokkels buigen met rechte vingers (tafelstand)",
+    "s": "3",
+    "h": "10"
+   },
+   {
     "n": "Bal knijpen",
     "s": "3",
     "h": "10 × 5 sec"
    },
    {
     "n": "Haakvuist maken",
+    "s": "3",
+    "h": "10"
+   }
+  ]
+ },
+ {
+  "naam": "Hand: skiduim (duimband)",
+  "sub": "Na een verrekte duimband: de duim weer alle kanten op laten bewegen.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   {
+    "n": "Duim buigen en strekken",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Duim optillen van de tafel",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Duim zijwaarts van de hand bewegen",
     "s": "3",
     "h": "10"
    }

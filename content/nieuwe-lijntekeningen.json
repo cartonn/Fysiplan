@@ -1827,6 +1827,58 @@
       "kaartImg": "images/bovenste-extremiteit/zenuw-medianus-glijden-avatar-v8.jpg",
       "kaartSha256": "ac6cdeab9cea6c721f99dc5ecc2c578a2968eed2c83fb006032b6476051cfef1",
       "kaartBron": "output/elleboog-pols-hand/proefset/zenuw-medianus-glijden-avatar.png"
+    },
+    {
+      "nieuweOefening": true,
+      "exerciseId": "fp_bd2236dc22edad01",
+      "naam": "Pols zijwaarts schuiven op tafel",
+      "groep": "Bovenste extremiteit",
+      "img": "images/bovenste-extremiteit/pols-zijwaarts-op-tafel-line-v1.png",
+      "sha256": "f079df9c689c57c4b90d651f9522fc456c6e81c220ef489a4636833adbf0c7e0",
+      "bron": null,
+      "bronTitel": "Physitrack-richting elleboog, pols en hand (2026-11-09)",
+      "kaartImg": "images/bovenste-extremiteit/pols-zijwaarts-op-tafel-avatar-v8.jpg",
+      "kaartSha256": "4a39f9b67c1d5d7fc76f201f28a172dac9fcbe1d58b281669a5c44783c2ad956",
+      "kaartBron": "output/elleboog-pols-hand/proefset/pols-zijwaarts-op-tafel-avatar.png"
+    },
+    {
+      "nieuweOefening": true,
+      "exerciseId": "fp_b247db4379a17a28",
+      "naam": "Polsrondjes",
+      "groep": "Bovenste extremiteit",
+      "img": "images/bovenste-extremiteit/polsrondjes-line-v1.png",
+      "sha256": "02157da6f887e8668e53de7ebd3b88c40f4e512ecdfe183bbfdb00cab873b4bc",
+      "bron": null,
+      "bronTitel": "Physitrack-richting elleboog, pols en hand (2026-11-09)",
+      "kaartImg": "images/bovenste-extremiteit/polsrondjes-avatar-v8.jpg",
+      "kaartSha256": "c297d02a3150ed7e7ae8c270456d53e4566afa4779f5481fd0dba80c2130e571",
+      "kaartBron": "output/elleboog-pols-hand/proefset/polsrondjes-avatar.png"
+    },
+    {
+      "nieuweOefening": true,
+      "exerciseId": "fp_dfbbea2a59f46d92",
+      "naam": "Knokkels buigen met rechte vingers (tafelstand)",
+      "groep": "Bovenste extremiteit",
+      "img": "images/bovenste-extremiteit/tafelstand-vingers-line-v1.png",
+      "sha256": "9a16de42670423d387b23e4db68a78737e138587abf4c1b9d747774e4fe9714a",
+      "bron": null,
+      "bronTitel": "Physitrack-richting elleboog, pols en hand (2026-11-09)",
+      "kaartImg": "images/bovenste-extremiteit/tafelstand-vingers-avatar-v8.jpg",
+      "kaartSha256": "0346b3b4fd4ca3501b9775bda81d206efe8b3b3f57caa9d0c7fe78231428afb4",
+      "kaartBron": "output/elleboog-pols-hand/proefset/tafelstand-vingers-avatar.png"
+    },
+    {
+      "nieuweOefening": true,
+      "exerciseId": "fp_c74ac1cafca59ce5",
+      "naam": "Duim zijwaarts van de hand bewegen",
+      "groep": "Bovenste extremiteit",
+      "img": "images/bovenste-extremiteit/duim-spreiden-line-v1.png",
+      "sha256": "b10fd967999ab90079c0e2ba606e9fb0e3db68c3bdb169c6b1bdad6c3d5159e8",
+      "bron": null,
+      "bronTitel": "Physitrack-richting elleboog, pols en hand (2026-11-09)",
+      "kaartImg": "images/bovenste-extremiteit/duim-spreiden-avatar-v8.jpg",
+      "kaartSha256": "7e1ec9fe2fde4ef2cb39156658acd0db3cfeb50a39be6f8657473afc77430ae7",
+      "kaartBron": "output/elleboog-pols-hand/proefset/duim-spreiden-avatar.png"
     }
   ]
 }
