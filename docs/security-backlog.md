@@ -184,6 +184,10 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **LAAG (doorgezet door de gebruikers-sweep 2026-11-09 22u, ter info) — e-mailcheck van de proef keurt `=hyperlink("http://evil")@x.nl`
+  en emoji-adressen goed** (lib/proef.js r. 25, `EMAIL_RE = /^[^\s@]{1,64}@…/`). Raakt de meldingsmails en het aanmeldoverzicht
+  (formule-injectie bij een export naar een spreadsheet). Sanne, desktop.
+
 - **AFGESLOTEN 2026-11-09 20u als beveiligingspunt, doorgezet naar docs/mensenwerk.md (zakelijke keuze).** Geen technisch gat:
   iedereen kan in /v2/app een praktijk beveiligen zonder proef (bewuste keuze), dus een typfout of een nieuwe naam is geen
   omzeiling die alleen een team heeft. Of de app zonder proef of abonnement open moet blijven, beslist Ahmed. Oorspronkelijke melding:
