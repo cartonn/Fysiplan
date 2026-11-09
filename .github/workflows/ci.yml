@@ -91,3 +91,4 @@ jobs:
       - run: npm run test:proefwissen
       - run: npm run test:pijnscorebezig
       - run: npm run test:uitnodigingpraktijk
+      - run: npm run test:rempraktijk

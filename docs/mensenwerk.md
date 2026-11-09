@@ -4,6 +4,14 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Fysiplan gebruiken zonder proef of abonnement (security, 2026-11-09 20u)
+**Wat de code nu doet:** wie /v2/app opent zonder de proef te starten, kan een praktijk beveiligen en kaarten maken, zonder
+einddatum. De proefgrens zit alleen op praktijken die bij de proef horen. Een team met een verlopen proef kan zo met een
+nieuwe (of verkeerd getypte) praktijknaam gewoon verder (gebruikers-sweep, Mark). Dit is geen beveiligingsgat maar een
+zakelijke keuze.
+**Wat jij moet kiezen:** (1) app zonder proef open laten zoals nu, of (2) beveiligen en kaarten delen alleen na een proef of
+abonnement (dan moet een collega altijd via een uitnodiging binnenkomen). Advies: (2) zodra de eerste praktijken betalen.
+
 ### Einde na de proef en controle door een praktijk (legal, 2026-11-09 13u)
 **Wat de code nu doet:** wordt een praktijk na de gratis proef geen klant, dan wist Fysiplan 30 dagen na de proef
 alles van die praktijk, ook de kaarten die patiënten nog gebruiken (eerst 90 dagen, nu 30).
