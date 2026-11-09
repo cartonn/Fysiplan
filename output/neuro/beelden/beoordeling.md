@@ -9,7 +9,7 @@ Zelf beoordeeld; maximaal 2 pogingen per beeld. Rijen met "catalogus" zijn besta
 | achtjes-lopen-pionnen | Achtjes lopen om twee pionnen | **goed** |  |
 | bal-opgooien-nakijken-staand | Bal opgooien en nakijken – staand | **goed** |  |
 | bal-hand-naar-hand-zittend | Bal van hand naar hand gooien – zittend | **goed** |  |
-| paraplu-draaien-staand | Draaiende paraplu volgen – staand | **goed** | statisch beeld, één figuur |
+| paraplu-draaien-staand | Draaiende paraplu volgen – staand | **goed** |  |
 | duim-achtje-staand | Duim volgen in een achtje – staand | **matig** | achtje niet zichtbaar; duim omhoog/omlaag |
 | nek-isometrisch-buigen-voorhoofd | Nek isometrisch buigen – hand op voorhoofd | **goed** |  |
 | ogen-heen-en-weer-ruglig | Ogen heen en weer – ruglig | **goed** |  |
@@ -17,6 +17,7 @@ Zelf beoordeeld; maximaal 2 pogingen per beeld. Rijen met "catalogus" zijn besta
 | bukken-oprichten-zittend | Bukken en oprichten – zittend | **goed** |  |
 | doel-volgen-verticaal-zittend | Doel volgen verticaal – zittend | **goed** |  |
 | duim-naar-neus-ruglig | Duim naar de neus – ruglig | **goed** |  |
+| schouder-naar-buiten-draaien-met-elastiek | Schouder naar buiten draaien – met elastiek | **goed** | catalogus |
 
-Totaal: goed 11, matig 1, fout 0.
-Kosten neuro: ca. 120 credits.
+Totaal: goed 12, matig 1, fout 0.
+Kosten neuro: ca. 130 credits (incl. catalogusaanvulling).
