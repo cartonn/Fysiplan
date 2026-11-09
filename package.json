@@ -85,6 +85,7 @@
     "test:offlinestand": "node scripts/test-offline-stand.mjs",
     "test:lightbox": "node scripts/test-sweep-lightbox-proefvenster.mjs",
     "test:profielovername": "node scripts/test-profiel-overname.mjs",
+    "test:proefarchief": "node scripts/test-proef-archief-bewaar.mjs",
     "test:vensterterug": "node scripts/test-sweep-venster-terug-spoed.mjs",
     "test:inboxmijn": "node scripts/test-sweep-inbox-mijn.mjs",
     "test:dubbelklikoverzicht": "node scripts/test-sweep-dubbelklik-overzicht.mjs",

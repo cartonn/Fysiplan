@@ -52,6 +52,10 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+- **LAAG (doorgezet door security 2026-11-09 12u) — app: inbox markeert een seintje als gezien terwijl het antwoord 403 kreeg**
+  (verlopen proef). `public/index.html` r. ~3786 zet `inboxGezien` ook na de 403 op `/api/kaart/antwoord`, waardoor de vraag
+  uit de inbox verdwijnt zonder antwoord aan de patiënt. Alleen bij een geslaagd antwoord als gezien markeren.
+
 ### HOOG (nieuw 2026-11-09 10u)
 - **OPGELOST 2026-11-09 (deze PR, test:roepnaamander) — App: roepnaamvoorstel hernoemde stil de kaart van een andere patiënt.**
   Het voorstel stuurt nu `roepnaamHernoem`; de server hernoemt alleen bij dezelfde voornaam ("Anna de Wit" → "Anna W."), anders
