@@ -21,10 +21,10 @@
     "rejected": 12,
     "unreviewed": 434,
     "approved": 0,
-    "poseGeometryApproved": 168,
-    "poseStatic": 278,
-    "brandMarkCovered": 147,
-    "brandMarkAbsent": 299
+    "poseGeometryApproved": 169,
+    "poseStatic": 277,
+    "brandMarkCovered": 146,
+    "brandMarkAbsent": 300
   },
   "entries": [
     {
@@ -2276,12 +2276,12 @@
       "exerciseId": "fp_ca78db68bfc2ce5e",
       "name": "Wrist extension",
       "source": "images/bovenste-extremiteit/wrist-extension-avatar-v7.jpg",
-      "assetSha256": "2329571e8fb4c2f38b8a0e4fd576c07a5793965f6dbe2337c73967e47acd4346",
+      "assetSha256": "ec430344728a1d93d7fb85f787836e03e69cc798b6b0fd2803f5e71e6ea49a2e",
       "explanationSha256": "8449befc959e40d44e74fafc6fb1308d202e15d71bb4f4b261a16ab66fca499d",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 702,
+        "chromaticPixels": 551,
         "visuallyInspected": false
       },
       "width": 800,
@@ -2297,17 +2297,12 @@
       "poses": [],
       "poseGeometry": {
         "status": "static",
-        "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+        "reason": "Binnen de uitsnedes staat 112 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
       },
       "brandMark": {
-        "present": true,
-        "cover": {
-          "x": 14,
-          "y": 14,
-          "w": 178,
-          "h": 58
-        },
-        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -5219,13 +5214,13 @@
       "exerciseId": "fp_1fd24c381f81dc30",
       "name": "Knee elbow",
       "source": "images/core/knee-elbow-avatar-v7.jpg",
-      "assetSha256": "5ae9caf87e28ff7c9265abb35413b039b8fd49ef37437e6e8a50db8dc0562029",
+      "assetSha256": "db532dd7bb334aeb46d7a197e9acb21495aaa7bca1c4f6199c8590838406644c",
       "explanationSha256": "65dc606ac1191d48dbdb8869f9fc1b05572cb543c5f6027da9f6033bfa56923a",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 330,
-        "visuallyInspected": false
+        "chromaticPixels": 404,
+        "visuallyInspected": true
       },
       "width": 800,
       "height": 1200,
@@ -5237,10 +5232,39 @@
         "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
       ],
       "observations": [],
-      "poses": [],
+      "poses": [
+        {
+          "label": "start",
+          "crop": {
+            "x": 8,
+            "y": 180,
+            "w": 780,
+            "h": 308
+          }
+        },
+        {
+          "label": "end",
+          "crop": {
+            "x": 4,
+            "y": 652,
+            "w": 780,
+            "h": 256
+          }
+        }
+      ],
       "poseGeometry": {
-        "status": "static",
-        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+        "status": "geometry-approved",
+        "axis": "y",
+        "reviewer": "Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02",
+        "reviewDate": "2026-11-02",
+        "reviewKind": "geometric-visual-only",
+        "visuallyInspected": true,
+        "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
+        "foreignInkPixels": 0,
+        "silhouetteIoU": 0.391,
+        "brandingBoxesOutsideCrop": 0,
+        "clinicalApproved": false,
+        "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
       },
       "brandMark": {
         "present": false,

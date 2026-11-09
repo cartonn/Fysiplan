@@ -458,8 +458,9 @@
       "output": "images/bovenste-extremiteit/wrist-extension-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.69873,
-      "sha256": "2329571e8fb4c2f38b8a0e4fd576c07a5793965f6dbe2337c73967e47acd4346"
+      "nearWhiteRatio": 0.69927,
+      "sha256": "ec430344728a1d93d7fb85f787836e03e69cc798b6b0fd2803f5e71e6ea49a2e",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck, ronde 4 (output/physitrack-crosscheck/beelden/avatars-r4)."
     },
     {
       "order": 45,
@@ -969,9 +970,9 @@
       "output": "images/core/knee-elbow-avatar-v7.jpg",
       "width": 800,
       "height": 1200,
-      "nearWhiteRatio": 0.78073,
-      "sha256": "5ae9caf87e28ff7c9265abb35413b039b8fd49ef37437e6e8a50db8dc0562029",
-      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck (output/physitrack-crosscheck/beelden/avatars)."
+      "nearWhiteRatio": 0.74865,
+      "sha256": "db532dd7bb334aeb46d7a197e9acb21495aaa7bca1c4f6199c8590838406644c",
+      "physitrackCrosscheck": "2026-11-09: vervangen door de nieuwe avatar uit de Physitrack-crosscheck, ronde 4 (output/physitrack-crosscheck/beelden/avatars-r4)."
     },
     {
       "order": 94,

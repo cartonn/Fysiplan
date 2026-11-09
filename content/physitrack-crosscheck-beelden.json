@@ -1215,9 +1215,7 @@
   ],
   "avatarsNietOvergenomen": {
     "reden": "past niet bij de nieuwe tekening of uitleg, of zelf afwijkend",
-    "nrs": [
-      43
-    ]
+    "nrs": []
   },
   "avatarsLaterApart": {
     "reden": "vastgelegde hold of V2-uitzondering; eerst die opheffen",
@@ -1432,6 +1430,29 @@
         "nr": 43,
         "naam": "Wrist extension",
         "reden": "hele onderarm komt van de tafel in plaats van alleen de pols"
+      }
+    ]
+  },
+  "avatarsRonde4": {
+    "datum": "2026-11-09",
+    "akkoord": "Ahmed: \"Ja runway-runs voor 2 avatars mogen, maximaal 20 credits\"",
+    "avatars": [
+      {
+        "nr": 43,
+        "naam": "Wrist extension",
+        "kaartImg": "images/bovenste-extremiteit/wrist-extension-avatar-v7.jpg",
+        "sha256": "ec430344728a1d93d7fb85f787836e03e69cc798b6b0fd2803f5e71e6ea49a2e",
+        "bron": "avatars-r4/43-wrist-extension-avatar.png",
+        "pose": "foreign-ink-in-crop",
+        "reden": "Binnen de uitsnedes staat 112 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      {
+        "nr": 92,
+        "naam": "Knee elbow",
+        "kaartImg": "images/core/knee-elbow-avatar-v7.jpg",
+        "sha256": "db532dd7bb334aeb46d7a197e9acb21495aaa7bca1c4f6199c8590838406644c",
+        "bron": "avatars-r4/92-knee-elbow-avatar.png",
+        "pose": "pair-candidate"
       }
     ]
   }
