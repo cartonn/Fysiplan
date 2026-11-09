@@ -1,0 +1,30 @@
+[
+ {
+  "nr": 43,
+  "slug": "wrist-extension",
+  "stijl": "stoel",
+  "lijn": "images/beginhouding-pijl-v2/044.webp",
+  "physitrack": {
+   "pagina": "Dumbell wrist extension",
+   "start": "zittend op een stoel naast een tafel, onderarm plat op het tafelblad, hand over de rand, pols neutraal",
+   "beweging": "alleen de pols omhoog strekken en gecontroleerd terug naar neutraal; onderarm blijft liggen",
+   "materiaal": "tafel, stoel, dumbbell",
+   "greep": "dumbbell vast, handpalm naar beneden"
+  },
+  "eind": "Both figures in a three-quarter FRONT view from slightly above, SEATED on a simple chair right beside a plain table. The working forearm lies completely FLAT on the tabletop in BOTH figures: the elbow AND the whole forearm touch the table and are pressed down by the other hand resting on top of the forearm just below the elbow. Only the hand sticks out past the table edge, palm facing DOWN, holding a small dumbbell. TOP: wrist straight, hand level with the forearm. BOTTOM: the forearm and elbow exactly as in the top figure, still flat on the table; ONLY the wrist is bent upward so the back of the hand and the dumbbell point up. The forearm never lifts off the table."
+ },
+ {
+  "nr": 92,
+  "slug": "knee-elbow",
+  "stijl": "mat",
+  "lijn": "images/beginhouding-pijl-v2/093.webp",
+  "physitrack": {
+   "pagina": "Supine cycling opposite elbow to knee",
+   "start": "ruglig, benen opgetild met heupen en knieën 90 graden, handen achter het hoofd, kin ingetrokken, hoofd en schouders opgekruld",
+   "beweging": "fietsbeweging met de benen, telkens knie naar de tegenovergestelde elleboog, onderrug op de mat",
+   "materiaal": "mat",
+   "greep": "handen achter het hoofd"
+  },
+  "eind": "Both figures in strict side profile, lying on the back on an exercise mat, both hands behind the head with elbows out, chin slightly tucked, head and shoulders curled up off the mat, lower back flat on the mat. TOP: BOTH legs lifted in table-top position: hips and knees bent at 90 degrees, shins parallel to the floor, feet in the air (NOT legs flat on the mat). BOTTOM: one leg stretched straight out diagonally just above the mat, the other knee pulled toward the chest, and the upper body rotated so the OPPOSITE elbow touches or nearly touches that knee."
+ }
+]
