@@ -320,10 +320,10 @@
   .vknoot{font:500 12.5px/1.5 var(--disp);color:var(--zacht);margin-bottom:10px}
   .vantwoord{margin-top:12px;padding:12px 14px;background:var(--blauw-05,#edf2fa);
     border:1px solid var(--lijn);border-radius:12px;font:500 15px/1.55 var(--disp);color:var(--tekst)}
-  .privregel{display:flex;align-items:flex-start;gap:10px;margin:0 0 12px;padding:10px 12px;border:1px solid var(--lijn);border-radius:14px;background:var(--vlak);font:500 13px/1.5 var(--disp);color:var(--grijs)}
-  .privregel>span{flex:1}
+  .privregel{display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px;margin:0 0 12px;padding:10px 12px;border:1px solid var(--lijn);border-radius:14px;background:var(--vlak);font:500 13px/1.5 var(--disp);color:var(--grijs)}
+  .privregel>span{flex:1 1 12em;min-width:0;overflow-wrap:anywhere}
   .privregel a{color:var(--blauw)}
-  .privregel button{flex:0 0 auto;font:700 12.5px/1 var(--disp);color:var(--blauw);background:transparent;border:1px solid var(--lijn);border-radius:999px;padding:8px 12px;cursor:pointer}
+  .privregel button{flex:0 0 auto;min-height:44px;max-width:100%;font:700 12.5px/1 var(--disp);color:var(--blauw);background:transparent;border:1px solid var(--lijn);border-radius:999px;padding:8px 12px;cursor:pointer}
   .vantwoord .vlabel{display:block;font:700 11.5px/1.4 var(--disp);color:var(--zacht);letter-spacing:.04em;text-transform:uppercase;margin-bottom:5px}
   .mschaal{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:6px}
   .mschaal button{min-height:44px}
@@ -428,8 +428,13 @@
   /* voet */
   .voet{margin-top:36px;text-align:center;font-size:14px;color:var(--grijs)}
   .voet a{color:var(--blauw);text-decoration:none;border-bottom:1px solid var(--blauw-10)}
-  .voet .merk{font:700 13px/1 var(--disp);letter-spacing:.02em;color:var(--zacht);margin-top:10px;
-    display:inline-flex;align-items:center;gap:7px}
+  .voet .merk{font:700 13px/1.4 var(--disp);letter-spacing:.02em;color:var(--zacht);margin-top:10px;
+    display:inline-flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:7px;max-width:100%}
+  /* laden: nooit een leeg scherm of een half Nederlandse kaart (sweep 2026-11-09, Jayden en Truus) */
+  .laden{margin-top:26vh;text-align:center;font:600 16px/1.5 var(--disp);color:var(--grijs)}
+  .laden i{display:block;width:34px;height:34px;margin:0 auto 14px;border:3px solid var(--lijn);border-top-color:var(--blauw);border-radius:50%;animation:ldraai 1s linear infinite}
+  @keyframes ldraai{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.laden i{animation:none}}
   .voet .merk svg{opacity:.75}
 
   .fout{background:var(--vlak);border:1px solid var(--lijn);border-radius:20px;padding:34px 24px;text-align:center;margin-top:26vh;box-shadow:var(--sh)}
@@ -462,6 +467,7 @@
 <div id="offlijn" style="display:none;position:sticky;top:0;z-index:40;font:600 13.5px/1.5 var(--disp);color:#8a5a00;background:#fff7e6;border-bottom:1px solid #f2d999;padding:9px 16px;text-align:center"></div>
 <!-- afgeronde behandeling: vriendelijke regel dat de kaart van de patiënt blijft -->
 <div id="afgerond" class="afgerondbanner" style="display:none;font:500 13.5px/1.5 var(--disp);color:#3e7a52;background:#eef6ef;border-bottom:1px solid #d7e8da;padding:9px 16px;text-align:center" role="note"></div>
+<div class="laden" id="laden" role="status" aria-live="polite"><i aria-hidden="true"></i><span id="laden_tekst">Je kaart wordt geladen…</span></div>
 <div class="wrap" id="wrap" style="display:none">
   <header class="kop">
     <div class="eyebrow">Trainingskaart</div>
@@ -618,8 +624,8 @@
 <div class="appbanner" id="appbanner"><img src="/images/icoon-192.png" alt=""/><span class="tekst" id="ab_tekst"></span><button type="button" class="doen" id="ab_doen"></button><button type="button" class="weg" id="ab_weg" aria-label="sluiten">×</button></div>
 <a class="belknop" id="belknop" style="display:none" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg><span id="beltxt">Bel de praktijk</span></a>
 <div class="fout" id="fout" style="display:none">
-  <h1>Kaart niet gevonden</h1>
-  Deze trainingskaart bestaat niet (meer). Vraag je fysiotherapeut om een nieuwe QR-code.
+  <h1 id="fout_kop">Kaart niet gevonden</h1>
+  <span id="fout_tekst">Deze trainingskaart bestaat niet (meer). Vraag je fysiotherapeut om een nieuwe QR-code.</span>
 </div>
 <div class="fout" id="storing" style="display:none" role="alert">
   <h1 id="storing_kop">Even geen verbinding</h1>
@@ -1775,16 +1781,22 @@
   function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenPsk();tekenAfspraak();tekenOfflijn();tekenAfgerond();tekenPrivacy();tekenSpoed();tekenMijnGegevens();tekenWacht();}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
-  function wisselTaal(t){
+  // klaar: pas na het tekenen in de nieuwe taal (bij het openen blijft tot dan het
+  // laadscherm staan; anders zag een Engelse patiënt eerst een half lege Nederlandse kaart).
+  // Een vertaling die na 8 s niet binnen is, wacht niet langer: dan de vaste teksten.
+  function wisselTaal(t,klaar){
     TAAL=isTaal(t)?t:'nl';
     try{localStorage.setItem('fp_taal',TAAL);}catch(e){}
     stopLezen();
+    var gedaan=false,taal=TAAL;
+    var af=function(teksten){if(gedaan)return;gedaan=true;if(!VERT[taal])VERT[taal]=teksten||{};if(TAAL===taal)alles();if(klaar)klaar();};
     if(TAAL!=='nl'&&!VERT[TAAL]){
+      setTimeout(function(){af(null);},8000);
       fetch('/api/kaart/vertaal?id='+id+'&taal='+TAAL,{cache:'no-cache'})
         .then(function(r){return r.json();})
-        .then(function(d){VERT[TAAL]=(d&&d.ok&&d.teksten)||{};alles();})
-        .catch(function(){VERT[TAAL]={};alles();});
-    }else alles();
+        .then(function(d){var tk=(d&&d.ok&&d.teksten)||null;if(gedaan&&tk){VERT[taal]=tk;if(TAAL===taal)alles();}else af(tk);})
+        .catch(function(){af(null);});
+    }else af(null);
   }
 
   // ---- voorlezen met de ingebouwde spraak van de telefoon (gratis, ook offline) ----
@@ -2706,13 +2718,32 @@
   // Alleen een 404 betekent dat de kaart echt weg is. Druk (429), een serverfout of
   // geen verbinding is tijdelijk: dan nooit "bestaat niet (meer)" zeggen, want dan denkt
   // de patiënt dat de kaart weg is en gooit hij de QR weg.
+  var LADEN={nl:'Je kaart wordt geladen…',en:'Loading your card…',de:'Deine Karte wird geladen…',fr:'Chargement de ta carte…',
+    es:'Cargando tu tarjeta…',pl:'Wczytywanie karty…',tr:'Kartın yükleniyor…',ar:'جارٍ تحميل بطاقتك…',uk:'Завантаження картки…'};
+  var NIETGEVONDEN={en:['Card not found','This exercise card does not exist (anymore). Ask your physiotherapist for a new QR code.'],
+    de:['Karte nicht gefunden','Diese Trainingskarte gibt es nicht (mehr). Bitte deine Physiotherapeutin oder deinen Physiotherapeuten um einen neuen QR-Code.'],
+    fr:['Carte introuvable','Cette carte d’exercices n’existe pas (ou plus). Demande un nouveau QR code à ton kinésithérapeute.'],
+    es:['Tarjeta no encontrada','Esta tarjeta de ejercicios no existe (ya). Pide un código QR nuevo a tu fisioterapeuta.'],
+    pl:['Nie znaleziono karty','Ta karta ćwiczeń nie istnieje (już). Poproś fizjoterapeutę o nowy kod QR.'],
+    tr:['Kart bulunamadı','Bu egzersiz kartı yok (artık). Fizyoterapistinden yeni bir QR kodu iste.'],
+    ar:['لم يتم العثور على البطاقة','بطاقة التمارين هذه غير موجودة. اطلب رمز QR جديدًا من أخصائي العلاج الطبيعي.'],
+    uk:['Картку не знайдено','Цієї картки вправ не існує (вже). Попросіть фізіотерапевта про новий QR-код.']};
+  (function(){var l=document.getElementById('laden_tekst');if(l&&LADEN[TAAL])l.textContent=LADEN[TAAL];if(TAAL==='ar')document.documentElement.dir='rtl';})();
+  function geenLaden(){var l=document.getElementById('laden');if(l)l.style.display='none';}
+  function toonNietGevonden(){
+    geenLaden();
+    var t=NIETGEVONDEN[TAAL];
+    if(t){document.getElementById('fout_kop').textContent=t[0];document.getElementById('fout_tekst').textContent=t[1];document.documentElement.lang=TAAL;}
+    document.getElementById('fout').style.display='block';
+  }
   function toonStoring(){
+    geenLaden();
     var t={en:['No connection right now','Your card is still there, but it is not loading right now. Please try again in a minute.','Try again']}[TAAL];
     if(t){document.getElementById('storing_kop').textContent=t[0];document.getElementById('storing_tekst').textContent=t[1];document.getElementById('storing_knop').textContent=t[2];}
     document.getElementById('storing').style.display='block';
   }
   document.getElementById('storing_knop').addEventListener('click',function(){location.reload();});
-  if(!id){var fo=document.getElementById('fout');if(/[?&]gewist=1/.test(location.search)){fo.textContent='';var pg=document.createElement('p');pg.id='mg_weg';pg.style.cssText='font:600 16px/1.5 var(--disp)';pg.textContent=trmg('gewist');fo.appendChild(pg);}fo.style.display='block';}
+  if(!id){var fo=document.getElementById('fout');if(/[?&]gewist=1/.test(location.search)){geenLaden();fo.textContent='';var pg=document.createElement('p');pg.id='mg_weg';pg.style.cssText='font:600 16px/1.5 var(--disp)';pg.textContent=trmg('gewist');fo.appendChild(pg);fo.style.display='block';}else toonNietGevonden();}
   else{
     Promise.all([
       fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){
@@ -2723,7 +2754,7 @@
       fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
       ,loadMobileReview().catch(function(){mediaReviewReady=false;})
     ]).then(function(res){
-      if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404){document.getElementById('fout').style.display='block';vergeetKaartHier();}else toonStoring();return;}
+      if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404){toonNietGevonden();vergeetKaartHier();}else toonStoring();return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai,dag:typeof res[0].dag==='string'?res[0].dag:''};
       // Komt het stemmanifest pas na het tekenen binnen, dan zetten we alleen de wachtende
       // luisterregels om (herstelNoorKnoppen), dezelfde weg als een latere geslaagde poging.
@@ -2731,8 +2762,8 @@
       if(window.NoorAudio)NoorAudio.load().then(function(){herstelNoorKnoppen();}).catch(function(){});
       bindEens();
       initApp();
-      if(TAAL!=='nl')wisselTaal(TAAL);else alles();
-      document.getElementById('wrap').style.display='block';
+      var toonKaart=function(){geenLaden();document.getElementById('wrap').style.display='block';};
+      if(TAAL!=='nl')wisselTaal(TAAL,toonKaart);else{alles();toonKaart();}
       verstuurWacht();
     }).catch(function(){toonStoring();});
   }

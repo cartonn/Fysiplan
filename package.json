@@ -88,7 +88,9 @@
     "test:vensterterug": "node scripts/test-sweep-venster-terug-spoed.mjs",
     "test:inboxmijn": "node scripts/test-sweep-inbox-mijn.mjs",
     "test:dubbelklikoverzicht": "node scripts/test-sweep-dubbelklik-overzicht.mjs",
-    "test:kaart200taal": "node scripts/test-sweep-kaart-200-taal.mjs"
+    "test:kaart200taal": "node scripts/test-sweep-kaart-200-taal.mjs",
+    "test:roepnaamander": "node scripts/test-sweep-roepnaam-andere-patient.mjs",
+    "test:kaartladen": "node scripts/test-sweep-kaart-laden.mjs"
   },
   "engines": {
     "node": ">=20"

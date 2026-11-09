@@ -1055,6 +1055,12 @@ function laatsteActiviteitKaart(k) {
     k.antwoord ? Number(k.antwoord.t) || 0 : 0, afspraak, zwaar);
 }
 // het moment waarop de kaart (met scores en video's) van de server verdwijnt
+
+// eerste woord van een kaartnaam, voor "zelfde patiënt?" bij een roepnaamvoorstel
+function eersteNaamWoord(n) {
+  return String(n || "").trim().toLowerCase().normalize("NFC").split(/[\s.,;:]+/)[0] || "";
+}
+
 function verlooptOp(k) {
   const dag = 86400000;
   const basis = k.gearchiveerd
@@ -2631,7 +2637,7 @@ async function afhandelen(request, response) {
         if (treffers.length > 1 && nkKeuze) treffers = treffers.filter((x) => x.pk === nkKeuze || accountNaam(x.pk) === nkKeuze);
         if (!treffers.length) {
           loginMisTel(remKey);
-          await denied(request, response, "praktijk-login");
+          await denied(request, response, "praktijk-login", "Praktijknaam, e-mailadres of wachtwoord klopt niet.");
           return;
         }
         if (treffers.length > 1) {
@@ -2668,7 +2674,7 @@ async function afhandelen(request, response) {
           return;
         }
         loginMisTel(nk || "?");
-        await denied(request, response, "praktijk-login");
+        await denied(request, response, "praktijk-login", "Praktijknaam, e-mailadres of wachtwoord klopt niet.");
         auditLog(metNaam[0] || nk || "?", "login-mislukt", request);
         return;
       }
@@ -2906,7 +2912,7 @@ async function afhandelen(request, response) {
       if (!checkHash(String(b.huidig || ""), acc.hash)) {
         loginMisTel(pk);
         auditLog(pk, "wachtwoord-wijzigen-mislukt", request);
-        await denied(request, response, "praktijk-wachtwoord");
+        await denied(request, response, "praktijk-wachtwoord", "Je huidige wachtwoord klopt niet.");
         return;
       }
       const nieuw = String(b.nieuw || "");
@@ -2951,7 +2957,7 @@ async function afhandelen(request, response) {
         await sendJson(response, 401, { ok: false, perEmail: true, fout: "Deze praktijk logt in met eigen logins. Wachtwoord kwijt? Vraag de beheerder om een nieuwe uitnodiging." });
         return;
       }
-      if (!nk || !kandidaten.length) { loginMisTel(nk || "?"); await denied(request, response, "praktijk-herstel"); return; }
+      if (!nk || !kandidaten.length) { loginMisTel(nk || "?"); await denied(request, response, "praktijk-herstel", "Praktijknaam of herstelcode klopt niet."); return; }
       if (!kandidaten.some((k) => praktijkAccounts[k].herstel)) {
         await sendJson(response, 404, { ok: false, fout: "Voor dit account is nog geen herstelcode ingesteld. Wijzig ingelogd het wachtwoord om er één te krijgen." });
         return;
@@ -2963,7 +2969,7 @@ async function afhandelen(request, response) {
       if (!acc) {
         loginMisTel(nk);
         auditLog(kandidaten[0], "herstel-mislukt", request);
-        await denied(request, response, "praktijk-herstel");
+        await denied(request, response, "praktijk-herstel", "Praktijknaam of herstelcode klopt niet.");
         return;
       }
       const nieuw = String(b.nieuw || "");
@@ -3007,7 +3013,7 @@ async function afhandelen(request, response) {
       if (!checkHash(String(b.huidig || ""), acc.hash)) {
         loginMisTel(pk);
         auditLog(pk, "herstelcode-vernieuwen-mislukt", request);
-        await denied(request, response, "praktijk-herstelcode");
+        await denied(request, response, "praktijk-herstelcode", "Je huidige wachtwoord klopt niet.");
         return;
       }
       const herstelcode = maakHerstelcode();
@@ -4016,7 +4022,14 @@ async function afhandelen(request, response) {
         // "opslaan als Piet V." vanuit de editor van Jan K. stil Jans kaart; Jans geprinte
         // QR opende daarna de kaart van Piet (gebruikers-sweep 2026-11-08, Sanne). De
         // editor vraagt nu: zelfde patiënt (naam verbeteren) of nieuwe kaart (kaartId leeg).
-        if (oudeSleutel && b.hernoem !== true) {
+        // Een roepnaamvoorstel ("Anna de Wit" → "Anna W.") is alleen een naamverbetering van
+        // dezelfde patiënt als de open kaart dezelfde voornaam heeft. Typte de therapeut in de
+        // editor van Joke de naam van een andere patiënt, dan hernoemde OK bij het voorstel stil
+        // Jokes kaart (gebruikers-sweep 2026-11-09, Sanne); dan eerst de hernoemVraag.
+        const roepOk = oudeSleutel && b.roepnaamHernoem === true &&
+          eersteNaamWoord(map[oudeSleutel].naam) !== "" &&
+          eersteNaamWoord(map[oudeSleutel].naam) === eersteNaamWoord(naam);
+        if (oudeSleutel && b.hernoem !== true && !roepOk) {
           // een verouderde editor (kaart intussen elders gewijzigd/hernoemd) hoort eerst dát
           const oud = map[oudeSleutel];
           if (Object.hasOwn(b, "basisTs") && b.overschrijf !== true && Number(oud.ts) > (Number(b.basisTs) || 0)) {

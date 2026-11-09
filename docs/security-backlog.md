@@ -169,6 +169,14 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL (gebruikers-sweep 2026-11-09 10u, Mark) — verlopen proef houdt kaarten onbeperkt in leven via `/api/kaart/archief`.**
+  Aan/uit zetten van het archief zet `verloopt` van de kaart opnieuw; de route staat niet in `PROEF_SCHRIJFROUTES`. Ook
+  `/api/praktijk/akkoord` schrijft nog bij een verlopen proef. Dossier en archief zijn bewust open; beoordelen of archief de
+  bewaartermijn mag verlengen. Server lokaal 4611 met verlopen `verloopt`.
+- **LAAG (sweep 2026-11-09 10u, Sanne) — server dwingt roepnaam en schone tekens niet af.** Via de API gaan `=HYPERLINK(...)`,
+  `<script>…` en volledige namen gewoon als kaartnaam mee (escaped op /k, CSV maakt formules onschadelijk); `cleanName`
+  (server.js r. ~1850) doet alleen trim en slice. Geen gat, wel dataminimalisatie alleen in de client.
+
 - **MIDDEL (gebruikers-sweep 2026-11-08 18u, Mark) — verlopen proef: seintje afhandelen werkt nog.** Een collega met een verlopen
   proef krijgt bij antwoorden netjes 403, maar `/api/praktijk/inbox/afgehandeld` en `/api/kaart/seintje/gezien` staan niet in
   `PROEF_SCHRIJFROUTES` (server.js r. ~541): het seintje verdwijnt uit de inbox zonder antwoord aan de patiënt. De app zet
