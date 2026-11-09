@@ -23,6 +23,10 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **LAAG (doorgezet door de gebruikers-sweep 2026-11-09 18u) — "Wis deze kaart van mijn telefoon" laat avatarbeelden van precies
+  deze oefeningen en `oefeningen.json` in Cache Storage (`fysiplan-kaart-v2`)**; op een gedeelde telefoon verraadt dat welke
+  oefeningen iemand doet. kaart.html r. ~1794 wist alleen URL's met het kaart-id. Toets tegen de tekst op /privacy (Truus, iPhone SE).
+
 - **MIDDEL — begrijpelijkheid + code tegen tekst (2026-11-09 17u): samenvatting voorwaarden beloofde iets anders dan art. 5.**
   "In het kort" zei "Je kunt maandelijks opzeggen. Daarna wissen we je kaarten binnen 30 dagen." Art. 5 en de code
   (`abonnementEindeStap`, lib/mollie.js) wissen pas 30 dagen na het einde van de betaalde maand, en dan alles van de

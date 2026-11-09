@@ -18,8 +18,9 @@ const kaartHtml = await readFile(join(root, "public/kaart.html"), "utf8");
 assert.match(kaartHtml, /\.chip\{max-width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere/, "chip breekt af");
 assert.match(kaartHtml, /\.naam\{overflow-wrap:anywhere\}/, "naam breekt af");
 assert.doesNotMatch(kaartHtml, /dank\.textContent=\(?d(&&d)?\.fout\)?\|\|/, "geen kale servertekst (nl) als melding op /k");
-assert.match(kaartHtml, /dank\.textContent=\(TAAL==='nl'&&d\.fout\)\?d\.fout:tr\('mfout'\)/, "pijnscore: eigen taal");
-assert.match(kaartHtml, /dank\.textContent=\(TAAL==='nl'&&d&&d\.fout\)\?d\.fout:trpsk\('fout'\)/, "PSK: eigen taal");
+// sinds 2026-11-09 18u via zetDank (rode foutopmaak), zelfde taalregel
+assert.match(kaartHtml, /zetDank\(dank,\(TAAL==='nl'&&d\.fout\)\?d\.fout:tr\('mfout'\),'fout'\)/, "pijnscore: eigen taal");
+assert.match(kaartHtml, /zetDank\(dank,\(TAAL==='nl'&&d&&d\.fout\)\?d\.fout:trpsk\('fout'\),'fout'\)/, "PSK: eigen taal");
 
 let pw = null;
 try { pw = createRequire(import.meta.url)("playwright"); } catch {}

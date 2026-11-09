@@ -179,6 +179,12 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL (doorgezet door de gebruikers-sweep 2026-11-09 18u) — praktijk zonder proef via een (typ)naam.** Mark (iPad): een collega
+  typte "Fysio Marktest." en Beveiligen maakte een tweede praktijkaccount zonder `proef`; op een kopie met verlopen proef gaf
+  `POST /api/kaarten` daar 200. `proefKoppel` (server.js r. ~2644) koppelt alleen via de proefcookie van dat apparaat. Bekend dat
+  /v2/app zonder proef open is (bewuste keuze), maar zo omzeilt een team ook de verlopen proef. De sweep zet nu de praktijknaam
+  klaar na een uitnodiging (deze PR); een "bedoel je …?" op namen lekt praktijknamen, dus eerst hier beoordelen.
+
 - **OPGELOST 2026-11-09 (deze PR) — MIDDEL — oude proefcookie op het apparaat hangt een gewone praktijk aan een
   verlopen proef, die daarna helemaal gewist wordt** (sanity #133/#136). Inloggen met naam en wachtwoord koppelde het
   account aan de proef van de cookie zodra `acc.gemaakt >= proef.gestart`, ook als de praktijk ná het einde van die

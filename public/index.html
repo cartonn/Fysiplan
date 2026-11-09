@@ -3572,6 +3572,15 @@ bridge2.jpg</div>
   // de praktijk leest haar eigen kaart via de praktijkroute (met sessie); de
   // patiëntroute /api/kaart geeft sinds de dataminimalisatie alleen nog de roepnaam
   function praktijkKaartUrl(id){return 'api/praktijk/kaart?praktijk='+encodeURIComponent((SET.praktijk||'').trim())+'&id='+encodeURIComponent(id);}
+  function volgNieuweKaart(naam,d){
+    var cn=document.getElementById('c_naam');if(!cn)return;
+    var nw=String((d&&d.naam)||naam||'').trim();if(!nw||cn.value.trim()===nw)return;
+    // de naam is net met de server afgestemd: geen nieuwe roepnaam- of hernoemvraag
+    NAAM_OK=nw.toLowerCase();HERNOEM_VOOR='';OVERSCHRIJF='';ROEP_VOOR='';
+    cn.value=nw;cn.dispatchEvent(new Event('input',{bubbles:true}));
+    laatsteDeel='';
+    if(typeof ensureQr==='function')ensureQr(function(){toonQr(d.id);});
+  }
   function saveServerCard(naam,cb,keuze){
     var c=serverKaart(naam);
     if(keuze==='hernoem')c.hernoem=true;
@@ -3587,7 +3596,11 @@ bridge2.jpg</div>
             'Annuleren = alleen de naam van \u201c'+(d.naam||'')+'\u201d verbeteren naar \u201c'+naam+'\u201d (zelfde pati\u00ebnt en QR)');
           saveServerCard(naam,cb,nieuw?'nieuw':'hernoem');return;
         }
-        if(d&&d.ok&&d.id&&keuze==='nieuw'){zetKaartId(d.id,d.ts);cb(d);return;}
+        // nieuwe kaart voor een andere patiënt: de editor volgt die kaart, dus ook het naamveld
+        // (en daarmee QR en autosave). Bleef hier de oude naam staan, dan gaf elke autosave
+        // 409 "bestaat al" en zette "Ja, die kaart bijwerken" de editor stil terug op de
+        // kaart van de vorige patiënt (sweep 2026-11-09, Sanne)
+        if(d&&d.ok&&d.id&&keuze==='nieuw'){zetKaartId(d.id,d.ts);volgNieuweKaart(naam,d);cb(d);return;}
         // ook bij de eerste deling (nog geen KAART_ID) het id onthouden: anders gaf elke
         // volgende opslag een 409 "bestaat al" over de eigen kaart en kwam een daarna
         // opgenomen eigen video nooit op de kaart van de patiënt (sweep 2026-11-08, Mark)
@@ -5431,6 +5444,10 @@ bridge2.jpg</div>
       if(qpr&&qpr.trim()){
         SET.praktijk=qpr.trim().slice(0,80);saveSettings();
         if(elPraktijk)elPraktijk.value=SET.praktijk;
+        // uitgenodigde collega (knop na de uitnodiging): geen algemeen welkom dat opnieuw om de
+        // praktijknaam vraagt; een typfout maakte daar een losse praktijk (sweep 2026-11-09, Mark)
+        var wpq=document.getElementById('welkom_praktijk');if(wpq)wpq.value=SET.praktijk;
+        var owq=document.getElementById('ovWelkom');if(owq&&owq.classList.contains('on'))closeOv('ovWelkom');
         setTimeout(function(){
           var kb=document.getElementById('kaartenBtn');if(kb)kb.click();
           setTimeout(function(){var ps=document.getElementById('prakslot');if(ps)ps.scrollIntoView({block:'center'});},450);

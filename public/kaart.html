@@ -343,6 +343,14 @@
     border:1px solid var(--lijn);background:var(--chip);color:var(--tekst);
     -webkit-tap-highlight-color:transparent;transition:background .12s,color .12s,border-color .12s}
   .mschaal button:active{background:var(--blauw-10)}
+  /* bezig: de tik is gezien en wordt bewaard (trage lijn), zodat niemand blijft tikken */
+  .mschaal button.bezig,.pskschaal button.bezig,[data-psk].bezig{background:var(--blauw-10);border-color:var(--blauw);color:var(--tekst);
+    animation:fpBezig 1s ease-in-out infinite alternate}
+  @keyframes fpBezig{from{opacity:1}to{opacity:.55}}
+  @media(prefers-reduced-motion:reduce){.mschaal button.bezig,[data-psk].bezig{animation:none}}
+  /* fout en wachtrij niet in de groene "gelukt"-opmaak (sweep 2026-11-09, Jayden) */
+  .mdank.fout,.sdank.fout{color:#a12a1f;background:#fdeeec;border-color:#f2c9c4}
+  .mdank.wacht,.sdank.wacht{color:#1d2b36;background:#f3f6fa;border-color:#d9e2ec}
   .mschaal button.aan{background:var(--blauw);border-color:var(--blauw);color:#fff;
     box-shadow:0 2px 6px rgba(36,86,166,.28)}
   .mlabels{display:flex;justify-content:space-between;font:600 11.5px/1 var(--disp);color:var(--zacht);margin-top:8px}
@@ -1586,6 +1594,11 @@
     var s=Math.min(Math.max(Number(seconden)||60,5),300);
     wachtKlok=setTimeout(function(){wachtKlok=null;verstuurWacht();},s*1000+500);
   }
+  // meldingsvak onder een knoppenrij: groen bij gelukt, rood bij fout, neutraal in de wachtrij
+  function zetDank(el,tekst,soort){
+    if(!el)return;el.textContent=tekst;el.style.display='block';
+    el.classList.toggle('fout',soort==='fout');el.classList.toggle('wacht',soort==='wacht');
+  }
   function stuur(pad,body){
     return fetch(pad,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)})
       .catch(function(){WACHT_REDEN='net';zetInWacht(pad,body);var e=new Error('wacht');e.wacht=true;throw e;})
@@ -2543,20 +2556,25 @@
     });
     document.getElementById('mschaal').addEventListener('click',function(e){
       var b=e.target.closest('button[data-score]');if(!b)return;
+      // bezig-stand: bij een trage lijn bleef de oude score seconden lang gemarkeerd en
+      // werd elke volgende tik een extra verzoek (sweep 2026-11-09, Jayden)
+      var schaal=this;if(schaal.dataset.bezig)return;
+      schaal.dataset.bezig='1';schaal.setAttribute('aria-busy','true');b.classList.add('bezig');
+      var klaar=function(){delete schaal.dataset.bezig;schaal.removeAttribute('aria-busy');b.classList.remove('bezig');};
       var dank=document.getElementById('mdank');
       stuur('/api/kaart/meting',{id:id,score:Number(b.dataset.score)})
         .then(function(d){
-          dank.style.display='block';
+          klaar();
           var nudge=document.getElementById('mnudge');
-          if(!d.ok){dank.textContent=(TAAL==='nl'&&d.fout)?d.fout:tr('mfout');if(nudge)nudge.style.display='none';return;}
+          if(!d.ok){zetDank(dank,(TAAL==='nl'&&d.fout)?d.fout:tr('mfout'),'fout');if(nudge)nudge.style.display='none';return;}
           K.kaart.metingen=d.metingen||[];
           tekenMeting();
-          dank.textContent=tr('mdank');
+          zetDank(dank,tr('mdank'));
           // hoge pijn (7-10): rustige, MDR-veilige nudge — alleen aandacht + de praktijk
           // één tik weg; geen oordeel of advies. Hergebruikt de bestaande vertalingen.
           toonPijnNudge(Number(b.dataset.score));
         })
-        .catch(function(e){dank.style.display='block';dank.textContent=e&&e.wacht?trw('een'):tr('mfout');
+        .catch(function(e){klaar();zetDank(dank,e&&e.wacht?trw('een'):tr('mfout'),e&&e.wacht?'wacht':'fout');
           if(e&&e.wacht){
             // offline: de score staat in de wachtrij; toon hem nu al als gekozen (vandaag vervangen)
             var vandaag=dagStr(Date.now());
@@ -2598,19 +2616,21 @@
       knoppen.forEach(function(k){k.classList.toggle('aan',k===b);});
       var dank=document.getElementById('sdank');
       stuur('/api/kaart/seintje',{id:id,soort:soort})
-        .then(function(d){dank.style.display='block';dank.textContent=d&&d.ok?trs('dank'):trs('fout');if(d&&d.ok)mgSeintjeErbij(K&&K.kaart,soort,Date.now());if(!d||!d.ok)b.classList.remove('aan');delete b.dataset.bezig;})
-        .catch(function(e){dank.style.display='block';delete b.dataset.bezig;if(e&&e.wacht){dank.textContent=trw('een');return;}dank.textContent=trs('fout');b.classList.remove('aan');});
+        .then(function(d){zetDank(dank,d&&d.ok?trs('dank'):trs('fout'),d&&d.ok?'':'fout');if(d&&d.ok)mgSeintjeErbij(K&&K.kaart,soort,Date.now());if(!d||!d.ok)b.classList.remove('aan');delete b.dataset.bezig;})
+        .catch(function(e){delete b.dataset.bezig;if(e&&e.wacht){zetDank(dank,trw('een'),'wacht');return;}zetDank(dank,trs('fout'),'fout');b.classList.remove('aan');});
     });
     // ervaren herstel: één tik stuurt de score (-2..+2), vandaag opnieuw tikken wijzigt
     // PSK-score: één tik, de server telt één score per dag
     document.getElementById('pskschaal').addEventListener('click',function(e){
       var pb=e.target.closest('[data-psk]');if(!pb||!id)return;
+      var pschaal=this;if(pschaal.dataset.bezig)return;
+      pschaal.dataset.bezig='1';pschaal.setAttribute('aria-busy','true');pb.classList.add('bezig');
+      var pklaar=function(){delete pschaal.dataset.bezig;pschaal.removeAttribute('aria-busy');pb.classList.remove('bezig');};
       stuur('/api/kaart/psk',{id:id,score:Number(pb.dataset.psk)})
-        .then(function(d){var dank=document.getElementById('pskdank');
-          if(d&&d.ok){K.kaart.psk=d.psk||[];tekenPsk();dank.textContent=trpsk('dank');}
-          else dank.textContent=(TAAL==='nl'&&d&&d.fout)?d.fout:trpsk('fout');
-          dank.style.display='block';})
-        .catch(function(e){var dank=document.getElementById('pskdank');dank.textContent=e&&e.wacht?trw('een'):trpsk('fout');dank.style.display='block';});
+        .then(function(d){pklaar();var dank=document.getElementById('pskdank');
+          if(d&&d.ok){K.kaart.psk=d.psk||[];tekenPsk();zetDank(dank,trpsk('dank'));}
+          else zetDank(dank,(TAAL==='nl'&&d&&d.fout)?d.fout:trpsk('fout'),'fout');})
+        .catch(function(e){pklaar();zetDank(document.getElementById('pskdank'),e&&e.wacht?trw('een'):trpsk('fout'),e&&e.wacht?'wacht':'fout');});
     });
     document.getElementById('hsknoppen').addEventListener('click',function(e){
       var b=e.target.closest('.sbtn');if(!b||b.dataset.bezig)return;
@@ -2618,11 +2638,11 @@
       var dank=document.getElementById('hsdank');
       stuur('/api/kaart/ervaring',{id:id,score:score})
         .then(function(d){
-          delete b.dataset.bezig;dank.style.display='block';
-          if(d&&d.ok){K.kaart.ervaring=d.ervaring||[];tekenHerstel();dank.textContent=trh('dank');}
-          else dank.textContent=trh('fout');
+          delete b.dataset.bezig;
+          if(d&&d.ok){K.kaart.ervaring=d.ervaring||[];tekenHerstel();zetDank(dank,trh('dank'));}
+          else zetDank(dank,trh('fout'),'fout');
         })
-        .catch(function(e){delete b.dataset.bezig;dank.style.display='block';dank.textContent=e&&e.wacht?trw('een'):trh('fout');});
+        .catch(function(e){delete b.dataset.bezig;zetDank(dank,e&&e.wacht?trw('een'):trh('fout'),e&&e.wacht?'wacht':'fout');});
     });
     // het gelezen therapeut-antwoord wegtikken
     document.getElementById('aweg').addEventListener('click',function(){

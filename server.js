@@ -5524,7 +5524,11 @@ async function afhandelen(request, response) {
   if (urlPath === "/v2/proef/wissen" && request.method === "POST") {
     response.setHeader("cache-control", "no-store");
     if (kruisSite(request)) { await weigerKruis(response); return; }
-    try { await readBody(request, 2048); } catch {}
+    let wb = {};
+    try { wb = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
+    // alleen met het vinkje "Ja, wis mijn gegevens": één verdwaalde tik wiste anders alles
+    // (gebruikers-sweep 2026-11-09, Mark iPad)
+    if (wb.zeker !== "1") { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     const p = proefVan(request);
     // na een online betaling blijft wat de fiscale bewaarplicht vraagt (7 jaar); de rest gaat weg
     if (p) { proefNaPraktijkWissen(p.id); await bewaarProeven(); }
@@ -5796,9 +5800,15 @@ async function afhandelen(request, response) {
     delete lid.uitnodiging;
     await saveJson(accountsPath, praktijkAccounts);
     auditLog(pk, "uitnodiging-aangenomen", request, naam);
-    await serveerProef(request, response, "bericht", { TITEL: "Klaar", ETIKET: weergaveNaam(pk), KOP: "Je eigen login staat klaar.",
-      TEKST: "Open Fysiplan en log onder Kaarten in met " + lid.email + " en je nieuwe wachtwoord.",
-      KNOP_HTML: '<a class="knop oranje" href="/v2/app">Open Fysiplan</a>' });
+    // de knop zet de praktijknaam alvast klaar (/v2/app?praktijk=): de collega hoeft hem niet zelf
+    // te typen, want met een typfout ("Fysio X.") maakte Beveiligen stil een losse tweede
+    // praktijk zonder proef (gebruikers-sweep 2026-11-09, Mark iPad)
+    const prNaam = weergaveNaam(pk);
+    const appLink = prNaam ? "/v2/app?praktijk=" + encodeURIComponent(prNaam) : "/v2/app";
+    await serveerProef(request, response, "bericht", { TITEL: "Klaar", ETIKET: prNaam, KOP: "Je eigen login staat klaar.",
+      TEKST: "Open Fysiplan en log onder Kaarten in met " + lid.email + " en je nieuwe wachtwoord." +
+        (prNaam ? " De praktijknaam \u201c" + prNaam + "\u201d staat dan al ingevuld." : ""),
+      KNOP_HTML: '<a class="knop oranje" href="' + htmlEsc(appLink) + '">Open Fysiplan</a>' });
     return;
   }
 

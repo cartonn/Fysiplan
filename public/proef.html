@@ -212,8 +212,10 @@ __INHOUD__
       __BETAAL_HTML__
     </div>
     <form method="post" action="/v2/proef/wissen" style="margin-top:22px">
-      <input type="hidden" name="zeker" value="1"/>
-      <p class="klein">Liever niet? Dan hoef je niets te doen; we wissen je gegevens automatisch na __BEWAAR_DAGEN__ dagen. <button class="knop stil" type="submit">Nu meteen wissen</button></p>
+      <!-- geen verborgen zeker=1: één tik wiste alles, ±70 px onder "Ja, ik wil doorgaan" (sweep 2026-11-09, Mark iPad) -->
+      <p class="klein">Liever niet? Dan hoef je niets te doen; we wissen je gegevens automatisch na __BEWAAR_DAGEN__ dagen.</p>
+      <label class="vink" style="margin-top:8px"><input type="checkbox" name="zeker" value="1" required/><span>Ja, wis mijn gegevens nu meteen.</span></label>
+      <div class="knoppen"><button class="knop stil" type="submit" style="min-height:44px">Nu meteen wissen</button></div>
     </form>
   </div>
 </main>

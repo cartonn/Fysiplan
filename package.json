@@ -94,7 +94,11 @@
     "test:roepnaamander": "node scripts/test-sweep-roepnaam-andere-patient.mjs",
     "test:kaartladen": "node scripts/test-sweep-kaart-laden.mjs",
     "test:noorstop": "node scripts/test-sweep-noor-stop.mjs",
-    "test:kaartdruk": "node scripts/test-sweep-kaart-druk.mjs"
+    "test:kaartdruk": "node scripts/test-sweep-kaart-druk.mjs",
+    "test:nieuwekaartnaam": "node scripts/test-sweep-nieuwe-kaart-naam.mjs",
+    "test:proefwissen": "node scripts/test-sweep-proef-wissen-vinkje.mjs",
+    "test:pijnscorebezig": "node scripts/test-sweep-pijnscore-bezig.mjs",
+    "test:uitnodigingpraktijk": "node scripts/test-sweep-uitnodiging-praktijk.mjs"
   },
   "engines": {
     "node": ">=20"
