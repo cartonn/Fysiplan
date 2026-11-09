@@ -3786,10 +3786,13 @@ bridge2.jpg</div>
       .then(function(d){
         if(!d||!d.ok){ib.style.display='none';return;}
         var mijn=(PRAKSLOT.wie||'').split(' ')[0].toLowerCase();
-        var lijst=d.kaarten.filter(function(k){return !(INBOX_ALLEEN_MIJN&&mijn)||String(k.behandelaar||'').toLowerCase().indexOf(mijn)===0;});
+        // "Alleen mijn patiënten": kaarten met mijn voornaam als behandelaar (heel het woord,
+        // "Sanneke" is niet "Sanne"), plus kaarten zonder behandelaar: een vraag mag nooit
+        // verdwijnen omdat niemand de kaart op zijn naam heeft gezet
+        var lijst=d.kaarten.filter(function(k){var b=String(k.behandelaar||'').trim().toLowerCase();return !(INBOX_ALLEEN_MIJN&&mijn)||!b||b.split(/\s+/)[0]===mijn;});
         ib.style.display='';
         var h="<div class='ib-kop' style='display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap'>"+
-          "<label style='margin:0'>Nieuw van patiënten"+(d.kaarten.length?" <span class='ib-tel'>"+d.kaarten.length+"</span>":"")+"</label>"+
+          "<label style='margin:0'>Nieuw van patiënten"+(lijst.length?" <span class='ib-tel'>"+lijst.length+"</span>":"")+"</label>"+
           (mijn?"<label class='ib-mijn' style='margin:0;font-weight:400;font-size:12px;display:flex;gap:5px;align-items:center'><input type='checkbox' id='ib_mijn' style='width:auto;height:auto'"+(INBOX_ALLEEN_MIJN?' checked':'')+"/>Alleen mijn patiënten</label>":"")+"</div>";
         if(!lijst.length){
           h+="<div class='ib-leeg'>Niets nieuws. Alles is afgehandeld.</div>";
@@ -5157,6 +5160,74 @@ bridge2.jpg</div>
   // ---- praktijkinstellingen en Help ----
   function openOv(id){document.getElementById(id).classList.add('on');}
   function closeOv(id){document.getElementById(id).classList.remove('on');}
+  // Vensters met alleen het toetsenbord: elk .ov wordt een echte dialoog. Bij openen
+  // gaat de focus het venster in, Tab blijft erin, Escape sluit via de eigen sluit-
+  // of annuleerknop (dus met dezelfde opruimlogica) en de focus keert terug naar de
+  // knop waarmee het venster openging. Werkt ook voor vensters die later worden
+  // gemaakt (team, seintje, eigen oefening) en voor code die de klasse direct zet.
+  (function vensterToetsenbord(){
+    var SLUIT=/(_cancel|_close|_dicht|_sluit)$|^welkom_zelf$/;
+    var FOCUSBAAR='a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+    var nr=0,stapel=[];
+    function zichtbaar(el){return !!(el.offsetWidth||el.offsetHeight||el.getClientRects().length)&&getComputedStyle(el).visibility!=='hidden';}
+    function focusbare(ov){return Array.prototype.filter.call(ov.querySelectorAll(FOCUSBAAR),zichtbaar);}
+    function bovenste(){for(var i=stapel.length-1;i>=0;i--){if(stapel[i].ov.classList.contains('on'))return stapel[i].ov;}return null;}
+    function markeer(ov){
+      if(ov.dataset.dlg)return;ov.dataset.dlg='1';
+      var m=ov.querySelector('.modal')||ov;
+      m.setAttribute('role','dialog');m.setAttribute('aria-modal','true');
+      var kop=m.querySelector('h1,h2,h3');
+      if(kop){if(!kop.id)kop.id='dlgkop'+(++nr);m.setAttribute('aria-labelledby',kop.id);}
+      if(!m.hasAttribute('tabindex'))m.setAttribute('tabindex','-1');
+    }
+    function geopend(ov){
+      markeer(ov);
+      stapel=stapel.filter(function(s){return s.ov!==ov;});
+      var terug=document.activeElement;
+      stapel.push({ov:ov,terug:(terug&&terug!==document.body&&!ov.contains(terug))?terug:null});
+      // na de eigen code van het venster (die soms zelf een veld focust)
+      setTimeout(function(){
+        if(!ov.classList.contains('on')||ov.contains(document.activeElement))return;
+        var f=focusbare(ov),m=ov.querySelector('.modal')||ov;
+        var eerste=f.filter(function(el){return /INPUT|SELECT|TEXTAREA/.test(el.tagName);})[0]||f[0]||m;
+        try{eerste.focus();}catch(e){}
+      },30);
+    }
+    function gesloten(ov){
+      var s=null;stapel=stapel.filter(function(x){if(x.ov===ov){s=x;return false;}return true;});
+      if(!s||!s.terug)return;
+      var a=document.activeElement;
+      if(a&&a!==document.body&&!ov.contains(a))return; // de code focuste al iets anders
+      if(document.contains(s.terug)&&zichtbaar(s.terug)){try{s.terug.focus();}catch(e){}}
+    }
+    var obs=new MutationObserver(function(lijst){
+      lijst.forEach(function(mu){
+        if(mu.type==='attributes'){
+          var ov=mu.target,aan=ov.classList.contains('on'),was=/(^|\s)on(\s|$)/.test(mu.oldValue||'');
+          if(aan&&!was)geopend(ov);else if(!aan&&was)gesloten(ov);
+        }else Array.prototype.forEach.call(mu.addedNodes,function(n){if(n.nodeType===1&&n.classList.contains('ov'))volg(n);});
+      });
+    });
+    function volg(ov){obs.observe(ov,{attributes:true,attributeFilter:['class'],attributeOldValue:true});markeer(ov);if(ov.classList.contains('on'))geopend(ov);}
+    Array.prototype.forEach.call(document.querySelectorAll('.ov'),volg);
+    obs.observe(document.body,{childList:true});
+    document.addEventListener('keydown',function(e){
+      var ov=bovenste();if(!ov)return;
+      if(e.key==='Escape'){
+        var knop=Array.prototype.filter.call(ov.querySelectorAll('button[id]'),function(b){return SLUIT.test(b.id)&&!b.disabled&&zichtbaar(b);})[0];
+        if(!knop)return; // venster zonder sluitknop (een verplichte keuze) blijft staan
+        e.preventDefault();e.stopPropagation();knop.click();
+        return;
+      }
+      if(e.key!=='Tab')return;
+      var f=focusbare(ov);
+      if(!f.length){e.preventDefault();return;}
+      var a=document.activeElement,i=f.indexOf(a);
+      if(!ov.contains(a)){e.preventDefault();f[e.shiftKey?f.length-1:0].focus();return;}
+      if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus();}
+      else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus();}
+    },true);
+  })();
   var PRAKKEYS={p_adres:'adres',p_plaats:'plaats',p_tel:'tel',p_email:'email',p_website:'website'};
   function applySettings(){
     var p=document.getElementById('praktijk');if(p)p.value=SET.praktijk||'';
