@@ -68,9 +68,9 @@ for(const v of verwacht){
 // V2-oefeningen (waarvan 60 gedeeld met V1) in dezelfde richting als Physitrack gezet en daarna
 // 10 bijgesteld na een tweede, onafhankelijke controle. Op 2026-11-09 nog 20 uitleggen (V1 en V2)
 // aangepast aan de nieuwe pijlstijl-tekeningen, ook volgens Physitrack (output/physitrack-crosscheck/),
-// en Yoga knee to chest hip stretch zittend, zoals tekening en avatar.
+// en Yoga knee to chest hip stretch zittend, zoals tekening, avatar en Physitrack (Seated knee hugs).
 // Elke andere wijziging van dit bestand laat deze test falen.
-assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'a3651916e85b3e8ac0183841510fb513bd19f4756ece15fd890534423afcda59','public/oefeningen.json is ongewijzigd');
+assert.equal(createHash('sha256').update(fs.readFileSync('public/oefeningen.json')).digest('hex'),'ae5301d7062eabc098cb990e0664251d6a831fec43c4549feab6a9a3410322f9','public/oefeningen.json is ongewijzigd');
 assert.notEqual(v2.find(x=>x.exerciseId==='fp_514654a0d4181742').kaartImg,v2.find(x=>x.exerciseId==='fp_5319c4700561725d').kaartImg);
 // geen bestand verplaatst, hernoemd of overschreven
 assert.equal(sha(HEUP),BEELD_KNIEHEFFING);assert.equal(sha(KNIE),BEELD_HEUPEXTENSIE);
