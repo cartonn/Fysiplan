@@ -9,33 +9,33 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 
 | Flow | Desktop 1280 | iPad | iPhone SE | iPhone 14 | Pixel 7 |
 |---|---|---|---|---|---|
-| Proef aanmelden + formulierfouten | 2026-11-08 18u (nog geen aria-invalid; focus bij alleen vinkjefout) | 2026-11-08 10u staand | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Proef aanmelden + formulierfouten | 2026-11-09 02u (nog geen aria-invalid; 5 losse alerts; 0612345678-melding misleidend) | 2026-11-08 10u staand | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Welkom, praktijknaam (ook leeg), 12 oefeningen | 2026-11-07 18u | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Printversie (lijn, kleur, compact) | 2026-11-08 18u (groot lettertype: A4-vlak 29 px te hoog) | 2026-11-08 14u liggend+staand, groot lettertype (nog 2 pagina's) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
-| Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-08 18u (dubbelklik: één claim) | 2026-11-08 18u staand (typfout praktijknaam ook op /k) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Delen, QR, kaartenoverzicht, CSV | 2026-11-08 18u (opslaan als andere patiënt hernoemde: fix; dubbelklik × ) | 2026-11-08 02u (staand) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-09 02u (dubbelklik: één claim ok) | 2026-11-08 18u staand (typfout praktijknaam ook op /k) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Delen, QR, kaartenoverzicht, CSV | 2026-11-09 02u (dubbelklik Kopie/× nog stuk; In de praktijk 2× POST; CSV-formules ok) | 2026-11-08 02u (staand) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Naam wijzigen in overzicht + daarna verder bewerken | 2026-11-08 14u (roepnaamvoorstel: fix) | 2026-11-07 10u | 2026-11-07 14u | – | 2026-11-07 10u |
-| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-08 02u (dubbelklik: fix) | 2026-11-08 18u liggend (uploads ok, × bij andermans sjabloon) | – | – | – |
+| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-08 02u (dubbelklik: fix) | 2026-11-09 02u staand+liggend (ok; × bij andermans sjabloon; tekstkolom smal) | – | – | – |
 | Opname via telefoon /o | 2026-11-07 22u | 2026-11-08 18u (nep-camera, komt aan op /k) | – | 2026-11-07 10u | 2026-11-08 02u |
 | Afspraak, seintje, signalen | 2026-11-08 18u (herstel/pijn-verloop onzichtbaar) | 2026-11-08 18u staand (afspraak na verlopen proef stil) | 2026-11-08 18u (seintje → inbox ok) | 2026-11-08 06u (.ics dubbeltik) | 2026-11-08 06u (.ics dubbeltik) |
-| Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-08 22u (Bewaar-knoppen in Kaarten: fix) | 2026-11-08 18u staand (afspraak, afgehandeld) | – | 2026-11-07 02u (breedte) | – |
-| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-07 06u | 2026-11-08 22u (Luister-alert) | 2026-11-08 14u (herstel 4 dagen) | 2026-11-08 14u (herstel 4 dagen) |
+| Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-09 02u (eigen login: Kaarten zegt niets tot opslaan; server weigert overal netjes) | 2026-11-08 18u staand (afspraak, afgehandeld) | – | 2026-11-07 02u (breedte) | – |
+| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-07 06u | 2026-11-09 02u (Luister-alert nog; Noor per oefening zonder stop) | 2026-11-08 14u (herstel 4 dagen) | 2026-11-09 02u (herstel 4 dagen ok op de server) |
 | /k: gedaan-vinkjes op een tweede apparaat | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u |
-| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-08 22u (lightbox: fix; 200 % nog 224 op 160) | 2026-11-08 22u (lightbox liggend: fix; terugknop nog stuk) | 2026-11-08 18u (trage lijn, pijnscore snel wisselen ok) |
+| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-09 02u (spoedregel: fix; 200 % nog 224 op 160) | 2026-11-09 02u (terugknop: fix; vertaalfout nog stil) | 2026-11-09 02u (terugknop: fix; trage lijn meteen Engels, wel leeg scherm) |
 | /k: video afspelen (eigen opname, YouTube) | – | 2026-11-08 22u (webm + mp4, staand/liggend) | 2026-11-07 22u (ook offline, 200%) | 2026-11-07 10u | 2026-11-07 22u |
 | /k: andere talen | – | – | de/tr 2026-11-08 18u (vertaalfout stil) | pl/ar 2026-11-08 22u (RTL-naam: fix) | ar + uk 2026-11-08 10u (te zwaar: fix) |
-| Landing /v2 (desktop: ook printen) | 2026-11-08 14u (print: fix) | 2026-11-08 18u staand+liggend (nav 22 px) | 2026-11-08 22u (47 tikdoelen < 44 px, 200 % schuift) | 2026-11-07 14u | 2026-11-08 22u (taallinks klein) |
+| Landing /v2 (desktop: ook printen) | 2026-11-08 14u (print: fix) | 2026-11-08 18u staand+liggend (nav 22 px) | 2026-11-09 02u (tikdoelen en 200 % ongewijzigd) | 2026-11-07 14u | 2026-11-08 22u (taallinks klein) |
 | Therapeut-app op telefoon | – | – | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 10u |
 | Therapeut-app op iPad liggend | – | 2026-11-07 10u | – | – | – |
 | Twee werkplekken op één kaart (oud apparaat/tabblad) | 2026-11-07 06u | 2026-11-07 06u | – | – | – |
-| Team: uitnodigen, rollen, verwijderen, inbox, dossier | 2026-11-08 14u (heruitnodigen, verwijderen) | 2026-11-08 18u (inbox Alleen mijn patiënten nog stuk) | – | – | – |
+| Team: uitnodigen, rollen, verwijderen, inbox, dossier | 2026-11-09 02u (Alleen mijn patiënten: fix; typfout praktijknaam nog stuk) | 2026-11-08 18u (inbox Alleen mijn patiënten nog stuk) | – | – | – |
 | /privacy (100 % en 200 %) | – | – | 2026-11-08 18u (200 % schoof: fix) | – | – |
 | Mijn gegevens /k, Wis van dit apparaat, /v2/gegevens | 2026-11-07 18u | – | 2026-11-08 14u (fr: download loopt achter) | 2026-11-08 02u | 2026-11-07 18u |
-| Vensters met alleen toetsenbord | 2026-11-08 18u (nog stuk: geen focus-val, geen Escape, geen role=dialog) | 2026-11-08 22u staand+liggend (nog stuk) | – | – | – |
+| Vensters met alleen toetsenbord | 2026-11-09 02u (fix: focus-val, Escape, role=dialog, focus terug) | 2026-11-09 02u staand (fix, in test:vensterterug) | – | – | – |
 
-Volgende run (na 2026-11-08 22u): vensters met toetsenbord (focus-val + Escape, eigen fix waard), landing /v2 tikdoelen op iPhone SE,
-team/inbox "Alleen mijn patiënten" op desktop, /o met nep-camera op iPhone 14, herstel over meerdere dagen op Pixel 7, teamsjabloon
-op iPad. Therapeut-app niet op telefoon (therapeuten werken op desktop/tablet). WebKit is niet geïnstalleerd: "iPhone"-devices draaien in Chromium.
+Volgende run (na 2026-11-09 02u): dubbelklik Kopie/× in het kaartenoverzicht (eigen fix waard), typfout praktijknaam bij een collega
+(Beveiligen i.p.v. inloggen), /k "Luister"-alert en Noor-stopknop op iPhone SE, vertaalfout stil op iPhone 14, /o met nep-camera
+op iPhone 14, proef bijna verlopen op iPad. Therapeut-app niet op telefoon (therapeuten werken op desktop/tablet). WebKit is niet geïnstalleerd: "iPhone"-devices draaien in Chromium.
 Testtip: 200 % op /k of landing is met een mobiele viewport van 160 px slecht na te bootsen (de viewport rekt mee met een bredere pagina).
 
 Testtip: de verlopen-pagina test je met een tweede server op een kopie van de datamap waarin `verloopt`
@@ -51,6 +51,28 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 ## Open
 
 ### HOOG
+- **OPGELOST 2026-11-09 (deze PR, test:inboxmijn) — Inbox "Alleen mijn patiënten" verborg de vraag op de eigen kaart van een
+  collega** (teller 1, lijst "Alles is afgehandeld"). Een nieuwe kaart kreeg `behandelaar:null`; het filter zocht de voornaam in dat
+  lege veld. Nu krijgt een nieuwe kaart de ingelogde collega als behandelaar, het filter vergelijkt het hele eerste woord
+  ("Sanneke" ≠ "Sanne"), kaarten zonder behandelaar blijven zichtbaar en de teller telt de getoonde lijst. Desktop (Mark, 02u).
+  Bestaand punt "Inbox Alleen mijn patiënten" hieronder (MIDDEL) is hiermee ook opgelost.
+- **OPGELOST 2026-11-09 (deze PR, test:vensterterug) — /k: terugknop met open foto (lightbox) verliet de kaart** (na een QR-scan
+  als eerste pagina: kaart weg). Nu een eigen geschiedenisstap: terug sluit alleen de foto; sluiten met × of Escape haalt die stap
+  weer weg. Pixel 7 en iPhone 14 (Jayden, 02u).
+- **OPGELOST 2026-11-09 (deze PR, test:vensterterug) — /k spoedregel "Bel de praktijk" zonder nummer.** Zonder telefoonnummer
+  nu "Bel je huisarts. Bij nood: 112." (9 talen); met nummer een tel-link van 44 px in de spoedregel zelf. iPhone SE (Truus, 02u).
+  Vervangt het MIDDEL-punt "spoedregel zegt Bel de praktijk zonder nummer".
+- **OPGELOST 2026-11-09 (deze PR, test:vensterterug) — App: vensters met alleen het toetsenbord** (ovProefWelkom, ovPrint,
+  ovKaarten, ovQrTest en alle andere `.ov`): focus bleef achter het venster, Escape sloot niets, geen role=dialog, focus na
+  sluiten op BODY. Nu een laag in index.html (`vensterToetsenbord`): role=dialog + aria-modal + naam, focus erin, focus-val,
+  Escape via de eigen sluitknop, focus terug. Vensters zonder sluitknop (proefwelkom: verplichte keuze) sluiten niet op Escape.
+  Desktop (Sanne, 02u), iPad staand. Het deelpaneel (Deel) is geen `.ov` en blijft open staan (LAAG hieronder).
+- **Nederlandse servermeldingen op een Engelse kaart** (o.a. 429 "Even te veel verzoeken…" na ±41 tikken op de pijnscore;
+  elke 4xx met `fout`). `kaart.html` r. ~2464 `dank.textContent=d.fout||tr('mfout')`: toon in een andere taal dan nl de eigen
+  vertaalde melding. Let op: de schrijfrem (40 per 5 min per IP, server.js r. ~1347) is gedeeld achter CGNAT/wifi. iPhone 14 (Jayden, 02u).
+- **Verloop pijn/herstel: de slechte dag is onzichtbaar voor de therapeut** (hertest 02u: pijn 7,6,8,6 en herstel −1,0,−2,+1 →
+  inbox "pijnscore 6", overzicht "pijn 7→6 · herstel: iets beter"). Zie het MIDDEL-punt hieronder; nu HOOG omdat het beeld
+  positiever is dan het was. server.js r. ~943 (inboxItems), index.html r. ~3950. MDR-grens: verloop tonen, geen rangschikking.
 - **OPGELOST 2026-11-08 (deze PR, test:hernoem) — App: "opslaan als" met de naam van een andere patiënt hernoemde de open kaart.**
   Kaart "Jan K." open → oefening weg → Kaarten → "Piet V." → In de praktijk: één kaart "Piet V." met Jans id; Jans geprinte QR
   opende Piets kaart en Jans scores stonden bij Piet. De server hernoemt nu alleen met `hernoem:true`; anders 409 `hernoemVraag`
@@ -97,6 +119,19 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   gaat na `afterprint` niet weg. public/index.html r. 238, 268–273, 1901 (`SAFARI_PRINT`). (Mark, 2026-11-07 06u)
 
 ### MIDDEL
+- **Collega met typfout in de praktijknaam krijgt "Beveiligen" i.p.v. inloggen** (hertest 02u, desktop, Mark): e-mailveld verborgen
+  bij `!PRAKSLOT.geclaimd` (index.html r. ~3018); server kan inloggen met alleen e-mail. Ook: fout praktijkwachtwoord en
+  `/api/opname/start` zonder sessie zeggen "Alleen beschikbaar voor beheer." (server.js r. ~1966, ~3600).
+- **App, verlopen proef met eigen login: Kaarten zegt niets tot je opslaat** (Deel/Opslaan staan er gewoon; pas dan 403). Desktop (Mark, 02u).
+- **Sjablonenvenster: tekstkolom te smal** (naam en oefeningenlijst breken per 1–2 woorden af door de knoppen). Desktop en iPad (Mark, 02u).
+- **Dubbelklik "In de praktijk" bij een andere naam: 2× POST (beide 409 hernoemVraag)**, één confirm; de keuze OK/Annuleren
+  ("nieuwe kaart" of "naam verbeteren") is onduidelijk. Desktop (Sanne, 02u).
+- **Toolbarknop Kaarten pas na 941× Tab** (446 oefeningen met ★ en + ervoor, geen skiplink); zijbalkknop "Kaarten en patiënten"
+  heeft alleen een title. index.html r. 290. Desktop (Sanne, 02u).
+- **Print: lange praktijknaam afgekapt** ("Praktijk Sanne mw8m…", 23 tekens). Desktop (Sanne, 02u).
+- **/k: onbekend of verlopen id met ?taal=en geeft een Nederlandse foutpagina** (kaart.html r. ~2699, ~615). Pixel 7 (Jayden, 02u).
+- **/k tikdoelen < 44 px** (iPhone SE): "Te zwaar?" 78×21, "Alles gedaan" 104×29, "Begrepen" 85×31, dagen 33×37, pijnscore
+  36 breed, Luister/AA/Print/Deel 36 hoog. kaart.html r. 182, 193. (Truus, 02u)
 - **OPGELOST 2026-11-08 (deze PR, test:lightbox) — /k in het Arabisch: Nederlandse oefennaam in RTL** ("graden 360", ".1 Mobilisatie
   rotatie rug" in de schemakop). Nu `dir="auto"` op oefennaam, schemakop en lightboxnaam. iPhone 14 (Jayden, 22u).
 - **Landing /v2 op iPhone SE: 47 tikdoelen kleiner dan 44 px.** Nav-links 22 px hoog ("Vragen" half buiten beeld zonder hint,
@@ -188,7 +223,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   loopt tot 576 bij 568 hoog met `overflow:visible` (niet scrollbaar), witte `.lbnaam` staat over de crème uitleg.
   Onderaan de technische zin "Volledige oefenafbeelding. De houdingen worden niet automatisch uitgesneden of
   afgespeeld." kaart.html r. 103–117, 2279. (Truus, 22u)
-- **Inbox "Alleen mijn patiënten" verbergt vragen en zegt "Alles is afgehandeld"** (hertest 22u: ongewijzigd) terwijl de teller 1 blijft. Kaarten
+- **OPGELOST 2026-11-09 (deze PR) — Inbox "Alleen mijn patiënten" verbergt vragen en zegt "Alles is afgehandeld"** (hertest 22u: ongewijzigd) terwijl de teller 1 blijft. Kaarten
   van eigen logins krijgen `behandelaar:null`; het filter zoekt op voornaam in het vrije veld. public/index.html
   r. ~3659–3663. Desktop (Mark, 2026-11-07 18u).
 - **Uitgenodigde collega met typfout in de praktijknaam maakt een losse praktijk** ("nog niet beveiligd" +
@@ -196,7 +231,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   noem de praktijknaam op de klaar-pagina (server.js r. ~5303). iPad liggend (Mark, 18u).
 - **/k offline: pijnscore en "Ik heb vandaag geoefend" tonen geen gekozen stand** (alleen groene tekst; knop
   aria-pressed=false, weekbolletje blijft leeg); seintjes wel. kaart.html r. ~2330, ~2346. iPhone SE (Truus, 18u).
-- **/k spoedregel zegt "Bel de praktijk" zonder nummer of belknop** als de praktijk geen telefoon heeft ingevuld.
+- **OPGELOST 2026-11-09 (deze PR) — /k spoedregel zegt "Bel de praktijk" zonder nummer of belknop** als de praktijk geen telefoon heeft ingevuld.
   `tekenSpoed` r. ~1578: tel-link als `K.praktijk.tel` bestaat, anders in de app om een nummer vragen. (Truus, 18u)
 - **OPGELOST 2026-11-08 PR #92 — Eigen oefening: dubbelklik op Toevoegen geeft een valse fout** (knop op slot vóór de FileReader, server reserveert de naam vóór de awaits; Mark hertestte: één POST, geen 409) (hertest 22u: 200 + 409, één oefening, maar daarna
   "Er is al een eigen oefening met deze naam."). `knop.disabled` gaat pas aan ná FileReader/`resizeDataUrl`
@@ -297,6 +332,13 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   Al opgelost in open PR #41 (server.js `denied()` met eigen tekst); mergen of overnemen.
 
 ### LAAG
+- **Sweep 2026-11-09 02u, LAAG:** × bij andermans teamsjabloon (403 pas na confirm; iPad, Mark); inbox-vinkje 16×13 px en
+  sjablonenknoppen 36 px (Mark); deelpaneel zonder aria-expanded/Escape (index.html r. ~4111); proefformulier zonder aria-invalid,
+  5 losse role=alert, "Gebruik 10 cijfers…" bij een geweigerd nepnummer (lib/proef.js r. 53, 96); 13e oefening via native alert;
+  `POST /api/kaarten` slaat `naam:{a:1}` op als "[object Object]" en `chosen:"abc"` als lege kaart; "Nieuw in Fysiplan" al bij
+  het 2e bezoek op dag 1 (release-notes.js r. 18) (Sanne); /k leeg scherm zonder laadindicator op een trage lijn, verloopdatums
+  "06-11" op een Engelse kaart, "0 deze week actief" terwijl er scores zijn (Jayden); seintje dubbeltik + extra tik = 2 POSTs
+  (Truus); landing-tikdoelen ongewijzigd.
 - **Verlopen proef: "+1 week" bij de afspraak schuift de datum in het veld door, ook als bewaren geweigerd wordt** (na twee tikken
   22-11 in het veld, niets bewaard). iPad (Mark, 22u).
 - **Verlopen-pagina /v2/proef vult de praktijknaam niet in** als die pas in de app is ingevuld (proefrecord `praktijk` leeg;

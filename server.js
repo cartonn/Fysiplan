@@ -297,6 +297,13 @@ function praktijkSessieVan(req) {
   return s ? s.pk : null;
 }
 const sessieLid = (s) => (s && s.lid) ? lidVan(s.pk, s.lid) : null;
+const behandelaarVanSessie = (req, pk) => {
+  const s = sessieVan(req);
+  if (!s || s.pk !== pk) return null;
+  const l = sessieLid(s);
+  const naam = String((l && l.naam) || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 40);
+  return naam || null;
+};
 const isBeheer = (s) => !!s && (!s.lid || (sessieLid(s) || {}).rol === "beheerder");
 // gedeeld praktijkwerk (teamsjabloon, eigen oefening) weghalen of overschrijven: alleen wie
 // het maakte (lid-id in `door`) of een beheerder. Zonder sessie kwam de aanvraag langs het
@@ -4024,7 +4031,9 @@ async function afhandelen(request, response) {
         afspraak: map[kk] ? map[kk].afspraak || null : null,
         oefTrouw: map[kk] ? map[kk].oefTrouw || null : null,
         oefZwaar: map[kk] ? map[kk].oefZwaar || null : null,
-        behandelaar: map[kk] ? map[kk].behandelaar || null : null,
+        // een nieuwe kaart van een collega met eigen login krijgt die collega als behandelaar,
+        // anders vond "Alleen mijn patiënten" in de inbox haar eigen kaarten nooit terug
+        behandelaar: map[kk] ? map[kk].behandelaar || null : behandelaarVanSessie(request, pk),
         pskDoel: map[kk] ? map[kk].pskDoel || null : null,
         psk: map[kk] ? map[kk].psk || [] : [],
         contact: map[kk] ? map[kk].contact || [] : [],
