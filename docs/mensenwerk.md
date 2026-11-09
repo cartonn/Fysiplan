@@ -4,6 +4,14 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Einde na de proef en controle door een praktijk (legal, 2026-11-09 13u)
+**Wat de code nu doet:** wordt een praktijk na de gratis proef geen klant, dan wist Fysiplan 90 dagen na de proef
+alles van die praktijk, ook de kaarten die patiënten nog gebruiken. Eerste mogelijke wissing: eind januari 2027.
+**Wat jij of de jurist moet kiezen:** (1) is 90 dagen goed, of wil je korter (bijvoorbeeld 30 dagen, gelijk aan een
+opgezegd abonnement)? Het getal staat op één plek (`PROEF_BEWAAR_DAGEN`). (2) De verwerkersovereenkomst zegt nu
+dat een praktijk de afspraken mag laten controleren, 14 dagen vooraf afgesproken, op eigen kosten. Laat de jurist
+kijken of je een maximum per jaar of een vergoeding voor jouw tijd wilt.
+
 ### Einde van een opgezegd abonnement (legal, 2026-11-09)
 **Wat de code nu doet:** na opzeggen loopt het abonnement tot het einde van de betaalde maand. Daarna is de
 praktijk geen klant meer (geen nieuwe kaarten), en 30 dagen later wist Fysiplan alles van die praktijk; alleen

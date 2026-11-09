@@ -9,7 +9,7 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | Gebied | Laatst gecontroleerd |
 |---|---|
 | (a) privacyverklaring (art. 13/14 AVG) | 2026-11-09 09u (art. 9-uitzondering, "Als je stopt", proefpraktijk zonder abonnement echt gewist, WhatsApp-link) |
-| (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-07 (eigen login per therapeut, één akkoord) |
+| (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-09 13u (art. 28 lid 3 a/g/h en lid 4 langs de tekst; einde proef: kaarten bleven onbeperkt; subverwerkers tegen alle externe hosts in code: geen gat) |
 | (c) algemene voorwaarden | 2026-11-09 05u (opzeggen in de app, einde abonnement; `AV_VERSIE` 2026-11-09) |
 | (d) code tegen tekst | 2026-11-09 05u (einde abonnement: wissen 30 dagen na het einde gebouwd) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-08 17u (patiënt: download klopt nu direct na vinkjes en seintje, niet pas na herladen) |
@@ -18,10 +18,28 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (h) WGBO en KNGF-beroepsregels | 2026-11-08 21u (werknotitie mee naar het dossier, dossierlabel vervalt bij nieuwe praktijkregels, datum heet nu "laatst opgeslagen") |
 | (i) begrijpelijkheid (B1) | 2026-11-08 09u (VWO en voorwaarden: "In het kort", VWO als concept gemarkeerd; /v2/gegevens-tekst) |
 
-Volgende run: (b) verwerkersovereenkomst, dan (i) begrijpelijkheid. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (i) begrijpelijkheid, dan (f) cookies. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **HOOG — code tegen tekst + verwerkersovereenkomst (2026-11-09 13u): kaarten van een proef zonder abonnement bleven onbeperkt staan.**
+  VWO art. 10 beloofde "stopt de praktijk, dan binnen 30 dagen gewist", maar na een proef zonder abonnement bleef het
+  account staan zolang er een gedeelde kaart was, en een kaart die de patiënt af en toe opent (`bekeken` telt als
+  activiteit) verloopt nooit. Gevolg: patiëntgegevens en het account zonder einddatum, ook zonder lopende overeenkomst
+  (art. 5 lid 1e en art. 28 lid 3g AVG). OPGELOST 2026-11-09 (deze PR): `proefRonde` wist bij het verlopen van de
+  aanmelding (90 dagen na de proef, alleen als de aanmelding zelf zegt "geen klant") via `praktijkAllesWissen` de hele
+  praktijk, ook de kaarten. Een ontbrekend aanmeldingenbestand wist dus nooit kaarten. Voorwaarden art. 3, /privacy
+  #einde, VWO "In het kort" en art. 10, en de herinneringsmail noemen de 90 dagen. Test
+  `scripts/test-proef-einde-wissen.mjs` aangepast (faalt zonder fix). `AV_VERSIE` 2026-11-09-2, `VWO_VERSIE` 2026-11-09.
+  Rest (LAAG): wist een proefpraktijk zelf eerder haar aanmelding ("Mijn proef wissen"), dan geldt nog de oude route
+  (account weg zodra de laatste kaart verloopt); begrenzen zou ook kaarten wissen als het aanmeldingenbestand ontbreekt.
+- **MIDDEL — verwerkersovereenkomst miste drie verplichte punten van art. 28 AVG (2026-11-09 13u).**
+  Lid 3a (wettelijke vordering vooraf melden), lid 3h (controle/audit door de praktijk of een deskundige) en lid 4
+  (verwerker blijft verantwoordelijk voor subverwerkers). OPGELOST 2026-11-09 (deze PR): art. 3, 6 en 11 aangevuld.
+  Bron: AVG art. 28 (eur-lex.europa.eu, Verordening (EU) 2016/679). Kosten en termijn van een audit: zie mensenwerk.
+- **LAAG — vertaalroute (2026-11-09 13u).** Bij vertalen gaan ook namen van eigen oefeningen van de praktijk naar
+  Anthropic; /privacy noemt "oefeningnamen", dat dekt het. Geen actie.
 
 - **MIDDEL — privacyverklaring + code (2026-11-09 09u): een proefpraktijk zonder abonnement werd nooit gewist.**
   De proefaanmelding verdween 90 dagen na de proef, maar het praktijkaccount (teamleden met naam en e-mail,
