@@ -1,0 +1,794 @@
+[
+ {
+  "nr": 393,
+  "slug": "rug-bol-en-hol-op-handen-en-knieen",
+  "groep": "Rug",
+  "stijl": "mat",
+  "lijn": "images/rug/rug-bol-en-hol-op-handen-en-knieen-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: on hands and knees in the same place, back rounded high up like a cat (arched toward the ceiling), head dropped down between the arms, tailbone tucked under; hands and knees do not move. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 394,
+  "slug": "rug-bol-en-hol-zittend",
+  "groep": "Rug",
+  "stijl": "stoel",
+  "lijn": "images/rug/rug-bol-en-hol-zittend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: sitting on the same chair, hands on the knees, whole back rounded forward, chin on the chest, shoulders curled forward. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 395,
+  "slug": "rug-bol-en-hol-staand",
+  "groep": "Rug",
+  "stijl": "staand",
+  "lijn": "images/rug/rug-bol-en-hol-staand-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: same stance with hands on the thighs and knees slightly bent, back rounded high up toward the ceiling, head dropped down, tailbone tucked under. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 396,
+  "slug": "rug-bol-en-hol-met-lichte-weerstand",
+  "groep": "Rug",
+  "stijl": "mat",
+  "lijn": "images/rug/rug-bol-en-hol-met-lichte-weerstand-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: on hands and knees in the same place, back rounded high up toward the ceiling, head dropped down between the arms, tailbone tucked under; hands and knees do not move. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 397,
+  "slug": "romp-draaien-liggend",
+  "groep": "Rug",
+  "stijl": "mat",
+  "lijn": "images/rug/romp-draaien-liggend-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: lying on the back with arms spread on the mat and both shoulders flat, both bent knees lowered together to one side toward the mat, feet stacked on their side."
+ },
+ {
+  "nr": 398,
+  "slug": "romp-draaien-op-handen-en-knieen",
+  "groep": "Rug",
+  "stijl": "mat",
+  "lijn": "images/rug/romp-draaien-op-handen-en-knieen-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: on hands and knees, one hand on the mat, the other arm stretched straight up toward the ceiling with the chest rotated open and the head turned to look at that hand."
+ },
+ {
+  "nr": 399,
+  "slug": "romp-draaien-zittend",
+  "groep": "Rug",
+  "stijl": "stoel",
+  "lijn": "images/rug/romp-draaien-zittend-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: sitting upright on the same chair, feet flat, arms crossed on the chest, upper body and shoulders rotated clearly to one side while the hips and knees stay facing forward. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 400,
+  "slug": "romp-draaien-staand",
+  "groep": "Rug",
+  "stijl": "staand",
+  "lijn": "images/rug/romp-draaien-staand-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: standing with feet hip-width apart, arms crossed on the chest, trunk and shoulders rotated clearly to one side while the hips and feet stay facing forward. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 401,
+  "slug": "romp-zijwaarts-buigen-liggend",
+  "groep": "Rug",
+  "stijl": "mat",
+  "lijn": "images/rug/romp-zijwaarts-buigen-liggend-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: lying on the back, legs straight in the same place, trunk bent sideways into a C-curve so one hand has slid down the side of the thigh toward the knee; the other arm stays along the body."
+ },
+ {
+  "nr": 402,
+  "slug": "romp-zijwaarts-buigen-zittend",
+  "groep": "Rug",
+  "stijl": "stoel",
+  "lijn": "images/rug/romp-zijwaarts-buigen-zittend-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: sitting on the same chair, feet flat, trunk bent sideways so one hand slides down beside the chair leg toward the floor, the other arm along the body; head follows the trunk."
+ },
+ {
+  "nr": 403,
+  "slug": "romp-zijwaarts-buigen-staand",
+  "groep": "Rug",
+  "stijl": "staand",
+  "lijn": "images/rug/romp-zijwaarts-buigen-staand-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: standing with feet hip-width apart, trunk bent sideways so one hand slides down the outside of the leg to about the knee, the other arm along the body."
+ },
+ {
+  "nr": 404,
+  "slug": "rug-strekken-liggend",
+  "groep": "Rug",
+  "stijl": "mat",
+  "lijn": "images/rug/rug-strekken-liggend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: lying on the belly, arms straightened pushing the upper body up, chest lifted well off the mat, hips and legs staying flat on the mat, looking forward. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 405,
+  "slug": "rug-strekken-op-handen-en-knieen",
+  "groep": "Rug",
+  "stijl": "mat",
+  "lijn": "images/rug/rug-strekken-op-handen-en-knieen-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: buttocks pushed back to rest near the heels, arms stretched far forward with hands in the same place on the mat, forehead low toward the mat (child's pose)."
+ },
+ {
+  "nr": 406,
+  "slug": "rug-strekken-zittend",
+  "groep": "Rug",
+  "stijl": "stoel",
+  "lijn": "images/rug/rug-strekken-zittend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: sitting on the same chair, not touching the backrest, hands on the hips, upper body leaning back with the back arched and the chest lifted, looking slightly up. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 407,
+  "slug": "rug-strekken-staand",
+  "groep": "Rug",
+  "stijl": "staand",
+  "lijn": "images/rug/rug-strekken-staand-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing with feet hip-width apart, hands on the lower back, upper body leaning back with the back arched and the hips pushed slightly forward, looking slightly up. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 408,
+  "slug": "knie-naar-borst-liggend",
+  "groep": "Rug",
+  "stijl": "mat",
+  "lijn": "images/rug/knie-naar-borst-liggend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: lying on the back, the near knee bent and pulled toward the chest, both hands holding just below that knee; the other leg stays straight on the mat."
+ },
+ {
+  "nr": 409,
+  "slug": "knie-naar-borst-zittend",
+  "groep": "Rug",
+  "stijl": "stoel",
+  "lijn": "images/rug/knie-naar-borst-zittend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: sitting upright on the same chair, one knee lifted and pulled toward the chest with both hands holding just below the knee; the other foot stays flat on the floor."
+ },
+ {
+  "nr": 410,
+  "slug": "knie-naar-borst-staand",
+  "groep": "Rug",
+  "stijl": "staand",
+  "lijn": "images/rug/knie-naar-borst-staand-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing upright on one leg, the other knee lifted and pulled toward the chest with both hands holding just below the knee."
+ },
+ {
+  "nr": 411,
+  "slug": "open-boek-liggend",
+  "groep": "Rug",
+  "stijl": "mat",
+  "lijn": "images/rug/open-boek-liggend-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: lying on the same side with knees bent and stacked, bottom arm still on the mat in front, top arm opened in a wide arc to the other side, resting toward the mat behind her, chest rotated open and head turned to look at that hand."
+ },
+ {
+  "nr": 412,
+  "slug": "open-boek-op-handen-en-knieen",
+  "groep": "Rug",
+  "stijl": "mat",
+  "lijn": "images/rug/open-boek-op-handen-en-knieen-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: on hands and knees, the hand still behind the head, the elbow rotated up pointing to the ceiling, chest turned open and head following; the support hand stays on the mat."
+ },
+ {
+  "nr": 413,
+  "slug": "open-boek-zittend",
+  "groep": "Rug",
+  "stijl": "stoel",
+  "lijn": "images/rug/open-boek-zittend-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: sitting upright on the same chair, one arm still stretched forward, the other arm opened sideways and backward at shoulder height, chest and head rotated to follow that hand."
+ },
+ {
+  "nr": 414,
+  "slug": "thoracale-extensie-liggend",
+  "groep": "Rug",
+  "stijl": "mat",
+  "lijn": "images/rug/thoracale-extensie-liggend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: lying on the back with knees bent, feet flat, hands behind the head, the upper back extended back over the rolled towel so the head and elbows are lower and closer to the mat, chest lifted. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 415,
+  "slug": "thoracale-extensie-op-handen-en-knieen",
+  "groep": "Rug",
+  "stijl": "mat",
+  "lijn": "images/rug/thoracale-extensie-op-handen-en-knieen-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: knees in the same place under the hips, hands in the same place forward, chest sunk down toward the mat with the upper back arched, hips staying up, looking at the mat. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 416,
+  "slug": "thoracale-extensie-zittend",
+  "groep": "Rug",
+  "stijl": "stoel",
+  "lijn": "images/rug/thoracale-extensie-zittend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: sitting on the same chair, hands behind the head, upper back extended back over the top of the backrest, chest lifted, elbows pointing up, looking slightly up; lower back and hips stay on the seat. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 417,
+  "slug": "thoracale-extensie-staand",
+  "groep": "Rug",
+  "stijl": "staand",
+  "lijn": "images/rug/thoracale-extensie-staand-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing with feet hip-width apart, hands behind the head with elbows out, upper back arched backward, chest lifted, looking slightly up. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 448,
+  "slug": "reiken-met-aangedane-arm-met-visueel-doel",
+  "groep": "Neurologische revalidatie",
+  "stijl": "stoel",
+  "lijn": "images/neurologische-revalidatie/reiken-met-aangedane-arm-met-visueel-doel-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: sitting upright on the same chair at the same table, the arm stretched forward along the table with the hand at the cup, fingers about to grasp it; trunk stays upright."
+ },
+ {
+  "nr": 449,
+  "slug": "reiken-met-aangedane-arm-functionele-combinatie",
+  "groep": "Neurologische revalidatie",
+  "stijl": "stoel",
+  "lijn": "images/neurologische-revalidatie/reiken-met-aangedane-arm-functionele-combinatie-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: sitting upright at the same table, the arm reached out and the hand placing the cup down on the empty spot next to its original place."
+ },
+ {
+  "nr": 450,
+  "slug": "hand-openen-na-grijpen-bilateraal",
+  "groep": "Neurologische revalidatie",
+  "stijl": "stoel",
+  "lijn": "images/neurologische-revalidatie/hand-openen-na-grijpen-bilateraal-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: sitting at the same table, both hands fully opened with fingers spread and straight, palms just above the soft ball, which lies free on the table. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 451,
+  "slug": "romp-rotatie-in-zit-bilateraal",
+  "groep": "Neurologische revalidatie",
+  "stijl": "stoel",
+  "lijn": "images/neurologische-revalidatie/romp-rotatie-in-zit-bilateraal-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: sitting upright on the same chair, feet flat, arms crossed on the chest, upper body and shoulders rotated clearly to one side while the hips and knees stay facing forward. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 453,
+  "slug": "symmetrisch-opstaan-met-ritmische-cue",
+  "groep": "Neurologische revalidatie",
+  "stijl": "stoel",
+  "lijn": "images/neurologische-revalidatie/symmetrisch-opstaan-met-ritmische-cue-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. End position: standing fully upright in front of the same chair, weight equal on both legs, feet side by side hip-width apart, arms relaxed; metronome still on the floor."
+ },
+ {
+  "nr": 454,
+  "slug": "stap-initieren-met-visueel-doel",
+  "groep": "Neurologische revalidatie",
+  "stijl": "staand",
+  "lijn": "images/neurologische-revalidatie/stap-initieren-met-visueel-doel-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: front foot stepped forward and placed on the floor marker, back foot behind it, weight shifting forward, trunk upright."
+ },
+ {
+  "nr": 455,
+  "slug": "stap-initieren-met-ritmische-cue",
+  "groep": "Neurologische revalidatie",
+  "stijl": "staand",
+  "lijn": "images/neurologische-revalidatie/stap-initieren-met-ritmische-cue-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: one foot stepped forward and placed on the floor, back foot behind it, arms relaxed, trunk upright; metronome still on the floor."
+ },
+ {
+  "nr": 456,
+  "slug": "zijwaarts-verplaatsen-in-zit-met-visueel-doel",
+  "groep": "Neurologische revalidatie",
+  "stijl": "stoel",
+  "lijn": "images/neurologische-revalidatie/zijwaarts-verplaatsen-in-zit-met-visueel-doel-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: sitting upright on the same bench, buttocks shifted sideways so she now sits on the marker, feet flat and moved along with her."
+ },
+ {
+  "nr": 457,
+  "slug": "hiel-plaatsen-met-visueel-doel",
+  "groep": "Neurologische revalidatie",
+  "stijl": "stoel",
+  "lijn": "images/neurologische-revalidatie/hiel-plaatsen-met-visueel-doel-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: sitting upright on the same chair, one leg moved forward with the knee more straight, heel placed on the floor marker and toes pointing up; the other foot stays flat."
+ },
+ {
+  "nr": 458,
+  "slug": "voet-naar-marker-met-visueel-doel",
+  "groep": "Neurologische revalidatie",
+  "stijl": "staand",
+  "lijn": "images/neurologische-revalidatie/voet-naar-marker-met-visueel-doel-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing on the back leg, the front foot stretched forward with the toes tapping the round floor marker; trunk upright, arms relaxed."
+ },
+ {
+  "nr": 459,
+  "slug": "ritmisch-marcheren-met-ritmische-cue",
+  "groep": "Neurologische revalidatie",
+  "stijl": "staand",
+  "lijn": "images/neurologische-revalidatie/ritmisch-marcheren-met-ritmische-cue-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: one knee lifted up to about hip height, thigh horizontal, foot off the floor, standing on the other leg, arms relaxed; metronome still on the floor."
+ },
+ {
+  "nr": 460,
+  "slug": "grote-stappen-met-ritmische-cue",
+  "groep": "Neurologische revalidatie",
+  "stijl": "staand",
+  "lijn": "images/neurologische-revalidatie/grote-stappen-met-ritmische-cue-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: mid-way in a very large step forward, front heel landing far ahead, back leg stretched with the heel lifting, arms swinging in opposition; metronome still on the floor where she started."
+ },
+ {
+  "nr": 461,
+  "slug": "grote-stappen-functionele-combinatie",
+  "groep": "Neurologische revalidatie",
+  "stijl": "staand",
+  "lijn": "images/neurologische-revalidatie/grote-stappen-functionele-combinatie-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: arrived at the small table after large steps, standing close to it and reaching with one hand to pick up the cup."
+ },
+ {
+  "nr": 462,
+  "slug": "brug-met-symmetrie-bilateraal",
+  "groep": "Neurologische revalidatie",
+  "stijl": "mat",
+  "lijn": "images/neurologische-revalidatie/brug-met-symmetrie-bilateraal-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: lying on the back, feet flat and shoulders on the mat, hips lifted so the body forms a straight line from knees to shoulders, both feet pressing equally, arms flat beside the body."
+ },
+ {
+  "nr": 464,
+  "slug": "blikstabilisatie-horizontaal-staand-langzaam",
+  "groep": "Vestibulair",
+  "stijl": "staand",
+  "lijn": "images/vestibulair/blikstabilisatie-horizontaal-staand-langzaam-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: same stance, arm stretched forward with the thumb up in the same place, head turned clearly to one side while the eyes stay fixed on the thumb. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 465,
+  "slug": "blikstabilisatie-horizontaal-tijdens-lopen",
+  "groep": "Vestibulair",
+  "stijl": "staand",
+  "lijn": "images/vestibulair/blikstabilisatie-horizontaal-tijdens-lopen-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: walking forward mid-stride along the path toward the card with the letter X, head turned clearly to one side while the eyes keep looking at the card. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 466,
+  "slug": "blikstabilisatie-verticaal-zittend-langzaam",
+  "groep": "Vestibulair",
+  "stijl": "stoel",
+  "lijn": "images/vestibulair/blikstabilisatie-verticaal-zittend-langzaam-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: sitting on the same chair, arm and thumb in the same place at eye level, head tilted clearly down (chin toward the chest) while the eyes stay looking up at the thumb. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 467,
+  "slug": "blikstabilisatie-verticaal-staand-langzaam",
+  "groep": "Vestibulair",
+  "stijl": "staand",
+  "lijn": "images/vestibulair/blikstabilisatie-verticaal-staand-langzaam-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: same stance, arm and thumb in the same place at eye level, head tilted clearly down (chin toward the chest) while the eyes stay looking up at the thumb. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 468,
+  "slug": "ogen-naar-doelen-zittend-langzaam",
+  "groep": "Vestibulair",
+  "stijl": "stoel",
+  "lijn": "images/vestibulair/ogen-naar-doelen-zittend-langzaam-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: sitting on the same chair, head still facing straight ahead, only the eyes turned to look at the card with the letter B; pupils clearly shifted to the side. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 469,
+  "slug": "ogen-naar-doelen-staand-langzaam",
+  "groep": "Vestibulair",
+  "stijl": "staand",
+  "lijn": "images/vestibulair/ogen-naar-doelen-staand-langzaam-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: standing in the same place, head still facing straight ahead, only the eyes turned to look at the card with the letter B; pupils clearly shifted to the side. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 470,
+  "slug": "doel-volgen-zittend-langzaam",
+  "groep": "Vestibulair",
+  "stijl": "stoel",
+  "lijn": "images/vestibulair/doel-volgen-zittend-langzaam-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: sitting on the same chair, head still facing forward, the stretched arm moved to one side so the thumb is off to the side at eye level, eyes following the thumb. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 471,
+  "slug": "hoofd-draaien-in-stand-staand-langzaam",
+  "groep": "Vestibulair",
+  "stijl": "staand",
+  "lijn": "images/vestibulair/hoofd-draaien-in-stand-staand-langzaam-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: standing with feet hip-width apart, arms by the sides, body still facing forward, head turned clearly to one side. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 472,
+  "slug": "buigen-en-oprichten-staand-langzaam",
+  "groep": "Vestibulair",
+  "stijl": "staand",
+  "lijn": "images/vestibulair/buigen-en-oprichten-staand-langzaam-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: bent forward at the hips with knees slightly bent, one hand reaching down to pick up the small object on the floor in front of the feet, head following the trunk."
+ },
+ {
+  "nr": 474,
+  "slug": "voorwerp-van-vloer-tillen-licht-en-dichtbij",
+  "groep": "Werk en dagelijkse handelingen",
+  "stijl": "staand",
+  "lijn": "images/werk-en-dagelijkse-handelingen/voorwerp-van-vloer-tillen-licht-en-dichtbij-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: squatted down through the knees with the back straight and upright, both hands holding the light box close in front of the feet, heels on the floor."
+ },
+ {
+  "nr": 475,
+  "slug": "voorwerp-van-tafel-pakken-licht-en-dichtbij",
+  "groep": "Werk en dagelijkse handelingen",
+  "stijl": "staand",
+  "lijn": "images/werk-en-dagelijkse-handelingen/voorwerp-van-tafel-pakken-licht-en-dichtbij-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing upright close to the same table, holding the light object in both hands close against the body at waist height."
+ },
+ {
+  "nr": 476,
+  "slug": "boven-schouderhoogte-plaatsen-ergonomische-basis",
+  "groep": "Werk en dagelijkse handelingen",
+  "stijl": "staand",
+  "lijn": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-ergonomische-basis-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing upright close to the shelf, both arms raised above the head, placing the light object onto the shelf; back straight, not arched."
+ },
+ {
+  "nr": 477,
+  "slug": "boven-schouderhoogte-plaatsen-licht-en-dichtbij",
+  "groep": "Werk en dagelijkse handelingen",
+  "stijl": "staand",
+  "lijn": "images/werk-en-dagelijkse-handelingen/boven-schouderhoogte-plaatsen-licht-en-dichtbij-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing upright close to the shelf, both arms raised above shoulder height, placing the light object onto the shelf; back straight, not arched."
+ },
+ {
+  "nr": 478,
+  "slug": "duwen-licht-en-dichtbij",
+  "groep": "Werk en dagelijkse handelingen",
+  "stijl": "staand",
+  "lijn": "images/werk-en-dagelijkse-handelingen/duwen-licht-en-dichtbij-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: same feet position, hands still on the cart handle, arms more stretched forward and the trunk leaning slightly into the push; the cart has moved a little forward."
+ },
+ {
+  "nr": 479,
+  "slug": "duwen-met-stapverplaatsing",
+  "groep": "Werk en dagelijkse handelingen",
+  "stijl": "staand",
+  "lijn": "images/werk-en-dagelijkse-handelingen/duwen-met-stapverplaatsing-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: one foot stepped forward toward the cart, hands still on the handle, body leaning slightly into the push; the cart has moved forward."
+ },
+ {
+  "nr": 480,
+  "slug": "trekken-licht-en-dichtbij",
+  "groep": "Werk en dagelijkse handelingen",
+  "stijl": "staand",
+  "lijn": "images/werk-en-dagelijkse-handelingen/trekken-licht-en-dichtbij-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: same feet position, both hands still on the cart handle, elbows bent back beside the body, hands near the belly; the cart is pulled closer to her."
+ },
+ {
+  "nr": 481,
+  "slug": "draaien-en-plaatsen-met-stapverplaatsing",
+  "groep": "Werk en dagelijkse handelingen",
+  "stijl": "staand",
+  "lijn": "images/werk-en-dagelijkse-handelingen/draaien-en-plaatsen-met-stapverplaatsing-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: having stepped sideways and turned the whole body (feet, hips and shoulders together) toward the table, she places the light box on the table with both hands."
+ },
+ {
+  "nr": 482,
+  "slug": "langdurig-zitten-onderbreken-met-tempo-of-herhaling",
+  "groep": "Werk en dagelijkse handelingen",
+  "stijl": "stoel",
+  "lijn": "images/werk-en-dagelijkse-handelingen/langdurig-zitten-onderbreken-met-tempo-of-herhaling-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. End position: standing fully upright in front of the same chair, weight equal on both legs, feet side by side, arms relaxed."
+ },
+ {
+  "nr": 483,
+  "slug": "bekkenbodem-aanspannen-liggend",
+  "groep": "Bekken & postpartum",
+  "stijl": "mat",
+  "lijn": "images/bekken-postpartum/bekkenbodem-aanspannen-liggend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. End position: identical lying position, knees bent, feet flat; the only visible cue is a gentle tension: lower belly slightly drawn in and the buttocks/inner thighs subtly firmer, with a short upward arrow kept at the pelvic floor. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 484,
+  "slug": "bekkenbodem-ontspannen-liggend",
+  "groep": "Bekken & postpartum",
+  "stijl": "mat",
+  "lijn": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. End position: identical relaxed lying position, hands resting on the belly; the belly is visibly softer and slightly rounded outward under the hands, shoulders and knees loose, face calm, eyes closed. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 485,
+  "slug": "bekkenbodem-snel-aanspannen-zittend",
+  "groep": "Bekken & postpartum",
+  "stijl": "stoel",
+  "lijn": "images/bekken-postpartum/bekkenbodem-snel-aanspannen-zittend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. End position: identical upright sitting position on the same chair; the only visible cue is the lower belly slightly drawn in and the posture subtly taller, with the short upward arrow at the seat kept. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 486,
+  "slug": "bekkenbodem-met-uitademing-liggend",
+  "groep": "Bekken & postpartum",
+  "stijl": "mat",
+  "lijn": "images/bekken-postpartum/bekkenbodem-met-uitademing-liggend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. End position: identical lying position, hand on the belly; on the out-breath the belly under the hand is visibly flatter and gently drawn in, lips slightly pursed as if breathing out. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 487,
+  "slug": "diepe-buikactivatie-liggend",
+  "groep": "Bekken & postpartum",
+  "stijl": "mat",
+  "lijn": "images/bekken-postpartum/diepe-buikactivatie-liggend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. End position: identical lying position with fingertips on the lower belly; the lower belly below the navel is visibly hollowed and drawn in toward the spine, the fingertips sinking slightly in; back and pelvis unchanged. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 488,
+  "slug": "bekkenmobiliteit-liggend",
+  "groep": "Bekken & postpartum",
+  "stijl": "mat",
+  "lijn": "images/bekken-postpartum/bekkenmobiliteit-liggend-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: lying on the back, knees bent, feet flat; pelvis tilted backward so the lower back is pressed completely flat onto the mat with no gap, tailbone slightly curled up (top figure has a neutral pelvis with a small gap under the lower back). The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 489,
+  "slug": "360-graden-ademhaling-eerste-fase-rustig",
+  "groep": "Bekken & postpartum",
+  "stijl": "mat",
+  "lijn": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: same relaxed lying position with hands on the lower ribs; the lower rib cage is visibly wider, the hands pushed slightly outward, belly gently risen, as on a full in-breath. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 491,
+  "slug": "functioneel-opstaan-functioneel",
+  "groep": "Bekken & postpartum",
+  "stijl": "stoel",
+  "lijn": "images/bekken-postpartum/functioneel-opstaan-functioneel-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. End position: standing fully upright in front of the same chair, weight equal on both legs, feet side by side, arms relaxed by the sides."
+ },
+ {
+  "nr": 492,
+  "slug": "zijlig-heupkracht-zijlig",
+  "groep": "Bekken & postpartum",
+  "stijl": "mat",
+  "lijn": "images/bekken-postpartum/zijlig-heupkracht-zijlig-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: lying on the side on the same mat, head on the lower arm, bottom leg straight on the mat, top leg lifted straight up about 30-40 degrees, knee straight and toes pointing forward."
+ },
+ {
+  "nr": 493,
+  "slug": "hop-vooruit-techniek-langzaam",
+  "groep": "Sportrevalidatie",
+  "stijl": "staand",
+  "lijn": "images/sportrevalidatie/hop-vooruit-techniek-langzaam-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: landed a small distance forward on both feet, hip-width apart, knees and hips softly bent to absorb the landing, arms slightly forward for balance."
+ },
+ {
+  "nr": 495,
+  "slug": "landing-op-een-been-techniek-langzaam",
+  "groep": "Sportrevalidatie",
+  "stijl": "staand",
+  "lijn": "images/sportrevalidatie/landing-op-een-been-techniek-langzaam-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: landed forward on ONE leg on the mat in front of the step, standing knee and hip softly bent and the knee in line over the toes, other foot lifted just off the floor behind, hands on the hips; the step stays behind her."
+ },
+ {
+  "nr": 496,
+  "slug": "laterale-shuffle-submaximaal",
+  "groep": "Sportrevalidatie",
+  "stijl": "staand",
+  "lijn": "images/sportrevalidatie/laterale-shuffle-submaximaal-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: in a low athletic stance, knees bent, arms slightly bent in front, shifted sideways with the feet wider apart mid-shuffle, leading foot pushed out to the side."
+ },
+ {
+  "nr": 497,
+  "slug": "richtingsverandering-techniek-langzaam",
+  "groep": "Sportrevalidatie",
+  "stijl": "staand",
+  "lijn": "images/sportrevalidatie/richtingsverandering-techniek-langzaam-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: at the far cone, knees slightly bent, body turned around so she now faces back toward the first cone, outer foot planted to change direction."
+ },
+ {
+  "nr": 498,
+  "slug": "sprinttechniek-marcheren-techniek-langzaam",
+  "groep": "Sportrevalidatie",
+  "stijl": "staand",
+  "lijn": "images/sportrevalidatie/sprinttechniek-marcheren-techniek-langzaam-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing on one leg, the other knee lifted to hip height with the thigh horizontal and the foot under the knee, arms bent about 90 degrees swinging in opposition (opposite arm forward)."
+ },
+ {
+  "nr": 499,
+  "slug": "versnellen-en-afremmen-submaximaal",
+  "groep": "Sportrevalidatie",
+  "stijl": "staand",
+  "lijn": "images/sportrevalidatie/versnellen-en-afremmen-submaximaal-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: walking briskly mid-stride further forward along the floor, longer step, trunk leaning slightly forward, arms swinging bent at the elbows."
+ },
+ {
+  "nr": 421,
+  "slug": "semi-tandemstand-met-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/semi-tandemstand-met-steun-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: standing upright behind the same chair, both hands on the backrest, one foot placed half a foot length in front of the other: the heel of the front foot beside the big toe of the back foot, NOT side by side; both feet fully visible below the chair. End position: the same position held steadily."
+ },
+ {
+  "nr": 422,
+  "slug": "semi-tandemstand-zonder-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/semi-tandemstand-zonder-steun-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: standing upright without support, arms relaxed, one foot placed half a foot length in front of the other: the heel of the front foot beside the big toe of the back foot, NOT side by side; both feet fully visible. End position: the same position held steadily."
+ },
+ {
+  "nr": 423,
+  "slug": "semi-tandemstand-met-hoofdbeweging",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/semi-tandemstand-met-hoofdbeweging-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: the same semi-tandem stance (heel of the front foot beside the big toe of the back foot, both feet fully visible), arms by the sides, body still, head turned clearly to one side. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 425,
+  "slug": "tandemstand-zonder-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/tandemstand-zonder-steun-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: standing upright without support, feet on ONE straight line, the heel of the front foot touching the toes of the back foot, NOT side by side; both feet fully visible, arms relaxed, looking ahead."
+ },
+ {
+  "nr": 426,
+  "slug": "tandemstand-met-hoofdbeweging",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/tandemstand-met-hoofdbeweging-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: the same tandem stance, feet on ONE straight line with the heel of the front foot touching the toes of the back foot, both feet fully visible, body still, head turned clearly to one side. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 427,
+  "slug": "eenbeenstand-met-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/eenbeenstand-met-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing upright beside the same chair, one hand on the backrest, standing on the leg nearest the chair; the other foot lifted clearly off the floor with the knee bent, trunk upright."
+ },
+ {
+  "nr": 428,
+  "slug": "eenbeenstand-zonder-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/eenbeenstand-zonder-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing upright without support on one leg, arms relaxed by the sides, the other foot lifted clearly off the floor with the knee bent, trunk upright."
+ },
+ {
+  "nr": 429,
+  "slug": "eenbeenstand-met-hoofdbeweging",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/eenbeenstand-met-hoofdbeweging-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: still standing on the same leg with the other foot just off the floor, arms by the sides, body still, head turned clearly to one side. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 430,
+  "slug": "gewicht-verplaatsen-voor-achter-met-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-met-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: behind the same chair with hands on the backrest, feet flat in the same place, the whole body leaning forward as one straight line from the ankles so the body weight is over the toes; heels stay on the floor. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 431,
+  "slug": "gewicht-verplaatsen-voor-achter-zonder-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/gewicht-verplaatsen-voor-achter-zonder-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: feet flat in the same place, arms by the sides, the whole body leaning forward as one straight line from the ankles so the weight is over the toes; heels stay on the floor. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 432,
+  "slug": "gewicht-verplaatsen-zijwaarts-met-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-met-steun-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: behind the same chair with hands on the backrest, feet flat in the same place, hips shifted sideways over one leg so that leg carries the weight and the other leg is unloaded; trunk upright. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 433,
+  "slug": "gewicht-verplaatsen-zijwaarts-zonder-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/gewicht-verplaatsen-zijwaarts-zonder-steun-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: feet flat in the same place, arms by the sides, hips shifted sideways over one leg so that leg carries the weight; trunk upright. The difference between top and bottom must be clearly visible."
+ },
+ {
+  "nr": 434,
+  "slug": "reiken-in-stand-met-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/reiken-in-stand-met-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing beside the same chair, hand nearest the chair on the backrest, the other arm stretched straight forward at shoulder height reaching as far as possible, trunk leaning slightly forward, both feet flat on the floor."
+ },
+ {
+  "nr": 435,
+  "slug": "reiken-in-stand-zonder-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/reiken-in-stand-zonder-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing without support, feet flat hip-width apart, one arm stretched straight forward at shoulder height reaching as far as possible, trunk leaning slightly forward, other arm by the side."
+ },
+ {
+  "nr": 436,
+  "slug": "op-de-plaats-marcheren-met-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/op-de-plaats-marcheren-met-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing behind the same chair, hands on the backrest, one knee lifted up to about hip height with the thigh horizontal and the foot off the floor, standing on the other leg."
+ },
+ {
+  "nr": 437,
+  "slug": "op-de-plaats-marcheren-zonder-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/op-de-plaats-marcheren-zonder-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing without support, arms by the sides, one knee lifted up to about hip height with the thigh horizontal and the foot off the floor, standing on the other leg."
+ },
+ {
+  "nr": 438,
+  "slug": "zijwaarts-stappen-met-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: standing at the same table with both hands on the tabletop, moved one step sideways along the table: feet side by side again, hip-width apart, hands slid along with her."
+ },
+ {
+  "nr": 439,
+  "slug": "zijwaarts-stappen-zonder-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/zijwaarts-stappen-zonder-steun-line-v1.png",
+  "eind": "Front view. TOP: the starting position exactly as in the line drawing. Both figures in front view. BOTTOM: standing upright without support, one foot stepped out sideways so the feet are wide apart (more than shoulder width), arms by the sides."
+ },
+ {
+  "nr": 440,
+  "slug": "achterwaarts-stappen-met-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/achterwaarts-stappen-met-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: still facing the same direction with one hand on the table, one foot placed a step behind the other so the feet are apart front-to-back, weight on the rear foot, trunk upright."
+ },
+ {
+  "nr": 441,
+  "slug": "achterwaarts-stappen-zonder-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/achterwaarts-stappen-zonder-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: still facing the same direction and looking ahead, one foot placed a step behind the other so the feet are apart front-to-back, weight on the rear foot, trunk upright."
+ },
+ {
+  "nr": 442,
+  "slug": "over-een-obstakel-stappen-met-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/over-een-obstakel-stappen-met-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: hand still on the chair, front foot placed on the floor beyond the rolled-up towel, back foot behind it, so she stands astride the towel."
+ },
+ {
+  "nr": 443,
+  "slug": "over-een-obstakel-stappen-zonder-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/over-een-obstakel-stappen-zonder-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: without support, front foot placed on the floor beyond the rolled-up towel, back foot behind it, so she stands astride the towel, arms by the sides."
+ },
+ {
+  "nr": 444,
+  "slug": "draaien-op-de-plaats-met-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/draaien-op-de-plaats-met-steun-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: mid-turn on the spot, body turned about a quarter turn so she stands sideways to the chair with one hand still on the backrest, feet in small steps hip-width apart."
+ },
+ {
+  "nr": 445,
+  "slug": "draaien-op-de-plaats-zonder-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/draaien-op-de-plaats-zonder-steun-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: mid-turn on the spot, whole body turned about a quarter turn so she is seen in side profile, feet in small steps hip-width apart, arms by the sides."
+ },
+ {
+  "nr": 446,
+  "slug": "stoel-opstaan-en-lopen-zonder-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "stoel",
+  "lijn": "images/balans-en-valpreventie/stoel-opstaan-en-lopen-zonder-steun-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: standing fully upright in front of the same chair, taking a first step forward away from it, arms relaxed, hands not touching the chair."
+ },
+ {
+  "nr": 447,
+  "slug": "dubbele-taak-lopen-met-cognitieve-taak",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/dubbele-taak-lopen-met-cognitieve-taak-line-v1.png",
+  "eind": "Side view. TOP: the starting position exactly as in the line drawing. Both figures in the same strict side view. BOTTOM: walking forward mid-stride, one foot in front of the other, arms swinging naturally, mouth slightly open as if speaking. No text or speech bubble."
+ },
+ {
+  "nr": 424,
+  "slug": "tandemstand-met-steun",
+  "groep": "Balans en valpreventie",
+  "stijl": "staand",
+  "lijn": "images/balans-en-valpreventie/tandemstand-met-steun-line-v1.png",
+  "eind": "Three-quarter front view. TOP: the starting position exactly as in the line drawing. Both figures in the same three-quarter front view. BOTTOM: standing upright behind the same sturdy chair, both hands on the backrest, feet on ONE straight line, the heel of the front foot touching the toes of the back foot, NOT side by side; both feet fully visible below the chair. End position: the same position held steadily."
+ }
+]
