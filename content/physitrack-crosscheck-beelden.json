@@ -2964,5 +2964,24 @@
       "credits": 10,
       "toelichting": "438 derde poging goed; 484-489 kregen een pijl in de eindstand (zelfde plek en richting als de lijntekening, zonder Runway)."
     }
+  },
+  "uitlegRonde4": {
+    "datum": "2026-11-09",
+    "toegepast": [
+      {
+        "nr": 14,
+        "naam": "Endo pull",
+        "reden": "zijwaarts naast paal/apparaat, start met onderarm naar buiten, zoals tekening en Physitrack-richting"
+      }
+    ],
+    "wachtOpBeelden": [
+      57,
+      106,
+      199,
+      389,
+      390,
+      516
+    ],
+    "bron": "output/physitrack-crosscheck/beelden/ronde4/uitleg.json (branch claude/project-thread-i8kbtd)"
   }
 }

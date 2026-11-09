@@ -751,7 +751,7 @@
       "name": "Endo pull",
       "source": "images/bovenste-extremiteit/endo-pull-avatar-v7.jpg",
       "assetSha256": "3602f176539e3f3e6fef94cd404cc48d1362423d8441c8f551b3bf0bba8a920b",
-      "explanationSha256": "b4ea7d7755bc43b5191700bec4b1ed01f1b2057270f1c097e4f42ab28fa3fb35",
+      "explanationSha256": "0391181bc3fb570d70cfb615b6ecbd1f794becca4eec08de6a50a41132e21380",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
