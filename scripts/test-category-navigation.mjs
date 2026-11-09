@@ -11,7 +11,7 @@ assert.deepEqual(JSON.parse(JSON.stringify(ordered)),[
  {title:'Lichaamsgebied',labels:['Nek']},
  {title:'Doel en toepassing',labels:['Werk en dagelijkse handelingen']},
  {title:'Specifieke revalidatie',labels:['Vestibulair']},
- {title:'Materiaal en uitgangshouding',labels:['Foam roller']},
+ {title:'Materiaal',labels:['Foam roller']},
  {title:'Eigen categorieën',labels:['Mijn categorie']}
 ]);
 const navigationGroups=JSON.parse(vm.runInContext('JSON.stringify(groups)',context));
@@ -57,7 +57,7 @@ const render=html.slice(html.indexOf('  function renderChips(){'),html.indexOf('
 vm.runInContext(render,context);context.renderChips();
 assert.equal((filters.innerHTML.match(/data-g="Foam roller"/g)||[]).length,1);
 assert.ok(filters.innerHTML.includes('Eigen &lt;X>'));
-assert.ok(filters.innerHTML.includes('Materiaal en uitgangshouding'));
+assert.ok(filters.innerHTML.includes('Materiaal'));
 assert.ok(filters.innerHTML.includes("aria-pressed='true'"));
 context.USE_V2_LIBRARY=false;context.renderChips();
 assert.ok(filters.innerHTML.includes('data-g="Foam Roller"'));

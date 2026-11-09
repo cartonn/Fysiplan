@@ -145,6 +145,7 @@
     padding:10px 8px 0;min-height:28px}
   .lightbox .demouitleg{text-align:center;font:400 12.5px/1.5 var(--disp);color:#6b6455;
     padding:2px 10px 2px;max-width:420px;margin:0 auto}
+  .nietvertaald{margin-top:6px;font:italic 400 12.5px/1.45 var(--disp);color:#5a5345}
   /* het merk staat buiten de houding-uitsnede en bij beide houdingen op dezelfde plek */
   .lightbox .demobeeld .demomerk{position:absolute;left:10px;top:8px;z-index:2}
   /* één merk voor de hele kaart: icoon + naam, bij de foto en bij de houdingen gelijk */
@@ -1161,6 +1162,13 @@
     document.getElementById('vraagknop').textContent=trq('knop');
   }
   function vt(s){var m=VERT[TAAL];return (m&&m[s])||s;}
+  // uitleg die in een andere taal dan Nederlands nog geen vertaling heeft
+  function uitlegNietVertaald(s){return !!s&&TAAL!=='nl'&&vt(s)===s;}
+  var NIET_VERTAALD={nl:'',en:'This explanation is not available in English yet, so it is shown in Dutch.',de:'Diese Anleitung gibt es noch nicht auf Deutsch, darum steht sie auf Niederländisch da.',fr:'Cette explication n’est pas encore traduite, elle est donc affichée en néerlandais.',es:'Esta explicación aún no está traducida, por eso aparece en neerlandés.',pl:'Ten opis nie jest jeszcze przetłumaczony, dlatego jest po niderlandzku.',tr:'Bu açıklama henüz çevrilmedi, bu yüzden Felemenkçe gösteriliyor.',ar:'هذا الشرح غير مترجم بعد، لذلك يظهر باللغة الهولندية.',uk:'Цей опис ще не перекладено, тому він показаний нідерландською.'};
+  function nietVertaaldNoot(){
+    var n=document.createElement('div');n.className='nietvertaald';n.setAttribute('role','note');
+    n.textContent=NIET_VERTAALD[TAAL]||NIET_VERTAALD.en;return n;
+  }
   // Uitwijklink onder een ingesloten YouTube-video. Dit herstelt de ingesloten speler niet:
   // YouTube verwacht een Referer en de kaart stuurt bewust geen (referrer-policy same-origin;
   // de kaartlink is de toegang tot de kaart). De link bevat alleen het gevalideerde video-id,
@@ -1853,7 +1861,7 @@
     try{localStorage.setItem('fp_taal',TAAL);}catch(e){}
     stopLezen();
     var gedaan=false,taal=TAAL;
-    var af=function(teksten){if(gedaan)return;gedaan=true;if(!VERT[taal])VERT[taal]=teksten||{};if(TAAL===taal)alles();if(klaar)klaar();};
+    var af=function(teksten){if(gedaan)return;gedaan=true;if(!VERT[taal]&&teksten)VERT[taal]=teksten;if(TAAL===taal)alles();if(klaar)klaar();};
     if(TAAL!=='nl'&&!VERT[TAAL]){
       setTimeout(function(){af(null);},8000);
       fetch('/api/kaart/vertaal?id='+id+'&taal='+TAAL,{cache:'no-cache'})
@@ -2380,13 +2388,20 @@
     // mogelijk), anders de algemene begeleidingszinnen; het voorschrift komt erbij
     var d=demo.info||{};
     var voorschrift=(d.s?d.s+' '+tr('series'):'')+(d.s&&d.h?', ':'')+(d.h?d.h+' '+tr('herh'):'');
+    // Is de echte uitleg (nog) niet vertaald, dan blijft hij in het Nederlands staan,
+    // met een korte melding; nooit de algemene zinnen in plaats van de echte uitleg
+    // (dan zou de patiënt halters, hoogte of houding missen).
     var eigenUitleg=d.uitleg||'';
-    if(eigenUitleg&&TAAL!=='nl'&&vt(eigenUitleg)===eigenUitleg)eigenUitleg='';
+    var uitlegNl=!!eigenUitleg&&uitlegNietVertaald(eigenUitleg);
     var uitlegTekst=(voorschrift?voorschrift+'. ':'')+
       (eigenUitleg?vt(eigenUitleg):tr('uitleg1')+' '+tr('uitleg2'));
     var uitlegEl=document.createElement('div');uitlegEl.className='demouitleg';uitlegEl.id='lbdemouitleg';
-    uitlegEl.textContent=uitlegTekst;
-    demo.introTekst=document.getElementById('lbnaam').textContent+'. '+uitlegTekst;
+    if(uitlegNl){
+      var uitlegP=document.createElement('span');uitlegP.lang='nl';uitlegP.dir='ltr';uitlegP.textContent=uitlegTekst;
+      uitlegEl.appendChild(uitlegP);uitlegEl.appendChild(nietVertaaldNoot());
+    }else uitlegEl.textContent=uitlegTekst;
+    // een niet-vertaalde Nederlandse uitleg niet met een stem in een andere taal voorlezen
+    demo.introTekst=document.getElementById('lbnaam').textContent+'. '+(uitlegNl?(voorschrift?voorschrift+'.':''):uitlegTekst);
     // eerlijk over wat dit is: twee uitsnedes uit dezelfde foto, geen oefentempo en
     // geen klinisch goedgekeurde bewegingsopname
     var bronNoot=document.createElement('div');bronNoot.className='demobron';
@@ -2512,7 +2527,9 @@
         var lu=document.getElementById('lbuitleg');
         var luTekst=foto.dataset.uitleg?vt(foto.dataset.uitleg):'';
         if(luTekst){
-          lu.innerHTML='<div class="vtekst-label">'+esc(tr('uitlegKop'))+'</div><p>'+esc(luTekst)+'</p>';
+          var luNl=uitlegNietVertaald(foto.dataset.uitleg);
+          lu.innerHTML='<div class="vtekst-label">'+esc(tr('uitlegKop'))+'</div><p'+(luNl?' lang="nl" dir="ltr"':'')+'>'+esc(luTekst)+'</p>';
+          if(luNl)lu.appendChild(nietVertaaldNoot());
           lu.hidden=false;
           document.getElementById('lbimg').style.maxHeight='calc(58vh - 44px)';
         }else{

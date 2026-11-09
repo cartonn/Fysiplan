@@ -90,5 +90,7 @@ jobs:
       - run: npm run test:nieuwekaartnaam
       - run: npm run test:proefwissen
       - run: npm run test:pijnscorebezig
+      - run: npm run test:nietvertaald
+      - run: npm run test:qrroepnaam
       - run: npm run test:uitnodigingpraktijk
       - run: npm run test:rempraktijk
