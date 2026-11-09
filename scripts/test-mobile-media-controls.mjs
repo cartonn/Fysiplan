@@ -15,7 +15,7 @@ const document={getElementById:el,querySelectorAll(selector){
   return [];
 }};
 let lastPlaylist=[],events=[];
-const context=vm.createContext({document,window:{NoorAudio:{}},NoorAudio:{stop(){audioStopped++;},load:async()=>{},match:(name)=>name!=='Missing',play(items){played++;lastPlaylist=items;events.push('play');}},noorRequest:0,mediaReviewReady:true,explanationHolds:[],TAAL:'nl',tr:x=>x,alert(){throw Error('Unexpected alert');},demo:{info:{}},bronGecontroleerd:{},URL,location:{href:'https://praktijk.example/k/abc'},Math,Number});
+const context=vm.createContext({document,window:{NoorAudio:{}},NoorAudio:{stop(){audioStopped++;},load:async()=>{},match:(name)=>name!=='Missing',play(items){played++;lastPlaylist=items;events.push('play');}},noorRequest:0,noorBron:-1,mediaReviewReady:true,explanationHolds:[],TAAL:'nl',tr:x=>x,alert(){throw Error('Unexpected alert');},demo:{info:{}},bronGecontroleerd:{},URL,location:{href:'https://praktijk.example/k/abc'},Math,Number});
 const between=(a,b)=>html.slice(html.indexOf(a),html.indexOf(b,html.indexOf(a)));
 vm.runInContext(between('  function geldigeUitsnede(','  async function loadMobileReview(')+
   between('  function stopLezen(){','  function leesVoor(){')+
@@ -158,6 +158,8 @@ assert.equal(mixed.mediaReviewReady,false);
 
 // ---- stemopnames ----
 context.explanationHolds=[{name:'Held'}];let messages=[];context.alert=message=>{messages.push(message);events.push('notice');};
+// sinds 2026-11-09 staat de melding op de pagina (#noorMelding) in plaats van in een alert()
+el('noorMelding');Object.defineProperty(el('noorMelding'),'textContent',{set(v){if(v){messages.push(v);events.push('notice');}},get(){return '';}});
 await vm.runInContext('speelNoor([{name:"Held",text:"Old text"}])',context);assert.equal(played,1,'held narration never plays');
 context.explanationHolds=[{exerciseId:'fp_held',name:'Oude naam'}];
 await vm.runInContext('speelNoor([{name:"Nieuwe naam",text:"Uitleg",id:"fp_held"}])',context);
@@ -234,7 +236,7 @@ const lees=vm.createContext({document,speechSynthesis:spraak,window:{speechSynth
   mediaReviewReady:true,mediaWithheld:()=>false,explanationHolds:[],
   K:{kaart:{chosen:[{n:'Squat'}],cells:{},client:{}},praktijk:{praktijk:'Praktijk'},lib:[{naam:'Squat',uitleg:'Rustig zakken.'}]}});
 vm.runInContext(between('  function normEx(s){','\n')+'\n'+between('  function metEigen(lib,kaart){','  function dagStr(t)')+
-  between('  var bezigLezen=false,noorRequest=0;','  async function speelNoor('),lees);
+  between('  var bezigLezen=false,noorRequest=0,noorBron=-1;','  async function speelNoor('),lees);
 vm.runInContext('leesVoor()',lees);
 const eerste=uitingen.at(-1);assert.equal(lees.bezigLezen,true);
 vm.runInContext('leesVoor()',lees);assert.equal(lees.bezigLezen,false,'tweede tik stopt');

@@ -174,6 +174,15 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL (doorgezet door gebruikers-sweep 2026-11-09 14u) — herstelcode is hoofdlettergevoelig.** Uitgegeven als
+  `FP-a0713-dff95-…`; in hoofdletters overgetypt (papieren code) geeft 403 en telt mee voor het slot van 15 minuten.
+  server.js r. ~2994 (`String(b.herstelcode).trim()` zonder normalisatie). Advies: client en server normaliseren
+  (kleine letters, streepjes/spaties). Desktop (Sanne).
+- **LAAG (doorgezet door gebruikers-sweep 2026-11-09 14u) — schrijfrem is één bucket per IP voor alle routes** (40/5 min,
+  server.js r. ~1467). Snel tikken op de pijnscore blokkeerde het pijnseintje. De kaart zet zo'n tik nu in de wachtrij
+  (PR van de sweep), maar overweeg een eigen bucket voor seintjes. Ook: praktijksessies alleen in het geheugen
+  (r. ~173), dus elke deploy logt iedereen uit en de eerste autosave daarna geeft stil 401 (Mark).
+
 - **OPGELOST 2026-11-09 (deze PR) — MIDDEL — onleesbaar `proef-aanmeldingen.json` wist klanten** (sanity #123). Bij een
   kapot bestand startte de server met `proeven = {}`; het rondje van 5 s na de start zag dan bij elk account met een oude
   proef "aanmelding weg" en wiste het (team, profiel, sjablonen) zodra er geen kaarten waren, ook bij betalende klanten.

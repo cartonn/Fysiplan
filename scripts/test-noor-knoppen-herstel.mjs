@@ -45,7 +45,7 @@ const KAART_CODE=
   tussen('  var mediaReviewReady=false,','  function tr(k){')+
   tussen('  function vt(s){','  function dagStr(t)')+
   tussen('  function tekenKaart(){','  // ---- Hoe ging het vandaag')+
-  tussen('  var bezigLezen=false,noorRequest=0;','  // ---- als app');
+  tussen('  var bezigLezen=false,noorRequest=0,noorBron=-1;','  // ---- als app');
 
 // #oefs als tekst, met alleen wat herstelNoorKnoppen echt gebruikt. Een element dat niet
 // meer (eenduidig) in de lijst staat kan niet vervangen worden, net als in een browser.
@@ -85,6 +85,8 @@ function maakKaart(chosen,{abort=false}={}){
 
   // ---- de kaart ----
   const oefs=maakOefs(),el=new Map(),meldingen=[];
+  // meldingen staan sinds 2026-11-09 op de pagina (#noorMelding), niet meer in een alert()
+  el.set('noorMelding',{hidden:true,set textContent(v){if(v)meldingen.push(String(v));},get textContent(){return '';}});
   const knop=id=>{
     if(id==='oefs')return oefs;
     if(!el.has(id))el.set(id,{id,textContent:'',innerHTML:'',hidden:false,style:{},attrs:{},klassen:new Set(),

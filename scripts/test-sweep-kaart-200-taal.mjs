@@ -78,14 +78,24 @@ try {
   // Engelse kaart, server weigert de pijnscore met een Nederlandse 429
   const en = await browser.newContext({ ...pw.devices["Pixel 7"], locale: "en-GB", extraHTTPHeaders: { "x-forwarded-for": "10.7.9.3" } });
   const pe = await en.newPage();
-  await pe.route("**/api/kaart/meting", (r) => r.fulfill({ status: 429, contentType: "application/json",
-    body: JSON.stringify({ ok: false, fout: "Even te veel verzoeken achter elkaar. Wacht een paar minuten." }) }));
+  // 400 met Nederlandse servertekst: de eigen vertaalde foutmelding. (Een 429 gaat sinds
+  // 2026-11-09 in de wachtrij met de melding "busy right now", zie test:kaartdruk.)
+  await pe.route("**/api/kaart/meting", (r) => r.fulfill({ status: 400, contentType: "application/json",
+    body: JSON.stringify({ ok: false, fout: "Geef een score van 0 tot 10. Wacht een paar minuten met verzoeken." }) }));
   await pe.goto(origin + "/k/" + id + "?taal=en", { waitUntil: "networkidle" });
   await pe.evaluate(() => document.querySelector("#mschaal button[data-score]").click());
   await pe.waitForFunction(() => (document.getElementById("mdank").textContent || "").trim().length > 0, null, { timeout: 5000 });
   const melding = (await pe.textContent("#mdank")).trim();
   assert.doesNotMatch(melding, /verzoeken|Wacht/, "geen Nederlandse servermelding op een Engelse kaart: " + melding);
   assert.match(melding, /Saving did not work/, "Engelse melding: " + melding);
+  await pe.unroute("**/api/kaart/meting");
+  await pe.route("**/api/kaart/meting", (r) => r.fulfill({ status: 429, contentType: "application/json", headers: { "retry-after": "300" },
+    body: JSON.stringify({ ok: false, fout: "Even te veel verzoeken achter elkaar. Wacht een paar minuten." }) }));
+  await pe.evaluate(() => { document.getElementById("mdank").textContent = ""; document.querySelectorAll("#mschaal button[data-score]")[3].click(); });
+  await pe.waitForFunction(() => (document.getElementById("mdank").textContent || "").trim().length > 0, null, { timeout: 5000 });
+  const druk = (await pe.textContent("#mdank")).trim();
+  assert.doesNotMatch(druk, /verzoeken|Wacht/, "429: geen Nederlandse servermelding: " + druk);
+  assert.match(druk, /busy right now/, "429: Engelse wachtrijmelding: " + druk);
   await en.close();
   console.log("dosering 200 %: ok (chip en naam breken af op 320 px); Engelse kaart: Engelse foutmelding");
 } catch (e) {

@@ -83,3 +83,5 @@ jobs:
       - run: npm run test:kaart200taal
       - run: npm run test:roepnaamander
       - run: npm run test:kaartladen
+      - run: npm run test:noorstop
+      - run: npm run test:kaartdruk

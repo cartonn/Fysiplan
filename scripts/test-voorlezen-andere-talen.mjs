@@ -48,7 +48,7 @@ function context(taal,{reviewOk=true}={}){
     regelVan(/  function tr\(k\)\{[^\n]*\n/)+regelVan(/  function vt\(s\)\{[^\n]*\n/)+regelVan(/  function normEx\(s\)\{[^\n]*\n/)+
     tussen('  var mediaReviewReady=false,','  function geldigeUitsnede(')+tussen('  function geldigeUitsnede(','  async function loadMobileReview(')+
     tussen('  async function loadMobileReview(','  // Een oude afkeuring mag')+tussen('  function metEigen(lib,kaart){','  function dagStr(t)')+
-    tussen('  var bezigLezen=false,noorRequest=0;','  // ---- als app'),ctx);
+    tussen('  var bezigLezen=false,noorRequest=0,noorBron=-1;','  // ---- als app'),ctx);
   ctx.VERT[taal]={[A.uitleg]:MARKER+A.uitleg};
   return {ctx,knop,log,laad:()=>vm.runInContext('loadMobileReview().catch(function(){mediaReviewReady=false;})',ctx)};
 }
