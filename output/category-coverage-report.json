@@ -1,16 +1,16 @@
 {
  "scope": "Basiscatalogus in de repository (public/oefeningen-v2.json). Runtime-overrides op de server niet meegeteld; die gaan altijd voor.",
  "inputs": {
-  "public/oefeningen-v2.json": "7bce846d5d1dc1ab",
-  "public/mobile-media-review.json": "9af7b05864999732",
-  "public/mobile-narration-review.json": "1e61cfcf26612e6e",
+  "public/oefeningen-v2.json": "46195ccf54f10c61",
+  "public/mobile-media-review.json": "88af9d02ea7e4aae",
+  "public/mobile-narration-review.json": "ba07a12ad0824544",
   "public/index.html": "785ba562286c5cf7",
-  "content/category-secondary-evidence.json": "38afbf1e0f0eb85a"
+  "content/category-secondary-evidence.json": "a6a87d35c8ee16b1"
  },
  "totals": {
-  "records": 633,
-  "available": 475,
-  "withoutAsset": 158,
+  "records": 669,
+  "available": 516,
+  "withoutAsset": 153,
   "withSecondary": 246,
   "secondaryLabels": 315,
   "evidence": {
@@ -23,8 +23,8 @@
  "assetGaps": [
   {
    "category": "Bovenste extremiteit",
-   "missingAssets": 50,
-   "availableIncludingSecondary": 114,
+   "missingAssets": 45,
+   "availableIncludingSecondary": 139,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
@@ -38,7 +38,7 @@
   {
    "category": "Onderste extremiteit",
    "missingAssets": 80,
-   "availableIncludingSecondary": 134,
+   "availableIncludingSecondary": 150,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
@@ -79,21 +79,16 @@
    "storedLabels": [
     "Bovenste extremiteit"
    ],
-   "records": 164,
-   "primary": 124,
-   "primaryAvailable": 74,
+   "records": 184,
+   "primary": 144,
+   "primaryAvailable": 99,
    "secondary": 40,
    "secondaryAvailable": 40,
-   "available": 114,
-   "availableClean": 114,
+   "available": 139,
+   "availableClean": 139,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [
-    {
-     "name": "Schouder voorwaarts heffen – met stok",
-     "exerciseId": "fp_ffaa4bced40909ad",
-     "coreExerciseId": "fc_03702bf427ce8652"
-    },
     {
      "name": "Schouder voorwaarts heffen – actief",
      "exerciseId": "fp_4f0ea626e702ca39",
@@ -113,11 +108,6 @@
      "name": "Schouder voorwaarts heffen – functioneel reikend",
      "exerciseId": "fp_878a8fecc7a01576",
      "coreExerciseId": "fc_33a2d93ee11092b9"
-    },
-    {
-     "name": "Schouder zijwaarts heffen – met stok",
-     "exerciseId": "fp_4fe2a7b1cdd7e048",
-     "coreExerciseId": "fc_ad61fe53d2d30ad7"
     },
     {
      "name": "Schouder zijwaarts heffen – actief",
@@ -145,11 +135,6 @@
      "coreExerciseId": "fc_e0f762d19d5f198c"
     },
     {
-     "name": "Schouder naar buiten draaien – isometrisch tegen de muur",
-     "exerciseId": "fp_542969b52513f876",
-     "coreExerciseId": "fc_3e00e292f20fa79d"
-    },
-    {
      "name": "Schouder naar buiten draaien – met elastiek",
      "exerciseId": "fp_2142f6b392621702",
      "coreExerciseId": "fc_04103dc1431c5605"
@@ -170,19 +155,9 @@
      "coreExerciseId": "fc_fc04a7fd8655fdfb"
     },
     {
-     "name": "Schouderblad naar achteren – actief",
-     "exerciseId": "fp_1c843a8c9afe4a64",
-     "coreExerciseId": "fc_dc9ce2c06bbfd6bd"
-    },
-    {
      "name": "Schouderblad naar achteren – isometrisch tegen de muur",
      "exerciseId": "fp_e6f5f6aa3b504dcc",
      "coreExerciseId": "fc_d6e63ed52511fe51"
-    },
-    {
-     "name": "Schouderblad naar achteren – met elastiek",
-     "exerciseId": "fp_9f8e94ce99b08ea6",
-     "coreExerciseId": "fc_333366c477992884"
     },
     {
      "name": "Schouderblad omhoog draaien – actief",
@@ -601,13 +576,13 @@
    "storedLabels": [
     "Onderste extremiteit"
    ],
-   "records": 214,
-   "primary": 110,
-   "primaryAvailable": 30,
+   "records": 230,
+   "primary": 126,
+   "primaryAvailable": 46,
    "secondary": 104,
    "secondaryAvailable": 104,
-   "available": 134,
-   "availableClean": 133,
+   "available": 150,
+   "availableClean": 149,
    "mediaRejected": 1,
    "explanationHeld": 0,
    "missingAssets": [

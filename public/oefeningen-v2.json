@@ -6550,5 +6550,257 @@
   "img": "images/bovenste-extremiteit/duim-spreiden-line-v1.png",
   "uitleg": "Leg je hand met de handpalm naar boven op tafel. Beweeg de duim zijwaarts van de hand af en weer terug; help eventueel met je andere hand.",
   "kaartImg": "images/bovenste-extremiteit/duim-spreiden-avatar-v8.jpg"
+ },
+ {
+  "naam": "Arm voorwaarts laten zakken – met stok (excentrisch)",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/arm-voorwaarts-laten-zakken-stok-line-v1.png",
+  "uitleg": "Til met beide handen een stok voorwaarts omhoog boven je hoofd; de goede arm doet het werk. Laat dan de stok los met de aangedane hand en laat die arm heel langzaam voorwaarts zakken.",
+  "kaartImg": "images/bovenste-extremiteit/arm-voorwaarts-laten-zakken-stok-avatar-v8.jpg"
+ },
+ {
+  "naam": "Arm zijwaarts laten zakken – met stok (excentrisch)",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/arm-zijwaarts-laten-zakken-stok-line-v1.png",
+  "uitleg": "Duw met de stok de aangedane arm zijwaarts omhoog; de goede arm doet het werk. Laat dan de stok los en laat de aangedane arm heel langzaam zijwaarts zakken.",
+  "kaartImg": "images/bovenste-extremiteit/arm-zijwaarts-laten-zakken-stok-avatar-v8.jpg"
+ },
+ {
+  "naam": "Schouder naar buiten draaien in 90 graden – met elastiek",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/schouder-buiten-draaien-90-elastiek-line-v1.png",
+  "uitleg": "Hef je arm zijwaarts tot schouderhoogte met de elleboog in een hoek en de onderarm naar voren. Draai je onderarm omhoog tegen het elastiek in en laat langzaam terugkomen.",
+  "kaartImg": "images/bovenste-extremiteit/schouder-buiten-draaien-90-elastiek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Arm schuin omhoog trekken – met elastiek",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/arm-schuin-omhoog-elastiek-line-v1.png",
+  "uitleg": "Ga met de voet aan de goede kant op een elastiek staan. Begin met je hand laag bij de andere heup en trek het elastiek schuin omhoog naar buiten, tot boven je hoofd aan je eigen kant, met de duim voorop.",
+  "kaartImg": "images/bovenste-extremiteit/arm-schuin-omhoog-elastiek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Arm schuin omlaag trekken – met elastiek",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/arm-schuin-omlaag-elastiek-line-v1.png",
+  "uitleg": "Maak een elastiek hoog vast aan de kant van je aangedane arm. Begin met je arm schuin omhoog naar buiten en trek het elastiek schuin omlaag voor je lichaam langs, naar de andere heup.",
+  "kaartImg": "images/bovenste-extremiteit/arm-schuin-omlaag-elastiek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Borstspier rekken tegen de muur",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/borstspier-rekken-muur-line-v1.png",
+  "uitleg": "Zet je hand op schouderhoogte tegen de muur, arm gestrekt naar achteren. Stap naar voren en draai je borst rustig van de muur weg tot je rek voelt aan de voorkant van je schouder.",
+  "kaartImg": "images/bovenste-extremiteit/borstspier-rekken-muur-avatar-v8.jpg"
+ },
+ {
+  "naam": "Schouder naar buiten draaien met stok – staand",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/schouder-buiten-draaien-stok-staand-line-v1.png",
+  "uitleg": "Houd een stok horizontaal vast met beide ellebogen in een hoek tegen je zij. Duw met de goede hand de stok opzij, zodat de onderarm van de aangedane kant naar buiten draait. De elleboog blijft tegen je zij.",
+  "kaartImg": "images/bovenste-extremiteit/schouder-buiten-draaien-stok-staand-avatar-v8.jpg"
+ },
+ {
+  "naam": "Schouder naar buiten draaien met stok – ruglig",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/schouder-buiten-draaien-stok-ruglig-line-v1.png",
+  "uitleg": "Lig op je rug met de aangedane elleboog op een kussen naast je. Houd een stok vast met beide ellebogen in een hoek. Duw met de goede hand de stok opzij, zodat de aangedane onderarm naar buiten draait.",
+  "kaartImg": "images/bovenste-extremiteit/schouder-buiten-draaien-stok-ruglig-avatar-v8.jpg"
+ },
+ {
+  "naam": "Schouder naar buiten draaien – arm zijwaarts op tafel",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/schouder-buiten-draaien-arm-op-tafel-line-v1.png",
+  "uitleg": "Zit naast een tafel en leg je aangedane arm zijwaarts op tafel, bijna op schouderhoogte, elleboog in een hoek. Draai je onderarm omhoog en laat hem langzaam weer zakken; eventueel tegen een elastiek in.",
+  "kaartImg": "images/bovenste-extremiteit/schouder-buiten-draaien-arm-op-tafel-avatar-v8.jpg"
+ },
+ {
+  "naam": "Schouder naar buiten draaien – zijlig",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/schouder-buiten-draaien-zijlig-line-v1.png",
+  "uitleg": "Lig op je goede zij met een handdoek tussen je bovenarm en je lichaam, elleboog in een hoek. Draai je onderarm omhoog richting het plafond en laat langzaam zakken; de elleboog blijft tegen je zij.",
+  "kaartImg": "images/bovenste-extremiteit/schouder-buiten-draaien-zijlig-avatar-v8.jpg"
+ },
+ {
+  "naam": "Sleeper stretch – zijlig",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/sleeper-stretch-line-v1.png",
+  "uitleg": "Lig op je aangedane zij met je bovenarm recht voor je en de elleboog in een hoek, onderarm omhoog. Duw met je andere hand de onderarm rustig naar beneden richting de mat tot je rek voelt achter in je schouder.",
+  "kaartImg": "images/bovenste-extremiteit/sleeper-stretch-avatar-v8.jpg"
+ },
+ {
+  "naam": "Armen naar voren schuiven over de tafel",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/armen-schuiven-over-tafel-line-v1.png",
+  "uitleg": "Zit aan een tafel en leg je handen op een handdoek op tafel. Schuif je armen zo ver mogelijk naar voren en laat je hoofd tussen je armen zakken. Ontspan en kom terug.",
+  "kaartImg": "images/bovenste-extremiteit/armen-schuiven-over-tafel-avatar-v8.jpg"
+ },
+ {
+  "naam": "Vingers langs de muur omhoog lopen",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/vingers-langs-muur-omhoog-line-v1.png",
+  "uitleg": "Sta met je gezicht naar de muur en zet je vingers op borsthoogte tegen de muur. Loop met je vingers zo hoog als prettig is omhoog, zonder je schouder op te trekken, en loop weer terug.",
+  "kaartImg": "images/bovenste-extremiteit/vingers-langs-muur-omhoog-avatar-v8.jpg"
+ },
+ {
+  "naam": "Handen achter het hoofd, ellebogen openen – ruglig",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/handen-achter-hoofd-ellebogen-openen-line-v1.png",
+  "uitleg": "Lig op je rug met je handen achter je hoofd en je ellebogen naar het plafond. Laat je ellebogen rustig naar buiten zakken tot je rek voelt in je schouders. Houd vast.",
+  "kaartImg": "images/bovenste-extremiteit/handen-achter-hoofd-ellebogen-openen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Hand achter de rug omhoog – met handdoek",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/hand-achter-rug-handdoek-line-v1.png",
+  "uitleg": "Hang een handdoek over je goede schouder. Pak met de aangedane hand achter je rug het onderste uiteinde. Trek met de bovenste hand de handdoek omhoog, zodat de onderste hand langs je rug omhoog schuift.",
+  "kaartImg": "images/bovenste-extremiteit/hand-achter-rug-handdoek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Schouderbladen plat in ruglig – arm heffen",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/schouderbladen-plat-ruglig-arm-heffen-line-v1.png",
+  "uitleg": "Lig op je rug en druk je schouderbladen rustig plat tegen de ondergrond. Houd ze stil en til je gestrekte arm met de duim voorop omhoog richting het plafond.",
+  "kaartImg": "images/bovenste-extremiteit/schouderbladen-plat-ruglig-arm-heffen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Schouderbladen laten zakken en duwen – handen en knieën",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/schouderbladen-handen-knieen-line-v1.png",
+  "uitleg": "Sta op handen en knieën met gestrekte armen. Laat je borst tussen je schouders zakken, zodat je schouderbladen naar elkaar gaan. Duw daarna de vloer weg, zodat je bovenrug bol wordt.",
+  "kaartImg": "images/bovenste-extremiteit/schouderbladen-handen-knieen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Bal tegen de muur rollen",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/bal-tegen-muur-rollen-line-v1.png",
+  "uitleg": "Sta voor een muur en druk met je gestrekte arm een bal op schouderhoogte tegen de muur. Houd je schouderblad stil en maak kleine bewegingen omhoog en omlaag of rondjes met de bal.",
+  "kaartImg": "images/bovenste-extremiteit/bal-tegen-muur-rollen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Leunen op je handen aan tafel",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/leunen-op-handen-tafel-line-v1.png",
+  "uitleg": "Zet je handen plat op een tafel met de vingers naar voren. Breng je schouderbladen naar achteren en omlaag en leun rustig met je gewicht naar voren op je handen. Houd vast.",
+  "kaartImg": "images/bovenste-extremiteit/leunen-op-handen-tafel-avatar-v8.jpg"
+ },
+ {
+  "naam": "Onderarm naar buiten draaien in ruglig – met hulp (na operatie)",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/onderarm-buiten-draaien-ruglig-met-hulp-line-v1.png",
+  "uitleg": "Lig op je rug met de aangedane arm op een kussen naast je en de onderarm op je buik. Til met je goede hand de onderarm op en draai hem rustig naar buiten tot hij recht omhoog wijst. Laat rustig terugkomen.",
+  "kaartImg": "images/bovenste-extremiteit/onderarm-buiten-draaien-ruglig-met-hulp-avatar-v8.jpg"
+ },
+ {
+  "naam": "Op je tenen lopen",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/op-je-tenen-lopen-line-v1.png",
+  "uitleg": "Kom zo hoog mogelijk op je tenen en loop zo rustig een stuk vooruit. Je hielen blijven de hele tijd los van de grond en je tenen wijzen recht naar voren. Laat je armen ontspannen meebewegen.",
+  "kaartImg": "images/onderste-extremiteit/op-je-tenen-lopen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Kuit laten zakken op een verhoging – excentrisch",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/kuit-laten-zakken-verhoging-excentrisch-line-v1.png",
+  "uitleg": "Sta met je voorvoeten op de rand van een traptrede en houd een muur of leuning vast. Kom met beide voeten op je tenen, til dan je goede voet op en laat de hiel van je aangedane been heel langzaam onder de rand zakken. Zet je goede voet weer bij om samen omhoog te komen.",
+  "kaartImg": "images/onderste-extremiteit/kuit-laten-zakken-verhoging-excentrisch-avatar-v8.jpg"
+ },
+ {
+  "naam": "Enkel alfabet schrijven – zittend",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/enkel-alfabet-zittend-line-v1.png",
+  "uitleg": "Zit rechtop op een stoel en strek je aangedane been iets naar voren, met je hiel net los van de grond. Schrijf met je grote teen rustig de hoofdletters van het alfabet in de lucht. De beweging komt uit je enkel; je knie en heup blijven stil.",
+  "kaartImg": "images/onderste-extremiteit/enkel-alfabet-zittend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Voetzool rekken – tenen tegen de muur",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/voetzool-rekken-tenen-tegen-muur-line-v1.png",
+  "uitleg": "Sta vlak voor een muur en zet de tenen van je aangedane voet omhoog tegen de muur, met je hiel op de grond. Buig je knie en breng hem rustig richting de muur tot je rek voelt onder je voet en laag in je kuit. Houd dit even vast en ontspan.",
+  "kaartImg": "images/onderste-extremiteit/voetzool-rekken-tenen-tegen-muur-avatar-v8.jpg"
+ },
+ {
+  "naam": "Eenbenige kniebuiging – met armzwaai",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/eenbenige-kniebuiging-armzwaai-line-v1.png",
+  "uitleg": "Sta op één been met je armen langs je lichaam. Zak door je standbeen tot een halve kniebuiging, met je hiel op de grond en je knie boven je tenen, en zwaai tegelijk je armen als bij hardlopen. Kom weer omhoog; maak het zwaarder met je ogen dicht of op een balanskussen.",
+  "kaartImg": "images/onderste-extremiteit/eenbenige-kniebuiging-armzwaai-avatar-v8.jpg"
+ },
+ {
+  "naam": "Hinkelen in een X-patroon",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/hinkelen-x-patroon-line-v1.png",
+  "uitleg": "Plak met tape een grote X op de vloer. Hinkel op één been van het ene vak naar het andere: schuin over de lijnen, via het midden en weer terug. Land telkens zacht met een licht gebogen knie.",
+  "kaartImg": "images/onderste-extremiteit/hinkelen-x-patroon-avatar-v8.jpg"
+ },
+ {
+  "naam": "Voet voor voet lopen – met hoofd draaien",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/voet-voor-voet-lopen-hoofd-draaien-line-v1.png",
+  "uitleg": "Kies een vast punt op ooghoogte recht voor je. Loop langzaam over een rechte lijn, telkens met je hak vlak voor je tenen, en draai ondertussen je hoofd rustig van links naar rechts. Houd je ogen de hele tijd op het punt gericht.",
+  "kaartImg": "images/onderste-extremiteit/voet-voor-voet-lopen-hoofd-draaien-avatar-v8.jpg"
+ },
+ {
+  "naam": "Eenbeenstand – been zijwaarts zwaaien",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/eenbeenstand-been-zijwaarts-zwaaien-line-v1.png",
+  "uitleg": "Sta op je aangedane been en leun een klein beetje naar voren, handen op je heupen. Zwaai je andere been ontspannen opzij en dan voor je standbeen langs naar de andere kant. Houd je romp rustig; gaat het goed, doe dan je ogen dicht.",
+  "kaartImg": "images/onderste-extremiteit/eenbeenstand-been-zijwaarts-zwaaien-avatar-v8.jpg"
+ },
+ {
+  "naam": "Huppelen op de voorvoeten – gestrekte knieën",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/huppelen-voorvoeten-gestrekte-knieen-line-v1.png",
+  "uitleg": "Kom hoog op je tenen en spring met kleine, snelle sprongetjes vooruit. Houd je knieën bijna gestrekt en veer vooral vanuit je enkels. Doe het eerst met je tenen recht vooruit en daarna met je tenen iets naar buiten of naar binnen.",
+  "kaartImg": "images/onderste-extremiteit/huppelen-voorvoeten-gestrekte-knieen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Voetzool rekken – tenen naar je toe trekken",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/voetzool-rekken-tenen-naar-je-toe-line-v1.png",
+  "uitleg": "Zit op een stoel en leg je aangedane enkel op je andere knie. Pak met je hand je tenen vast en trek ze, vooral je grote teen, rustig naar je scheenbeen tot je rek voelt in je voetboog. Houd dit even vast en laat langzaam los.",
+  "kaartImg": "images/onderste-extremiteit/voetzool-rekken-tenen-naar-je-toe-avatar-v8.jpg"
+ },
+ {
+  "naam": "Voetzool rollen – over een koude fles",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/voetzool-rollen-koude-fles-line-v1.png",
+  "uitleg": "Wikkel een bevroren flesje water in een dunne doek en leg het voor je stoel op de grond. Zet je blote voetzool erop en rol de fles rustig heen en weer van je hiel tot de bal van je voet. Druk zo stevig als prettig voelt.",
+  "kaartImg": "images/onderste-extremiteit/voetzool-rollen-koude-fles-avatar-v8.jpg"
+ },
+ {
+  "naam": "Voet naar binnen en omlaag – met elastiek, been over de knie",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/voet-binnen-omlaag-elastiek-been-over-knie-line-v1.png",
+  "uitleg": "Zit op een stoel en leg je aangedane enkel op je andere knie. Leg een elastiek om je voorvoet en houd de uiteinden boven je voet vast. Duw je voet rustig omlaag en naar binnen tegen het elastiek in, houd even vast en laat hem langzaam terugkomen.",
+  "kaartImg": "images/onderste-extremiteit/voet-binnen-omlaag-elastiek-been-over-knie-avatar-v8.jpg"
+ },
+ {
+  "naam": "Knie naar voren over voet – met elastiek om de enkel",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/knie-naar-voren-over-voet-elastiek-enkel-line-v1.png",
+  "uitleg": "Maak een stevig elastiek laag vast achter je en zet je aangedane voet in de lus, zodat het elastiek over de voorkant van je enkel loopt. Zet die voet een kleine stap naar voren en breng je knie rustig naar voren over je tenen, met je hiel op de grond. Het elastiek trekt je enkel daarbij iets naar achteren.",
+  "kaartImg": "images/onderste-extremiteit/knie-naar-voren-over-voet-elastiek-enkel-avatar-v8.jpg"
+ },
+ {
+  "naam": "Uitvalspas achterwaarts – met halters",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/uitvalspas-achterwaarts-halters-line-v1.png",
+  "uitleg": "Sta rechtop met in elke hand een halter langs je lichaam. Stap met één been ver naar achteren en zak tot je voorste bovenbeen ongeveer horizontaal is, met je voorste hiel op de grond en je rug recht. Duw je vanuit je voorste been terug naar de beginhouding.",
+  "kaartImg": "images/onderste-extremiteit/uitvalspas-achterwaarts-halters-avatar-v8.jpg"
+ },
+ {
+  "naam": "Buitenkant onderbeen rollen – foamroller",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/buitenkant-onderbeen-rollen-foamroller-line-v1.png",
+  "uitleg": "Ga op je zij liggen met de buitenkant van je onderste onderbeen op een foamroller en steun op je onderarm. Rol rustig heen en weer tussen net onder je knie en net boven je enkel. Til je heup wat op als je meer druk wilt.",
+  "kaartImg": "images/onderste-extremiteit/buitenkant-onderbeen-rollen-foamroller-avatar-v8.jpg"
+ },
+ {
+  "naam": "Voeten naar buiten en binnen rollen – met elastiek",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/voeten-buiten-binnen-rollen-elastiek-line-v1.png",
+  "uitleg": "Zit op een stoel met je voeten plat op de grond en een elastiek in een lus om je beide voorvoeten. Zet je voeten iets uit elkaar zodat het elastiek strak staat. Rol je voeten naar de buitenranden, zodat je voetbogen omhoog komen en je tenen de grond vasthouden, en rol daarna rustig terug.",
+  "kaartImg": "images/onderste-extremiteit/voeten-buiten-binnen-rollen-elastiek-avatar-v8.jpg"
  }
 ]
