@@ -1,0 +1,30 @@
+[
+ {
+  "nr": 8,
+  "slug": "dips",
+  "stijl": "staand",
+  "lijn": "images/beginhouding-pijl-v1/009.webp",
+  "physitrack": {
+   "pagina": "Shoulder Dips on Bar",
+   "start": "(pagina noemt geen begin; tekening) armen gestrekt op twee parallelle leggers, lichaam ertussen",
+   "beweging": "lichaam laten zakken en weer omhoog drukken, ellebogen naar achteren, schouders niet naar voren, niet verder dan 90 graden",
+   "materiaal": "dip-stangen (parallelle leggers)",
+   "greep": "handen om de leggers"
+  },
+  "eind": "Both figures in three-quarter front view, at a free-standing dip station with TWO PARALLEL horizontal bars at hip height on either side of her body (exactly like the line drawing). She supports her whole body weight on both hands on the bars, one hand on each bar, body hanging BETWEEN the bars, both FEET OFF THE FLOOR, knees slightly bent, ankles crossed or together. NOT standing on the floor, NOT a single bar. TOP: arms fully straight, body high, shoulders down. BOTTOM: elbows bent to about 90 degrees and pointing BACKWARD, body lowered between the bars, trunk slightly forward, feet still off the floor."
+ },
+ {
+  "nr": 39,
+  "slug": "triceps-dips",
+  "stijl": "stoel",
+  "lijn": "images/beginhouding-pijl-v2/040.webp",
+  "physitrack": {
+   "pagina": "Triceps dips - on box (on chair)",
+   "start": "hand op de rand van een stevige stoel achter je, vingers naar voren, heupen net voor de rand, voeten plat op de grond iets naar voren",
+   "beweging": "ellebogen buigen en heupen recht omlaag laten zakken met open borst, weer omhoog drukken tot de armen gestrekt zijn",
+   "materiaal": "stevige stoel",
+   "greep": "handen op de rand van de zitting, vingers naar voren"
+  },
+  "eind": "Both figures in strict side profile, in FRONT of a sturdy simple chair (a chair with a backrest, NOT a bench), her back toward the chair. Both hands are on the front edge of the chair seat behind her hips, fingers pointing forward. Knees bent at about 90 degrees, both feet flat on the floor a little in front of the knees. Her buttocks are just in front of the seat, NOT sitting on it. TOP: arms straight, hips at seat height, chest open. BOTTOM: elbows bent pointing straight back, hips lowered straight DOWN below seat height, feet still flat on the floor, chest open."
+ }
+]
