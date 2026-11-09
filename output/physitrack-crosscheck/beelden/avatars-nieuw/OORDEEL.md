@@ -13,3 +13,9 @@ Contactvellen: ../ronde3b/_vel-nieuw-1..9.png (lijn | avatar), ../ronde3b/_vel-r
 - r2 nog onvoldoende: 429 (geen duidelijke eenbeenstand), 495 (landt nog in uitvalspas).
 - niet herkanst (budget op): 399, 433, 438, 442, 443, 444, 449, 451, 465, 497.
 - inwendige beweging, beeld begin = eind: 484, 485, 486, 487, 488, 489 (beter: pijl achteraf intekenen in plaats van opnieuw genereren).
+
+## Herkansing 2 (14:23, akkoord Ahmed max 70 credits): 60 credits, saldo 800 -> 740
+Goed, in de app zetten: 399, 433, 442, 443, 444, 449, 451, 465, 497 (-r2) en 429, 495 (-r3).
+Nog twijfel: 438 (-r2, zijstap aan tafel nauwelijks zichtbaar), niet opnemen.
+484-489: geen nieuwe run; pijl intekenen (coordinator).
+Contactvel: ../ronde3b/_vel-r3.png
