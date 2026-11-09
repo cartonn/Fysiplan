@@ -1787,6 +1787,38 @@
       weg.forEach(function(k){localStorage.removeItem(k);});
     }catch(e){}
   }
+  // Legal 2026-11-09: ook de beelden van precies deze oefeningen gaan uit de offline-cache;
+  // op een gedeelde telefoon verraden die anders welke oefeningen iemand doet. Staat er
+  // geen andere kaart op deze telefoon, dan gaat de hele offline-cache van /k weg (ook de
+  // oefenbibliotheek). Staan er wel andere kaarten, dan blijven die en hun gegevens staan.
+  function kaartIdUitCache(u){
+    var m=u.pathname.match(/^\/k\/([a-f0-9]{8,16})$/);if(m)return m[1];
+    if(/^\/api\/kaart(\/vertaal|\/manifest)?$/.test(u.pathname))return u.searchParams.get('id')||'';
+    return '';
+  }
+  function beeldenVanDezeKaart(){
+    var uit={};
+    try{performance.getEntriesByType('resource').forEach(function(en){
+      var u=new URL(en.name,location.href);
+      if(u.origin===location.origin&&/\.(png|jpe?g|webp|gif|svg|avif|mp4|webm|mp3|m4a)$/i.test(u.pathname))uit[u.pathname]=1;
+    });}catch(e){}
+    try{Array.prototype.forEach.call(document.querySelectorAll('img[src],source[src],video[src],audio[src]'),function(el){
+      var u=new URL(el.getAttribute('src'),location.href);if(u.origin===location.origin)uit[u.pathname]=1;
+    });}catch(e){}
+    return uit;
+  }
+  function wisOfflineKopie(){
+    var beelden=beeldenVanDezeKaart();
+    return caches.keys().then(function(namen){return Promise.all(namen.map(function(n){return caches.open(n).then(function(c){
+      return c.keys().then(function(ks){
+        var anderen=ks.some(function(r){var k=kaartIdUitCache(new URL(r.url));return k&&k!==id;});
+        if(!anderen)return caches.delete(n);
+        return Promise.all(ks.filter(function(r){
+          var u=new URL(r.url);return kaartIdUitCache(u)===id||r.url.indexOf(id)>-1||beelden[u.pathname];
+        }).map(function(r){return c.delete(r);}));
+      });
+    });}));});
+  }
   function wisVanTelefoon(){
     var nWacht=Object.keys(leesWacht()).length;
     var vraag=trmg('zeker')+(nWacht?'\n\n'+trmg('wacht').replace('{n}',nWacht):'');
@@ -1804,9 +1836,7 @@
     };
     try{
       if(window.caches&&caches.keys){
-        caches.keys().then(function(namen){return Promise.all(namen.map(function(n){return caches.open(n).then(function(c){
-          return c.keys().then(function(ks){return Promise.all(ks.filter(function(r){return r.url.indexOf(id)>-1;}).map(function(r){return c.delete(r);}));});
-        });}));}).then(klaar,klaar);
+        wisOfflineKopie().then(klaar,klaar);
         return;
       }
     }catch(e){}
