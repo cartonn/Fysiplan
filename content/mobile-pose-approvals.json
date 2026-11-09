@@ -1381,6 +1381,20 @@
       "assetSha256": "779afde6b3af12ea96d532f2d24af220b692cc138bc83227360705dbc760514f",
       "reviewDate": "2026-11-09",
       "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck; beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Dips",
+      "source": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
+      "assetSha256": "934fa2b9c011db5d611cf725225887de8fc3a6a380ba870e106c6bce17961b68",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck (ronde 5); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
+    },
+    {
+      "name": "Triceps dips",
+      "source": "images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg",
+      "assetSha256": "e5b3f3d96cdfba13d4e11f23e9b6c0555f21de0a36224ba3dff8464abb043fc6",
+      "reviewDate": "2026-11-09",
+      "reviewNote": "Nieuwe avatar uit de Physitrack-crosscheck (ronde 5); beide gemeten uitsnedes op een contactvel bekeken (volledig, geen vreemde inkt). Alleen uitsnede, geen klinisch oordeel."
     }
   ],
   "inspectionClaim": "Elk hieronder genoemde beeld is in de definitieve weergave op een contactvel bekeken. De hash bindt de controle aan exact dit bestand: verandert het beeld, dan vervalt de controle en valt de kaart terug op de volledige afbeelding."

@@ -14,6 +14,9 @@ const html=fs.readFileSync('public/kaart.html','utf8');
 const tussen=(a,b)=>{const i=html.indexOf(a);assert.ok(i>=0,a);const j=html.indexOf(b,i);assert.ok(j>i,b);return html.slice(i,j);};
 const regelVan=(re)=>{const m=html.match(re);assert.ok(m,String(re));return m[0];};
 const v2=lees('public/oefeningen-v2.json'),review=lees('public/mobile-media-review.json'),narration=lees('public/mobile-narration-review.json');
+// Testgeval: sinds 2026-11-09 is de hold op Dips opgeheven (nieuwe avatar). Om "alleen het beeld wordt
+// tegengehouden" te blijven toetsen houden we in deze test Biceps curl tegen, zoals de beoordeling een hold vastlegt.
+for(const r of review.entries)if(r.name==='Biceps curl'){r.status='rejected';r.presentation='withhold';}
 const lib=v2.map(e=>({...e,exerciseId:exerciseId(e),img:'/v2/'+e.img,kaartImg:'/v2/'+e.kaartImg}));
 const oef=(naam)=>{const e=lib.find(x=>x.naam===naam);assert.ok(e,naam);return e;};
 const beeldWeg=new Set(review.entries.filter(r=>r.status==='rejected').map(r=>r.exerciseId));
@@ -21,8 +24,8 @@ const uitlegWeg=new Set(narration.holds.filter(h=>h.status==='hold').map(h=>h.ex
 const vrij=lib.filter(e=>review.entries.some(r=>r.exerciseId===e.exerciseId)&&!beeldWeg.has(e.exerciseId)&&!uitlegWeg.has(e.exerciseId)&&e.uitleg);
 const [A,B]=[vrij[0],vrij[1]];
 // testgevallen uit de echte beoordeling
-const DIPS=oef('Dips'),SWING=oef('Med ball swing'),ROTATOR=oef('Rotator (apparaat)');
-assert.ok(beeldWeg.has(DIPS.exerciseId)&&!uitlegWeg.has(DIPS.exerciseId),'Dips: alleen het beeld wordt tegengehouden');
+const DIPS=oef('Biceps curl'),SWING=oef('Med ball swing'),ROTATOR=oef('Rotator (apparaat)');
+assert.ok(beeldWeg.has(DIPS.exerciseId)&&!uitlegWeg.has(DIPS.exerciseId),'Biceps curl (testhold): alleen het beeld wordt tegengehouden');
 assert.ok(uitlegWeg.has(SWING.exerciseId)&&!beeldWeg.has(SWING.exerciseId),'Med ball swing: alleen de uitleg wordt tegengehouden');
 assert.ok(uitlegWeg.has(ROTATOR.exerciseId)&&beeldWeg.has(ROTATOR.exerciseId),'Rotator (apparaat): beide');
 
@@ -39,7 +42,7 @@ function context(taal,{reviewOk=true}={}){
     document:{getElementById:knop,querySelectorAll:()=>[]},window:{speechSynthesis:spraak,NoorAudio:{stop(){}}},
     NoorAudio:{stop(){}},speechSynthesis:spraak,SpeechSynthesisUtterance:function(t){this.text=t;},
     alert:m=>log.push({type:'alert',text:m}),demoGeluidKnop(){},kiesStem:()=>null,
-    fetch:async(url)=>reviewOk?{ok:true,json:async()=>lees(url.includes('narration')?'public/mobile-narration-review.json':'public/mobile-media-review.json')}
+    fetch:async(url)=>reviewOk?{ok:true,json:async()=>url.includes('narration')?lees('public/mobile-narration-review.json'):JSON.parse(JSON.stringify(review))}
       :{ok:false,json:async()=>({})}});
   vm.runInContext(T_CODE+regelVan(/  var SPRAAK=\{[^\n]*\n/)+'var TAAL='+JSON.stringify(taal)+';var VERT={};\n'+
     regelVan(/  function tr\(k\)\{[^\n]*\n/)+regelVan(/  function vt\(s\)\{[^\n]*\n/)+regelVan(/  function normEx\(s\)\{[^\n]*\n/)+
@@ -95,7 +98,7 @@ const fill=(s,n)=>s.replace('{n}',n);
   for(const e of [DIPS,SWING,ROTATOR])assert.ok(!tekst.includes(e.naam),e.naam+' niet voorgelezen');
   const m=meldingen(r);
   assert.equal(m.length,1,'één melding');
-  assert.equal(m[0],[fill(T.en.leesUitlegCheck,'Med ball swing, Rotator (apparaat)'),fill(T.en.leesBeeldCheck,'Dips'),T.en.leesDosering].join('\n\n'));
+  assert.equal(m[0],[fill(T.en.leesUitlegCheck,'Med ball swing, Rotator (apparaat)'),fill(T.en.leesBeeldCheck,'Biceps curl'),T.en.leesDosering].join('\n\n'));
   assert.doesNotMatch(m[0],/record|opname|wrong|incorrect|clinic/i,'geen bewering over opnames, geen oordeel over de tekst');
   assert.deepEqual(r.log.map(x=>x.type),['cancel','speak','alert'],'eerst spreken (binnen de tik), dan melden');
   assert.equal(r.ctx.bezigLezen,true);assert.equal(r.knop('leesBtn').attrs['aria-pressed'],'true');
@@ -115,7 +118,7 @@ const fill=(s,n)=>s.replace('{n}',n);
   assert.deepEqual(spreek(r),[],'niets uitgesproken');
   assert.ok(!r.log.some(x=>x.type==='cancel'),'een eventuele andere spraak wordt niet afgebroken');
   assert.equal(r.ctx.bezigLezen,false);assert.notEqual(r.knop('leesBtn').attrs['aria-pressed'],'true');
-  assert.deepEqual(meldingen(r),[[fill(T.en.leesUitlegCheck,'Med ball swing'),fill(T.en.leesBeeldCheck,'Dips'),T.en.leesNiets,T.en.leesDosering].join('\n\n')]);
+  assert.deepEqual(meldingen(r),[[fill(T.en.leesUitlegCheck,'Med ball swing'),fill(T.en.leesBeeldCheck,'Biceps curl'),T.en.leesNiets,T.en.leesDosering].join('\n\n')]);
   tik(r);assert.equal(meldingen(r).length,2,'een volgende tik meldt opnieuw in plaats van te "stoppen"');assert.deepEqual(spreek(r),[]);
 }
 
@@ -128,7 +131,7 @@ for(const taal of TALEN){
   const r=context(taal);await r.laad();kaart(r,[ROTATOR,DIPS]);
   tik(r);
   assert.deepEqual(spreek(r),[],taal);
-  assert.deepEqual(meldingen(r),[[fill(T[taal].leesUitlegCheck,'Rotator (apparaat)'),fill(T[taal].leesBeeldCheck,'Dips'),T[taal].leesNiets,T[taal].leesDosering].join('\n\n')],taal);
+  assert.deepEqual(meldingen(r),[[fill(T[taal].leesUitlegCheck,'Rotator (apparaat)'),fill(T[taal].leesBeeldCheck,'Biceps curl'),T[taal].leesNiets,T[taal].leesDosering].join('\n\n')],taal);
   assert.notEqual(T[taal].leesNiets,T.nl.leesNiets,taal+': niet terugvallen op het Nederlands');
 }
 

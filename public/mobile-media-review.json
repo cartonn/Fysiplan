@@ -18,13 +18,13 @@
   ],
   "summary": {
     "total": 446,
-    "rejected": 10,
-    "unreviewed": 436,
+    "rejected": 8,
+    "unreviewed": 438,
     "approved": 0,
-    "poseGeometryApproved": 170,
-    "poseStatic": 276,
-    "brandMarkCovered": 145,
-    "brandMarkAbsent": 301
+    "poseGeometryApproved": 171,
+    "poseStatic": 275,
+    "brandMarkCovered": 143,
+    "brandMarkAbsent": 303
   },
   "entries": [
     {
@@ -465,46 +465,34 @@
       "exerciseId": "fp_013ba6ad937cc9d9",
       "name": "Dips",
       "source": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
-      "assetSha256": "ae7ea9bc2bcf7646e69832179c1ada68c42f1fb39af8e05effe15c6758bf7298",
-      "explanationSha256": "d162904fe990a009aea31fdab53c4fd18b976dc44eebd60156d42fcc62139f0b",
+      "assetSha256": "934fa2b9c011db5d611cf725225887de8fc3a6a380ba870e106c6bce17961b68",
+      "explanationSha256": "43e2c53a7451eb3c3a2b99d88a7e5ce3675f11913bb1108e6c9fca4886de011d",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 485,
+        "chromaticPixels": 204,
         "visuallyInspected": true
       },
       "width": 800,
       "height": 1200,
-      "status": "rejected",
+      "status": "unreviewed",
       "clinicalApproved": false,
-      "presentation": "withhold",
+      "presentation": "static",
       "allowAutomaticPoseSplit": false,
       "reasons": [
-        "Tijdelijk tegengehouden: de steunen zijn onvolledig en er is geen dip afgebeeld; de figuur staat met de voeten op de grond."
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
       ],
       "observations": [],
-      "hold": {
-        "temporary": true,
-        "kind": "source-defect",
-        "source": "images/bovenste-extremiteit/dips-avatar-v7.jpg",
-        "assetSha256": "ae7ea9bc2bcf7646e69832179c1ada68c42f1fb39af8e05effe15c6758bf7298",
-        "evidence": "Onafhankelijke beoordeling op oorspronkelijke resolutie en visuele controle door de coördinator (2026-11-03); eerder gesignaleerd in de statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md).",
-        "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
-      },
       "poses": [],
       "poseGeometry": {
-        "status": "withheld",
-        "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
+        "status": "static",
+        "reason": "In houding 1 staat een losse handgreep naast het figuur die niet als voorwerp van deze houding te verantwoorden is, en beide figuren staan rechtop: de dip zelf is niet afgebeeld.",
+        "rejectedByReviewer": true
       },
       "brandMark": {
-        "present": true,
-        "cover": {
-          "x": 14,
-          "y": 14,
-          "w": 178,
-          "h": 58
-        },
-        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
@@ -2039,46 +2027,62 @@
       "exerciseId": "fp_f227db5fcf245d9c",
       "name": "Triceps dips",
       "source": "images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg",
-      "assetSha256": "7a3f8095e040023498c3d6ec46d1b6a0d31d8d559a2141deecd98770fd84487a",
+      "assetSha256": "e5b3f3d96cdfba13d4e11f23e9b6c0555f21de0a36224ba3dff8464abb043fc6",
       "explanationSha256": "bb8552be00110fb317c00767547750b5058dfa5839316873e27233cfe0a46352",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
-        "chromaticPixels": 320,
+        "chromaticPixels": 479,
         "visuallyInspected": true
       },
       "width": 800,
       "height": 1200,
-      "status": "rejected",
+      "status": "unreviewed",
       "clinicalApproved": false,
-      "presentation": "withhold",
+      "presentation": "static",
       "allowAutomaticPoseSplit": false,
       "reasons": [
-        "Tijdelijk tegengehouden: de handen steunen op niets; de stoel of bank uit de uitleg ontbreekt."
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
       ],
       "observations": [],
-      "hold": {
-        "temporary": true,
-        "kind": "source-defect",
-        "source": "images/bovenste-extremiteit/triceps-dips-avatar-v7.jpg",
-        "assetSha256": "7a3f8095e040023498c3d6ec46d1b6a0d31d8d559a2141deecd98770fd84487a",
-        "evidence": "Onafhankelijke beoordeling op oorspronkelijke resolutie en visuele controle door de coördinator (2026-11-03); eerder gesignaleerd in de statische visuele ronde van 2026-11-02 (output/pose-review/static/inspection.md).",
-        "release": "Vervalt niet vanzelf: alleen met een nieuw, beoordeeld bronbestand of een expliciet besluit. Er is niets verwijderd."
-      },
-      "poses": [],
+      "poses": [
+        {
+          "label": "start",
+          "crop": {
+            "x": 108,
+            "y": 24,
+            "w": 588,
+            "h": 560
+          }
+        },
+        {
+          "label": "end",
+          "crop": {
+            "x": 108,
+            "y": 660,
+            "w": 592,
+            "h": 440
+          }
+        }
+      ],
       "poseGeometry": {
-        "status": "withheld",
-        "reason": "De afbeelding zelf is afgekeurd; er worden geen houdingen uit getoond."
+        "status": "geometry-approved",
+        "axis": "y",
+        "reviewer": "Claude Opus 5, nachtelijke reparatieopdracht eigenaar 2026-11-02",
+        "reviewDate": "2026-11-02",
+        "reviewKind": "geometric-visual-only",
+        "visuallyInspected": true,
+        "method": "connected components op bronpixels; expliciete uitsnede per houding; geen witruimtesplitsing",
+        "foreignInkPixels": 0,
+        "silhouetteIoU": 0.509,
+        "brandingBoxesOutsideCrop": 0,
+        "clinicalApproved": false,
+        "note": "Alleen de uitsnede en de weergave zijn gecontroleerd. De uitvoering is niet klinisch goedgekeurd."
       },
       "brandMark": {
-        "present": true,
-        "cover": {
-          "x": 14,
-          "y": 14,
-          "w": 178,
-          "h": 58
-        },
-        "method": "icoon 20..61x22..63 + witte rand rond het afdekvlak, gemeten op bronpixels"
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
       }
     },
     {
