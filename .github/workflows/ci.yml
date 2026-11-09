@@ -87,3 +87,7 @@ jobs:
       - run: npm run test:kaartladen
       - run: npm run test:noorstop
       - run: npm run test:kaartdruk
+      - run: npm run test:nieuwekaartnaam
+      - run: npm run test:proefwissen
+      - run: npm run test:pijnscorebezig
+      - run: npm run test:uitnodigingpraktijk
