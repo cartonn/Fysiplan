@@ -1,0 +1,119 @@
+[
+ {
+  "slug": "nek-isometrisch-voor-achter-opzij",
+  "naam": "Nek isometrisch – voor, achter en opzij",
+  "ref": "287",
+  "pose_en": "Frame her from the chest up (head, neck, shoulders and the raised arm large in the frame). She sits upright on a chair, seen in a THREE-QUARTER FRONT view (body turned about 45 degrees to the viewer's left). Her head is straight and level, looking forward. Her RIGHT palm lies flat against her FOREHEAD, fingers pointing to her left, right elbow bent and pointing forward. The arrow is a short, thick straight arrow at her forehead pointing FORWARD into the palm, showing the head pressing gently into the hand without moving.",
+  "eind_en": "END position: same chair, same three-quarter front view and close framing, head still straight and level, but now her RIGHT hand lies flat against the BACK of her head, right elbow pointing out to the side. The top figure has the palm on the forehead, the bottom figure has the palm on the back of the head.",
+  "zoom": false,
+  "extra_avatar": "Frame both figures from the chest up, three-quarter front view. The head stays exactly straight and level in both figures; only the hand position changes: palm on the forehead (top), palm on the back of the head (bottom)."
+ },
+ {
+  "slug": "achtjes-lopen-pionnen",
+  "naam": "Achtjes lopen om twee pionnen",
+  "ref": "001",
+  "pose_en": "Seen in a THREE-QUARTER view from the front and slightly from above, so the floor is clearly visible. Two traffic cones stand on the floor about three meters apart, one near her and one further back. She stands upright beside the near cone, ready to walk, whole body visible. The arrow is ONE long thick black arrow drawn flat on the floor as a FIGURE-EIGHT path that loops around both cones, starting at her feet and ending in a single arrowhead, showing the walking route.",
+  "eind_en": "END position: she is walking (mid-stride) while curving around the FAR cone, body leaning slightly into the turn. Same view from the front and slightly above, both cones visible in both figures; the top figure stands beside the near cone.",
+  "zoom": false,
+  "extra_avatar": "Both traffic cones clearly visible in both figures, about three meters apart. Top: standing beside the near cone. Bottom: walking around the far cone."
+ },
+ {
+  "slug": "bal-opgooien-nakijken-staand",
+  "naam": "Bal opgooien en nakijken – staand",
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the SIDE, facing left, feet shoulder-width apart. She holds a tennis ball with BOTH hands in front of her chest, elbows bent, and looks down at the ball. The arrow is a long straight vertical arrow starting at the ball and pointing straight UP to well above her head, showing the ball being tossed upward.",
+  "eind_en": "END position: the ball floats in the air well above her head; her hands are open and empty in front of her chest, ready to catch; her head is tilted back and her eyes follow the ball. Same side view facing left.",
+  "zoom": false,
+  "extra_avatar": "Exaggerate the difference: top figure looks DOWN at the ball held at the chest; bottom figure has the head tilted BACK looking UP at the ball high above her head."
+ },
+ {
+  "slug": "bal-hand-naar-hand-zittend",
+  "naam": "Bal van hand naar hand gooien – zittend",
+  "ref": "287",
+  "pose_en": "Frame her from the hips up. She sits upright on a chair, seen from the FRONT. Both elbows are bent and both forearms point forward, hands about shoulder-width apart at chest height with the palms UP. A tennis ball lies in her RIGHT hand (on the viewer's left) and she looks at it. The arrow is a high curved arc arrow starting at the ball and arching UP over the space between her hands and DOWN into her LEFT hand, showing the toss from hand to hand.",
+  "eind_en": "END position: the ball now lies in her LEFT hand, her right hand is empty and open, and her head and eyes are turned toward the ball in the left hand. Same front view, framed from the hips up.",
+  "zoom": false,
+  "extra_avatar": "Frame both figures from the hips up, seen from the front, the chair visible. Top: ball in her right hand, looking at it. Bottom: ball in her left hand, head turned toward it."
+ },
+ {
+  "slug": "paraplu-draaien-staand",
+  "naam": "Draaiende paraplu volgen – staand",
+  "ref": "001",
+  "static": true,
+  "pose_en": "Frame her from the knees up. She stands upright, seen in a THREE-QUARTER FRONT view. She holds the handle of an OPEN umbrella with BOTH hands in front of her chest; the shaft points FORWARD and slightly up away from her, so the open canopy is in front of her at arm's length with its INSIDE (ribs and a bold striped pattern) facing her face. She looks into the canopy. The arrow is a curved CIRCULAR arrow drawn along the rim of the canopy, showing the umbrella spinning around its shaft.",
+  "eind_en": "She holds this position: open umbrella held by the handle in both hands in front of her chest, shaft pointing forward, the patterned inside of the canopy facing her, her eyes on the pattern as it spins.",
+  "extra_avatar": "Frame her from the knees up. The open umbrella with a bold black-and-white striped pattern is clearly visible, its inside facing her face, handle in both hands at chest height."
+ },
+ {
+  "slug": "duim-achtje-staand",
+  "naam": "Duim volgen in een achtje – staand",
+  "ref": "001",
+  "pose_en": "Frame her from the waist up so the arm, hand and face are large. She stands upright, seen in a THREE-QUARTER FRONT view (body turned about 45 degrees to the viewer's left). Her RIGHT arm is straight forward at eye level, the hand in a loose fist with the THUMB pointing UP, and her eyes look at the thumb. The arrow is a sideways FIGURE-EIGHT (infinity-shaped) loop drawn in the air around the thumb, with one arrowhead, showing the path the thumb will trace.",
+  "eind_en": "END position: the right arm is still straight forward with the thumb up, but the thumb is now LOW and to HER RIGHT (the other end of the figure-eight), and her eyes follow the thumb while the head stays almost still. Top figure: thumb high and to her left. Same three-quarter front view.",
+  "zoom": true,
+  "extra_avatar": "Frame both figures from the waist up, three-quarter front view. Exaggerate the thumb position: clearly HIGH and to her LEFT in the top figure, clearly LOW and to her RIGHT in the bottom figure, eyes on the thumb in both."
+ },
+ {
+  "slug": "nek-isometrisch-buigen-voorhoofd",
+  "naam": "Nek isometrisch buigen – hand op voorhoofd",
+  "ref": "287",
+  "static": true,
+  "pose_en": "Frame her from the chest up. She sits upright on a chair, seen from the SIDE, facing left. Her head is straight and level, looking forward. Her RIGHT palm lies flat against her FOREHEAD, the right elbow bent and pointing forward. Nothing moves. The arrow is a short thick straight arrow at her forehead pointing FORWARD (to the left) into the palm, showing the head pressing into the hand.",
+  "eind_en": "She holds this position: seated upright, seen from the side facing left, right palm flat against the forehead, head straight and level, neck muscles gently tensed, nothing moves.",
+  "extra_avatar": "Frame her from the chest up, side view facing left; the palm on the forehead and the straight neck clearly visible."
+ },
+ {
+  "slug": "ogen-heen-en-weer-ruglig",
+  "naam": "Ogen heen en weer – ruglig",
+  "ref": "001",
+  "pose_en": "CLOSE-UP of head and shoulders only. She lies on her back on an exercise mat, her head on a flat pillow, seen from ABOVE (the camera looks down on her face), face large in the frame, arms relaxed beside her body just visible at the shoulders. Her head points straight up and does not move. Her EYES look as far as possible to HER LEFT (irises clearly in the corners of the eyes). The arrow is a short horizontal straight arrow just above her eyebrows pointing to HER RIGHT, showing the eyes moving across.",
+  "eind_en": "END position: same close-up from above, head exactly the same, but now her EYES look as far as possible to HER RIGHT, irises clearly in the other corners of the eyes.",
+  "zoom": false,
+  "extra_avatar": "Very close framing of the face and shoulders, seen from above, eyes large and clearly visible. Exaggerate: irises fully in the left corners (top figure) and fully in the right corners (bottom figure); the head does not move."
+ },
+ {
+  "slug": "voeten-samen-balansmat-hoofd-op-neer",
+  "naam": "Voeten samen op balansmat – hoofd op en neer",
+  "ref": "001",
+  "pose_en": "She stands upright on a thick square foam balance pad, seen from the SIDE, facing left, whole body visible. Her feet are pressed together on the pad, arms relaxed at her sides. On a wall in front of her (on the left) a small card with a cross is fixed at eye level. Her head is tilted DOWN, chin toward the chest, while her eyes look up at the card. The arrow is a curved arrow in front of her face going UPWARD, showing the head tilting up.",
+  "eind_en": "END position: same stance on the foam pad with the feet together, but her head is tilted UP, chin raised, while her eyes still look at the card on the wall. Same side view facing left.",
+  "zoom": false,
+  "extra_avatar": "The thick foam pad and the card on the wall are clearly visible in both figures. Exaggerate the head position: chin clearly DOWN in the top figure and clearly UP in the bottom figure."
+ },
+ {
+  "slug": "bukken-oprichten-zittend",
+  "naam": "Bukken en oprichten – zittend",
+  "ref": "287",
+  "pose_en": "She sits upright on a chair, seen from the SIDE, facing left, whole body visible, feet flat on the floor, hands resting on her thighs. A plastic cup stands on the floor just in front of her feet. The arrow is a long curved arrow starting at her head and going FORWARD and DOWN toward the cup, showing the trunk bending forward to pick it up.",
+  "eind_en": "END position: still seated on the chair, her trunk is bent far forward with her head low near her knees, and her right hand reaches down and grasps the cup on the floor in front of her feet. Same side view facing left.",
+  "zoom": false
+ },
+ {
+  "slug": "doel-volgen-verticaal-zittend",
+  "naam": "Doel volgen verticaal – zittend",
+  "ref": "287",
+  "pose_en": "Frame her from the waist up so the arm, thumb and eyes are large. She sits upright on a chair, seen in a THREE-QUARTER FRONT view. Her RIGHT arm reaches forward with the elbow slightly bent, the hand in a loose fist with the THUMB pointing UP, held HIGH above eye level. Her head stays level while her EYES look UP at the thumb. The arrow is a long straight vertical arrow in front of the thumb pointing DOWN to chest height, showing the thumb moving down.",
+  "eind_en": "END position: same seated position and view, the thumb is now LOW in front of her chest and her eyes look DOWN at it, while her head stays level and still.",
+  "zoom": true,
+  "extra_avatar": "Frame both figures from the waist up, three-quarter front view. Exaggerate: thumb clearly above eye level with eyes looking up (top), thumb at chest height with eyes looking down (bottom); the head does not tilt."
+ },
+ {
+  "slug": "duim-naar-neus-ruglig",
+  "naam": "Duim naar de neus – ruglig",
+  "ref": "001",
+  "pose_en": "Frame her from the hips up. She lies on her back on an exercise mat with her head on a flat pillow, seen from the SIDE (her head on the viewer's left). Her RIGHT arm points straight UP toward the ceiling above her face, the hand in a loose fist with the THUMB pointing toward her head, and her eyes look up at the thumb. The left arm rests beside her body. The arrow is a straight arrow alongside the raised forearm pointing DOWN toward her nose, showing the thumb moving toward the face.",
+  "eind_en": "END position: the right elbow is bent and the thumb is now just a few centimeters above her NOSE, her eyes focused on it. Same side view, lying on her back.",
+  "zoom": false,
+  "extra_avatar": "Frame both figures from the hips up, lying on the back, side view. Exaggerate: arm fully straight up with the thumb far from the face (top), thumb right above the nose (bottom)."
+ },
+ {
+  "slug": "schouder-naar-buiten-draaien-met-elastiek",
+  "naam": "Schouder naar buiten draaien – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the hips up, seen in a THREE-QUARTER FRONT view from her right side (her body turned about 45 degrees), so her right arm is large and clearly visible. Her right elbow is bent at a right angle and held against her side; the right forearm lies ACROSS her belly, the hand in front of her navel. Her right hand holds an elastic band that runs sideways across the front of her body to an anchor on a door at elbow height on her LEFT side. Her left arm hangs relaxed. The arrow is a curved horizontal arrow at the right hand going OUTWARD (away from her belly, to her right), showing the forearm turning outward while the elbow stays against her side.",
+  "eind_en": "END position: same framing and view. The right elbow is still bent at a right angle and still touches her side, but the right forearm now points forward and OUTWARD to her right (about 45 degrees out from straight forward), the elastic band stretched tight across her body to the anchor on her left.",
+  "zoom": false,
+  "extra_avatar": "Frame both figures from the hips up, three-quarter front view. In BOTH figures the right elbow is bent 90 degrees and touches her side. TOP: forearm across the belly. BOTTOM: forearm swung outward, band taut. The anchor is on her LEFT side, the band crosses in front of her body."
+ }
+]

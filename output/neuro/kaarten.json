@@ -1,0 +1,265 @@
+[
+ {
+  "naam": "Duizeligheid: blikstabilisatie fase 2",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "De blik stil houden terwijl hoofd of doel beweegt, staand en op een zachte ondergrond.",
+  "fase": 2,
+  "oefeningen": [
+   "Tandemstand – met hoofdbeweging",
+   "Duim volgen in een achtje – staand",
+   "Voeten samen op balansmat – hoofd op en neer"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Duizeligheid: blikstabilisatie fase 3",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Blikstabilisatie tijdens lopen en met een bewegend doel.",
+  "fase": 3,
+  "oefeningen": [
+   "Bal opgooien en nakijken – staand",
+   "Blikstabilisatie horizontaal – zittend langzaam",
+   "Duim volgen in een achtje – staand",
+   "Blikstabilisatie verticaal – zittend langzaam",
+   "Voet voor voet lopen – met hoofd draaien",
+   "Blikstabilisatie horizontaal – staand langzaam"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Duizeligheid: gewenning fase 1",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Wennen aan bewegingen die duizelig maken, te beginnen in lig en zit.",
+  "fase": 1,
+  "oefeningen": [
+   "Ogen heen en weer – ruglig",
+   "Ogen naar doelen – zittend langzaam",
+   "Nek draaien – zittend actief"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Duizeligheid: gewenning fase 2",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Gewenning met bukken en het volgen van een bal in zit.",
+  "fase": 2,
+  "oefeningen": [
+   "Bukken en oprichten – zittend",
+   "Buigen en oprichten – staand langzaam",
+   "Bal van hand naar hand gooien – zittend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Duizeligheid: gewenning fase 3",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Gewenning in stand met een bewegend doel en hoofdbewegingen.",
+  "fase": 3,
+  "oefeningen": [
+   "Draaiende paraplu volgen – staand",
+   "Blikstabilisatie horizontaal – staand langzaam",
+   "Blikstabilisatie horizontaal – tijdens lopen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Balans: neurologisch herstel fase 3",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Evenwicht tijdens lopen en bij gericht stappen, als vervolg op fase 1 en 2.",
+  "fase": 3,
+  "oefeningen": [
+   "Voet naar marker – met visueel doel",
+   "Voeten naast elkaar staan – met hoofdbeweging",
+   "Lunges",
+   "Voet voor voet lopen – met hoofd draaien"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hersenschudding: evenwicht deel 1",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Eerste evenwichtsoefeningen na een hersenschudding, met rustige hoofdbewegingen.",
+  "fase": 1,
+  "oefeningen": [
+   "Blikstabilisatie verticaal – zittend langzaam",
+   "Blikstabilisatie horizontaal – zittend langzaam",
+   "Voeten samen op balansmat – hoofd op en neer"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hersenschudding: evenwicht deel 2",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Evenwicht tijdens lopen met hoofd draaien en van richting veranderen.",
+  "fase": 2,
+  "oefeningen": [
+   "Blikstabilisatie horizontaal – tijdens lopen",
+   "Voet voor voet lopen – met hoofd draaien",
+   "Achtjes lopen om twee pionnen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hersenschudding: nek deel 2",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "De nekspieren aanspannen zonder bewegen, als vervolg op deel 1.",
+  "fase": 2,
+  "oefeningen": [
+   "Diepe nekflexoren activeren – liggend ondersteund",
+   "Nek isometrisch – voor, achter en opzij",
+   "Nek isometrisch buigen – hand op voorhoofd"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10 × 5 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hersenschudding: oogbewegingen niveau 1",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Rustige oogoefeningen in lig na een hersenschudding.",
+  "fase": 1,
+  "oefeningen": [
+   "Ogen heen en weer – ruglig",
+   "Duim naar de neus – ruglig",
+   "Ogen naar doelen – zittend langzaam"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hersenschudding: oogbewegingen niveau 2",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Een doel volgen met de ogen, zittend.",
+  "fase": 2,
+  "oefeningen": [
+   "Ogen naar doelen – zittend langzaam",
+   "Doel volgen – zittend langzaam",
+   "Doel volgen verticaal – zittend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hersenschudding: oogbewegingen niveau 3",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Een bewegende bal of paraplu volgen met de ogen, zittend en staand.",
+  "fase": 3,
+  "oefeningen": [
+   "Bal van hand naar hand gooien – zittend",
+   "Bal opgooien en nakijken – staand",
+   "Draaiende paraplu volgen – staand"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Neurologie: schouder en schouderblad met elastiek",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Schouder en schouderblad sterker maken met elastiek na een neurologische aandoening.",
+  "oefeningen": [
+   "Schouder naar binnen draaien – met elastiek",
+   "Schouder naar buiten draaien – met elastiek",
+   "Schouderblad naar achteren – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hersenschudding: nek en bovenrug deel 1",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Beweeglijkheid van nek en bovenrug terugwinnen na een hersenschudding.",
+  "fase": 1,
+  "oefeningen": [
+   "Nek draaien – zittend actief",
+   "Open boek – liggend",
+   "Borstspier rekken tegen de muur",
+   "Kin intrekken – liggend ondersteund",
+   "Yoga snake"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Romp: stabiliteit na neurologische aandoening fase 1",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Eerste stap in rompcontrole in lig, zit en op handen en knieën.",
+  "fase": 1,
+  "oefeningen": [
+   "360 graden ademhaling – eerste fase rustig",
+   "Bruggen beginner",
+   "Rug bol en hol – op handen en knieën",
+   "Romp draaien – zittend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "MS: algemeen oefenprogramma",
+  "categorie": "Neurologie en duizeligheid",
+  "sub": "Rekken, opstaan en balans voor mensen met multiple sclerose.",
+  "oefeningen": [
+   "Bovenste trapezius rek – zittend actief",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Armen naar voren schuiven over de tafel",
+   "Functioneel opstaan – functioneel",
+   "Tandemstand – met steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ }
+]
