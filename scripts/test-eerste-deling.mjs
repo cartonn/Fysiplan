@@ -15,7 +15,7 @@ import { createRequire } from "node:module";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const index = await readFile(join(root, "public/index.html"), "utf8");
-const sv = index.match(/function saveServerCard\(naam,cb\)\{[\s\S]*?\n  \}/);
+const sv = index.match(/function saveServerCard\(naam,cb(?:,keuze)?\)\{[\s\S]*?\n  \}/);
 assert.ok(sv, "saveServerCard gevonden");
 assert.match(sv[0], /\(d\.id===KAART_ID\|\|!KAART_ID\)\)zetKaartId\(d\.id,d\.ts\)/, "eerste deling onthoudt het kaart-id");
 

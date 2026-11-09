@@ -12,14 +12,57 @@ daaruit tot en met 2026-11-06.
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
 | (c) proef-tokens en verlopen proeven | 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP, patiëntroute met allowlist, praktijkroutes alleen eigen map) |
-| (e) uploads (video, logo, opname /o) | 2026-11-07 (logo-veeg wiste logo's van andere praktijken: opgelost; opname-upload, eigen oefening, /uploads-pad: geen gat) |
+| (e) uploads (video, logo, opname /o) | 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-07 (runtime: payloads in alle kaartvelden, /k in nl/en/ar met vertaling, overzicht, sjablonen, eigen oefeningen, serverpagina's; geen gat) |
-| (g) security-headers, CSP, cookies, CSRF | 2026-11-07 (runtime: koppen op 11 V2-pagina's en API, cookies HttpOnly+Lax+Secure, praktijksessie via eigen kop; kruisSite kijkt nu ook naar Origin) |
+| (g) security-headers, CSP, cookies, CSRF | 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat) |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
-| (i) denial of service: grote bodies, opslaggroei | 2026-11-07 (te grote body: nu 413, weglezen begrensd op 10 s en 80 MB) |
-| (j) npm audit | 2026-11-07 (sharp 0.35.3 → 0.35.5, daarna 0 meldingen) |
+| (i) denial of service: grote bodies, opslaggroei | 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
+| (j) npm audit | 2026-11-08 20u (0 meldingen, ook dev) |
 
-Volgende run: (g) headers/CSRF, daarna (i) opslaggroei en (j) npm audit.
+Volgende run: (f) injectie/XSS, daarna (a) beheer.
+
+Sanity 2026-11-09 00u op #109–#111 (videoquotum, werknotitie mee naar dossier, lightbox/proefvenster): `notitieT`
+reist alleen mee in het praktijkoverzicht (achter de praktijkpoort), niet in de patiëntroute (allowlist); de nieuwe
+`innerHTML` in de app is vaste tekst. Geen gat.
+
+Audit (e) 2026-11-09 00u:
+- **OPGELOST 2026-11-09 (deze PR) — MIDDEL — praktijkprofiel en logo van een praktijk zonder wachtwoord
+  overschrijfbaar door iedereen.** `POST /api/praktijken` gebruikte `eisPraktijk`, die bij een niet-geclaimde praktijk
+  alles doorlaat. Het profiel (telefoon, e-mail, website, logo) staat via `/api/kaart` op elke gedeelde patiëntkaart
+  van die praktijk. Met alleen de praktijknaam (staat op de geprinte kaart) kon iedereen er een eigen nummer, website
+  of logo neerzetten: phishing namens de praktijk. Repro lokaal: POST `/api/praktijken` met `{praktijk, adres, tel}`
+  zonder cookie gaf 200 en `/api/kaart?id=…` toonde daarna het valse nummer. Nu: `eisBeveiligdePraktijk` (zonder
+  wachtwoord alleen v1 en een eigen beheersleutel); de v2-app stuurt het profiel direct na beveiligen mee.
+  Test: `npm run test:profielovername`.
+- Verder nagelopen, geen gat: `/api/opname/upload` (token 48 bits, eenmalig, TTL, cross-site dicht, 60 MB vóór
+  bufferen, mp4/webm op magische bytes, quotum), beheer-uploads (alleen `isAdmin`), logo en eigen-oefeningfoto
+  (dataURL-regex + `echteAfbeelding`, 400/600 kB), `/uploads/` (normalize + prefixcheck, extensie-allowlist,
+  nosniff, CORP same-origin, noindex).
+
+Sanity 2026-11-08 20u op #106–#108 (verwijderde collega, Mijn gegevens-download, niet stil hernoemen): de nieuwe
+409-vraag in `POST /api/kaarten` zit achter dezelfde praktijkpoort en geeft alleen de naam van een kaart uit de
+eigen map terug. Geen gat.
+
+Audit (i) + (j) 2026-11-08 20u:
+- **OPGELOST 2026-11-08 (deze PR) — MIDDEL — één praktijk kon de videogrens voor alle praktijken volzetten.**
+  Iedereen kan gratis een praktijk claimen (5 per IP per dag) en daarna via `/api/opname/start` + `/o` eigen
+  video's tot 60 MB uploaden en op de eigen kaarten zetten (100 kaarten × 12 video's). Die tellen tegen de gedeelde
+  grens `VIDEO_OPSLAG_MAX_MB` (4 GB) en verdwijnen pas met de kaart. Na ~70 uploads kreeg elke andere praktijk
+  blijvend 507 "videopslag is vol". Nu: quotum per praktijk `VIDEO_PRAKTIJK_MAX_MB` (standaard 500 MB) over de
+  opnames op de eigen kaarten plus nog niet opgeslagen opnames; daarboven 507 met `praktijkVol`, andere praktijken
+  merken niets. Test: `npm run test:videoquotum`.
+- **LAAG — restrisico: meerdere geclaimde praktijken samen** (8 × 500 MB = 4 GB, met 5 claims per IP per dag twee
+  dagen vanaf één IP). Voorgestelde fix: bij de 507 van de gedeelde grens een melding in het beheerdashboard, of
+  voor praktijken in een proef een lager quotum (bv. 100 MB). Nu niet gebouwd: het quotum maakt het al veel duurder.
+- **LAAG — gelijktijdige uploads kunnen het quotum met hooguit 4 × 60 MB overschrijden** (`lopendeUploads` ≤ 4, de
+  telling gebeurt na het bufferen). Acceptabel; fix zou een reservering per praktijk zijn.
+- Verder nagelopen, geen gat: plafonds op praktijken (200/300/1000), kaarten per praktijk (100), metingen/gedaan
+  (366), ervaring/psk (120), contactlogboek (50), oefTrouw (60), oefzwaar (24), eigen oefeningen (200, foto 600 kB),
+  sjablonen (30), teamleden (50), proeven (5000), v1-tokens (500), opnametokens (200, TTL 15 min), logo 400 kB,
+  eigen categorieën (100); `/api/stats/event` alleen tellers met eigen rem. `npm audit`: 0 meldingen.
+
+Sanity 2026-11-08 16u op #103–#105 (Mijn gegevens in 9 talen, roepnaamvoorstel/landing printbaar, oefenteksten):
+alleen `PRIVACY_VERSIE` in server.js, geen nieuwe routes; de nieuwe vertalingen zijn vaste tekst. Geen gat.
 
 Sanity 2026-11-08 12u op #99–#101 (prijs €9,99, samenvatting VWO/voorwaarden, dubbeltik/seintje-antwoord): geen
 nieuwe routes of velden; de nieuwe foutmelding in de seintje-venster is vaste tekst. Geen gat.
@@ -116,11 +159,18 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
-- **MIDDEL (gebruikers-sweep 2026-11-08 14u, Mark) — verwijderde collega komt weer binnen met het gedeelde praktijkwachtwoord.**
-  Na × in Team vervalt zijn eigen sessie (401/403), maar inloggen met praktijknaam + praktijkwachtwoord geeft 200 en een
-  beheerderssessie (sessie zonder lid = beheer, server.js r. ~299 `isBeheer`; verwijderen r. ~2660–2671 trekt alleen
-  lid-sessies in). Het Team-venster belooft "kan een vertrokken collega er niet meer in" (index.html r. ~3044).
-  Voorstel: bij verwijderen waarschuwen of het gedeelde wachtwoord automatisch uitzetten zodra er eigen logins zijn.
+- **MIDDEL (gebruikers-sweep 2026-11-08 18u, Mark) — verlopen proef: seintje afhandelen werkt nog.** Een collega met een verlopen
+  proef krijgt bij antwoorden netjes 403, maar `/api/praktijk/inbox/afgehandeld` en `/api/kaart/seintje/gezien` staan niet in
+  `PROEF_SCHRIJFROUTES` (server.js r. ~541): het seintje verdwijnt uit de inbox zonder antwoord aan de patiënt. De app zet
+  `inboxGezien` ook na een 403 op het antwoord (index.html r. ~3786). iPad.
+
+- **OPGELOST 2026-11-08 (deze PR) — MIDDEL (gebruikers-sweep 2026-11-08 14u, Mark) — verwijderde collega komt weer binnen met het gedeelde praktijkwachtwoord.**
+  Na × in Team vervalt zijn eigen sessie, maar inloggen met praktijknaam + praktijkwachtwoord gaf 200 en een
+  beheerderssessie. Nu: zolang het praktijkwachtwoord werkt, geeft `/api/praktijk/team/verwijder` voor een actieve
+  collega 409 (`gedeeldAan`), en kiest de beheerder in de app "Verwijder en zet het praktijkwachtwoord uit"
+  (`gedeeld:"uit"`, alleen met eigen login; trekt ook alle gedeelde sessies in) of bewust "Alleen verwijderen"
+  (`gedeeld:"laten"`, met de tip het wachtwoord te veranderen). Uitgenodigden die nooit inlogden gaan gewoon weg.
+  Test: `npm run test:teamherstel` en `npm run test:team`.
 - **LAAG (sweep 14u, Jayden) — bericht van de therapeut laat tekst-omkeertekens (U+202E e.d.) door** naar /k; alleen
   \u0000–\u001f wordt gefilterd (server.js r. ~4333). Geen XSS (platte tekst), wel misleidende weergave.
 

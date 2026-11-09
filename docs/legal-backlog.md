@@ -10,23 +10,82 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 |---|---|
 | (a) privacyverklaring (art. 13/14 AVG) | 2026-11-07 (team, akkoord, Mijn gegevens, Railway-logs) |
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-07 (eigen login per therapeut, één akkoord) |
-| (c) algemene voorwaarden | 2026-11-07 (akkoord met versie, eigen login) |
-| (d) code tegen tekst | 2026-11-08 05u (wissen van opnames, eigen video's, logs, reservekopie; mails/FAQ over gedeelde kaarten) |
-| (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-08 01u (patiënt: Mijn gegevens-download leesbaar met eigen seintjes, PR #91) |
+| (c) algemene voorwaarden | 2026-11-09 05u (opzeggen in de app, einde abonnement; `AV_VERSIE` 2026-11-09) |
+| (d) code tegen tekst | 2026-11-09 05u (einde abonnement: wissen 30 dagen na het einde gebouwd) |
+| (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-08 17u (patiënt: download klopt nu direct na vinkjes en seintje, niet pas na herladen) |
 | (f) cookies en lokale opslag | 2026-11-08 13u (cookies `fpproef`/`fp1` kloppen; alle localStorage-sleutels van /k en de app langs de tekst gelegd; twee ontbraken in /privacy, toegevoegd) |
-| (g) MDR en AI-verordening | 2026-11-07 (vraaghulp op de kaart, zoekhulp, vertalen, AI-labels, landing en app) |
-| (h) WGBO en KNGF-beroepsregels | 2026-11-07 (contactlogboek in de dossiertekst) |
+| (g) MDR en AI-verordening | 2026-11-09 01u (vraaghulp gaf mogelijk doseringsadvies: opgelost; videolabels AI-concept/klinisch gecontroleerd volgen de reviewstatus; landing en app zonder sorteer- of doseringsbelofte) |
+| (h) WGBO en KNGF-beroepsregels | 2026-11-08 21u (werknotitie mee naar het dossier, dossierlabel vervalt bij nieuwe praktijkregels, datum heet nu "laatst opgeslagen") |
 | (i) begrijpelijkheid (B1) | 2026-11-08 09u (VWO en voorwaarden: "In het kort", VWO als concept gemarkeerd; /v2/gegevens-tekst) |
 
-Volgende run: (h) WGBO/KNGF, daarna (g) MDR en AI-verordening, dan (a) en (b).
+Volgende run: (a) privacyverklaring, dan (b) verwerkersovereenkomst. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **HOOG — code tegen tekst (2026-11-09 05u): een opgezegd abonnement stopte nooit en er werd nooit gewist.**
+  Voorwaarden art. 5 en verwerkersovereenkomst art. 10 beloven: na het einde worden de kaarten van de praktijk binnen
+  30 dagen gewist. Na opzeggen bleef `proef.klant` echter voor altijd `true`: de praktijk kon na de betaalde maand
+  gratis kaarten blijven maken, en kaarten, account, profiel en aanmelding (met telefoon) bleven staan (art. 5 lid 1e
+  en art. 28 lid 3g AVG). OPGELOST 2026-11-09 (deze PR): `abonnementEindeStap` (lib/mollie.js) in de uurlijkse
+  proefronde zet na `betaaldTot` het abonnement op "beeindigd" (geen klant, proefpoort dicht, gedeelde kaarten werken
+  nog) en wist 30 dagen later alles van de praktijk via `praktijkAllesWissen` (dezelfde route als "Alles wissen" op
+  /v2/gegevens; fiscale gegevens blijven 7 jaar). Pagina, mail en voorwaarden noemen de 30 dagen.
+  Test: `scripts/test-abonnement-einde.mjs` (faalt zonder fix), plus unit-test in `test-abonnement-mollie.mjs`.
+  Nog niet: een abonnement dat stopt omdat een maandincasso mislukt (er is nog geen incasso); de praktijk krijgt
+  geen herinneringsmail vlak voor het wissen (zie mensenwerk).
+
+- **MIDDEL — voorwaarden (2026-11-09, gemeld door de praktijk-routine): opzeggen kan nu ook in de app.**
+  OPGELOST 2026-11-09 (deze PR): art. 5 zegt nu "zelf in de app (Mijn proef) of per e-mail", stopt aan het einde van
+  de betaalde maand, intrekken kan tot die dag. Nieuwe `AV_VERSIE` 2026-11-09 met regel in `AKKOORD_WIJZIGINGEN`
+  (beheerders zien het in de app). Opzegtermijn blijft een invulplek voor Ahmed.
+  `public/juridisch.html` (abonnement) zegt "Opzeggen doe je per e-mail. Je krijgt een bevestiging." en "Opzegtermijn:
+  in te vullen". Sinds PR "praktijk: abonnement zelf opzeggen" kan een betalende praktijk op /v2/proef?mijn=1 zelf
+  opzeggen; dat gaat in per het einde van de al betaalde maand (`abonnement.betaaldTot`), tot dan kan ze het intrekken,
+  en met mail ingesteld krijgt ze een bevestiging. Voorstel: "Opzeggen doe je in de app (Mijn proef) of per e-mail;
+  het abonnement stopt aan het einde van de betaalde maand." Opzegtermijn blijft een keuze van Ahmed (zie mensenwerk).
+
+- **HOOG — MDR (2026-11-09 01u): de AI-vraaghulp op /k kon een dosering invullen.**
+  Een vraag als "Hoeveel herhalingen moet ik doen?", "Hoe vaak per dag?" of "Mag ik zwaarder?" ging naar de AI-dienst,
+  die de dosering van de kaart niet meekrijgt en hem dus zelf moest bedenken. Dat is doseringsadvies per patiënt,
+  precies de grens waarop software een medisch hulpmiddel wordt (MDCG 2019-11, regel 11 MDR; Fysiplan belooft
+  "kiest geen behandeling of dosering"). De systeemprompt verbood alleen "aantallen veranderen", niet ze noemen.
+  OPGELOST 2026-11-09 (deze PR): `vraagOverDosering` in `lib/vraaghulp-grens.js` vangt hoe vaak/hoeveel/hoe lang/
+  hoe zwaar af in de 9 kaarttalen; de server geeft dan een vaste verwijzing ("staat op je kaart, vraag je praktijk",
+  zonder AI-label) en roept de AI-dienst niet aan. Prompt: "noem of verander nooit aantallen ... of hoe vaak".
+  /privacy (patiëntdeel, `PRIVACY_VERSIE` 2026-11-09) en landing zeggen het erbij. Test: `scripts/test-vraaghulp-grens.mjs`
+  (faalt zonder fix). Bewust ruim: "hoe lang moet ik vasthouden?" wordt ook verwezen; een onterechte verwijzing
+  kost de patiënt niets.
+  Gecontroleerd zonder gat: videolabel "AI-demonstratie · klinisch gecontroleerd" verschijnt alleen bij
+  `clinicallyReviewed === true`, anders "AI-concept · beoordeling volgt" (AI-verordening art. 50 lid 4, alle 9 talen);
+  landingsfoto's dragen "AI-bewerkt"; zoekhulp geeft geen dosering; sorteren "meldingen eerst" gaat alleen over
+  meldingen die de patiënt zelf stuurde, niet over scores (geen "wie slechter wordt komt bovenaan").
+- **LAAG — landing: "auditlogboek is openbaar" linkte naar het oude `docs/security-log.md`** (sinds 7 nov niet meer
+  bijgewerkt), terwijl de tekst zegt dat de beveiliging doorlopend getoetst wordt. OPGELOST 2026-11-09 (deze PR):
+  link naar `docs/security-backlog.md`.
+
+- **MIDDEL — WGBO (2026-11-08 21u): werknotitie en berichten konden ongemerkt met de kaart verdwijnen.**
+  De werknotitie ("linkerknie ontzien") staat alleen in Fysiplan, maar ging niet mee in "Kopieer voor dossier".
+  Het label "In dossier" keek alleen naar invoer van de patiënt: een werknotitie of bericht van de praktijk ná het
+  label liet de kaart "bijgewerkt in het dossier" lijken, dus de bewaartermijn waarschuwde niet. De dossiertekst
+  noemde het laatste opslaan "Aangemaakt" (ook in de CSV-kop), een onjuiste datum in het dossier.
+  Bron: art. 7:454 BW (dossierplicht); KNGF-richtlijn Fysiotherapeutische verslaglegging.
+  OPGELOST 2026-11-08 PR #110: `laatsteDossierInvoer` (server.js) telt ook praktijkberichten en `notitieT`;
+  dossiertekst neemt de werknotitie mee; "Kaart laatst opgeslagen" en CSV-kop "Laatst opgeslagen"; /privacy noemt
+  berichten en werknotitie bij de praktijkgegevens. Test in `scripts/test-dossier-contact.mjs` (faalt zonder fix).
+  Gecontroleerd zonder gat: app en landing noemen Fysiplan overal "geen dossier" (/privacy, voorwaarden, VWO,
+  FAQ), dossiertekst eindigt met bron en bewaartermijn, weekbrief waarschuwt voor kaarten die nog niet in het dossier staan.
+  Nog open (LAAG): opnieuw opslaan van een kaart wist het label "In dossier" (conservatief: de waarschuwing komt
+  terug), maar ook wie het label zette; dat staat wel in het praktijklogboek.
 
 - **MIDDEL (gebruikers-sweep 2026-11-08 14u, Truus) — /k "Download mijn gegevens" direct na tikken klopt niet** (inzage art. 15).
   Na 2 oefeningen afvinken en een seintje toont de download "0 jours" en "Mes messages au cabinet: rien"; pas na herladen
   klopt het. `zetOefTrouwLokaal` maakt `{n:0}` (kaart.html r. ~1038), download print `n` (r. ~1661); `mijnSeintjes` wordt
   na een seintje niet lokaal bijgewerkt (r. ~1669). Alle talen. iPhone SE.
+  OPGELOST 2026-11-08 PR #107: `mgTrouwTik` volgt de serverregel van /api/kaart/oefening (één dag telt één keer,
+  uitvinken dezelfde dag haalt hem weg); na een verstuurd seintje zet `mgSeintjeErbij` het meteen in `mijnSeintjes`.
+  Test in `scripts/test-mijn-gegevens.mjs` (faalt zonder fix). Rest: een seintje uit de offline-wachtrij komt pas na
+  herladen in de seintjeslijst; tot dan staat het onder "Nog niet verstuurd", dus niets ontbreekt.
 
 - **LAAG — /k "Mijn gegevens"-download alleen in nl en en** (2026-11-08). OPGELOST 2026-11-08 PR #103: `TMGD` in alle 9 talen,
   datums in de kaarttaal, test in `scripts/test-mijn-gegevens.mjs`.
@@ -37,6 +96,8 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   sessionStorage alleen voor de beheersleutel in het tabblad.
 - **LAAG — Privacy-link op een Engelse/Arabische kaart opent een pagina die alleen Nederlands is** en niet het
   patiëntdeel `#patient` (sweep 18u, Jayden, Pixel 7). kaart.html r. ~473, ~599; server.js `juridischBlok`.
+  DEELS OPGELOST 2026-11-08 PR #107: beide links gaan nu naar `/privacy#patient` met `hreflang="nl"`. Nog open (LAAG):
+  het patiëntdeel van /privacy is alleen Nederlands; vertalen in de 9 kaarttalen is de volgende stap.
 
 - **LAAG — praktijk kan de vraaghulp op de kaart niet zelf uitzetten (2026-11-07).** Staat
   `ANTHROPIC_API_KEY` aan, dan ziet elke patiënt de vraaghulp. De praktijk is

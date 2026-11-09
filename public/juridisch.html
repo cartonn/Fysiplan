@@ -21,13 +21,13 @@
   @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;
     src:url(/fonts/inter-latin-wght-normal.woff2) format('woff2')}
   :root{
-    --bg:#f6f2e9; --papier:#fffdf7; --inkt:#232019; --tekst:#3d3a31; --demp:#6b6557; --zacht:#a39c8a;
+    --bg:#f6f2e9; --papier:#fffdf7; --inkt:#232019; --tekst:#3d3a31; --demp:#6b6557; --zacht:#6f6858;
     --blauw:#2456a6; --blauw-05:#edf2fa; --oranje:#d4501f; --lijn:#e3dbc6; --lijn-z:#efe9d8;
     --serif:'Newsreader',Charter,'Iowan Old Style','Palatino Linotype',Georgia,serif;
     --disp:'Inter','Avenir Next',Seravek,'Segoe UI',system-ui,-apple-system,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font:17px/1.65 var(--serif);color:var(--tekst);background:var(--bg);-webkit-font-smoothing:antialiased;min-height:100vh}
+  body{font:17px/1.65 var(--serif);color:var(--tekst);background:var(--bg);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-wrap:break-word;hyphens:auto}
   a{color:var(--blauw)}
   a:focus-visible{outline:2px solid var(--blauw);outline-offset:2px}
   nav{border-bottom:1px solid var(--lijn);background:rgba(246,242,233,.92)}
@@ -104,7 +104,7 @@ __INHOUD__
     <li><b>Wat er niet op hoort:</b> je achternaam, geboortedatum, BSN of diagnose. Fysiplan vraagt daar niet om; je dossier staat bij je praktijk.</li>
     <li><b>Wie het ziet:</b> jijzelf, en iedereen aan wie je de link of QR-code geeft. Daarnaast alleen je eigen praktijk, die er een wachtwoord voor heeft. Fysiplan kijkt niet in kaarten, behalve als je praktijk om hulp vraagt.</li>
     <li><b>Hoe lang:</b> een kaart verdwijnt vanzelf __STIL__ dagen nadat er niets meer mee gebeurde, of __AFGEROND__ dagen nadat je therapeut de behandeling afrondde. Daarna staat hij nog hooguit 7 dagen in de dagelijkse reservekopie. Je praktijk kan je kaart ook eerder wissen of je een nieuwe link geven. Onder <b>Mijn gegevens</b> op je kaart zie je tot wanneer hij minstens blijft.</li>
-    <li><b>Vraaghulp:</b> stel je een vraag aan je kaart, dan beantwoordt een AI-dienst (Anthropic, Verenigde Staten) die. Alleen je vraag en de namen van je oefeningen gaan mee, niet je naam of scores, en de vraag wordt niet bewaard. Gaat je vraag over pijn, klachten, medicijnen of herstel, dan stuurt Fysiplan hem niet door: je krijgt dan het advies je eigen praktijk te bellen. Zet er zelf geen persoonsgegevens in.</li>
+    <li><b>Vraaghulp:</b> stel je een vraag aan je kaart, dan beantwoordt een AI-dienst (Anthropic, Verenigde Staten) die. Alleen je vraag en de namen van je oefeningen gaan mee, niet je naam of scores, en de vraag wordt niet bewaard. Gaat je vraag over pijn, klachten, medicijnen of herstel, of over hoe vaak, hoeveel of hoe zwaar je oefent, dan stuurt Fysiplan hem niet door: je krijgt dan het advies je kaart te volgen en je eigen praktijk te bellen. Zet er zelf geen persoonsgegevens in.</li>
     <li><b>Video's:</b> sommige oefenvideo's komen van YouTube (Google) of Cloudflare. Pas als je op afspelen tikt, krijgen zij je IP-adres te zien.</li>
     <li><b>Geen volgcookies:</b> geen advertenties en geen analysediensten. Wat je telefoon onthoudt, staat hieronder bij <a href="#opslag">Cookies en opslag op je apparaat</a>.</li>
   </ul>
@@ -113,7 +113,7 @@ __INHOUD__
   <table class="tabel">
     <thead><tr><th>Gegevens</th><th>Waarvoor</th><th>Hoe lang</th></tr></thead>
     <tbody>
-      <tr><td>Oefenkaarten met roepnaam en wat de pati&euml;nt aantikt</td><td>De pati&euml;nt laten oefenen en de praktijk laten zien wat de pati&euml;nt zelf meldt (verwerker, in opdracht van de praktijk)</td><td>__STIL__ dagen na de laatste activiteit, of __AFGEROND__ dagen na afronden; plus 7 dagen reservekopie</td></tr>
+      <tr><td>Oefenkaarten met roepnaam en wat de pati&euml;nt aantikt, berichten van de praktijk aan de pati&euml;nt, en een werknotitie die alleen de praktijk ziet</td><td>De pati&euml;nt laten oefenen en de praktijk laten zien wat de pati&euml;nt zelf meldt (verwerker, in opdracht van de praktijk)</td><td>__STIL__ dagen na de laatste activiteit, of __AFGEROND__ dagen na afronden; plus 7 dagen reservekopie</td></tr>
       <tr><td>Praktijknaam, wachtwoord en herstelcode (alleen als onomkeerbare hash)</td><td>Alleen jouw praktijk toegang geven tot jouw kaarten</td><td>Zolang de praktijk Fysiplan gebruikt</td></tr>
       <tr><td>Teamleden: naam, e-mail, rol (beheerder of therapeut), wachtwoord (alleen als hash), wanneer iemand het laatst inlogde, en een openstaande uitnodiging (alleen als hash, 7 dagen geldig)</td><td>Elke therapeut een eigen login geven, zodat te zien is wie wat deed (artikel 32 AVG)</td><td>Tot de beheerder iemand uit het team haalt; dan direct weg</td></tr>
       <tr><td>Wie in de app iets afhandelde of naar het dossier zette (naam van de therapeut bij de kaart)</td><td>De praktijk laten zien wie een melding van een pati&euml;nt oppakte</td><td>Zolang de kaart bestaat</td></tr>
@@ -131,7 +131,7 @@ __INHOUD__
   <h2 id="beoogd">Wat Fysiplan niet doet</h2>
   <div class="blad">
     <p>Fysiplan is bedoeld om de oefeningen die de fysiotherapeut kiest aan de pati&euml;nt mee te geven, en om wat de pati&euml;nt zelf aantikt (pijnscore, oefenvinkje, seintje) aan de eigen therapeut te tonen. Fysiplan stelt geen diagnose, berekent geen dosering, geeft geen behandeladvies en beoordeelt geen scores. De therapeut beslist.</p>
-    <p>Fysiplan is ook geen dossier. Wat je volgens de WGBO moet bewaren, zet je in je eigen EPD; de knop &ldquo;Kopieer voor dossier&rdquo; maakt daar een tekst voor.</p>
+    <p>Fysiplan is ook geen dossier. Wat je volgens de WGBO moet bewaren, zet je in je eigen EPD; de knop &ldquo;Kopieer voor dossier&rdquo; maakt daar een tekst voor, met de scores, de seintjes, je berichten en je werknotitie. Komt er daarna iets bij, dan staat de kaart weer bij &ldquo;nog niet bijgewerkt in het dossier&rdquo;.</p>
   </div>
 
   <h2 id="opslag">Cookies en opslag op je apparaat</h2>
@@ -302,8 +302,8 @@ __INHOUD__
   <h2 id="stoppen">5. Looptijd en stoppen</h2>
   <ul>
     <li>Het abonnement loopt per maand en is maandelijks opzegbaar. Opzegtermijn: <span class="invul">in te vullen</span>.</li>
-    <li>Opzeggen doe je per e-mail. Je krijgt een bevestiging.</li>
-    <li>Na het einde wissen we de kaarten van je praktijk binnen 30 dagen, zoals in de <a href="/verwerkersovereenkomst">verwerkersovereenkomst</a> staat. Kopieer v&oacute;&oacute;r het einde naar je dossier wat je wilt bewaren; op <a href="/v2/gegevens">Gegevens van je praktijk</a> download je alles in &eacute;&eacute;n bestand of wis je het meteen zelf.</li>
+    <li>Opzeggen doe je zelf in de app (Mijn proef) of per e-mail. Je krijgt een bevestiging. Het abonnement stopt aan het einde van de maand die je al betaald hebt; tot die dag kun je de opzegging intrekken.</li>
+    <li>Na het einde maak je geen nieuwe kaarten meer. Kaarten die je deelde, blijven nog even werken. 30 dagen na het einde wissen we alles van je praktijk, ook de gedeelde kaarten, zoals in de <a href="/verwerkersovereenkomst">verwerkersovereenkomst</a> staat. Kopieer daarvoor naar je dossier wat je wilt bewaren; op <a href="/v2/gegevens">Gegevens van je praktijk</a> download je alles in &eacute;&eacute;n bestand of wis je het meteen zelf.</li>
     <li>Fysiplan mag het abonnement be&euml;indigen als je deze voorwaarden ernstig schendt, bijvoorbeeld bij misbruik of als je na een herinnering niet betaalt. Fysiplan kan ook stoppen met de dienst; dat melden we minstens 3 maanden vooraf.</li>
   </ul>
 

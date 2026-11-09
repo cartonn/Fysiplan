@@ -9,7 +9,7 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { aantalTherapeuten, maandBedrag, beoordeelBetaling } from "../lib/mollie.js";
+import { aantalTherapeuten, maandBedrag, beoordeelBetaling, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN } from "../lib/mollie.js";
 import { volgendFactuurNr, bedragen, naarCent, euro, factuurHtml, isFactuur } from "../lib/factuur.js";
 
 // 1b. factuur: nummering, btw en escapen
@@ -38,6 +38,28 @@ assert.equal(beoordeelBetaling(ok, pr), "betaald");
 assert.equal(beoordeelBetaling({ ...ok, metadata: { proef: "p2" } }, pr), "vreemd");
 assert.equal(beoordeelBetaling({ ...ok, amount: { currency: "EUR", value: "0.01" } }, pr), "vreemd");
 assert.equal(beoordeelBetaling({ ...ok, status: "canceled" }, pr), "mislukt");
+// 1c. opzeggen: alleen een actief abonnement, intrekken alleen binnen de betaalde maand
+const ab = { abonnement: { status: "actief", betaaldTot: 2000 } };
+assert.equal(markeerOpgezegd(ab, 1000), true); assert.equal(ab.abonnement.status, "opgezegd");
+assert.equal(markeerOpgezegd(ab, 1500), false, "tweede keer verandert niets"); assert.equal(ab.abonnement.opgezegd, 1000);
+assert.equal(trekOpzeggingIn(ab, 2500), false, "na de betaalde maand niet meer intrekken");
+assert.equal(trekOpzeggingIn(ab, 1500), true); assert.equal(ab.abonnement.status, "actief"); assert.ok(!("opgezegd" in ab.abonnement));
+assert.equal(markeerOpgezegd({}, 1), false); assert.equal(markeerOpgezegd({ abonnement: { status: "gestopt" } }, 1), false);
+// 1d. einde na opzeggen: na de betaalde maand gestopt, 30 dagen later wissen (voorwaarden art. 5)
+const D = 86400000;
+const eind = { klant: true, verloopt: 5, abonnement: { status: "opgezegd", betaaldTot: 100 * D } };
+assert.equal(abonnementEindeStap(eind, 99 * D), null, "binnen de betaalde maand verandert niets");
+assert.equal(eind.klant, true);
+assert.equal(abonnementEindeStap(eind, 100 * D), "gestopt");
+assert.equal(eind.klant, false, "geen klant meer"); assert.equal(eind.verloopt, 100 * D, "proefpoort dicht vanaf betaaldTot");
+assert.equal(eind.abonnement.status, "beeindigd");
+assert.equal(trekOpzeggingIn(eind, 100 * D), false, "intrekken kan niet meer");
+assert.equal(abonnementEindeStap(eind, (100 + NA_EINDE_WISSEN_DAGEN) * D - 1), null);
+assert.equal(abonnementEindeStap(eind, (100 + NA_EINDE_WISSEN_DAGEN) * D), "wissen");
+const laat = { klant: true, abonnement: { status: "opgezegd", betaaldTot: D } };
+assert.equal(abonnementEindeStap(laat, 40 * D), "wissen", "lang voorbij: meteen wissen");
+assert.equal(abonnementEindeStap({ klant: true, abonnement: { status: "actief", betaaldTot: D } }, 99 * D), null, "actief abonnement stopt niet vanzelf");
+assert.equal(abonnementEindeStap({ gewist: 1, abonnement: { status: "beeindigd", betaaldTot: D } }, 99 * D), null);
 
 // 2. nep-Mollie
 const nep = { verzoeken: [], betaling: null };
@@ -187,6 +209,33 @@ try {
   assert.equal((await leesProef()).abonnement.factuurNr, "FP-" + jaar + "-0001", "nummer bewaard");
   html = await (await fetch(srv.origin + "/v2/app", { headers: { cookie } })).text();
   assert.doesNotMatch(html, /gratis dagen zitten erop/, "na betalen geen verlopen-pagina meer");
+
+  // opzeggen in de app (Mijn proef), en weer intrekken
+  html = await (await fetch(srv.origin + "/v2/proef?mijn=1", { headers: { cookie } })).text();
+  assert.match(html, /action="\/v2\/proef\/opzeggen"/, "Mijn abonnement heeft een opzegknop");
+  assert.doesNotMatch(html, /je proef loopt nog/, "een klant ziet geen proefteller");
+  r = await form(srv.origin, "/v2/proef/opzeggen", { actie: "opzeggen" }, { cookie });
+  assert.equal(r.status, 422, "zonder vinkje niet opgezegd");
+  r = await form(srv.origin, "/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1" }, { cookie, "sec-fetch-site": "cross-site" });
+  assert.equal(r.status, 403, "opzeggen vanaf een andere site geweigerd");
+  r = await form(srv.origin, "/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1" });
+  assert.equal(r.headers.get("location"), "/v2/proef", "zonder cookie niets opgezegd");
+  assert.equal((await leesProef()).abonnement.status, "actief", "nog steeds actief");
+  r = await form(srv.origin, "/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1" }, { cookie });
+  assert.equal(r.status, 200);
+  assert.match(await r.text(), /Je abonnement is opgezegd/);
+  const opg = (await leesProef()).abonnement;
+  assert.equal(opg.status, "opgezegd"); assert.ok(opg.opgezegd > 0);
+  await form(srv.origin, "/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1" }, { cookie });
+  assert.equal((await leesProef()).abonnement.opgezegd, opg.opgezegd, "opzeggen is idempotent");
+  html = await (await fetch(srv.origin + "/v2/proef?mijn=1", { headers: { cookie } })).text();
+  assert.match(html, /abonnement is opgezegd/); assert.match(html, /Toch doorgaan/); assert.match(html, /href="\/v2\/proef\/factuur"/);
+  html = await (await fetch(srv.origin + "/v2/app", { headers: { cookie } })).text();
+  assert.doesNotMatch(html, /gratis dagen zitten erop/, "opgezegd: de betaalde maand loopt gewoon door");
+  r = await form(srv.origin, "/v2/proef/opzeggen", { actie: "intrekken" }, { cookie });
+  assert.match(await r.text(), /abonnement loopt door/);
+  assert.equal((await leesProef()).abonnement.status, "actief", "opzegging ingetrokken");
+  assert.ok(nep.verzoeken.every((v) => v.methode !== "DELETE"), "opzeggen raakt Mollie niet");
   srv.app.kill(); await new Promise((r) => srv.app.once("exit", r));
 
   // 5. met btw-id en bedrijfsgegevens: een echte factuur, zelfde nummer
@@ -198,6 +247,13 @@ try {
   assert.match(html, /Btw-id NL000000000B01/); assert.match(html, /KvK 12345678/);
   assert.match(html, /Btw 21%/); assert.ok(html.includes(euro(b.btw)) && html.includes(euro(b.excl)), "btw uitgesplitst");
   assert.match(html, /FP-\d{4}-0001/, "nummer verandert niet bij opnieuw bekijken");
+  // gegevens wissen via Mijn proef na een betaling: de fiscale gegevens blijven 7 jaar
+  r = await form(srv.origin, "/v2/proef/wissen", { zeker: "1" }, { cookie });
+  assert.equal(r.status, 200);
+  const gewist = await leesProef();
+  assert.ok(gewist, "betaalde aanmelding niet helemaal weg (fiscale bewaarplicht)");
+  assert.equal(gewist.abonnement.status, "gestopt"); assert.match(gewist.abonnement.factuurNr, /^FP-/);
+  assert.ok(!gewist.tel && !(gewist.tokens || []).length, "telefoon en apparaten wel gewist");
   console.log("abonnement via Mollie: alle controles groen");
 } catch (err) {
   if (srv) console.error(srv.app.uit.slice(-2000));

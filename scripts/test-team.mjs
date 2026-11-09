@@ -122,7 +122,17 @@ try {
 
   // ---- collega verwijderen: meteen uitgelogd ----
   const idJ = team.leden.find((l) => l.email === "joris@team.nl").id;
-  assert.equal((await post("/api/praktijk/team/verwijder", { id: idJ }, S)).status, 200);
+  // (security 2026-11-08) het gedeelde praktijkwachtwoord werkt nog: niet stil verwijderen,
+  // want een vertrokken collega die het kende, komt daarmee weer binnen als beheerder
+  const stil = await post("/api/praktijk/team/verwijder", { id: idJ }, S);
+  assert.equal(stil.status, 409, "verwijderen vraagt eerst wat er met het praktijkwachtwoord gebeurt");
+  const sj = await stil.json();
+  assert.equal(sj.gedeeldAan, true);
+  assert.equal(sj.kanUit, true);
+  assert.equal((await get("/api/praktijk/team", J2)).status, 200, "na de vraag is de collega nog niet verwijderd");
+  assert.equal((await post("/api/praktijk/team/verwijder", { id: idJ, gedeeld: "uit" }, G)).status, 400,
+    "met het gedeelde wachtwoord ingelogd kun je het niet tegelijk uitzetten");
+  assert.equal((await post("/api/praktijk/team/verwijder", { id: idJ, gedeeld: "laten" }, S)).status, 200, "bewust laten mag");
   assert.equal((await get("/api/praktijk/team", J2)).status, 401, "verwijderde collega is uitgelogd");
   assert.equal((await post("/api/praktijk/login", { email: "joris@team.nl", wachtwoord: "joris-nieuw-ww" })).status, 403);
   assert.equal((await get("/api/kaarten?praktijk=Fysio%20Team", S)).status, 200, "kaarten blijven bij de praktijk");

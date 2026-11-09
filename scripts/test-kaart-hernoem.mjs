@@ -49,8 +49,16 @@ try {
   const { id, ts } = await r1.json();
   assert.equal((await post("/api/kaart/meting", { id, score: 4 })).status, 200);
 
-  // therapeut verbetert de roepnaam en slaat opnieuw op vanuit dezelfde editor
-  const r2 = await deel("Dirck", { kaartId: id, basisTs: ts });
+  // andere naam vanuit dezelfde editor zonder keuze: niet stil hernoemen (sweep 2026-11-08,
+  // Sanne: "opslaan als Piet V." vanuit de kaart van Jan K. gaf Jans QR de kaart van Piet)
+  const vraag = await deel("Dirck", { kaartId: id, basisTs: ts });
+  assert.equal(vraag.status, 409, "eerst vragen: zelfde patiënt of nieuwe kaart");
+  const vj = await vraag.json();
+  assert.equal(vj.hernoemVraag, true);
+  assert.equal(vj.naam, "Dirk");
+  assert.deepEqual((await lijst()).map((x) => x.naam), ["Dirk"], "niets hernoemd zonder keuze");
+  // therapeut verbetert de roepnaam en kiest "zelfde patiënt"
+  const r2 = await deel("Dirck", { kaartId: id, basisTs: ts, hernoem: true });
   assert.equal(r2.status, 200, "hernoemen via opslaan lukt");
   const d2 = await r2.json();
   assert.equal(d2.id, id, "zelfde id, dus de geprinte QR blijft kloppen");
@@ -118,7 +126,16 @@ try {
   const verder = await deel("Dirk B.", { kaartId: id, basisTs: dn.ts, client: { c_naam: "Dirk B.", c_doel: "wandelen" } });
   assert.equal(verder.status, 200);
   assert.ok((await lijst()).some((x) => x.naam === "Dirk B."));
+  // keuze "nieuwe kaart" vanuit de editor van Dirk B. (kaartId leeg): eigen id, Dirk blijft
+  const voor = (await lijst()).length;
+  const piet = await deel("Piet V.", { kaartId: "" });
+  assert.equal(piet.status, 200);
+  assert.notEqual((await piet.json()).id, id, "nieuwe patiënt krijgt een eigen QR");
+  assert.equal((await lijst()).length, voor + 1);
+  assert.ok((await lijst()).some((x) => x.naam === "Dirk B." && x.id === id), "kaart van Dirk B. blijft staan");
   const idx = await readFile(join(root, "public/index.html"), "utf8");
+  assert.match(idx, /d\.hernoemVraag&&!keuze/, "opslaan vraagt bij een andere naam: nieuwe kaart of naam verbeteren");
+  assert.match(idx, /act:'nieuwkaart'[\s\S]{0,200}act:'hernoem'/, "QR-hint biedt beide keuzes");
   const hblok = idx.match(/var hn=e\.target\.closest\('\[data-shernoem\]'\);[\s\S]*?\n      return;\n    \}/);
   assert.ok(hblok, "hernoem-handler gevonden");
   assert.match(hblok[0], /zetKaartId\(KAART_ID,d\.ts/, "open editor neemt de nieuwe versie over");

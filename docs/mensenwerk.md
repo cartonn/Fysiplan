@@ -4,6 +4,14 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Einde van een opgezegd abonnement (legal, 2026-11-09)
+**Wat de code nu doet:** na opzeggen loopt het abonnement tot het einde van de betaalde maand. Daarna is de
+praktijk geen klant meer (geen nieuwe kaarten), en 30 dagen later wist Fysiplan alles van die praktijk; alleen
+naam, e-mail, praktijknaam en betaling blijven 7 jaar. Jij krijgt een mail op de dag dat het abonnement stopt.
+**Wat jij moet kiezen:** (1) wil je dat de praktijk een paar dagen vóór het wissen nog een mail krijgt? Advies: ja,
+zodra er een maandincasso is. (2) Teruggave van geld bij opzeggen halverwege de maand: de code boekt niets terug;
+zet je keuze in de voorwaarden (art. 5) of laat de jurist het zeggen. (3) De opzegtermijn in art. 5 is nog een invulplek.
+
 ### Vraaghulp op de kaart (legal, 2026-11-07)
 **Wat de code nu doet:** met `ANTHROPIC_API_KEY` ziet elke patiënt "Vraag over je oefeningen (AI)".
 Vragen over pijn, klachten, medicijnen of herstel gaan sinds 7 november niet meer naar de AI-dienst;
@@ -45,7 +53,22 @@ Zonder sleutel verandert er niets: alleen "Ja, ik wil doorgaan" en jij belt.
    beloven dat je praktijken laat weten voordat de automatische maandincasso begint; doe dat (of
    laat de code het doen) vóór de eerste incasso. Laat de 7 jaar bewaren door je boekhouder bevestigen.
 **Nog niet gebouwd (volgende runs):** de maandelijkse incasso na maand 1 (Mollie-subscription op het
-mandaat) en opzeggen in de app. Tot dan: de eerste maand loopt via Mollie, de rest regel je zelf.
+mandaat). Tot dan: de eerste maand loopt via Mollie, de rest regel je zelf.
+
+### Abonnement zelf opzeggen (praktijk-routine, 2026-11-09)
+**Wat de code nu doet:** een praktijk die online betaalde ziet op https://fysiplan.nl/v2/proef?mijn=1 het blok
+"Je abonnement" met factuur en de knop "Abonnement opzeggen" (vinkje verplicht). Opzeggen gaat in per het einde van
+de betaalde maand; tot die datum kan de praktijk "Toch doorgaan". Jij krijgt een mail "Opgezegd: …" of "Opzegging
+ingetrokken: …", de praktijk een bevestiging (alleen als `MAIL_API_SLEUTEL` en `MAIL_AFZENDER` staan). Er gaat niets
+naar Mollie, want er loopt nog geen maandincasso; de komende incasso slaat opgezegde abonnementen over. Ook opgelost:
+"Gegevens wissen" op Mijn proef wiste bij een betalende praktijk ook de betaling en het factuurnummer; nu blijft wat de
+fiscale bewaarplicht vraagt (7 jaar), net als bij Alles wissen op /v2/gegevens.
+Zonder `MOLLIE_API_KEY` bestaat er geen online abonnement, dus verandert er niets.
+**Wat jij moet doen:**
+1. **Beslissen:** opzegtermijn. Gebouwd is "stopt aan het einde van de betaalde maand" (geen extra termijn). Wil je
+   een termijn (bv. een maand), zeg het. Vul dan ook "Opzegtermijn" in de voorwaarden in (staat in de legal-backlog).
+2. Na het einde van een opgezegde maand gaat de app nog niet vanzelf op slot; dat komt samen met de maandincasso.
+   Tot dan zie je opzeggingen in je mail en zet je de praktijk zelf op "geen klant" in /aanmeldingen.
 
 ### Factuur per online betaling (praktijk-routine, 2026-11-08)
 **Wat de code nu doet:** na een online betaling ziet de praktijk op de bedankpagina en in "Mijn proef"
