@@ -3323,7 +3323,8 @@
   "groep": "Balans en valpreventie",
   "img": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-line-v1.png",
   "coreExerciseId": "fc_aff98ba2f3eed4a1",
-  "uitleg": "Sta rechtop achter een stevige tafel of het aanrecht en houd deze vast. Zet rustig een stap opzij en sluit je andere voet langzaam aan. Stap daarna dezelfde weg weer terug."
+  "uitleg": "Sta rechtop achter een stevige tafel of het aanrecht en houd deze vast. Zet rustig een stap opzij en sluit je andere voet langzaam aan. Stap daarna dezelfde weg weer terug.",
+  "kaartImg": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-avatar-v8.jpg"
  },
  {
   "naam": "Zijwaarts stappen – zonder steun",
@@ -3689,42 +3690,48 @@
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-line-v1.png",
   "coreExerciseId": "fc_5f84b78fbf651cdf",
-  "uitleg": "Ga ontspannen op je rug liggen met je knieën gebogen en je voeten plat op de grond. Adem rustig in naar je buik en laat je bekkenbodem daarbij zacht openen en loslaten. Adem rustig uit en blijf ontspannen."
+  "uitleg": "Ga ontspannen op je rug liggen met je knieën gebogen en je voeten plat op de grond. Adem rustig in naar je buik en laat je bekkenbodem daarbij zacht openen en loslaten. Adem rustig uit en blijf ontspannen.",
+  "kaartImg": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-avatar-v8.jpg"
  },
  {
   "naam": "Bekkenbodem snel aanspannen – zittend",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/bekkenbodem-snel-aanspannen-zittend-line-v1.png",
   "coreExerciseId": "fc_98e2ae0c112e5894",
-  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Span je bekkenbodem kort en vlot aan en laat de spanning daarna meteen weer rustig los."
+  "uitleg": "Zit rechtop op een stoel met je voeten plat op de grond. Span je bekkenbodem kort en vlot aan en laat de spanning daarna meteen weer rustig los.",
+  "kaartImg": "images/bekken-postpartum/bekkenbodem-snel-aanspannen-zittend-avatar-v8.jpg"
  },
  {
   "naam": "Bekkenbodem met uitademing – liggend",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/bekkenbodem-met-uitademing-liggend-line-v1.png",
   "coreExerciseId": "fc_4c89f053d8c62426",
-  "uitleg": "Ga op je rug liggen met je knieën gebogen. Adem rustig in naar je buik, span tijdens de uitademing je bekkenbodem aan en laat daarna langzaam weer los."
+  "uitleg": "Ga op je rug liggen met je knieën gebogen. Adem rustig in naar je buik, span tijdens de uitademing je bekkenbodem aan en laat daarna langzaam weer los.",
+  "kaartImg": "images/bekken-postpartum/bekkenbodem-met-uitademing-liggend-avatar-v8.jpg"
  },
  {
   "naam": "Diepe buikactivatie – liggend",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/diepe-buikactivatie-liggend-line-v1.png",
   "coreExerciseId": "fc_13a93af892cd15ed",
-  "uitleg": "Ga op je rug liggen met je knieën gebogen en je voeten plat op heupbreedte. Trek je bekkenbodem zacht naar binnen en omhoog en breng tegelijk je onderbuik iets naar binnen. Adem rustig door, houd even vast en laat langzaam los."
+  "uitleg": "Ga op je rug liggen met je knieën gebogen en je voeten plat op heupbreedte. Trek je bekkenbodem zacht naar binnen en omhoog en breng tegelijk je onderbuik iets naar binnen. Adem rustig door, houd even vast en laat langzaam los.",
+  "kaartImg": "images/bekken-postpartum/diepe-buikactivatie-liggend-avatar-v8.jpg"
  },
  {
   "naam": "Bekkenmobiliteit – liggend",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/bekkenmobiliteit-liggend-line-v1.png",
   "coreExerciseId": "fc_0c0c1d08d20d8deb",
-  "uitleg": "Ga op je rug liggen met je knieën gebogen. Kantel je bekken rustig naar voren en langzaam weer naar achteren, zodat je onderrug afwisselend hol en plat wordt."
+  "uitleg": "Ga op je rug liggen met je knieën gebogen. Kantel je bekken rustig naar voren en langzaam weer naar achteren, zodat je onderrug afwisselend hol en plat wordt.",
+  "kaartImg": "images/bekken-postpartum/bekkenmobiliteit-liggend-avatar-v8.jpg"
  },
  {
   "naam": "360 graden ademhaling – eerste fase rustig",
   "groep": "Bekken & postpartum",
   "img": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-line-v1.png",
   "coreExerciseId": "fc_dedda204d4d6ff84",
-  "uitleg": "Ga ontspannen op je rug liggen met je handen op je onderste ribben. Adem rustig in zodat je ribben naar alle kanten breed worden en adem daarna langzaam weer uit."
+  "uitleg": "Ga ontspannen op je rug liggen met je handen op je onderste ribben. Adem rustig in zodat je ribben naar alle kanten breed worden en adem daarna langzaam weer uit.",
+  "kaartImg": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-avatar-v8.jpg"
  },
  {
   "naam": "Bekkenkanteling postpartum – eerste fase rustig",

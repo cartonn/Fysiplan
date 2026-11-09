@@ -550,7 +550,10 @@
       "img": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-line-v1.png",
       "sha256": "6230915fac2850dd649c21b890fe4d53afdbda7691a1d5496f34b316642dbb91",
       "bron": "https://au.physitrack.com/home-exercise-video/side-stepping-with-support",
-      "bronTitel": "Side stepping with support"
+      "bronTitel": "Side stepping with support",
+      "kaartImg": "images/balans-en-valpreventie/zijwaarts-stappen-met-steun-avatar-v8.jpg",
+      "kaartSha256": "8ea68cf1b3db03a7757c7ad413b410f4e3ec7fa4a454c9e38f655aa6d959d4cf",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/438-zijwaarts-stappen-met-steun-avatar-r3.png"
     },
     {
       "exerciseId": "fp_21a541d8d8aae697",
@@ -1060,7 +1063,10 @@
       "img": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-line-v1.png",
       "sha256": "e7a235a4f92c66bcc7a665d88e97bb392d38ff91da0e87e5f69493a730891bc8",
       "bron": null,
-      "bronTitel": null
+      "bronTitel": null,
+      "kaartImg": "images/bekken-postpartum/bekkenbodem-ontspannen-liggend-avatar-v8.jpg",
+      "kaartSha256": "b14deb6e6b0581d1ee1c0e3189b138a381e95f4aeb496d401ed0c19b3287f494",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/484-bekkenbodem-ontspannen-liggend-avatar-pijl.png"
     },
     {
       "exerciseId": "fp_96a6630928d93cd2",
@@ -1069,7 +1075,10 @@
       "img": "images/bekken-postpartum/bekkenbodem-snel-aanspannen-zittend-line-v1.png",
       "sha256": "d0ec386e79cd774067d9a1db393a0e61b88ac6747c4cf4850aa76a5ab04a01f5",
       "bron": "https://ca.physitrack.com/home-exercise-video/sitting-pelvic-floor-muscle-contraction",
-      "bronTitel": "Sitting Pelvic Floor Muscle Contraction"
+      "bronTitel": "Sitting Pelvic Floor Muscle Contraction",
+      "kaartImg": "images/bekken-postpartum/bekkenbodem-snel-aanspannen-zittend-avatar-v8.jpg",
+      "kaartSha256": "b989a067e31a444ee3b2ea4416ca9d5830718bf9dacb6539b62d2f9ec7b825c4",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/485-bekkenbodem-snel-aanspannen-zittend-avatar-pijl.png"
     },
     {
       "exerciseId": "fp_94a35e31779075e4",
@@ -1078,7 +1087,10 @@
       "img": "images/bekken-postpartum/bekkenbodem-met-uitademing-liggend-line-v1.png",
       "sha256": "06cafa9c10589cbd360f8866975fc2596bb9785bcfffabc4dbfec7f0d3a7df84",
       "bron": "https://uk.physitrack.com/home-exercise-video/basic-setting-in-crook-with-breath-control",
-      "bronTitel": "Basic setting in crook with breath control"
+      "bronTitel": "Basic setting in crook with breath control",
+      "kaartImg": "images/bekken-postpartum/bekkenbodem-met-uitademing-liggend-avatar-v8.jpg",
+      "kaartSha256": "c803f6dc0f262b32aa6377fddf21aca5af8cb4ce2093420c0cdd523f52dc1340",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/486-bekkenbodem-met-uitademing-liggend-avatar-pijl.png"
     },
     {
       "exerciseId": "fp_24237e101a2c77ad",
@@ -1087,7 +1099,10 @@
       "img": "images/bekken-postpartum/diepe-buikactivatie-liggend-line-v1.png",
       "sha256": "849814d6478a123fb533198d404813a7ee7763db58d6e8d24d6f7ad28d4d8c10",
       "bron": "https://us.physitrack.com/home-exercise-video/transversus-abdominis-and-pelvic-floor-activation-in-crook-lying",
-      "bronTitel": "Transversus abdominis and pelvic floor activation in crook lying"
+      "bronTitel": "Transversus abdominis and pelvic floor activation in crook lying",
+      "kaartImg": "images/bekken-postpartum/diepe-buikactivatie-liggend-avatar-v8.jpg",
+      "kaartSha256": "c0f20550b4728749326edfea4f1e1e1d40dfdcef6e225449a9dddc989eb9a61d",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/487-diepe-buikactivatie-liggend-avatar-pijl.png"
     },
     {
       "exerciseId": "fp_0474f0286832320f",
@@ -1096,7 +1111,10 @@
       "img": "images/bekken-postpartum/bekkenmobiliteit-liggend-line-v1.png",
       "sha256": "28353244789675c79938ca404966e31b8682074bebf4adce691d2800ec7fc1b0",
       "bron": "https://au.physitrack.com/home-exercise-video/pelvic-tilt-in-crook-lying--v2",
-      "bronTitel": "Pelvic tilt in crook lying- v2"
+      "bronTitel": "Pelvic tilt in crook lying- v2",
+      "kaartImg": "images/bekken-postpartum/bekkenmobiliteit-liggend-avatar-v8.jpg",
+      "kaartSha256": "12ded747cb2013d5bc260cfed53e179a348bde8697464cf367cf2e3c8071cfef",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/488-bekkenmobiliteit-liggend-avatar-pijl.png"
     },
     {
       "exerciseId": "fp_8d4fb0f3f39ab16e",
@@ -1105,7 +1123,10 @@
       "img": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-line-v1.png",
       "sha256": "35d2a2e3f5f298253c232f7d6053d90cfcc8482111caf66d753a161745deaf0c",
       "bron": "https://au.physitrack.com/home-exercise-video/supine-lateral-rib-breathing",
-      "bronTitel": "Supine Lateral Rib Breathing"
+      "bronTitel": "Supine Lateral Rib Breathing",
+      "kaartImg": "images/bekken-postpartum/360-graden-ademhaling-eerste-fase-rustig-avatar-v8.jpg",
+      "kaartSha256": "c76b18032582f1d0fd9d3daf52d1e59bd3027a6caf3664838e62cf731c1dd339",
+      "kaartBron": "output/physitrack-crosscheck/beelden/avatars-nieuw/489-360-graden-ademhaling-eerste-fase-rustig-avatar-pijl.png"
     },
     {
       "exerciseId": "fp_2d59f8875bc40b6c",
