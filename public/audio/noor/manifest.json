@@ -176,31 +176,6 @@
       "duration": 9.560816
     },
     {
-      "name": "Dips",
-      "text": "Dips. Sta tussen de twee steunen en pak de handgrepen vast met gestrekte armen. Buig je ellebogen en laat je lichaam rustig zakken, met je romp iets naar voren en je voeten op de grond. Druk jezelf daarna weer omhoog tot je armen gestrekt zijn.",
-      "src": "/audio/noor/d416e58c6635cd601bf0f204d2e5bec545eb18d49223fa6fabfb1b0b887c2033.mp3",
-      "duration": 15.203265,
-      "provenance": {
-        "provider": "HeyGen text-to-speech (cloud, via coordinator)",
-        "requestId": "5687340c-8838-4850-8a89-555c7e992713",
-        "voiceId": "ea8f12713f7644ea9ad4ed710901fbbb",
-        "providerVoice": "Marieke",
-        "requestedEngine": "heygen_voice",
-        "speed": 0.95,
-        "language": "nl",
-        "sourceFormat": "MP3 256 kbps mono 44.1 kHz",
-        "sourceSha256": "699a4d42c1d5b0cda1d6cc772d51af63381bf79919af2748696fd07e55ca21e4",
-        "mp3Sha256": "30e7bd6724a04a8e1cf788c083ad0b6f5373d03f75996ecf9bc74839ef7f184c",
-        "processing": "MP3 re-encode (libmp3lame -q:a 2) only; no tempo, pitch, trim, gain or text changes.",
-        "exactCatalogTextMatch": true,
-        "userListeningApproval": null,
-        "agentListeningReviewed": false,
-        "asrCheck": "Whisper small (nl): volledige tekst herkend (\"romp\" als \"rond\")",
-        "clinicalApproved": false,
-        "previousSrc": "/audio/noor/2749c5ef6bf0d1bf160a52183332c6c66e5f54d7873ff45403d598afb9bb66e4.mp3"
-      }
-    },
-    {
       "name": "Dumbell bench press",
       "text": "Dumbell bench press. Lig op de bank met in elke hand een dumbell boven je borst. Laat de dumbells langzaam naast je borst zakken en druk ze weer omhoog tot gestrekte armen.",
       "src": "/audio/noor/263b64934c48215c7bb04b256a87d25ac56c60d6fb2e57853c3a02284793f086.mp3",

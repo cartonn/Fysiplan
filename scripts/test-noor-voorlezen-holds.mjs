@@ -12,6 +12,11 @@ const lees=(p)=>JSON.parse(fs.readFileSync(p,'utf8'));
 const html=fs.readFileSync('public/kaart.html','utf8');
 const tussen=(a,b)=>{const i=html.indexOf(a);assert.ok(i>=0,a);const j=html.indexOf(b,i);assert.ok(j>i,b);return html.slice(i,j);};
 const v2=lees('public/oefeningen-v2.json'),review=lees('public/mobile-media-review.json'),manifest=lees('public/audio/noor/manifest.json');
+// Testgeval: sinds 2026-11-09 heeft geen echte tegengehouden bron nog een opname (de holds op Dips en
+// Triceps dips zijn opgeheven met een nieuwe avatar). Om dezelfde regel te blijven toetsen houden we in
+// deze test twee oefeningen met een opname tegen, precies zoals de beoordeling een hold vastlegt.
+const TESTHOLD=['Biceps curl','Triceps dips'];
+for(const r of review.entries)if(TESTHOLD.includes(r.name)){r.status='rejected';r.presentation='withhold';}
 // zoals de server ze levert
 const lib=v2.map(e=>({...e,exerciseId:exerciseId(e),img:'/v2/'+e.img,kaartImg:'/v2/'+e.kaartImg}));
 const heeftOpname=(e)=>manifest.clips.some(c=>c.name===e.naam&&c.text===e.naam+'. '+e.uitleg);
@@ -20,7 +25,7 @@ const regel=(naam)=>{const e=lib.find(x=>x.naam===naam);assert.ok(e,naam);return
 // de held-bronnen met een opname: precies wat de bovenste knop vroeger toch afspeelde
 const gehouden=review.entries.filter(r=>r.status==='rejected').map(r=>regel(r.name));
 const gehoudenMetOpname=gehouden.filter(heeftOpname).map(e=>e.naam);
-assert.ok(gehoudenMetOpname.includes('Dips')&&gehoudenMetOpname.includes('Triceps dips'),'testgeval: Dips en Triceps dips hebben een opname');
+assert.ok(gehoudenMetOpname.includes('Biceps curl')&&gehoudenMetOpname.includes('Triceps dips'),'testgeval: Biceps curl en Triceps dips hebben een opname');
 const normaal=lib.find(e=>heeftOpname(e)&&!review.entries.some(r=>r.exerciseId===e.exerciseId&&r.status==='rejected'));
 assert.ok(normaal,'een gewone oefening met opname');
 
@@ -34,7 +39,7 @@ function kaartContext(chosen){
     document:{getElementById:knop,querySelectorAll:()=>[]},window:{NoorAudio,speechSynthesis:{cancel(){},speak(){robot.push('speak');}}},NoorAudio,
     speechSynthesis:{cancel(){},speak(){robot.push('speak');}},SpeechSynthesisUtterance:function(){robot.push('utterance');},
     TAAL:'nl',tr:x=>x,alert:m=>meldingen.push(m),demoGeluidKnop(){},
-    fetch:async(url)=>({ok:true,json:async()=>lees(url.includes('narration')?'public/mobile-narration-review.json':'public/mobile-media-review.json')})});
+    fetch:async(url)=>({ok:true,json:async()=>url.includes('narration')?lees('public/mobile-narration-review.json'):JSON.parse(JSON.stringify(review))})});
   const normEx=html.match(/  function normEx\(s\)\{[^\n]*\n/)[0];
   vm.runInContext(normEx+tussen('  var mediaReviewReady=false,','  function geldigeUitsnede(')+
     tussen('  function geldigeUitsnede(','  async function loadMobileReview(')+tussen('  async function loadMobileReview(','  // Een oude afkeuring mag')+
@@ -45,13 +50,13 @@ function kaartContext(chosen){
 
 // 1. gemengde selectie: de gewone oefening speelt, de tegengehouden worden overgeslagen en genoemd
 {
-  const keuze=[{n:normaal.naam,id:normaal.exerciseId},{n:'Dips',id:'fp_013ba6ad937cc9d9'},{n:'Triceps dips',id:'fp_f227db5fcf245d9c'},
+  const keuze=[{n:normaal.naam,id:normaal.exerciseId},{n:'Biceps curl',id:'fp_ffdd7a98ee2ba5cc'},{n:'Triceps dips',id:'fp_f227db5fcf245d9c'},
     {n:'Step up with knee raise',id:'fp_7dc1478e2b3c17b0'},{n:'Standing chair hip extension',id:'fp_514654a0d4181742'}];
   function controleer(r){
     assert.deepEqual(r.afgespeeld,[normaal.naam],'alleen de oefening met een zichtbaar beeld wordt voorgelezen');
     assert.equal(r.meldingen.length,1,'één eerlijke melding');
     const m=r.meldingen[0];
-    assert.match(m,/Niet voorgelezen, omdat de oefenafbeelding nog wordt gecontroleerd: Dips, Triceps dips, Step up with knee raise\./);
+    assert.match(m,/Niet voorgelezen, omdat de oefenafbeelding nog wordt gecontroleerd: Biceps curl, Triceps dips, Step up with knee raise\./);
     assert.match(m,/Nog geen actuele stemopname: Standing chair hip extension\./,'ontbrekende opname apart benoemd');
     assert.match(m,/Je hoort nu de beschikbare uitleg voor 1 oefening/);
     assert.match(m,/dosering en opmerkingen van je behandelaar/,'dosering blijft het uitgangspunt');
@@ -71,13 +76,13 @@ function kaartContext(chosen){
 
 // 2. alleen tegengehouden oefeningen: niets spelen, knop terug, eerlijke melding, geen robotstem
 {
-  const k=kaartContext([{n:'Dips',id:'fp_013ba6ad937cc9d9'},{n:'Triceps dips',id:'fp_f227db5fcf245d9c'}]);
+  const k=kaartContext([{n:'Biceps curl',id:'fp_ffdd7a98ee2ba5cc'},{n:'Triceps dips',id:'fp_f227db5fcf245d9c'}]);
   await vm.runInContext('loadMobileReview()',k.ctx);
   vm.runInContext('leesVoor()',k.ctx);for(let i=0;i<20;i++)await new Promise(r=>setImmediate(r));
   assert.deepEqual(k.afgespeeld,[]);assert.deepEqual(k.robot,[]);
   assert.equal(k.knop('leesBtn').attrs['aria-pressed'],'false','knop meteen terug op luisteren');
   assert.equal(k.meldingen.length,1);
-  assert.match(k.meldingen[0],/oefenafbeelding nog wordt gecontroleerd: Dips, Triceps dips\./);
+  assert.match(k.meldingen[0],/oefenafbeelding nog wordt gecontroleerd: Biceps curl, Triceps dips\./);
   assert.match(k.meldingen[0],/Er wordt nu niets voorgelezen voor deze selectie\./);
   assert.doesNotMatch(k.meldingen[0],/geen stemopname beschikbaar/,'niet beweren dat de opname ontbreekt');
 }
@@ -85,7 +90,7 @@ function kaartContext(chosen){
 // 3. dezelfde regel als de knop per oefening (die verschijnt niet bij een tegengehouden beeld)
 {
   const k=kaartContext([]);await vm.runInContext('loadMobileReview()',k.ctx);
-  for(const [naam,verwacht] of [['Dips',true],['Triceps dips',true],['Standing chair shoulder rotations',false],['Rotator (apparaat)',true],
+  for(const [naam,verwacht] of [['Biceps curl',true],['Triceps dips',true],['Dips',false],['Standing chair shoulder rotations',false],['Rotator (apparaat)',true],
     ['Back extension',true],['Rug extensie',true],['Backextensie (apparaat)',false],
     ['Standing chair hip extension',false],['Standing chair knee lift',false],[normaal.naam,false]]){
     const o=vm.runInContext('vindOefening',k.ctx)({n:naam});
@@ -111,7 +116,7 @@ function kaartContext(chosen){
 
 // 3b. controlegegevens niet te laden: er wordt niets voorgelezen (bestaande regel, blijft gelden)
 {
-  const k=kaartContext([{n:normaal.naam,id:normaal.exerciseId},{n:'Dips',id:'fp_013ba6ad937cc9d9'}]);
+  const k=kaartContext([{n:normaal.naam,id:normaal.exerciseId},{n:'Biceps curl',id:'fp_ffdd7a98ee2ba5cc'}]);
   k.ctx.fetch=async()=>({ok:false,json:async()=>({})});
   await vm.runInContext('loadMobileReview().catch(function(){mediaReviewReady=false;})',k.ctx);
   vm.runInContext('leesVoor()',k.ctx);for(let i=0;i<20;i++)await new Promise(r=>setImmediate(r));

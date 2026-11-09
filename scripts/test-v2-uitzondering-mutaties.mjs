@@ -87,11 +87,12 @@ const HEUP = 'Standing chair hip extension', KNIE = 'Standing chair knee lift';
 
 try {
   // ---------- A. tijdelijke bron-houds ----------
-  const dips = naam(v2, 'Dips');
+  // Dips had tot 2026-11-09 een bron-hold; nu is Step up with knee raise de enige bronfout-hold.
+  const stap = naam(v2, 'Step up with knee raise');
   const anderBeeld = v2.find((e) => e.kaartImg?.startsWith('images/bovenste-extremiteit/') && e.kaartImg.endsWith('-avatar-v7.jpg')
-    && !['Dips', 'Triceps dips'].includes(e.naam)).kaartImg;
-  const herschreven = await sharp(fs.readFileSync(path.join(repo, 'public', dips.kaartImg))).jpeg({quality: 88}).toBuffer();
-  assert.notEqual(createHash('sha256').update(herschreven).digest('hex'), sha('public/' + dips.kaartImg));
+    && !['Step up with knee raise'].includes(e.naam)).kaartImg;
+  const herschreven = await sharp(fs.readFileSync(path.join(repo, 'public', stap.kaartImg))).jpeg({quality: 88}).toBuffer();
+  assert.notEqual(createHash('sha256').update(herschreven).digest('hex'), sha('public/' + stap.kaartImg));
   // Back extension en Rug extensie (open bronkeuze): elk beeld opnieuw gecodeerd, dus zelfde
   // inhoud maar andere bytes, precies wat een stille vervanging op hetzelfde pad zou zijn.
   const bronkeuzeGevallen = [];
@@ -110,12 +111,11 @@ try {
   const houdGevallen = [
     ['controle: exacte bron', {}, null],
     ...bronkeuzeGevallen,
-    // Chair squat: hold op 2026-11-09 opgeheven met een nieuwe avatar (Physitrack-crosscheck).
-    ['Step up with knee raise: ander pad', {bestanden: metV2((c) => { naam(c, 'Step up with knee raise').kaartImg = anderBeeld; })}, /Tijdelijke hold voor Step up with knee raise past niet meer/],
-    ['ander pad', {bestanden: metV2((c) => { naam(c, 'Dips').kaartImg = anderBeeld; })}, /Tijdelijke hold voor Dips past niet meer/],
-    ['andere bytes op hetzelfde pad', {beelden: {[dips.kaartImg]: herschreven}}, /Tijdelijke hold voor Dips past niet meer/],
-    ['andere naam bij hetzelfde id', {bestanden: metV2((c) => { naam(c, 'Dips').naam = 'Dips aan de bank'; })}, /Tijdelijke hold voor Dips past niet meer/],
-    ['ander id (herkoppeld lijnbeeld)', {bestanden: metV2((c) => { naam(c, 'Dips').img = 'images/bovenste-extremiteit/dips-nieuw.jpg'; })}, /Tijdelijke hold niet toegepast: Dips/],
+    // Chair squat, Dips, Triceps dips: holds op 2026-11-09 opgeheven met een nieuwe avatar (Physitrack-crosscheck).
+    ['ander pad', {bestanden: metV2((c) => { naam(c, 'Step up with knee raise').kaartImg = anderBeeld; })}, /Tijdelijke hold voor Step up with knee raise past niet meer/],
+    ['andere bytes op hetzelfde pad', {beelden: {[stap.kaartImg]: herschreven}}, /Tijdelijke hold voor Step up with knee raise past niet meer/],
+    ['andere naam bij hetzelfde id', {bestanden: metV2((c) => { naam(c, 'Step up with knee raise').naam = 'Step up met kniehef'; })}, /Tijdelijke hold voor Step up with knee raise past niet meer/],
+    ['ander id (herkoppeld lijnbeeld)', {bestanden: metV2((c) => { naam(c, 'Step up with knee raise').img = 'images/onderste-extremiteit/step-up-with-knee-raise-nieuw.jpg'; })}, /Tijdelijke hold niet toegepast: Step up with knee raise/],
   ];
   const houdUitkomst = await Promise.all(houdGevallen.map(([, opzet]) => {
     const root = wegwerp(opzet);
@@ -126,8 +126,8 @@ try {
     if (!verwacht) {
       assert.equal(r.code, 0, label + ': ' + r.fout);
       const review = JSON.parse(fs.readFileSync(path.join(r.root, 'public/mobile-media-review.json'), 'utf8'));
-      assert.equal(review.summary.rejected, 10, label);
-      assert.equal(review.entries.filter((e) => e.hold?.temporary).length, 5, label);
+      assert.equal(review.summary.rejected, 8, label);
+      assert.equal(review.entries.filter((e) => e.hold?.temporary).length, 3, label);
       assert.deepEqual(review.entries.filter((e) => e.hold?.kind === 'source-choice-pending').map((e) => e.exerciseId).sort(),
         ['fp_7b07f346644f9c17', 'fp_a0a18c0c13673d38'], label);
       // de wegwerpmap levert exact dezelfde beoordeling als de repo: het harnas zelf verandert niets
@@ -246,4 +246,4 @@ try {
   fs.rmSync(werk, {recursive: true, force: true});
 }
 assert.deepEqual(BEWAAKT.map(sha), voor, 'echte catalogi, beoordeling, pijlen en beelden byte-gelijk');
-console.log('Uitzonderingen smal: 5 bron-houds; Dips-, Back extension- en Rug extensie-mutaties op pad/bytes/naam/id en een Step up-mutatie op pad falen; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug; houdingvolgorde Dumbell bench press faalt bij andere bytes/uitleg/naam/pad/id/uitsnede/as en zonder regel verandert alleen die volgorde.');
+console.log('Uitzonderingen smal: 3 bron-houds; Step up-, Back extension- en Rug extensie-mutaties op pad/bytes/naam/id falen; V2-lijnbeeldcorrectie geldt alleen voor de 2 vastgelegde oefeningen (derde afwijking, V1-wijziging, losse pijlen, verkeerde hash of ontbrekende uitzondering falen in beide poorten); de lijnbeeldgraph draait de correctie niet terug; houdingvolgorde Dumbell bench press faalt bij andere bytes/uitleg/naam/pad/id/uitsnede/as en zonder regel verandert alleen die volgorde.');
