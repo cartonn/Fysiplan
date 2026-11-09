@@ -1,0 +1,726 @@
+[
+ {
+  "naam": "Knie: buitenste knieband, vroege fase",
+  "categorie": "Knie",
+  "sub": "Eerste fase na een blessure van de buitenste knieband: buigen, strekken en het bovenbeen aanspannen.",
+  "fase": 1,
+  "oefeningen": [
+   "Knie buigen – zittend met hulp van het andere been",
+   "Knie strekken – been op een stoel",
+   "Knie strekken tegen een bal – langzit",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Straight leg raise – liggend",
+   "Seated hamstring stretch",
+   "Glute bridges"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: buitenste knieband, late fase",
+  "categorie": "Knie",
+  "sub": "Uitvalspassen en sprongen als laatste stap na een blessure van de buitenste knieband.",
+  "fase": 3,
+  "oefeningen": [
+   "Lunges",
+   "Skate jumps",
+   "Vooruit en achteruit springen – twee benen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: bakercyste",
+  "categorie": "Knie",
+  "sub": "De knie soepel houden en het bovenbeen versterken bij een zwelling in de knieholte.",
+  "oefeningen": [
+   "Knie buigen – zittend met hulp van het andere been",
+   "Knie strekken – been op een stoel",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Terminal knee extension – met elastiek",
+   "Swiss ball wall squat",
+   "Glute bridges",
+   "Hamstring rekken – staand met hiel vooruit"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: kraakbeen achter de knieschijf",
+  "categorie": "Knie",
+  "sub": "Het bovenbeen versterken en rekken bij pijn door het kraakbeen achter de knieschijf.",
+  "oefeningen": [
+   "Quadriceps aanspannen – liggend",
+   "Knie strekken tegen een bal – langzit",
+   "Glute bridges",
+   "Voorkant bovenbeen rekken – buiklig met band",
+   "Been heffen met voet naar buiten – half liggend op de ellebogen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: knieschijf loopt niet goed fase 1",
+  "categorie": "Knie",
+  "sub": "De binnenste bovenbeenspier activeren en de buitenkant losmaken als de knieschijf niet goed spoort.",
+  "fase": 1,
+  "oefeningen": [
+   "Been heffen met voet naar buiten – half liggend op de ellebogen",
+   "Foam roller glute med.",
+   "Quadriceps stretch",
+   "Terminal knee extension – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: knieschijf loopt niet goed fase 2",
+  "categorie": "Knie",
+  "sub": "Kracht van bovenbeen en heup opbouwen voor een knieschijf die beter spoort.",
+  "fase": 2,
+  "oefeningen": [
+   "Glute bridges",
+   "Knie strekken tegen een bal – langzit",
+   "Mini-squat – met elastiek",
+   "Clamshell – zijlig",
+   "Foam roller quadriceps"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: pijn voor de knie fase 1",
+  "categorie": "Knie",
+  "sub": "Pijn aan de voorkant van de knie: losmaken, rekken en de knie leren uitstrekken tegen elastiek.",
+  "fase": 1,
+  "oefeningen": [
+   "Foam roller glute med.",
+   "Quadriceps stretch",
+   "Terminal knee extension – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: pijn voor de knie fase 2",
+  "categorie": "Knie",
+  "sub": "Heup- en bovenbeenkracht opbouwen bij pijn aan de voorkant van de knie.",
+  "fase": 2,
+  "oefeningen": [
+   "Glute bridges",
+   "Mini-squat – met elastiek",
+   "Clamshell – zijlig",
+   "Foam roller quadriceps"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: pijn voor de knie fase 3",
+  "categorie": "Knie",
+  "sub": "Uitvalspassen en sprongen met een rechte knie, als laatste stap bij pijn voor de knie.",
+  "fase": 3,
+  "oefeningen": [
+   "Uitvalspas met elastiek opzij – knie recht houden",
+   "Skate jumps",
+   "Hoppen in vier richtingen – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: pijn voor de knie voorkomen",
+  "categorie": "Knie",
+  "sub": "Bovenbeen en heup sterk en soepel houden om pijn aan de voorkant van de knie te voorkomen.",
+  "oefeningen": [
+   "Quadriceps stretch",
+   "Quadriceps aanspannen – liggend",
+   "Terminal knee extension – met elastiek",
+   "Brug – met bal tussen de knieën",
+   "Mini-squat – met elastiek",
+   "Foam roller tractus"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: patellapeesklachten fase 1",
+  "categorie": "Knie",
+  "sub": "Prikkelbare kniepees: het bovenbeen losmaken en licht aanspannen zonder de pees te overbelasten.",
+  "fase": 1,
+  "oefeningen": [
+   "Foam roller quadriceps",
+   "Terminal knee extension – met elastiek",
+   "Straight leg raise – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: patellapeesklachten fase 3",
+  "categorie": "Knie",
+  "sub": "Springen en landen opbouwen voor terugkeer naar sport bij kniepeesklachten.",
+  "fase": 3,
+  "oefeningen": [
+   "Lunges",
+   "Alternating lunge jumps",
+   "Landing op twee benen – techniek langzaam",
+   "Hoppen in vier richtingen – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: Osgood-Schlatter (jeugd)",
+  "categorie": "Knie",
+  "sub": "Bovenbeen en heup rekken bij groeipijn onder de knie bij jongeren.",
+  "oefeningen": [
+   "Quadriceps stretch",
+   "Hamstring rekken – staand met hiel vooruit",
+   "Yoga hip flexor stretch"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: klachten voorkant bovenbeen",
+  "categorie": "Knie",
+  "sub": "De voorkant van het bovenbeen losmaken en rekken bij spierklachten.",
+  "oefeningen": [
+   "Foam roller quadriceps",
+   "Voorkant bovenbeen rekken – buiklig met band",
+   "Foam roller tractus"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: hamstringklachten fase 1",
+  "categorie": "Knie",
+  "sub": "De achterkant van het bovenbeen losmaken en rustig rekken bij hamstringklachten.",
+  "fase": 1,
+  "oefeningen": [
+   "Foam roller hamstring",
+   "Hamstring en kuit rekken – ruglig met band",
+   "Straight leg raise – liggend",
+   "Yoga pigeon"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: hamstringklachten fase 2",
+  "categorie": "Knie",
+  "sub": "De hamstrings rustig belasten en de zenuw aan de achterkant van het been laten glijden.",
+  "fase": 2,
+  "oefeningen": [
+   "Seated band leg curl",
+   "Knie langzaam strekken – buiklig met hulp",
+   "Zenuw glijden been – ruglig"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: hamstringklachten fase 3",
+  "categorie": "Knie",
+  "sub": "Krachttraining voor de hamstrings met bal, elastiek en liggend buigen.",
+  "fase": 3,
+  "oefeningen": [
+   "Swiss ball leg curl hip raise",
+   "Seated band leg curl",
+   "Hamstring curl – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: knieprothese fase 1",
+  "categorie": "Knie",
+  "sub": "Eerste dagen na een knieprothese: de enkel bewegen, de knie buigen en het been gestrekt heffen.",
+  "fase": 1,
+  "oefeningen": [
+   "Seated ankle rotations",
+   "Straight leg raise – liggend",
+   "Knie buigen – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: knieprothese fase 2",
+  "categorie": "Knie",
+  "sub": "Na een knieprothese verder buigen en strekken en de eerste kracht opbouwen.",
+  "fase": 2,
+  "oefeningen": [
+   "Knie buigen – zittend met hulp van het andere been",
+   "Seated leg extension",
+   "Glute bridges",
+   "Kuitrek gestrekte knie – staand met steun"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: voorste kruisband fase 1",
+  "categorie": "Knie",
+  "sub": "Direct na een kruisbandblessure of -operatie: zwelling afvoeren, buigen en de bovenbeenspier activeren.",
+  "fase": 1,
+  "oefeningen": [
+   "Seated ankle rotations",
+   "Billen aanspannen – ruglig",
+   "Knie buigen – liggend",
+   "Been heffen met voet naar buiten – half liggend op de ellebogen",
+   "Glute bridges",
+   "Knie buigen – zittend met hulp van het andere been"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: meniscus na operatie",
+  "categorie": "Knie",
+  "sub": "Na een meniscusoperatie de knie weer buigen en het bovenbeen sterker maken.",
+  "oefeningen": [
+   "Knie buigen – liggend",
+   "Quadriceps aanspannen – liggend",
+   "Swiss ball wall squat"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: meniscusletsel, kracht en controle niveau 2",
+  "categorie": "Knie",
+  "sub": "Vervolg op niveau 1: zwaardere oefeningen voor kracht en controle rond de knie.",
+  "fase": 2,
+  "oefeningen": [
+   "Chair squat",
+   "Swiss ball leg curl hip raise",
+   "Step up tempo"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie: collateraal bandletsel fase 2",
+  "categorie": "Knie",
+  "sub": "Kracht en balans van de knie opbouwen na een verrekte zijband.",
+  "fase": 2,
+  "oefeningen": [
+   "Brug op de tenen – ruglig",
+   "Knie strekken – liggend",
+   "Terminal knee extension – met elastiek",
+   "Swiss ball wall squat",
+   "Eenbeenstand – met hoofdbeweging",
+   "Tandemstand – met hoofdbeweging"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: patellapeesklachten fase 2",
+  "categorie": "Knie",
+  "sub": "Bovenbeen belasten en rekken bij pijn aan de kniepees.",
+  "fase": 2,
+  "oefeningen": [
+   "Knie strekken – liggend",
+   "Mini-squat – met elastiek",
+   "Swiss ball wall squat",
+   "Quadriceps stretch",
+   "Tandemstand – zonder steun",
+   "Eenbeenstand – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: VKB-revalidatie fase 2",
+  "categorie": "Knie",
+  "sub": "Squat, opstappen en balans in de eerste weken na de operatie.",
+  "fase": 2,
+  "oefeningen": [
+   "Terminal knee extension – met elastiek",
+   "Swiss ball wall squat",
+   "Step up tempo",
+   "Eenbeenstand – zonder steun",
+   "Tandemstand – zonder steun",
+   "Seated hamstring stretch",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Fiets"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: VKB-revalidatie fase 3",
+  "categorie": "Knie",
+  "sub": "Kracht en conditie verder opbouwen met toestellen en uitvalspassen.",
+  "fase": 3,
+  "oefeningen": [
+   "Lunges",
+   "Eenbeenstand – ogen dicht",
+   "Binnenkant bovenbeen rekken – zijwaarts uitstappen",
+   "Stairs (apparaat)",
+   "Roeier",
+   "Plank basis",
+   "Swiss ball knee to chest",
+   "Brug – afwisselend knie optillen",
+   "Clamshell – zijlig",
+   "Hiel tikken – ruglig met benen in de lucht",
+   "Leg press",
+   "Bosu brigdes"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: VKB-revalidatie fase 4",
+  "categorie": "Knie",
+  "sub": "Sprongen, wendingen en kracht voor terugkeer naar sport.",
+  "fase": 4,
+  "oefeningen": [
+   "Leg extension",
+   "Long jumps",
+   "Vooruit en achteruit springen – twee benen",
+   "Alternating lunge jumps",
+   "Hoppen op de plaats – op één been",
+   "Skate jumps",
+   "Hoppen in vier richtingen – op één been",
+   "Landing op twee benen – techniek langzaam",
+   "Bal tegen de muur gooien – squat op een bosu",
+   "Box jumps",
+   "Swiss ball knee to chest",
+   "Loopband"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: VKB-reconstructie fase 1",
+  "categorie": "Knie",
+  "sub": "Eerste kracht van heup en been na een voorste-kruisbandreconstructie.",
+  "fase": 1,
+  "oefeningen": [
+   "Knieschijf zijwaarts bewegen – zelf met je vingers",
+   "Quadriceps aanspannen – liggend",
+   "Knie buigen – liggend",
+   "Straight leg raise – liggend",
+   "Chair squat",
+   "Step up tempo",
+   "Lying abduction",
+   "Standing chair abductie",
+   "Standing chair hip extension",
+   "Good mornings",
+   "Crabwalk"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: blessurepreventie voorste kruisband",
+  "categorie": "Knie",
+  "sub": "Warming-up met rek, sprongen en landingen om kruisbandletsel te voorkomen.",
+  "oefeningen": [
+   "Quadriceps stretch",
+   "Hamstring en kuit rekken – ruglig met band",
+   "Adductoren stretch",
+   "Yoga hip flexor stretch",
+   "Eenbenige kniebuiging – en op de tenen komen",
+   "Alternating lunge jumps",
+   "Long jumps",
+   "Op de plaats marcheren – zonder steun",
+   "Skate jumps"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: meniscusklachten",
+  "categorie": "Knie",
+  "sub": "Stabiliteit en kracht van de knie bij meniscusschade.",
+  "oefeningen": [
+   "Bruggen 1 been liften",
+   "Terminal knee extension – met elastiek",
+   "Eenbeenstand – zonder steun",
+   "Swiss ball wall squat",
+   "Hamstring rekken – staand met hiel vooruit"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: degeneratieve meniscusklachten fase 1",
+  "categorie": "Knie",
+  "sub": "Rustig opbouwen van kracht en controle rond de knie, met fiets en toestellen.",
+  "fase": 1,
+  "oefeningen": [
+   "Fiets",
+   "Chair squat",
+   "Eenbenige kniebuiging – staand",
+   "Step up tempo",
+   "Swiss ball leg curl hip raise",
+   "Heup zijwaarts heffen – met elastiek",
+   "Leg press (apparaat)",
+   "Leg extension",
+   "Leg curl"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: degeneratieve meniscusklachten fase 2",
+  "categorie": "Knie",
+  "sub": "Kracht verder opbouwen en sprongen toevoegen bij meniscusslijtage.",
+  "fase": 2,
+  "oefeningen": [
+   "Fiets",
+   "Heup zijwaarts heffen – met elastiek",
+   "Swiss ball leg curl hip raise",
+   "Leg press (apparaat)",
+   "Leg extension",
+   "Leg curl",
+   "Skate jumps",
+   "Hinkelen in een X-patroon"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: artrose, kracht en stabiliteit (licht)",
+  "categorie": "Knie",
+  "sub": "Oefeningen met steun van een stoel voor kracht rond knie en heup bij artrose.",
+  "oefeningen": [
+   "Knie buigen – zittend",
+   "Knie buigen – liggend",
+   "Knie buigen – staand met steun",
+   "Standing chair knee lift",
+   "Lying abduction",
+   "Clamshell – met elastiek",
+   "Seated band abduction",
+   "Standing chair half squat",
+   "Standing chair abductie",
+   "Chair squat"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: VKB-reconstructie fase 2",
+  "categorie": "Knie",
+  "sub": "Heupspieren en beenkracht opbouwen in de middenfase.",
+  "fase": 2,
+  "oefeningen": [
+   "Knieschijf zijwaarts bewegen – zelf met je vingers",
+   "Straight leg raise – liggend",
+   "Step up tempo",
+   "Lying abduction",
+   "Standing chair abductie",
+   "Standing chair hip extension",
+   "Good mornings",
+   "Crabwalk",
+   "Lunges",
+   "Eenbenige kniebuiging – staand"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: VKB-reconstructie fase 3",
+  "categorie": "Knie",
+  "sub": "Heup en knie dynamisch belasten in de late fase na de operatie.",
+  "fase": 3,
+  "oefeningen": [
+   "Knieschijf zijwaarts bewegen – zelf met je vingers",
+   "Step up tempo",
+   "Lying abduction",
+   "Standing chair abductie",
+   "Crabwalk",
+   "Eenbenige kniebuiging – staand"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: artrose, actief oefenprogramma",
+  "categorie": "Knie",
+  "sub": "Breed programma voor kracht, balans en conditie bij knieartrose.",
+  "oefeningen": [
+   "Chair squat",
+   "Wall sit",
+   "Squat lunges",
+   "Crabwalk",
+   "Eenbeenstand – met steun",
+   "Good mornings",
+   "Glute bridges",
+   "Calf raises",
+   "Fiets",
+   "Been pendelen",
+   "Bruggen 1 been liften",
+   "Stevig doorwandelen – buiten"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: meniscusletsel, kracht in de sportschool",
+  "categorie": "Knie",
+  "sub": "Beenspieren sterker maken op toestellen na een meniscusletsel.",
+  "oefeningen": [
+   "Leg press (apparaat)",
+   "Leg extension",
+   "Hamstring curl – liggend",
+   "Kettlebell swing"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Knie: totale knieprothese fase 3 (balans)",
+  "categorie": "Knie",
+  "sub": "Opstaan, traplopen en balans in de late fase na een knieprothese.",
+  "fase": 3,
+  "oefeningen": [
+   "Step up tempo",
+   "Zijwaarts opstappen op een step",
+   "Functioneel opstaan – functioneel",
+   "Tandemstand – zonder steun",
+   "Eenbeenstand – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "aanvullen"
+ },
+ {
+  "naam": "Ouderen: knieartrose voorkomen",
+  "categorie": "Ouderen en balans",
+  "sub": "Kracht en balans voor de knie bij ouderen.",
+  "oefeningen": [
+   "Seated leg extension",
+   "Knie buigen – zittend",
+   "Quadriceps aanspannen – liggend",
+   "Step up tempo",
+   "Functioneel opstaan – functioneel",
+   "Voeten naast elkaar staan – met hoofdbeweging",
+   "Eenbeenstand – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "aanvullen"
+ }
+]
