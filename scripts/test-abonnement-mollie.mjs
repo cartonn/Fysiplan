@@ -9,7 +9,7 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { aantalTherapeuten, maandBedrag, beoordeelBetaling, markeerOpgezegd, trekOpzeggingIn } from "../lib/mollie.js";
+import { aantalTherapeuten, maandBedrag, beoordeelBetaling, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN } from "../lib/mollie.js";
 import { volgendFactuurNr, bedragen, naarCent, euro, factuurHtml, isFactuur } from "../lib/factuur.js";
 
 // 1b. factuur: nummering, btw en escapen
@@ -45,6 +45,21 @@ assert.equal(markeerOpgezegd(ab, 1500), false, "tweede keer verandert niets"); a
 assert.equal(trekOpzeggingIn(ab, 2500), false, "na de betaalde maand niet meer intrekken");
 assert.equal(trekOpzeggingIn(ab, 1500), true); assert.equal(ab.abonnement.status, "actief"); assert.ok(!("opgezegd" in ab.abonnement));
 assert.equal(markeerOpgezegd({}, 1), false); assert.equal(markeerOpgezegd({ abonnement: { status: "gestopt" } }, 1), false);
+// 1d. einde na opzeggen: na de betaalde maand gestopt, 30 dagen later wissen (voorwaarden art. 5)
+const D = 86400000;
+const eind = { klant: true, verloopt: 5, abonnement: { status: "opgezegd", betaaldTot: 100 * D } };
+assert.equal(abonnementEindeStap(eind, 99 * D), null, "binnen de betaalde maand verandert niets");
+assert.equal(eind.klant, true);
+assert.equal(abonnementEindeStap(eind, 100 * D), "gestopt");
+assert.equal(eind.klant, false, "geen klant meer"); assert.equal(eind.verloopt, 100 * D, "proefpoort dicht vanaf betaaldTot");
+assert.equal(eind.abonnement.status, "beeindigd");
+assert.equal(trekOpzeggingIn(eind, 100 * D), false, "intrekken kan niet meer");
+assert.equal(abonnementEindeStap(eind, (100 + NA_EINDE_WISSEN_DAGEN) * D - 1), null);
+assert.equal(abonnementEindeStap(eind, (100 + NA_EINDE_WISSEN_DAGEN) * D), "wissen");
+const laat = { klant: true, abonnement: { status: "opgezegd", betaaldTot: D } };
+assert.equal(abonnementEindeStap(laat, 40 * D), "wissen", "lang voorbij: meteen wissen");
+assert.equal(abonnementEindeStap({ klant: true, abonnement: { status: "actief", betaaldTot: D } }, 99 * D), null, "actief abonnement stopt niet vanzelf");
+assert.equal(abonnementEindeStap({ gewist: 1, abonnement: { status: "beeindigd", betaaldTot: D } }, 99 * D), null);
 
 // 2. nep-Mollie
 const nep = { verzoeken: [], betaling: null };

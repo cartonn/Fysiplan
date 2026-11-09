@@ -9,7 +9,7 @@ import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
-import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, MAX_THERAPEUTEN } from "./lib/mollie.js";
+import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN } from "./lib/mollie.js";
 import { volgendFactuurNr, factuurHtml, isFactuur } from "./lib/factuur.js";
 
 const port = Number(process.env.PORT || 3000);
@@ -66,7 +66,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-07";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-07-3";
+const AV_VERSIE = "2026-11-09";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-09";
@@ -79,7 +79,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-07", tekst: "Eerste versie van de algemene voorwaarden: wat Fysiplan doet, de gratis proef, prijs per therapeut, looptijd en stoppen." },
   { stuk: "vwo", versie: "2026-11-07", tekst: "Beveiliging: elke therapeut een eigen login met de rollen beheerder en therapeut; wie uit het team gaat, verliest direct de toegang. Eén akkoord samen met de voorwaarden." },
   { stuk: "av", versie: "2026-11-07-2", tekst: "Artikel over je account: elke therapeut krijgt een eigen login en je deelt wachtwoorden met niemand." },
-  { stuk: "av", versie: "2026-11-07-3", tekst: "Prijs: elke persoon met een eigen login telt als één therapeut; een login delen met meerdere mensen mag niet." }
+  { stuk: "av", versie: "2026-11-07-3", tekst: "Prijs: elke persoon met een eigen login telt als één therapeut; een login delen met meerdere mensen mag niet." },
+  { stuk: "av", versie: "2026-11-09", tekst: "Stoppen: opzeggen kan nu ook zelf in de app. Het abonnement stopt aan het einde van de betaalde maand; 30 dagen later wissen we alles van je praktijk." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -589,6 +590,43 @@ function proefNaPraktijkWissen(id, nu = Date.now()) {
     klant: true, betaling: p.betaling, abonnement: { ...p.abonnement, status: "gestopt" }, gewist: nu, bewaarTot: nu + FISCAAL_BEWAAR_MS };
   return "betaling";
 }
+// Alles van één praktijk van de server: kaarten (met opnames), eigen oefeningen (met
+// foto's), sjablonen, profiel (met logo), account, sessies en logboek. De proefaanmelding
+// gaat mee, behalve wat de fiscale bewaarplicht vraagt. Gebruikt door "Alles wissen" op
+// /v2/gegevens en door het automatisch wissen 30 dagen na het einde van een abonnement.
+async function praktijkAllesWissen(pk) {
+  const acc = Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
+  // alleen het eigen profiel: op sleutel, en bij een oude sleutel (de naam) ook een
+  // profiel onder die naam dat niemand anders geclaimd heeft
+  const eigenProfiel = ([k, p]) => k === pk || (!isPraktijkCode(pk) && !praktijkGeclaimd(k) && String(p && p.praktijk || "").toLowerCase() === pk);
+  const wegVids = Object.values(kaarten[pk] || {}).flatMap((k) => Object.values(k.vids || {}));
+  const aantalKaarten = Object.keys(kaarten[pk] || {}).length;
+  delete kaarten[pk];
+  await saveJson(kaartenPath, kaarten);
+  await ruimKaartVideosOp(wegVids);
+  for (const o of praktijkOefeningen[pk] || []) {
+    if (/^uploads\/oef-[a-f0-9]{12}\.(jpg|png)$/.test(String(o.img || ""))) { try { await unlink(join(dataDir, o.img)); } catch {} }
+  }
+  delete praktijkOefeningen[pk];
+  await saveJson(praktijkOefeningenPath, praktijkOefeningen);
+  delete praktijkSjablonen[pk];
+  await saveJson(praktijkSjablonenPath, praktijkSjablonen);
+  await inProfielRij(pk, async () => {
+    for (const [k, p] of Object.entries(praktijken).filter(eigenProfiel)) {
+      if (/^uploads\/logo-[^/]+$/.test(String(p.logo || ""))) { try { await unlink(join(dataDir, p.logo)); } catch {} }
+      delete praktijken[k];
+    }
+    await saveJson(praktijkenPath, praktijken);
+  });
+  const proefUitkomst = acc && acc.proef ? proefNaPraktijkWissen(acc.proef.id) : null;
+  if (proefUitkomst) await bewaarProeven();
+  delete praktijkAccounts[pk];
+  await saveJson(accountsPath, praktijkAccounts);
+  for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
+  // het logboek noemde de praktijknaam; alleen het feit dat er gewist is blijft, zonder naam
+  praktijkAudit = praktijkAudit.filter((a) => a.praktijk !== pk);
+  return { aantalKaarten, proefUitkomst };
+}
 // wat de praktijk bij een download over de eigen aanmelding krijgt: alles behalve apparaat-tokens
 function proefVoorDownload(id) {
   const p = Object.hasOwn(proeven, String(id)) ? proeven[String(id)] : null;
@@ -657,7 +695,8 @@ function abonnementBlok(a) {
   const factuur = '<a href="/v2/proef/factuur">' + (isFactuur(FYSIPLAN_ID) ? "Factuur" : "Betaalbewijs") + " bekijken en printen</a>";
   if (a.status === "opgezegd") return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement is opgezegd</h2>' +
     '<p class="klein" style="font-size:14.5px">Je kunt Fysiplan nog gebruiken tot en met <b>' + tot + "</b> (" + therapeuten + "). " +
-    "Daarna schrijven we niets meer af. Je kaarten kun je tot die tijd downloaden of wissen op <a href=\"/v2/gegevens\">Mijn gegevens</a>. " + factuur + ".</p>" +
+    "Daarna schrijven we niets meer af en maak je geen nieuwe kaarten meer. Na nog " + NA_EINDE_WISSEN_DAGEN + " dagen wissen we alles van je praktijk, ook de gedeelde kaarten. " +
+    "Download v\u00f3\u00f3r die tijd wat je wilt bewaren op <a href=\"/v2/gegevens\">Mijn gegevens</a>. " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="intrekken"/>' +
     '<div class="knoppen"><button class="knop oranje" type="submit">Toch doorgaan</button></div></form></div>';
   return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement</h2>' +
@@ -739,6 +778,22 @@ async function proefRonde() {
     if (!p.klant && nu >= p.verloopt + PROEF_BEWAAR_DAGEN * 86400000) { proefWis(p.id); gewijzigd = true; continue; }
     if (p.gewist && nu >= Number(p.bewaarTot || 0)) { proefWis(p.id); gewijzigd = true; continue; }
     if (p.gewist) continue;
+    // opgezegd abonnement: na de betaalde maand gestopt (geen nieuwe kaarten meer), en
+    // 30 dagen later alles van die praktijk gewist, zoals voorwaarden art. 5 en de
+    // verwerkersovereenkomst art. 10 beloven (alleen de fiscale bewaarplicht blijft)
+    const einde = abonnementEindeStap(p, nu);
+    if (einde === "gestopt") {
+      gewijzigd = true;
+      proefMeldAhmed("Abonnement gestopt: " + (p.praktijk || p.naam), p, "Het opgezegde abonnement is voorbij. Over " +
+        NA_EINDE_WISSEN_DAGEN + " dagen wist Fysiplan de kaarten van deze praktijk.");
+    }
+    if (einde === "wissen") {
+      const pk = Object.keys(praktijkAccounts).find((k) => String(praktijkAccounts[k].proef?.id || "") === p.id);
+      if (pk) await praktijkAllesWissen(pk).then(() => auditLog("(gewist)", "praktijk-gewist-na-einde", null)).catch((e) => console.error("wissen na einde:", e.message));
+      else proefNaPraktijkWissen(p.id);
+      gewijzigd = true;
+      continue;
+    }
     if (!p.klant && !p.herinnerd && nu < p.verloopt && p.verloopt - nu <= 2 * 86400000) {
       p.herinnerd = nu; gewijzigd = true;
       proefMail(p.email, "Je Fysiplan-proef loopt over twee dagen af",
@@ -5419,13 +5474,15 @@ async function afhandelen(request, response) {
       proefMeldAhmed("Opgezegd: " + naam, p, "Deze praktijk heeft het abonnement zelf opgezegd in de app, per " + tot +
         ". Zet een eventuele maandincasso bij Mollie stop als die al loopt.");
       proefMail(p.email, "Bevestiging: je Fysiplan-abonnement is opgezegd", "Hoi " + (p.naam || "").split(" ")[0] + ",\n\n" +
-        "We hebben je opzegging ontvangen. Je kunt Fysiplan nog gebruiken tot en met " + tot + "; daarna schrijven we niets meer af.\n\n" +
+        "We hebben je opzegging ontvangen. Je kunt Fysiplan nog gebruiken tot en met " + tot + "; daarna schrijven we niets meer af.\n" +
+        NA_EINDE_WISSEN_DAGEN + " dagen na die datum wissen we alles van je praktijk, ook de kaarten die je met patiënten deelde.\n\n" +
         "Bedacht? Tot die datum trek je de opzegging in via https://fysiplan.nl/v2/proef?mijn=1\n" +
         "Je kaarten downloaden of wissen kan op https://fysiplan.nl/v2/gegevens\n\nGroet,\nFysiplan");
     }
     await serveerProef(request, response, "bericht", { TITEL: "Opgezegd", ETIKET: "Opgezegd",
       KOP: "Je abonnement is opgezegd.",
-      TEKST: "Je kunt Fysiplan nog gebruiken tot en met " + tot + ". Daarna schrijven we niets meer af." +
+      TEKST: "Je kunt Fysiplan nog gebruiken tot en met " + tot + ". Daarna schrijven we niets meer af, en " + NA_EINDE_WISSEN_DAGEN +
+        " dagen later wissen we alles van je praktijk." +
         (mailIngesteld() ? " Je krijgt een bevestiging per e-mail." : ""),
       KNOP_HTML: '<a class="knop oranje" href="/v2/app">Naar mijn kaarten</a> ' + terug });
     return;
@@ -5728,32 +5785,7 @@ async function afhandelen(request, response) {
       await opnieuw("Typ WISSEN in het laatste veld om te bevestigen dat alles weg mag.", 400);
       return;
     }
-    const wegVids = Object.values(kaarten[pk] || {}).flatMap((k) => Object.values(k.vids || {}));
-    const aantalKaarten = Object.keys(kaarten[pk] || {}).length;
-    delete kaarten[pk];
-    await saveJson(kaartenPath, kaarten);
-    await ruimKaartVideosOp(wegVids);
-    for (const o of praktijkOefeningen[pk] || []) {
-      if (/^uploads\/oef-[a-f0-9]{12}\.(jpg|png)$/.test(String(o.img || ""))) { try { await unlink(join(dataDir, o.img)); } catch {} }
-    }
-    delete praktijkOefeningen[pk];
-    await saveJson(praktijkOefeningenPath, praktijkOefeningen);
-    delete praktijkSjablonen[pk];
-    await saveJson(praktijkSjablonenPath, praktijkSjablonen);
-    await inProfielRij(pk, async () => {
-      for (const [k, p] of Object.entries(praktijken).filter(eigenProfiel)) {
-        if (/^uploads\/logo-[^/]+$/.test(String(p.logo || ""))) { try { await unlink(join(dataDir, p.logo)); } catch {} }
-        delete praktijken[k];
-      }
-      await saveJson(praktijkenPath, praktijken);
-    });
-    const proefUitkomst = acc.proef ? proefNaPraktijkWissen(acc.proef.id) : null;
-    if (proefUitkomst) await bewaarProeven();
-    delete praktijkAccounts[pk];
-    await saveJson(accountsPath, praktijkAccounts);
-    for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
-    // het logboek noemde de praktijknaam; alleen het feit dat er gewist is blijft, zonder naam
-    praktijkAudit = praktijkAudit.filter((a) => a.praktijk !== pk);
+    const { aantalKaarten, proefUitkomst } = await praktijkAllesWissen(pk);
     auditLog("(gewist)", "praktijk-alles-gewist", request);
     await serveerProef(request, response, "bericht", { TITEL: "Alles gewist", ETIKET: "Gewist", KOP: "Alles van je praktijk is gewist.",
       TEKST: aantalKaarten + (aantalKaarten === 1 ? " kaart" : " kaarten") + ", je eigen oefeningen, sjablonen, praktijkgegevens, wachtwoord, " +
