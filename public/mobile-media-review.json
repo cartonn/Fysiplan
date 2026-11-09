@@ -1990,7 +1990,7 @@
       "name": "Shoulder rotation (shrugs)",
       "source": "images/bovenste-extremiteit/shoulder-rotation-shrugs-avatar-v7.jpg",
       "assetSha256": "b2f91a3e116026dc60cecf491de1c8f59f01b8c1dd2ddf7fc963097d16333c7e",
-      "explanationSha256": "ad5cc292ef8a1b36990b3a09e3d86c8227fb34fa6cb4c894d019b48048628106",
+      "explanationSha256": "5929b7f1d640778fe5225b3e1d7c1c05c550c2caed8d2240d65f9f5b495bd582",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
@@ -3593,7 +3593,7 @@
       "name": "Squat lunges",
       "source": "images/onderste-extremiteit/squat-lunges-avatar-v7.jpg",
       "assetSha256": "f5447e3a8586447b31ed6df78efc193d21486623ac2905c32e04d57c7b086326",
-      "explanationSha256": "f8922983233d474fe5ddfd2558318cf5adcb218cc5da9f3f6f614d9c8adb805a",
+      "explanationSha256": "45b460d48ad4746041dd3ff81e7db7bd30a47284e3d945f68c17a4fd9de6142c",
       "mediaType": "color_avatar_candidate",
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
