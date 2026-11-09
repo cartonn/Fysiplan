@@ -30,6 +30,7 @@ jobs:
       - run: npm run test:drafts
       - run: npm run test:beheer
       - run: npm run test:proefpoort
+      - run: npm run test:oudeproef
       - run: npm run test:abonnement
       - run: npm run test:sweep
       - run: npm run test:offline
