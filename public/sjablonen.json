@@ -1,6 +1,7 @@
 [
  {
   "naam": "Knie na operatie",
+  "categorie": "Knie",
   "sub": "Opbouw na een knieoperatie (bijv. voorste kruisband of knieprothese): rustig beginnen op de fiets, daarna kracht en stabiliteit.",
   "oefeningen": [
    "Fiets",
@@ -21,6 +22,7 @@
  },
  {
   "naam": "Heup na operatie",
+  "categorie": "Heup en bovenbeen",
   "sub": "Opbouw na een heupoperatie (bijv. heupprothese): mobiliteit, bilspieren en veilig belasten.",
   "oefeningen": [
    "Been pendelen",
@@ -40,6 +42,7 @@
  },
  {
   "naam": "Schouderrevalidatie",
+  "categorie": "Schouder",
   "sub": "Rotator cuff en schoudergordel: eerst gecontroleerd bewegen, daarna kracht in alle richtingen.",
   "oefeningen": [
    "Anteflexie armen",
@@ -58,6 +61,7 @@
  },
  {
   "naam": "Lage rugklachten",
+  "categorie": "Rug en bekken",
   "sub": "Mobiliseren en de rompspieren versterken bij aspecifieke lage rugklachten.",
   "oefeningen": [
    "Mobilisatie rotatie rug",
@@ -77,6 +81,7 @@
  },
  {
   "naam": "Valpreventie en balans",
+  "categorie": "Ouderen en balans",
   "sub": "Balans, beenkracht en zelfvertrouwen voor ouderen; ook geschikt als groepsprogramma.",
   "oefeningen": [
    "Balans op 1 been",
@@ -95,6 +100,7 @@
  },
  {
   "naam": "Algemene conditie",
+  "categorie": "Algemeen en sport",
   "sub": "Full-body startprogramma: kracht en conditie voor wie (weer) begint met trainen.",
   "oefeningen": [
    "Roeier",
@@ -113,6 +119,7 @@
  },
  {
   "naam": "Enkel na verzwikking",
+  "categorie": "Enkel en voet",
   "sub": "Opbouw na een enkelblessure: eerst rustig belasten en kracht, daarna balans en stevigheid op één been.",
   "oefeningen": [
    "Fiets",
@@ -131,6 +138,7 @@
  },
  {
   "naam": "Nek en schoudergordel",
+  "categorie": "Nek",
   "sub": "Houding en ontspanning bij nek- en schouderklachten: de schoudergordel sterker maken en de rug soepel houden.",
   "oefeningen": [
    "Shoulder rotation (shrugs)",
@@ -149,6 +157,7 @@
  },
  {
   "naam": "Artrose knie en heup",
+  "categorie": "Knie",
   "sub": "Rustig blijven bewegen bij artrose: licht beginnen, kracht rond het gewricht opbouwen en actief blijven.",
   "oefeningen": [
    "Fiets",
@@ -168,6 +177,7 @@
  },
  {
   "naam": "Pols en onderarm",
+  "categorie": "Elleboog, pols en hand",
   "sub": "Bij pols- en elleboogklachten zoals een tenniselleboog: de onderarm rustig sterker maken.",
   "oefeningen": [
    "Wrist extension",
@@ -184,6 +194,7 @@
  },
  {
   "naam": "Soepel blijven (mobiliteit)",
+  "categorie": "Algemeen en sport",
   "sub": "Rek- en mobiliteitsprogramma om soepel te blijven; ook geschikt als rustige afsluiting van een training.",
   "oefeningen": [
    "Yoga cat tail",
@@ -202,6 +213,7 @@
  },
  {
   "naam": "Kracht thuis zonder apparaten",
+  "categorie": "Algemeen en sport",
   "sub": "Volledig lichaam met alleen lichaamsgewicht: overal uit te voeren, geen materiaal nodig.",
   "oefeningen": [
    "Squat",
@@ -220,6 +232,7 @@
  },
  {
   "naam": "Nekprogramma basis",
+  "categorie": "Nek",
   "sub": "Nek en schouders losmaken bij stijfheid of bureauwerk: rustige rek en ontspannen rondjes, allemaal zittend of met een stoel bij de hand.",
   "oefeningen": [
    "Seated cervical stretch",
@@ -238,6 +251,7 @@
  },
  {
   "naam": "Rug soepel maken",
+  "categorie": "Rug en bekken",
   "sub": "De rug rustig soepel maken: mobiliseren in alle richtingen, van kat-koe tot rotaties en rek.",
   "oefeningen": [
    "Mob back cat/cow",
@@ -256,6 +270,7 @@
  },
  {
   "naam": "Valpreventie opbouw met steun",
+  "categorie": "Ouderen en balans",
   "sub": "Steviger op de benen met een stoel als steun: van hak-teen en kniehef tot halve squat — thuis, veilig op te bouwen.",
   "oefeningen": [
    "Standing chair heel/toe",
@@ -274,6 +289,7 @@
  },
  {
   "naam": "Duizeligheid (vestibulair)",
+  "categorie": "Neurologie en duizeligheid",
   "sub": "Rustige balansopbouw bij duizeligheid, met steun binnen handbereik. De blik-oefeningen doet je therapeut in de praktijk voor.",
   "oefeningen": [
    "Seated marching",
@@ -291,6 +307,7 @@
  },
  {
   "naam": "Neurologische revalidatie basis",
+  "categorie": "Neurologie en duizeligheid",
   "sub": "Laagdrempelige basis: reiken, opstaan en balans — eerst vanuit de stoel, daarna staand met steun.",
   "oefeningen": [
    "Seated foreward reach",
@@ -309,6 +326,7 @@
  },
  {
   "naam": "Achillespees en kuit",
+  "categorie": "Enkel en voet",
   "sub": "Opbouw bij achillespees- of kuitklachten: de kuit rustig en zwaar genoeg belasten, eerst met twee benen, daarna met balans en steun.",
   "oefeningen": [
    "Calf raises",
@@ -326,6 +344,7 @@
  },
  {
   "naam": "Hamstring na blessure",
+  "categorie": "Heup en bovenbeen",
   "sub": "Terug naar sport na een hamstringblessure: kracht in de lengte opbouwen en daarna belasten in de pas.",
   "oefeningen": [
    "Leg curl",
@@ -344,6 +363,7 @@
  },
  {
   "naam": "Hardloopknie (patellofemoraal)",
+  "categorie": "Knie",
   "sub": "Bij pijn rond de knieschijf (hardloopknie): kracht van bovenbeen én heup, met balans als basis.",
   "oefeningen": [
    "Squat",
@@ -362,6 +382,7 @@
  },
  {
   "naam": "Frozen shoulder (stijve schouder)",
+  "categorie": "Schouder",
   "sub": "Beweeglijkheid opbouwen bij een stijve, pijnlijke schouder: eerst slingerend en geleid, daarna licht belast binnen de pijngrens.",
   "oefeningen": [
    "Been pendelen",
@@ -379,6 +400,7 @@
  },
  {
   "naam": "Osteoporose: botbelasting en balans",
+  "categorie": "Ouderen en balans",
   "sub": "Botten belasten en vallen voorkomen: staand krachtwerk met eigen gewicht, opstappen en balansmomenten.",
   "oefeningen": [
    "Chair squat",
@@ -396,6 +418,7 @@
  },
  {
   "naam": "Bekken en romp (stabiliteit)",
+  "categorie": "Rug en bekken",
   "sub": "Stabiliteit van bekken en romp opbouwen: bruggen, rustige rompspanning en soepele heupen.",
   "oefeningen": [
    "Bruggen beginner",
@@ -413,6 +436,7 @@
  },
  {
   "naam": "Etalagebenen (claudicatio): lopen en kuitkracht",
+  "categorie": "Hart, vaten en longen",
   "sub": "Looptraining bij etalagebenen: dagelijks wandelen tot de pijngrens komt, even rust, en weer verder — plus kracht voor kuiten en benen.",
   "oefeningen": [
    "Loopband",
@@ -430,6 +454,7 @@
  },
  {
   "naam": "COPD: kracht en conditie",
+  "categorie": "Hart, vaten en longen",
   "sub": "Beweegtraining bij COPD: rustige conditie en kracht met steun van een stoel, in eigen tempo en met pauzes tussen de series.",
   "oefeningen": [
    "Loopband",
