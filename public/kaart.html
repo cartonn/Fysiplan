@@ -495,8 +495,10 @@
   .rustblok>summary h2{display:inline;margin:0;font:inherit;color:inherit}
   .rustblok>summary:focus-visible{outline:3px solid var(--blauw);outline-offset:2px;border-radius:6px}
   .rustblok>.mkaart,.rustblok>.agkaart,.rustblok>.mgkaart{padding:4px 0 22px}
-  #hsknoppen{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  /* twee per rij zolang de woorden passen; bij grote letters (200 %) één per rij, anders liep "Hetzelfde" buiten de knop */
+  #hsknoppen{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,8em),1fr));gap:8px}
   #hsknoppen button:last-child{grid-column:1 / -1}
+  #hsknoppen .sbtn{overflow-wrap:break-word;hyphens:auto}
   @media print{.rustblok{display:none!important}}
 
   /* herinnering in de agenda van de telefoon */
@@ -659,6 +661,20 @@
 <!-- afgeronde behandeling: vriendelijke regel dat de kaart van de patiënt blijft -->
 <div id="afgerond" class="afgerondbanner" style="display:none;font:500 13.5px/1.5 var(--disp);color:#3e7a52;background:#eef6ef;border-bottom:1px solid #d7e8da;padding:9px 16px;text-align:center" role="note"></div>
 <div class="laden" id="laden" role="status" aria-live="polite"><i aria-hidden="true"></i><span id="laden_tekst">Je kaart wordt geladen…</span></div>
+<script>
+  // laadtekst meteen in de taal van de kaart: bij een trage lijn duurt het hoofdscript seconden,
+  // en zag een Engelse patiënt tot dan "Je kaart wordt geladen…". Zelfde volgorde als TAAL hieronder.
+  var LADEN={nl:'Je kaart wordt geladen…',en:'Loading your card…',de:'Deine Karte wird geladen…',fr:'Chargement de ta carte…',
+    es:'Cargando tu tarjeta…',pl:'Wczytywanie karty…',tr:'Kartın yükleniyor…',ar:'جارٍ تحميل بطاقتك…',uk:'Завантаження картки…'};
+  (function(){
+    var h=Object.prototype.hasOwnProperty,t=null,k=function(x){return typeof x==='string'&&h.call(LADEN,x);};
+    try{var q=new URLSearchParams(location.search).get('taal');if(k(q))t=q;}catch(e){}
+    if(!t)try{var o=localStorage.getItem('fp_taal');if(k(o))t=o;}catch(e){}
+    if(!t)try{var v=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||''];
+      for(var i=0;i<v.length&&!t;i++){var c=String(v[i]||'').slice(0,2).toLowerCase();if(k(c))t=c;}}catch(e){}
+    if(t&&t!=='nl'){document.getElementById('laden_tekst').textContent=LADEN[t];document.documentElement.lang=t;if(t==='ar')document.documentElement.dir='rtl';}
+  })();
+</script>
 <div class="skop" id="sessiekop" hidden>
   <button type="button" class="sterug" id="sterug"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span id="sterugTxt">Overzicht</span></button>
   <span class="stel" id="stel" tabindex="-1"></span>
@@ -3183,15 +3199,19 @@
           delete knop.dataset.bezig;});
     });
     // seintje naar de praktijk: één tik stuurt een vaste soort, geen vrije tekst
+    // een tweede tik op hetzelfde seintje binnen een halve minuut stuurt niets nieuws (anders twee regels in het dossier)
+    var SEIN_LAATST={};
     document.getElementById('sknoppen').addEventListener('click',function(e){
       var b=e.target.closest('.sbtn');if(!b||b.dataset.bezig)return;
-      var soort=b.dataset.soort;b.dataset.bezig='1';
+      var soort=b.dataset.soort,nu=Date.now();
+      if(SEIN_LAATST[soort]&&nu-SEIN_LAATST[soort]<30000){zetDank(document.getElementById('sdank'),trs('dank'),'');return;}
+      SEIN_LAATST[soort]=nu;b.dataset.bezig='1';
       var knoppen=document.querySelectorAll('#sknoppen .sbtn');
       knoppen.forEach(function(k){k.classList.toggle('aan',k===b);});
       var dank=document.getElementById('sdank');
       stuur('/api/kaart/seintje',{id:id,soort:soort})
-        .then(function(d){zetDank(dank,d&&d.ok?trs('dank'):trs('fout'),d&&d.ok?'':'fout');if(d&&d.ok)mgSeintjeErbij(K&&K.kaart,soort,Date.now());if(!d||!d.ok)b.classList.remove('aan');delete b.dataset.bezig;})
-        .catch(function(e){delete b.dataset.bezig;if(e&&e.wacht){zetDank(dank,trw('een'),'wacht');return;}zetDank(dank,trs('fout'),'fout');b.classList.remove('aan');});
+        .then(function(d){zetDank(dank,d&&d.ok?trs('dank'):trs('fout'),d&&d.ok?'':'fout');if(d&&d.ok)mgSeintjeErbij(K&&K.kaart,soort,Date.now());if(!d||!d.ok){b.classList.remove('aan');delete SEIN_LAATST[soort];}delete b.dataset.bezig;})
+        .catch(function(e){delete b.dataset.bezig;if(e&&e.wacht){zetDank(dank,trw('een'),'wacht');return;}delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout');b.classList.remove('aan');});
     });
     // ervaren herstel: één tik stuurt de score (-2..+2), vandaag opnieuw tikken wijzigt
     // PSK-score: één tik, de server telt één score per dag
@@ -3385,8 +3405,6 @@
   // Alleen een 404 betekent dat de kaart echt weg is. Druk (429), een serverfout of
   // geen verbinding is tijdelijk: dan nooit "bestaat niet (meer)" zeggen, want dan denkt
   // de patiënt dat de kaart weg is en gooit hij de QR weg.
-  var LADEN={nl:'Je kaart wordt geladen…',en:'Loading your card…',de:'Deine Karte wird geladen…',fr:'Chargement de ta carte…',
-    es:'Cargando tu tarjeta…',pl:'Wczytywanie karty…',tr:'Kartın yükleniyor…',ar:'جارٍ تحميل بطاقتك…',uk:'Завантаження картки…'};
   var NIETGEVONDEN={en:['Card not found','This exercise card does not exist (anymore). Ask your physiotherapist for a new QR code.'],
     de:['Karte nicht gefunden','Diese Trainingskarte gibt es nicht (mehr). Bitte deine Physiotherapeutin oder deinen Physiotherapeuten um einen neuen QR-Code.'],
     fr:['Carte introuvable','Cette carte d’exercices n’existe pas (ou plus). Demande un nouveau QR code à ton kinésithérapeute.'],
