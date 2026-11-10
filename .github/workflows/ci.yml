@@ -102,3 +102,6 @@ jobs:
       - run: npm run test:controletaal
       - run: npm run test:wistweekaarten
       - run: npm run test:emojiinitialen
+      - run: npm run test:proeftweedeapparaat
+      - run: npm run test:printgroot
+      - run: npm run test:vuleersterij
