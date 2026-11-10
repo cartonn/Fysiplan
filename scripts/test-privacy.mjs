@@ -241,7 +241,7 @@ try {
   assert.match(privacy, /binnen een maand antwoord/);
   assert.match(privacy, /alleen door een computer/);
   assert.match(privacy, /zonder die gegevens kunnen we de proef niet starten/);
-  assert.match(privacy, /Versie 9 november 2026/);
+  assert.match(privacy, /Versie 10 november 2026/);
   assert.match(privacy, /hoe vaak, hoeveel of hoe zwaar je oefent/, "privacyverklaring noemt dat doseringsvragen niet naar de AI-dienst gaan");
   assert.match(privacy, /Foutlog/);
   assert.match(privacy, /artikel 9 lid 2 onder h AVG/, "privacyverklaring noemt de uitzondering voor gezondheidsgegevens");
