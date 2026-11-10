@@ -15,7 +15,7 @@ const BUDGET = Number(process.env.BUDGET || 120), PER = 10; // max credits per b
 const AV = { "287": "public/images/onderste-extremiteit/chair-squat-avatar-v7.jpg", "001": "public/images/onderste-extremiteit/standing-abduction-avatar-v7.jpg" };
 const MANNEN = {
   A: { l: "a man of about 35 with fair (white) skin, short light-brown hair, clean-shaven", a: "a man of about 35 with fair, light (white European) skin, short light-brown hair, clean-shaven, friendly face, slim athletic build" },
-  B: { l: "a man of about 35 with light-brown skin (draw only contour lines, no shading), short black curly hair, a short neat beard", a: "a man of about 35 with light-brown (lightly tanned, mixed North-African/Middle-Eastern) skin, short black curly hair, a short neat beard, friendly face, slim athletic build" },
+  B: { l: "a man of about 35 with light-brown skin (draw only contour lines, no shading), short black curly hair, a short neat beard", a: "a man of about 35 with medium-brown skin (clearly a shade darker than lightly tanned; mixed North-African/Middle-Eastern), short black curly hair, a short neat beard, friendly face, slim athletic build" },
 };
 const MAN = MANNEN[process.env.MAN || "A"], MAN_L = MAN.l, MAN_A = MAN.a;
 const LIJN = [
