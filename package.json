@@ -82,6 +82,7 @@
     "test:oefvinkje": "node scripts/test-sweep-oefvinkje-wachtrij.mjs",
     "test:dubbeltik": "node scripts/test-sweep-dubbeltik-breedte.mjs",
     "test:kaartroutes": "node scripts/test-kaart-praktijkroutes.mjs",
+    "test:sjablonenslot": "node scripts/test-sjablonen-onbeveiligd.mjs",
     "test:landingprint": "node scripts/test-sweep-landingprint-langetekst.mjs",
     "test:offlinestand": "node scripts/test-offline-stand.mjs",
     "test:lightbox": "node scripts/test-sweep-lightbox-proefvenster.mjs",

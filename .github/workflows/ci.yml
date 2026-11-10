@@ -94,3 +94,4 @@ jobs:
       - run: npm run test:qrroepnaam
       - run: npm run test:uitnodigingpraktijk
       - run: npm run test:rempraktijk
+      - run: npm run test:sjablonenslot
