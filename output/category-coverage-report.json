@@ -1,16 +1,16 @@
 {
  "scope": "Basiscatalogus in de repository (public/oefeningen-v2.json). Runtime-overrides op de server niet meegeteld; die gaan altijd voor.",
  "inputs": {
-  "public/oefeningen-v2.json": "98df98097361826c",
-  "public/mobile-media-review.json": "ba71f3750d3aa1a3",
-  "public/mobile-narration-review.json": "68691362925cf99f",
+  "public/oefeningen-v2.json": "932ac3af5809d80a",
+  "public/mobile-media-review.json": "61571507309754de",
+  "public/mobile-narration-review.json": "a2f39a635521cb30",
   "public/index.html": "785ba562286c5cf7",
   "content/category-secondary-evidence.json": "1877ac95d64b6a66"
  },
  "totals": {
-  "records": 719,
-  "available": 600,
-  "withoutAsset": 119,
+  "records": 748,
+  "available": 637,
+  "withoutAsset": 111,
   "withSecondary": 246,
   "secondaryLabels": 315,
   "evidence": {
@@ -23,29 +23,29 @@
  "assetGaps": [
   {
    "category": "Bovenste extremiteit",
-   "missingAssets": 38,
-   "availableIncludingSecondary": 146,
+   "missingAssets": 37,
+   "availableIncludingSecondary": 163,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
   {
    "category": "Core",
-   "missingAssets": 20,
-   "availableIncludingSecondary": 74,
+   "missingAssets": 19,
+   "availableIncludingSecondary": 75,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
   {
    "category": "Onderste extremiteit",
-   "missingAssets": 53,
-   "availableIncludingSecondary": 201,
+   "missingAssets": 48,
+   "availableIncludingSecondary": 212,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
   {
    "category": "Conditie",
-   "missingAssets": 8,
-   "availableIncludingSecondary": 17,
+   "missingAssets": 7,
+   "availableIncludingSecondary": 23,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   }
@@ -79,13 +79,13 @@
    "storedLabels": [
     "Bovenste extremiteit"
    ],
-   "records": 184,
-   "primary": 144,
-   "primaryAvailable": 106,
+   "records": 200,
+   "primary": 160,
+   "primaryAvailable": 123,
    "secondary": 40,
    "secondaryAvailable": 40,
-   "available": 146,
-   "availableClean": 146,
+   "available": 163,
+   "availableClean": 163,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [
@@ -230,11 +230,6 @@
      "coreExerciseId": "fc_08cfeeedfb4b8f9f"
     },
     {
-     "name": "Pols omhoog – actief",
-     "exerciseId": "fp_b27fb30c91df41ae",
-     "coreExerciseId": "fc_d8ac752144bca4a4"
-    },
-    {
      "name": "Pols omhoog – met lichte weerstand",
      "exerciseId": "fp_f59b9c981aac6c74",
      "coreExerciseId": "fc_5532da663c73f31f"
@@ -331,13 +326,13 @@
    "storedLabels": [
     "Rug"
    ],
-   "records": 64,
-   "primary": 37,
-   "primaryAvailable": 37,
+   "records": 66,
+   "primary": 39,
+   "primaryAvailable": 39,
    "secondary": 27,
    "secondaryAvailable": 27,
-   "available": 64,
-   "availableClean": 64,
+   "available": 66,
+   "availableClean": 66,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [],
@@ -381,11 +376,11 @@
    ],
    "records": 94,
    "primary": 54,
-   "primaryAvailable": 34,
+   "primaryAvailable": 35,
    "secondary": 40,
    "secondaryAvailable": 40,
-   "available": 74,
-   "availableClean": 74,
+   "available": 75,
+   "availableClean": 75,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [
@@ -465,11 +460,6 @@
      "coreExerciseId": "fc_dfaf4f468f172ed9"
     },
     {
-     "name": "Romp heupscharnier – staand",
-     "exerciseId": "fp_3fad61b466eee53c",
-     "coreExerciseId": "fc_14ad1e81dbb67608"
-    },
-    {
      "name": "Romp heupscharnier – met lichte weerstand",
      "exerciseId": "fp_50fd5edeb35381b1",
      "coreExerciseId": "fc_b9afb611bed36add"
@@ -541,13 +531,13 @@
    "storedLabels": [
     "Onderste extremiteit"
    ],
-   "records": 254,
-   "primary": 150,
-   "primaryAvailable": 97,
+   "records": 260,
+   "primary": 156,
+   "primaryAvailable": 108,
    "secondary": 104,
    "secondaryAvailable": 104,
-   "available": 201,
-   "availableClean": 200,
+   "available": 212,
+   "availableClean": 211,
    "mediaRejected": 1,
    "explanationHeld": 0,
    "missingAssets": [
@@ -647,11 +637,6 @@
      "coreExerciseId": "fc_2f41adc210b215b9"
     },
     {
-     "name": "Knie strekken – zittend",
-     "exerciseId": "fp_cf505e07966207af",
-     "coreExerciseId": "fc_074f4d1dd8bf423d"
-    },
-    {
      "name": "Knie strekken – staand met steun",
      "exerciseId": "fp_5910886c0aa7c37b",
      "coreExerciseId": "fc_6c0928ca205ec113"
@@ -677,11 +662,6 @@
      "coreExerciseId": "fc_f193144158ac3ec6"
     },
     {
-     "name": "Sit-to-stand – zittend",
-     "exerciseId": "fp_048db79e23621d95",
-     "coreExerciseId": "fc_440944237c927a09"
-    },
-    {
      "name": "Sit-to-stand – staand met steun",
      "exerciseId": "fp_3ca340b82645738c",
      "coreExerciseId": "fc_cc2f1ec88c684e6a"
@@ -695,11 +675,6 @@
      "name": "Step-up – staand met steun",
      "exerciseId": "fp_af17701903e878be",
      "coreExerciseId": "fc_d1c46fb7bd403cf8"
-    },
-    {
-     "name": "Step-up – op verhoging",
-     "exerciseId": "fp_fd2ac7311f3602ca",
-     "coreExerciseId": "fc_6cd017541cb3fb1a"
     },
     {
      "name": "Step-down – staand met steun",
@@ -730,16 +705,6 @@
      "name": "Hamstring curl – zittend",
      "exerciseId": "fp_55747db401012e8c",
      "coreExerciseId": "fc_32f73eb8caa06a9c"
-    },
-    {
-     "name": "Hamstring curl – staand met steun",
-     "exerciseId": "fp_7b6bfab821c10c3e",
-     "coreExerciseId": "fc_292f133de46a577c"
-    },
-    {
-     "name": "Hamstring curl – met elastiek",
-     "exerciseId": "fp_c1e1e7d84d51e2c0",
-     "coreExerciseId": "fc_a816e5871d232970"
     },
     {
      "name": "Terminal knee extension – staand met steun",
@@ -1104,13 +1069,13 @@
     "Cardio",
     "Conditie"
    ],
-   "records": 25,
-   "primary": 14,
-   "primaryAvailable": 6,
+   "records": 30,
+   "primary": 19,
+   "primaryAvailable": 12,
    "secondary": 11,
    "secondaryAvailable": 11,
-   "available": 17,
-   "availableClean": 16,
+   "available": 23,
+   "availableClean": 22,
    "mediaRejected": 0,
    "explanationHeld": 1,
    "missingAssets": [
@@ -1118,11 +1083,6 @@
      "name": "Diafragma-ademhaling – zittend",
      "exerciseId": "fp_6aa232defeec08a5",
      "coreExerciseId": "fc_b21fb04b055a6374"
-    },
-    {
-     "name": "Lippenremademhaling – zittend",
-     "exerciseId": "fp_e17adac2e142f1f8",
-     "coreExerciseId": "fc_3b3dec662966916f"
     },
     {
      "name": "Armen en adem koppelen – met armtaak",

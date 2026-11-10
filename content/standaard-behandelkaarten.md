@@ -46,3 +46,5 @@ Nieuwe oefeningen en kaarten per regio komen erin met `scripts/importeer-regio-o
 - Heup: 9 nieuwe oefeningen, beeld bij 4 bestaande, 5 nieuwe kaarten en 6 aanvullingen.
 - Rug en nek: 15 nieuwe oefeningen, 13 nieuwe kaarten en 18 aanvullingen.
 - Basisoefeningen uit de catalogus die nog geen beeld hadden (schouder, voet en enkel, knie, neurologie): 30 oefeningen kregen lijntekening en avatar, 16 nieuwe kaarten.
+- Arm: 13 nieuwe oefeningen, beeld bij 2 bestaande, 8 nieuwe kaarten.
+- Overig (hart, vaten en longen, algemeen en sport, werk): 16 nieuwe oefeningen, beeld bij 6 bestaande, 7 nieuwe kaarten en 21 aanvullingen.

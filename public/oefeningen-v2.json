@@ -7159,5 +7159,208 @@
   "img": "images/rug/schuin-opkrullen-elastiek-liggend-line-v1.png",
   "uitleg": "Maak een elastiek achter je vast op vloerhoogte en lig op je rug met gebogen knieën; houd het elastiek in één hand bij je hoofd. Trek je kin in en krul je bovenlijf schuin op, terwijl je de hand met het elastiek naar je andere knie brengt. Houd kort vast en rol gecontroleerd terug.",
   "kaartImg": "images/rug/schuin-opkrullen-elastiek-liggend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Bal tegen de muur gooien – squat op een bosu",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/bal-muur-gooien-bosu-squat-line-v1.png",
+  "uitleg": "Leg een bosu met de bolle kant omlaag vlak voor een muur en ga op de platte kant staan. Zak in een squat met een bal voor je borst, werp de bal naar de muur terwijl je omhoogkomt en vang hem terwijl je weer zakt. Houd de bosu zo stil mogelijk.",
+  "kaartImg": "images/bovenste-extremiteit/bal-muur-gooien-bosu-squat-avatar-v8.jpg"
+ },
+ {
+  "naam": "Voorwerpen herkennen op de tast – ogen dicht",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/voorwerpen-herkennen-tast-line-v1.png",
+  "uitleg": "Zet een bak met kleine, bekende spullen voor je op tafel, zoals een sleutel, munt of kam. Sluit je ogen, pak met je aangedane hand één voorwerp en betast het: is het hard, zacht, glad of ruw, en wat is het? Kijk daarna of je het goed had en neem het volgende.",
+  "kaartImg": "images/bovenste-extremiteit/voorwerpen-herkennen-tast-avatar-v8.jpg"
+ },
+ {
+  "naam": "Bovenrug strekken – buiklig met handen onder het voorhoofd",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/bovenrug-strekken-buiklig-ruit-line-v1.png",
+  "uitleg": "Lig op je buik en leg je handen plat op elkaar onder je voorhoofd, ellebogen opzij, zodat je armen een ruit vormen. Druk je onderarmen en handen in de mat en til je hoofd en bovenborst een klein stukje op, met je kin licht ingetrokken en je blik op je handen. Houd even vast en zak rustig terug.",
+  "kaartImg": "images/bovenste-extremiteit/bovenrug-strekken-buiklig-ruit-avatar-v8.jpg"
+ },
+ {
+  "naam": "Elleboog buigen en strekken – ruglig met arm omhoog",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/elleboog-ruglig-arm-omhoog-line-v1.png",
+  "uitleg": "Lig op je rug en breng je aangedane arm gestrekt omhoog naar het plafond; houd de bovenarm stil met je andere hand of laat iemand helpen. Buig je elleboog zodat je hand rustig naar je voorhoofd zakt. Strek daarna je arm weer zo ver mogelijk naar boven.",
+  "kaartImg": "images/bovenste-extremiteit/elleboog-ruglig-arm-omhoog-avatar-v8.jpg"
+ },
+ {
+  "naam": "Elleboog strekken over tafel – met handdoek",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/elleboog-strekken-tafel-handdoek-line-v1.png",
+  "uitleg": "Zit recht voor een tafel en leg je aangedane onderarm op een handdoek op het tafelblad. Schuif de handdoek met je hand naar voren tot je elleboog gestrekt is, zonder met je romp mee te leunen. Buig je elleboog daarna weer en schuif terug naar je lichaam.",
+  "kaartImg": "images/bovenste-extremiteit/elleboog-strekken-tafel-handdoek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Gevouwen handen kantelen – ellebogen op tafel",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/gevouwen-handen-kantelen-line-v1.png",
+  "uitleg": "Zet je ellebogen op tafel, vouw je vingers stevig in elkaar en druk je handpalmen tegen elkaar, zodat je onderarmen een driehoek vormen. Buig je polsen zo ver mogelijk naar achteren. Draai je gevouwen handen naar de ene kant tot de pinkzijde van één hand naar je toe wijst, en daarna naar de andere kant.",
+  "kaartImg": "images/bovenste-extremiteit/gevouwen-handen-kantelen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Hand plat op tafel voelen – met kijken",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/hand-plat-voelen-kijken-line-v1.png",
+  "uitleg": "Leg je aangedane onderarm op tafel met je handpalm plat naar beneden en je pols zo recht mogelijk. Strijk met een vinger van je andere hand rustig over elke vinger, van de knokkel naar de top, en duw hem zacht plat tegen de tafel. Kijk mee en let op hoe lang en hoe breed elke vinger voelt.",
+  "kaartImg": "images/bovenste-extremiteit/hand-plat-voelen-kijken-avatar-v8.jpg"
+ },
+ {
+  "naam": "Kneedgum draaien tussen duim en wijsvinger",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/kneedgum-draaien-duim-wijsvinger-line-v1.png",
+  "uitleg": "Rol een stuk kneedgum tot een worstje en houd het ene eind vast in je sterke hand. Knijp het andere eind tussen de duim en wijsvinger van je aangedane hand. Draai je aangedane pols naar buiten, zodat het worstje verdraait, en houd je schouder en romp stil.",
+  "kaartImg": "images/bovenste-extremiteit/kneedgum-draaien-duim-wijsvinger-avatar-v8.jpg"
+ },
+ {
+  "naam": "Knijpers rond een beker zetten",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/knijpers-rond-beker-line-v1.png",
+  "uitleg": "Zet een beker en een handvol wasknijpers voor je op tafel. Knijp met je aangedane hand één knijper open en klem hem op de rand van de beker; doe dit tot de rand rondom vol zit en haal ze er daarna een voor een weer af. Houd je schouder laag en je romp stil.",
+  "kaartImg": "images/bovenste-extremiteit/knijpers-rond-beker-avatar-v8.jpg"
+ },
+ {
+  "naam": "Middelste vingerkootje buigen – met blokkeren",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/middelste-vingerkootje-blokkeren-line-v1.png",
+  "uitleg": "Zet je aangedane elleboog op tafel met je onderarm omhoog. Houd met je andere hand het onderste kootje van de vinger stevig vast, zodat de knokkel niet meebeweegt. Buig en strek nu alleen het middelste vingergewricht.",
+  "kaartImg": "images/bovenste-extremiteit/middelste-vingerkootje-blokkeren-avatar-v8.jpg"
+ },
+ {
+  "naam": "Opstaan uit de stoel – looprek voor je",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/opstaan-looprek-line-v1.png",
+  "uitleg": "Zet het looprek recht voor je stoel, schuif naar voren tot je op de rand zit en zet je voeten iets uit elkaar. Plaats je handen op de armleuningen van de stoel, buig voorover en duw jezelf met je benen omhoog; trek jezelf niet op aan het looprek. Sta helemaal rechtop en pak dan één voor één de handvatten van het looprek.",
+  "kaartImg": "images/bovenste-extremiteit/opstaan-looprek-avatar-v8.jpg"
+ },
+ {
+  "naam": "Schouderblad naar achteren – zittend met arm op een bal",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/schouderblad-zittend-arm-op-bal-line-v1.png",
+  "uitleg": "Zit rechtop zonder tegen de leuning te leunen, met een grote bal naast je. Leg je aangedane arm op de bal, net onder schouderhoogte, en je andere hand op je schoot. Trek je schouderblad een klein stukje naar achteren en omlaag, houd het daar en rol de bal langzaam naar voren en terug.",
+  "kaartImg": "images/bovenste-extremiteit/schouderblad-zittend-arm-op-bal-avatar-v8.jpg"
+ },
+ {
+  "naam": "Van liggen naar zitten – over de zij uit bed",
+  "groep": "Bovenste extremiteit",
+  "img": "images/bovenste-extremiteit/liggen-naar-zitten-uit-bed-line-v1.png",
+  "uitleg": "Lig op je rug en schuif je hielen een voor een naar je toe, zodat beide knieën gebogen zijn. Rol in één beweging naar de kant van de bedrand, laat je onderbenen over de rand zakken en duw jezelf met je bovenste hand en de onderste elleboog omhoog. Kom rechtop op de rand zitten met je handen naast je heupen.",
+  "kaartImg": "images/bovenste-extremiteit/liggen-naar-zitten-uit-bed-avatar-v8.jpg"
+ },
+ {
+  "naam": "Marcheren op een minitrampoline",
+  "groep": "Cardio",
+  "img": "images/onderste-extremiteit/marcheren-minitrampoline-line-v1.png",
+  "uitleg": "Ga midden op een minitrampoline staan, eventueel met een hand aan een steun. Til om de beurt je knieën op tot ongeveer heuphoogte en zwaai je armen mee, zoals bij stevig marcheren. Houd een rustig, regelmatig ritme aan en blijf rechtop.",
+  "kaartImg": "images/onderste-extremiteit/marcheren-minitrampoline-avatar-v8.jpg"
+ },
+ {
+  "naam": "Eenbenige kniebuiging – staand",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/eenbenige-kniebuiging-staand-line-v1.png",
+  "uitleg": "Ga op je ene been staan en houd je andere voet met gebogen knie achter je van de grond; houd je zo nodig licht vast aan een tafel. Buig je standbeen tot ongeveer een kwart kniebuiging, met je knie boven je tweede teen en je bekken recht. Kom weer omhoog tot je standbeen gestrekt is. Zwaarder: met een halter in elke hand.",
+  "kaartImg": "images/onderste-extremiteit/eenbenige-kniebuiging-staand-avatar-v8.jpg"
+ },
+ {
+  "naam": "Bovenrug rekken – handen gevouwen naar voren",
+  "groep": "Rug",
+  "img": "images/onderste-extremiteit/bovenrug-rekken-handen-naar-voren-line-v1.png",
+  "uitleg": "Sta rechtop en vouw je handen in elkaar voor je borst. Strek je armen ver naar voren, laat je bovenrug bol worden zodat je schouderbladen uit elkaar gaan en laat je kin rustig naar je borst zakken. Houd de rek tussen je schouderbladen even vast en kom weer rechtop.",
+  "kaartImg": "images/onderste-extremiteit/bovenrug-rekken-handen-naar-voren-avatar-v8.jpg"
+ },
+ {
+  "naam": "Ellebogen naar achteren trekken – zittend zonder gewicht",
+  "groep": "Bovenste extremiteit",
+  "img": "images/onderste-extremiteit/ellebogen-naar-achteren-zittend-line-v1.png",
+  "uitleg": "Ga rechtop op een stoel zitten en steek je armen gestrekt vooruit op schouderhoogte, handpalmen naar elkaar. Trek je ellebogen dicht langs je zij naar achteren en knijp je schouderbladen samen; je borstbeen blijft hoog. Strek je armen daarna rustig weer naar voren.",
+  "kaartImg": "images/onderste-extremiteit/ellebogen-naar-achteren-zittend-avatar-v8.jpg"
+ },
+ {
+  "naam": "Lopen en omkeren",
+  "groep": "Cardio",
+  "img": "images/onderste-extremiteit/lopen-en-omkeren-line-v1.png",
+  "uitleg": "Zorg voor een vrije looproute. Loop in je gewone tempo een stuk rechtdoor, draai dan in een halve cirkel om en sta stil met je voeten naast elkaar. Blijf even in balans staan en loop terug; gaat het makkelijk, loop dan wat sneller.",
+  "kaartImg": "images/onderste-extremiteit/lopen-en-omkeren-avatar-v8.jpg"
+ },
+ {
+  "naam": "Stevig doorwandelen – buiten",
+  "groep": "Cardio",
+  "img": "images/onderste-extremiteit/stevig-doorwandelen-line-v1.png",
+  "uitleg": "Trek goede schoenen aan en wandel in een tempo waarin je nog net kunt praten. Loop rechtop, kijk vooruit en laat je armen ontspannen meezwaaien. Spreek met je fysiotherapeut af hoe lang en hoe ver je loopt en bouw dat rustig op.",
+  "kaartImg": "images/onderste-extremiteit/stevig-doorwandelen-avatar-v8.jpg"
+ },
+ {
+  "naam": "Binnenkant bovenbeen rekken – zijwaarts uitstappen",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/binnenkant-bovenbeen-rekken-zijwaarts-line-v1.png",
+  "uitleg": "Sta met je voeten ver uit elkaar, tenen naar voren en je hele voetzolen op de vloer. Schuif je heupen opzij boven je rechtervoet en laat die knie buigen, terwijl je linkerbeen lang blijft; je voelt rek aan de binnenkant van het lange been. Houd even vast en schuif via het midden naar de andere kant.",
+  "kaartImg": "images/onderste-extremiteit/binnenkant-bovenbeen-rekken-zijwaarts-avatar-v8.jpg"
+ },
+ {
+  "naam": "Armen kruisen boven je hoofd en voor je borst",
+  "groep": "Bovenste extremiteit",
+  "img": "images/onderste-extremiteit/armen-kruisen-boven-hoofd-line-v1.png",
+  "uitleg": "Sta rechtop met je armen zijwaarts gestrekt op schouderhoogte. Zwaai je armen in een boog omhoog en kruis ze boven je hoofd, open ze weer opzij en kruis ze daarna voor je borst. Blijf rechtop staan en beweeg vlot maar gecontroleerd.",
+  "kaartImg": "images/onderste-extremiteit/armen-kruisen-boven-hoofd-avatar-v8.jpg"
+ },
+ {
+  "naam": "Brug op één been – voet op een step",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/brug-een-been-voet-op-step-line-v1.png",
+  "uitleg": "Lig op je rug met je hielen op een step en je knieën gebogen. Strek je ene been omhoog. Duw met de hiel die op de step blijft je billen omhoog tot je schouders, heupen en knie op één lijn liggen, met je bekken recht. Laat je rustig zakken.",
+  "kaartImg": "images/onderste-extremiteit/brug-een-been-voet-op-step-avatar-v8.jpg"
+ },
+ {
+  "naam": "Achterkant benen rekken – voeten gekruist",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/achterkant-benen-rekken-gekruist-line-v1.png",
+  "uitleg": "Sta rechtop en zet je ene voet gekruist voor de andere, beide knieën gestrekt maar niet op slot. Leg je handen op je bovenbenen en buig vanuit je heupen langzaam voorover met een lange rug, tot je rek voelt achter in je bovenbenen en in je bilspieren. Kom rustig weer rechtop en wissel de voeten.",
+  "kaartImg": "images/onderste-extremiteit/achterkant-benen-rekken-gekruist-avatar-v8.jpg"
+ },
+ {
+  "naam": "Achterkant bovenarm rekken – hand achter je hoofd",
+  "groep": "Bovenste extremiteit",
+  "img": "images/onderste-extremiteit/achterkant-bovenarm-rekken-line-v1.png",
+  "uitleg": "Breng je ene arm omhoog en laat je hand achter je hoofd zakken, richting je schouderbladen. Pak met je andere hand de elleboog vast en duw die rustig verder naar achteren en omlaag, tot je rek voelt aan de achterkant van je bovenarm. Houd vast en wissel van arm.",
+  "kaartImg": "images/onderste-extremiteit/achterkant-bovenarm-rekken-avatar-v8.jpg"
+ },
+ {
+  "naam": "Brede kniebuiging – tenen naar buiten",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/brede-kniebuiging-tenen-buiten-line-v1.png",
+  "uitleg": "Zet je voeten ruim uit elkaar en draai je tenen schuin naar buiten. Zak recht naar beneden door je knieën te buigen, waarbij je knieën in de richting van je tenen wijzen en je romp rechtop blijft. Houd een paar tellen vast en duw je weer omhoog.",
+  "kaartImg": "images/onderste-extremiteit/brede-kniebuiging-tenen-buiten-avatar-v8.jpg"
+ },
+ {
+  "naam": "Bovenrug rekken – zittend voorover",
+  "groep": "Rug",
+  "img": "images/onderste-extremiteit/bovenrug-rekken-zittend-voorover-line-v1.png",
+  "uitleg": "Zit op het midden van een stoel, voeten wat uit elkaar, en buig voorover. Pak met je ene hand de voorpoot van de stoel aan dezelfde kant vast. Duw met je andere hand op die elleboog naar de vloer, zodat je rek voelt tussen je schouderblad en je wervelkolom. Houd vast en wissel van kant.",
+  "kaartImg": "images/onderste-extremiteit/bovenrug-rekken-zittend-voorover-avatar-v8.jpg"
+ },
+ {
+  "naam": "Traplopen met leuning – trede voor trede",
+  "groep": "Cardio",
+  "img": "images/onderste-extremiteit/traplopen-met-leuning-line-v1.png",
+  "uitleg": "Houd de leuning vast en zet bij het naar boven gaan eerst je sterke been op de trede, daarna je andere been ernaast. Schuif je hand mee langs de leuning en herhaal per trede. Naar beneden zet je eerst het zwakkere been een trede lager en daarna het sterke been ernaast.",
+  "kaartImg": "images/onderste-extremiteit/traplopen-met-leuning-avatar-v8.jpg"
+ },
+ {
+  "naam": "Voorkant heup rekken – been over de bedrand",
+  "groep": "Onderste extremiteit",
+  "img": "images/onderste-extremiteit/voorkant-heup-rekken-bedrand-line-v1.png",
+  "uitleg": "Lig op je rug dicht bij de rand van je bed, met je benen gestrekt. Schuif je been aan de bedkant over de rand en laat het ontspannen naar beneden hangen, terwijl je billen en bekken op het bed blijven liggen. Houd vast tot je rek voelt aan de voorkant van je heup en leg je been terug.",
+  "kaartImg": "images/onderste-extremiteit/voorkant-heup-rekken-bedrand-avatar-v8.jpg"
+ },
+ {
+  "naam": "Om en om door één neusgat ademen – zittend",
+  "groep": "Cardio",
+  "img": "images/onderste-extremiteit/om-en-om-neusgat-ademen-line-v1.png",
+  "uitleg": "Zit rechtop met je voeten plat en ontspannen schouders. Sluit met je duim één neusgat en adem langzaam in via het andere. Sluit dan dat neusgat met je ringvinger, laat je duim los en adem uit aan de andere kant. Wissel zo rustig af.",
+  "kaartImg": "images/onderste-extremiteit/om-en-om-neusgat-ademen-avatar-v8.jpg"
  }
 ]
