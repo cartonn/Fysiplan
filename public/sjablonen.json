@@ -499,6 +499,11 @@
     "n": "Pully row",
     "s": "3",
     "h": "15"
+   },
+   {
+    "n": "Schouderblad naar achteren – actief",
+    "s": "3",
+    "h": "30 sec"
    }
   ]
  },
@@ -900,6 +905,16 @@
     "n": "Pully row",
     "s": "3",
     "h": "15"
+   },
+   {
+    "n": "Rug strekken – staand",
+    "s": "2",
+    "h": "10"
+   },
+   {
+    "n": "Schouderblad naar achteren – actief",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -1457,6 +1472,21 @@
     "n": "Quadriceps stretch",
     "s": "3",
     "h": "5 × 15 sec"
+   },
+   {
+    "n": "Heupflexor rek – staand met steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Chair squat",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lunges",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2931,6 +2961,11 @@
     "n": "Zijwaarts stappen – zonder steun",
     "s": "2",
     "h": "10"
+   },
+   {
+    "n": "Reiken in stand – zonder steun",
+    "s": "3",
+    "h": "30 sec"
    }
   ]
  },
@@ -2954,6 +2989,11 @@
     "n": "Grote stappen – met ritmische cue",
     "s": "1",
     "h": "10"
+   },
+   {
+    "n": "Tandemstand – zonder steun",
+    "s": "3",
+    "h": "30 sec"
    }
   ]
  },
@@ -3138,6 +3178,16 @@
     "n": "Wrist extension",
     "s": "1",
     "h": "10"
+   },
+   {
+    "n": "Seated dumbell press up",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Wrist flexion",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -3240,6 +3290,11 @@
     "n": "Lunges",
     "s": "3",
     "h": "8"
+   },
+   {
+    "n": "Step-up – op verhoging",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -3261,6 +3316,11 @@
    },
    {
     "n": "Lunges",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Step-up – op verhoging",
     "s": "3",
     "h": "10"
    }
@@ -3435,6 +3495,21 @@
     "n": "Lateral raises",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Uitvalspas achterwaarts – met halters",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Upright row",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Marcheren op een minitrampoline",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -3471,6 +3546,26 @@
    },
    {
     "n": "Op de plaats marcheren – zonder steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Uitvalspas achterwaarts – met halters",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Upright row",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Marcheren op een minitrampoline",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Hamstring curl – staand met steun",
     "s": "3",
     "h": "10"
    }
@@ -3516,6 +3611,31 @@
     "n": "Zijwaarts stappen – zonder steun",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Uitvalspas achterwaarts – met halters",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Upright row",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Marcheren op een minitrampoline",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Hamstring curl – staand met steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Chair squat",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -3552,6 +3672,26 @@
    },
    {
     "n": "Pully press double",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Uitvalspas achterwaarts – met halters",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Upright row",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Marcheren op een minitrampoline",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lopen en omkeren",
     "s": "3",
     "h": "10"
    }
@@ -3595,6 +3735,31 @@
    },
    {
     "n": "Pully press double",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Uitvalspas achterwaarts – met halters",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Upright row",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Marcheren op een minitrampoline",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Hamstring curl – staand met steun",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Lopen en omkeren",
     "s": "3",
     "h": "10"
    }
@@ -3645,6 +3810,26 @@
     "n": "Pully press double",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Uitvalspas achterwaarts – met halters",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Upright row",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Marcheren op een minitrampoline",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Hamstring curl – staand met steun",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -3676,6 +3861,11 @@
    },
    {
     "n": "Biceps curl",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Upright row",
     "s": "3",
     "h": "10"
    }
@@ -3716,6 +3906,11 @@
     "n": "Leg press",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Upright row",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -3752,6 +3947,21 @@
    },
    {
     "n": "Anteflexie armen",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Calf raises",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Seated dumbell press up",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "French press",
     "s": "3",
     "h": "10"
    }
@@ -3802,6 +4012,16 @@
     "n": "Anteflexie armen",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Seated dumbell press up",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "French press",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -3829,6 +4049,11 @@
     "n": "Plank basis",
     "s": "3",
     "h": "3 × 30 sec"
+   },
+   {
+    "n": "Chair squat",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -3951,6 +4176,46 @@
     "n": "Squat",
     "s": "4",
     "h": "8"
+   },
+   {
+    "n": "Eenbenige kniebuiging – staand",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Hamstring curl – liggend",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Knie strekken met heup gebogen – ruglig",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Heupscharnier – functioneel op één been",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Been naar achteren laten glijden – met handdoek",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Brug op één been – voet op een step",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Hamstring en kuit rekken – ruglig met band",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Hamstring curl – met elastiek",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -3978,6 +4243,21 @@
     "n": "Seated hamstring stretch",
     "s": "3",
     "h": "5 × 15 sec"
+   },
+   {
+    "n": "Pols buigen en strekken – duim omhoog",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Bovenrug rekken – handen gevouwen naar voren",
+    "s": "3",
+    "h": "30 sec"
+   },
+   {
+    "n": "Kuitrek gestrekte knie – staand met steun",
+    "s": "3",
+    "h": "30 sec"
    }
   ]
  },
@@ -6025,6 +6305,256 @@
   "dosering": {
    "s": "3",
    "h": "10"
+  }
+ },
+ {
+  "naam": "Arm en hand na hersenletsel – fase 1",
+  "sub": "Eerste oefeningen voor elleboog en hand na een beroerte of ander hersenletsel.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 1,
+  "oefeningen": [
+   "Seated shoulder roll",
+   "Elleboog buigen en strekken – ruglig met arm omhoog",
+   "Vuist maken en hand openen"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Arm en hand na hersenletsel – fase 2",
+  "sub": "Elleboog, pols en hand actiever bewegen aan tafel na hersenletsel.",
+  "categorie": "Neurologie en duizeligheid",
+  "fase": 2,
+  "oefeningen": [
+   "Elleboog strekken over tafel – met handdoek",
+   "Pols omhoog – actief",
+   "Vuist maken en hand openen"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Arm en hand na hersenletsel – rekken",
+  "sub": "Schouder, onderarm en pols soepel houden bij een stijve arm na hersenletsel.",
+  "categorie": "Neurologie en duizeligheid",
+  "oefeningen": [
+   "Gevouwen handen kantelen – ellebogen op tafel",
+   "Schouder naar buiten draaien met stok – staand",
+   "Pols buigen en strekken – duim omhoog"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Handvaardigheid na hersenletsel",
+  "sub": "Fijne grepen oefenen met kneedgum, knijpers en kleine voorwerpen.",
+  "categorie": "Neurologie en duizeligheid",
+  "oefeningen": [
+   "Kneedgum draaien tussen duim en wijsvinger",
+   "Knijpers rond een beker zetten",
+   "Voorwerpen herkennen op de tast – ogen dicht"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Transfers: liggen, zitten en opstaan",
+  "sub": "Veilig van liggen naar zitten en van zitten naar staan komen.",
+  "categorie": "Neurologie en duizeligheid",
+  "oefeningen": [
+   "Sit-to-stand – zittend",
+   "Van liggen naar zitten – over de zij uit bed",
+   "Opstaan uit de stoel – looprek voor je"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "5"
+  }
+ },
+ {
+  "naam": "Hoofdpijn met nek/schouder fase 1",
+  "sub": "Nek, bovenrug en schouderbladen rustig activeren bij aanhoudende hoofdpijn.",
+  "categorie": "Nek",
+  "fase": 1,
+  "oefeningen": [
+   "Diepe nekflexoren activeren – liggend ondersteund",
+   "Bovenrug strekken – buiklig met handen onder het voorhoofd",
+   "Nek isometrisch buigen – hand op voorhoofd"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Kind: elleboog en onderarm",
+  "sub": "Elleboog en onderarm weer soepel maken bij kinderen.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   "Elleboog buigen en strekken met hulp",
+   "Vingers langs de muur omhoog lopen",
+   "Onderarm draaien – handpalm op en neer"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Kind: na een elleboogbreuk",
+  "sub": "Buigen, strekken en draaien van de arm na een elleboogbreuk bij kinderen, met de eerste kracht.",
+  "categorie": "Elleboog, pols en hand",
+  "oefeningen": [
+   "Elleboog buigen en strekken met hulp",
+   "Vingers langs de muur omhoog lopen",
+   "Onderarm draaien – handpalm op en neer",
+   "Biceps alternate dumbell"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Herstel na covid: uithoudingsvermogen, vroege fase",
+  "sub": "Conditie rustig opbouwen met wandelen, traplopen en lichte oefeningen na covid.",
+  "categorie": "Hart, vaten en longen",
+  "fase": 1,
+  "oefeningen": [
+   "Stevig doorwandelen – buiten",
+   "Fiets",
+   "Traplopen met leuning – trede voor trede"
+  ],
+  "dosering": {
+   "s": "1",
+   "h": "10 min"
+  }
+ },
+ {
+  "naam": "Algemeen: circuit hele lichaam",
+  "sub": "Kort circuit met oefeningen voor benen, romp en armen.",
+  "categorie": "Algemeen en sport",
+  "oefeningen": [
+   "Uitvalspas achterwaarts – met halters",
+   "Military press",
+   "Mountain climber"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  }
+ },
+ {
+  "naam": "Sport: hamstringblessure fase 1",
+  "sub": "Eerste fase na een hamstringblessure: licht aanspannen, bruggen en rustig verlengen.",
+  "categorie": "Algemeen en sport",
+  "fase": 1,
+  "oefeningen": [
+   "Fiets",
+   "Chair squat",
+   "Glute bridges",
+   "Eenbenige kniebuiging – staand",
+   "Hamstring curl – liggend",
+   "Knie strekken met heup gebogen – ruglig",
+   "Heupscharnier – functioneel op één been",
+   "Been naar achteren laten glijden – met handdoek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Sport: hamstringblessure fase 3",
+  "sub": "Zware kracht en lengte voor de hamstrings als voorbereiding op sprinten en sport.",
+  "categorie": "Algemeen en sport",
+  "fase": 3,
+  "oefeningen": [
+   "Knie strekken met heup gebogen – ruglig",
+   "Heupscharnier – functioneel op één been",
+   "Been naar achteren laten glijden – met handdoek",
+   "Bruggen 1 been liften",
+   "Brug op één been – voet op een step",
+   "Hamstring en kuit rekken – ruglig met band",
+   "Hamstring curl – met elastiek",
+   "Hamstring curl – liggend",
+   "Squat"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Werk: rekken vóór de dienst – nek en schouders",
+  "sub": "Korte rek- en losmaakoefeningen voor nek, schouders en armen voordat het werk begint.",
+  "categorie": "Algemeen en sport",
+  "oefeningen": [
+   "Seated chest opener",
+   "Schouderblad naar achteren – actief",
+   "Armen kruisen boven je hoofd en voor je borst",
+   "Nek zijwaarts buigen – zittend actief",
+   "Seated shoulder stretch",
+   "Achterkant bovenarm rekken – hand achter je hoofd",
+   "Polsstrekkers rekken – arm gestrekt",
+   "Bovenste trapezius rek – zittend actief",
+   "Levator scapulae rek – functioneel staand",
+   "Ellebogen naar achteren trekken – zittend zonder gewicht",
+   "Seated shoulder roll"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Werk: rekken vóór de dienst – romp",
+  "sub": "De rug in alle richtingen losmaken en rekken voordat het werk begint.",
+  "categorie": "Algemeen en sport",
+  "oefeningen": [
+   "Romp voorover buigen – staand",
+   "Bovenrug rekken – handen gevouwen naar voren",
+   "Zijwaarts rekken met arm boven het hoofd – staand",
+   "Rug strekken – staand",
+   "Bovenrug rekken – zittend voorover",
+   "Romp draaien – zittend",
+   "Romp heupscharnier – staand",
+   "Good mornings"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Werk: rekken vóór de dienst – benen",
+  "sub": "Benen, heupen en kuiten opwarmen en rekken voordat het werk begint.",
+  "categorie": "Algemeen en sport",
+  "oefeningen": [
+   "Binnenkant bovenbeen rekken – zijwaarts uitstappen",
+   "Standing chair leg curl",
+   "Brede kniebuiging – tenen naar buiten",
+   "Chair squat",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Op de plaats marcheren – zonder steun",
+   "Knie strekken – zittend",
+   "Kuitheffing – op een verhoging",
+   "Seated hamstring stretch",
+   "Achterkant benen rekken – voeten gekruist",
+   "Kuitrek gebogen knie – staand met steun",
+   "Calf raises"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
   }
  }
 ]

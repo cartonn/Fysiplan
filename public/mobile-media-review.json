@@ -17,14 +17,14 @@
     }
   ],
   "summary": {
-    "total": 600,
+    "total": 637,
     "rejected": 6,
-    "unreviewed": 594,
+    "unreviewed": 631,
     "approved": 0,
     "poseGeometryApproved": 170,
-    "poseStatic": 430,
+    "poseStatic": 467,
     "brandMarkCovered": 115,
-    "brandMarkAbsent": 485
+    "brandMarkAbsent": 522
   },
   "entries": [
     {
@@ -12296,6 +12296,39 @@
       }
     },
     {
+      "exerciseId": "fp_b27fb30c91df41ae",
+      "name": "Pols omhoog – actief",
+      "source": "images/bovenste-extremiteit/pols-omhoog-actief-avatar-v8.jpg",
+      "assetSha256": "f16133fc75b118fc09b864997b515ed1a7062287f5d0a96fdbda6455e79ae97c",
+      "explanationSha256": "5a16a966075f78928943a5a826ecc624b7c1527084cab03298158ddf1f69efd4",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1140,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
       "exerciseId": "fp_88cc523196e29c4c",
       "name": "Heup buigen – liggend ondersteund",
       "source": "images/onderste-extremiteit/heup-buigen-liggend-ondersteund-avatar-v8.jpg",
@@ -12659,6 +12692,39 @@
       }
     },
     {
+      "exerciseId": "fp_cf505e07966207af",
+      "name": "Knie strekken – zittend",
+      "source": "images/onderste-extremiteit/knie-strekken-zittend-avatar-v8.jpg",
+      "assetSha256": "ec2f1c0741228b0cc997bee4e359181503273d0d731f3d90f05b3150d5cc76e8",
+      "explanationSha256": "9474acdfbf75cedabe35f8c909015ce3fefb84c9ecaa01c12f4351f55cbb30eb",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 370,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
       "exerciseId": "fp_b7c420895a4b7d4c",
       "name": "Quadriceps aanspannen – liggend",
       "source": "images/onderste-extremiteit/quadriceps-aanspannen-liggend-avatar-v8.jpg",
@@ -12758,6 +12824,72 @@
       }
     },
     {
+      "exerciseId": "fp_048db79e23621d95",
+      "name": "Sit-to-stand – zittend",
+      "source": "images/onderste-extremiteit/sit-to-stand-zittend-avatar-v8.jpg",
+      "assetSha256": "8d1701d0ef7541b92982a48d8371fe1e25e1208b1678b63286a860466998c8a0",
+      "explanationSha256": "17bda34af399b78c13db15bad4c131590cb7d85c0526bba6e0ea0c4c8e55da37",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 377,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_fd2ac7311f3602ca",
+      "name": "Step-up – op verhoging",
+      "source": "images/onderste-extremiteit/step-up-op-verhoging-avatar-v8.jpg",
+      "assetSha256": "f4cd8ddf6d4e2b55530b67f40c4cf708841f467e13b33b307fe8855a7f68a119",
+      "explanationSha256": "b030f9ffebc1f87c3db12c2a9a489ece14bc752bd58bd4ad320e2ba03bde4381",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 209,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "3 figuren gevonden; welk paar bedoeld is, staat niet vast."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
       "exerciseId": "fp_d0991c8c23527248",
       "name": "Hamstring curl – liggend",
       "source": "images/onderste-extremiteit/hamstring-curl-liggend-avatar-v8.jpg",
@@ -12767,6 +12899,72 @@
       "classification": {
         "method": "raster-chroma-80x120-not-filename",
         "chromaticPixels": 292,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_7b6bfab821c10c3e",
+      "name": "Hamstring curl – staand met steun",
+      "source": "images/onderste-extremiteit/hamstring-curl-staand-met-steun-avatar-v8.jpg",
+      "assetSha256": "e79757bb0ab43a9d64b02c60914f9dbc77132930492aed3c812f246b4c24d760",
+      "explanationSha256": "ea8d53524d63dc1249cfbdf1bc5c478f6a46e6b3f8052ac4804878d1e40ef035",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 197,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c1e1e7d84d51e2c0",
+      "name": "Hamstring curl – met elastiek",
+      "source": "images/onderste-extremiteit/hamstring-curl-met-elastiek-avatar-v8.jpg",
+      "assetSha256": "6005cc3a8f240bbacd5c0fac908265fb5a2e334441aae26398b42fe7a4cdf59d",
+      "explanationSha256": "267c3f427a47df2a06680223251e2bd80ea0975734c46b7919cbd3c2a78f6962",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 321,
         "visuallyInspected": false
       },
       "width": 800,
@@ -13179,6 +13377,72 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Binnen de uitsnedes staat 32 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_3fad61b466eee53c",
+      "name": "Romp heupscharnier – staand",
+      "source": "images/core/romp-heupscharnier-staand-avatar-v8.jpg",
+      "assetSha256": "b0417b82011f8c06a357765858a653029d7f62e0e0590d7377b3e11aa8fe88b0",
+      "explanationSha256": "6312ad7e336f1ad57aeee328fb5712741f4d545e92448efc54b015ae1b6f7758",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 232,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_e17adac2e142f1f8",
+      "name": "Lippenremademhaling – zittend",
+      "source": "images/cardio/lippenremademhaling-zittend-avatar-v8.jpg",
+      "assetSha256": "1c2b95f856f4d1d7f2cbaf1555dfba8288dbdd62470dc6a29ad747a29cf9e28f",
+      "explanationSha256": "7f39f47d3b71f3fc120d0692e331f9a90e833982293f7a9e29d8f9e821d7be7f",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1604,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
       },
       "brandMark": {
         "present": false,
@@ -25366,6 +25630,963 @@
       "poseGeometry": {
         "status": "static",
         "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_dbc442af015ea53f",
+      "name": "Bal tegen de muur gooien – squat op een bosu",
+      "source": "images/bovenste-extremiteit/bal-muur-gooien-bosu-squat-avatar-v8.jpg",
+      "assetSha256": "c23c91a3fc10e44b3b39cd2947a33f12be56eba1d8ff1115cfb7a91fb14c699d",
+      "explanationSha256": "06082c331e73d116babd60c83f7430f9f3a1c671004c9ca8ea8483ebeee42b6c",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 316,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_1f297ffc342e2d4a",
+      "name": "Voorwerpen herkennen op de tast – ogen dicht",
+      "source": "images/bovenste-extremiteit/voorwerpen-herkennen-tast-avatar-v8.jpg",
+      "assetSha256": "cb05ff615907b7154ddde4a49391c22aecf11c5842c257dce1f8abf1fcc868d2",
+      "explanationSha256": "4e61fe5c0056d1ada32ca604c25ed6d575b9be5b3d0f3e05e0d8d4bdf37edad1",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1136,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 91%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c793a8f82ea0c2c5",
+      "name": "Bovenrug strekken – buiklig met handen onder het voorhoofd",
+      "source": "images/bovenste-extremiteit/bovenrug-strekken-buiklig-ruit-avatar-v8.jpg",
+      "assetSha256": "1a1a63b4b451d87e127a4fafc2094836f511ee7d03931c8d21cd35b3e41d5964",
+      "explanationSha256": "d4e9910c79d916d2fe1eb078d2909f082ef03c62b2486eb8935038b8f046c506",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 554,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_eff10350206c2dde",
+      "name": "Elleboog buigen en strekken – ruglig met arm omhoog",
+      "source": "images/bovenste-extremiteit/elleboog-ruglig-arm-omhoog-avatar-v8.jpg",
+      "assetSha256": "ab9bf66ddfd867a5cc665bcb82b34664f1f69c36f9123b5841dc34d2fdfabe0c",
+      "explanationSha256": "bb9677644349a6a2c4406cd5732d3a7061591750d05250c23774fa5496751bcc",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 562,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_c5e1d1af7902d73f",
+      "name": "Elleboog strekken over tafel – met handdoek",
+      "source": "images/bovenste-extremiteit/elleboog-strekken-tafel-handdoek-avatar-v8.jpg",
+      "assetSha256": "1afd45f10e77d6f614335a2c515f9344f7b82b7711e97b37ed3c213fb9ca0eab",
+      "explanationSha256": "514e27a7c0f08b6bb2193f8a713bbf005c399019e82dc27e6e6f006e99096a3f",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 720,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De twee figuren overlappen elkaar in beide richtingen; een uitsnede zou een stuk van de andere tekening bevatten."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_44f1f6abc05cfab2",
+      "name": "Gevouwen handen kantelen – ellebogen op tafel",
+      "source": "images/bovenste-extremiteit/gevouwen-handen-kantelen-avatar-v8.jpg",
+      "assetSha256": "7422169642f2c734a79a4e76ae72bd98e8124ffed815a6c6ec765e6ff03dd845",
+      "explanationSha256": "02471d07c3847608fab964900ba445ebdb2b6837ae80bf0d0988deb191975c6a",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1753,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_16c75c70559a24aa",
+      "name": "Hand plat op tafel voelen – met kijken",
+      "source": "images/bovenste-extremiteit/hand-plat-voelen-kijken-avatar-v8.jpg",
+      "assetSha256": "d823388ae835fcd7183140736610c844f9c1b95ddd295022ba84089f8c634dbf",
+      "explanationSha256": "b444471ee132cb751ee34300768d74923ba0c4ea78ec3ba5ad038979eebabbff",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1948,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_877b298b0f9e0d4f",
+      "name": "Kneedgum draaien tussen duim en wijsvinger",
+      "source": "images/bovenste-extremiteit/kneedgum-draaien-duim-wijsvinger-avatar-v8.jpg",
+      "assetSha256": "6a07028c3aa10f489bd546ff942dcb06a2692abc10fd7e5029af9d36958638a1",
+      "explanationSha256": "72977630574b81286d67b1da360d8c6215eda19008164cda25513cf5d5e2aafc",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1717,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 93%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_67d0e965faefbac9",
+      "name": "Knijpers rond een beker zetten",
+      "source": "images/bovenste-extremiteit/knijpers-rond-beker-avatar-v8.jpg",
+      "assetSha256": "9e3b27c844ab1a2f1f8216a7afc51176df6fa70916b948175ba715fea5ab43b1",
+      "explanationSha256": "5ee240ef464ebad8ee06e8bb2bce325d5f12e579a6929aa1f5675ab40e71ad2d",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 1725,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 88%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_68667866ed06d34c",
+      "name": "Middelste vingerkootje buigen – met blokkeren",
+      "source": "images/bovenste-extremiteit/middelste-vingerkootje-blokkeren-avatar-v8.jpg",
+      "assetSha256": "137d5bc3d3dc8ff148f80bbcc0409fbf8b45c4ff798df1053878c2968f0e3426",
+      "explanationSha256": "2a1da44af141f17792c7026e2eed3649b03b50fe5d37e45a4aad3f2735ca4d10",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 3161,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_4088d122645ebb80",
+      "name": "Opstaan uit de stoel – looprek voor je",
+      "source": "images/bovenste-extremiteit/opstaan-looprek-avatar-v8.jpg",
+      "assetSha256": "947856b57da8489792966b35755eb2691b208d8e774c12a6b8b69cf783f5fcaf",
+      "explanationSha256": "306d8eb1e1fdf91e10f7f07a1e01738f537debb11e28e66aeb68ed10508155a7",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 533,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_9b0ebb8bd8a4a15c",
+      "name": "Schouderblad naar achteren – zittend met arm op een bal",
+      "source": "images/bovenste-extremiteit/schouderblad-zittend-arm-op-bal-avatar-v8.jpg",
+      "assetSha256": "2ef888a59ec7423f0c6fdb6f9fe2345391c07bcf01c9cf26cec3179534d79169",
+      "explanationSha256": "7c2afbb75a5a7e7fd405e9150d3542e4bf2a52c82567244c1994609f65fb636f",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 517,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_073f2b54e17c4e82",
+      "name": "Van liggen naar zitten – over de zij uit bed",
+      "source": "images/bovenste-extremiteit/liggen-naar-zitten-uit-bed-avatar-v8.jpg",
+      "assetSha256": "25175a0a9f9f76f8d482307a1cb4c30990b2a39229a4ff2e748ac4573ccb7293",
+      "explanationSha256": "f36d9830989830e7491cda3ae334a6b29f7e533c94b52a405bf9cb8f944af0bc",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 314,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_e05ed14e064082f1",
+      "name": "Marcheren op een minitrampoline",
+      "source": "images/onderste-extremiteit/marcheren-minitrampoline-avatar-v8.jpg",
+      "assetSha256": "33024afb3969e107d8d29e2321c4bcd1752fe57b19daca716400bb4d5af2a9c7",
+      "explanationSha256": "561ed6656847be588e047dfc3ab077f94447debb414c01a2b25506f8f472c47b",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 206,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_365e6f7f07ea4fc5",
+      "name": "Eenbenige kniebuiging – staand",
+      "source": "images/onderste-extremiteit/eenbenige-kniebuiging-staand-avatar-v8.jpg",
+      "assetSha256": "9d29e433f5f76c1995293a2ce6f17db8517a5b1c8313f5d4bfa54771d3cb8b54",
+      "explanationSha256": "6e8708ce26404a548a7b338b2fbded57cddc8d29032c508fcb4281252cbb8832",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 193,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_141d32865b6d06bf",
+      "name": "Bovenrug rekken – handen gevouwen naar voren",
+      "source": "images/onderste-extremiteit/bovenrug-rekken-handen-naar-voren-avatar-v8.jpg",
+      "assetSha256": "e2293c755e445b7c4ccfab325c38d2bd071fb6dbb18245c6af8abb655775775b",
+      "explanationSha256": "3f103b99db8f2a37a8088c09a2dea565986199634fe1357e03460e01d79682bd",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 217,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_eacbc3b05c816638",
+      "name": "Ellebogen naar achteren trekken – zittend zonder gewicht",
+      "source": "images/onderste-extremiteit/ellebogen-naar-achteren-zittend-avatar-v8.jpg",
+      "assetSha256": "c93d4b231a83de351d1f08f265ec42c0bfcabcbab050b24c53a6978fbc7539f0",
+      "explanationSha256": "ef5a7b3de7238419f61f36b2c9b977d4d8774b8158d8d32f64e9c7d39eb40b63",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 373,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_66cee71147b87894",
+      "name": "Lopen en omkeren",
+      "source": "images/onderste-extremiteit/lopen-en-omkeren-avatar-v8.jpg",
+      "assetSha256": "1dff2519c40dca4bed07d31e05b7b87fdcfe0c25d020cc39bc9fbce79d33ae8d",
+      "explanationSha256": "4eec44bf0fefc12fe30abdc9413ae579a80350ef4834065cb0663773e39923f4",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 212,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_03b9c6e386bdd19d",
+      "name": "Stevig doorwandelen – buiten",
+      "source": "images/onderste-extremiteit/stevig-doorwandelen-avatar-v8.jpg",
+      "assetSha256": "a3615657e027e57fc093a916f15ffdb3c25cc235d0b2705bfc94bb6afbd57cce",
+      "explanationSha256": "a14a0e9d1014d45c46c2ad9372642ac6b9460f259521137b149020ae4f0f3ec4",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 289,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_ac330e247025c6a7",
+      "name": "Binnenkant bovenbeen rekken – zijwaarts uitstappen",
+      "source": "images/onderste-extremiteit/binnenkant-bovenbeen-rekken-zijwaarts-avatar-v8.jpg",
+      "assetSha256": "ab2d02d566621a709f4c2d76c761760b01f7e5d28ed5ff170517a05504553218",
+      "explanationSha256": "03ac68100f4682b2f7b3d3245352ea7b86a4d4848ce4ca46097d17064fd4e089",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 274,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_83b035d11ae2d11a",
+      "name": "Armen kruisen boven je hoofd en voor je borst",
+      "source": "images/onderste-extremiteit/armen-kruisen-boven-hoofd-avatar-v8.jpg",
+      "assetSha256": "630236b1befe89bd2b810f07935465470dee16cbb5fdffaef487332a6b9258be",
+      "explanationSha256": "d0f8914e41c83170b2e50f4b7350e03e4f14b38a31b3798a7f9092e3e745d860",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 252,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_b3857fe01281fd16",
+      "name": "Brug op één been – voet op een step",
+      "source": "images/onderste-extremiteit/brug-een-been-voet-op-step-avatar-v8.jpg",
+      "assetSha256": "4fdff8c284b73719e085c60dd20ba25d2793c2caa380b45de969ef585a8ddd0c",
+      "explanationSha256": "6a0435b09fe67d91ea13f8694cbbad0cb921a359c54629a0e7e79984e56b56af",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 387,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_247cc5340e23532b",
+      "name": "Achterkant benen rekken – voeten gekruist",
+      "source": "images/onderste-extremiteit/achterkant-benen-rekken-gekruist-avatar-v8.jpg",
+      "assetSha256": "1a7c2dd973caba9297e3770a9dc9378d66e31be9a4712118f63b34fe2e6b86eb",
+      "explanationSha256": "2eade4e8035e63e4c2549368c579cb45aeee6de286f242abdea594bff10a83ce",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 305,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_2ffe838416e2fc24",
+      "name": "Achterkant bovenarm rekken – hand achter je hoofd",
+      "source": "images/onderste-extremiteit/achterkant-bovenarm-rekken-avatar-v8.jpg",
+      "assetSha256": "4e58cdc774a1c478875b292f2f0ee226ffeffc84264205659b2f177a34c958b6",
+      "explanationSha256": "1aab764bb12d3177500fa3c4903fff2f6ddda8f571a88859785afade282529a4",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 497,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "De silhouetten van beide houdingen overlappen voor 96%; in het frame is geen beweging te zien. Als beweging tonen zou misleidend zijn."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_aa00b954d0a5f75a",
+      "name": "Brede kniebuiging – tenen naar buiten",
+      "source": "images/onderste-extremiteit/brede-kniebuiging-tenen-buiten-avatar-v8.jpg",
+      "assetSha256": "194360f9171963d153bcc474ce461e5b88c36935f7381e080a58dd588f543ac8",
+      "explanationSha256": "0452a29b9c2935bca448089428cceb9535e1e09e13aff4c3137362a875d58de9",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 300,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_3167d3254cb920aa",
+      "name": "Bovenrug rekken – zittend voorover",
+      "source": "images/onderste-extremiteit/bovenrug-rekken-zittend-voorover-avatar-v8.jpg",
+      "assetSha256": "de680066a7062bd43f42db7e00fd9686344b2a3baa8876c5e598c6deb6cc59e9",
+      "explanationSha256": "16e101ac3892deb4b3e865e7de5e2ba3e2ef136c7258b6244da5cd35b91765f3",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 587,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_0177d0061ec8e599",
+      "name": "Traplopen met leuning – trede voor trede",
+      "source": "images/onderste-extremiteit/traplopen-met-leuning-avatar-v8.jpg",
+      "assetSha256": "c6c3b58276091af2498307b127ea12bde5bf8e87f55e81bc25c3ecc0bbeab7d8",
+      "explanationSha256": "83a1741d2b1e29ce5d4ecebe669cc0b6eec2a9644513fddda9fa0bd125efbcaa",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 256,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Binnen de uitsnedes staat 16 px² inkt die niet bij deze houding hoort (los voorwerp of stuk van de andere tekening). Volledige afbeelding blijft staan."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_3635a7fe1929beaa",
+      "name": "Voorkant heup rekken – been over de bedrand",
+      "source": "images/onderste-extremiteit/voorkant-heup-rekken-bedrand-avatar-v8.jpg",
+      "assetSha256": "bd2764ab6e56955798d6af19bd4995cf173870d405945bfbf2fe81ef69fcb139",
+      "explanationSha256": "8a535c728114b6440fb6cc94638c57f4a33f56cd459cf0c9e668870039b49b71",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 319,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Uitsnede gemeten maar niet visueel gecontroleerd voor exact dit bestand."
+      },
+      "brandMark": {
+        "present": false,
+        "cover": null,
+        "reason": "geen merkicoon linksboven"
+      }
+    },
+    {
+      "exerciseId": "fp_b87fc209c0805a14",
+      "name": "Om en om door één neusgat ademen – zittend",
+      "source": "images/onderste-extremiteit/om-en-om-neusgat-ademen-avatar-v8.jpg",
+      "assetSha256": "a616e74f0d80aef724590da99d073811929817512f9c74c05c2f3c134842b3d6",
+      "explanationSha256": "ebc13b94733cd08298a1c00841720b308ce44631d19d95cca750c08ff65be4d5",
+      "mediaType": "color_avatar_candidate",
+      "classification": {
+        "method": "raster-chroma-80x120-not-filename",
+        "chromaticPixels": 3271,
+        "visuallyInspected": false
+      },
+      "width": 800,
+      "height": 1200,
+      "status": "unreviewed",
+      "clinicalApproved": false,
+      "presentation": "static",
+      "allowAutomaticPoseSplit": false,
+      "reasons": [
+        "Geen volledige inhoudelijke controle en goedgekeurde pose-uitsneden vastgelegd."
+      ],
+      "observations": [],
+      "poses": [],
+      "poseGeometry": {
+        "status": "static",
+        "reason": "Eén samenhangend figuur gevonden; geen paar om te tonen."
       },
       "brandMark": {
         "present": false,
