@@ -11,17 +11,35 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (a) privacyverklaring (art. 13/14 AVG) | 2026-11-09 09u (art. 9-uitzondering, "Als je stopt", proefpraktijk zonder abonnement echt gewist, WhatsApp-link) |
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-09 13u (art. 28 lid 3 a/g/h en lid 4 langs de tekst; einde proef: kaarten bleven onbeperkt; subverwerkers tegen alle externe hosts in code: geen gat) |
 | (c) algemene voorwaarden | 2026-11-10 05u (art. 4 beschrijft de maandincasso: afschrijven via machtiging, mail 5 dagen vooraf als afgesproken kortere termijn, mislukt = contact, factuur per maand; `AV_VERSIE` 2026-11-10) |
-| (d) code tegen tekst | 2026-11-09 05u (einde abonnement: wissen 30 dagen na het einde gebouwd) |
+| (d) code tegen tekst | 2026-11-10 17u (patiëntroute `PATIENT_VELDEN` tegen /privacy#patient: doelactiviteit, bericht van de praktijk, weekdoel en eigen video/foto ontbraken, afspraak stond onder "zelf aantikt"; opgelost. Mails via Resend gaan ook over betaling en wachtwoord: open tot #167 gemerged is. Logs, auditlog 500, cookies, reservekopie 7 dagen, uitnodiging 7 dagen: klopt) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-10 01u (vertaalcache hield namen van eigen oefeningen na "Alles wissen" en na verwijderen tot de volgende herstart; /privacy noemde de beheerderslogin op /v2/gegevens niet; download bevat geen geheimen, wel alle kaartvelden) |
 | (f) cookies en lokale opslag | 2026-11-09 21u (Cache Storage van /k: "Wis deze kaart" liet oefenbeelden en bibliotheek staan, opgelost; cookies en localStorage ongewijzigd sinds 8-11) |
 | (g) MDR en AI-verordening | 2026-11-10 13u (nieuwe patiëntkaart #162: de AI-stem bij oefeningen zonder AI-video en via de knop bovenaan/vergroting had geen AI-melding: opgelost; landing, app en kaart zonder diagnose-, doserings- of sorteerbelofte; vraaghulp-grens ongewijzigd) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
 | (i) begrijpelijkheid (B1) | 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (d) code tegen tekst, dan (a) privacyverklaring, dan (f) cookies. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (a) privacyverklaring (eerst het Resend-punt hieronder als PR #167 gemerged is), dan (f) cookies, dan (i) B1. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **LAAG — code tegen tekst (d) 2026-11-10 17u: Resend-rij op /privacy#subverwerkers is te smal.**
+  De rij zegt "e-mail rond de proef en uitnodigingen; e-mailadres en naam". Fysiplan mailt via Resend ook de
+  wachtwoordlinks voor teamleden (server.js `stuurMail`), de opzegbevestiging en, met `MOLLIE_INCASSO=aan`, de
+  aankondiging en uitkomst van de maandbetaling met het bedrag (`proefMail` in de incassostap). Geen patiëntgegevens.
+  Niet nu aangepast: open PR #167 voegt een regel direct onder die rij toe (botsing). Daarna: rij verbreden naar
+  "proef, inloggen, uitnodigingen en betaling" en "bedrag van de maandbetaling" bij de gegevens. Bron: AVG art. 13 lid 1 e.
+
+- **LAAG — code tegen tekst (d) 2026-11-10 17u: /privacy#patient noemde niet alles wat de kaart toont.**
+  `/api/kaart` (server.js `PATIENT_VELDEN`) geeft de patiënt ook de doelactiviteit (PSK) met de eigen score, het
+  bericht/antwoord van de praktijk, het weekdoel (dagen per week) en eigen video's of foto's van de praktijk (waar de
+  patiënt soms zelf op staat). Die ontbraken in "Voor patiënten"; de afspraak stond onder "Wat je zelf aantikt", maar
+  die zet de praktijk (`/api/kaart/afspraak` eist de praktijksessie). De verwerkersovereenkomst noemde ze wel.
+  OPGELOST 2026-11-10 (deze PR): beide punten in /privacy#patient bijgewerkt; test in `scripts/test-privacy.mjs`
+  leest `PATIENT_VELDEN` en faalt als een veld niet uitgelegd is (fail-closed, faalt zonder fix op `vids`).
+  Gecontroleerd zonder gat: foutlog zonder IP/kaartlink (`logPad`, mailfout alleen statuscode), auditlog max 500 met
+  gemaskeerd IP en weg bij praktijk wissen, `fp1` 30 dagen, `fpproef` proef + bewaartermijn, uitnodiging 7 dagen,
+  dagtellingen 120 dagen, reservekopie 7 mappen. Bron: AVG art. 13 lid 1 en art. 14 lid 1 d (categorieën gegevens).
 
 - **MIDDEL — MDR/AI-verordening (g) 2026-11-10 13u: de voorleesstem is met AI gemaakt, maar dat stond er niet altijd bij.**
   De stem op /k ("Luister naar deze oefening", "Luister naar uitleg" bovenaan en in de vergroting) is vooraf gemaakt met
