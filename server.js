@@ -1046,7 +1046,7 @@ function weekBrief(pk) {
     .map((x) => ({ k: x.k, w: werkdagenSinds(Math.min(...x.items.map((i) => i.t)), nu) }))
     .filter((x) => x.w >= INBOX_HERINNER_WERKDAGEN).map((x) => naam(x.k) + " (" + x.w + " werkdagen)");
   // staat de kaart al bijgewerkt in het dossier, dan is verdwijnen geen probleem
-  const verdwijnt = actief.filter((k) => !inDossierBij(k)).map((k) => ({ k, v: verlooptOp(k) }))
+  const verdwijnt = actief.filter((k) => !inDossierBij(k)).map((k) => ({ k, v: verdwijntOp(pk, k) }))
     .filter((x) => x.v - nu <= 14 * dag).sort((a, b) => a.v - b.v)
     .map((x) => naam(x.k) + " (" + Math.max(0, Math.ceil((x.v - nu) / dag)) + " dagen)");
   const datum = new Date(nu).toLocaleDateString("nl-NL", { day: "numeric", month: "long", timeZone: "Europe/Amsterdam" });
@@ -1211,6 +1211,27 @@ function verlooptOp(k) {
     ? (Number(k.gearchiveerdOp) || laatsteActiviteitKaart(k)) + BEWAAR_AFGEROND_DAGEN * dag
     : laatsteActiviteitKaart(k) + BEWAAR_STIL_DAGEN * dag;
   return Math.max(basis, bewaarInfo.invoering + BEWAAR_AANLOOP_DAGEN * dag);
+}
+// Wanneer de hele praktijk verdwijnt: 30 dagen na een proef zonder abonnement
+// (proefRondeEen) of na het einde van een opgezegd abonnement (abonnementEindeStap).
+// Dat kan veel eerder zijn dan de bewaartermijn van een kaart. Zonder deze datum
+// toonde het overzicht, de weekbrief, de dossiertekst en de patiëntkaart de latere
+// kaartdatum, en kopieerde een praktijk misschien te laat naar het dossier (WGBO).
+function praktijkWisOp(pk) {
+  const ref = pk && Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk].proef : null;
+  if (!ref) return Infinity;
+  const p = Object.hasOwn(proeven, String(ref.id)) ? proeven[String(ref.id)] : null;
+  if (!p || p.gewist) return Infinity;
+  const a = p.abonnement;
+  const tot = Number(a && a.betaaldTot);
+  if (a && (a.status === "opgezegd" || a.status === "beeindigd") && Number.isFinite(tot)) return tot + NA_EINDE_WISSEN_DAGEN * 86400000;
+  if (!p.klant) return Number(p.verloopt) + PROEF_BEWAAR_DAGEN * 86400000;
+  return Infinity;
+}
+// de datum die de praktijk en de patiënt zien: wat het eerst komt
+function verdwijntOp(pk, k) {
+  const v = verlooptOp(k);
+  return k && k.demo ? v : Math.min(v, praktijkWisOp(pk));
 }
 async function bewaartermijnOpruimen() {
   const nu = Date.now();
@@ -2707,7 +2728,10 @@ async function afhandelen(request, response) {
       perEmail: !ingelogd && accountsMetNaam(nk).length > 0 && accountsMetNaam(nk).every((k) => praktijkAccounts[k].gedeeldUit),
       bewaar: { stil: BEWAAR_STIL_DAGEN, afgerond: BEWAAR_AFGEROND_DAGEN },
       // het akkoord van de praktijk; beheer: alleen een beheerder kan opnieuw akkoord gaan
-      akkoord: ingelogd ? { ...akkoordStatus(praktijkAccounts[eigen]), beheer: isBeheer(sessieVan(request)) } : undefined });
+      akkoord: ingelogd ? { ...akkoordStatus(praktijkAccounts[eigen]), beheer: isBeheer(sessieVan(request)) } : undefined,
+      // verlopen proef (dit apparaat of de ingelogde praktijk): de app toont het meteen bij
+      // het laden, niet pas na de eerste geweigerde opslag (gebruikers-sweep, tweede apparaat)
+      proefVerlopen: proefVerlopen(proefVan(request)) || (ingelogd && praktijkProefVerlopen(eigen)) || undefined });
     return;
   }
 
@@ -4108,7 +4132,7 @@ async function afhandelen(request, response) {
       .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, aantal: (k.chosen || []).length,
         // wanneer de kaart door de bewaartermijn verdwijnt: het overzicht waarschuwt
         // ruim van tevoren, zodat de praktijk eerst naar het dossier kan kopiëren
-        verloopt: verlooptOp(k),
+        verloopt: verdwijntOp(pk, k),
         scores: (k.metingen || []).slice(-14), gedaan: (k.gedaan || []).slice(-14),
         // de allereerste meting apart: het praktijkrapport toont zo het verloop
         // sinds de start van de behandeling, ook als die buiten de recente 14 valt
@@ -4392,7 +4416,7 @@ async function afhandelen(request, response) {
       .map((c) => ({ soort: c.soort, t: Number(c.t) || 0 }));
     // de patiënt ziet tot wanneer de kaart minstens bestaat (bewaartermijn): bij een
     // afgeronde kaart en in "Mijn gegevens"
-    if (!found.demo) patientKaart.verloopt = verlooptOp(found);
+    if (!found.demo) patientKaart.verloopt = verdwijntOp(fpk, found);
     // ai-vlag: de kaartpagina toont de vraaghulp alleen als de server een AI-sleutel heeft
     // eigen oefeningen van de praktijk staan niet in de openbare bibliotheek: naam,
     // foto en uitleg reizen met de kaart mee (alleen die op déze kaart)
@@ -4420,7 +4444,7 @@ async function afhandelen(request, response) {
     const nu = Date.now();
     const kaart = Object.values(kaarten[pk] || {}).find((k) => k.id === id && (k.demo || verlooptOp(k) > nu)) || null;
     if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-    await sendJson(response, 200, { ok: true, kaart: { ...kaart, verloopt: verlooptOp(kaart) } });
+    await sendJson(response, 200, { ok: true, kaart: { ...kaart, verloopt: verdwijntOp(pk, kaart) } });
     return;
   }
 
@@ -5012,7 +5036,7 @@ async function afhandelen(request, response) {
         return;
       }
       await saveJson(kaartenPath, kaarten);
-      await sendJson(response, 200, { ok: true, gearchiveerd: !!kaart.gearchiveerd, verloopt: verlooptOp(kaart) });
+      await sendJson(response, 200, { ok: true, gearchiveerd: !!kaart.gearchiveerd, verloopt: verdwijntOp(pk, kaart) });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }

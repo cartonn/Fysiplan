@@ -49,3 +49,4 @@ Nieuwe oefeningen en kaarten per regio komen erin met `scripts/importeer-regio-o
 - Arm: 13 nieuwe oefeningen, beeld bij 2 bestaande, 8 nieuwe kaarten.
 - Overig (hart, vaten en longen, algemeen en sport, werk): 16 nieuwe oefeningen, beeld bij 6 bestaande, 7 nieuwe kaarten en 21 aanvullingen.
 - Rest van de catalogusoefeningen zonder beeld: 82 oefeningen kregen lijntekening en avatar (24 matige nog niet), 4 nieuwe kaarten en 15 aanvullingen.
+- Ronde 2 (10 november 2026, figuur: man): 98 nieuwe oefeningen in onderbeen, arm en schouder, rug en nek, neurologie en balans en overig; 117 nieuwe kaarten. 21 matige en 11 niet te tekenen oefeningen blijven buiten de app.

@@ -11,29 +11,32 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 |---|---|---|---|---|---|
 | Proef aanmelden + formulierfouten | 2026-11-09 18u (ok; 0612345678 nog misleidend) | 2026-11-08 10u staand | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Welkom, praktijknaam (ook leeg), 12 oefeningen | 2026-11-09 18u (ok; lange naam 66 tekens; "Nieuw in Fysiplan" direct na welkom) | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Printversie (lijn, kleur, compact) | 2026-11-10 06u (lijn/kleur/compact passen; "Groot lettertype" loopt van de A4, compact geeft geen extra schemaruimte) | 2026-11-09 22u liggend (printknop ok; kaartvelden 8–11 px hoog) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
+| Printversie (lijn, kleur, compact) | 2026-11-10 10u (Groot liep van de A4 → OPGELOST, test:printgroot; compact geeft nog geen extra schemaruimte) | 2026-11-09 22u liggend (printknop ok; kaartvelden 8–11 px hoog) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
 | Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-09 18u (ok; herstelcode kleine letters ok) | 2026-11-09 18u staand (typfout collega: losse praktijk → fix via klaargezette naam) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Delen, QR, kaartenoverzicht, CSV | 2026-11-10 06u (emoji-initiaal → OPGELOST, test:emojiinitialen; CSV-escape ok; dubbelklik Deel nog open) | 2026-11-10 06u staand (tikdoelen overzicht nog < 44) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Delen, QR, kaartenoverzicht, CSV | 2026-11-10 10u (CSV-escape ok; dubbelklik Deel nog open; "@Piet" geeft "?") | 2026-11-10 06u staand (tikdoelen overzicht nog < 44) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Naam wijzigen in overzicht + daarna verder bewerken | 2026-11-09 18u (nieuwe kaart: naamveld volgt → OPGELOST, test:nieuwekaartnaam) | 2026-11-07 10u | 2026-11-07 14u | – | 2026-11-07 10u |
-| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-09 18u (ok; 30 MB foto verkleind, .exe nette melding) | 2026-11-09 18u liggend (Carla ziet sjabloon en eigen oefening) | – | – | – |
+| Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-10 10u (ok; nep-JPEG/.exe nette melding, 6 MB verkleind) | 2026-11-10 10u staand+liggend (sjabloon ok; tekstkolom liggend 303 px) | – | – | – |
 | Opname via telefoon /o | 2026-11-09 14u (ok; vals "verouderd" na opname OPGELOST) | 2026-11-09 18u (nep-camera ok; .exe 400) | – | 2026-11-07 10u | 2026-11-09 10u (ok) |
-| Afspraak, seintje, signalen | 2026-11-09 18u (seintje + score 8 in inbox en overzicht, antwoord bij patiënt) | 2026-11-08 18u staand (afspraak na verlopen proef stil) | 2026-11-08 18u (seintje → inbox ok) | 2026-11-09 22u (.ics dubbeltik nog 2 downloads; tijdzone kaart ≠ Mijn gegevens) | 2026-11-09 18u (.ics ok, Engels) |
-| Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-10 06u (verlopen-pagina met cookie ok, 403 overal) | 2026-11-10 06u staand (2e apparaat: nog geen melding bij laden; "In de praktijk" kale alert; "t/m <dag>" te ruim) | – | 2026-11-07 02u (breedte) | – |
-| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-09 14u staand+liggend (ok; tikdoelen) | 2026-11-10 06u (dubbeltik ok, seintje bij therapeut; tikdoelen 31 < 44) | 2026-11-10 06u (Too hard? na 400 nog open) | 2026-11-10 06u (ok) |
+| Afspraak, seintje, signalen | 2026-11-10 10u (seintje → inbox, ook bij collega) | 2026-11-08 18u staand (afspraak na verlopen proef stil) | 2026-11-08 18u (seintje → inbox ok) | 2026-11-10 10u #162 (.ics 1 download, nog 3 verzoeken) | 2026-11-10 10u #162 (Engels ok) |
+| Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-10 10u ("t/m <dag>" + "loopt nog vandaag nog" open) | 2026-11-10 10u staand+liggend (2e apparaat zonder cookie → OPGELOST, test:proeftweedeapparaat) | – | 2026-11-07 02u (breedte) | – |
+| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-09 14u staand+liggend (ok; tikdoelen) | 2026-11-10 10u #162 (dubbeltik Gedaan slaat volgende oefening over: HOOG, naar #162) | 2026-11-10 10u #162 (Engelse oefenstand ok) | 2026-11-10 10u #162 (ok) |
 | /k: gedaan-vinkjes op een tweede apparaat | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u |
-| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-10 06u (wissen met 2 kaarten → OPGELOST, test:wistweekaarten; beginschermbalk 177 px nog) | 2026-11-10 06u (Engelse controlezinnen → OPGELOST, test:controletaal) | 2026-11-10 06u (liggend, terug, trage lijn ok) |
+| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-10 10u #162 (200 %: dosering buiten beeld; offline wachtrij ok) | 2026-11-10 10u #162 (liggend ±49 % over voor de oefening) | 2026-11-10 10u #162 (trage lijn: eerst NL laadtekst; draaien/terug ok) |
 | /k: video afspelen (eigen opname, YouTube) | – | 2026-11-08 22u (webm + mp4, staand/liggend) | 2026-11-07 22u (ook offline, 200%) | 2026-11-07 10u | 2026-11-09 22u (eigen webm, ook liggend ok) |
 | /k: andere talen | – | – | de/tr 2026-11-09 22u (mislukte vertaling → echte uitleg in NL met melding OPGELOST, test:nietvertaald; demostem las NL met Duitse stem: mee opgelost) | pl/ar 2026-11-08 22u (RTL-naam: fix) | ar + uk 2026-11-08 10u (te zwaar: fix) |
 | Landing /v2 (desktop: ook printen) | 2026-11-08 14u (print: fix) | 2026-11-09 10u staand+liggend (nav 22/30 px nog) | 2026-11-09 18u (200 %: 513 px breed door <code> in FAQ; nav 22 px) | 2026-11-09 22u staand+liggend (38/40 tikdoelen < 44 px) | 2026-11-08 22u (taallinks klein) |
 | Therapeut-app op telefoon | – | – | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 10u |
 | Therapeut-app op iPad liggend | – | 2026-11-07 10u | – | – | – |
 | Twee werkplekken op één kaart (oud apparaat/tabblad) | 2026-11-09 22u (409 + keuze ok; melding ±7 px) | 2026-11-09 22u liggend (idem) | – | – | – |
-| Team: uitnodigen, rollen, verwijderen, inbox, dossier | 2026-11-10 06u (3 collega's, dubbelklik Nodig uit één POST; focus na "Maak mijn login") | 2026-11-10 06u staand (login 2e apparaat ok) | – | – | – |
+| Team: uitnodigen, rollen, verwijderen, inbox, dossier | 2026-11-10 10u (oude link na weigering → OPGELOST, test:vuleersterij) | 2026-11-10 10u staand (uitnodiging aangenomen op iPad ok) | – | – | – |
 | /privacy (100 % en 200 %) | – | – | 2026-11-09 18u (ok; kopregellinks 14–17 px) | – | – |
 | Mijn gegevens /k, Wis van dit apparaat, /v2/gegevens | 2026-11-09 18u (/v2/gegevens: naam niet ingevuld, melding bovenaan) | – | 2026-11-09 18u (wis laat avatars in de cache) | 2026-11-08 02u | 2026-11-09 18u (download Engels ok) |
 | Vensters met alleen toetsenbord | 2026-11-09 18u (Kaarten en Print: focus-val en Escape ok) | 2026-11-09 02u staand (fix, in test:vensterterug) | – | – | – |
 
-Volgende run (na 2026-11-10 06u): verlopen proef bij laden op 2e apparaat (`/api/praktijk/status`) + "In de praktijk"
+Volgende run (na 2026-11-10 10u): na merge van #162 de nieuwe /k opnieuw (dubbeltik Gedaan, 200 %, liggend), "Compacte kaart"
+schemaruimte, proefbalk "t/m <dag>", .ics dubbeltik, /o op iPad, landing /v2 op tablet, iPad liggend print. Tip: Playwright staat
+in /opt/node22/lib/node_modules/playwright (niet in node_modules van de repo); createRequire vindt hem via NODE_PATH.
+Oudere lijst (na 2026-11-10 06u): verlopen proef bij laden op 2e apparaat (`/api/praktijk/status`) + "In de praktijk"
 (`k_save_srv` → `toonProefVoorbij`), printvariant "Groot lettertype" past niet op A4, teamsjabloon (niet getest 06u), .ics dubbeltik,
 /o met camera, iPad liggend print.
 Oudere lijst (na 2026-11-09 22u): .ics dubbeltik (kaart.html `naarAgenda` + `#agbtn`), na Uitloggen QR/deelknoppen/roepnaam
@@ -107,12 +110,12 @@ De kaart /k heeft nu twee standen met dezelfde oefeningen (zelfde DOM, zelfde kn
   Hertest Truus: ok.
 - **OPGELOST 2026-11-10 06u (deze PR, test:emojiinitialen) — LAAG App: emoji vooraan in praktijknaam of roepnaam gaf "�" als initiaal**
   in de badge en het kaartenoverzicht (Sanne). `avInitialen` slaat woorden zonder letter over en neemt het eerste codepunt. Hertest: ok.
-- **MIDDEL (nieuw, Sanne desktop) — printvariant "Groot lettertype" loopt van de A4:** tabel groeit tot de onderrand, de legenda
+- **OPGELOST 2026-11-10 10u (test:printgroot) — MIDDEL (nieuw, Sanne desktop) — printvariant "Groot lettertype" loopt van de A4:** tabel groeit tot de onderrand, de legenda
   "S = series…" wordt afgeknipt en de veiligheidsregel (`#a4::after`) valt over de laatste rij; ook bij compact + groot. Groot is
   bovendien amper groter (namen 7,5 → 10 px). public/v2.css r. ~189–193, ~176/209; index.html r. ~385 (`.shw-legenda`).
 - **MIDDEL (nieuw, Sanne) — "Compacte kaart" geeft geen extra schemaruimte:** alleen het plaatje krimpt (81×123 → 42×62), de
   `.pic`-cel blijft 83×125 en het aantal rijen gelijk (v2.css r. ~196–197).
-- **MIDDEL (bevestigd, Mark iPad) — verlopen proef op een 2e apparaat pas na de eerste 403**, en "In de praktijk" geeft dan een kale
+- **OPGELOST 2026-11-10 10u (test:proeftweedeapparaat) — MIDDEL (bevestigd, Mark iPad) — verlopen proef op een 2e apparaat pas na de eerste 403**, en "In de praktijk" geeft dan een kale
   alert "Kijk op fysiplan.nl/v2/proef" zonder proefbalk (`k_save_srv` index.html r. ~4664/4685 roept `toonProefVoorbij` niet aan).
   Het oudere punt hieronder "Verlopen proef, eigen login: Kaarten waarschuwt niet vóór opslaan" is dus NIET opgelost.
 - **LAAG (nieuw)** — Emoji in de roepnaam telt als "volledige naam" (`naamLijktVolledig`, confirm + label) (Sanne). 13e oefening geeft een
@@ -129,6 +132,40 @@ De kaart /k heeft nu twee standen met dezelfde oefeningen (zelfde DOM, zelfde kn
 - **Goed bevonden:** formulierfouten /v2/proef, beveiligen + herstelcode (dubbelklik één claim), CSV-escape, gegokte id's 404 / "Card not
   found", rare invoer 400/413, uploads (.exe, GIF, 61 MB) nette weigering, 403 op alle schrijfroutes bij verlopen proef, team en login
   2e apparaat, Engelse kaart + trage lijn + draaien + terugknop, offline wachtrij /k, nergens een 500 of pageerror.
+
+### Sweep 2026-11-10 10u (patiëntkant getest op PR #162, de nieuwe /k; therapeutkant op main)
+- **OPGELOST 2026-11-10 10u (deze PR, test:proeftweedeapparaat) — MIDDEL App: verlopen proef op een tweede apparaat pas na de
+  eerste 403, "In de praktijk" gaf een kale alert** (Mark, iPad staand + liggend). `/api/praktijk/status` geeft nu `proefVerlopen`
+  (proefcookie of ingelogde praktijk; niet op naam alleen), `toonPrakSlot` toont de proefbalk bij het laden, `k_save_srv` toont de
+  balk + melding in het venster i.p.v. `alert`. Rest: "bijna verlopen" (laatste dag) ziet een collega zonder proefcookie nog niet.
+- **OPGELOST 2026-11-10 10u (deze PR, test:printgroot) — MIDDEL Print "Groot lettertype" liep van de A4** (Sanne): bij 12 oefeningen
+  206 mm op 200 mm, legenda weg, veiligheidsregel over de XRM-rij. Bij Groot nu invulvak 19 px en rij 5,7 mm; alle vier varianten
+  passen, gemeten met 12 lange namen.
+- **OPGELOST 2026-11-10 10u (deze PR, test:vuleersterij) — MIDDEL App: "Vul eerste rij" deed stil niets** terwijl er "3 × 10" in de
+  vakjes stond (placeholders); de kaart ging zonder dosering naar de patiënt (Truus' therapeut, main en #162). Beide leeg = 3 × 10.
+- **OPGELOST 2026-11-10 10u (deze PR, test:vuleersterij) — LAAG Team: na een geweigerde uitnodiging bleef de link van de vorige
+  collega onder de fout staan** (Mark). De link wordt nu bij elke nieuwe poging eerst gewist.
+- **HOOG (nieuw, Truus iPhone SE, alleen PR #162) — dubbeltik op "Gedaan" vinkt ook de volgende oefening af en slaat die over**
+  (`#sklaar`, `OEF_SLOT` per index; na `openOef(v)` valt de tweede tik op v). Doorgegeven aan de thread van #162; moet vóór de merge.
+- **MIDDEL (nieuw, PR #162)** — 200 % tekst op iPhone SE: dosering buiten beeld bij het openen van een oefening (kop 107 + balk 88 px;
+  na Gedaan balk 206 px). Liggend (Pixel 7 915×412, iPhone 14): kop 69 + balk 131 px laten ±49 % over. Doorgegeven aan #162.
+- **MIDDEL (nieuw, Truus, main en #162)** — eerste opening: privacyblok met "Begrepen" vult het hele eerste scherm, "Begin met
+  oefenen" staat onder de vouw (bij 200 % drie schermen scrollen).
+- **LAAG (nieuw)** — #162: na alles gedaan is "Begin met oefenen" weg (tweede ronde alleen via een rij); offline "Toch niet gedaan"
+  (`aan:false`) gaat niet in de wachtrij; trage lijn toont op een Engelse kaart eerst "Je kaart wordt geladen…" (kaart.html r. ~574,
+  vertaling pas na noor-audio.js) (Jayden). Main: roepnaam "@Piet" geeft "?" als initiaal (`avInitialen` knipt vanaf "@") (Sanne).
+  Opnieuw uitnodigen met hetzelfde adres maakt de eerste link stil ongeldig, zonder melding aan de beheerder (Mark).
+  Sjablonenvenster op iPad liggend (981–1150 px): tekstkolom 303 px, 40 titels over 2 regels (v2.css r. 652, breekpunt 980) (Mark).
+- **Bevestigd, nog open:** "Compacte kaart" geeft geen schemaruimte (`.pic` aspect-ratio 2/3, index.html r. 141; vaste rijen),
+  dubbelklik "Deel" + geen `aria-expanded`, alert "Maximaal 12 plaatjes", tikdoelen Kaarten-venster (48 < 44 px), "Nieuw in Fysiplan"
+  direct na welkom, proefbalk "t/m <dag>" + "loopt nog vandaag nog" (server.js `proefVars`, `datumNl`), foto < 100 bytes "te groot",
+  .ics dubbeltik (3 verzoeken, nu 1 download), .ics-naam `afspraak.ics`, kaartlink zonder `?taal=`, AM/PM, Nederlandse oefennamen
+  onder `lang="en"`, "Ik heb een vraag" zonder tekst, "Hoe gaat het vergeleken met de start?" dichtgeklapt.
+- **Goed bevonden:** proefformulier, beveiligen + herstelcode (dubbelklik één claim), CSV-escape (BOM, `;`, `'=`), team (3 collega's,
+  `<script>`-naam veilig, iPad-login), teamsjabloon op iPad, eigen oefening (nep-JPEG/.exe nette melding, 6 MB verkleind, 10.000
+  tekens ingekort), /o met nep-camera, seintje → inbox bij collega, verlopen-pagina met cookie; #162: Engelse oefenstand, terugknop
+  lightbox → oefening → overzicht → vorige pagina, RTL, offline wachtrij, gegokte/rare id's "Kaart niet gevonden"/"Card not found",
+  rare API-invoer 400. Nergens een 500 of pageerror.
 
 ### Sweep 2026-11-10 02u
 - **OPGELOST 2026-11-10 02u (deze PR, test:uitloggenprint) — MIDDEL App: na Uitloggen bleven QR, "Bekijk zelf…", deelknoppen en
