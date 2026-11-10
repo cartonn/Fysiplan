@@ -68,7 +68,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-10";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-10";
+const AV_VERSIE = "2026-11-10-2";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-10";
@@ -87,7 +87,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-09", tekst: "Einde: na de proef zonder abonnement wissen we alles na 90 dagen. Nieuw: een wettelijke vordering melden we vooraf, Fysiplan blijft verantwoordelijk voor subverwerkers, en de praktijk mag de afspraken laten controleren." },
   { stuk: "av", versie: "2026-11-09-3", tekst: "Proef: word je geen klant, dan wissen we al 30 dagen na de proef alles van je praktijk (was 90 dagen)." },
   { stuk: "vwo", versie: "2026-11-10", tekst: "Einde: na een proef zonder abonnement wissen we alles 30 dagen na de proef, net als na opzeggen." },
-  { stuk: "av", versie: "2026-11-10", tekst: "Betalen na de eerste maand: we schrijven elke maand automatisch af via je machtiging, met minstens " + INCASSO_VOORAF_DAGEN + " dagen vooraf een mail. Lukt het niet, dan nemen we contact op." }
+  { stuk: "av", versie: "2026-11-10", tekst: "Betalen na de eerste maand: we schrijven elke maand automatisch af via je machtiging, met minstens " + INCASSO_VOORAF_DAGEN + " dagen vooraf een mail. Lukt het niet, dan nemen we contact op." },
+  { stuk: "av", versie: "2026-11-10-2", tekst: "Ingevuld: een nieuwe prijs melden we minstens 30 dagen vooraf per e-mail, en er is geen opzegtermijn (opzeggen kan elke dag, het abonnement stopt aan het einde van de betaalde maand)." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
