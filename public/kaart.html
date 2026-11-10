@@ -1587,6 +1587,9 @@
   function tekenWacht(klaar){
     var el=document.getElementById('wachtrij');if(!el)return;
     var n=Object.keys(leesWacht()).length;
+    // alles verstuurd: de meldingen "Opgeslagen op je telefoon…" onder pijnscore en seintjes
+    // kloppen dan niet meer (gebruikers-sweep 2026-11-10, Truus)
+    if(!n&&klaar)document.querySelectorAll('.mdank.wacht,.sdank.wacht').forEach(function(d){d.classList.remove('wacht');d.textContent='';d.style.display='none';});
     if(n){el.className='wachtrij';el.textContent=trw('n').replace('{n}',n);el.style.display='block';}
     else if(klaar){el.className='wachtrij klaar';el.textContent=trw('ok');el.style.display='block';setTimeout(function(){if(!Object.keys(leesWacht()).length)el.style.display='none';},6000);}
     else el.style.display='none';

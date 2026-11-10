@@ -95,3 +95,5 @@ jobs:
       - run: npm run test:uitnodigingpraktijk
       - run: npm run test:rempraktijk
       - run: npm run test:sjablonenslot
+      - run: npm run test:uitloggenprint
+      - run: npm run test:wachtrijmelding
