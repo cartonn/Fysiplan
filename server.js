@@ -3192,7 +3192,9 @@ async function afhandelen(request, response) {
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const pk = praktijkVan(request, q.get("praktijk"));
     if (!pk) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam op." }); return; }
-    if (await eisPraktijk(request, response, pk)) return;
+    // eisBeveiligdePraktijk, niet eisPraktijk: sjablonen blijven staan na een claim-reset door
+    // beheer of onder een oude naamsleutel; zonder wachtwoord kon iedereen ze dan op naam lezen
+    if (await eisBeveiligdePraktijk(request, response, pk)) return;
     await sendJson(response, 200, { ok: true, sjablonen: praktijkSjablonen[pk] || [] });
     return;
   }
@@ -3238,7 +3240,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
-      if (await eisPraktijk(request, response, pk)) return;
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const naam = cleanName(b.naam, 60).toLowerCase();
       const lijst = praktijkSjablonen[pk] || [];
       const idx = lijst.findIndex((s) => String(s.naam || "").toLowerCase() === naam);

@@ -11,7 +11,7 @@ daaruit tot en met 2026-11-06.
 | (a) beheer-endpoints en de admin-sleutel | 2026-11-09 12u (statisch: 17 `isAdmin`-routes, /aanmeldingen en /medewerkers alleen `ACCOUNT_BEHEER_EMAILS`, geen admin88 in publieke bestanden, productie zonder eigen `ADMIN_KEY` dicht, rem vóór sleutel. Geen gat) |
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-09 12u (team: eigen login, uitnodigen, verwijderen, rol, gedeeld uit; uitnodiging verzilveren; wachtwoord per lid; v1-login/registratie. Nieuw: LAAG uitnodigingsmail als spamkanaal, zie Open) · 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
 | (c) proef-tokens en verlopen proeven | 2026-11-09 16u (koppelen van een account aan een proef bij inloggen, nu ook gevolgd door wissen na 30 dagen: oude proefcookie hing een gewone praktijk aan een verlopen proef, opgelost; claim, slot en wissen alleen voor de eigen proef) · 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
-| (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP, patiëntroute met allowlist, praktijkroutes alleen eigen map) |
+| (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-10 00u (statisch alle 30 kaartroutes: patiëntroutes met `vindKaart` + misrem + `kruisSite`, therapeutroutes met `eisBeveiligdePraktijk` en alleen de eigen map, /api/kaart met allowlist, /k zonder bestaan-orakel, demo per verzoek vers. Teamsjablonen lezen/verwijderen zonder wachtwoord: opgelost) · 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP) |
 | (e) uploads (video, logo, opname /o) | 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-09 08u (runtime met Chromium: payloads in teamnaam, uitnodiging, eigen oefening, teamsjabloon, alle kaartvelden, bericht, notitie, behandelaar, doel; app-start, Kaarten-paneel, inbox, Team, Activiteit, Rapport, Sjablonen, /k in nl/en/ar: niets geïnjecteerd, geen CSP-melding. CSV-exports met formule-escape, afspraak-ICS zonder regelinjectie. Geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat); 2026-11-09 08u: `kruisSite` liet same-site door, opgelost) |
@@ -19,7 +19,11 @@ daaruit tot en met 2026-11-06.
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-09 20u (remmen: schrijf-/leesrem per IP zette een hele praktijk achter één wifi plus de patiënten daar op 429: opgelost met een rem per praktijk; plafonds per praktijk ongewijzigd) · 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
 | (j) npm audit | 2026-11-09 20u (0 meldingen, ook dev) |
 
-Volgende run: (d) gedeelde kaarten, daarna (g) headers/CSP/cookies en (a) beheer.
+Volgende run: (g) headers/CSP/cookies, daarna (a) beheer en (b) accountlaag.
+
+Sanity 2026-11-10 00u op #143–#150 (Physitrack-avatars, regio-oefeningen en 116 nieuwe behandelkaarten, categorie-indeling,
+niet-vertaalde uitleg op /k): geen wijziging in server.js of lib/ sinds #141; de nieuwe melding op /k is `textContent`, de
+lightbox-uitleg gaat door `esc()`, de categorieën in de app zijn vaste labels. Geen gat.
 
 Sanity 2026-11-09 20u op #139–#140 (juridische teksten B1, wissen na proef alleen met vinkje, knop na uitnodiging met
 klaargezette praktijknaam, behandelkaartenbibliotheek): `/v2/proef/wissen` houdt `kruisSite` en eist nu ook `zeker=1`;
@@ -102,7 +106,10 @@ Audit (d) 2026-11-08 12u:
   (weg na de bewaartermijn), de patiëntlink breken of het seintje wegtikken. Repro lokaal: POST
   `/api/kaart/antwoord` met `{praktijk, id, tekst}` zonder cookie gaf 200. Nu: `eisBeveiligdePraktijk`, dezelfde
   poort als het overzicht; v1-sessies en een eigen beheersleutel werken nog. Test: `npm run test:kaartroutes`.
-- **LAAG — teamsjablonen van een praktijk zonder wachtwoord zijn op naam te lezen/overschrijven**
+- **OPGELOST 2026-11-10 (deze PR) — LAAG — teamsjablonen van een praktijk zonder wachtwoord zijn op naam te lezen/overschrijven**
+  Opslaan eiste al een claim; lezen en verwijderen niet. Na een claim-reset door beheer of onder een oude naamsleutel
+  bleven sjablonen op naam leesbaar en weg te halen. Nu `eisBeveiligdePraktijk` op GET en verwijder (de app vangt de 401
+  al op). Test: `npm run test:sjablonenslot`. Oorspronkelijk:
   (`/api/praktijk/sjablonen` GET/POST/verwijder en `POST /api/praktijken` gebruiken `eisPraktijk`). Geen
   patiëntgegevens; v2 deelt pas na beveiligen. Fix (eventueel): ook `eisBeveiligdePraktijk`, na een check dat de
   app sjablonen niet vóór het beveiligen opslaat.
@@ -184,6 +191,8 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **AFGESLOTEN 2026-11-10 (geen gat) — beoordeeld door security:** de proefmails zijn platte tekst, de adressen in HTML gaan
+  door `htmlEsc` en de CSV van /api/aanmeldingen zet `'` voor `= + - @` (formule-escape). Een strengere regex mag (UX), is geen securityfix.
 - **LAAG (doorgezet door de gebruikers-sweep 2026-11-09 22u, ter info) — e-mailcheck van de proef keurt `=hyperlink("http://evil")@x.nl`
   en emoji-adressen goed** (lib/proef.js r. 25, `EMAIL_RE = /^[^\s@]{1,64}@…/`). Raakt de meldingsmails en het aanmeldoverzicht
   (formule-injectie bij een export naar een spreadsheet). Sanne, desktop.
