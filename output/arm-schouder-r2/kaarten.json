@@ -1,0 +1,237 @@
+[
+ {
+  "naam": "Arm weer in beweging – met hulp",
+  "categorie": "Arm & schouder",
+  "sub": "Eerste stap: je arm, elleboog en pols bewegen terwijl je andere hand of een stok meehelpt.",
+  "oefeningen": [
+   "Arm omhoog brengen in ruglig – met hulp",
+   "Schouder zijwaarts heffen – met stok",
+   "Elleboog buigen en strekken met hulp",
+   "Pols achterover buigen – met hulp op tafel",
+   "Pols voorover buigen – met hulp op tafel"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Arm zelf bewegen – zonder hulp",
+  "categorie": "Arm & schouder",
+  "sub": "Je tilt en draait je arm nu op eigen kracht, nog zonder gewicht.",
+  "oefeningen": [
+   "Schouder voorwaarts heffen – actief",
+   "Schouder zijwaarts heffen – actief",
+   "Elleboog buigen en strekken – ruglig met arm omhoog",
+   "Onderarm draaien – handpalm op en neer",
+   "Pols omlaag – actief"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Arm sterker maken – licht gewicht",
+  "categorie": "Arm & schouder",
+  "sub": "Kracht opbouwen in schouder, onderarm en hand met een licht gewichtje, bal of elastiek.",
+  "oefeningen": [
+   "Front raises",
+   "Lateral raises",
+   "Handpalm naar beneden draaien tegen elastiek",
+   "Handpalm naar boven draaien tegen elastiek",
+   "Bal knijpen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Armkracht met elastiek",
+  "categorie": "Arm & schouder",
+  "sub": "Laatste fase: schouder en elleboog trainen tegen de weerstand van een elastiek.",
+  "oefeningen": [
+   "Schouder naar buiten draaien – met elastiek",
+   "Schouder naar binnen draaien – met elastiek",
+   "Elleboog buigen – met lichte weerstand",
+   "Arm schuin omhoog trekken – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Fijne handvaardigheid aan tafel",
+  "categorie": "Hand & pols",
+  "sub": "Oefenen met alledaagse spullen om je vingers weer handig en precies te laten werken.",
+  "oefeningen": [
+   "Munten omdraaien op tafel",
+   "Paperclips in een beker doen",
+   "Deksel van een pot draaien",
+   "Beker optillen en verplaatsen – zittend aan tafel",
+   "Vingers strekken in therapieklei",
+   "Vingers één voor één in therapieklei drukken",
+   "Duim oppositie – actief",
+   "Knokkels buigen met rechte vingers (tafelstand)"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Arm en hand soepel houden – rekken",
+  "categorie": "Arm & schouder",
+  "sub": "Rustige rekoefeningen die stijfheid in elleboog, pols en vingers tegengaan.",
+  "oefeningen": [
+   "Vinger achterover rekken – met je andere hand",
+   "Elleboog buigen en strekken met hulp",
+   "Polsbuigers rekken – arm gestrekt",
+   "Handpalmen tegen elkaar zakken (gebedsrek)"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Gevoel in arm en hand trainen",
+  "categorie": "Neurologie",
+  "sub": "Je arm en hand op verschillende manieren prikkelen om het gevoel te verbeteren.",
+  "oefeningen": [
+   "Arm wrijven met je andere hand – zittend",
+   "Vingertoppen aanraken met verschillende stoffen",
+   "Voorwerpen herkennen op de tast – ogen dicht",
+   "Hand plat op tafel voelen – met kijken"
+  ],
+  "dosering": {
+   "s": "1",
+   "h": "2 min"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Verplaatsen en lopen in huis",
+  "categorie": "Dagelijks functioneren",
+  "sub": "Veilig omrollen, overstappen, opstaan en lopen met een hulpmiddel oefenen.",
+  "oefeningen": [
+   "Omrollen naar je zij – ruglig",
+   "Van liggen naar zitten – over de zij uit bed",
+   "Overstappen van bed naar stoel – via je sterke kant",
+   "Sit-to-stand – zittend",
+   "Opstaan van de vloer – met steun van een stoel",
+   "Lopen met een looprek",
+   "Lopen met een wandelstok"
+  ],
+  "dosering": {
+   "s": "1",
+   "h": "5"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "In beweging blijven – heel het lichaam",
+  "categorie": "Neurologie",
+  "sub": "Een korte mix voor soepele polsen en enkels, sterke armen en een beweeglijke heup.",
+  "oefeningen": [
+   "Polsen draaien in achtjes – handen gevouwen",
+   "Opdrukken tegen de muur",
+   "Enkel alfabet schrijven – zittend",
+   "Knie opzij laten zakken – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Pols herstellen na een breuk",
+  "categorie": "Hand & pols",
+  "sub": "Je pols weer soepel en sterk maken in alle richtingen.",
+  "oefeningen": [
+   "Pols omhoog – actief",
+   "Pols naar duimzijde – actief",
+   "Pols naar pinkzijde – met elastiek",
+   "Onderarm draaien – handpalm op en neer",
+   "Bal knijpen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Elleboog herstellen na een breuk",
+  "categorie": "Elleboog",
+  "sub": "Je elleboog weer leren strekken, buigen en draaien, met een paar speelse oefeningen erbij.",
+  "oefeningen": [
+   "Elleboog buigen – actief",
+   "Elleboog strekken – actief",
+   "Armen strekken boven je hoofd – vingers gevouwen",
+   "Speelkaarten omdraaien – onderarm draaien",
+   "Bal opgooien en nakijken – staand",
+   "Opdrukken op de knieën – ellebogen langs het lichaam"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Handpalm en vingers soepel houden",
+  "categorie": "Hand & pols",
+  "sub": "Masseren en bewegen om je handpalm en vingers zo open en soepel mogelijk te houden.",
+  "oefeningen": [
+   "Onderarm masseren – binnenkant, met je andere hand",
+   "Peesglijden hand – actief",
+   "Vingers openen en sluiten – actief",
+   "Handpalmen tegen elkaar zakken (gebedsrek)"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hand en duim na een polsbreukje",
+  "categorie": "Hand & pols",
+  "sub": "Kracht en beweging in duim, vingers en pols rustig terug opbouwen.",
+  "oefeningen": [
+   "Duim oppositie – actief",
+   "Duim buigen en strekken",
+   "Pols omhoog – actief"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Vingers herstellen na een breuk in de hand",
+  "categorie": "Hand & pols",
+  "sub": "Je vingers weer volledig leren buigen, strekken en knijpen.",
+  "oefeningen": [
+   "Vuist maken en hand openen",
+   "Peesglijden hand – actief",
+   "Knokkels buigen met rechte vingers (tafelstand)"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ }
+]
