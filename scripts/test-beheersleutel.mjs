@@ -12,7 +12,7 @@ import { join } from "node:path";
 for (const f of ["public/index.html", "public/dashboard.html", "public/content1000.html"]) {
   const html = await readFile(f, "utf8");
   assert.doesNotMatch(html, /x-admin-sleutel['"]?\s*:\s*['"]admin88['"]/, `${f} bevat de beheersleutel`);
-  assert.match(html, /sessionStorage[^\n]*fysiplan-beheersleutel/, `${f} vraagt de sleutel niet zelf`);
+  assert.match(html, /import\('\/beheersleutel\.js'\)\)\.vraagBeheersleutel\(\)/, `${f} vraagt de sleutel niet zelf`);
 }
 
 async function vrijePoort() {
