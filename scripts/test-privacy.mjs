@@ -10,6 +10,7 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { INCASSO_VOORAF_DAGEN } from "../lib/mollie.js";
 
 const root = process.cwd();
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-privacy-"));
@@ -281,6 +282,12 @@ try {
   assert.match(av, /geen dossier|vervangt je dossier niet/i);
   assert.match(av, /30 dagen later wissen we alles/);
   assert.match(av, /class="invul"/);
+  // art. 4 (legal 2026-11-10): de maandincasso uit lib/mollie.js staat in de voorwaarden,
+  // met de aankondigingstermijn uit de code en zonder open invulplek voor de betaalwijze
+  assert.match(av, /Na de eerste maand schrijven we elke maand automatisch af/);
+  assert.match(av, new RegExp("minstens " + INCASSO_VOORAF_DAGEN + " dagen vooraf een mail"));
+  assert.match(av, /niet vanzelf opnieuw/);
+  assert.doesNotMatch(av, /betaalwijze, factuurmoment en betaaltermijn|__INCASSO_VOORAF__/);
   assert.match(av, /In het kort[\s\S]*14 dagen, is gratis[\s\S]*De artikelen hieronder gelden/);
   assert.match(av, /href="\/verwerkersovereenkomst"/);
   assert.doesNotMatch(av, /juridisch advies|kaartvoorstel|startdosering/i);

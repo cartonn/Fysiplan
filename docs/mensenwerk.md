@@ -64,10 +64,9 @@ Zonder sleutel verandert er niets: alleen "Ja, ik wil doorgaan" en jij belt.
 3. Daarna de **live**sleutel (`live_…`) in `MOLLIE_API_KEY`. De webhook-URL
    (`https://fysiplan.nl/api/mollie/webhook`) geeft de app zelf mee; in Mollie hoef je niets in te stellen.
 4. Mollie staat nu vanzelf in de privacyverklaring zodra de sleutel staat (legal, 2026-11-07), en
-   de voorwaarden beschrijven de eerste maand vooraf. Nog in te vullen in de voorwaarden (art. 4):
-   betaalwijze, factuurmoment en betaaltermijn **na** de eerste maand. Let op: de voorwaarden
-   beloven dat je praktijken laat weten voordat de automatische maandincasso begint; doe dat (of
-   laat de code het doen) vóór de eerste incasso. Laat de 7 jaar bewaren door je boekhouder bevestigen.
+   de voorwaarden beschrijven de eerste maand vooraf. Sinds 2026-11-10 (legal) beschrijft art. 4 ook
+   de maandincasso zoals de code hem doet (mail 5 dagen vooraf, mislukt = jij neemt contact op).
+   Laat de jurist kijken of de afgesproken termijn van 5 dagen (standaard 14) zo goed geregeld is. Laat de 7 jaar bewaren door je boekhouder bevestigen.
 **Maandincasso:** gebouwd 2026-11-10, staat UIT tot je `MOLLIE_INCASSO=aan` zet (zie hieronder).
 
 ### Maandincasso na de eerste maand (praktijk-routine, 2026-11-10)
@@ -139,7 +138,7 @@ reservekopie van 7 dagen goed in de tekst staan.
 Op https://fysiplan.nl/voorwaarden staat een concept, duidelijk gemarkeerd. Vul deze keuzes in
 (of laat een jurist ze voorstellen); ze staan in de tekst als oranje invulplek in
 `public/juridisch.html`, blok `voorwaarden`:
-1. **Betaalwijze en factuur:** incasso of factuur, factuur vooraf per maand, betaaltermijn (bijv. 14 dagen).
+1. ~~**Betaalwijze en factuur**~~ ingevuld 2026-11-10 volgens de gebouwde maandincasso (art. 4); wil je het anders, zeg het.
 2. **Prijswijziging:** hoeveel dagen vooraf je een nieuwe prijs meldt (gebruikelijk 30).
 3. **Opzegtermijn:** de landing belooft "maandelijks opzegbaar"; kies bijv. "tegen het einde van de lopende maand".
 4. **Aansprakelijkheidsgrens:** bijv. maximaal het bedrag van 3 of 12 maanden abonnement.
