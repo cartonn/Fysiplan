@@ -432,6 +432,20 @@ function mailOpSlot(em) {
   if (!t || nu - t.start > 3600e3) { mailTeller.set(em, { start: nu, n: 1 }); return false; }
   return ++t.n > 3;
 }
+// mailrem per praktijk voor uitnodigingen (security 2026-11-10): mailOpSlot remt alleen
+// per adres, dus één geclaimde praktijk kon 50 willekeurige adressen mailen met een
+// zelfgekozen praktijknaam in het onderwerp (en 5 claims per IP per dag = ~250 mails).
+// Boven het plafond komt de link wel terug (de beheerder deelt hem zelf), maar mailt
+// Fysiplan niet meer namens die praktijk tot de 24 uur om zijn.
+const UITNODIG_MAILS_PER_DAG = 10;
+const uitnodigMailTeller = new Map(); // pk -> { start, n }
+function uitnodigMailOpSlot(pk) {
+  const nu = Date.now();
+  if (uitnodigMailTeller.size > 5000) for (const [k, v] of uitnodigMailTeller) if (nu - v.start > 86400e3) uitnodigMailTeller.delete(k);
+  const t = uitnodigMailTeller.get(pk);
+  if (!t || nu - t.start > 86400e3) { uitnodigMailTeller.set(pk, { start: nu, n: 1 }); return false; }
+  return ++t.n > UITNODIG_MAILS_PER_DAG;
+}
 const tokenHash = (t) => createHash("sha256").update(String(t)).digest("hex");
 async function maakInstelToken(email) {
   const nu = Date.now();
@@ -2920,8 +2934,10 @@ async function afhandelen(request, response) {
       await opslaan();
       auditLog(pk, "collega-uitgenodigd", request);
       const link = instelBasis(request) + "/v2/uitnodiging?t=" + token;
-      let gemaild = false;
-      if (mailIngesteld() && !mailOpSlot(em)) {
+      let gemaild = false, mailLimiet = false;
+      if (mailIngesteld() && uitnodigMailOpSlot(pk)) {
+        mailLimiet = true;
+      } else if (mailIngesteld() && !mailOpSlot(em)) {
         try {
           await stuurMail(em, "Je bent uitgenodigd voor Fysiplan (" + weergaveNaam(pk) + ")",
             "Hallo" + (l.naam ? " " + l.naam.split(" ")[0] : "") + ",\n\n" +
@@ -2930,7 +2946,7 @@ async function afhandelen(request, response) {
           gemaild = true;
         } catch {}
       }
-      await sendJson(response, 200, { ok: true, link, gemaild, lid: lidUit(l) });
+      await sendJson(response, 200, { ok: true, link, gemaild, ...(mailLimiet ? { mailLimiet } : {}), lid: lidUit(l) });
       return;
     }
     const doel = typeof b.id === "string" ? acc.leden.find((x) => x.id === b.id) : null;

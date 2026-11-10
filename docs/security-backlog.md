@@ -12,14 +12,19 @@ daaruit tot en met 2026-11-06.
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-09 12u (team: eigen login, uitnodigen, verwijderen, rol, gedeeld uit; uitnodiging verzilveren; wachtwoord per lid; v1-login/registratie. Nieuw: LAAG uitnodigingsmail als spamkanaal, zie Open) · 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
 | (c) proef-tokens en verlopen proeven | 2026-11-09 16u (koppelen van een account aan een proef bij inloggen, nu ook gevolgd door wissen na 30 dagen: oude proefcookie hing een gewone praktijk aan een verlopen proef, opgelost; claim, slot en wissen alleen voor de eigen proef) · 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-10 00u (statisch alle 30 kaartroutes: patiëntroutes met `vindKaart` + misrem + `kruisSite`, therapeutroutes met `eisBeveiligdePraktijk` en alleen de eigen map, /api/kaart met allowlist, /k zonder bestaan-orakel, demo per verzoek vers. Teamsjablonen lezen/verwijderen zonder wachtwoord: opgelost) · 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP) |
-| (e) uploads (video, logo, opname /o) | 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
+| (e) uploads (video, logo, opname /o) | 2026-11-10 08u (statisch + runtime: /uploads met ../, %2e%2e, %2f, %5c, %00, dubbele codering → 403/404; opname-upload chunked 70 MB zonder content-length → 413 vóór bufferen, geen bestand; type/magische bytes; token blijft na fout bruikbaar; eigenVideoPad alleen eigen opnames; wissen ruimt foto's, logo en video's op. Geen gat) · 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-09 08u (runtime met Chromium: payloads in teamnaam, uitnodiging, eigen oefening, teamsjabloon, alle kaartvelden, bericht, notitie, behandelaar, doel; app-start, Kaarten-paneel, inbox, Team, Activiteit, Rapport, Sjablonen, /k in nl/en/ar: niets geïnjecteerd, geen CSP-melding. CSV-exports met formule-escape, afspraak-ICS zonder regelinjectie. Geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-11-10 04u (runtime: CSP/frame-ancestors/nosniff/referrer/no-store op 13 V2-routes ook /v2/gegevens, /v2/uitnodiging, /aanmeldingen, factuur; cookies fp1/fpproef HttpOnly+SameSite=Lax(+Secure achter https); cross-site POST op alle /v2/proef/*-acties, /v2/gegevens en /api/praktijk* → 403; geen CORS-headers, ook niet op OPTIONS. Geen gat) · 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat); 2026-11-09 08u: `kruisSite` liet same-site door, opgelost) |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-09 16u (statisch: alle `sendJson`/`send` met `err.message`/`e.stack` in server.js, routes/ en lib/ sinds 8-11, ook opzeggen, factuur, wissen na proef: interne fouten gaan alleen naar het serverlog. Geen gat) · 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-09 20u (remmen: schrijf-/leesrem per IP zette een hele praktijk achter één wifi plus de patiënten daar op 429: opgelost met een rem per praktijk; plafonds per praktijk ongewijzigd) · 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
-| (j) npm audit | 2026-11-09 20u (0 meldingen, ook dev) |
+| (j) npm audit | 2026-11-10 08u (0 meldingen) · 2026-11-09 20u (0 meldingen, ook dev) |
 
-Volgende run: (a) beheer, daarna (b) accountlaag en (e) uploads.
+Volgende run: (a) beheer en (b) accountlaag (open PR #159 verandert het sleutelformulier: na merge nalopen), daarna (f) XSS.
+
+Sanity 2026-11-10 08u op #157–#158 (voorwaarden art. 4 incasso, controlezinnen in de kaarttaal, wissen spaart beelden
+van een andere kaart, emoji-initiaal): server.js alleen een nieuwe AV-versie en tekstvariabele; /k-meldingen via `tr()`
+als tekst, de cache-opruiming kijkt alleen naar `fp_beelden_<id>` op het eigen apparaat. Open PR #159 (beheersleutel in
+een dialoog in plaats van `prompt`): sleutel blijft alleen in sessionStorage, geen sleutel in publieke bestanden. Geen gat.
 
 Sanity 2026-11-10 04u op #151–#155 (maandincasso, factuur per maand, vertaalcache wissen, print/uitloggen): de factuur
 `?nr=` zoekt alleen in de eigen proef (404 voor een andere praktijk), de webhook beoordeelt alleen eigen betaal-id's met
@@ -246,7 +251,9 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   proef "aanmelding weg" en wiste het (team, profiel, sjablonen) zodra er geen kaarten waren, ook bij betalende klanten.
   De eerste nieuwe aanmelding overschreef daarna het kapotte bestand. Nu: onleesbaar ≠ leeg; het automatisch wissen na
   de proef staat dan uit en het kapotte bestand wordt apart bewaard (`.onleesbaar-<tijd>`). Test: `npm run test:proefarchief`.
-- **LAAG (audit (b) 2026-11-09) — uitnodigingsmail als spamkanaal.** Iedereen kan een praktijk claimen (5 per IP per dag)
+- **OPGELOST 2026-11-10 (deze PR) — LAAG (audit (b) 2026-11-09) — uitnodigingsmail als spamkanaal.** Nu hooguit
+  10 uitnodigingsmails per praktijk per 24 uur (`uitnodigMailOpSlot`); daarboven komt de link wel terug met
+  `mailLimiet`, zonder mail. Test: `npm run test:uitnodigmail`. Oorspronkelijke melding: Iedereen kan een praktijk claimen (5 per IP per dag)
   en per praktijk 50 collega's uitnodigen: Fysiplan mailt dan willekeurige adressen met een zelfgekozen praktijknaam in het
   onderwerp (`mailOpSlot` remt alleen per adres). Max ~250 mails per IP per dag; slecht voor de mailreputatie. Voorgestelde
   fix: uitnodigingen per praktijk per dag begrenzen (bv. 10) en tijdens een proef pas mailen na de eerste gedeelde kaart.
