@@ -8,7 +8,7 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 
 | Gebied | Laatst gecontroleerd |
 |---|---|
-| (a) privacyverklaring (art. 13/14 AVG) | 2026-11-09 09u (art. 9-uitzondering, "Als je stopt", proefpraktijk zonder abonnement echt gewist, WhatsApp-link) |
+| (a) privacyverklaring (art. 13/14 AVG) | 2026-11-10 21u (Anthropic-rij beloofde "geen vrije tekst van de therapeut" en "bibliotheekteksten", maar namen van eigen oefeningen gaan mee naar vertaling en vraaghulp: opgelost; bron van teamledengegevens (art. 14 lid 2 f): opgelost; proefvelden, externe hosts in code, Cloudflare Stream (alleen bibliotheekvideo's van beheer), rechten en klachtrecht: klopt; Resend-rij wacht nog op #167) |
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-09 13u (art. 28 lid 3 a/g/h en lid 4 langs de tekst; einde proef: kaarten bleven onbeperkt; subverwerkers tegen alle externe hosts in code: geen gat) |
 | (c) algemene voorwaarden | 2026-11-10 05u (art. 4 beschrijft de maandincasso: afschrijven via machtiging, mail 5 dagen vooraf als afgesproken kortere termijn, mislukt = contact, factuur per maand; `AV_VERSIE` 2026-11-10) |
 | (d) code tegen tekst | 2026-11-10 17u (patiëntroute `PATIENT_VELDEN` tegen /privacy#patient: doelactiviteit, bericht van de praktijk, weekdoel en eigen video/foto ontbraken, afspraak stond onder "zelf aantikt"; opgelost. Mails via Resend gaan ook over betaling en wachtwoord: open tot #167 gemerged is. Logs, auditlog 500, cookies, reservekopie 7 dagen, uitnodiging 7 dagen: klopt) |
@@ -18,10 +18,20 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (h) WGBO en KNGF-beroepsregels | 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
 | (i) begrijpelijkheid (B1) | 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (a) privacyverklaring (eerst het Resend-punt hieronder als PR #167 gemerged is), dan (f) cookies, dan (i) B1. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (f) cookies, dan (i) B1, dan (b) verwerkersovereenkomst. Het Resend-punt hieronder pakken zodra PR #167 gemerged of gesloten is. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **LAAG — privacyverklaring (a) 2026-11-10 21u: Anthropic-rij klopte niet met wat er naar de AI-dienst gaat.**
+  /privacy#subverwerkers zei bij Anthropic "het vertalen van bibliotheekteksten" en "geen namen, scores of vrije tekst
+  van de therapeut". Maar `/api/kaart/vertaal` en `/api/kaart/vraag` (server.js, filter `PRAKTIJK_OEF_ID`) sturen ook de
+  namen van eigen oefeningen van de praktijk mee: vrije tekst van de therapeut, die een patiënt kan aanduiden. Vertaalde
+  namen blijven in `vertalingen.json` tot de oefening of praktijk gewist wordt. Daarnaast noemde de teamrij niet waar
+  naam en e-mail van een teamlid vandaan komen (de beheerder vult ze in), terwijl art. 14 lid 2 f AVG de bron vraagt.
+  OPGELOST 2026-11-10 (deze PR): rij beschrijft nu wat echt meegaat, met de waarschuwing geen patiëntnaam in een eigen
+  oefening te zetten; teamrij noemt de bron. Test in `scripts/test-privacy.mjs` (nagebootste AI-dienst vertaalt een kaart
+  met een eigen oefening; faalt zonder fix). Bron: AVG art. 13 lid 1 e, art. 14 lid 2 f.
 
 - **LAAG — code tegen tekst (d) 2026-11-10 17u: Resend-rij op /privacy#subverwerkers is te smal.**
   De rij zegt "e-mail rond de proef en uitnodigingen; e-mailadres en naam". Fysiplan mailt via Resend ook de
