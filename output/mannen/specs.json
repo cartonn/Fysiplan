@@ -1,0 +1,20 @@
+[
+ {
+  "slug": "man-a-kniebuiging-staand",
+  "naam": "Kniebuiging staand (referentie man A)",
+  "ref": "001",
+  "pose_en": "He stands upright, seen exactly from the side: we see his RIGHT side (he faces the viewer's right), feet hip-width apart, arms hanging relaxed beside his body. The arrow is a short curved arrow behind his hips pointing DOWN and slightly BACK, showing the hips moving down into a squat.",
+  "eind_en": "END position: same side view. He is in a half squat: knees bent to about 60 degrees, knees above the toes, hips pushed back, back straight and leaning slightly forward, both arms stretched forward at shoulder height for balance, heels on the floor.",
+  "zoom": false,
+  "man": "A"
+ },
+ {
+  "slug": "man-b-kniebuiging-staand",
+  "naam": "Kniebuiging staand (referentie man B)",
+  "ref": "001",
+  "pose_en": "He stands upright, seen exactly from the side: we see his RIGHT side (he faces the viewer's right), feet hip-width apart, arms hanging relaxed beside his body. The arrow is a short curved arrow behind his hips pointing DOWN and slightly BACK, showing the hips moving down into a squat.",
+  "eind_en": "END position: same side view. He is in a half squat: knees bent to about 60 degrees, knees above the toes, hips pushed back, back straight and leaning slightly forward, both arms stretched forward at shoulder height for balance, heels on the floor.",
+  "zoom": false,
+  "man": "B"
+ }
+]
