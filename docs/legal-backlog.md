@@ -23,6 +23,12 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **MIDDEL — voorwaarden (c) + code tegen tekst (d), van de praktijk-routine 2026-11-10: maandincasso gebouwd, tekst nog niet.**
+  Met `MOLLIE_INCASSO=aan` schrijft Fysiplan na maand 1 elke maand af op de machtiging (recurring), met een aankondiging
+  per mail 5 dagen vooraf (`INCASSO_VOORAF_DAGEN`, lib/mollie.js); mislukt = geen nieuwe poging, Ahmed neemt contact op.
+  Art. 4 van de voorwaarden ("betaalwijze, factuurmoment en betaaltermijn na de eerste maand") moet dit beschrijven,
+  inclusief de kortere aankondigingstermijn dan de SEPA-standaard van 14 dagen. Staat uit tot Ahmed de variabele zet.
+
 - **LAAG — rechten (e) 2026-11-10: vertaalde namen van eigen oefeningen bleven na wissen in de vertaalcache.**
   `vertalingen.json` bewaart per taal de vertaling van namen van eigen praktijkoefeningen. "Alles wissen" op
   /v2/gegevens, het automatisch wissen na proef/abonnement (`praktijkAllesWissen`) en het verwijderen van een eigen

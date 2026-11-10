@@ -68,8 +68,24 @@ Zonder sleutel verandert er niets: alleen "Ja, ik wil doorgaan" en jij belt.
    betaalwijze, factuurmoment en betaaltermijn **na** de eerste maand. Let op: de voorwaarden
    beloven dat je praktijken laat weten voordat de automatische maandincasso begint; doe dat (of
    laat de code het doen) vóór de eerste incasso. Laat de 7 jaar bewaren door je boekhouder bevestigen.
-**Nog niet gebouwd (volgende runs):** de maandelijkse incasso na maand 1 (Mollie-subscription op het
-mandaat). Tot dan: de eerste maand loopt via Mollie, de rest regel je zelf.
+**Maandincasso:** gebouwd 2026-11-10, staat UIT tot je `MOLLIE_INCASSO=aan` zet (zie hieronder).
+
+### Maandincasso na de eerste maand (praktijk-routine, 2026-11-10)
+**Wat de code nu doet:** met `MOLLIE_API_KEY` **én** `MOLLIE_INCASSO=aan` (en werkende mail: `MAIL_API_SLEUTEL` +
+`MAIL_AFZENDER`) schrijft Fysiplan elke maand zelf af op de machtiging van de eerste betaling. Vijf dagen vóór het einde
+van de betaalde maand krijgt de praktijk een aankondiging (bedrag, datum, hoe opzeggen); pas als die maand om is én de
+mail vijf dagen oud is, maakt de server bij Mollie een `recurring`-betaling. Gelukt: de betaalde maand schuift een maand
+op, de praktijk krijgt een mail en een eigen factuur (`/v2/proef/factuur?nr=FP-…`, gelinkt op Mijn proef), jij een mail
+"Maand betaald". Mislukt: jij krijgt "Maandincasso mislukt", de praktijk een mail; er volgt **geen** nieuwe poging en de
+app blijft open. Een opgezegd abonnement wordt nooit geïnd. Zonder `MOLLIE_INCASSO` (of zonder mail) verandert er niets.
+Webhook-adres: `FYSIPLAN_BASIS_URL` (standaard `https://fysiplan.nl`) + `/api/mollie/webhook`.
+**Wat jij moet doen:**
+1. In Mollie SEPA-incasso laten activeren (voor iDEAL-machtigingen nodig).
+2. In de voorwaarden (art. 4) invullen: maandelijkse incasso, aankondiging 5 dagen vooraf. Laat dat bij voorkeur de
+   legal-routine doen; de SEPA-regel is 14 dagen vooraf, tenzij je een kortere termijn afspreekt in de voorwaarden.
+3. Zet daarna op Railway `MOLLIE_INCASSO` = `aan` (eerst met de testsleutel proberen).
+4. **Beslissen:** wat er gebeurt na een mislukte incasso. Gebouwd: jij belt, de app blijft open. Alternatief: na X dagen
+   zonder betaling op slot (zoals een opgezegd abonnement). Zeg het, dan bouwt deze routine het.
 
 ### Abonnement zelf opzeggen (praktijk-routine, 2026-11-09)
 **Wat de code nu doet:** een praktijk die online betaalde ziet op https://fysiplan.nl/v2/proef?mijn=1 het blok
