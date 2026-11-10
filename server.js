@@ -9,7 +9,8 @@ import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
-import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN } from "./lib/mollie.js";
+import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN,
+  incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
 import { volgendFactuurNr, factuurHtml, isFactuur } from "./lib/factuur.js";
 
 const port = Number(process.env.PORT || 3000);
@@ -699,7 +700,16 @@ const MOLLIE_SLEUTEL = String(process.env.MOLLIE_API_KEY || "");
 const MOLLIE_BASIS = String(process.env.MOLLIE_API_BASIS || "https://api.mollie.com");
 const mollieAan = () => !!MOLLIE_SLEUTEL;
 const mollieBetaalIndex = new Map(); // tr_… -> proef-id: de webhook zoekt alleen eigen betalingen op
-for (const p of Object.values(proeven)) if (p.betaling?.id) mollieBetaalIndex.set(p.betaling.id, p.id);
+for (const p of Object.values(proeven)) {
+  if (p.betaling?.id) mollieBetaalIndex.set(p.betaling.id, p.id);
+  if (p.abonnement?.incasso?.id) mollieBetaalIndex.set(p.abonnement.incasso.id, p.id);
+}
+// Maandincasso na de eerste maand: pas aan met MOLLIE_INCASSO=aan (naast de sleutel), zodat
+// Ahmed eerst de voorwaarden (betaalwijze na maand 1) kan invullen. Alleen als mail werkt:
+// de voorwaarden beloven dat de praktijk het vooraf hoort. Zonder: niets verandert.
+const MOLLIE_INCASSO = /^(aan|ja|1|true)$/i.test(String(process.env.MOLLIE_INCASSO || "").trim());
+const incassoAan = () => mollieAan() && MOLLIE_INCASSO && mailIngesteld();
+const INCASSO_WEBHOOK = String(process.env.FYSIPLAN_BASIS_URL || "https://fysiplan.nl").replace(/\/+$/, "") + "/api/mollie/webhook";
 function betaalBlok(p) {
   if (!p) return "";
   const a = p.abonnement;
@@ -719,7 +729,12 @@ function betaalBlok(p) {
 function abonnementBlok(a) {
   const therapeuten = a.aantal + (a.aantal === 1 ? " therapeut" : " therapeuten");
   const tot = htmlEsc(datumNl(a.betaaldTot));
-  const factuur = '<a href="/v2/proef/factuur">' + (isFactuur(FYSIPLAN_ID) ? "Factuur" : "Betaalbewijs") + " bekijken en printen</a>";
+  const soort = isFactuur(FYSIPLAN_ID) ? "Factuur" : "Betaalbewijs";
+  // latere maanden (maandincasso) hebben elk een eigen factuur
+  const later = (Array.isArray(a.betalingen) ? a.betalingen : []).filter((b) => b && b.factuurNr)
+    .map((b) => '<a href="/v2/proef/factuur?nr=' + encodeURIComponent(b.factuurNr) + '">' + htmlEsc(b.factuurNr) + "</a>");
+  const factuur = '<a href="/v2/proef/factuur">' + soort + " bekijken en printen</a>" + (later.length ? " (eerste maand). Latere maanden: " + later.join(", ") : "");
+  const incasso = incassoAan() ? " Elke maand schrijven we automatisch af via Mollie; je krijgt " + INCASSO_VOORAF_DAGEN + " dagen vooraf een mail." : "";
   if (a.status === "opgezegd") return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement is opgezegd</h2>' +
     '<p class="klein" style="font-size:14.5px">Je kunt Fysiplan nog gebruiken tot en met <b>' + tot + "</b> (" + therapeuten + "). " +
     "Daarna schrijven we niets meer af en maak je geen nieuwe kaarten meer. Na nog " + NA_EINDE_WISSEN_DAGEN + " dagen wissen we alles van je praktijk, ook de gedeelde kaarten. " +
@@ -727,7 +742,7 @@ function abonnementBlok(a) {
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="intrekken"/>' +
     '<div class="knoppen"><button class="knop oranje" type="submit">Toch doorgaan</button></div></form></div>';
   return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement</h2>' +
-    '<p class="klein" style="font-size:14.5px">Actief voor ' + therapeuten + ", betaald tot en met " + tot + ". " + factuur + ".</p>" +
+    '<p class="klein" style="font-size:14.5px">Actief voor ' + therapeuten + ", betaald tot en met " + tot + "." + incasso + " " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="opzeggen"/>' +
     '<label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, zeg mijn abonnement op per ' + tot + ".</span></label>" +
     '<div class="knoppen"><button class="knop omlijnd" type="submit">Abonnement opzeggen</button></div></form></div>';
@@ -738,6 +753,7 @@ async function mollieVerwerk(id) {
   const p = pid && Object.hasOwn(proeven, pid) ? proeven[pid] : null;
   if (!p) return null;
   const betaling = await mollie("/payments/" + encodeURIComponent(id), { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS });
+  if (p.abonnement?.incasso?.id === id) { await incassoVerwerk(p, betaling); return p; }
   const oordeel = beoordeelBetaling(betaling, p);
   if (oordeel === "betaald" && markeerBetaald(p, betaling)) {
     geefFactuurNr(p);
@@ -750,14 +766,76 @@ async function mollieVerwerk(id) {
   }
   return p;
 }
+// een maandincasso komt binnen (webhook): betaald schuift de betaalde maand op en krijgt een
+// eigen factuurnummer; mislukt meldt het aan Ahmed en de praktijk, er volgt geen nieuwe poging
+async function incassoVerwerk(p, betaling) {
+  const oordeel = beoordeelIncasso(betaling, p);
+  const naam = p.praktijk || p.naam;
+  if (oordeel === "betaald" && markeerIncassoBetaald(p)) {
+    geefFactuurNr(p);
+    await bewaarProeven();
+    const a = p.abonnement;
+    proefMeldAhmed("Maand betaald: " + naam, p, "De maandincasso is gelukt (EUR " + maandBedrag(a.incasso.aantal).value + "). Betaald tot en met " + datumNl(a.betaaldTot) + ".");
+    proefMail(p.email, "Fysiplan: je maandbetaling is gelukt", "Hoi " + p.naam + ",\n\nWe hebben EUR " + maandBedrag(a.incasso.aantal).value +
+      " afgeschreven voor je Fysiplan-abonnement. Je kunt Fysiplan gebruiken tot en met " + datumNl(a.betaaldTot) + ".\n" +
+      "Je factuur of betaalbewijs staat op https://fysiplan.nl/v2/proef?mijn=1\n\nGroet,\nFysiplan");
+  } else if (oordeel === "mislukt" && markeerIncassoMislukt(p, betaling.status)) {
+    await bewaarProeven();
+    proefMeldAhmed("Maandincasso mislukt: " + naam, p, "De maandincasso is niet gelukt (Mollie: " + p.abonnement.incasso.mollieStatus +
+      "). Fysiplan probeert het niet opnieuw en de praktijk kan gewoon verder. Neem contact op en spreek af hoe de praktijk betaalt.");
+    proefMail(p.email, "Fysiplan: je maandbetaling is niet gelukt", "Hoi " + p.naam + ",\n\nDe automatische betaling voor je Fysiplan-abonnement is niet gelukt. " +
+      "Er is niets afgeschreven en je kunt gewoon verder. We nemen contact met je op om het te regelen.\n\nGroet,\nFysiplan");
+  }
+}
+// één incassostap per ronde: eerst vooraf mailen, INCASSO_VOORAF_DAGEN later afschrijven
+async function incassoRondeStap(p, nu) {
+  if (!incassoAan()) return false;
+  const stap = incassoStap(p, nu);
+  if (stap === "melden") {
+    const a = p.abonnement;
+    markeerGemeld(p, nu);
+    proefMail(p.email, "Fysiplan: aankondiging van je maandbetaling", "Hoi " + p.naam + ",\n\nJe betaalde maand loopt tot en met " +
+      datumNl(a.betaaldTot) + ". Op of rond " + datumNl(incassoDatum(p, nu)) + " schrijven we EUR " + maandBedrag(a.aantal).value +
+      " af voor de volgende maand (" + a.aantal + (a.aantal === 1 ? " therapeut" : " therapeuten") + "), via Mollie, met de machtiging van je eerste betaling.\n\n" +
+      "Wil je stoppen? Zeg vóór die datum op via https://fysiplan.nl/v2/proef?mijn=1, dan schrijven we niets meer af.\n\nGroet,\nFysiplan");
+    return true;
+  }
+  if (stap === "nakijken") {
+    try {
+      p.abonnement.incasso.gekeken = nu;
+      const betaling = await mollie("/payments/" + encodeURIComponent(p.abonnement.incasso.id), { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS });
+      await incassoVerwerk(p, betaling);
+    } catch (err) { console.error("mollie incasso nakijken:", err.message); }
+    return true;
+  }
+  if (stap === "incasseren") {
+    try {
+      const betaling = await mollie("/payments", { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS, methode: "POST", body: incassoVerzoek(p, INCASSO_WEBHOOK) });
+      if (!geldigBetaalId(betaling?.id)) throw new Error("mollie zonder betaal-id");
+      markeerIncassoGestart(p, betaling, nu);
+      mollieBetaalIndex.set(betaling.id, p.id);
+      // sommige betalingen zijn meteen definitief; dan niet op de webhook wachten
+      if (betaling.status && betaling.status !== "open" && betaling.status !== "pending") await incassoVerwerk(p, betaling);
+      return true;
+    } catch (err) {
+      // volgende ronde opnieuw (er is nog niets opgeslagen)
+      console.error("mollie incasso mislukt:", err.message);
+    }
+  }
+  return false;
+}
 // doorlopend factuurnummer per jaar, één keer per betaling (ook voor oudere betalingen
 // zonder nummer, bij de eerste keer bekijken); gewiste praktijken tellen mee (7 jaar)
 function geefFactuurNr(p) {
   const a = p && p.abonnement;
-  if (!a || !a.eersteBetaling || a.factuurNr) return false;
-  const jaar = new Date(a.sinds || Date.now()).toLocaleDateString("nl-NL", { year: "numeric", timeZone: "Europe/Amsterdam" });
-  a.factuurNr = volgendFactuurNr(Object.values(proeven), jaar);
-  return true;
+  if (!a || !a.eersteBetaling) return false;
+  const jaarVan = (ms) => new Date(ms || Date.now()).toLocaleDateString("nl-NL", { year: "numeric", timeZone: "Europe/Amsterdam" });
+  let nieuw = false;
+  if (!a.factuurNr) { a.factuurNr = volgendFactuurNr(Object.values(proeven), jaarVan(a.sinds)); nieuw = true; }
+  for (const b of Array.isArray(a.betalingen) ? a.betalingen : []) {
+    if (b && !b.factuurNr) { b.factuurNr = volgendFactuurNr(Object.values(proeven), jaarVan(b.betaald || b.sinds)); nieuw = true; }
+  }
+  return nieuw;
 }
 // het aanmeldformulier, eventueel opnieuw met de ingevulde waarden en per veld de fout
 async function proefFormVars(request, w, fouten, suggestie = "", akkoord = false, alarm = "") {
@@ -826,6 +904,7 @@ async function proefRonde() {
       proefMeldAhmed("Abonnement gestopt: " + (p.praktijk || p.naam), p, "Het opgezegde abonnement is voorbij. Over " +
         NA_EINDE_WISSEN_DAGEN + " dagen wist Fysiplan de kaarten van deze praktijk.");
     }
+    if (await incassoRondeStap(p, nu)) gewijzigd = true;
     if (einde === "wissen") {
       const pk = Object.keys(praktijkAccounts).find((k) => String(praktijkAccounts[k].proef?.id || "") === p.id);
       if (pk) await praktijkAllesWissen(pk).then(() => auditLog("(gewist)", "praktijk-gewist-na-einde", null)).catch((e) => console.error("wissen na einde:", e.message));
@@ -5688,8 +5767,16 @@ async function afhandelen(request, response) {
     response.setHeader("x-frame-options", "DENY");
     response.setHeader("x-robots-tag", "noindex");
     response.setHeader("content-security-policy", "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+    // ?nr=FP-…: een latere maand (maandincasso); zonder nr de eerste betaling
+    const nr = String(new URL(request.url, "http://x").searchParams.get("nr") || "");
+    let stuk = p.abonnement;
+    if (nr && nr !== p.abonnement.factuurNr) {
+      const b = (Array.isArray(p.abonnement.betalingen) ? p.abonnement.betalingen : []).find((x) => x && x.factuurNr === nr);
+      if (!b) { await send(response, 404, "text/plain; charset=utf-8", "Not found"); return; }
+      stuk = { ...b, betaalId: b.id };
+    }
     await send(response, 200, "text/html; charset=utf-8", factuurHtml({ leverancier: FYSIPLAN_ID,
-      afnemer: { naam: p.praktijk || p.naam, email: p.email }, abonnement: p.abonnement }));
+      afnemer: { naam: p.praktijk || p.naam, email: p.email }, abonnement: stuk }));
     return;
   }
   // Mollie meldt een statuswijziging met alleen het id; onbekende id's krijgen ook 200
