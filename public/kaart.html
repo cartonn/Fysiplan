@@ -132,6 +132,7 @@
   .leesrij button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 2px;border:0;background:none;
     font:600 .9375rem/1.2 var(--disp);color:var(--blauw);cursor:pointer}
   .leesrij button.aan{color:var(--inkt)}
+  .leesrij .stemnoot{flex-basis:100%;margin:0}
   .leesrij label{display:inline-flex;align-items:center;gap:6px;font:600 .9375rem/1 var(--disp);color:var(--grijs)}
   .leesrij select{min-height:44px;max-width:170px;font:600 .9375rem/1 var(--disp);color:var(--inkt);background:var(--bg);border:1px solid var(--rand);border-radius:10px;padding:0 8px}
   /* alles-in-één-tik: de hele kaart gedaan zonder elke oefening los af te vinken */
@@ -616,6 +617,7 @@
   .lightbox .lbknop{font:600 14px/1 var(--disp);color:#fff;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);
     padding:12px 20px;border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
   .lightbox .lbknop:active{background:rgba(255,255,255,.3)}
+  .lightbox .stemnoot{flex-basis:100%;margin:2px 0 0;text-align:center;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.6)}
   .lightbox .lbknop[aria-pressed="true"]{background:rgba(255,255,255,.92);color:#16130c}
   .lightbox .demowrap{background:#fff;border-radius:18px;padding:10px;cursor:default;max-width:100%}
   .lightbox .demobeeld{position:relative;overflow:hidden;border-radius:10px;background:#fff;
@@ -694,6 +696,7 @@
   <button type="button" class="kn1" id="startknop" style="display:none"></button>
   <div class="leesrij">
     <button type="button" id="leesBtn" style="display:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg><span id="leesTxt">Lees voor</span></button>
+    <p class="vmeta stemnoot" id="leesNoot" hidden>De stem is met AI gemaakt.</p>
     <label id="stemlabel" hidden>Stem <select id="stemsel" aria-label="Voorleesstem"><option value="">Automatisch</option></select></label>
   </div>
   <div id="oefs"></div>
@@ -833,7 +836,7 @@
     <button type="button" class="spijl" id="svolgende"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
   </div>
 </div>
-<div class="lightbox" id="lightbox" role="dialog" aria-label="vergrote oefenfoto"><button type="button" class="lbsluit" id="lbsluit" aria-label="Sluiten">×</button><div class="lbknoppen"><button type="button" class="lbknop" id="lbdemoKnop" aria-pressed="false" hidden></button><button type="button" class="lbknop" id="lbgeluid" aria-pressed="false" hidden></button></div><div class="lbfoto" id="lbfoto"><span class="fpmerk" aria-hidden="true">Fysiplan</span><span class="lbbeeld"><img id="lbimg" alt=""/><i class="merkdek" id="lbdek" hidden></i></span></div><div class="vtekst lbuitleg" id="lbuitleg" hidden></div><div class="demowrap" id="lbdemo" hidden></div><div class="lbnaam" id="lbnaam" dir="auto"></div></div>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="vergrote oefenfoto"><button type="button" class="lbsluit" id="lbsluit" aria-label="Sluiten">×</button><div class="lbknoppen"><button type="button" class="lbknop" id="lbdemoKnop" aria-pressed="false" hidden></button><button type="button" class="lbknop" id="lbgeluid" aria-pressed="false" hidden></button><p class="vmeta stemnoot" id="lbStemNoot" hidden>De stem is met AI gemaakt.</p></div><div class="lbfoto" id="lbfoto"><span class="fpmerk" aria-hidden="true">Fysiplan</span><span class="lbbeeld"><img id="lbimg" alt=""/><i class="merkdek" id="lbdek" hidden></i></span></div><div class="vtekst lbuitleg" id="lbuitleg" hidden></div><div class="demowrap" id="lbdemo" hidden></div><div class="lbnaam" id="lbnaam" dir="auto"></div></div>
 <div class="appbanner" id="appbanner"><img src="/images/icoon-192.png" alt=""/><span class="tekst" id="ab_tekst"></span><button type="button" class="doen" id="ab_doen"></button><button type="button" class="weg" id="ab_weg" aria-label="sluiten">×</button></div>
 <div class="fout" id="fout" style="display:none">
   <h1 id="fout_kop">Kaart niet gevonden</h1>
@@ -871,7 +874,8 @@
   // Dat de video met AI is gemaakt blijft erin staan (AI-verordening art. 50 lid 4), in alle negen talen.
   var VIDEO_META_CONCEPT={nl:'De video is met AI gemaakt en laat de algemene uitvoering zien. Volg daarnaast de dosering en opmerkingen van je behandelaar op.',en:'This video was made with AI and shows the general movement. Also follow the dosage and notes from your therapist.',de:'Das Video wurde mit KI erstellt und zeigt die allgemeine Ausführung. Halte dich außerdem an die Dosierung und die Hinweise deiner Therapeutin oder deines Therapeuten.',fr:'Cette vidéo a été créée avec l’IA et montre l’exécution générale. Suis aussi le dosage et les remarques de ton thérapeute.',es:'Este vídeo se ha creado con IA y muestra la ejecución general. Sigue además la dosis y las indicaciones de tu terapeuta.',pl:'Ten film został stworzony przy użyciu AI i pokazuje ogólne wykonanie. Stosuj się też do dawkowania i uwag swojego terapeuty.',tr:'Bu video yapay zekâ ile oluşturuldu ve genel uygulamayı gösterir. Ayrıca terapistinin belirlediği doz ve notlara uy.',ar:'أُنشئ هذا الفيديو بالذكاء الاصطناعي ويعرض طريقة الأداء العامة. اتبع كذلك الجرعة وملاحظات معالجك.',uk:'Це відео створено за допомогою ШІ, воно показує загальне виконання. Також дотримуйся дозування та зауважень свого терапевта.'};
   // Staat de luisterknop erbij (Nederlands), dan zegt één zin het voor stem en video samen.
-  var STEM_NOOT='De stem legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op.';
+  // De stem is altijd met AI gemaakt (HeyGen, vooraf opgenomen), ook zonder AI-video: AI-verordening art. 50 lid 4.
+  var STEM_NOOT='De stem is met AI gemaakt en legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op.';
   var STEM_VIDEO_NOOT='De stem en video zijn met AI gemaakt en leggen de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op.';
   function aiVideoNoot(meta){
     if(meta.clinicallyReviewed===true)return '<div class="vmeta">'+esc(VIDEO_META[TAAL]||VIDEO_META.nl)+'</div>';
@@ -2165,6 +2169,7 @@
     if(window.NoorAudio)NoorAudio.stop();
     if(window.speechSynthesis)speechSynthesis.cancel();
     bezigLezen=false;
+    toonStemNoot(false);
     var b=document.getElementById('leesBtn');
     b.classList.remove('aan');
     document.getElementById('leesTxt').textContent=TAAL==='nl'?'Luister naar uitleg':tr('lees');
@@ -2195,6 +2200,10 @@
   // Alleen op naam vergelijken laat een hernoemde oefening door de controle glippen.
   function uitlegGehouden(item){
     return explanationHolds.some(function(h){return (h.exerciseId&&item.id&&h.exerciseId===item.id)||h.name===item.name;});
+  }
+  // De AI-zin bij de stem als de knop per oefening (met zijn eigen zin) niet in beeld is.
+  function toonStemNoot(aan){
+    ['leesNoot','lbStemNoot'].forEach(function(id){var el=document.getElementById(id);if(el)el.hidden=!aan;});
   }
   function leesVoor(){
     if(!K)return;
@@ -2294,6 +2303,9 @@
     var request=noorRequest;
     bezigLezen=true;
     noorBron=bron;zetNoorKnop(noorKnop(bron),true);
+    // Zonder knop per oefening (bovenaan of in de vergroting) staat de AI-zin van die
+    // oefening niet in beeld; dan zegt een korte regel het zolang de stem speelt.
+    toonStemNoot(bron<0);
     document.getElementById('leesBtn').classList.add('aan');
     document.getElementById('leesBtn').setAttribute('aria-pressed','true');
     document.getElementById('leesTxt').textContent=tr('stop');

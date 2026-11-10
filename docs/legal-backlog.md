@@ -14,14 +14,26 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (d) code tegen tekst | 2026-11-09 05u (einde abonnement: wissen 30 dagen na het einde gebouwd) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-10 01u (vertaalcache hield namen van eigen oefeningen na "Alles wissen" en na verwijderen tot de volgende herstart; /privacy noemde de beheerderslogin op /v2/gegevens niet; download bevat geen geheimen, wel alle kaartvelden) |
 | (f) cookies en lokale opslag | 2026-11-09 21u (Cache Storage van /k: "Wis deze kaart" liet oefenbeelden en bibliotheek staan, opgelost; cookies en localStorage ongewijzigd sinds 8-11) |
-| (g) MDR en AI-verordening | 2026-11-09 01u (vraaghulp gaf mogelijk doseringsadvies: opgelost; videolabels AI-concept/klinisch gecontroleerd volgen de reviewstatus; landing en app zonder sorteer- of doseringsbelofte) |
+| (g) MDR en AI-verordening | 2026-11-10 13u (nieuwe patiëntkaart #162: de AI-stem bij oefeningen zonder AI-video en via de knop bovenaan/vergroting had geen AI-melding: opgelost; landing, app en kaart zonder diagnose-, doserings- of sorteerbelofte; vraaghulp-grens ongewijzigd) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
 | (i) begrijpelijkheid (B1) | 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (g) MDR, dan (d) code tegen tekst, dan (a) privacyverklaring. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (d) code tegen tekst, dan (a) privacyverklaring, dan (f) cookies. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **MIDDEL — MDR/AI-verordening (g) 2026-11-10 13u: de voorleesstem is met AI gemaakt, maar dat stond er niet altijd bij.**
+  De stem op /k ("Luister naar deze oefening", "Luister naar uitleg" bovenaan en in de vergroting) is vooraf gemaakt met
+  een AI-stemdienst (HeyGen, `public/audio/noor/manifest.json`). Alleen naast een AI-video zei de kaart "De stem en video
+  zijn met AI gemaakt". Bij een oefening zonder AI-video stond er "De stem legt de algemene uitvoering uit", zonder AI;
+  en de knop bovenaan en in de vergroting speelden de stem af terwijl de zin per oefening niet in beeld was (de nieuwe
+  kaart verbergt die in het overzicht). Een natuurlijk klinkende stem kan voor een echte opname van een mens doorgaan.
+  OPGELOST 2026-11-10 (deze PR): de zin bij de knop per oefening zegt nu altijd "De stem is met AI gemaakt"; bovenaan en
+  in de vergroting staat een korte regel zolang de stem speelt. De foutmelding noemt "Noor" niet meer als persoon.
+  Andere talen gebruiken de stem van het toestel (geen AI-melding nodig). Test `scripts/test-stem-ai-melding.mjs` (in
+  test:privacy en CI, faalt zonder fix). Bron: AI-verordening (EU) 2024/1689 art. 50 lid 4 en art. 3 punt 60 (deepfake),
+  van toepassing sinds 2 augustus 2026; consistent met Ahmeds keuze van 10-11 (één zin "met AI gemaakt" bij de video).
 
 - **MIDDEL — WGBO + code tegen tekst (2026-11-10 09u): de verdwijndatum klopte niet als de hele praktijk gewist wordt.**
   Fysiplan is geen dossier; de praktijk kopieert naar het EPD vóór een kaart verdwijnt. Het overzicht ("verloopt over
