@@ -15,7 +15,7 @@
   // dan eindeloos op "Stop" staan. Na een mislukte of verlopen poging begint de volgende
   // aanroep opnieuw; een te laat antwoord van de oude poging telt niet meer mee.
   var MANIFEST_WACHTTIJD=10000;
-  var GEEN_MANIFEST='Noor-audio is niet beschikbaar.';
+  var GEEN_MANIFEST='De voorleesstem is niet beschikbaar.';
   var MANIFEST_TRAAG='De natuurlijke stem laadt niet. Controleer je verbinding en probeer het opnieuw, of lees de uitleg op de kaart.';
   function load(){
     if(loading)return loading;
