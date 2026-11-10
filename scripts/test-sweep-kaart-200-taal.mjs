@@ -57,7 +57,8 @@ try {
   const ctx = await browser.newContext({ ...pw.devices["iPhone SE"], locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.7.9.2" } });
   const page = await ctx.newPage();
   await page.goto(origin + "/k/" + id, { waitUntil: "networkidle" });
-  await page.waitForSelector("#oefs .oef .chip");
+  // overzicht: korte dosering in de rij; de uitgeschreven dosering (.chip) staat in de oefenstand
+  await page.waitForSelector("#oefs .oef .dosis");
   // grote systeemtekst nagespeeld: elke lettergrootte verdubbeld
   await page.evaluate(() => {
     const els = [...document.querySelectorAll("body *")];
@@ -65,16 +66,23 @@ try {
     els.forEach((e, i) => { e.style.fontSize = (maten[i] * 2) + "px"; });
   });
   await wacht(200);
-  const r = await page.evaluate(() => {
+  const meet = () => page.evaluate(() => {
     const vw = window.innerWidth, uit = [];
-    for (const c of document.querySelectorAll("#oefs .oef .chip, #oefs .oef .naam")) {
+    for (const c of document.querySelectorAll("#oefs .oef .chip, #oefs .oef .dosis, #oefs .oef .naam")) {
       const oef = c.closest(".oef").getBoundingClientRect(), b = c.getBoundingClientRect();
       if (b.width && b.right > oef.right + 1) uit.push(c.textContent.trim() + " " + Math.round(b.right) + ">" + Math.round(oef.right));
     }
     return { vw, sw: document.documentElement.scrollWidth, uit };
   });
+  const r = await meet();
   assert.deepEqual(r.uit, [], "dosering en naam binnen de oefening");
   assert.ok(r.sw <= r.vw + 1, `geen pagina breder dan het scherm: ${r.sw} op ${r.vw}`);
+  // en in de oefenstand, waar de dosering groot en uitgeschreven staat
+  await page.click("#oefs .oef .oefinfo");
+  await page.waitForSelector("#oefs .oef.actief .chip");
+  const r2 = await meet();
+  assert.deepEqual(r2.uit, [], "oefenstand: dosering en naam binnen de oefening");
+  assert.ok(r2.sw <= r2.vw + 1, `oefenstand: geen pagina breder dan het scherm: ${r2.sw} op ${r2.vw}`);
   await ctx.close();
   // Engelse kaart, server weigert de pijnscore met een Nederlandse 429
   const en = await browser.newContext({ ...pw.devices["Pixel 7"], locale: "en-GB", extraHTTPHeaders: { "x-forwarded-for": "10.7.9.3" } });

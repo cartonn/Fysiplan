@@ -127,6 +127,19 @@ try {
   stap('kaart geladen', { oefenfotos: aantal, taal: await cdp.waarde('document.documentElement.lang||null') });
   verslag.screenshots.push(await cdp.foto('01-kaart.png'));
 
+  // De kaart opent als overzicht; vergroting, stemknop en video staan bij de oefening zelf.
+  // Eén tik op de rij opent de oefening, "Overzicht" sluit haar weer.
+  const openOefening = async (n) => {
+    await cdp.tik(`#oefs .oef:nth-of-type(${n}) .oefinfo`);
+    await wachtOp(() => cdp.waarde(`document.body.classList.contains('sessie')&&!!document.querySelector('#oefs .oef:nth-of-type(${n}).actief')`), 3000, 'oefening open');
+    await slaap(300);
+  };
+  const sluitOefening = async () => {
+    await cdp.waarde(`document.getElementById('sterug').click()`);
+    await wachtOp(() => cdp.waarde(`!document.body.classList.contains('sessie')`), 3000, 'oefening dicht');
+    await slaap(200);
+  };
+
   const oefeningen = await cdp.waarde(`[...document.querySelectorAll('#oefs .fotoknop img')].map(i=>({naam:i.dataset.audioNaam,pose:i.dataset.pose,src:i.getAttribute('src')}))`);
   verslag.oefeningen = oefeningen;
   const review = JSON.parse(await fs.readFile('public/mobile-media-review.json', 'utf8'));
@@ -135,6 +148,7 @@ try {
   let volgnummer = 2;
   for (const [i, oef] of oefeningen.entries()) {
     const regel = goedgekeurd.get(oef.pose);
+    await openOefening(i + 1);
     await cdp.tik(`#oefs .oef:nth-of-type(${i + 1}) .fotoknop`);
     await wachtOp(() => cdp.waarde(`document.getElementById('lightbox').classList.contains('open')`), 5000, 'vergroting open');
     if (!regel) {
@@ -186,11 +200,13 @@ try {
     await cdp.stuur('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27 });
     await cdp.stuur('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27 });
     await wachtOp(() => cdp.waarde(`!document.getElementById('lightbox').classList.contains('open')`), 3000, 'vergroting dicht');
+    await sluitOefening();
   }
 
   // Stemopname: een echte tik op "Luister naar Noor" bij de eerste oefening die er een heeft
   const noorIndex = await cdp.waarde(`(()=>{const b=document.querySelector('#oefs [data-noor]');return b?Number(b.dataset.noor):-1})()`);
   if (noorIndex >= 0) {
+    await openOefening(noorIndex + 1);
     const t0 = Date.now();
     await cdp.tik(`#oefs [data-noor="${noorIndex}"]`);
     await wachtOp(() => cdp.waarde(`document.getElementById('leesBtn').getAttribute('aria-pressed')==='true'`), 3000, 'afspelen gestart');

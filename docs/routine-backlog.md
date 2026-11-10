@@ -54,14 +54,25 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
-### Mobiele doorloop patiëntkaart 2026-11-10 (thread "Verbeter de mobiele ervaring voor patiënten", test:patientmobiel)
-- **OPGELOST — /k: uitleg alleen in de lightbox.** Nu "Zo doe je het" (inklapbaar) bij elke oefening, 9 talen.
-- **OPGELOST — /k: lijntekening op de telefoon** bij een oefening zonder avatar. Nu alleen `kaartImg`; zonder avatar geen beeld.
-- **OPGELOST — /k: "Zet op beginscherm"-balk na 2,5 s over de oefeningen.** Komt pas na het eerste afvinken of een score.
-- **OPGELOST — tikdoelen /k:** "Te zwaar?", "Alles gedaan", taal/AA, weekdagen en tijdveld minstens 44 px.
-- **OPGELOST — /k contrast `--zacht`** nu 4,5:1 of hoger (licht #6f6a5a, donker #9a9384).
-- Ook: stemzin één keer boven de lijst, knop "Luister naar deze oefening", Print/Deel onderaan, schema ingeklapt (print uitgeklapt), "30 sec" zonder "herhalingen".
-- Nog open (voorstel in projectmap patient-mobiel/voorstel.md): pijnschaal en doelactiviteit beter onderscheiden, één afvinkroute, rem-letters, onderbalk.
+### Herontwerp patiëntkaart 2026-11-10 (thread "Verbeter de mobiele ervaring voor patiënten", test:patientmobiel)
+De kaart /k heeft nu twee standen met dezelfde oefeningen (zelfde DOM, zelfde knoppen):
+- **Overzicht:** datum, "Jouw oefeningen", doel, voortgang, één knop "Begin met oefenen", korte rijen (avatar, naam, "3 × 10",
+  vinkje). Daaronder "Hoe ging het vandaag?" (pijnscore eerst), contact (afspraak, seintjes, bellen) en "Meer" (agenda, schema,
+  Mijn gegevens, Print/Deel).
+- **Oefenstand (`body.sessie`):** één oefening per scherm met groot beeld, dosering in grote cijfers, stemknop, "Zo doe je het"
+  per zin, "Te zwaar?" en de pijnregel; onderin vast "Gedaan" met vorige/volgende. Na de laatste oefening sta je bij de pijnvraag.
+  De terugknop van de telefoon sluit de oefening (eerst het grote beeld), niet de kaart.
+- Wie een test voor /k schrijft: stemknop, video, "Te zwaar?" en uitleg zijn in het overzicht verborgen; open eerst de oefening
+  (`#startknop` of een tik op de rij).
+- **OPGELOST — /k: uitleg alleen in de lightbox.** Staat nu bij de oefening zelf, 9 talen.
+- **OPGELOST — /k: lijntekening op de telefoon** bij een oefening zonder avatar. Nu alleen `kaartImg`; zonder avatar het volgnummer.
+- **OPGELOST — /k: "Zet op beginscherm"-balk na 2,5 s over de oefeningen.** Komt pas na de pijnscore of "Ik heb vandaag geoefend",
+  nooit over de oefenstand.
+- **OPGELOST — tikdoelen /k** minstens 44 px (pijncijfers op 320 px: 41 breed, 52 hoog).
+- **OPGELOST — /k: letters in px.** Alles in rem (behalve het grote beeld/lightbox); schaalt mee met de telefooninstelling.
+- **OPGELOST — /k: lange pagina zonder houvast.** Vier blokken met één hoofdknop; drie afvinkroutes zijn er nog, maar de oefenstand
+  is de hoofdroute en "Ik heb vandaag geoefend" gaat vanzelf aan als alles is afgevinkt.
+- Nog open: "Ik heb een vraag" met vrije tekst (productkeuze, MDR) en de juridische tekst in het grote beeld (legal).
 
 
 ### Sweep 2026-11-10 06u

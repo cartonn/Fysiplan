@@ -86,6 +86,9 @@ try {
       await page.goto(origin + "/k/" + id + (taal ? "?taal=" + taal : ""), { waitUntil: "networkidle" });
       const foto = page.locator("#oefs .oef img").first();
       await foto.waitFor();
+      // eerste tik opent de oefening, een tik op het grote beeld daarna de vergroting
+      await foto.click();
+      await page.waitForSelector("body.sessie #oefs .oef.actief img");
       await foto.click();
       await page.waitForSelector("#lightbox.open");
       await wacht(400);

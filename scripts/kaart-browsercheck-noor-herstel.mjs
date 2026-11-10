@@ -162,6 +162,10 @@ try {
   check('stop: knoppen niet gelijk aan gewone lading', JSON.stringify(naStop.knoppen) === JSON.stringify(ref.knoppen) && naStop.uniek);
   verslag.scenarios.stopTijdensPoging = { hersteld: herstelStop.knoppen, opnameAanvragen: mp3.length, knopBovenaan: naStop.stand, meldingenNaStop: dialogen.length - meldingenVoor, paginafouten: fouten.slice() };
   // een herstelde knop werkt: tik de eerste en de opname start
+  // de stemknop staat bij de oefening zelf: eerst de oefening openen vanuit het overzicht
+  await cdp.tik(`#oefs .oef[data-oidx="${ref.knoppen[0]}"] .oefinfo`);
+  await wachtOp(() => cdp.waarde(`document.body.classList.contains('sessie')`), 3000, 'oefening open');
+  await slaap(300);
   await cdp.tik(`#oefs [data-noor="${ref.knoppen[0]}"]`);
   await wachtOp(() => mp3.length > 0, 5000, 'herstelde knop speelt af');
   verslag.scenarios.stopTijdensPoging.hersteldeKnopSpeelt = true;

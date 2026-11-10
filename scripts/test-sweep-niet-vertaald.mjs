@@ -61,6 +61,9 @@ try {
   await foto.waitFor({ timeout: 15000 });
   const nl = await foto.getAttribute("data-uitleg");
   assert.ok(nl && nl.length > 20, "oefening heeft een echte uitleg");
+  // eerste tik opent de oefening, een tik op het grote beeld daarna de vergroting
+  await foto.click();
+  await p.waitForSelector("body.sessie .oef.actief img", { timeout: 8000 });
   await foto.click();
   await p.waitForSelector("#lightbox.open", { timeout: 8000 });
   // de demo start vanzelf als de foto te splitsen is; anders staat de uitleg onder de foto

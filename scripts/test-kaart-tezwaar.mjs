@@ -67,6 +67,9 @@ try {
       ? route.fulfill({ status: fout, contentType: "application/json", body: "{}" })
       : route.continue());
     await page.goto(origin + "/k/a1b2c3d4e5f6");
+    // "Te zwaar?" staat bij de oefening zelf: eerst de oefening openen vanuit het overzicht
+    const open = async () => { await page.click('#oefs .oef[data-oidx="0"] .oefinfo', { timeout: 15000 }); };
+    await open();
     await page.waitForSelector("#oefs .oefzwaar[data-zidx='0']", { timeout: 15000 });
     const knop = "#oefs .oefzwaar[data-zidx='0']";
     await page.click(knop);
@@ -79,6 +82,7 @@ try {
     await page.waitForFunction((s) => /Doorgegeven/.test(document.querySelector(s).textContent), knop, { timeout: 5000 });
     assert.equal(await page.isDisabled(knop), true);
     await page.reload();
+    await open();
     await page.waitForSelector(knop);
     assert.match(await page.textContent(knop), /Doorgegeven/, "na herladen nog steeds doorgegeven");
     await ctx.close();

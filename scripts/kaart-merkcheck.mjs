@@ -132,7 +132,42 @@ try {
     if (n > 0) verslag.fouten.push('blauwe merkstip zichtbaar op miniatuur: ' + m.naam);
   }
 
+  // De kaart opent als overzicht; het grote beeld en de vergroting staan bij de oefening zelf.
+  const openOefening = async (n) => {
+    await cdp.tik(`#oefs .oef:nth-of-type(${n}) .oefinfo`);
+    await wachtOp(() => cdp.waarde(`document.body.classList.contains('sessie')&&!!document.querySelector('#oefs .oef:nth-of-type(${n}).actief')`), 3000, 'oefening open');
+    await slaap(400);
+  };
+  const sluitOefening = async () => {
+    await cdp.waarde(`document.getElementById('sterug').click()`);
+    await wachtOp(() => cdp.waarde(`!document.body.classList.contains('sessie')`), 3000, 'oefening dicht');
+    await slaap(250);
+  };
+
+  // 1b. hetzelfde beeld groot in de oefenstand: het afdekvlak is opnieuw gemeten, geen blauwe stip
+  for (const [k, m] of minis.entries()) {
+    await openOefening(k + 1);
+    const g = await cdp.waarde(`(()=>{const i=document.querySelector('#oefs .oef.actief .fotoknop img');const r=i.getBoundingClientRect();
+      return {dek:!!i.parentNode.querySelector('.merkdek'),r:{x:r.x,y:r.y,w:r.width,h:r.height}};})()`);
+    const png = await schot(cdp);
+    if (k === 0) await fs.writeFile(path.join(UIT, '01b-oefening.png'), png);
+    const n = await blauw(png, { x: g.r.x, y: g.r.y, w: g.r.w * 0.5, h: g.r.h * 0.3 });
+    const metMerk = !!(review.entries.find(e => e.exerciseId + '|' + e.source === m.pose)?.brandMark?.cover);
+    stap('oefenstand ' + m.naam, { ingebakkenMerk: metMerk, afgedekt: g.dek, blauwLinksboven: n, breedte: Math.round(g.r.w) });
+    if (metMerk !== g.dek) verslag.fouten.push('afdekking in de oefenstand klopt niet: ' + m.naam);
+    if (n > 0) verslag.fouten.push('blauwe merkstip zichtbaar in de oefenstand: ' + m.naam);
+    if (g.r.w < 120) verslag.fouten.push('beeld in de oefenstand is niet groot: ' + m.naam);
+    await sluitOefening();
+    // terug in de lijst moet het afdekvlak weer op de miniatuur passen
+    const terug = await cdp.waarde(`(()=>{const i=document.querySelectorAll('#oefs .fotoknop img')[${k}];i.scrollIntoView({block:'center'});const r=i.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}})()`);
+    await slaap(200);
+    const r2 = await cdp.waarde(`(()=>{const r=document.querySelectorAll('#oefs .fotoknop img')[${k}].getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}})()`);
+    const n2 = await blauw(await schot(cdp), { x: r2.x, y: r2.y, w: r2.w * 0.5, h: r2.h * 0.3 });
+    if (n2 > 0) verslag.fouten.push('blauwe merkstip terug op de miniatuur na het sluiten: ' + m.naam);
+  }
+
   // 2. houdingen: zelfde merk, niet over het figuur
+  await openOefening(1);
   await cdp.tik('#oefs .oef:nth-of-type(1) .fotoknop');
   await wachtOp(() => cdp.waarde(`!document.getElementById('lbdemo').hidden&&document.querySelectorAll('#lbdemo canvas').length===2`), 10000, 'houdingen');
   const pose = await cdp.waarde(`(()=>{const m=document.querySelector('#lbdemo .demomerk').getBoundingClientRect();
@@ -147,11 +182,13 @@ try {
   if (pose.breedte < 50) verslag.fouten.push('merk bij houdingen mist icoon of tekst');
   await cdp.tik('#lbdemoKnop'); await slaap(200);
   await cdp.tik('#lbnaam'); await slaap(300);
+  await sluitOefening();
 
   // 3. vergrote foto's van statische beelden, met en zonder ingebakken merk
   const pad0 = await cdp.waarde(`document.querySelector('#oefs .fotoknop img').getAttribute('src')`);
   const voorvoegsel = pad0.startsWith('/v2/') ? '/v2/' : '/';
   let nr = 3;
+  await openOefening(2);
   for (const naam of ['Front raises', 'Barbell neck press', 'Yoga deep squat', 'Foam roller calf', 'Seated biceps curl']) {
     const e = regel(naam);
     await cdp.waarde(`(()=>{const i=document.querySelector('#oefs .oef:nth-of-type(2) .fotoknop img');

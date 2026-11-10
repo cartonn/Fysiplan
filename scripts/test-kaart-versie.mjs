@@ -109,6 +109,8 @@ try {
     assert.ok(cs, "Chair squat staat op de kaart: " + JSON.stringify(info));
     if (!cs.controle) console.log("test-kaart-versie: let op, Chair squat is niet (meer) in controle; check op eigen video blijft gelden");
     assert.equal(cs.eigen, "/" + pad, "eigen video van de therapeut blijft zichtbaar: " + JSON.stringify(cs));
+    // de videoknop staat bij de oefening zelf: eerst de oefening openen vanuit het overzicht
+    await page.locator(".oef", { has: page.locator(".vbtn.eigen") }).locator(".oefinfo").click();
     await page.click(".vbtn.eigen");
     assert.equal(await page.locator(".vhouder.open video").count(), 1, "video speelt");
     await ctx.close();
