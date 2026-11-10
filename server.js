@@ -2271,6 +2271,18 @@ const denied = (req, res, pad, melding = "Alleen beschikbaar voor beheer.") => {
   if (opRem) return send429(res, 300, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
   return sendJson(res, 403, { ok: false, fout: melding });
 };
+// Inlogrem per IP: denied() telt elke foute inlogpoging (wachtwoord, herstelcode) in
+// dezelfde teller als foute beheersleutels. Staat een IP op die rem, dan komt ook een
+// goed wachtwoord niet binnen; anders veranderde de rem alleen het antwoord (429 in
+// plaats van 403) en kon één IP over alle praktijknamen blijven raden (security 2026-11-10).
+async function inlogOpRemIp(req, res) {
+  if (!beheerOpRem(req)) return false;
+  logGeweigerd(req, "inlog-rem");
+  await send429(res, 300, { ok: false, fout: "Te veel foute pogingen vanaf deze verbinding; probeer het over een paar minuten opnieuw." });
+  return true;
+}
+// voor de scriptloze formulieren die zelf een pagina terugsturen: tel een foute poging
+function telInlogMisIp(req, pad) { logGeweigerd(req, pad); telBeheerMis(req); }
 
 // foutlog zonder kaartlinks: de query (bv. ?id=<kaart-id>) en id's in /k/, /o/ en
 // /api/kaart/ zijn sleutels tot een kaart en horen niet in de logs van de hoster
@@ -2808,6 +2820,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/praktijk/login" && request.method === "POST") {
     if (schrijfLimiet(request, response)) return;
     if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (await inlogOpRemIp(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request));
       // eigen login: e-mail + wachtwoord van het lid. Werkt iemand bij twee praktijken
@@ -3137,6 +3150,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/praktijk/herstel" && request.method === "POST") {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     if (schrijfLimiet(request, response)) return;
+    if (await inlogOpRemIp(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request));
       const nk = cleanName(b.praktijk, 80).toLowerCase();
@@ -3558,6 +3572,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/v1/login" && request.method === "POST") {
     if (schrijfLimiet(request, response)) return;
     if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (await inlogOpRemIp(request, response)) return;
     try {
       const b = JSON.parse(await readBody(request));
       const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
@@ -5874,6 +5889,7 @@ async function afhandelen(request, response) {
       V_OV_EMAIL: cleanName(b.email, 120),
       OVERZICHT_FOUT_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }), status);
     if (nk && loginOpSlot(nk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
+    if (beheerOpRem(request)) { await opnieuw("Te veel foute pogingen vanaf deze verbinding; probeer het over een paar minuten opnieuw.", 429); return; }
     // met eigen login: e-mail + eigen wachtwoord van een actief lid (alleen lezen, dus elke
     // rol). Anders bleef het overzicht dicht zodra het gedeelde praktijkwachtwoord uit stond.
     const em = normEmail(b.email);
@@ -5887,6 +5903,7 @@ async function afhandelen(request, response) {
     }
     if (!pk) {
       loginMisTel(nk || "?");
+      telInlogMisIp(request, "proef-overzicht");
       auditLog(accountsMetNaam(nk)[0] || nk || "?", "overzicht-na-proef-mislukt", request);
       await opnieuw(em ? "Die praktijknaam, dat e-mailadres en dat wachtwoord horen niet bij elkaar." : "Die praktijknaam en dat wachtwoord horen niet bij elkaar. Werk je met een eigen login? Vul dan ook je e-mail in.", 403);
       return;
@@ -6001,6 +6018,7 @@ async function afhandelen(request, response) {
     const opnieuw = (fout, status) => serveerProef(request, response, "gegevens", { TITEL: "Gegevens van je praktijk",
       V_PRAKTIJK: cleanName(b.praktijk, 80), MELDING_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }, status);
     if (nk && loginOpSlot(nk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
+    if (beheerOpRem(request)) { await opnieuw("Te veel foute pogingen vanaf deze verbinding; probeer het over een paar minuten opnieuw.", 429); return; }
     // met eigen login: e-mail + wachtwoord van een beheerder van die praktijk. Zo blijft
     // downloaden en wissen mogelijk nadat het gedeelde praktijkwachtwoord uit staat.
     const em = normEmail(b.email);
@@ -6015,6 +6033,7 @@ async function afhandelen(request, response) {
     const acc = pk ? praktijkAccounts[pk] : null;
     if (!acc) {
       loginMisTel(nk || "?");
+      telInlogMisIp(request, wissen ? "gegevens-wissen" : "gegevens-download");
       auditLog(accountsMetNaam(nk)[0] || nk || "?", wissen ? "alles-wissen-mislukt" : "download-mislukt", request);
       await opnieuw(em ? "Dat e-mailadres en wachtwoord horen niet bij een beheerder van deze praktijk. Alleen een beheerder kan hier downloaden of wissen."
         : "Die praktijknaam en dat wachtwoord horen niet bij elkaar. Alleen een beveiligde praktijk kan hier downloaden of wissen. Werkt je praktijk met eigen logins? Vul dan ook je e-mail in.", 403);
