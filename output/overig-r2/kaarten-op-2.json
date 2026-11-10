@@ -1,0 +1,219 @@
+{
+ "kaarten": [
+  {
+   "naam": "Hersenschudding: evenwicht deel 3",
+   "categorie": "Neurologie en duizeligheid",
+   "sub": "Je evenwicht verder uitdagen op één been, met ogen dicht en met hoofd- en oogbewegingen.",
+   "oefeningen": [
+    "Eenbeenstand – zonder steun",
+    "Voet naar marker – met visueel doel",
+    "Eenbeenstand – ogen dicht",
+    "Eenbeenstand – met hoofdbeweging",
+    "Eenbeenstand – duim volgen met je ogen"
+   ],
+   "dosering": {
+    "s": "3",
+    "h": "30 sec"
+   },
+   "actie": "aanvullen",
+   "was": 2,
+   "toegevoegd": [
+    "Eenbeenstand – ogen dicht",
+    "Eenbeenstand – met hoofdbeweging",
+    "Eenbeenstand – duim volgen met je ogen"
+   ]
+  },
+  {
+   "naam": "Balans: niveau 3",
+   "categorie": "Ouderen en balans",
+   "sub": "Balans oefenen op een smalle basis terwijl je je hoofd beweegt, in stand en tijdens het lopen.",
+   "oefeningen": [
+    "Eenbeenstand – met hoofdbeweging",
+    "Voet voor voet lopen – met hoofd draaien",
+    "Tandemstand – met hoofdbeweging",
+    "Voet voor voet lopen – met hoofd knikken",
+    "Eenbeenstand – op een balanskussen"
+   ],
+   "dosering": {
+    "s": "3",
+    "h": "30 sec"
+   },
+   "actie": "aanvullen",
+   "was": 2,
+   "toegevoegd": [
+    "Tandemstand – met hoofdbeweging",
+    "Voet voor voet lopen – met hoofd knikken",
+    "Eenbeenstand – op een balanskussen"
+   ]
+  },
+  {
+   "naam": "Schouderbladcontrole fase 3",
+   "categorie": "Schouder",
+   "sub": "Je schouderblad stabiel houden terwijl je steunt, duwt en trekt met meer belasting.",
+   "oefeningen": [
+    "Schouderbladen plat in ruglig – arm heffen",
+    "Leunen op je handen aan tafel",
+    "Schouderbladen laten zakken en duwen – handen en knieën",
+    "Serratus punch – met elastiek",
+    "Opdrukken tegen de muur",
+    "W-roeien – buiklig op een bank met halters"
+   ],
+   "dosering": {
+    "s": "3",
+    "h": "10"
+   },
+   "actie": "aanvullen",
+   "was": 2,
+   "toegevoegd": [
+    "Schouderbladen laten zakken en duwen – handen en knieën",
+    "Serratus punch – met elastiek",
+    "Opdrukken tegen de muur",
+    "W-roeien – buiklig op een bank met halters"
+   ]
+  },
+  {
+   "naam": "Herstel na covid: uithoudingsvermogen, late fase",
+   "categorie": "Hart, vaten en longen",
+   "sub": "Je conditie verder opbouwen met langer wandelen, fietsen en stappen.",
+   "oefeningen": [
+    "Stevig doorwandelen – buiten",
+    "Fiets",
+    "Loopband",
+    "Step-up – op verhoging"
+   ],
+   "dosering": {
+    "s": "1",
+    "h": "15 min"
+   },
+   "actie": "aanvullen",
+   "was": 1,
+   "toegevoegd": [
+    "Fiets",
+    "Loopband",
+    "Step-up – op verhoging"
+   ]
+  },
+  {
+   "naam": "Ademhaling: rustig ademen door de neus",
+   "categorie": "Hart, vaten en longen",
+   "sub": "Rustig en laag ademen door je neus, met een oefening om je neus vrij te maken.",
+   "oefeningen": [
+    "Om en om door één neusgat ademen – zittend",
+    "Nek strekken – zittend actief",
+    "Diafragma-ademhaling – zittend",
+    "Lippenremademhaling – zittend"
+   ],
+   "dosering": {
+    "s": "1",
+    "h": "10"
+   },
+   "actie": "aanvullen",
+   "was": 2,
+   "toegevoegd": [
+    "Diafragma-ademhaling – zittend",
+    "Lippenremademhaling – zittend"
+   ]
+  },
+  {
+   "naam": "Been: rekken bij beperkte beweeglijkheid (neurologisch)",
+   "categorie": "Neurologie en duizeligheid",
+   "sub": "Heup, achterkant bovenbeen en kuit rustig op lengte houden als je been stijf aanvoelt.",
+   "oefeningen": [
+    "Knie naar borst – liggend",
+    "Voorkant heup rekken – been over de bedrand",
+    "Knie strekken met heup gebogen – ruglig",
+    "Hamstring en kuit rekken – ruglig met band",
+    "Kuit rekken – langzit met handdoek"
+   ],
+   "dosering": {
+    "s": "3",
+    "h": "30 sec"
+   },
+   "actie": "aanvullen",
+   "was": 2,
+   "toegevoegd": [
+    "Knie strekken met heup gebogen – ruglig",
+    "Hamstring en kuit rekken – ruglig met band",
+    "Kuit rekken – langzit met handdoek"
+   ]
+  }
+ ],
+ "overgeslagen": [
+  {
+   "naam": "Kind: klompvoet",
+   "reden": "Kinderkaart; bovendien 0 oefeningen (alles weggelaten)."
+  },
+  {
+   "naam": "Ademhaling: slijm loshalen",
+   "reden": "0 oefeningen; de ademtechnieken zijn weggelaten (geen zichtbare beweging) en er is geen passende vervanging in de catalogus."
+  },
+  {
+   "naam": "Hersenschudding: evenwicht deel 2 (ook: Duizeligheid na hersenschudding: balans / Hersenschudding (evenwicht) deel 2)",
+   "reden": "Al opgelost: staat met 3 oefeningen in Fysiplan-neuro/output/neuro/kaarten.json."
+  },
+  {
+   "naam": "Hersenschudding: nek deel 2",
+   "reden": "Al opgelost: staat met 3 oefeningen in neuro/kaarten.json."
+  },
+  {
+   "naam": "Hoofdpijn met nek/schouder fase 1",
+   "reden": "Al opgelost: staat met 4 oefeningen in arm/kaarten.json."
+  },
+  {
+   "naam": "Balans: lopen en hoofd draaien",
+   "reden": "Zelfde sjabloon als 'Balans: niveau 3'; daar aangevuld, niet dubbel."
+  },
+  {
+   "naam": "Enkel: artrose",
+   "reden": "Al opgelost: 'Enkelartrose' staat met 3 oefeningen in voet-enkel/kaarten.json."
+  },
+  {
+   "naam": "Hamstring fase 2",
+   "reden": "Al opgelost: 'Knie: hamstringklachten fase 2' staat met 3 oefeningen in knie/kaarten.json."
+  },
+  {
+   "naam": "Enkelletsel fase 3",
+   "reden": "Al opgelost: 'Enkel na acuut letsel fase 3' staat met 4 oefeningen in voet-enkel/kaarten.json."
+  },
+  {
+   "naam": "Enkel na acuut letsel fase 2",
+   "reden": "Al opgelost: staat met 5 oefeningen in voet-enkel/kaarten.json."
+  },
+  {
+   "naam": "Voetbreuk",
+   "reden": "Al opgelost: staat met 6 oefeningen in voet-enkel/kaarten.json."
+  },
+  {
+   "naam": "Zwangerschap: eerste trimester",
+   "reden": "Al opgelost: staat met 3 oefeningen in overig/kaarten.json."
+  },
+  {
+   "naam": "Ademhaling na covid: vroege fase / late fase",
+   "reden": "Al opgelost: samengevoegd tot 'Herstel na covid: ademhalen (vroege en late fase)' (3) in overig/kaarten.json."
+  },
+  {
+   "naam": "Ontspanning: hele lichaam",
+   "reden": "Al opgelost: staat met 3 oefeningen in overig/kaarten.json."
+  },
+  {
+   "naam": "Sport: hamstring verlengen",
+   "reden": "Al opgelost: zelfde sjabloon staat als 'Hamstring: verlengen' (3) in heup/kaarten.json."
+  },
+  {
+   "naam": "Knie: knieprothese fase 1",
+   "reden": "Al opgelost: staat met 3 oefeningen in knie/kaarten.json."
+  },
+  {
+   "naam": "Knie: meniscus na operatie",
+   "reden": "Al opgelost: staat met 3 oefeningen in knie/kaarten.json."
+  },
+  {
+   "naam": "Heup: totale heupprothese fase 1",
+   "reden": "Al opgelost: zelfde sjabloon staat als 'Heupprothese fase 1' (3) in heup/kaarten.json."
+  },
+  {
+   "naam": "Bovenrug: ademen en bewegen",
+   "reden": "Al opgelost: zelfde sjabloon staat als 'Ademhaling: basis' (3) in rug-nek/kaarten.json; aanvullen zou dezelfde kaart opleveren."
+  }
+ ]
+}

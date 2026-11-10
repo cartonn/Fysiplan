@@ -1,0 +1,300 @@
+[
+ {
+  "naam": "Losmaken voor je begint",
+  "categorie": "Warming-up",
+  "sub": "Maak je schouders, romp en benen in een paar minuten soepel en warm voordat je gaat werken of sporten.",
+  "oefeningen": [
+   "Armen in- en uitdraaien – staand",
+   "Romp draaien – staand",
+   "Zijwaarts rekken met arm boven het hoofd – staand",
+   "Schouder rekken – arm achter de rug langs trekken",
+   "Arm zijwaarts langzaam laten zakken – staand (excentrisch)",
+   "Romp voorover buigen – staand",
+   "Binnenkant bovenbeen rekken – zijwaarts uitstappen",
+   "Knie buigen – staand met steun",
+   "Squat jumps"
+  ],
+  "dosering": {
+   "s": "1",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Balans – stevig leren staan",
+  "categorie": "Balans",
+  "sub": "Eerste stap: je gewicht verplaatsen en om je heen kijken terwijl je stevig blijft staan.",
+  "oefeningen": [
+   "Kuitheffing – staand met steun",
+   "Romp draaien – staand",
+   "Gewicht verplaatsen zijwaarts – met steun",
+   "Semi-tandemstand – met steun",
+   "Voeten naast elkaar staan – zonder steun"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Balans – bewegen met een taak",
+  "categorie": "Balans",
+  "sub": "Tweede stap: je balans houden terwijl je loopt, stapt of iets met een bal doet.",
+  "oefeningen": [
+   "Staan op een balansmat – met steun dichtbij",
+   "Over een step heen stappen",
+   "Bal tegen de muur schoppen – staand",
+   "Lopen en een bal om je middel doorgeven",
+   "Tandemstand – zonder steun"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Balans – uitdaging op één been",
+  "categorie": "Balans",
+  "sub": "Derde stap: op één been blijven staan terwijl je ook nog iets anders doet.",
+  "oefeningen": [
+   "Kruispas zijwaarts",
+   "Bal rond je standbeen rollen – staand",
+   "Eenbeenstand – bal tegen de muur gooien",
+   "Eenbeenstand – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Vallen voorkomen – kracht en balans",
+  "categorie": "Valpreventie",
+  "sub": "Sterkere benen en een betere balans, zodat je zekerder loopt en opstaat.",
+  "oefeningen": [
+   "Knie strekken – met elastiek",
+   "Sit-to-stand – zittend",
+   "Op je hakken lopen",
+   "Op je tenen lopen",
+   "Kuitheffing – staand met steun",
+   "Tandemstand – met steun"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Onderrug in beweging achter je bureau",
+  "categorie": "Werkplek",
+  "sub": "Korte oefeningen op je stoel om je onderrug los te houden tijdens beeldschermwerk.",
+  "oefeningen": [
+   "Bil om de beurt optillen – zittend",
+   "Bekken kantelen – zittend",
+   "Rug bol en hol – zittend",
+   "Romp draaien – zittend"
+  ],
+  "dosering": {
+   "s": "1",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Bovenrug sterk en soepel op het werk",
+  "categorie": "Werkplek",
+  "sub": "Tegenwicht voor lang voorovergebogen zitten: je bovenrug strekken, draaien en sterker maken.",
+  "oefeningen": [
+   "Thoracale extensie – zittend",
+   "Open boek – zittend",
+   "Grasmaaier – roeien met romp draaien",
+   "Voorovergebogen roeien – staand op elastiek"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Pijn tussen de schouderbladen voorkomen",
+  "categorie": "Rug",
+  "sub": "Rekken en strekken van je middenrug als je veel aan een bureau zit.",
+  "oefeningen": [
+   "Bovenrug rekken – handen gevouwen naar voren",
+   "Thoracale extensie – zittend",
+   "Open boek – zittend",
+   "Schouderblad naar achteren – actief"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Circuit voor je hele lichaam",
+  "categorie": "Algemene fitheid",
+  "sub": "Een rondje met oefeningen voor benen, romp, rug en armen; doe ze achter elkaar met korte pauzes.",
+  "oefeningen": [
+   "Squat",
+   "Brug op de tenen – ruglig",
+   "W-roeien – buiklig op een bank met halters",
+   "Handen uitlopen naar plank en opdrukken"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Kracht voor je hele lichaam",
+  "categorie": "Algemene fitheid",
+  "sub": "Basisoefeningen om benen, buik en armen sterker te maken.",
+  "oefeningen": [
+   "Squat",
+   "Brug – liggend",
+   "Bicycles buik",
+   "Biceps curl",
+   "Push up"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Rompstabiliteit onderrug – vervolg",
+  "categorie": "Rug",
+  "sub": "Je buik- en heupspieren sterker maken zonder je onderrug hol te trekken.",
+  "oefeningen": [
+   "Dead bug – liggend",
+   "Crunch",
+   "Clamshell – met elastiek",
+   "Heup buigen – met elastiek",
+   "Bird dog – op handen en knieën"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie na kruisbandoperatie – eerste weken",
+  "categorie": "Knie",
+  "sub": "Je bovenbeenspieren weer leren aanspannen en je knie rustig laten buigen en strekken.",
+  "oefeningen": [
+   "Quadriceps aanspannen – liggend",
+   "Straight leg raise – liggend",
+   "Knie buigen – liggend",
+   "Enkelpomp – ruglig"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie na kruisbandoperatie – kracht en controle",
+  "categorie": "Knie",
+  "sub": "Zwaardere beenoefeningen waarbij je knie netjes boven je voet blijft.",
+  "oefeningen": [
+   "Squat – met elastiek om de knieën",
+   "Heupscharnier – functioneel op één been",
+   "Split squat – staand met steun",
+   "Step-down – op verhoging",
+   "Landing op twee benen – techniek langzaam"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hamstring herstel – rustige opbouw",
+  "categorie": "Bovenbeen",
+  "sub": "De achterkant van je bovenbeen weer belasten met lichte kracht.",
+  "oefeningen": [
+   "Hiel in de grond drukken – ruglig (zonder bewegen)",
+   "Brug – liggend",
+   "Hamstring curl – liggend",
+   "Squat"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hamstring herstel – sterk en lang",
+  "categorie": "Bovenbeen",
+  "sub": "Zware, remmende kracht voor je hamstrings, als voorbereiding op sprinten en sport.",
+  "oefeningen": [
+   "Heupscharnier – functioneel op één been",
+   "Brug op één been – voet op een step",
+   "Hamstring curl – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "6"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Conditiecircuit – in beweging blijven",
+  "categorie": "Conditie",
+  "sub": "Wissel deze oefeningen af in een rustig, gelijkmatig tempo om je conditie op te bouwen.",
+  "oefeningen": [
+   "Step aantikken met je tenen – om en om",
+   "Marcheren – interval kort",
+   "Zijwaarts stappen – interval kort",
+   "Sit-to-stand – zittend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "15"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Ontspannen van top tot teen",
+  "categorie": "Ontspanning",
+  "sub": "Span een spiergroep kort aan en laat weer los, in combinatie met een rustige buikademhaling.",
+  "oefeningen": [
+   "Diafragma-ademhaling – zittend",
+   "Schouderblad liften en ontspannen – zittend actief",
+   "Billen aanspannen – ruglig",
+   "Quadriceps aanspannen – liggend"
+  ],
+  "dosering": {
+   "s": "1",
+   "h": "5"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Rustig ademen door je neus",
+  "categorie": "Ademhaling",
+  "sub": "Oefen een rustige, lage ademhaling en ademen door je neus.",
+  "oefeningen": [
+   "Diafragma-ademhaling – zittend",
+   "Om en om door één neusgat ademen – zittend",
+   "Lippenremademhaling – zittend"
+  ],
+  "dosering": {
+   "s": "1",
+   "h": "5"
+  },
+  "actie": "nieuw"
+ }
+]
