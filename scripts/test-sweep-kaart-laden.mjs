@@ -6,6 +6,9 @@
 // - 200 % tekst: "Begrepen" in de privacyregel en "Gemaakt met Fysiplan" maakten de pagina 392 px breed op 320.
 // Nu een laadscherm in de taal van de patiënt tot de kaart in die taal getekend is (max 8 s wachten
 // op de vertaling), een vertaalde niet-gevonden-pagina en afbrekende privacyregel/voet.
+// Sweep 2026-11-10 18u (Jayden, Pixel 7, trage lijn): de laadtekst bleef ±1,5 s Nederlands ("Je kaart wordt
+// geladen…") omdat het hoofdscript (na /noor-audio.js) hem pas vertaalde. Nu zet een klein script direct na het
+// laadscherm de tekst in de taal van de patiënt.
 // Broncontrole altijd (CI); het browserdeel alleen waar Playwright staat. `npm run test:kaartladen`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -18,6 +21,8 @@ import { createRequire } from "node:module";
 const root = process.cwd();
 const k = await readFile(join(root, "public/kaart.html"), "utf8");
 assert.match(k, /<div class="laden" id="laden" role="status"/, "laadscherm bestaat");
+const vroeg = k.indexOf('id="laden_tekst"'), vroegScript = k.indexOf("<script>", vroeg), noor = k.indexOf('<script src="/noor-audio.js">');
+assert.ok(vroeg > 0 && vroegScript > vroeg && vroegScript < noor && k.slice(vroegScript, noor).includes("LADEN[t]"), "laadtekst wordt vóór de zware scripts vertaald");
 assert.match(k, /function wisselTaal\(t,klaar\)/, "wisselTaal meldt wanneer de taal getekend is");
 assert.match(k, /wisselTaal\(TAAL,toonKaart\)/, "kaart pas tonen na het tekenen in de eigen taal");
 assert.doesNotMatch(k, /if\(TAAL!=='nl'\)wisselTaal\(TAAL\);else alles\(\);\s*document\.getElementById\('wrap'\)\.style\.display='block';/, "niet meer meteen tonen");
@@ -55,6 +60,28 @@ try {
     chosen: [{ n: "Mobilisatie rotatie rug", id: "fp_f17c3675b48db1ae", i: 0 }, { n: "Bruggen beginner", id: "fp_688499fde71e7575", i: 0 }],
     kaartId: "" }, { "x-praktijk-sessie": sessie })).json()).id;
   assert.ok(id, "kaart gedeeld");
+
+  // 0) trage lijn: alle scripts traag, laadtekst toch meteen Engels
+  {
+    const c0 = await browser.newContext({ ...pw.devices["Pixel 7"], locale: "en-GB", serviceWorkers: "block", extraHTTPHeaders: { "x-forwarded-for": "10.7.9.10" } });
+    const p0 = await c0.newPage();
+    await p0.route("**/noor-audio.js*", async (r) => { await wacht(2500); await r.continue(); });
+    await p0.goto(origin + "/k/" + id, { waitUntil: "commit" });
+    await p0.waitForSelector("#laden_tekst", { state: "attached" });
+    await wacht(600);
+    const t0 = await p0.evaluate(() => ({ t: document.getElementById("laden_tekst").textContent, lang: document.documentElement.lang }));
+    assert.match(t0.t, /Loading your card/, "trage lijn: laadtekst meteen Engels: " + JSON.stringify(t0));
+    await p0.waitForFunction(() => getComputedStyle(document.getElementById("wrap")).display === "block", null, { timeout: 15000 });
+    await c0.close();
+    const c1 = await browser.newContext({ ...pw.devices["Pixel 7"], locale: "nl-NL", serviceWorkers: "block", extraHTTPHeaders: { "x-forwarded-for": "10.7.9.12" } });
+    const p1 = await c1.newPage();
+    await p1.route("**/noor-audio.js*", async (r) => { await wacht(1500); await r.continue(); });
+    await p1.goto(origin + "/k/" + id, { waitUntil: "commit" });
+    await p1.waitForSelector("#laden_tekst", { state: "attached" });
+    await wacht(400);
+    assert.match(await p1.textContent("#laden_tekst"), /Je kaart wordt geladen/, "Nederlandse telefoon: Nederlandse laadtekst");
+    await c1.close();
+  }
 
   // 1) trage kaart en trage vertaling (Engels): laadscherm, nooit een half Nederlandse kaart
   const en = await browser.newContext({ ...pw.devices["Pixel 7"], locale: "en-GB", serviceWorkers: "block",
