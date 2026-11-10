@@ -117,6 +117,7 @@
   #a4 .a4hd{display:flex;gap:26px;align-items:flex-start;flex:0 0 150px}
   #a4 .prak{width:240px;flex:0 0 240px}
   #a4 .a4hd .logoIn{font-size:21px;font-weight:700;color:var(--brand);border:none;border-bottom:1px dashed transparent;background:transparent;width:100%;padding:0;font-family:inherit}
+  #a4 .a4hd .praktijkPrint{display:none}
   #a4 .a4hd .logoIn:hover,#a4 .a4hd .logoIn:focus{border-bottom-color:var(--brand-100);outline:none}
   #a4 .adres{margin-top:10px}
   #a4 .adres input{display:block;border:none;background:transparent;font:inherit;font-size:10.5px;color:#344054;width:100%;padding:1px 0}
@@ -255,6 +256,9 @@
     #a4 .box .print-text-value{display:block}
     #a4 table.mon{flex:1 1 0;min-height:0;margin-top:2.5mm;font-size:9px}
     #a4 .a4hd .logoIn{color:#1f6feb !important;border:none !important}
+    #a4 input::placeholder,#a4 textarea::placeholder{color:transparent !important}
+    #a4 .a4hd #praktijk.metPrintNaam{display:none !important}
+    #a4 .a4hd .praktijkPrint{display:block !important;white-space:normal;overflow-wrap:anywhere;line-height:1.15;max-height:2.4em;overflow:hidden}
     #a4 .client input{border-bottom:1px solid #333 !important}
     #a4 .pic .rm{display:none !important}
     #a4 table.mon th,#a4 table.mon td{padding:1px}
@@ -3568,6 +3572,14 @@ bridge2.jpg</div>
   function prakLogout(){
     fetch('api/praktijk/logout',{method:'POST',headers:PJSON()}).catch(function(){});
     setPrakSes('');PRAKSLOT.ingelogd=false;rendPrakSlot();toonSrvKaarten();
+    // uitgelogd = geen patiënt meer op het scherm: QR, deelknoppen en roepnaam van de
+    // laatste kaart weg, ook na herladen (gebruikers-sweep 2026-11-10, Sanne). De
+    // gekozen oefeningen blijven staan; die zijn niet van één patiënt.
+    SIGNAAL_KAART=null;zetKaartId('');OVERSCHRIJF='';NAAM_OK='';HERNOEM_VOOR='';ROEP_VOOR='';
+    laatsteDeel='';QR_UIT_VOOR=null;verbergQr();
+    CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
+    if(typeof normalizePrintableTextFields==='function')normalizePrintableTextFields();
+    render();
   }
   function toonPsMsg(t){var m=document.getElementById('ps_msg');if(m){m.textContent=t;m.style.display='';}}
 
@@ -5431,6 +5443,30 @@ bridge2.jpg</div>
     var el=document.getElementById(id);
     if(el)el.addEventListener('input',function(){SET[PRAKKEYS[id]]=el.value;saveSettings();});
   });
+  // print: een lange praktijknaam past niet in het 60 mm brede kopvak en werd afgekapt
+  // (gebruikers-sweep 2026-11-10, Sanne). Vóór het printen komt de naam in een tekstblok
+  // dat over twee regels mag lopen, met een letter die zo nodig kleiner wordt (min. 10 px);
+  // na het printen weer het gewone invulveld.
+  function pasPraktijkNaamVoorPrint(){
+    if(!elPraktijk)return;
+    var t=(elPraktijk.value||'').trim(),blok=document.getElementById('praktijkPrint');
+    if(!blok){blok=document.createElement('div');blok.id='praktijkPrint';blok.className='logoIn praktijkPrint';
+      blok.setAttribute('aria-hidden','true');elPraktijk.insertAdjacentElement('afterend',blok);}
+    blok.textContent=t;blok.style.fontSize='';
+    if(!t){elPraktijk.classList.remove('metPrintNaam');return;}
+    var cs=getComputedStyle(elPraktijk),basis=parseFloat(cs.fontSize)||21;
+    var c=pasPraktijkNaamVoorPrint.c||(pasPraktijkNaamVoorPrint.c=document.createElement('canvas'));
+    var ctx=c.getContext('2d');
+    if(ctx){
+      ctx.font=cs.fontWeight+' '+basis+'px '+cs.fontFamily;
+      // één regel bij de gewone maat; anders twee regels (met marge voor het afbreken)
+      var breed=ctx.measureText(t).width,ruimte=60*96/25.4-4;
+      if(breed>ruimte)blok.style.fontSize=Math.max(10,Math.min(basis,Math.floor(basis*ruimte*1.7/breed*10)/10))+'px';
+    }
+    elPraktijk.classList.add('metPrintNaam');
+  }
+  window.addEventListener('beforeprint',pasPraktijkNaamVoorPrint);
+  window.addEventListener('afterprint',function(){if(elPraktijk)elPraktijk.classList.remove('metPrintNaam');});
   elMon.addEventListener('input',function(e){
     var t=e.target;if(t.tagName!=='INPUT')return;
     if(t.classList.contains('drow')){GRID.rows[t.dataset.row]=t.value;}

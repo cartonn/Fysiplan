@@ -11,14 +11,14 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 |---|---|---|---|---|---|
 | Proef aanmelden + formulierfouten | 2026-11-09 18u (ok; 0612345678 nog misleidend) | 2026-11-08 10u staand | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Welkom, praktijknaam (ook leeg), 12 oefeningen | 2026-11-09 18u (ok; lange naam 66 tekens; "Nieuw in Fysiplan" direct na welkom) | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Printversie (lijn, kleur, compact) | 2026-11-09 22u (lange naam afgekapt en placeholders op de print: nog open) | 2026-11-09 22u liggend (printknop ok; kaartvelden 8–11 px hoog) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
+| Printversie (lijn, kleur, compact) | 2026-11-10 02u (lange naam + placeholders → OPGELOST, test:uitloggenprint) | 2026-11-09 22u liggend (printknop ok; kaartvelden 8–11 px hoog) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
 | Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-09 18u (ok; herstelcode kleine letters ok) | 2026-11-09 18u staand (typfout collega: losse praktijk → fix via klaargezette naam) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Delen, QR, kaartenoverzicht, CSV | 2026-11-09 22u (Roepnaam 24 px naast de QR → OPGELOST, test:qrroepnaam; na Uitloggen blijven QR en deelknoppen) | 2026-11-08 02u (staand) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Delen, QR, kaartenoverzicht, CSV | 2026-11-10 02u (na Uitloggen QR/roepnaam weg → OPGELOST, test:uitloggenprint; CSV-escape ok) | 2026-11-08 02u (staand) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Naam wijzigen in overzicht + daarna verder bewerken | 2026-11-09 18u (nieuwe kaart: naamveld volgt → OPGELOST, test:nieuwekaartnaam) | 2026-11-07 10u | 2026-11-07 14u | – | 2026-11-07 10u |
 | Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-09 18u (ok; 30 MB foto verkleind, .exe nette melding) | 2026-11-09 18u liggend (Carla ziet sjabloon en eigen oefening) | – | – | – |
 | Opname via telefoon /o | 2026-11-09 14u (ok; vals "verouderd" na opname OPGELOST) | 2026-11-09 18u (nep-camera ok; .exe 400) | – | 2026-11-07 10u | 2026-11-09 10u (ok) |
 | Afspraak, seintje, signalen | 2026-11-09 18u (seintje + score 8 in inbox en overzicht, antwoord bij patiënt) | 2026-11-08 18u staand (afspraak na verlopen proef stil) | 2026-11-08 18u (seintje → inbox ok) | 2026-11-09 22u (.ics dubbeltik nog 2 downloads; tijdzone kaart ≠ Mijn gegevens) | 2026-11-09 18u (.ics ok, Engels) |
-| Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-09 18u (403 proefVerlopen ok, ook collega 2e apparaat) | 2026-11-09 22u liggend (2e apparaat zonder proefcookie: geen melding tot de eerste 403) | – | 2026-11-07 02u (breedte) | – |
+| Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-09 18u (403 proefVerlopen ok, ook collega 2e apparaat) | 2026-11-10 02u liggend (nog steeds geen melding bij laden) (2e apparaat zonder proefcookie: geen melding tot de eerste 403) | – | 2026-11-07 02u (breedte) | – |
 | /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-09 14u staand+liggend (ok; tikdoelen) | 2026-11-09 22u (dubbeltik ok; "Ik heb een vraag" zonder inhoud nog) | 2026-11-09 18u | 2026-11-09 18u (pijnscore bezig-stand + rode fout → OPGELOST, test:pijnscorebezig) |
 | /k: gedaan-vinkjes op een tweede apparaat | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u |
 | /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-09 18u (offline ok; meldingen blijven staan na versturen) | 2026-11-09 10u (trage vertaling + 404 NL: fix) | 2026-11-09 18u (liggend, terug, trage lijn ok) 
@@ -33,7 +33,9 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 | Mijn gegevens /k, Wis van dit apparaat, /v2/gegevens | 2026-11-09 18u (/v2/gegevens: naam niet ingevuld, melding bovenaan) | – | 2026-11-09 18u (wis laat avatars in de cache) | 2026-11-08 02u | 2026-11-09 18u (download Engels ok) |
 | Vensters met alleen toetsenbord | 2026-11-09 18u (Kaarten en Print: focus-val en Escape ok) | 2026-11-09 02u staand (fix, in test:vensterterug) | – | – | – |
 
-Volgende run (na 2026-11-09 22u): .ics dubbeltik (kaart.html `naarAgenda` + `#agbtn`), na Uitloggen QR/deelknoppen/roepnaam
+Volgende run (na 2026-11-10 02u): Engelse /k zonder Nederlandse reviewzinnen, verlopen proef bij laden (`/api/praktijk/status`),
+.ics dubbeltik + `?taal=`, wissen met twee kaarten op één telefoon, /o met camera, iPad staand, compacte/grote printvariant.
+Oudere lijst (na 2026-11-09 22u): .ics dubbeltik (kaart.html `naarAgenda` + `#agbtn`), na Uitloggen QR/deelknoppen/roepnaam
 weg (`prakLogout`), verlopen proef op een 2e apparaat meteen tonen (`/api/praktijk/status` zonder `proefVerlopen`), lange
 praktijknaam + placeholders op de print. Niet getest deze run: /o met camera, compacte/grote printvariant, iPad staand.
 Therapeut-app niet op telefoon (therapeuten werken op desktop/tablet). WebKit is niet geïnstalleerd: "iPhone"-devices draaien in Chromium.
@@ -51,6 +53,38 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+### Sweep 2026-11-10 02u
+- **OPGELOST 2026-11-10 02u (deze PR, test:uitloggenprint) — MIDDEL App: na Uitloggen bleven QR, "Bekijk zelf…", deelknoppen en
+  roepnaam van de laatste patiënt staan**, de roepnaam ook na herladen (Sanne, desktop). `prakLogout` haalt nu de QR weg, leegt
+  roepnaam en patiëntvelden en koppelt de editor los van de gedeelde kaart; de oefeningen blijven staan. Hertest Sanne: ok.
+- **OPGELOST 2026-11-10 02u (deze PR, test:uitloggenprint) — MIDDEL Print: lange praktijknaam afgekapt en grijze placeholders
+  ("adres", "telefoon", "__-__") op papier** (Sanne, lijn/kleur/compact). Placeholders zijn transparant in `@media print`; vóór het
+  printen (`beforeprint`) komt de praktijknaam in een tekstblok dat over twee regels mag lopen met een kleinere letter (min. 10 px).
+- **OPGELOST 2026-11-10 02u (deze PR, test:wachtrijmelding) — MIDDEL /k: "Opgeslagen op je telefoon…" bleef onder pijnscore en
+  seintje staan nadat de wachtrij verstuurd was** (Truus, iPhone SE). `tekenWacht` ruimt de wachtmeldingen op zodra alles weg is.
+- **MIDDEL (nieuw, Jayden Pixel 7 + iPhone 14) — Engelse kaart toont Nederlandse zinnen "De algemene uitleg wordt gecontroleerd.
+  Vraag je behandelaar…" en "De oefenafbeelding wordt gecontroleerd…"** (kaart.html r. ~1357–1358, vast in de code, niet via `tr()`).
+  Alleen de tekst vertalen; de reviewstatus zelf niet aanraken (videostroom).
+- **MIDDEL (nieuw, Truus) — "Wis van dit apparaat" bij twee kaarten op één telefoon wist ook beelden die de andere kaart nog nodig
+  heeft** (kaart.html `wisOfflineKopie` r. ~1818). Kaart A mist offline dan de foto van een gedeelde oefening. Met één kaart: opgelost.
+- **MIDDEL (nieuw, Mark) — tikdoelen app op desktop/iPad:** Kaarten-overzicht 27 elementen < 44 px ("1 seintje", "Rapport",
+  "Exporteer (CSV)" 22 hoog; sorteer/Deel/Openen/Kopie 32); Teamvenster rolkeuze 32, × 32×36, velden en "Nodig uit" 36.
+- **LAAG (nieuw)** — Emoji-roepnaam geeft "�" als initiaal (`avInitialen` r. ~1213 `charAt(0)`; `Array.from` gebruiken) (Sanne).
+  Roepnaamhint stelt "script>alert(1)…" voor (Sanne). Escape in het seintjesvenster zet de focus op body (Mark). Wegvallende lijn
+  vlak na de .ics-check kan de kaart vervangen door de foutpagina van de browser (`naarAgenda` `location.href`; blob/`<a download>`
+  voorkomt het) (Jayden). Het blok "Hoe gaat het vergeleken met de start?" staat dichtgeklapt (`<details>` r. ~548) (Truus).
+  `/api/kaart/gedaan` met een `dag` van 10.000 tekens geeft 200 (veld genegeerd) (Jayden).
+- **Bevestigd, nog open:** verlopen proef op een 2e apparaat pas na de eerste 403 (`/api/praktijk/status` zonder `proefVerlopen`,
+  server.js r. ~2590) (Mark iPad); conflictmelding en deelknoppen onder de QR 8 px in het verkleinde A4-voorbeeld (Mark); seintjesvenster
+  bij verlopen proef zegt "niet afhandelen" (index.html r. ~5112); .ics dubbeltik (timingafhankelijk 2 downloads, 4 verzoeken); tijdzone
+  kaart vs Mijn gegevens (r. ~1470 zonder `timeZone`); "Too hard?" na 400 eindeloos "Tap to retry" (r. ~2498); offline .ics algemene fout;
+  .ics-link zonder `?taal=` en Nederlandse bestandsnamen (server.js r. ~4795/5007); "Zet op beginscherm"-balk 177 px bij 200 %;
+  "Ik heb een vraag" zonder inhoud (productkeuze); dubbelklik "Deel" in overzicht; Escape in QR-testvenster; 0612345678-melding;
+  tikdoelen /k (Te zwaar? 77×21, Alles gedaan 29, pijnscore 36, weekdagen 33×37, AA/Print/Deel 35–36).
+- **Goed bevonden:** formulierfouten /v2/proef, beveiligen + herstelcode, CSV-formule-escape, andere praktijk 401/404, gegokte id's
+  404, 9 schrijfroutes 403 bij verlopen proef (ook collega zonder cookie), uploads (.exe, 61 MB) nette 400/413, dubbeltik pijnscore/
+  herstel/seintje één POST, offline herladen /k, 200 % zonder horizontaal scrollen, Engels + liggend + terugknop + trage lijn.
+
 ### Sweep 2026-11-09 22u
 - **OPGELOST 2026-11-09 22u (deze PR, test:nietvertaald) — HOOG /k: mislukte vertaling verving de echte uitleg door algemene
   zinnen.** De bewegingsdemo toont nu de echte uitleg in het Nederlands (`lang="nl"`) met een korte melding in de taal van de
@@ -59,7 +93,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   Duitse stem voor (gevonden door Truus bij de hertest). Hertest Truus iPhone SE de/tr: ok.
 - **OPGELOST 2026-11-09 22u (deze PR, test:qrroepnaam) — MIDDEL App: Roepnaam, Leeftijd, max. HF en Trainingszone 24 px breed zodra
   de QR op de A4 staat** (Sanne, 1280 en 1600). De rij deelknoppen onder de QR breekt nu af; Roepnaam 110 px op 1280.
-- **MIDDEL (nieuw, Sanne) — na Uitloggen blijven de QR, "Bekijk zelf…" en de deelknoppen van de laatste patiënt werken**, roepnaam
+- **OPGELOST 2026-11-10 02u (test:uitloggenprint) — MIDDEL (Sanne) — na Uitloggen blijven de QR, "Bekijk zelf…" en de deelknoppen van de laatste patiënt werken**, roepnaam
   blijft ook na herladen. index.html r. ~3565 `prakLogout()` roept geen `verbergQr()` aan en leegt `#c_naam` niet.
 - **MIDDEL (nieuw, Mark iPad) — verlopen proef op een tweede apparaat (ingelogd, geen proefcookie): de app toont niets tot de eerste
   403.** `/api/praktijk/status` geeft geen `proefVerlopen`, dus `toonProefVoorbij` start niet bij het laden.
@@ -105,7 +139,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   `overflow-wrap:anywhere` ontbreekt).
 - **MIDDEL (Jayden iPhone 14) — .ics dubbeltik geeft 2 downloads** (kaart.html `naarAgenda` r. ~911 zonder bezig-slot; ook
   oefenmomenten).
-- **MIDDEL (herhaald, Sanne) — lange praktijknaam afgekapt op print; placeholders grijs op de print** (index.html r. ~347, ~249,
+- **OPGELOST 2026-11-10 02u (test:uitloggenprint) — MIDDEL (herhaald, Sanne) — lange praktijknaam afgekapt op print; placeholders grijs op de print** (index.html r. ~347, ~249,
   ~351; `@media print` mist `::placeholder{color:transparent}`).
 - **MIDDEL (Truus, Jayden) — tikdoelen /k:** "Te zwaar?" 78×21, "Alles gedaan" 29 hoog, pijnscore 36 breed op 320, weekdagen 33×37,
   taal/AA/Lees voor 36–38, Print/Deel 35. iPad app: categoriechips 24, + 28, ★ 24, werkbalk 36 (Mark).
