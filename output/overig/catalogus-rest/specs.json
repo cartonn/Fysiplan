@@ -1,0 +1,1064 @@
+[
+ {
+  "slug": "schouder-voorwaarts-heffen-actief",
+  "naam": "Schouder voorwaarts heffen – actief",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer, both arms hanging straight beside her body. The arrow is a long curved arrow starting at her RIGHT hand and going FORWARD and UP in an arc to shoulder height, showing the straight right arm being lifted forward.",
+  "eind_en": "END position: same side view. Her straight right arm is lifted FORWARD to exactly shoulder height (horizontal), palm facing inward, thumb up. The left arm hangs beside her body, torso upright, shoulder not shrugged.",
+  "zoom": false
+ },
+ {
+  "slug": "elleboog-buigen-actief",
+  "naam": "Elleboog buigen – actief",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer. Her right arm hangs straight beside her body with the PALM facing FORWARD, hand open and empty. The arrow is a curved arrow from the right hand going FORWARD and UP in an arc to the right shoulder, showing the elbow bending.",
+  "eind_en": "END position: same side view. The right elbow is fully BENT: the right hand is at the front of the right shoulder, palm toward the shoulder. The right upper arm still hangs vertically against her side. Torso upright.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: right arm straight down, palm forward. BOTTOM: elbow fully bent, hand at the shoulder; the upper arm stays vertical against her side in both figures."
+ },
+ {
+  "slug": "heup-buigen-staand-met-steun",
+  "naam": "Heup buigen – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer. A plain chair stands at her LEFT side (partly hidden behind her) and her left hand rests on its backrest for balance. Both feet are on the floor. The arrow is a straight arrow at the right knee pointing UP and slightly forward, showing the right knee being lifted.",
+  "eind_en": "END position: same side view. The right knee is lifted in front of her until the right thigh is horizontal (hip height), knee bent about 90 degrees, the right foot hanging relaxed below the knee. She stands tall on the left leg, torso upright, left hand on the chair.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: both feet on the floor. BOTTOM: right knee lifted to hip height, thigh horizontal, torso upright (not leaning back)."
+ },
+ {
+  "slug": "heup-strekken-staand-met-steun",
+  "naam": "Heup strekken – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer. A plain chair stands in front of her with its backrest toward her, and both hands rest lightly on the top of the backrest for balance. Both feet are on the floor, legs straight. The arrow is a curved arrow at the right heel going BACKWARD (to the viewer's left), showing the straight right leg moving backward.",
+  "eind_en": "END position: same side view. The straight right leg is moved BACKWARD from the hip (about 20 degrees behind the standing leg), knee straight, foot just off the floor. Her torso stays UPRIGHT and her back straight (no leaning forward, no hollow back), hands on the chair.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: both feet together on the floor. BOTTOM: straight right leg lifted backward a small distance, torso still vertical."
+ },
+ {
+  "slug": "heup-zijwaarts-heffen-zijlig",
+  "naam": "Heup zijwaarts heffen – zijlig",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She lies on her LEFT SIDE on an exercise mat, seen from the FRONT (her face and chest toward the viewer), her head resting on her stretched left arm, her right hand on the mat in front of her chest. BOTH legs are straight and stacked on top of each other, in one line with her body. The arrow is a straight arrow at the top (RIGHT) ankle pointing UP, showing the straight top leg being lifted.",
+  "eind_en": "END position: same view, still lying on her left side. The top (right) leg, knee completely straight, is lifted UP about 35 degrees, the toes pointing forward to the viewer (not up to the ceiling). The bottom leg stays straight on the mat, hips stacked.",
+  "zoom": false,
+  "extra_avatar": "Side-lying, seen from the front. TOP: legs stacked. BOTTOM: straight top leg lifted clearly, toes pointing forward, pelvis not rolling backward."
+ },
+ {
+  "slug": "heup-zijwaarts-heffen-staand-met-steun",
+  "naam": "Heup zijwaarts heffen – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT, feet together. A plain chair stands beside her on her LEFT side (on the viewer's right) and her left hand rests on its backrest for balance. The arrow is a curved arrow at her RIGHT ankle (on the viewer's left) going SIDEWAYS and up, showing the straight right leg moving out to the side.",
+  "eind_en": "END position: seen from the front. The straight RIGHT leg is lifted out to her right side (about 30 degrees), foot off the floor, toes pointing forward. Her torso stays perfectly UPRIGHT (not leaning to the left), left hand on the chair.",
+  "zoom": false,
+  "extra_avatar": "Seen from the front, chair at her left side. TOP: feet together. BOTTOM: straight right leg out to the side, toes forward, torso vertical."
+ },
+ {
+  "slug": "heupscharnier-staand-met-steun",
+  "naam": "Heupscharnier – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right side is nearest to the viewer, feet hip-width apart, knees slightly bent. A plain chair stands at her LEFT side (partly hidden behind her) and her left hand rests on its backrest for balance. Her right hand rests on her right hip, back straight. The arrow is a curved arrow starting at her upper back and going FORWARD and DOWN, showing the straight-backed torso tipping forward from the hips.",
+  "eind_en": "END position: same side view. Her hips are pushed BACKWARD and her torso, with a long FLAT back, is tipped forward from the hips to about 45 degrees; knees only slightly bent, head in line with the spine, left hand still on the chair.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: upright. BOTTOM: buttocks back, flat back tipped forward about 45 degrees. The back is never rounded; it is a hip hinge, not a squat."
+ },
+ {
+  "slug": "mini-squat-staand-met-steun",
+  "naam": "Mini-squat – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, feet hip-width apart. A plain chair stands in front of her with its backrest toward her, and both hands rest lightly on the top of the backrest for balance. The arrow is a short curved arrow at her hips going DOWN and slightly BACK, showing a small knee bend as if starting to sit down.",
+  "eind_en": "END position: same side view. Both knees are bent a SMALL amount (about 40 degrees), her buttocks moved slightly back as if starting to sit, back straight, heels on the floor, knees above the feet. Hands still on the chair backrest.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: standing straight. BOTTOM: a shallow squat - knees bent only about 40 degrees, buttocks slightly back, heels down. Not a deep squat."
+ },
+ {
+  "slug": "sit-to-stand-staand-met-steun",
+  "naam": "Sit-to-stand – staand met steun",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on the front half of a plain chair, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, both feet flat on the floor under her knees. A sturdy table stands in front of her (on the viewer's right) and both hands rest on the edge of the tabletop. The arrow is a curved arrow starting at her shoulders and going FORWARD and UP, showing her standing up.",
+  "eind_en": "END position: same side view. She stands fully UPRIGHT between the chair and the table, hips and knees straight, both hands still resting on the table edge. The empty chair is right behind her.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, table in front and chair behind in both figures. TOP: sitting with hands on the table edge. BOTTOM: standing upright, hands still on the table."
+ },
+ {
+  "slug": "step-up-staand-met-steun",
+  "naam": "Step-up – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, in front of the bottom step of a staircase (on the viewer's right). A handrail runs along the wall on the far side and her LEFT hand holds it. The arrow is a curved arrow starting at her right foot and going UP and FORWARD onto the step, showing the right foot stepping up.",
+  "eind_en": "END position: same side view. She stands fully upright ON the step with BOTH feet next to each other, knees and hips straight, left hand on the handrail.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, stair step and handrail in both figures. TOP: both feet on the floor in front of the step. BOTTOM: both feet on the step, standing tall."
+ },
+ {
+  "slug": "kuitheffing-staand-met-steun",
+  "naam": "Kuitheffing – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer. A plain chair stands in front of her with its backrest toward her, and both hands rest lightly on the top of the backrest for balance. Both feet are flat on the floor, hip-width apart, knees straight. The arrow is a straight arrow at the back of the right heel pointing UP, showing her rising onto her toes.",
+  "eind_en": "END position: same side view. She stands HIGH on the balls of BOTH feet, both heels far off the floor, knees straight, body tall and vertical (not leaning onto the chair).",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, full figure with the chair. TOP: both feet flat. BOTTOM: high on the toes of both feet, obvious gap under both heels."
+ },
+ {
+  "slug": "bekken-kantelen-liggend",
+  "naam": "Bekken kantelen – liggend",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the shoulders to the knees. She lies on her BACK on an exercise mat, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right side is nearest to the viewer, head on the mat, BOTH knees bent and both feet flat on the mat hip-width apart, arms beside her body. Her lower back has its natural small ARCH: a clear gap between the lower back and the mat. The arrow is a curved arrow at the front of her pelvis (lower belly) rolling BACKWARD toward her navel and down, showing the pelvis tilting so the lower back presses into the mat.",
+  "eind_en": "END position: same framing and view. The pelvis is tilted BACKWARD: the lower back is pressed completely FLAT against the mat (no gap), the lower belly drawn in, the tailbone curled very slightly up. Buttocks stay on the mat, knees and feet unchanged.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the shoulders to the knees, lying on the back with bent knees, seen exactly from the side. Exaggerate the small movement: TOP a visible gap under the hollow lower back, BOTTOM the lower back pressed flat on the mat. The buttocks do NOT lift (this is not a bridge)."
+ },
+ {
+  "slug": "brug-liggend",
+  "naam": "Brug – liggend",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She lies on her BACK on an exercise mat, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right side is nearest to the viewer, head on the mat, BOTH knees bent and both feet flat on the mat hip-width apart, arms beside her body with the palms down. Her buttocks rest on the mat. The arrow is a straight arrow at her hips pointing UP, showing the hips being pushed up.",
+  "eind_en": "END position: same side view. Her hips are lifted HIGH so her body forms one STRAIGHT slanted line from the shoulders through the hips to the knees. Shoulders, arms and both feet stay on the mat, lower legs vertical.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: buttocks on the mat. BOTTOM: hips lifted into a straight line from shoulders to knees (not over-arched), feet flat."
+ },
+ {
+  "slug": "bird-dog-op-handen-en-knieen",
+  "naam": "Bird dog – op handen en knieën",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She is on her HANDS and KNEES on an exercise mat, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right side is nearest to the viewer, hands directly under her shoulders, knees under her hips, back flat like a table top, head in line with the spine. The arrow is a straight horizontal arrow at her RIGHT hand pointing FORWARD (to the viewer's right), showing the right arm reaching forward while the opposite leg stretches back.",
+  "eind_en": "END position: same side view. Her RIGHT arm is stretched straight FORWARD at shoulder height and her LEFT leg is stretched straight BACKWARD at hip height, both horizontal, in one line with her flat back. The left hand and the right knee stay on the mat; the hips stay level.",
+  "zoom": false,
+  "extra_avatar": "On hands and knees, seen from the side. TOP: both hands and both knees on the mat. BOTTOM: right arm forward and LEFT leg back (opposite sides), both horizontal, back flat and level."
+ },
+ {
+  "slug": "dead-bug-liggend",
+  "naam": "Dead bug – liggend",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She lies on her BACK on an exercise mat, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer, head on the mat. BOTH arms point straight UP to the ceiling. BOTH hips and knees are bent 90 degrees: the knees are directly above the hips and the lower legs are horizontal in the air. The arrow is a curved arrow from her RIGHT hand going BACKWARD over her head toward the mat, showing the right arm lowering overhead while the opposite leg stretches out.",
+  "eind_en": "END position: same side view. Her RIGHT arm is lowered straight BACKWARD over her head, hovering just above the mat, and her LEFT leg is stretched straight out FORWARD, hovering just above the mat. The LEFT arm still points straight up and the RIGHT knee is still bent above the hip. Lower back flat on the mat.",
+  "zoom": false,
+  "extra_avatar": "Lying on the back, seen from the side. TOP: both arms up, both knees bent above the hips. BOTTOM: right arm overhead and LEFT leg stretched out low (opposite sides), the other arm and knee unchanged, lower back flat."
+ },
+ {
+  "slug": "schouder-voorwaarts-heffen-met-elastiek",
+  "naam": "Schouder voorwaarts heffen – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer. One end of a long elastic band is under her RIGHT foot and she holds the other end in her RIGHT hand; the right arm hangs straight beside her body, the band running straight down to the foot. The arrow is a long curved arrow from the right hand going FORWARD and UP in an arc to shoulder height, showing the straight arm being lifted forward against the band.",
+  "eind_en": "END position: same side view. The straight right arm is lifted FORWARD to shoulder height (horizontal), the elastic band stretched tight in a straight line from the right hand down to the right foot. Torso upright, not leaning back.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: arm hanging, band slack from hand to foot. BOTTOM: arm straight forward at shoulder height, band taut from hand to foot."
+ },
+ {
+  "slug": "schouder-zijwaarts-heffen-met-elastiek",
+  "naam": "Schouder zijwaarts heffen – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT. One end of a long elastic band is under her RIGHT foot (on the viewer's left) and she holds the other end in her RIGHT hand; the right arm hangs straight beside her body. The arrow is a long curved arrow from the right hand going SIDEWAYS and UP in an arc to shoulder height, showing the straight arm being lifted out to the side against the band.",
+  "eind_en": "END position: seen from the front. The straight right arm is lifted out to her right SIDE to shoulder height (horizontal), palm down, the elastic band stretched tight in a straight line from the right hand down to the right foot. Torso upright, shoulders level.",
+  "zoom": false,
+  "extra_avatar": "Seen from the front. TOP: arm hanging, band slack. BOTTOM: right arm straight out to the side at shoulder height, band taut from hand to foot."
+ },
+ {
+  "slug": "schouderblad-omhoog-draaien-actief",
+  "naam": "Schouderblad omhoog draaien – actief",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen in a THREE-QUARTER FRONT view from her right side (her body turned about 45 degrees), so her right arm is large and clearly visible. Both arms hang straight beside her body, right thumb pointing forward. The arrow is a long curved arrow from the right hand going UP DIAGONALLY - halfway between straight forward and straight sideways - showing the straight arm being lifted in the diagonal plane.",
+  "eind_en": "END position: same view. The straight right arm is lifted DIAGONALLY (halfway between forward and sideways) to well above shoulder height (about 130 degrees), thumb pointing up. Shoulder not shrugged, torso upright, left arm hanging.",
+  "zoom": false,
+  "extra_avatar": "Three-quarter front view. TOP: arms hanging. BOTTOM: right arm straight, raised high in the diagonal direction between front and side, thumb up."
+ },
+ {
+  "slug": "serratus-punch-actief",
+  "naam": "Serratus punch – actief",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the waist up. She lies on her BACK on an exercise mat, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer, knees bent. Her right arm points STRAIGHT UP to the ceiling, elbow fully straight, the hand closed in a fist; her right shoulder blade lies FLAT on the mat. Her left arm lies beside her body. The arrow is a short straight arrow above the right fist pointing UP, showing the fist being pushed a little higher.",
+  "eind_en": "END position: same framing and view. The right arm is still vertical with a straight elbow, but the fist is pushed several centimetres HIGHER toward the ceiling: the right shoulder and shoulder blade are lifted clearly OFF the mat. Head and back stay on the mat.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the waist up, lying on the back, seen from the side. Exaggerate the small movement: TOP right shoulder flat on the mat, BOTTOM right shoulder lifted well off the mat with the fist higher. The elbow stays completely straight in both figures."
+ },
+ {
+  "slug": "serratus-punch-met-elastiek",
+  "naam": "Serratus punch – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the hips up, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer. She stands with her BACK toward a door (on the viewer's left) to which an elastic band is anchored at shoulder height. Her right hand holds the end of the band at the front of her right shoulder, the elbow bent and pointing backward at shoulder height; the band runs straight back to the anchor. The arrow is a straight horizontal arrow at the right hand pointing FORWARD (to the viewer's right), showing the punch forward.",
+  "eind_en": "END position: same framing and view. The right arm is stretched completely STRAIGHT forward at shoulder height and the right shoulder is pushed a little further FORWARD (shoulder blade sliding around the ribcage), the elastic band stretched tight behind her. Torso upright, not rotating.",
+  "zoom": false,
+  "extra_avatar": "Frame both figures from the hips up, seen from the side, band anchored behind her at shoulder height. TOP: hand at the shoulder, elbow bent. BOTTOM: arm straight forward, shoulder reached forward, band taut."
+ },
+ {
+  "slug": "schouder-extensie-met-elastiek",
+  "naam": "Schouder extensie – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer, facing a door (on the viewer's right) to which an elastic band is anchored at chest height. Her right arm is straight and points FORWARD and DOWN (about 45 degrees in front of her body), the hand holding the end of the band. The arrow is a curved arrow at the right hand going DOWN and BACKWARD past her hip, showing the straight arm being pulled back.",
+  "eind_en": "END position: same side view. The straight right arm has been pulled BACK along her body to just behind her hip (about 20 degrees behind vertical), the elastic band stretched tight to the anchor in front. Torso upright, chest not tipping forward.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, band anchored in front of her. TOP: straight right arm pointing forward-down. BOTTOM: straight right arm just behind the hip, band taut. The elbow stays straight."
+ },
+ {
+  "slug": "horizontaal-openen-actief",
+  "naam": "Horizontaal openen – actief",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the hips up, seen in a THREE-QUARTER FRONT view from her right side (her body turned about 45 degrees), so her right arm is large and clearly visible. BOTH arms are stretched straight FORWARD at shoulder height, palms facing each other, hands shoulder-width apart, hands empty. The arrow is a curved horizontal arrow at her right hand going OUTWARD and backward, showing the straight arms opening sideways.",
+  "eind_en": "END position: same framing and view. BOTH straight arms have opened out to the SIDES and slightly behind the line of her shoulders at shoulder height (a wide T-shape), chest open, shoulder blades pulled together, shoulders low.",
+  "zoom": false,
+  "extra_avatar": "Frame both figures from the hips up. TOP: both arms straight forward. BOTTOM: both arms straight out to the sides in a wide T, chest open. Elbows straight, no equipment."
+ },
+ {
+  "slug": "elleboog-buigen-met-lichte-weerstand",
+  "naam": "Elleboog buigen – met lichte weerstand",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer. Her right arm hangs straight beside her body with the palm facing forward, and her right hand holds a filled WATER BOTTLE (a half-litre plastic bottle). The arrow is a curved arrow from the bottle going FORWARD and UP in an arc to the right shoulder, showing the elbow bending.",
+  "eind_en": "END position: same side view. The right elbow is fully BENT: the hand with the water bottle is at the front of the right shoulder. The right upper arm still hangs vertically against her side. Torso upright, not leaning back.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, water bottle in the right hand in both figures. TOP: arm straight down. BOTTOM: elbow fully bent, bottle at the shoulder, upper arm vertical."
+ },
+ {
+  "slug": "elleboog-strekken-actief",
+  "naam": "Elleboog strekken – actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer, feet flat on the floor, left hand on her thigh. Her right upper arm hangs beside her body and the right elbow is fully BENT, the right hand at the front of her right shoulder. The arrow is a curved arrow from the right hand going FORWARD and DOWN in an arc, showing the elbow straightening.",
+  "eind_en": "END position: same side view on the same chair. The right arm is completely STRAIGHT and hangs down beside the chair seat, the fingers pointing to the floor; the upper arm has stayed beside her body.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: right elbow fully bent, hand at the shoulder. BOTTOM: right arm completely straight down beside the chair. The upper arm stays beside the body in both figures."
+ },
+ {
+  "slug": "heup-strekken-met-elastiek",
+  "naam": "Heup strekken – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer. A plain chair stands in front of her with its backrest toward her, and both hands rest lightly on the top of the backrest for balance. A short loop of elastic band runs around BOTH ankles; both feet are on the floor. The arrow is a curved arrow at the right heel going BACKWARD (to the viewer's left), showing the straight right leg moving backward against the band.",
+  "eind_en": "END position: same side view. The straight right leg is moved BACKWARD from the hip (about 20 degrees), foot just off the floor, the loop band stretched tight between the two ankles. Torso upright, back straight, hands on the chair.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, loop band around both ankles in both figures. TOP: feet together, band slack. BOTTOM: straight right leg backward, band clearly stretched, torso vertical."
+ },
+ {
+  "slug": "heup-naar-buiten-draaien-zijlig",
+  "naam": "Heup naar buiten draaien – zijlig",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She lies on her LEFT SIDE on an exercise mat, seen from the FRONT (her face, chest and knees toward the viewer), her head resting on her left arm. Hips and knees are bent, the knees stacked and the feet stacked on top of each other. The arrow is a curved arrow at the top (RIGHT) knee going UP and outward, showing the top knee turning open while the feet stay together.",
+  "eind_en": "END position: same view, still lying on her left side. The top (right) knee is turned UP and open toward the ceiling while BOTH feet stay on top of each other; hips stay stacked, pelvis not rolling back.",
+  "zoom": false,
+  "extra_avatar": "Side-lying, seen from the front. TOP: knees together. BOTTOM: top knee opened high, feet still touching, hips stacked."
+ },
+ {
+  "slug": "monster-walk-met-elastiek",
+  "naam": "Monster walk – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands seen in a THREE-QUARTER FRONT view from her right side (her body turned about 45 degrees), so both legs are clearly visible, feet hip-width apart, in a slight squat (knees bent about 30 degrees, hips a little back), hands on her hips. A short loop of elastic band runs around BOTH lower legs just above the ankles, lightly taut. The arrow is a straight arrow on the floor at her RIGHT foot pointing DIAGONALLY forward and outward, showing a step diagonally forward and to the side.",
+  "eind_en": "END position: same view. She has stepped with the RIGHT foot DIAGONALLY forward and outward, so the feet are now wide apart and the loop band is stretched tight; she is still in the slight squat with both knees bent, torso upright.",
+  "zoom": false,
+  "extra_avatar": "Three-quarter front view, loop band just above the ankles in both figures. In BOTH figures the knees stay bent (slight squat). TOP: feet hip-width. BOTTOM: right foot stepped diagonally forward and out, wide stance, band taut."
+ },
+ {
+  "slug": "piriformis-rek-liggend-ondersteund",
+  "naam": "Piriformis rek – liggend ondersteund",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She lies on her BACK on an exercise mat, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, head on the mat. Her LEFT knee is bent with the left foot flat on the mat. Her RIGHT ankle rests crossed on top of the LEFT knee, the right knee pointing out to the side (a figure-4 shape). Both hands are clasped behind the LEFT thigh, the right arm reaching through the gap between the legs. The arrow is a curved arrow at the left knee going toward her chest, showing the legs being pulled toward her.",
+  "eind_en": "END position: same side view, lying on her back in the same figure-4. Both hands have pulled the LEFT thigh toward her chest, so the left foot is lifted off the mat and the crossed right leg comes closer to her chest; the right knee still points outward. Head and lower back stay on the mat.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. In BOTH figures the right ankle rests on the left knee. TOP: left foot flat on the mat. BOTTOM: left foot off the mat, both legs pulled toward the chest with the hands behind the left thigh."
+ },
+ {
+  "slug": "knie-buigen-met-elastiek",
+  "naam": "Knie buigen – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer. A plain chair stands in front of her with its backrest toward her, and both hands rest lightly on the top of the backrest for balance. An elastic band is looped around her RIGHT ankle and runs low along the floor FORWARD to an anchor on the front leg of the chair (on the viewer's right). Both feet are on the floor. The arrow is a curved arrow at the right heel going BACKWARD and UP toward her buttock, showing the right knee bending against the band.",
+  "eind_en": "END position: same side view. The right knee is bent to about a right angle (lower leg horizontal, heel toward the buttock), the elastic band stretched tight from the right ankle forward to the low anchor. The right thigh stays vertical beside the left thigh, torso upright.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, band from the right ankle to a low anchor in front. TOP: both feet on the floor, band slack. BOTTOM: right knee bent 90 degrees, heel up behind, band taut."
+ },
+ {
+  "slug": "knie-strekken-met-elastiek",
+  "naam": "Knie strekken – met elastiek",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, both feet on the floor, hands holding the sides of the seat. An elastic band is looped around her RIGHT ankle and runs BACKWARD to the rear leg of the chair, where it is tied. The arrow is a curved arrow at the right foot going FORWARD and UP, showing the right knee straightening against the band.",
+  "eind_en": "END position: same side view on the same chair. The right knee is STRAIGHT: the right leg points almost horizontally forward, the elastic band stretched tight from the ankle back to the rear chair leg. The thigh stays on the seat, back upright.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, band from the right ankle to the rear chair leg in both figures. TOP: right foot on the floor, band slack. BOTTOM: right leg stretched forward, band long and taut."
+ },
+ {
+  "slug": "quadriceps-aanspannen-zittend",
+  "naam": "Quadriceps aanspannen – zittend",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "CLOSE-UP framing: show her from the waist down to the feet, large in the frame. She sits on an exercise mat with her back upright, leaning on her hands behind her, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer. Her right leg lies stretched out in front of her but RELAXED: the knee very slightly bent so there is a small gap between the back of the knee and the mat, foot relaxed. The left knee is bent with the foot flat on the mat. The arrow is a short straight arrow at the top of the right knee pointing DOWN into the mat, showing the back of the knee being pressed down.",
+  "eind_en": "END position: same close-up side view. The back of the right knee is pressed FLAT into the mat, the knee completely straight, the muscle on the front of the right thigh visibly tensed and bulging, toes pulled up toward her, the heel lifting a fraction.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the waist down, sitting, seen from the side. Exaggerate the difference: TOP right leg relaxed with a visible gap under the knee; BOTTOM knee pressed flat, thigh muscle clearly tensed, toes pulled up."
+ },
+ {
+  "slug": "straight-leg-raise-met-elastiek",
+  "naam": "Straight leg raise – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She lies on her BACK on an exercise mat, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, arms beside her body. Her LEFT knee is bent with the left foot flat on the mat. Her RIGHT leg lies straight on the mat. A loop of elastic band runs around the RIGHT ankle and under the LEFT foot, which stands on it. The arrow is a straight arrow next to the right ankle pointing UP, showing the straight right leg being lifted against the band.",
+  "eind_en": "END position: same side view, lying on her back. The right leg, knee completely STRAIGHT, is lifted to about the height of the bent left knee; the elastic band is stretched tight between the right ankle and the left foot on the mat.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, band between the right ankle and the left foot in both figures. TOP: right leg flat on the mat. BOTTOM: straight right leg lifted, band clearly stretched."
+ },
+ {
+  "slug": "sit-to-stand-met-elastiek",
+  "naam": "Sit-to-stand – met elastiek",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on the front half of a plain chair, seen in a THREE-QUARTER FRONT view from her right side (her body turned about 45 degrees), so both legs are clearly visible, feet flat on the floor hip-width apart, arms crossed over her chest. A short loop of elastic band runs around BOTH thighs just above the knees. The arrow is a curved arrow starting at her shoulders and going FORWARD and UP, showing her standing up.",
+  "eind_en": "END position: same view. She stands fully UPRIGHT in front of the chair, arms crossed over her chest, the loop band still just above the knees and lightly stretched because the knees point slightly OUTWARD over the feet (not falling inward).",
+  "zoom": false,
+  "extra_avatar": "Three-quarter front view, loop band just above the knees in both figures. TOP: sitting. BOTTOM: standing upright in front of the chair, knees slightly outward, band taut."
+ },
+ {
+  "slug": "step-down-staand-met-steun",
+  "naam": "Step-down – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright ON a single stair step (about 15 cm high), seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, close to the front edge. A handrail runs along the wall on the far side and her LEFT hand holds it. Both feet are on the step. The arrow is a curved arrow at her RIGHT foot going FORWARD and DOWN to the floor in front of the step, showing the right foot being lowered.",
+  "eind_en": "END position: same side view. Her LEFT foot is still flat on the step and the LEFT knee is bent; her RIGHT leg reaches forward and down so the right HEEL lightly touches the floor in front of the step. Pelvis level, torso upright, left hand on the handrail.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: both feet on the step. BOTTOM: left foot on the step with the left knee bent, right heel just tapping the floor in front of the step - her weight stays on the step."
+ },
+ {
+  "slug": "step-down-op-verhoging",
+  "naam": "Step-down – op verhoging",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright ON a low wooden platform (about 15 cm high), seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, close to the front edge, hands on her hips, WITHOUT any support. Both feet are on the platform. The arrow is a curved arrow at her RIGHT foot going FORWARD and DOWN to the floor in front of the platform, showing the right foot being lowered.",
+  "eind_en": "END position: same side view. Her LEFT foot is still flat on the platform and the LEFT knee is bent; her RIGHT heel lightly touches the floor in front of the platform. Pelvis level, torso upright, hands on her hips.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, no support. TOP: both feet on the platform. BOTTOM: left knee bent on the platform, right heel just tapping the floor in front."
+ },
+ {
+  "slug": "split-squat-staand-met-steun",
+  "naam": "Split squat – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, in a WIDE split stance: her RIGHT foot is a big step forward, flat on the floor; her LEFT foot is a big step back, resting on the ball of the foot. Both knees are straight, torso upright. A plain chair stands at her LEFT side (partly hidden behind her) and her left hand rests on its backrest for balance. The arrow is a straight arrow at her hips pointing straight DOWN, showing her lowering straight down.",
+  "eind_en": "END position: same side view, feet in the same places. She has lowered STRAIGHT down: the front (right) knee is bent about 90 degrees above the right ankle, the back (left) knee is bent and hovers just above the floor. Torso upright, left hand on the chair.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: wide split stance, legs straight. BOTTOM: both knees bent about 90 degrees, back knee just above the floor, torso vertical."
+ },
+ {
+  "slug": "enkel-optrekken-staand-met-steun",
+  "naam": "Enkel optrekken – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "CLOSE-UP framing: show her from the knees down, large in the frame, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer; a chair leg is just visible in front of her (she holds the chair). She stands upright with both feet FLAT on the floor. The arrow is a short curved arrow at the toes of her right foot pointing UP, showing the forefoot being lifted while the heel stays on the floor.",
+  "eind_en": "END position: same close-up side view. The right heel is still on the floor, but the right forefoot and toes are lifted HIGH off the floor (foot tilted up about 30 degrees). The left foot stays flat; knees straight.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the knees down, standing, seen from the side. TOP: both feet flat. BOTTOM: right heel on the floor, right forefoot pulled up HIGH toward the shin. Exaggerate the gap under the toes."
+ },
+ {
+  "slug": "enkel-optrekken-met-elastiek",
+  "naam": "Enkel optrekken – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "CLOSE-UP framing from the knees down to the feet. She sits on an exercise mat with her right leg stretched straight in front of her, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer. An elastic band is looped around the top of her right forefoot and runs straight FORWARD (to the viewer's right) to an anchor low on a table leg beyond her foot. The right foot is pointed slightly AWAY from her (toes tilted forward), pulled by the band. The arrow is a curved arrow at the right toes going UP and BACK toward her shin, showing the foot being pulled toward her.",
+  "eind_en": "END position: same close-up side view. The right foot is pulled far UP toward her shin (toes pointing up and back toward her knee), the elastic band stretched tight to the anchor beyond the foot. The lower leg has not moved.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP of the lower leg and foot, seen from the side, band anchored beyond the foot. TOP: foot pointed away. BOTTOM: foot pulled up strongly toward the shin, band taut. Exaggerate the difference."
+ },
+ {
+  "slug": "enkel-wegduwen-staand-met-steun",
+  "naam": "Enkel wegduwen – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "CLOSE-UP framing: show her from the knees down, large in the frame, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer; a chair leg is just visible in front of her (she holds the chair). She stands upright with BOTH feet flat on the floor, hip-width apart, knees straight. The arrow is a straight arrow at the back of the right heel pointing UP, showing both heels being pushed up off the floor.",
+  "eind_en": "END position: same close-up side view. She stands HIGH on the balls of BOTH feet: both heels far off the floor, ankles stretched, knees straight.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the knees down, seen from the side. TOP: both feet flat. BOTTOM: both heels lifted high, standing on the toes. Obvious gap under both heels."
+ },
+ {
+  "slug": "enkel-wegduwen-met-elastiek",
+  "naam": "Enkel wegduwen – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the hips to the feet. She sits on an exercise mat with her back upright and her right leg stretched straight in front of her, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer; the left knee is bent with the foot flat. An elastic band runs around the sole of her right forefoot and she holds BOTH ends of the band in her hands near her right knee, the band taut. The right foot is upright, toes pointing to the ceiling. The arrow is a curved arrow at the right toes going FORWARD and DOWN (away from her), showing the foot being pushed away against the band.",
+  "eind_en": "END position: same view. The right foot is pointed far AWAY from her (toes forward and down, instep in line with the shin), the elastic band stretched longer between the forefoot and her hands. Knee straight, hands in the same place.",
+  "zoom": false,
+  "extra_avatar": "Frame from the hips to the feet, seen from the side, both hands holding the band ends. TOP: foot upright, toes to the ceiling. BOTTOM: foot pointed far away like pressing a pedal, band stretched. Exaggerate the difference."
+ },
+ {
+  "slug": "knie-naar-voren-over-voet-staand-met-steun",
+  "naam": "Knie naar voren over voet – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the hips down, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, a wall on the viewer's right with her hands resting on it (forearms visible at the top edge). Her RIGHT foot is placed a small step FORWARD, flat on the floor, toes about a hand's width from the wall, right knee straight; her left foot is flat on the floor a step behind. The arrow is a curved arrow at the front of the right knee pointing FORWARD toward the wall, showing the knee moving forward over the toes.",
+  "eind_en": "END position: same framing and view. The RIGHT knee is bent and pushed far FORWARD over and beyond the right toes, almost touching the wall, while the right HEEL stays flat on the floor.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the hips down, seen from the side, wall on the right. TOP: right knee straight above the ankle. BOTTOM: right knee far forward past the toes, heel still flat on the floor. Exaggerate the forward knee travel."
+ },
+ {
+  "slug": "bekken-kantelen-op-handen-en-knieen",
+  "naam": "Bekken kantelen – op handen en knieën",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She is on her HANDS and KNEES on an exercise mat, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right side is nearest to the viewer, hands directly under her shoulders, knees under her hips, arms straight. Her back is long and FLAT like a table top, head in line with the spine. The arrow is a curved arrow at her lower back going UP toward the ceiling, showing the pelvis tucking under and the lower back rounding upward.",
+  "eind_en": "END position: same side view on hands and knees, hands and knees in the same places. Her pelvis is tucked under (tailbone pointing down toward the mat) and her LOWER back is clearly ROUNDED upward like a small hump. Arms straight, head relaxed.",
+  "zoom": false,
+  "extra_avatar": "On hands and knees, seen from the side. Exaggerate: TOP a flat back, BOTTOM the lower back rounded upward with the tailbone tucked under. Hands and knees do not move."
+ },
+ {
+  "slug": "bekken-kantelen-staand",
+  "naam": "Bekken kantelen – staand",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the shoulders to the knees. She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right side is nearest to the viewer, knees slightly bent, hands on her hips. Her lower back has a clear natural HOLLOW and her buttocks stick slightly out behind. The arrow is a curved arrow at her tailbone going DOWN and FORWARD (under her body), showing the pelvis tucking under.",
+  "eind_en": "END position: same framing and view. Her pelvis is tilted BACKWARD (tailbone tucked under, pubic bone lifted toward the navel), so the lower back is clearly FLATTER and straight; knees still slightly bent, chest and head in the same place.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the shoulders to the knees, standing, seen exactly from the side. Exaggerate: TOP hollow lower back with the buttocks out, BOTTOM pelvis tucked under and a flat lower back. Only the pelvis moves."
+ },
+ {
+  "slug": "brug-met-lichte-weerstand",
+  "naam": "Brug – met lichte weerstand",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She lies on her BACK on an exercise mat, seen in a THREE-QUARTER view from her feet and her right side, so both knees are clearly visible. BOTH knees are bent, feet flat on the mat hip-width apart, arms beside her body, buttocks on the mat. A short loop of elastic band runs around BOTH thighs just above the knees, and the knees press slightly outward so the band is taut. The arrow is a straight arrow at her hips pointing UP, showing the hips being lifted.",
+  "eind_en": "END position: same view. Her hips are lifted HIGH so her body forms one straight line from shoulders to knees; the knees are still pressed slightly APART against the stretched loop band. Shoulders and feet stay on the mat.",
+  "zoom": false,
+  "extra_avatar": "Three-quarter view from the feet, loop band just above the knees in both figures, knees kept apart. TOP: buttocks on the mat. BOTTOM: hips lifted into a straight line from shoulders to knees, band taut."
+ },
+ {
+  "slug": "romp-heupscharnier-op-handen-en-knieen",
+  "naam": "Romp heupscharnier – op handen en knieën",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She is on her HANDS and KNEES on an exercise mat, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right side is nearest to the viewer, hands directly under her shoulders, knees under her hips, arms straight, back flat like a table top. The arrow is a straight horizontal arrow at her hips pointing BACKWARD (to the viewer's left) toward her heels, showing the hips moving back.",
+  "eind_en": "END position: same side view, hands and knees in the same places. Her hips have moved far BACKWARD toward her heels (buttocks close to the heels), arms stretched long in front of her, and her back is still STRAIGHT and flat (not rounded), head in line.",
+  "zoom": false,
+  "extra_avatar": "On hands and knees, seen from the side. TOP: hips above the knees. BOTTOM: hips rocked back toward the heels, arms long, back still flat and straight."
+ },
+ {
+  "slug": "romp-heupscharnier-zittend",
+  "naam": "Romp heupscharnier – zittend",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair WITHOUT leaning on the backrest, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right side is nearest to the viewer, feet flat on the floor, arms crossed over her chest, back straight. The arrow is a curved arrow starting at her upper back and going FORWARD and DOWN, showing the straight-backed torso tipping forward from the hips.",
+  "eind_en": "END position: same side view on the same chair. Her torso, with a long FLAT back, is tipped FORWARD from the hips about 45 degrees, chest over her thighs, head in line with the spine; buttocks stay on the seat, feet flat.",
+  "zoom": false,
+  "extra_avatar": "Sitting, seen from the side. TOP: upright. BOTTOM: flat back tipped forward about 45 degrees from the hips. The back is never rounded."
+ },
+ {
+  "slug": "marcheren-interval-kort",
+  "naam": "Marcheren – interval kort",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen in a THREE-QUARTER FRONT view from her right side (her body turned about 45 degrees), so both legs are clearly visible, arms relaxed beside her body, both feet on the floor. The arrow is a straight arrow at her RIGHT knee pointing UP, showing the knee lifting as she marches on the spot.",
+  "eind_en": "END position: same view, marching on the spot. Her RIGHT knee is lifted in front of her to about hip height and her LEFT arm swings forward, right arm back, like a calm march. She stands tall on the left leg.",
+  "zoom": false,
+  "extra_avatar": "Three-quarter front view. TOP: standing on both feet. BOTTOM: marching on the spot - right knee lifted to hip height, opposite (left) arm swung forward. Calm, relaxed pace."
+ },
+ {
+  "slug": "opstaan-herhalen-interval-kort",
+  "naam": "Opstaan herhalen – interval kort",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on the front half of a plain chair, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, both feet flat on the floor under her knees, arms crossed over her chest. The arrow is a curved arrow starting at her shoulders and going FORWARD and UP, showing her standing up.",
+  "eind_en": "END position: same side view. She stands fully UPRIGHT directly in front of the chair, hips and knees straight, arms still crossed over her chest. The empty chair is right behind her.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: sitting, arms crossed. BOTTOM: standing upright in front of the chair, arms crossed."
+ },
+ {
+  "slug": "zijwaarts-stappen-interval-kort",
+  "naam": "Zijwaarts stappen – interval kort",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT, feet together, hands on her hips. The arrow is a straight horizontal arrow on the floor at her RIGHT foot (on the viewer's left) pointing SIDEWAYS, away from the other foot, showing a step to the side.",
+  "eind_en": "END position: seen from the front. She has taken a clear step SIDEWAYS with her right foot: the feet are now wide apart, her weight shifting onto the right foot and the left foot about to follow. Torso upright, hands on her hips, knees soft.",
+  "zoom": false,
+  "extra_avatar": "Seen from the front. TOP: feet together. BOTTOM: right foot stepped wide out to the side, weight moving onto it, torso upright."
+ },
+ {
+  "slug": "schouder-voorwaarts-heffen-isometrisch-tegen-de-muur",
+  "naam": "Schouder voorwaarts heffen – isometrisch tegen de muur",
+  "catalogus": true,
+  "ref": "001",
+  "static": true,
+  "pose_en": "Frame her from the hips up, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer. She stands facing a wall (on the viewer's right), about an arm's length away. Her right arm is stretched FORWARD at shoulder height and her right FIST rests against the wall. Her left arm hangs relaxed. Nothing moves. Draw a short straight arrow at the right fist pointing INTO the wall, showing the forward push.",
+  "eind_en": "She holds this position: right arm forward at shoulder height, fist pressing into the wall, shoulder muscles tensed, body upright, nothing moves.",
+  "zoom": false,
+  "extra_avatar": "Frame her from the hips up, seen from the side, the wall in front of her; the right fist is clearly in contact with the wall at shoulder height."
+ },
+ {
+  "slug": "schouder-voorwaarts-heffen-functioneel-reikend",
+  "naam": "Schouder voorwaarts heffen – functioneel reikend",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer. A tall cupboard with an open shelf at head height stands directly in front of her (on the viewer's right); a cup stands on the shelf. Both arms hang beside her body. The arrow is a long curved arrow from her right hand going FORWARD and UP to the cup on the shelf, showing her reaching forward and up.",
+  "eind_en": "END position: same side view. Her right arm reaches FORWARD and UP, almost straight, and her right hand holds the cup on the shelf at head height. Torso upright, left arm relaxed.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, cupboard with shelf in front of her in both figures. TOP: arms hanging. BOTTOM: right hand reaching forward-up and gripping the cup on the shelf at head height."
+ },
+ {
+  "slug": "schouder-zijwaarts-heffen-isometrisch-tegen-de-muur",
+  "naam": "Schouder zijwaarts heffen – isometrisch tegen de muur",
+  "catalogus": true,
+  "ref": "001",
+  "static": true,
+  "pose_en": "Frame her from the hips up, seen from the FRONT. She stands with her RIGHT side directly next to a wall (the wall on the viewer's left). Her right arm hangs straight beside her body and the OUTER side of her right forearm and the back of her hand press sideways against the wall. Her left arm hangs relaxed. Nothing moves. Draw a short straight arrow at the right wrist pointing sideways INTO the wall, showing the outward push.",
+  "eind_en": "She holds this position: right arm straight beside her body, the outside of the arm pressing sideways into the wall, shoulder muscles tensed, body upright and not leaning, nothing moves.",
+  "zoom": false,
+  "extra_avatar": "Frame her from the hips up, seen from the front, the wall directly at her right side; the outside of the right forearm is clearly in contact with the wall."
+ },
+ {
+  "slug": "schouder-zijwaarts-heffen-functioneel-reikend",
+  "naam": "Schouder zijwaarts heffen – functioneel reikend",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT, both arms hanging beside her body. A wall shelf hangs at head height at her RIGHT side (on the viewer's left), an arm's length away, with a cup on it. The arrow is a long curved arrow from her right hand going SIDEWAYS and UP to the cup on the shelf, showing her reaching sideways and up.",
+  "eind_en": "END position: seen from the front. Her right arm reaches SIDEWAYS and UP, almost straight, and the right hand holds the cup on the shelf beside her at head height. Torso upright (not leaning), left arm relaxed.",
+  "zoom": false,
+  "extra_avatar": "Seen from the front, shelf at her right side in both figures. TOP: arms hanging. BOTTOM: right arm reaching out sideways-up, hand on the cup on the shelf."
+ },
+ {
+  "slug": "schouder-naar-binnen-draaien-actief",
+  "naam": "Schouder naar binnen draaien – actief",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the hips up, seen in a THREE-QUARTER FRONT view from her right side (her body turned about 45 degrees), so her right arm is large and clearly visible. Her right elbow is bent at a right angle and held against her side; the right forearm points straight FORWARD, horizontal, thumb up, hand empty. Her left arm hangs relaxed. The arrow is a curved horizontal arrow at the right hand going INWARD toward her belly, showing the forearm turning inward while the elbow stays against her side.",
+  "eind_en": "END position: same framing and view. The right elbow is still bent at a right angle and touches her side, but the right forearm now lies ACROSS her belly, the palm of the hand against her navel.",
+  "zoom": false,
+  "extra_avatar": "Frame both figures from the hips up, three-quarter front view. In BOTH figures the right elbow is bent 90 degrees and touches her side. TOP: forearm pointing straight forward. BOTTOM: forearm across the belly. No band, no equipment."
+ },
+ {
+  "slug": "schouderblad-naar-achteren-isometrisch-tegen-de-muur",
+  "naam": "Schouderblad naar achteren – isometrisch tegen de muur",
+  "catalogus": true,
+  "ref": "001",
+  "static": true,
+  "pose_en": "Frame her from the hips up, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer. She stands with her BACK flat against a wall (the wall on the viewer's left), head against the wall. Her arms hang beside her body with the elbows slightly bent, and the back of her right elbow touches the wall. Nothing moves. Draw a short straight arrow at the right elbow pointing BACKWARD into the wall, showing the elbows and shoulder blades pressing back.",
+  "eind_en": "She holds this position: back against the wall, both elbows and shoulder blades pressed backward into the wall, chest open, shoulders low, nothing moves.",
+  "zoom": false,
+  "extra_avatar": "Frame her from the hips up, seen from the side, wall directly behind her; elbows and shoulders are clearly pressed back against the wall, chest open."
+ },
+ {
+  "slug": "schouderblad-omhoog-draaien-functioneel-reikend",
+  "naam": "Schouderblad omhoog draaien – functioneel reikend",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen in a THREE-QUARTER FRONT view from her right side (her body turned about 45 degrees), so her right arm is large and clearly visible. A tall cupboard with a HIGH open shelf (above head height) stands diagonally in front of her right side. She holds a cup in her right hand in front of her right hip, arm hanging. The arrow is a long curved arrow from the cup going DIAGONALLY UP to the high shelf, showing her reaching up to put the cup away.",
+  "eind_en": "END position: same view. Her right arm reaches DIAGONALLY UP, almost straight, well above head height, and her right hand sets the cup on the high shelf. Torso upright, shoulder blade turning upward, left arm relaxed.",
+  "zoom": false,
+  "extra_avatar": "Three-quarter front view, high shelf in both figures. TOP: cup held at hip height. BOTTOM: right arm stretched diagonally up, placing the cup on the high shelf above head height."
+ },
+ {
+  "slug": "serratus-punch-functioneel-reikend",
+  "naam": "Serratus punch – functioneel reikend",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the hips up, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer. Her right arm is stretched straight FORWARD at shoulder height, elbow straight, hand open, shoulder in its normal position. Her left arm hangs relaxed. The arrow is a short straight horizontal arrow in front of the right fingertips pointing FORWARD, showing her reaching a little further.",
+  "eind_en": "END position: same framing and view. The right arm is still straight at shoulder height, but the hand has reached clearly FURTHER forward because the right shoulder has slid forward; her chest and hips stay in the same place (the torso does not lean or turn).",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the hips up, seen from the side. Exaggerate the small movement: TOP shoulder in neutral, BOTTOM the right shoulder pushed far forward so the hand is a hand's length further forward. Elbow straight in both, torso upright."
+ },
+ {
+  "slug": "schouder-extensie-functioneel-reikend",
+  "naam": "Schouder extensie – functioneel reikend",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer, both arms hanging beside her body. The arrow is a curved arrow at the right hand going BACKWARD to her right back pocket, showing the hand reaching back.",
+  "eind_en": "END position: same side view. Her right hand has moved BACKWARD and rests flat on her right back pocket (on her buttock), the elbow bent and pointing backward, shoulder low. Torso upright.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: right arm hanging beside the thigh. BOTTOM: right hand on the back pocket of her trousers, elbow pointing back."
+ },
+ {
+  "slug": "onderste-trapezius-heffen-actief",
+  "naam": "Onderste trapezius heffen – actief",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She lies FACE DOWN (prone) on an exercise mat, seen from ABOVE at an angle from her right side. Her forehead rests on a small folded towel. Her RIGHT arm is stretched out on the mat DIAGONALLY above her head (like one arm of the letter Y), elbow straight, thumb pointing up; her left arm lies beside her body. The arrow is a short straight arrow at the right hand pointing UP, away from the mat, showing the straight arm being lifted.",
+  "eind_en": "END position: same view, still lying face down with the forehead on the towel. The straight right arm, still in the diagonal Y-direction, is lifted a hand's width OFF the mat, thumb up, shoulder blade pulled down and back.",
+  "zoom": false,
+  "extra_avatar": "Lying face down, seen from above at an angle. TOP: right arm resting on the mat diagonally overhead. BOTTOM: the same straight arm lifted clearly off the mat (visible gap under the whole arm), head stays down."
+ },
+ {
+  "slug": "onderste-trapezius-heffen-functioneel-reikend",
+  "naam": "Onderste trapezius heffen – functioneel reikend",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT, both arms hanging relaxed. A HIGH wall shelf (above head height) hangs diagonally above her right shoulder (on the viewer's left) with a cup on it. The arrow is a long curved arrow from her right hand going DIAGONALLY UP and OUT to the cup, showing her reaching up like one arm of the letter Y.",
+  "eind_en": "END position: seen from the front. Her right arm is stretched straight DIAGONALLY up and out (a Y-arm, about 45 degrees out from vertical), the hand holding the cup on the high shelf. Shoulder low (not shrugged toward the ear), torso upright.",
+  "zoom": false,
+  "extra_avatar": "Seen from the front, high shelf in both figures. TOP: arms hanging. BOTTOM: right arm straight in a high diagonal Y-direction, hand at the cup, shoulder kept low."
+ },
+ {
+  "slug": "hand-achter-de-rug-brengen-actief",
+  "naam": "Hand achter de rug brengen – actief",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the hips up, seen from BEHIND (we see her back and ponytail). Both arms hang straight beside her body. The arrow is a curved arrow from her RIGHT hand going behind her back and UP along the spine, showing the hand being brought up behind the back.",
+  "eind_en": "END position: same view from behind. Her right arm is bent behind her back: the BACK of the right hand rests against the middle of her spine, as high toward the shoulder blades as is comfortable, the elbow pointing out to the right. Torso upright, left arm hanging.",
+  "zoom": false,
+  "extra_avatar": "Frame both figures from the hips up, seen from BEHIND. TOP: both arms hanging. BOTTOM: right hand behind the back, back of the hand on the spine between waist and shoulder blades, elbow out to the side."
+ },
+ {
+  "slug": "hand-achter-de-rug-brengen-functioneel-reikend",
+  "naam": "Hand achter de rug brengen – functioneel reikend",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the hips up, seen from BEHIND (we see her back and ponytail). Both arms hang relaxed beside her body. The arrow is a curved arrow from her RIGHT hand going behind her back and UP along the spine, showing the hand reaching up behind the back as if washing her back.",
+  "eind_en": "END position: same view from behind. Her right arm is bent behind her back and the right hand reaches UP between her shoulder blades as if washing her back, the fingers pointing up, the elbow pointing out and down. Torso upright, left arm hanging.",
+  "zoom": false,
+  "extra_avatar": "Frame both figures from the hips up, seen from BEHIND. TOP: both arms hanging. BOTTOM: right hand reaching high up behind the back to between the shoulder blades, fingers pointing up."
+ },
+ {
+  "slug": "heup-strekken-functioneel-op-een-been",
+  "naam": "Heup strekken – functioneel op één been",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, in front of a kitchen counter (on the viewer's right) with both hands resting on the edge of the counter. She stands on her LEFT leg; her RIGHT foot is just off the floor beside the left foot, right leg straight. The arrow is a curved arrow at the right heel going BACKWARD (to the viewer's left), showing the straight right leg moving backward.",
+  "eind_en": "END position: same side view at the counter, still standing only on the left leg. The straight right leg is stretched BACKWARD from the hip (about 25 degrees), toes pointing down. Torso upright, back straight, hands on the counter.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, kitchen counter in front of her. In BOTH figures only the left foot is on the floor. TOP: right foot hovering beside the left. BOTTOM: straight right leg stretched backward, torso vertical."
+ },
+ {
+  "slug": "heup-zijwaarts-heffen-functioneel-op-een-been",
+  "naam": "Heup zijwaarts heffen – functioneel op één been",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT, hands on her hips, WITHOUT any support. She stands on her LEFT leg; her RIGHT foot (on the viewer's left) hovers just above the floor next to the left foot. The arrow is a curved arrow at her right ankle going SIDEWAYS and outward, showing the straight right leg moving out to the side.",
+  "eind_en": "END position: seen from the front, still balancing only on the left leg, hands on her hips. The straight right leg is moved out to her right side (about 30 degrees), toes pointing forward. Pelvis level, torso upright.",
+  "zoom": false,
+  "extra_avatar": "Seen from the front, no chair, hands on hips. In BOTH figures only the left foot is on the floor. TOP: right foot hovering beside the left. BOTTOM: straight right leg out to the side, pelvis level."
+ },
+ {
+  "slug": "heup-naar-binnen-bewegen-liggend-ondersteund",
+  "naam": "Heup naar binnen bewegen – liggend ondersteund",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She lies on her BACK on a bed, head on a pillow, arms beside her body, seen from ABOVE at an angle from her feet, so both legs are clearly visible. Her left leg lies straight. Her RIGHT leg lies straight but is spread OUT to the side (about 30 degrees away from the left leg), toes pointing up. The arrow is a straight arrow on the bed at the right foot pointing INWARD toward the left foot, showing the right leg sliding inward.",
+  "eind_en": "END position: same view, lying on her back. The straight right leg has slid INWARD over the bed and now lies right next to the left leg, feet together, toes still pointing up.",
+  "zoom": false,
+  "extra_avatar": "Lying on the back, seen from above at an angle from the feet. TOP: right leg spread out to the side, a wide gap between the legs. BOTTOM: both legs together. The leg slides over the surface, knee straight, toes up."
+ },
+ {
+  "slug": "heup-naar-binnen-bewegen-staand-met-steun",
+  "naam": "Heup naar binnen bewegen – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT, feet hip-width apart. A plain chair stands beside her on her LEFT side (on the viewer's right) and her left hand rests on its backrest for balance. The arrow is a curved arrow at her RIGHT foot (on the viewer's left) going INWARD, passing in FRONT of the left leg, showing the straight right leg crossing in front of the other leg.",
+  "eind_en": "END position: seen from the front. The straight RIGHT leg has moved INWARD and crosses in FRONT of the standing left leg: the right foot hovers just above the floor beyond the left foot. Torso upright, pelvis level, left hand on the chair.",
+  "zoom": false,
+  "extra_avatar": "Seen from the front. TOP: feet hip-width apart. BOTTOM: the straight right leg crossed in front of the left leg, right foot off the floor on the far side of the left foot. Torso vertical."
+ },
+ {
+  "slug": "heup-naar-binnen-bewegen-met-elastiek",
+  "naam": "Heup naar binnen bewegen – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT. A plain chair stands beside her on her LEFT side (on the viewer's right) and her left hand rests on its backrest for balance. An elastic band is looped around her RIGHT ankle (on the viewer's left) and runs sideways to an anchor low on a table leg at her RIGHT side. Her straight right leg is held a little OUT to the right side, foot just off the floor, the band lightly taut. The arrow is a curved arrow at the right ankle going INWARD toward the left leg, showing the straight right leg being pulled inward against the band.",
+  "eind_en": "END position: seen from the front. The straight right leg has moved INWARD to just in front of the left foot, the elastic band stretched tight to the anchor at her right side. Torso upright, left hand on the chair.",
+  "zoom": false,
+  "extra_avatar": "Seen from the front, band from the right ankle to a low anchor at her right side. TOP: right leg out to the side. BOTTOM: right leg pulled inward to the standing leg, band taut."
+ },
+ {
+  "slug": "heup-naar-buiten-draaien-liggend-ondersteund",
+  "naam": "Heup naar buiten draaien – liggend ondersteund",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "CLOSE-UP framing from the hips down to the feet. She lies on her BACK on a bed with both legs straight and slightly apart, seen from ABOVE at an angle from her feet, so the soles and toes are toward the viewer. The toes and kneecap of the RIGHT leg point straight UP to the ceiling. The arrow is a curved arrow at the right toes rolling OUTWARD (away from the other leg), showing the whole leg rolling outward.",
+  "eind_en": "END position: same close-up view. The whole right leg is rolled OUTWARD from the hip: the right toes and kneecap now point out to the SIDE, the outer edge of the foot toward the bed. The leg stays straight and in the same place. The left leg is unchanged, toes up.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the hips down, seen from the feet. TOP: right toes and kneecap pointing straight up. BOTTOM: right leg rolled outward, toes pointing out to the side. Exaggerate the difference; the left foot keeps pointing up as comparison."
+ },
+ {
+  "slug": "heup-naar-buiten-draaien-met-elastiek",
+  "naam": "Heup naar buiten draaien – met elastiek",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair, seen from the FRONT, feet flat on the floor hip-width apart, hands on the sides of the seat. A short loop of elastic band runs around BOTH thighs just above the knees; the knees are hip-width apart. The arrow is a short straight arrow at her RIGHT knee (on the viewer's left) pointing OUTWARD, showing the knees pushing outward against the band.",
+  "eind_en": "END position: same front view on the same chair. BOTH knees are pushed wide OUTWARD against the loop band, which is stretched tight; both feet remain flat on the floor in the same place.",
+  "zoom": false,
+  "extra_avatar": "Seen from the front, loop band just above the knees in both figures. TOP: knees hip-width, band slack. BOTTOM: knees pushed wide apart, band stretched, feet unmoved."
+ },
+ {
+  "slug": "heup-naar-binnen-draaien-liggend-ondersteund",
+  "naam": "Heup naar binnen draaien – liggend ondersteund",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She lies on her BACK on a bed, head on a pillow, seen in a THREE-QUARTER view from her feet and her right side. BOTH knees are bent and point to the ceiling, both feet flat on the bed a little wider than hip-width apart. The arrow is a curved arrow at the RIGHT knee going INWARD and down toward the left leg, showing the right knee dropping inward.",
+  "eind_en": "END position: same view, lying on her back. The RIGHT knee has dropped INWARD toward the left leg (the right thigh slanting inward, the right foot rolled onto its inner edge in the same spot). The left knee still points straight up; pelvis flat on the bed.",
+  "zoom": false,
+  "extra_avatar": "Lying on the back, knees bent, seen from the feet at an angle. TOP: both knees pointing up. BOTTOM: right knee dropped clearly inward toward the left knee, left knee unchanged, both feet in place."
+ },
+ {
+  "slug": "heup-naar-binnen-draaien-staand-met-steun",
+  "naam": "Heup naar binnen draaien – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "CLOSE-UP framing from the hips down, seen from the FRONT. She stands upright; a chair backrest held by her left hand is just visible at her left side (viewer's right). Both legs are straight, feet hip-width apart, both feet and kneecaps pointing straight FORWARD; the right foot rests lightly on its heel. The arrow is a curved arrow at the toes of the RIGHT foot (on the viewer's left) going INWARD toward the other foot, showing the whole leg turning inward.",
+  "eind_en": "END position: same close-up front view. The whole straight RIGHT leg is turned INWARD from the hip: the right toes AND the right kneecap point toward the left foot (about 35 degrees inward). The pelvis still faces forward; the left leg is unchanged.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the hips down, seen from the front. TOP: right toes and kneecap pointing forward. BOTTOM: right toes and kneecap turned clearly inward toward the other foot. The pelvis does not turn. Exaggerate the difference."
+ },
+ {
+  "slug": "knie-strekken-staand-met-steun",
+  "naam": "Knie strekken – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer. A plain chair stands at her LEFT side (partly hidden behind her) and her left hand rests on its backrest for balance. She stands on her left leg; her RIGHT thigh is lifted a little forward (about 30 degrees) and the right knee is bent, so the right foot hangs just off the floor below the knee. The arrow is a curved arrow at the right foot going FORWARD and UP, showing the right knee straightening forward.",
+  "eind_en": "END position: same side view. The right thigh is in the same place, but the right knee is now completely STRAIGHT: the whole right leg points diagonally forward and down, the foot a little above the floor in front of her, toes pulled up. Torso upright.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. In BOTH figures the right foot is off the floor and the thigh slightly forward. TOP: right knee bent, lower leg hanging. BOTTOM: right knee fully straight, leg stretched diagonally forward."
+ },
+ {
+  "slug": "step-down-met-elastiek",
+  "naam": "Step-down – met elastiek",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright ON a single stair step (about 15 cm high), seen in a THREE-QUARTER FRONT view so both knees are clearly visible, hands on her hips. A short loop of elastic band runs around BOTH thighs just above the knees. Both feet are on the step, close to the front edge. The arrow is a curved arrow at her RIGHT foot going FORWARD and DOWN to the floor in front of the step, showing the right foot being lowered.",
+  "eind_en": "END position: same view. Her LEFT foot is still flat on the step and the LEFT knee is bent, pointing straight over the left foot (pressing outward against the band, not falling inward); her RIGHT heel lightly touches the floor in front of the step. Pelvis level, torso upright.",
+  "zoom": false,
+  "extra_avatar": "Three-quarter front view, loop band just above the knees in both figures. TOP: both feet on the step. BOTTOM: standing knee bent and kept above the foot, other heel tapping the floor in front, band taut."
+ },
+ {
+  "slug": "split-squat-op-verhoging",
+  "naam": "Split squat – op verhoging",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, in a wide split stance, hands on her hips. Her RIGHT foot is a big step forward, flat on the floor. Her LEFT foot is behind her, the top of the foot resting ON a low step or bench (about 30 cm high). Front knee almost straight, torso upright. The arrow is a straight arrow at her hips pointing straight DOWN, showing her lowering straight down.",
+  "eind_en": "END position: same side view, feet in the same places (back foot still on the step). She has lowered STRAIGHT down: the front (right) knee is bent about 90 degrees above the ankle, the back (left) knee bent and dropped toward the floor. Torso upright.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, back foot on the low step in both figures. TOP: front leg almost straight. BOTTOM: front knee bent 90 degrees, back knee dropped low, torso vertical."
+ },
+ {
+  "slug": "hamstring-curl-zittend",
+  "naam": "Hamstring curl – zittend",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, knees bent at a right angle, hands on her thighs. Her right foot is on the floor a little in front of the knee, resting on the HEEL; the left foot is flat. The arrow is a straight horizontal arrow at the right heel pointing BACKWARD (to the viewer's left), under the chair, showing the heel being dragged back over the floor.",
+  "eind_en": "END position: same side view on the same chair. The right heel has been pulled far BACKWARD over the floor and the right foot is now under the chair seat, the knee bent sharply. Left foot unchanged, back upright.",
+  "zoom": false,
+  "extra_avatar": "Frame both figures from the waist down plus the chair, seen from the side. TOP: right heel on the floor in front of the knee. BOTTOM: right foot pulled far back under the chair. Make the difference obvious."
+ },
+ {
+  "slug": "terminal-knee-extension-staand-met-steun",
+  "naam": "Terminal knee extension – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the hips down, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer; a chair backrest held by her hand is just visible in front of her. She stands with the RIGHT knee slightly BENT (about 25 degrees), the right heel just lifted and the knee pushed a little forward; the left leg is straight. The arrow is a short straight arrow at the back of the right knee pointing BACKWARD (to the viewer's left), showing the knee being straightened fully.",
+  "eind_en": "END position: same framing and view. The right knee is pushed back until it is completely STRAIGHT, the right heel flat on the floor, the thigh muscle visibly tensed.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the hips down, seen from the side. TOP: right knee clearly bent and forward. BOTTOM: right knee fully straight, thigh tensed. Exaggerate the difference in knee angle. No band."
+ },
+ {
+  "slug": "knie-naar-voren-over-voet-op-een-verhoging",
+  "naam": "Knie naar voren over voet – op een verhoging",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the hips down, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer. Her RIGHT foot stands flat ON a low wooden step (about 20 cm high) in front of her, the right knee bent above the ankle; her LEFT leg stands straight on the floor behind. The arrow is a curved arrow at the front of the right knee pointing FORWARD, showing the knee moving forward over the foot.",
+  "eind_en": "END position: same framing and view. Her weight has shifted forward: the RIGHT knee is pushed far FORWARD beyond the right toes, while the right HEEL stays flat on the step. The left foot is still on the floor behind, heel lifting slightly.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the hips down, seen from the side, right foot on the step in both figures. TOP: right knee above the ankle. BOTTOM: right knee far forward past the toes, heel still flat on the step. Exaggerate."
+ },
+ {
+  "slug": "bekken-kantelen-met-lichte-weerstand",
+  "naam": "Bekken kantelen – met lichte weerstand",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the shoulders to the knees. She lies on her BACK on an exercise mat, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right side is nearest to the viewer, head on the mat, BOTH knees bent and both feet flat on the mat hip-width apart. BOTH hands lie flat on the FRONT of her pelvis (on the hip bones), elbows resting on the mat, pressing down lightly. Her lower back has its natural small arch: a clear gap between the lower back and the mat. The arrow is a curved arrow at the front of her pelvis, under her hands, rolling BACKWARD toward her navel, showing the pelvis tilting against the light pressure of the hands.",
+  "eind_en": "END position: same framing and view, both hands still on the front of the pelvis. The pelvis is tilted BACKWARD against the hands: the lower back is pressed FLAT against the mat (no gap). Buttocks stay on the mat.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the shoulders to the knees, lying on the back with bent knees, both hands on the front of the pelvis in both figures. Exaggerate: TOP a gap under the lower back, BOTTOM the lower back flat on the mat. The buttocks do not lift."
+ },
+ {
+  "slug": "bird-dog-staand",
+  "naam": "Bird dog – staand",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer, feet under her hips, both arms hanging beside her body. The arrow is a curved arrow from her RIGHT hand going FORWARD and UP to shoulder height, showing the right arm reaching forward while the opposite leg stretches back.",
+  "eind_en": "END position: same side view. Her RIGHT arm is stretched straight FORWARD at shoulder height and her LEFT leg is stretched straight BACKWARD, the left foot a little off the floor. She balances on the right leg; her torso stays UPRIGHT and still (not tipping forward).",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: standing on both feet, arms hanging. BOTTOM: right arm straight forward at shoulder height, LEFT leg straight back off the floor (opposite sides), torso vertical."
+ },
+ {
+  "slug": "bird-dog-met-lichte-weerstand",
+  "naam": "Bird dog – met lichte weerstand",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She is on her HANDS and KNEES on an exercise mat, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right side is nearest to the viewer, hands directly under her shoulders, knees under her hips, back flat. A long elastic band runs under her body from her RIGHT hand (the end wrapped around the hand on the mat) to the sole of her LEFT foot (looped around the foot), lightly taut. The arrow is a straight horizontal arrow at her RIGHT hand pointing FORWARD (to the viewer's right), showing the right arm reaching forward while the opposite leg stretches back against the band.",
+  "eind_en": "END position: same side view. Her RIGHT arm is stretched straight FORWARD at shoulder height and her LEFT leg straight BACKWARD at hip height; the elastic band is stretched long and tight in a line from the right hand to the left foot. Left hand and right knee stay on the mat, back flat.",
+  "zoom": false,
+  "extra_avatar": "On hands and knees, seen from the side, elastic band from the right hand to the left foot in both figures. TOP: all fours, band short. BOTTOM: right arm forward and left leg back, band stretched long between hand and foot."
+ },
+ {
+  "slug": "dead-bug-staand",
+  "naam": "Dead bug – staand",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen in a THREE-QUARTER FRONT view from her right side (her body turned about 45 degrees), so both legs are clearly visible, feet under her hips. BOTH arms are stretched straight UP above her head. The arrow is a straight arrow at her RIGHT knee pointing UP, showing the right knee lifting while the opposite arm comes down.",
+  "eind_en": "END position: same view. Her RIGHT knee is lifted to hip height (thigh horizontal) and her LEFT arm is lowered straight forward and down so the left hand is just above the right knee. The RIGHT arm still points straight up. She stands tall on the left leg, torso upright.",
+  "zoom": false,
+  "extra_avatar": "Three-quarter front view. TOP: standing on both feet, both arms straight up. BOTTOM: right knee at hip height, LEFT hand lowered to the right knee (opposite sides), right arm still up."
+ },
+ {
+  "slug": "dead-bug-met-lichte-weerstand",
+  "naam": "Dead bug – met lichte weerstand",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She lies on her BACK on an exercise mat, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right arm is nearest to the viewer, head on the mat. BOTH arms point straight UP and BOTH hips and knees are bent 90 degrees, knees above the hips, lower legs horizontal. A short elastic band is held in her RIGHT hand and looped around her LEFT knee, lightly taut. The arrow is a curved arrow from her RIGHT hand going BACKWARD over her head, showing the right arm lowering overhead while the opposite leg stretches out against the band.",
+  "eind_en": "END position: same side view. Her RIGHT arm is lowered straight BACKWARD over her head and her LEFT leg is stretched out FORWARD, both hovering above the mat; the elastic band between the right hand and the left knee is stretched long and tight. Left arm still up, right knee still bent above the hip, lower back flat.",
+  "zoom": false,
+  "extra_avatar": "Lying on the back, seen from the side, elastic band between the right hand and the left knee in both figures. TOP: arms up, knees above hips, band short. BOTTOM: right arm overhead and left leg stretched out, band stretched long."
+ },
+ {
+  "slug": "romp-heupscharnier-met-lichte-weerstand",
+  "naam": "Romp heupscharnier – met lichte weerstand",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right side is nearest to the viewer, feet hip-width apart, knees slightly bent. With BOTH hands she holds a filled WATER BOTTLE (a large plastic bottle) in front of her thighs, arms straight down. The arrow is a curved arrow starting at her upper back and going FORWARD and DOWN, showing the straight-backed torso tipping forward from the hips.",
+  "eind_en": "END position: same side view. Her hips are pushed BACKWARD and her torso, with a long FLAT back, is tipped forward about 50 degrees; the arms hang straight down so the bottle is at knee height, close to her legs. Knees only slightly bent.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, water bottle in both hands in both figures. TOP: upright, bottle in front of the thighs. BOTTOM: flat back tipped forward, buttocks back, bottle at knee height. Back never rounded."
+ },
+ {
+  "slug": "romp-draaien-met-lichte-weerstand",
+  "naam": "Romp draaien – met lichte weerstand",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the knees up, seen from the FRONT. She stands upright, feet hip-width apart. With BOTH hands she holds a filled WATER BOTTLE (a large plastic bottle) against the middle of her chest, elbows bent beside her ribs. Chest, hips and feet all face the viewer. The arrow is a curved horizontal arrow in front of her chest going toward HER right (the viewer's left), showing the torso turning to one side.",
+  "eind_en": "END position: same framing. Her shoulders and chest, with the bottle still at her chest, are turned about 45 degrees toward HER right (the viewer's left), head turning along. Her HIPS, knees and feet still face straight toward the viewer.",
+  "zoom": false,
+  "extra_avatar": "Frame both figures from the knees up, seen from the front. TOP: chest facing the viewer. BOTTOM: chest and shoulders rotated 45 degrees to one side while the hips and feet still face the viewer. Bottle held at the chest in both."
+ },
+ {
+  "slug": "romp-zijwaarts-buigen-met-lichte-weerstand",
+  "naam": "Romp zijwaarts buigen – met lichte weerstand",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT, feet hip-width apart. Her RIGHT hand (on the viewer's left) holds a filled WATER BOTTLE (a large plastic bottle) hanging beside her right thigh; her left hand rests on her left hip. The arrow is a straight arrow at the bottle pointing DOWN along the outside of the right leg, showing the torso bending sideways.",
+  "eind_en": "END position: seen from the front. Her torso is bent straight SIDEWAYS to HER right: the right hand with the bottle has slid down to the outside of the right knee, the left side of her body is long and stretched. Hips and legs stay in place; she bends purely sideways (not forward).",
+  "zoom": false,
+  "extra_avatar": "Seen from the front, water bottle in the right hand in both figures. TOP: upright. BOTTOM: torso bent sideways toward the bottle, bottle at knee height, no forward bend."
+ },
+ {
+  "slug": "rug-strekken-met-lichte-weerstand",
+  "naam": "Rug strekken – met lichte weerstand",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right side is nearest to the viewer, feet hip-width apart, knees slightly bent. Her torso, with a FLAT back, is bent a little FORWARD from the hips (about 40 degrees). With BOTH hands she holds a filled WATER BOTTLE (a large plastic bottle), arms hanging straight down so the bottle is just above her knees. The arrow is a curved arrow at her upper back going UP and BACKWARD, showing the back straightening up.",
+  "eind_en": "END position: same side view. She stands fully UPRIGHT, hips and back straight, shoulders back, the bottle held with straight arms in front of her thighs.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side, water bottle in both hands in both figures. TOP: flat back tipped forward about 40 degrees. BOTTOM: fully upright."
+ },
+ {
+  "slug": "armen-en-adem-koppelen-met-armtaak",
+  "naam": "Armen en adem koppelen – met armtaak",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen from the FRONT, both arms hanging straight beside her body, mouth closed. The arrow is a long curved arrow from her RIGHT hand (on the viewer's left) going SIDEWAYS and UP in a big arc to above her head, showing both arms being raised while she breathes in.",
+  "eind_en": "END position: seen from the front. BOTH straight arms are raised via the sides to diagonally above her head (a wide V), chest lifted and widened as she breathes in, shoulders relaxed, face calm.",
+  "zoom": false,
+  "extra_avatar": "Seen from the front. TOP: both arms hanging. BOTTOM: both arms raised in a wide V above the head, chest visibly expanded with the in-breath."
+ },
+ {
+  "slug": "marcheren-interval-langer",
+  "naam": "Marcheren – interval langer",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "She stands upright, seen exactly from the side: we see her from her RIGHT side (she faces the viewer's right), so her right leg is nearest to the viewer, arms relaxed beside her body, both feet on the floor. The arrow is a straight arrow at her RIGHT knee pointing UP, showing the knee lifting as she marches on the spot.",
+  "eind_en": "END position: same side view, marching on the spot at an easy pace. Her RIGHT knee is lifted in front of her to a moderate height (thigh about 45 degrees up) and her LEFT arm swings forward, right arm back. Torso upright, relaxed.",
+  "zoom": false,
+  "extra_avatar": "Seen from the side. TOP: standing on both feet. BOTTOM: marching on the spot at an easy, sustainable pace - right knee lifted moderately, opposite (left) arm swung forward."
+ },
+ {
+  "slug": "thorax-openen-met-armtaak",
+  "naam": "Thorax openen – met armtaak",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "Frame her from the hips up, seen from the FRONT. She stands upright. BOTH arms are bent in front of her chest at shoulder height: elbows out to the sides, forearms horizontal, fingertips of both hands touching each other in front of the breastbone. The arrow is a curved horizontal arrow at her RIGHT hand (on the viewer's left) going OUTWARD and back, showing the arms opening sideways.",
+  "eind_en": "END position: same framing. BOTH arms have opened wide out to the SIDES at shoulder height, elbows only slightly bent, palms facing forward, chest broad and lifted, shoulder blades together.",
+  "zoom": false,
+  "extra_avatar": "Frame both figures from the hips up, seen from the front. TOP: arms bent in front of the chest, fingertips touching. BOTTOM: arms opened wide to the sides at shoulder height, palms forward, chest broad."
+ },
+ {
+  "slug": "onderarm-naar-handpalm-boven-actief",
+  "naam": "Onderarm naar handpalm boven – actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair at a table, seen in a THREE-QUARTER FRONT view from her right side; show mainly her right forearm and hand on the table. Her right elbow is bent 90 degrees beside her body and the forearm rests on the tabletop pointing forward, the PALM facing DOWN flat on the table. The arrow is a curved rotation arrow over the right hand, turning OUTWARD (thumb rolling up and over to the outside), showing the forearm rotating until the palm faces up.",
+  "eind_en": "END position: same close view. The forearm still rests on the table in the same place, elbow still bent beside her body, but it is rotated so the PALM faces UP to the ceiling, the back of the hand on the table, fingers relaxed.",
+  "zoom": true,
+  "extra_avatar": "CLOSE-UP of the right forearm and hand on the table. TOP: palm DOWN on the table (back of the hand visible). BOTTOM: palm UP (open palm visible). Elbow and forearm stay in the same place; only the forearm rotates."
+ },
+ {
+  "slug": "onderarm-naar-handpalm-onder-actief",
+  "naam": "Onderarm naar handpalm onder – actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair at a table, seen in a THREE-QUARTER FRONT view from her right side; show mainly her right forearm and hand on the table. Her right elbow is bent 90 degrees beside her body and the forearm rests on the tabletop pointing forward, the PALM facing UP to the ceiling. The arrow is a curved rotation arrow over the right hand, turning INWARD (thumb rolling up and over to the inside), showing the forearm rotating until the palm faces down.",
+  "eind_en": "END position: same close view. The forearm still rests on the table in the same place, elbow still bent beside her body, but it is rotated so the PALM faces DOWN flat on the table, the back of the hand up.",
+  "zoom": true,
+  "extra_avatar": "CLOSE-UP of the right forearm and hand on the table. TOP: palm UP (open palm visible). BOTTOM: palm DOWN on the table (back of the hand visible). Elbow and forearm stay in the same place; only the forearm rotates."
+ },
+ {
+  "slug": "pols-omhoog-met-lichte-weerstand",
+  "naam": "Pols omhoog – met lichte weerstand",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair beside a table; show only her right forearm and hand on the table, seen from the side of the forearm (thumb side toward the viewer). Her right forearm lies flat on the tabletop, palm facing DOWN, the wrist exactly at the table edge; the hand holds a filled WATER BOTTLE (half-litre plastic bottle, gripped around the middle) and hangs DOWN over the edge. The arrow is a curved arrow at the back of the hand going UP, showing the hand with the bottle being lifted at the wrist.",
+  "eind_en": "END position: same close view. The forearm still lies flat on the table, but the hand with the water bottle is lifted UP at the wrist as far as possible (knuckles pointing up), the bottle above the level of the table.",
+  "zoom": true,
+  "extra_avatar": "CLOSE-UP of the right forearm and hand at the table edge, water bottle in the hand in both figures. TOP: hand and bottle hanging down over the edge. BOTTOM: hand bent UP at the wrist, bottle lifted. The forearm stays flat on the table."
+ },
+ {
+  "slug": "pols-omlaag-actief",
+  "naam": "Pols omlaag – actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair beside a table; show only her right forearm and hand on the table, seen from the side of the forearm (thumb side toward the viewer). Her right forearm lies flat on the tabletop, palm facing DOWN, the wrist exactly at the table edge; the hand sticks out over the edge, held LEVEL in one straight line with the forearm, fingers relaxed. The arrow is a curved arrow at the fingers going DOWN, showing the hand bending down at the wrist.",
+  "eind_en": "END position: same close view. The forearm still lies flat on the table, but the hand is bent DOWN at the wrist as far as possible, the fingers pointing to the floor.",
+  "zoom": true,
+  "extra_avatar": "CLOSE-UP of the right forearm and hand at the table edge, seen from the side. TOP: hand level, in line with the forearm. BOTTOM: hand bent far DOWN at the wrist, fingers toward the floor. The forearm stays flat on the table."
+ },
+ {
+  "slug": "pols-naar-duimzijde-actief",
+  "naam": "Pols naar duimzijde – actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair beside a table; show only her right forearm and hand on the table, seen from the side. Her right forearm rests on its LITTLE-FINGER edge on the tabletop (like a handshake position), the THUMB pointing UP, the wrist exactly at the table edge; the hand sticks out over the edge and hangs slightly down, fingers straight and together. The arrow is a curved arrow at the thumb side of the hand going UP, showing the hand tilting up toward the thumb side.",
+  "eind_en": "END position: same close view. The forearm still rests on its little-finger edge, thumb on top, but the hand is tilted UP at the wrist toward the thumb side (the knuckle of the index finger rising, the fingertips pointing diagonally upward).",
+  "zoom": true,
+  "extra_avatar": "CLOSE-UP of the right forearm and hand at the table edge, thumb on top in both figures (handshake position, palm never turns down). TOP: hand drooping slightly down. BOTTOM: hand tilted clearly UP toward the thumb side. Exaggerate the difference; forearm stays still."
+ },
+ {
+  "slug": "pols-naar-pinkzijde-actief",
+  "naam": "Pols naar pinkzijde – actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair at a table; show only her right forearm and hand on the tabletop, seen from directly ABOVE. The right forearm and hand lie FLAT on the table, palm down, fingers together and pointing straight ahead in one line with the forearm. The arrow is a short curved arrow at the fingertips going SIDEWAYS toward the LITTLE-FINGER side, showing the hand sliding over the table toward the little-finger side.",
+  "eind_en": "END position: same view from above. The forearm has not moved, but the flat hand has slid sideways at the wrist toward the LITTLE-FINGER side: the fingers now point about 30 degrees outward from the line of the forearm. Palm still flat on the table.",
+  "zoom": true,
+  "extra_avatar": "CLOSE-UP from above of the right forearm and flat hand on the table. TOP: hand straight in line with the forearm. BOTTOM: hand angled clearly toward the little-finger side at the wrist. The forearm stays in exactly the same place. Exaggerate the angle."
+ },
+ {
+  "slug": "vingers-openen-en-sluiten-actief",
+  "naam": "Vingers openen en sluiten – actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair; show her from the chest up with her RIGHT hand large in the picture, seen from the FRONT. She holds her right hand up in front of her shoulder, the PALM facing forward toward the viewer, all five fingers stretched and SPREAD as wide apart as possible. The arrow is a curved arrow at the fingertips curling DOWN toward the palm, showing the fingers closing into a fist.",
+  "eind_en": "END position: same view. The right hand is closed into a full FIST, still held up in front of the shoulder with the palm side toward the viewer, the thumb wrapped over the front of the fingers.",
+  "zoom": true,
+  "extra_avatar": "CLOSE-UP of the right hand. TOP: open hand, palm toward the viewer, five fingers spread wide. BOTTOM: the same hand closed into a fist. Five fingers, anatomically correct."
+ },
+ {
+  "slug": "duim-oppositie-actief",
+  "naam": "Duim oppositie – actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair; show her right forearm and hand large in the picture, seen from the front and slightly above. She holds her right hand in front of her with the PALM facing UP, fingers open, relaxed and slightly apart, the thumb out to the side. The arrow is a curved arrow from the tip of the thumb going across the palm toward the fingertips, showing the thumb moving to touch the fingertips one by one.",
+  "eind_en": "END position: same view, palm still facing up. The tip of the THUMB touches the tip of the LITTLE FINGER, forming a ring across the palm; the other three fingers stay relaxed and slightly curved.",
+  "zoom": true,
+  "extra_avatar": "CLOSE-UP of the right hand, palm up. TOP: open hand, thumb out to the side. BOTTOM: thumb tip touching the tip of the little finger. Five fingers, anatomically correct."
+ },
+ {
+  "slug": "peesglijden-hand-actief",
+  "naam": "Peesglijden hand – actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair; show her right forearm and hand large in the picture, seen from the SIDE of the hand (thumb side toward the viewer). Her right forearm is held upright, the hand up at shoulder height, wrist straight, all fingers stretched STRAIGHT up and together, thumb relaxed beside them. The arrow is a curved arrow at the fingertips curling FORWARD and DOWN toward the palm, showing the fingers bending step by step into a fist.",
+  "eind_en": "END position: same side view of the hand. The fingers are rolled all the way in to a full FIST: knuckles on top, fingertips tucked into the palm, thumb resting on the outside of the index finger. The wrist is still straight and the forearm upright.",
+  "zoom": true,
+  "extra_avatar": "CLOSE-UP of the right hand seen from the thumb side. TOP: fingers completely straight up. BOTTOM: full fist with a straight wrist. Five fingers, anatomically correct."
+ },
+ {
+  "slug": "knijpkracht-actief",
+  "naam": "Knijpkracht – actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair; show her from the waist to the knees with the right forearm and hand large, seen in a THREE-QUARTER FRONT view. Her right forearm rests relaxed on her right thigh, the palm facing UP, the hand OPEN with the fingers stretched and relaxed. The arrow is a curved arrow at the fingertips curling toward the palm, showing the hand closing into a fist.",
+  "eind_en": "END position: same view. The right forearm still rests on the thigh, palm side up, but the hand is squeezed into a firm FIST, the thumb over the fingers.",
+  "zoom": true,
+  "extra_avatar": "CLOSE-UP of the right forearm resting on the thigh. TOP: open hand, palm up. BOTTOM: tight fist. No object in the hand. Five fingers, anatomically correct."
+ },
+ {
+  "slug": "knijpkracht-met-lichte-weerstand",
+  "naam": "Knijpkracht – met lichte weerstand",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "She sits upright on a plain chair; show her from the waist to the knees with the right forearm and hand large, seen in a THREE-QUARTER FRONT view. Her right forearm rests on her right thigh, palm facing UP, and a soft round foam BALL (about the size of a tennis ball) lies in the open hand, the fingers loosely around it. The arrow is a curved arrow at the fingertips pressing INTO the ball, showing the hand squeezing the ball.",
+  "eind_en": "END position: same view. The fingers and thumb are squeezed firmly around the soft ball, which is visibly SQUASHED and dented between the fingers.",
+  "zoom": true,
+  "extra_avatar": "CLOSE-UP of the right hand on the thigh with a soft foam ball. TOP: ball round, fingers loose around it. BOTTOM: ball clearly squashed in a firm grip. Five fingers, anatomically correct."
+ },
+ {
+  "slug": "tenen-heffen-zittend-actief",
+  "naam": "Tenen heffen – zittend actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "CLOSE-UP framing: show her from the knees down, large in the frame, seen in a THREE-QUARTER FRONT view; the front edge of the chair seat is just visible. She sits on a plain chair and is BAREFOOT, both feet flat on the floor. The arrow is a short curved arrow at the toes of her RIGHT foot pointing UP, showing the toes being lifted.",
+  "eind_en": "END position: same close-up view, barefoot. On BOTH feet all five TOES are lifted HIGH off the floor and bent back, while the balls of the feet and the heels stay on the floor.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP of both bare feet from the knees down. TOP: toes flat on the floor. BOTTOM: all toes lifted high and bent upward; heels AND balls of the feet stay on the floor. Exaggerate the toe lift."
+ },
+ {
+  "slug": "tenen-heffen-staand-met-steun",
+  "naam": "Tenen heffen – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "CLOSE-UP framing: show her from the knees down, large in the frame, seen in a THREE-QUARTER FRONT view; a chair leg is just visible beside her (she holds the chair lightly). She stands upright and is BAREFOOT, both feet flat on the floor. The arrow is a short curved arrow at the toes of her RIGHT foot pointing UP, showing the toes being lifted.",
+  "eind_en": "END position: same close-up view, barefoot, standing. On BOTH feet all five TOES are lifted HIGH off the floor and bent back, while the balls of the feet and the heels stay on the floor. Knees straight.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP of both bare feet from the knees down, standing. TOP: toes flat on the floor. BOTTOM: all toes lifted high; heels AND balls of the feet stay on the floor. Exaggerate the toe lift."
+ },
+ {
+  "slug": "korte-voet-zittend-actief",
+  "naam": "Korte voet – zittend actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "EXTREME CLOSE-UP of her bare RIGHT foot and ankle, seen exactly from the INNER (arch) side of the foot, the foot filling the picture; the shin goes up out of the frame and a chair leg is just visible (she is sitting). The bare foot stands FLAT and relaxed on the floor: the inner arch is LOW, almost touching the floor. The arrow is a short straight horizontal arrow under the ball of the foot pointing BACKWARD toward the heel, showing the ball of the foot being drawn toward the heel.",
+  "eind_en": "END position: same extreme close-up from the inner side. The ball of the foot has been drawn slightly toward the heel so the foot looks SHORTER and the inner ARCH is lifted HIGH into a clear dome. The toes lie long, flat and relaxed on the floor (NOT curled, not clawing), heel on the floor.",
+  "zoom": false,
+  "extra_avatar": "EXTREME CLOSE-UP of the bare right foot from the inner side. Exaggerate: TOP a flat, low arch; BOTTOM a clearly raised, domed arch and a visibly shorter foot. Toes stay flat and straight in both figures."
+ },
+ {
+  "slug": "korte-voet-staand-met-steun",
+  "naam": "Korte voet – staand met steun",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "CLOSE-UP framing: show her from the knees down, large in the frame, seen from her right side at a slight front angle so the INNER arch of her bare LEFT foot and the outside of the right foot are visible; a chair leg is just visible (she holds a chair lightly). She stands upright, BAREFOOT, both feet flat on the floor, the arches LOW and relaxed. The arrow is a short straight horizontal arrow on the floor under the ball of the left foot pointing BACKWARD toward the heel, showing the ball of the foot being drawn toward the heel.",
+  "eind_en": "END position: same close-up view, barefoot, standing. The inner ARCH of the foot is lifted HIGH into a clear dome and the foot looks slightly shorter; the toes stay long, flat and relaxed on the floor (NOT curled), heels on the floor, knees straight.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP of the bare feet from the knees down, standing, the inner arch of one foot clearly visible. Exaggerate: TOP a flat, low arch; BOTTOM a clearly raised arch. Toes flat and straight in both figures."
+ },
+ {
+  "slug": "korte-voet-op-een-been",
+  "naam": "Korte voet – op één been",
+  "catalogus": true,
+  "ref": "001",
+  "pose_en": "CLOSE-UP framing: show her from the knees down, large in the frame, seen from the FRONT at a slight angle so the inner arch of her bare RIGHT foot is visible. She is BAREFOOT and stands ONLY on her RIGHT foot, flat on the floor with a LOW relaxed arch; her left foot is lifted off the floor behind her. Her fingertips lightly touch a chair backrest at the edge of the picture. The arrow is a short straight horizontal arrow on the floor under the ball of the right foot pointing BACKWARD toward the heel, showing the ball of the foot being drawn toward the heel.",
+  "eind_en": "END position: same close-up view, still standing only on the bare right foot. The inner ARCH of the right foot is lifted HIGH into a clear dome and the foot looks slightly shorter; toes long and flat on the floor (NOT curled), heel down, ankle steady.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP from the knees down. In BOTH figures only the bare right foot is on the floor. Exaggerate: TOP flat, low arch; BOTTOM clearly raised arch. Toes flat and straight."
+ },
+ {
+  "slug": "tenen-spreiden-zittend-actief",
+  "naam": "Tenen spreiden – zittend actief",
+  "catalogus": true,
+  "ref": "287",
+  "pose_en": "CLOSE-UP framing of both feet and the lower shins, seen from the FRONT and slightly from above; the front edge of the chair seat is just visible. She sits on a plain chair and is BAREFOOT, both feet flat on the floor pointing forward, the toes lying close TOGETHER. The arrow is a short curved arrow at the little toe of her RIGHT foot (on the viewer's left) pointing OUTWARD, showing the toes spreading apart.",
+  "eind_en": "END position: same close-up view, barefoot. On BOTH feet the five toes are SPREAD wide apart like a fan, with clear gaps between all the toes; the feet stay flat on the floor.",
+  "zoom": false,
+  "extra_avatar": "CLOSE-UP of both bare feet from the front. Exaggerate: TOP toes close together, BOTTOM toes fanned wide apart with visible gaps between every toe. Five toes per foot, anatomically correct."
+ }
+]
