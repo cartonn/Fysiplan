@@ -596,6 +596,14 @@ function proefSlotVoor(req, urlPath) {
   if (ADMIN_KEY_EIGEN && isAdmin(req)) return false;
   return proefVerlopen(proefVan(req)) || praktijkProefVerlopen(praktijkSessieVan(req));
 }
+// Een nieuwe praktijk beveiligen (en daarmee kaarten delen) kan alleen vanuit een lopende
+// proef of als klant. Zonder deze poort kon iedereen /v2/app openen, een nieuwe praktijknaam
+// kiezen en zonder einddatum en zonder abonnement kaarten delen; een team met een verlopen
+// proef kwam zo met een andere naam weer binnen. Bestaande praktijken merken er niets van:
+// zij zijn al beveiligd en loggen gewoon in, en een collega komt binnen via een uitnodiging.
+// Standaard aan in productie; lokaal en in tests uit. PROEF_VERPLICHT=aan|uit dwingt het af.
+const PROEF_VERPLICHT = /^(aan|uit)$/.test(String(process.env.PROEF_VERPLICHT || ""))
+  ? process.env.PROEF_VERPLICHT === "aan" : IS_PRODUCTIE;
 function proefCookie(token, request) {
   const proxyProto = String(request.headers["x-forwarded-proto"] || "").split(",", 1)[0].trim().toLowerCase();
   const veilig = proxyProto === "https" || !!request.socket?.encrypted;
@@ -2811,6 +2819,11 @@ async function afhandelen(request, response) {
       // namens de praktijk akkoord met de verwerkersovereenkomst
       if (b.akkoord !== true) { await sendJson(response, 400, { ok: false, akkoord: true, fout: "Vink aan dat je namens de praktijk akkoord gaat met de voorwaarden en de verwerkersovereenkomst." }); return; }
       if (Object.keys(praktijkAccounts).length >= 1000) { await sendJson(response, 400, { ok: false, fout: "Maximum bereikt." }); return; }
+      if (PROEF_VERPLICHT && !(ADMIN_KEY_EIGEN && isAdmin(request))) {
+        const p = proefVan(request);
+        if (!p) { await sendJson(response, 403, { ok: false, proefNodig: true, fout: "Start eerst je gratis proef van " + PROEF_DAGEN + " dagen. Daarna beveilig je hier je praktijk en deel je kaarten. Werkt je praktijk al met Fysiplan? Vraag je collega dan om een uitnodiging." }); return; }
+        if (proefVerlopen(p)) { await sendJson(response, 403, { ok: false, proefVerlopen: true, fout: "Je gratis proef is voorbij. Wil je doorgaan? Kijk op fysiplan.nl/v2/proef." }); return; }
+      }
       // herstelcode: eenmalig getoond bij het claimen; er is geen e-mail in het
       // systeem, dus dit is de enige zelfbedieningsroute bij een vergeten wachtwoord
       const herstelcode = maakHerstelcode();

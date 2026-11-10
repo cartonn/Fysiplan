@@ -23,13 +23,14 @@ kan de inhoud niet lezen. Video's, foto's en logo's gaan niet mee. Zonder de var
 4. Controleer daarna https://fysiplan.nl/health: `backupElders` moet `ok` zijn.
 5. Terugzetten (één keer oefenen): `BACKUP_SLEUTEL=… node scripts/backup-terugzetten.mjs <bestand.fpb> <lege map>`.
 
-### Fysiplan gebruiken zonder proef of abonnement (security, 2026-11-09 20u)
-**Wat de code nu doet:** wie /v2/app opent zonder de proef te starten, kan een praktijk beveiligen en kaarten maken, zonder
-einddatum. De proefgrens zit alleen op praktijken die bij de proef horen. Een team met een verlopen proef kan zo met een
-nieuwe (of verkeerd getypte) praktijknaam gewoon verder (gebruikers-sweep, Mark). Dit is geen beveiligingsgat maar een
-zakelijke keuze.
-**Wat jij moet kiezen:** (1) app zonder proef open laten zoals nu, of (2) beveiligen en kaarten delen alleen na een proef of
-abonnement (dan moet een collega altijd via een uitnodiging binnenkomen). Advies: (2) zodra de eerste praktijken betalen.
+### Fysiplan gebruiken zonder proef of abonnement (security 2026-11-09, gebouwd 2026-11-10)
+**Wat de code nu doet:** GEDAAN 2026-11-10 (livegang, Ahmed: "verbeter alle punten die je zelf kan"): een **nieuwe**
+praktijk beveiligen, en dus kaarten delen, kan live alleen nog vanuit een lopende proef of als klant
+(`PROEF_VERPLICHT`, standaard aan in productie). Zonder proef zegt de app "Start eerst je gratis proef" met een link.
+Praktijken die al beveiligd waren merken niets; een collega komt binnen via een uitnodiging. Een team met een verlopen
+proef kan niet meer verder onder een nieuwe naam.
+**Wat jij kunt doen:** niets. Wil je het terug zoals het was, zet dan op Railway `PROEF_VERPLICHT` = `uit`.
+Nog open (LAAG): wie zich opnieuw aanmeldt met een ander e-mailadres krijgt een nieuwe proef van 14 dagen.
 
 ### Einde na de proef en controle door een praktijk (legal, 2026-11-09 13u)
 **Wat de code nu doet:** wordt een praktijk na de gratis proef geen klant, dan wist Fysiplan 30 dagen na de proef
