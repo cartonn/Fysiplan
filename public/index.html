@@ -829,7 +829,7 @@ bridge2.jpg</div>
 </div>
 
 <script>
-(function(){
+(async function(){
   var P={
     squat:"<circle cx='40' cy='18' r='6'/><line x1='40' y1='24' x2='40' y2='40'/><line x1='40' y1='29' x2='55' y2='29'/><line x1='40' y1='40' x2='28' y2='53'/><line x1='40' y1='40' x2='52' y2='53'/><line x1='28' y1='53' x2='30' y2='68'/><line x1='52' y1='53' x2='50' y2='68'/><line x1='22' y1='70' x2='58' y2='70'/>",
     lunge:"<circle cx='32' cy='17' r='6'/><line x1='33' y1='23' x2='36' y2='40'/><line x1='36' y1='40' x2='30' y2='55'/><line x1='30' y1='55' x2='30' y2='68'/><line x1='36' y1='40' x2='52' y2='54'/><line x1='52' y1='54' x2='60' y2='68'/><line x1='24' y1='70' x2='64' y2='70'/>",
@@ -1074,11 +1074,8 @@ bridge2.jpg</div>
   // Beheer toont de V2-catalogus, zodat gekoppelde avatars en lijntekeningen
   // daar direct gecontroleerd kunnen worden. De V1-root blijft onaangeraakt.
   var IS_ADMIN=/^\/admin88\/?$/.test(location.pathname);
-  // de beheersleutel staat nooit in een publiek bestand: de beheerder voert hem zelf
-  // in en hij blijft alleen in dit tabblad (sessionStorage) bewaard
-  var beheerSleutel=function(opnieuw){var k='';try{if(opnieuw)sessionStorage.removeItem('fysiplan-beheersleutel');k=sessionStorage.getItem('fysiplan-beheersleutel')||'';}catch(e){}if(!k){k=String(window.prompt('Beheersleutel (blijft alleen in dit tabblad bewaard):')||'').trim();if(k){try{sessionStorage.setItem('fysiplan-beheersleutel',k);}catch(e){}}}return k;}
   var ADMIN_HDR={};
-  if(IS_ADMIN){var bk=beheerSleutel();if(bk)ADMIN_HDR['x-admin-sleutel']=bk;}
+  if(IS_ADMIN){var bk=await (await import('/beheersleutel.js')).vraagBeheersleutel();if(bk)ADMIN_HDR['x-admin-sleutel']=bk;}
   // anonieme gebruiksteller voor het eigenaars-dashboard (alleen aantallen, geen inhoud)
   function ping(type){try{fetch('api/stats/event',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({type:type})}).catch(function(){});}catch(e){}}
   // v2: /v2/app krijgt de vernieuwde huisstijl en de nieuwe printopties

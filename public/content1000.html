@@ -41,11 +41,8 @@
     <div class="tablewrap"><table><thead><tr><th>#</th><th>Oefening</th><th>Domein</th><th>Risico</th><th>Script</th><th>Motion</th><th>Video</th><th>Publicatie</th><th>Talen</th></tr></thead><tbody id="rows"><tr><td colspan="9" class="empty">Catalogus laden…</td></tr></tbody></table></div>
   </section>
 </main>
-<script>
-  // de beheersleutel staat nooit in een publiek bestand: de beheerder voert hem zelf
-  // in en hij blijft alleen in dit tabblad (sessionStorage) bewaard
-  const beheerSleutel=function(opnieuw){var k='';try{if(opnieuw)sessionStorage.removeItem('fysiplan-beheersleutel');k=sessionStorage.getItem('fysiplan-beheersleutel')||'';}catch(e){}if(!k){k=String(window.prompt('Beheersleutel (blijft alleen in dit tabblad bewaard):')||'').trim();if(k){try{sessionStorage.setItem('fysiplan-beheersleutel',k);}catch(e){}}}return k;}
-  const HEADERS={'x-admin-sleutel':beheerSleutel()};let all=[];
+<script type="module">
+  const HEADERS={'x-admin-sleutel':await (await import('/beheersleutel.js')).vraagBeheersleutel()};let all=[];
   const esc=(value)=>String(value??'').replace(/[&<>"']/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const label=(value)=>String(value||'pending').replaceAll('-',' ');
   const pill=(value)=>`<span class="pill ${esc(value)}">${esc(label(value))}</span>`;
