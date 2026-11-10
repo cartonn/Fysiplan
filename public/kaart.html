@@ -33,7 +33,7 @@
 <style>
   :root{
     --blauw:#2456a6; --blauw-d:#1c4487; --blauw-05:#edf2fa; --blauw-10:#d9e4f5;
-    --inkt:#232019; --tekst:#3d3a31; --grijs:#777162; --zacht:#a39c8a;
+    --inkt:#232019; --tekst:#3d3a31; --grijs:#777162; --zacht:#6f6a5a;
     --bg:#f6f2e9; --vlak:#fffefa; --lijn:#e7e0cf; --lijn2:#f0ebdd;
     --chip:#faf7ef; --veilig-bg:#fdf6e8; --veilig-rand:#eeddb8; --veilig-tekst:#7a622e;
     --sh:0 1px 2px rgba(80,64,32,.05),0 6px 24px rgba(80,64,32,.08);
@@ -43,7 +43,7 @@
   @media screen and (prefers-color-scheme:dark){
     :root{
       --blauw:#7aa4e8; --blauw-d:#93b5ee; --blauw-05:#1d2836; --blauw-10:#28374d;
-      --inkt:#efece4; --tekst:#d7d3c9; --grijs:#a49d8e; --zacht:#7e786b;
+      --inkt:#efece4; --tekst:#d7d3c9; --grijs:#a49d8e; --zacht:#9a9384;
       --bg:#171512; --vlak:#211e19; --lijn:#37332a; --lijn2:#2c2922;
       --chip:#2a2721; --veilig-bg:#2b2517; --veilig-rand:#4a3f26; --veilig-tekst:#d9bf82;
       --sh:0 1px 2px rgba(0,0,0,.35),0 6px 24px rgba(0,0,0,.4);
@@ -340,6 +340,33 @@
   #hsknoppen button:last-child{grid-column:1 / -1}
   @media(max-width:600px){.mschaal{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.mschaal button{min-height:46px;font-size:17px}}
   @media print{.rustblok{display:none!important}}
+  /* mobiele doorloop 2026-11-10: uitleg bij de oefening, één stemzin, tikdoelen van 44 px */
+  .oefuitleg{margin:0 14px 12px;border:1px solid var(--lijn2);border-radius:14px;background:var(--vlak)}
+  .oefuitleg>summary{display:flex;align-items:center;gap:8px;min-height:44px;padding:10px 14px;cursor:pointer;
+    font:600 15px/1.3 var(--disp);color:var(--blauw);list-style:none;-webkit-tap-highlight-color:transparent}
+  .oefuitleg>summary::-webkit-details-marker{display:none}
+  .oefuitleg>summary::before{content:"";flex:0 0 8px;width:8px;height:8px;border:solid currentColor;border-width:0 2px 2px 0;
+    transform:rotate(-45deg);margin:0 4px 0 2px;transition:transform .15s}
+  .oefuitleg[open]>summary::before{transform:rotate(45deg)}
+  .oefuitleg>summary:focus-visible{outline:3px solid var(--blauw);outline-offset:-3px;border-radius:12px}
+  .oefuitleg p{margin:0;padding:0 16px 14px;font:400 16px/1.6 var(--disp);color:var(--tekst);max-width:68ch}
+  .oefuitleg .nietvertaald{padding:0 16px 12px;margin:0}
+  #oefs [data-noor-wacht]{display:none}
+  .oefnoot{margin:-4px 4px 14px;font:500 13.5px/1.5 var(--disp);color:var(--grijs)}
+  .oefzwaar{min-height:44px;padding:4px 6px 4px 14px;margin:-12px 14px 4px auto;font-size:14px}
+  .ovalles{min-height:44px;padding:0 16px;font-size:14px}
+  .kopacties select,.kopacties button{min-height:44px}
+  .agdagen button{min-height:44px}
+  .agrij input[type=time]{min-height:44px}
+  .appbanner .weg{min-width:44px;min-height:44px;font-size:22px;color:#d9d3c3}
+  .voetacties{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:28px}
+  .voetacties button{display:inline-flex;align-items:center;gap:8px;min-height:44px;font:600 14.5px/1 var(--disp);
+    padding:10px 16px;border-radius:12px;cursor:pointer;border:1px solid var(--lijn);background:var(--vlak);color:var(--blauw);
+    -webkit-tap-highlight-color:transparent}
+  .schemablok>.schemakaart{border:0;box-shadow:none;border-radius:0}
+  @media print{.voetacties,.oefuitleg,.oefnoot{display:none!important}
+    .rustblok.schemablok{display:block!important;border:0;margin:0}.schemablok>summary{padding:0;min-height:0;border:0!important}
+    .schemablok>summary h2{display:block;margin:30px 4px 12px}}
   .mschaal button{font:700 15px/1 var(--disp);padding:12px 0;border-radius:10px;cursor:pointer;
     border:1px solid var(--lijn);background:var(--chip);color:var(--tekst);
     -webkit-tap-highlight-color:transparent;transition:background .12s,color .12s,border-color .12s}
@@ -496,8 +523,6 @@
       <label id="stemlabel" hidden>Stem <select id="stemsel" aria-label="Voorleesstem"><option value="">Automatisch</option></select></label>
       <button type="button" id="leesBtn" style="display:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg><span id="leesTxt">Lees voor</span></button>
       <button type="button" id="grootBtn" aria-pressed="false" title="Grotere letters"><span aria-hidden="true" style="font-size:11px;font-weight:800;line-height:1">A</span><span aria-hidden="true" style="font-size:16px;font-weight:800;line-height:1">A</span></button>
-      <button type="button" id="printBtn" title="Print of bewaar als PDF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg><span id="printTxt">Print</span></button>
-      <button type="button" id="deelBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7l6.8-4.4M8.6 13.3l6.8 4.4"/></svg><span id="deelTxt">Deel</span></button>
     </div>
     <div class="mdank noormelding" id="noorMelding" role="status" aria-live="polite" hidden></div>
     <div class="client" id="clientblok" style="display:none"></div>
@@ -509,6 +534,7 @@
 
   <h2><span id="oefkop">Jouw oefeningen</span> <span class="tel" id="oeftel"></span></h2>
   <div class="oefvoortgang" id="oefvoortgang" style="display:none"><span class="ovbalk" aria-hidden="true"><i id="ovvul"></i></span><span class="ovtekst" id="ovtekst"></span><button type="button" class="ovalles" id="ovalles" style="display:none"></button></div>
+  <p class="oefnoot" id="noornoot" hidden>De stem legt de algemene uitvoering uit. Houd je aan de series, herhalingen en opmerkingen van je fysiotherapeut op deze kaart.</p>
   <div id="oefs"></div>
 
   <h2 id="vraagkop" style="display:none">Vraag over je oefeningen (AI)</h2>
@@ -626,9 +652,14 @@
   </div>
   </details>
 
+  <div class="voetacties" id="voetacties">
+    <button type="button" id="printBtn" title="Print of bewaar als PDF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg><span id="printTxt">Print</span></button>
+    <button type="button" id="deelBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7l6.8-4.4M8.6 13.3l6.8 4.4"/></svg><span id="deelTxt">Deel</span></button>
+  </div>
+
   <div class="voet">
     <span id="voet1">Vragen over de uitvoering? Neem contact op met je praktijk.</span><br/>
-    <span class="merk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a39c8a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
+    <span class="merk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
     <span id="gemaakt">Gemaakt met</span> <a href="https://fysiplan.nl/v2">Fysiplan</a> · <a id="privlink" href="/privacy#patient" hreflang="nl" target="_blank" rel="noopener">Privacy</a></span>
   </div>
 </div>
@@ -1169,6 +1200,23 @@
     var n=document.createElement('div');n.className='nietvertaald';n.setAttribute('role','note');
     n.textContent=NIET_VERTAALD[TAAL]||NIET_VERTAALD.en;return n;
   }
+  // Uitleg direct bij de oefening (mobiele doorloop 2026-11-10): eerst stond de tekst alleen
+  // in het vergrote beeld, en wie niet op de foto tikte, zag nooit hoe de oefening moest.
+  // Ingeklapt, zodat de lijst kort blijft; open blijft open als de kaart opnieuw tekent.
+  var ZO_DOE={nl:'Zo doe je het',en:'How to do it',de:'So geht es',fr:'Comment faire',es:'Cómo hacerlo',pl:'Jak to zrobić',tr:'Nasıl yapılır',ar:'طريقة الأداء',uk:'Як виконувати'};
+  var UITLEG_OPEN={};
+  function oefUitlegBlok(o,idx,gehouden){
+    if(gehouden||!o||!o.uitleg)return '';
+    var nl=uitlegNietVertaald(o.uitleg);
+    return '<details class="oefuitleg" data-uidx="'+idx+'"'+(UITLEG_OPEN[idx]?' open':'')+'><summary>'+esc(ZO_DOE[TAAL]||ZO_DOE.nl)+'</summary>'+
+      '<p dir="auto"'+(nl?' lang="nl"':'')+'>'+esc(vt(o.uitleg))+'</p>'+
+      (nl?'<div class="nietvertaald" role="note">'+esc(NIET_VERTAALD[TAAL]||NIET_VERTAALD.en)+'</div>':'')+'</details>';
+  }
+  // De stemopname vertelt de algemene uitvoering, niet de dosering van de behandelaar.
+  // Die zin staat één keer boven de oefeningen, alleen als er een luisterknop is.
+  function zetNoorNoot(aan){
+    var n=document.getElementById('noornoot');if(n)n.hidden=!(aan&&TAAL==='nl');
+  }
   // Uitwijklink onder een ingesloten YouTube-video. Dit herstelt de ingesloten speler niet:
   // YouTube verwacht een Referer en de kaart stuurt bewust geen (referrer-policy same-origin;
   // de kaartlink is de toegang tot de kaart). De link bevat alleen het gevalideerde video-id,
@@ -1292,7 +1340,8 @@
         if(s||h||w){
           eersteS=s||'';eersteH=h||'';
           if(s)chips+='<span class="chip"><b>'+esc(s)+'</b>&nbsp;'+esc(tr('series'))+'</span>';
-          if(h)chips+='<span class="chip"><b>'+esc(h)+'</b>&nbsp;'+esc(tr('herh'))+'</span>';
+          // "30 sec" of "1 min" is een tijd, geen aantal: dan niet "herhalingen" erachter
+          if(h)chips+='<span class="chip"><b>'+esc(h)+'</b>'+(/^\s*\d+([-–]\d+)?\s*x?\s*$/i.test(String(h))?'&nbsp;'+esc(tr('herh')):'')+'</span>';
           if(w)chips+='<span class="chip"><b>'+esc(w)+'</b></span>';
           break;
         }
@@ -1335,7 +1384,9 @@
         else if(persoonlijkYt)knop='<button class="vbtn" data-yt="'+esc(persoonlijkYt)+'" data-vbron="praktijk" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
         else knop='';
       }
-      var beeldpad=o?(o.kaartImg||o.img):'';
+      // Op de telefoon alleen de avatar (kaartImg), nooit de lijntekening (img): die hoort bij
+      // de therapeut en de print (Ahmed 2026-11-08). Zonder avatar geen beeld, wel de uitleg.
+      var beeldpad=o&&o.kaartImg?o.kaartImg:'';
       // het v2-kanaal levert al absolute paden (/v2/images/...); oudere relatieve paden
       // krijgen zelf een schuine streep, zodat er nooit een dubbele ontstaat
       if(beeldpad&&beeldpad.charAt(0)!=='/')beeldpad='/'+beeldpad;
@@ -1348,11 +1399,12 @@
       // beschrijvend label voor toetsenbord- en screenreadergebruik
       var fotoLabel=esc(vt(x.n))+': '+esc(heeftVideo?tr('fotoVideo'):tr('fotoBekijk'));
       html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
-        (o&&!hideMedia?'<button type="button" class="fotoknop" aria-label="'+fotoLabel+'"><img src="'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
+        (o&&!hideMedia&&beeldpad?'<button type="button" class="fotoknop" aria-label="'+fotoLabel+'"><img src="'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
           '" data-h="'+esc(eersteH)+'" data-audio-naam="'+esc(o.naam)+'" data-oef-id="'+esc(o.exerciseId||'')+'" data-pose="'+esc(mediaKey(o))+'" data-uitleg="'+esc(holdExplanation?'':(o.uitleg||''))+'" data-heeft-video="'+(heeftVideo?'1':'0')+'"/>'+
           badge+'</button>':'')+
         '<div class="oefinfo"><div class="naam" dir="auto">'+esc(vt(x.n))+'</div>'+
         (chips?'<div class="chips">'+chips+'</div>':'')+'</div></div>'+
+        oefUitlegBlok(o,idx,hideMedia||holdExplanation)+
         knop+'<div class="vhouder"></div>'+
         (hideMedia?'<p class="vmeta">'+esc(tr('holdBeeld'))+'</p>':'')+
         (holdExplanation?'<p class="vmeta">'+esc(tr('holdUitleg'))+'</p>':
@@ -1366,6 +1418,7 @@
     document.getElementById('oefs').innerHTML=html||'<div class="oef"><div class="oefkop">'+esc(tr('geenoef'))+'</div></div>';
     if(teControleren.length)herzieAfgekeurd(teControleren);
     dekMiniaturen();
+    zetNoorNoot(html.indexOf(' data-noor="')>-1);
 
     // ingevuld schema, alleen als er iets staat
     var rowdefs=[];for(var r2=0;r2<12;r2++)rowdefs.push('r'+r2);
@@ -1377,7 +1430,7 @@
     });
     var schemaEl=document.getElementById('schema');
     if(gevuld.length){
-      var t='<h2>'+esc(tr('schemakop'))+'</h2><div class="schemakaart"><div class="schemawrap"><table><thead><tr><th class="dat">'+esc(tr('datum'))+'</th>';
+      var t='<details class="rustblok schemablok"><summary><h2>'+esc(tr('schemakop'))+'</h2></summary><div class="schemakaart"><div class="schemawrap"><table><thead><tr><th class="dat">'+esc(tr('datum'))+'</th>';
       chosen.forEach(function(x,idx){t+='<th colspan="3" dir="auto">'+(idx+1)+'. '+esc(vt(x.n))+'</th>';});
       t+='</tr><tr><th class="dat"></th>';
       chosen.forEach(function(){t+='<th>S</th><th>H</th><th>W</th>';});
@@ -1390,7 +1443,7 @@
         });
         t+='</tr>';
       });
-      t+='</tbody></table></div><div class="schemahint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'+esc(tr('schemahint'))+'</div></div>';
+      t+='</tbody></table></div><div class="schemahint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'+esc(tr('schemahint'))+'</div></div></details>';
       schemaEl.innerHTML=t;
     }else schemaEl.innerHTML='';
     tekenMeting();
@@ -1908,7 +1961,7 @@
     noorRequest++;
     // de knop per oefening die Noor startte, terug naar luisteren (zie zetNoorKnop)
     var nk=noorBron>=0&&document.querySelector?document.querySelector('#oefs [data-noor="'+noorBron+'"]'):null;
-    if(nk){nk.textContent='Luister naar Noor';nk.setAttribute('aria-pressed','false');}
+    if(nk){nk.textContent=NOOR_LABEL;nk.setAttribute('aria-pressed','false');}
     noorBron=-1;
     if(window.NoorAudio)NoorAudio.stop();
     if(window.speechSynthesis)speechSynthesis.cancel();
@@ -2090,10 +2143,11 @@
   // De knop "Luister naar Noor" bij een oefening is ook de stopknop: tijdens het luisteren
   // heet hij "Stop" en stopt een tweede tik de stem (sweep 2026-11-09, Truus op iPhone SE:
   // alleen de knop bovenaan werd Stop, buiten beeld, en een tweede tik begon opnieuw).
+  var NOOR_LABEL='Luister naar deze oefening';
   function noorKnop(i){return i>=0&&document.querySelector?document.querySelector('#oefs [data-noor="'+i+'"]'):null;}
   function zetNoorKnop(knop,aan){
     if(!knop)return;
-    knop.textContent=aan?tr('stop'):'Luister naar Noor';
+    knop.textContent=aan?tr('stop'):NOOR_LABEL;
     knop.setAttribute('aria-pressed',aan?'true':'false');
   }
   // Meldingen bij het luisteren staan op de pagina, naast de knop die ze veroorzaakte, in
@@ -2120,12 +2174,12 @@
   function noorRegel(o,idx){
     // tekent de kaart opnieuw terwijl Noor bij deze oefening praat, dan blijft het een stopknop
     var aan=bezigLezen&&noorBron===idx;
-    if(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg))return '<button type="button" class="vbtn" data-noor="'+idx+'"'+(aan?' aria-pressed="true"':'')+'>'+(aan?tr('stop'):'Luister naar Noor')+'</button>'+
-      // De opname bevat de algemene uitvoering, niet de dosering of de opmerkingen
-      // van de behandelaar. Dat hoort de patiënt te weten voordat hij luistert.
-      '<div class="vmeta">De stem legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.</div>';
+    if(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg))return '<button type="button" class="vbtn" data-noor="'+idx+'"'+(aan?' aria-pressed="true"':'')+'>'+(aan?tr('stop'):NOOR_LABEL)+'</button>';
+      // De opname bevat de algemene uitvoering, niet de dosering of de opmerkingen van de
+      // behandelaar. Dat staat één keer boven de oefeningen (#noornoot), niet bij elke
+      // oefening opnieuw: vier keer dezelfde zin las als ruis (mobiele doorloop 2026-11-10).
     // herkenbaar, zodat herstelNoorKnoppen deze regel later kan omzetten
-    return '<div class="vmeta" data-noor-wacht="'+idx+'">Natuurlijke stemopname nog niet beschikbaar. De uitleg staat bij de afbeelding.</div>';
+    return '<div class="vmeta" data-noor-wacht="'+idx+'"></div>';
   }
   // Mislukt of verloopt het eerste laden van het stemmanifest, dan staat bij elke oefening
   // "nog niet beschikbaar". Lukt een latere poging (bijvoorbeeld via de knop bovenaan), dan
@@ -2143,6 +2197,7 @@
       // uitleg krijgt nooit een knop, en zonder actuele opname blijft de regel staan
       if(!o||!o.uitleg||mediaWithheld(o)||explanationWithheld(o)||!NoorAudio.match(o.naam,o.uitleg))return;
       regel.outerHTML=noorRegel(o,idx);
+      zetNoorNoot(true);
     });
   }
 
@@ -2187,11 +2242,19 @@
       try{localStorage.setItem('fp_app_weg','1');}catch(e){}
     });
     if(standalone||weg)return;
+    // De uitnodiging komt pas nadat de patiënt iets heeft afgevinkt of een score gaf: dan
+    // weet hij waar de kaart voor is, en de balk ligt niet over de eerste blik op de
+    // oefeningen heen (mobiele doorloop 2026-11-10).
+    var straks=null;
     window.addEventListener('beforeinstallprompt',function(e){
-      e.preventDefault();installEvent=e;toonBanner(false);
+      e.preventDefault();installEvent=e;straks=function(){toonBanner(false);};
     });
     // iPhone kent het installatie-event niet: toon daar eenmalig een korte uitleg
-    if(/iphone|ipad|ipod/i.test(navigator.userAgent))setTimeout(function(){toonBanner(true);},2500);
+    if(/iphone|ipad|ipod/i.test(navigator.userAgent))straks=function(){toonBanner(true);};
+    document.addEventListener('click',function(e){
+      if(!straks||!e.target.closest||!e.target.closest('.oefdone,#ovalles,#gdaan,#mschaal button'))return;
+      var f=straks;straks=null;setTimeout(f,1500);
+    },true);
   }
 
   // Pose controls require reviewed source-specific metadata; otherwise show the full image.
@@ -2496,6 +2559,11 @@
   // ---- alle knoppen één keer koppelen; hertekenen vervangt alleen de inhoud ----
   function bindEens(){
     // video laden bij een tik; één tegelijk open, de rest pauzeert vanzelf
+    // 'toggle' bubbelt niet: luisteren in de capture-fase
+    document.getElementById('oefs').addEventListener('toggle',function(e){
+      var d=e.target;if(!d||!d.classList||!d.classList.contains('oefuitleg'))return;
+      UITLEG_OPEN[d.dataset.uidx]=d.open;
+    },true);
     document.getElementById('oefs').addEventListener('click',function(e){
       var noor=e.target.closest('[data-noor]');
       if(noor){
@@ -2849,6 +2917,9 @@
       window.addEventListener('afterprint',terug);
       window.print();
     });
+    // het ingeklapte schema hoort wél op de print
+    window.addEventListener('beforeprint',function(){document.querySelectorAll('.schemablok:not([open])').forEach(function(d){d.open=true;d.dataset.dicht='1';});});
+    window.addEventListener('afterprint',function(){document.querySelectorAll('.schemablok[data-dicht]').forEach(function(d){d.open=false;delete d.dataset.dicht;});});
     if(window.speechSynthesis||window.NoorAudio){
       var lb=document.getElementById('leesBtn');
       lb.style.display='';

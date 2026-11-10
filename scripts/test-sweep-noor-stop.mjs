@@ -1,4 +1,4 @@
-// Gebruikers-sweep 2026-11-09 (Truus, 72, iPhone SE): "Luister naar Noor" bij een oefening werd
+// Gebruikers-sweep 2026-11-09 (Truus, 72, iPhone SE): "Luister naar deze oefening" bij een oefening werd
 // geen stopknop. Een tweede tik begon de uitleg opnieuw; alleen de knop bovenaan werd "Stop" en die
 // stond buiten beeld. Meldingen ("Nog geen actuele stemopname …", "kon niet worden afgespeeld")
 // kwamen als alert(), een blokkerend venster.
@@ -88,8 +88,8 @@ try {
   const knopMaat = await p.$eval('#oefs [data-noor="0"]', (b) => b.getBoundingClientRect().height);
   assert.ok(knopMaat >= 44, "stopknop minstens 44 px hoog: " + knopMaat);
   await p.click('#oefs [data-noor="0"]');
-  await p.waitForFunction(() => document.querySelector('#oefs [data-noor="0"]').textContent.trim() === "Luister naar Noor", null, { timeout: 5000 });
-  assert.deepEqual(await stand(0), { t: "Luister naar Noor", a: "false" }, "tweede tik stopt de stem");
+  await p.waitForFunction(() => document.querySelector('#oefs [data-noor="0"]').textContent.trim() === "Luister naar deze oefening", null, { timeout: 5000 });
+  assert.deepEqual(await stand(0), { t: "Luister naar deze oefening", a: "false" }, "tweede tik stopt de stem");
   assert.equal(await p.evaluate(() => document.getElementById("leesBtn").classList.contains("aan")), false, "ook de knop bovenaan staat weer op luisteren");
 
   // 2) een andere oefening starten terwijl de eerste praat: alleen de nieuwe heet Stop
@@ -97,9 +97,9 @@ try {
   await p.waitForFunction(() => document.querySelector('#oefs [data-noor="0"]').textContent.trim() === "Stop");
   await p.click('#oefs [data-noor="1"]');
   await p.waitForFunction(() => document.querySelector('#oefs [data-noor="1"]').textContent.trim() === "Stop");
-  assert.deepEqual(await stand(0), { t: "Luister naar Noor", a: "false" }, "de vorige knop gaat terug");
+  assert.deepEqual(await stand(0), { t: "Luister naar deze oefening", a: "false" }, "de vorige knop gaat terug");
   await p.click('#oefs [data-noor="1"]');
-  await p.waitForFunction(() => document.querySelector('#oefs [data-noor="1"]').textContent.trim() === "Luister naar Noor");
+  await p.waitForFunction(() => document.querySelector('#oefs [data-noor="1"]').textContent.trim() === "Luister naar deze oefening");
 
   // 3) afspelen mislukt: melding op de pagina bij deze oefening, geen alert, knop terug
   await p.evaluate(() => { window.__speelFout = true; });
@@ -109,7 +109,7 @@ try {
     return { t: el.textContent, bijOefening: !!el.closest(".oef") && el.closest(".oef").contains(document.querySelector('#oefs [data-noor="0"]')) }; });
   assert.match(m.t, /kon niet worden afgespeeld/, "melding zegt wat er misging");
   assert.ok(m.bijOefening, "melding staat bij de oefening die werd aangetikt");
-  assert.deepEqual(await stand(0), { t: "Luister naar Noor", a: "false" }, "na een fout geen hangende Stop");
+  assert.deepEqual(await stand(0), { t: "Luister naar deze oefening", a: "false" }, "na een fout geen hangende Stop");
   await p.evaluate(() => { window.__speelFout = false; });
 
   // 4) knop bovenaan met een oefening zonder opname: melding bovenaan op de pagina, geen alert

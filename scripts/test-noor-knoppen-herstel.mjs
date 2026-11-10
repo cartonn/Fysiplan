@@ -126,7 +126,7 @@ const knoppenIn=s=>[...s.matchAll(/data-noor="(\d+)"/g)].map(m=>Number(m[1]));
 const wachtIn=s=>[...s.matchAll(/data-noor-wacht="(\d+)"/g)].map(m=>Number(m[1]));
 // alles behalve de luisterregels zelf: moet na herstel byte voor byte gelijk zijn
 const zonderLuisterregels=s=>s
-  .replace(/<button type="button" class="vbtn" data-noor="\d+">Luister naar Noor<\/button><div class="vmeta">De stem legt[^<]*<\/div>/g,'#NOOR#')
+  .replace(/<button type="button" class="vbtn" data-noor="\d+">Luister naar deze oefening<\/button>/g,'#NOOR#')
   .replace(WACHT,'#NOOR#');
 
 // ---- de oefeningen: uit de echte bibliotheek, met de echte beoordeling ----

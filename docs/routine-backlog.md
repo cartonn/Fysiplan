@@ -54,6 +54,16 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+### Mobiele doorloop patiëntkaart 2026-11-10 (thread "Verbeter de mobiele ervaring voor patiënten", test:patientmobiel)
+- **OPGELOST — /k: uitleg alleen in de lightbox.** Nu "Zo doe je het" (inklapbaar) bij elke oefening, 9 talen.
+- **OPGELOST — /k: lijntekening op de telefoon** bij een oefening zonder avatar. Nu alleen `kaartImg`; zonder avatar geen beeld.
+- **OPGELOST — /k: "Zet op beginscherm"-balk na 2,5 s over de oefeningen.** Komt pas na het eerste afvinken of een score.
+- **OPGELOST — tikdoelen /k:** "Te zwaar?", "Alles gedaan", taal/AA, weekdagen en tijdveld minstens 44 px.
+- **OPGELOST — /k contrast `--zacht`** nu 4,5:1 of hoger (licht #6f6a5a, donker #9a9384).
+- Ook: stemzin één keer boven de lijst, knop "Luister naar deze oefening", Print/Deel onderaan, schema ingeklapt (print uitgeklapt), "30 sec" zonder "herhalingen".
+- Nog open (voorstel in projectmap patient-mobiel/voorstel.md): pijnschaal en doelactiviteit beter onderscheiden, één afvinkroute, rem-letters, onderbalk.
+
+
 ### Sweep 2026-11-10 06u
 - **OPGELOST 2026-11-10 06u (deze PR, test:controletaal) — MIDDEL /k: Engelse kaart toonde de Nederlandse zinnen "De oefenafbeelding
   wordt gecontroleerd…" en "De algemene uitleg wordt gecontroleerd…"** (Jayden). Nu `tr('holdBeeld')`/`tr('holdUitleg')` in alle negen

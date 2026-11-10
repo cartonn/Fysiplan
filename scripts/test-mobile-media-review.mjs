@@ -105,10 +105,12 @@ const approvedPoses=manifest.entries.filter(e=>e.poseGeometry.status==='geometry
 assert.equal(approvedPoses.length,manifest.summary.poseGeometryApproved);
 assert(approvedPoses.length>0,'geen enkele houding goedgekeurd: de reparatie doet dan niets');
 // De patiëntkaart mag een oefenfoto nooit stilzwijgend door een lijntekening vervangen.
-// De kaart tekent o.kaartImg (en pas bij ontbreken o.img); de beoordeling moet over
-// datzelfde bestand gaan, en dat bestand mag geen lijntekening zijn.
+// De kaart tekent alleen o.kaartImg (de avatar); zonder avatar geen beeld, nooit o.img
+// (de lijntekening hoort bij de therapeut, Ahmed 2026-11-08). De beoordeling gaat over
+// datzelfde bestand: bij een avatar is mediaSource gelijk aan wat de kaart tekent.
 const kaartHtml=await fs.readFile('public/kaart.html','utf8');
-assert.ok(kaartHtml.includes("var beeldpad=o?(o.kaartImg||o.img):'';"),'de kaart kiest zelf geen ander beeld');
+assert.ok(kaartHtml.includes("var beeldpad=o&&o.kaartImg?o.kaartImg:'';"),'de kaart kiest zelf geen ander beeld');
+assert.ok(kaartHtml.includes("(o&&!hideMedia&&beeldpad?'<button type=\"button\" class=\"fotoknop\""),'zonder avatar geen oefenbeeld op de telefoon');
 assert.ok(kaartHtml.includes("function mediaSource(o){return String(o&&(o.kaartImg||o.img)||'')"),'de beoordeling gaat over hetzelfde beeld als de weergave');
 // Uitzondering: de nieuwe lijntekeningen (content/nieuwe-lijntekeningen.json) horen bij
 // oefeningen die nog géén oefenfoto/avatar hebben; daar vervangt de lijntekening niets.

@@ -178,7 +178,7 @@ assert.equal(played,beforeCancelled,'stop while manifest loading prevents delaye
 assert.ok(html.includes("if(explanationWithheld(bron))uitleg='';"),'other languages also suppress held explanation');
 // teruggehouden beeld/uitleg: geen bibliotheek- of AI-video; alleen een video die de
 // therapeut zelf opnam of per kaart koppelde blijft, zonder de algemene uitlegtekst
-const holdBlok=html.slice(html.indexOf("if(hideMedia||holdExplanation){"),html.indexOf("var beeldpad=o?(o.kaartImg||o.img):'';"));
+const holdBlok=html.slice(html.indexOf("if(hideMedia||holdExplanation){"),html.indexOf("var beeldpad=o&&o.kaartImg?o.kaartImg:'';"));
 assert.ok(holdBlok.length>0&&holdBlok.length<1500,'held content block present');
 assert.ok(/else knop='';\s*\}/.test(holdBlok),'held content cannot expose a library video play button');
 assert.ok(holdBlok.includes("!(o.video.eigenMeta&&o.video.eigenMeta.aiGenerated)"),'held content never keeps a generated video');
