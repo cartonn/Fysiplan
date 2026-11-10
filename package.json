@@ -40,7 +40,7 @@
     "test:proefpoort": "node scripts/test-proef-poort.mjs",
     "test:oudeproef": "node scripts/test-oude-proef-herstelcode.mjs",
     "test:abonnement": "node scripts/test-abonnement-mollie.mjs && node scripts/test-abonnement-einde.mjs && node scripts/test-abonnement-incasso.mjs && node scripts/test-incasso-dubbel.mjs",
-    "test:privacy": "node scripts/test-vraaghulp-grens.mjs && node scripts/test-privacy.mjs && node scripts/test-praktijkgegevens.mjs && node scripts/test-gegevens-proef.mjs && node scripts/test-kaart-weg.mjs && node scripts/test-kaart-wis-telefoon.mjs && node scripts/test-mijn-gegevens.mjs && node scripts/test-dossier-contact.mjs && node scripts/test-wees-opnames.mjs && node scripts/test-proef-einde-wissen.mjs && node scripts/test-juridisch-b1.mjs",
+    "test:privacy": "node scripts/test-vraaghulp-grens.mjs && node scripts/test-privacy.mjs && node scripts/test-praktijkgegevens.mjs && node scripts/test-gegevens-proef.mjs && node scripts/test-kaart-weg.mjs && node scripts/test-kaart-wis-telefoon.mjs && node scripts/test-mijn-gegevens.mjs && node scripts/test-dossier-contact.mjs && node scripts/test-wees-opnames.mjs && node scripts/test-proef-einde-wissen.mjs && node scripts/test-verdwijndatum-praktijk.mjs && node scripts/test-juridisch-b1.mjs",
     "test:beheer": "node scripts/test-beheersleutel.mjs",
     "test:sweep": "node scripts/test-sweep-kaart.mjs",
     "test:offline": "node scripts/test-kaart-offline.mjs",
