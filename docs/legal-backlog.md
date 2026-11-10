@@ -23,6 +23,13 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **OPGELOST 2026-11-10 22u (gebruikers-sweep, test:zwaaroffline) — MIDDEL lokale opslag (f): "Wis deze kaart van mijn
+  telefoon" liet het kaart-id terugkomen.** Na wissen schreef `pagehide` → `bewaarBeeldenLijst()` opnieuw
+  `fp_beelden_<id>` in localStorage (Truus, iPhone SE); dat id is de toegang tot de kaart. Nu schrijft de kaart na wissen niets meer.
+- **LAAG (gebruikers-sweep 2026-11-10 22u, Jayden) — Privacy-link op een Engelse kaart opent een alleen-Nederlandse pagina
+  zonder melding** (/privacy en /privacy?taal=en geven lang="nl"). Hoort bij het bekende punt "patiëntdeel /privacy in de
+  kaarttalen"; tot die tijd minstens "(in Dutch)" bij de link (kaart.html r. ~708 en ~847).
+
 - **LAAG — privacyverklaring (a) 2026-11-10 21u: Anthropic-rij klopte niet met wat er naar de AI-dienst gaat.**
   /privacy#subverwerkers zei bij Anthropic "het vertalen van bibliotheekteksten" en "geen namen, scores of vrije tekst
   van de therapeut". Maar `/api/kaart/vertaal` en `/api/kaart/vraag` (server.js, filter `PRAKTIJK_OEF_ID`) sturen ook de
