@@ -245,6 +245,32 @@ try {
   assert.match(privacy, /Versie 10 november 2026/);
   assert.match(privacy, /hoe vaak, hoeveel of hoe zwaar je oefent/, "privacyverklaring noemt dat doseringsvragen niet naar de AI-dienst gaan");
   assert.match(privacy, /Foutlog/);
+  // code tegen tekst (legal 2026-11-10 17u): alles wat de patiëntroute /api/kaart laat
+  // zien, staat ook in "Voor patiënten" (art. 13/14 AVG). Vóór deze fix ontbraken de
+  // doelactiviteit en de score daarvan, het bericht van de praktijk, het weekdoel en
+  // de eigen video/foto, en stond de afspraak (die de praktijk zet) onder "zelf aantikt".
+  // Fail-closed: een nieuw veld in PATIENT_VELDEN zonder uitleg hier laat de test falen.
+  {
+    const serverBron = await readFile(join(root, "server.js"), "utf8");
+    const velden = JSON.parse(serverBron.match(/const PATIENT_VELDEN = (\[[^\]]+\])/)[1].replace(/\s+/g, " "));
+    const patientDeel = privacy.split('id="patient"')[1].split("<h2")[0];
+    const [therapeut, zelf] = ["Wat je therapeut erop zet", "Wat je zelf aantikt"]
+      .map((kop) => patientDeel.split(kop)[1].split("</li>")[0]);
+    const uitleg = {
+      // techniek of inhoud van de kaart zelf, al gedekt door "je oefeningen met uitleg en dosering"
+      id: null, demo: null, praktijk: null, ts: null, chosen: null, rows: null, cells: null, gearchiveerd: null,
+      vids: [therapeut, /eigen video of foto/], doel: [therapeut, /dagen per week/],
+      afspraak: [therapeut, /afspraak/], antwoord: [therapeut, /bericht van je praktijk/],
+      pskDoel: [therapeut, /doelactiviteit/], psk: [zelf, /hoe je doelactiviteit gaat/],
+      metingen: [zelf, /pijnscore/], ervaring: [zelf, /hoe het gaat/], gedaan: [zelf, /geoefend/],
+      oefTrouw: [zelf, /geoefend/], oefZwaar: [zelf, /te zwaar/]
+    };
+    for (const veld of velden) {
+      assert.ok(Object.hasOwn(uitleg, veld), "patiëntveld '" + veld + "' staat niet uitgelegd op /privacy#patient");
+      if (uitleg[veld]) assert.match(uitleg[veld][0], uitleg[veld][1], "/privacy#patient noemt " + veld);
+    }
+    assert.doesNotMatch(zelf, /afspraak/, "de afspraak zet de praktijk, de patiënt tikt hem niet aan");
+  }
   assert.match(privacy, /artikel 9 lid 2 onder h AVG/, "privacyverklaring noemt de uitzondering voor gezondheidsgegevens");
   assert.match(privacy, /id="einde"/, "privacyverklaring zegt wat er gebeurt als een praktijk stopt");
   assert.match(privacy, /30 dagen na het einde van je abonnement/);
