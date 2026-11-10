@@ -3094,15 +3094,23 @@ async function afhandelen(request, response) {
       const acc = praktijkAccounts[pk];
       if (!pk || !acc) { await sendJson(response, 404, { ok: false, fout: "Geen account voor deze praktijk." }); return; }
       if (praktijkSessieVan(request) !== pk) { await sendJson(response, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true }); return; }
-      if (loginOpSlot(pk)) {
-        await send429(response, 900, { ok: false, fout: "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
+      // eigen login: alleen het eigen wachtwoord, en alleen de eigen sessies vervallen.
+      // De missers van een lid tellen op een eigen sleutel per lid: op de sleutel van de
+      // praktijk kon één collega met tien foute pogingen de beheerder (en bij een praktijk
+      // met de naam als sleutel ook het gedeelde inloggen) een kwartier op slot zetten,
+      // en wiste een geslaagde wijziging de teller van een lopende aanval op het
+      // praktijkwachtwoord (security 2026-11-10 20u).
+      const mijnLid = sessieLid(sessieVan(request));
+      const remSleutel = mijnLid ? "lid:" + pk + ":" + mijnLid.id : pk;
+      if (loginOpSlot(remSleutel)) {
+        await send429(response, 900, { ok: false, fout: mijnLid
+          ? "Te veel foute pogingen; probeer het over een kwartier opnieuw."
+          : "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
         return;
       }
-      // eigen login: alleen het eigen wachtwoord, en alleen de eigen sessies vervallen
-      const mijnLid = sessieLid(sessieVan(request));
       if (mijnLid) {
         if (!checkHash(String(b.huidig || ""), mijnLid.hash)) {
-          loginMisTel(pk);
+          loginMisTel(remSleutel);
           auditLog(pk, "wachtwoord-wijzigen-mislukt", request);
           await denied(request, response, "praktijk-wachtwoord", "Je huidige wachtwoord klopt niet.");
           return;
@@ -3113,7 +3121,7 @@ async function afhandelen(request, response) {
         mijnLid.gewijzigd = Date.now();
         await saveJson(accountsPath, praktijkAccounts);
         trekSessiesIn(pk, mijnLid.id);
-        loginMisPraktijk.delete(pk);
+        loginMisPraktijk.delete(remSleutel);
         const tok = nieuweSessie(pk, mijnLid.id);
         auditLog(pk, "wachtwoord-gewijzigd", request, mijnLid.naam || mijnLid.email);
         await sendJson(response, 200, { ok: true, sessie: tok });

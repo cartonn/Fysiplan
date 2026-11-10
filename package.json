@@ -115,7 +115,8 @@
     "test:proeftweedeapparaat": "node scripts/test-sweep-proef-tweede-apparaat.mjs",
     "test:printgroot": "node scripts/test-sweep-print-groot.mjs",
     "test:vuleersterij": "node scripts/test-sweep-vul-eerste-rij.mjs",
-    "test:inlogrem": "node scripts/test-inlogrem-ip.mjs"
+    "test:inlogrem": "node scripts/test-inlogrem-ip.mjs",
+    "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs"
   },
   "engines": {
     "node": ">=20"
