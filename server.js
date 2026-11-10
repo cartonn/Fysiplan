@@ -67,7 +67,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-10";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-09-3";
+const AV_VERSIE = "2026-11-10";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-10";
@@ -85,7 +85,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-09-2", tekst: "Proef: word je geen klant, dan wissen we 90 dagen na de proef alles van je praktijk, ook de kaarten die je deelde." },
   { stuk: "vwo", versie: "2026-11-09", tekst: "Einde: na de proef zonder abonnement wissen we alles na 90 dagen. Nieuw: een wettelijke vordering melden we vooraf, Fysiplan blijft verantwoordelijk voor subverwerkers, en de praktijk mag de afspraken laten controleren." },
   { stuk: "av", versie: "2026-11-09-3", tekst: "Proef: word je geen klant, dan wissen we al 30 dagen na de proef alles van je praktijk (was 90 dagen)." },
-  { stuk: "vwo", versie: "2026-11-10", tekst: "Einde: na een proef zonder abonnement wissen we alles 30 dagen na de proef, net als na opzeggen." }
+  { stuk: "vwo", versie: "2026-11-10", tekst: "Einde: na een proef zonder abonnement wissen we alles 30 dagen na de proef, net als na opzeggen." },
+  { stuk: "av", versie: "2026-11-10", tekst: "Betalen na de eerste maand: we schrijven elke maand automatisch af via je machtiging, met minstens " + INCASSO_VOORAF_DAGEN + " dagen vooraf een mail. Lukt het niet, dan nemen we contact op." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -705,7 +706,7 @@ for (const p of Object.values(proeven)) {
   if (p.abonnement?.incasso?.id) mollieBetaalIndex.set(p.abonnement.incasso.id, p.id);
 }
 // Maandincasso na de eerste maand: pas aan met MOLLIE_INCASSO=aan (naast de sleutel), zodat
-// Ahmed eerst de voorwaarden (betaalwijze na maand 1) kan invullen. Alleen als mail werkt:
+// Ahmed het eerst met een testsleutel kan proberen (voorwaarden art. 4 beschrijven het). Alleen als mail werkt:
 // de voorwaarden beloven dat de praktijk het vooraf hoort. Zonder: niets verandert.
 const MOLLIE_INCASSO = /^(aan|ja|1|true)$/i.test(String(process.env.MOLLIE_INCASSO || "").trim());
 const incassoAan = () => mollieAan() && MOLLIE_INCASSO && mailIngesteld();
@@ -6147,7 +6148,7 @@ async function afhandelen(request, response) {
         CONTACT_HTML: contact ? '<p>Vragen over privacy: <a href="mailto:' + htmlEsc(contact) + '">' + htmlEsc(contact) + "</a></p>" : "",
         HOSTING: FYSIPLAN_ID.hosting || "nog niet vastgelegd",
         STIL: String(BEWAAR_STIL_DAGEN), AFGEROND: String(BEWAAR_AFGEROND_DAGEN),
-        PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN), PROEF_DAGEN: String(PROEF_DAGEN), NA_EINDE: String(NA_EINDE_WISSEN_DAGEN),
+        PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN), PROEF_DAGEN: String(PROEF_DAGEN), NA_EINDE: String(NA_EINDE_WISSEN_DAGEN), INCASSO_VOORAF: String(INCASSO_VOORAF_DAGEN),
         // Mollie staat alleen in de privacyverklaring als online betalen echt aan staat
         BETAAL_RIJ_HTML: mollieAan() ? '<tr id="betalen"><td>Betaling: naam van de praktijk (of je eigen naam), e-mail, aantal therapeuten, bedrag, '
           + "en de kenmerken van klant, betaling en machtiging bij Mollie. Geen rekeningnummer of kaartgegevens; die vul je alleen bij Mollie in.</td>"

@@ -10,7 +10,7 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 |---|---|
 | (a) privacyverklaring (art. 13/14 AVG) | 2026-11-09 09u (art. 9-uitzondering, "Als je stopt", proefpraktijk zonder abonnement echt gewist, WhatsApp-link) |
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-09 13u (art. 28 lid 3 a/g/h en lid 4 langs de tekst; einde proef: kaarten bleven onbeperkt; subverwerkers tegen alle externe hosts in code: geen gat) |
-| (c) algemene voorwaarden | 2026-11-09 05u (opzeggen in de app, einde abonnement; `AV_VERSIE` 2026-11-09) |
+| (c) algemene voorwaarden | 2026-11-10 05u (art. 4 beschrijft de maandincasso: afschrijven via machtiging, mail 5 dagen vooraf als afgesproken kortere termijn, mislukt = contact, factuur per maand; `AV_VERSIE` 2026-11-10) |
 | (d) code tegen tekst | 2026-11-09 05u (einde abonnement: wissen 30 dagen na het einde gebouwd) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-10 01u (vertaalcache hield namen van eigen oefeningen na "Alles wissen" en na verwijderen tot de volgende herstart; /privacy noemde de beheerderslogin op /v2/gegevens niet; download bevat geen geheimen, wel alle kaartvelden) |
 | (f) cookies en lokale opslag | 2026-11-09 21u (Cache Storage van /k: "Wis deze kaart" liet oefenbeelden en bibliotheek staan, opgelost; cookies en localStorage ongewijzigd sinds 8-11) |
@@ -18,7 +18,7 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (h) WGBO en KNGF-beroepsregels | 2026-11-08 21u (werknotitie mee naar het dossier, dossierlabel vervalt bij nieuwe praktijkregels, datum heet nu "laatst opgeslagen") |
 | (i) begrijpelijkheid (B1) | 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (h) WGBO, dan (g) MDR. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (h) WGBO, dan (g) MDR, dan (d) code tegen tekst. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
@@ -28,6 +28,9 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   per mail 5 dagen vooraf (`INCASSO_VOORAF_DAGEN`, lib/mollie.js); mislukt = geen nieuwe poging, Ahmed neemt contact op.
   Art. 4 van de voorwaarden ("betaalwijze, factuurmoment en betaaltermijn na de eerste maand") moet dit beschrijven,
   inclusief de kortere aankondigingstermijn dan de SEPA-standaard van 14 dagen. Staat uit tot Ahmed de variabele zet.
+  OPGELOST 2026-11-10 (deze PR): art. 4 beschrijft de incasso, de termijn komt uit `INCASSO_VOORAF_DAGEN`, en zolang
+  het uit staat "spreken we de betaling met je af, er wordt niets afgeschreven". Test in `scripts/test-privacy.mjs`
+  (faalt zonder fix). Bron: SEPA Core Rulebook (EPC), vooraankondiging 14 dagen tenzij anders afgesproken.
 
 - **LAAG — rechten (e) 2026-11-10: vertaalde namen van eigen oefeningen bleven na wissen in de vertaalcache.**
   `vertalingen.json` bewaart per taal de vertaling van namen van eigen praktijkoefeningen. "Alles wissen" op
