@@ -32,7 +32,9 @@ const ai = createServer(async (request, response) => {
       { naam: "Bestaat niet", traint: "geen bibliotheekoefening, valt weg" },
       { naam: "Lunges", traint: "Kracht en balans van de benen." }
     ] })
-    : JSON.stringify({ antwoord: "Zak zo ver als prettig voelt en houd je rug recht." });
+    : /^Je vertaalt/.test(String(b.system || ""))
+      ? JSON.stringify(JSON.parse(b.messages[0].content).map((t) => "[de] " + t))
+      : JSON.stringify({ antwoord: "Zak zo ver als prettig voelt en houd je rug recht." });
   response.writeHead(200, { "content-type": "application/json" });
   response.end(JSON.stringify({ content: [{ type: "text", text: tekst }] }));
 });
@@ -46,7 +48,8 @@ await writeFile(join(dataDir, "kaarten.json"), JSON.stringify({
   "fysio oud": {
     "stil": kaart("aaaaaaaaaaa1", { naam: "Stil", ts: nu - 200 * dag, client: { c_naam: "Stil" } }),
     "afgerond": kaart("aaaaaaaaaaa2", { naam: "Afgerond", ts: nu - 50 * dag, gearchiveerd: true, gearchiveerdOp: nu - 40 * dag, client: { c_naam: "Afgerond" } }),
-    "actief": kaart("aaaaaaaaaaa3", { naam: "Actief", ts: nu - 10 * dag, metingen: [{ t: nu - 2 * dag, s: 3 }],
+    "actief": kaart("aaaaaaaaaaa3", { naam: "Actief", ts: nu - 10 * dag,
+      chosen: [{ n: "Squat", id: "", i: 0 }, { n: "Brug op de mat van de praktijk", id: "po_0123456789ab", i: 1 }], metingen: [{ t: nu - 2 * dag, s: 3 }],
       client: { c_naam: "Actief", c_leeftijd: "54", c_cave: "hernia L5", c_doel: "Traplopen" } })
   }
 }));
@@ -208,6 +211,16 @@ try {
   assert.match(klacht.antwoord, /your own practice/);
   assert.equal(aiAanvragen.length, voorKlacht, "klachtvraag gaat niet naar de AI-dienst");
 
+  // vertalen: ook de naam van een eigen praktijkoefening gaat naar de AI-dienst
+  // (vrije tekst van de therapeut); /privacy moet dat zeggen (legal 2026-11-10 21u)
+  const voorVertaal = aiAanvragen.length;
+  const vertaald = await api("/api/kaart/vertaal?id=aaaaaaaaaaa3&taal=de", { ip: nieuwIp() });
+  assert.equal(vertaald.status, 200);
+  assert.equal(aiAanvragen.length, voorVertaal + 1, "vertalen vraagt de AI-dienst");
+  const vertaalAanvraag = JSON.stringify(aiAanvragen[aiAanvragen.length - 1].messages);
+  assert.match(vertaalAanvraag, /Brug op de mat van de praktijk/, "naam van een eigen oefening gaat mee naar de vertaling");
+  assert.doesNotMatch(vertaalAanvraag, /Traplopen|hernia|Actief/, "doel, Casus en naam blijven thuis");
+
   // ---- juridische pagina's ----
   for (const pad of ["/privacy", "/verwerkersovereenkomst", "/voorwaarden"]) {
     const r = await fetch(origin + pad);
@@ -221,6 +234,16 @@ try {
   }
   const privacy = await (await fetch(origin + "/privacy")).text();
   assert.match(privacy, /Anthropic/);
+  {
+    // code tegen tekst (legal 2026-11-10 21u): de rij zei "geen vrije tekst van de
+    // therapeut" en "bibliotheekteksten", maar namen van eigen oefeningen gaan mee
+    const anthropicRij = privacy.split("<td>Anthropic</td>")[1].split("</tr>")[0];
+    assert.match(anthropicRij, /eigen oefeningen van de praktijk/, "/privacy noemt eigen oefeningnamen bij Anthropic");
+    assert.match(anthropicRij, /nooit de naam van een pati&euml;nt/);
+    assert.doesNotMatch(anthropicRij, /vrije tekst van de therapeut/, "oude, onjuiste belofte is weg");
+    // art. 14 lid 2 f AVG: bron van de gegevens van een teamlid
+    assert.match(privacy, /Naam en e-mail vult de beheerder van je praktijk in/);
+  }
   assert.match(privacy, /Railway/);
   assert.match(privacy, /EU West \(Amsterdam\)/);
   assert.match(privacy, /privacy@fysiplan\.nl/);
