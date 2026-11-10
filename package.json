@@ -114,7 +114,8 @@
     "test:agendadubbel": "node scripts/test-kaart-agenda-dubbel.mjs",
     "test:proeftweedeapparaat": "node scripts/test-sweep-proef-tweede-apparaat.mjs",
     "test:printgroot": "node scripts/test-sweep-print-groot.mjs",
-    "test:vuleersterij": "node scripts/test-sweep-vul-eerste-rij.mjs"
+    "test:vuleersterij": "node scripts/test-sweep-vul-eerste-rij.mjs",
+    "test:inlogrem": "node scripts/test-inlogrem-ip.mjs"
   },
   "engines": {
     "node": ">=20"

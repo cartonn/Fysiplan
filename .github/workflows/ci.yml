@@ -109,3 +109,4 @@ jobs:
       - run: npm run test:proeftweedeapparaat
       - run: npm run test:printgroot
       - run: npm run test:vuleersterij
+      - run: npm run test:inlogrem
