@@ -1,0 +1,810 @@
+[
+ {
+  "naam": "Heup – terug naar zijwaarts bewegen",
+  "categorie": "Heup",
+  "sub": "Zijwaartse passen en controle op één been voor de laatste fase van je heupherstel.",
+  "oefeningen": [
+   "Kruispas zijwaarts",
+   "Monster walk – met elastiek",
+   "Laterale shuffle – submaximaal",
+   "Eenbenige kniebuiging – staand"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Kniepees – springen en landen",
+  "categorie": "Knie",
+  "sub": "Je bouwt sprongbelasting op en oefent zacht landen.",
+  "oefeningen": [
+   "Vooruit en achteruit springen – twee benen",
+   "Squat jumps",
+   "Landing op twee benen – techniek langzaam",
+   "Step-down – op verhoging"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Voorste kniepijn – landen met controle",
+  "categorie": "Knie",
+  "sub": "Zacht landen en je knie recht boven je voet houden.",
+  "oefeningen": [
+   "Van een verhoging stappen en zacht landen",
+   "Landing op twee benen – techniek langzaam",
+   "Eenbenige kniebuiging – staand",
+   "Step-down – op verhoging"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nieuwe heup – eerste oefeningen in bed",
+  "categorie": "Heup",
+  "sub": "Rustig bewegen en spieren aanspannen in de eerste dagen na je operatie.",
+  "oefeningen": [
+   "Enkelpomp – ruglig",
+   "Billen aanspannen – ruglig",
+   "Knie buigen – liggend",
+   "Been opzij schuiven – ruglig",
+   "Quadriceps aanspannen – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nieuwe knie – buigen en strekken starten",
+  "categorie": "Knie",
+  "sub": "De eerste oefeningen om je nieuwe knie weer te leren buigen en strekken.",
+  "oefeningen": [
+   "Enkelpomp – ruglig",
+   "Quadriceps aanspannen – liggend",
+   "Knie buigen – liggend",
+   "Hiel naar je bil schuiven – langzit met band",
+   "Straight leg raise – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nieuwe knie – kracht opbouwen",
+  "categorie": "Knie",
+  "sub": "Meer kracht en buiging voor dagelijkse dingen zoals opstaan en traplopen.",
+  "oefeningen": [
+   "Quadriceps aanspannen – liggend",
+   "Hamstring curl – staand met steun",
+   "Knie strekken – zittend",
+   "Sit-to-stand – zittend",
+   "Mini-squat – staand met steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Voet na een breuk – weer soepel en sterk",
+  "categorie": "Enkel & voet",
+  "sub": "Je enkel en tenen weer in beweging brengen en voorzichtig belasten.",
+  "oefeningen": [
+   "Enkel ronddraaien met je hand – zittend",
+   "Handdoek naar je toe krullen met je tenen – zittend",
+   "Enkel alfabet schrijven – zittend",
+   "Enkel optrekken – zittend actief",
+   "Kuitheffing – staand met steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knieband buitenkant – wendbaarheid",
+  "categorie": "Knie",
+  "sub": "Snelle voeten en richtingen wisselen in de late fase van je herstel.",
+  "oefeningen": [
+   "Loopladder – twee voeten in elk vak",
+   "Uitvalspas rond de klok",
+   "Marcheren op een minitrampoline",
+   "Laterale shuffle – submaximaal"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Meniscus – kracht rond de knie",
+  "categorie": "Knie",
+  "sub": "Sterke heup- en bovenbeenspieren om je knie te ontlasten.",
+  "oefeningen": [
+   "Clamshell – met elastiek",
+   "Lunges",
+   "Mini-squat – staand met steun",
+   "Step-up – staand met steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knieblessures voorkomen – warming-up voor sporters",
+  "categorie": "Knie",
+  "sub": "Een actieve warming-up met loop-, kracht- en sprongvormen.",
+  "oefeningen": [
+   "Rennen op de plaats",
+   "Uitvalspassen lopend",
+   "Nordic hamstring – knielend met vaste voeten",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Squat jumps",
+   "Zijwaarts springen – twee benen",
+   "Vooruit en achteruit springen – twee benen",
+   "Hoppen op de plaats – op één been"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Heup – rustige start",
+  "categorie": "Heup",
+  "sub": "Lichte beweging en aanspannen in de eerste fase.",
+  "oefeningen": [
+   "Knie buigen – liggend",
+   "Billen aanspannen – ruglig",
+   "Brug – liggend",
+   "Clamshell – zijlig"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Voorste kruisband – beweging en eerste kracht",
+  "categorie": "Knie",
+  "sub": "Volledig strekken, verder buigen en je bovenbeen weer aanzetten.",
+  "oefeningen": [
+   "Knie buigen – liggend",
+   "Quadriceps aanspannen – liggend",
+   "Straight leg raise – liggend",
+   "Mini-squat – staand met steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Voorste kruisband – balans en controle",
+  "categorie": "Knie",
+  "sub": "Stabiliteit op een wiebelige ondergrond.",
+  "oefeningen": [
+   "Staan op een balansmat – twee voeten",
+   "Uitvalspas – voorste voet op een balanskussen",
+   "Eenbeenstand – zonder steun",
+   "Step-up – op verhoging"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Voorste kruisband – springen en wenden",
+  "categorie": "Knie",
+  "sub": "Sprongen in alle richtingen als voorbereiding op sport.",
+  "oefeningen": [
+   "Over lage horden springen – twee benen",
+   "Squatsprong met kwartdraai",
+   "Zijwaarts springen – twee benen",
+   "Zijwaarts over een bosu stappen – snel",
+   "Hoppen in vier richtingen – op één been",
+   "Alternating lunge jumps"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Balans – basis",
+  "categorie": "Balans",
+  "sub": "Stevig leren staan met minder steun en minder zicht.",
+  "oefeningen": [
+   "Voeten naast elkaar staan – ogen dicht",
+   "Staan op een balansmat – twee voeten",
+   "Semi-tandemstand – zonder steun",
+   "Gewicht verplaatsen zijwaarts – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Balans – reageren met een bal",
+  "categorie": "Balans",
+  "sub": "Je evenwicht bewaren terwijl je aandacht bij een bal is.",
+  "oefeningen": [
+   "Bal tegen de muur gooien en vangen – staand",
+   "Bal stuiteren en vangen – staand",
+   "Bal rollen onder je voet – staand",
+   "Voeten naast elkaar staan – ogen dicht",
+   "Voeten samen op balansmat – hoofd op en neer"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Balans – gevorderd in beweging",
+  "categorie": "Balans",
+  "sub": "Evenwicht tijdens stappen, draaien en lopen.",
+  "oefeningen": [
+   "Uitvalspas met rompdraai – met stok",
+   "Uitvalspas – voorste voet op een balanskussen",
+   "Voet voor voet lopen – over een lijn",
+   "Voeten samen op balansmat – hoofd op en neer"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Rompkracht op de mat",
+  "categorie": "Romp",
+  "sub": "Buik en rug rustig sterker maken op de mat.",
+  "oefeningen": [
+   "Curl up",
+   "Superman",
+   "Dead bug – liggend",
+   "Brug – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knieschijf – bovenbeen versterken",
+  "categorie": "Knie",
+  "sub": "Kracht in je bovenbeen en heup zonder je knieschijf te overbelasten.",
+  "oefeningen": [
+   "Kniebuiging tegen de muur – bal tussen je knieën",
+   "Quadriceps aanspannen – liggend",
+   "Straight leg raise – liggend",
+   "Clamshell – zijlig"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Kniepees – rustig belasten",
+  "categorie": "Knie",
+  "sub": "Aanspannen zonder bewegen om de pees te laten wennen.",
+  "oefeningen": [
+   "Knie strekken tegen je andere been – zittend (zonder bewegen)",
+   "Wall sit",
+   "Quadriceps aanspannen – zittend",
+   "Kuitrek gestrekte knie – staand met steun"
+  ],
+  "dosering": {
+   "s": "4",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Bovenbeen voorkant – rekken en aanspannen",
+  "categorie": "Knie",
+  "sub": "Soepelheid en eerste kracht voor je bovenbeenspier.",
+  "oefeningen": [
+   "Buitenkant bovenbeen rekken – zijlig over de bedrand",
+   "Voorkant bovenbeen rekken – buiklig met band",
+   "Quadriceps aanspannen – liggend",
+   "Straight leg raise – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Voorste kniepijn – basis",
+  "categorie": "Knie",
+  "sub": "Bovenbeen en heup versterken in liggende houdingen.",
+  "oefeningen": [
+   "Quadriceps aanspannen – liggend",
+   "Straight leg raise – liggend",
+   "Clamshell – zijlig",
+   "Heup zijwaarts heffen – zijlig"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Opstaan trainen – zwakke been laten werken",
+  "categorie": "Neurologie",
+  "sub": "Bij het opstaan meer gewicht op je zwakkere been leren zetten.",
+  "oefeningen": [
+   "Opstaan uit de stoel – sterke voet verder naar voren",
+   "Sit-to-stand – zittend",
+   "Gewicht verplaatsen zijwaarts – met steun",
+   "Brug – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Opstaan trainen – zwaarder",
+  "categorie": "Neurologie",
+  "sub": "Opstaan met reiken en stappen voor meer kracht aan je zwakkere kant.",
+  "oefeningen": [
+   "Opstaan uit de stoel – sterke voet verder naar voren",
+   "Opstaan uit de stoel – met schuin omhoog reiken",
+   "Step-up – staand met steun",
+   "Reiken in stand – met steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "8"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Buitenkant knie en heup – rekken en versterken",
+  "categorie": "Knie",
+  "sub": "Minder spanning op de buitenkant van je been en sterkere heupspieren.",
+  "oefeningen": [
+   "Buitenkant heup rekken – staand met gekruiste benen",
+   "Foam roller tractus",
+   "Clamshell – zijlig",
+   "Heup zijwaarts heffen – zijlig"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Scheenbeenklachten – losmaken en opbouwen",
+  "categorie": "Onderbeen",
+  "sub": "Spanning in je onderbeen verminderen en de spieren rustig sterker maken.",
+  "oefeningen": [
+   "Voorkant scheenbeen rollen – foamroller",
+   "Yoga cobra",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Enkel wegduwen – met elastiek",
+   "Tenen heffen – staand met steun",
+   "Op je hakken lopen"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie in het spoor – voor sporters",
+  "categorie": "Knie",
+  "sub": "Soepele heupen en een knie die recht boven je voet blijft.",
+  "oefeningen": [
+   "Bilspier rekken – zittend op een stoel",
+   "Clamshell – met elastiek",
+   "Step-down – op verhoging",
+   "Eenbenige kniebuiging – staand"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Hielpijn onder de voet",
+  "categorie": "Enkel & voet",
+  "sub": "Je voetzool en kuit rekken en de peesplaat stap voor stap sterker maken.",
+  "oefeningen": [
+   "Kuitheffing op een verhoging – tenen op een handdoekrol",
+   "Voetzool rekken – tenen naar je toe trekken",
+   "Kuitrek gestrekte knie – staand met steun",
+   "Voetzool rollen – over een koude fles"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nieuwe heup – kracht en balans in stand",
+  "categorie": "Heup",
+  "sub": "Sterker worden op je benen in de laatste fase na je heupoperatie.",
+  "oefeningen": [
+   "Zijwaartse uitvalspas – staand",
+   "Eenbenige kniebuiging – staand",
+   "Step-up – op verhoging",
+   "Eenbeenstand – zonder steun",
+   "Heup zijwaarts heffen – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Artrose heup en knie – in beweging blijven",
+  "categorie": "Heup & knie",
+  "sub": "Functionele kracht voor opstaan, traplopen en wandelen.",
+  "oefeningen": [
+   "Zijwaartse uitvalspas – staand",
+   "Sit-to-stand – zittend",
+   "Step-up – staand met steun",
+   "Stevig doorwandelen – buiten"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Rond je knieoperatie – lopen en aanspannen",
+  "categorie": "Knie",
+  "sub": "Veilig lopen met krukken en je beenspieren actief houden.",
+  "oefeningen": [
+   "Lopen met krukken – deels steunen op je been",
+   "Traplopen met leuning – trede voor trede",
+   "Quadriceps aanspannen – liggend",
+   "Sit-to-stand – zittend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Achillespees – start",
+  "categorie": "Enkel & voet",
+  "sub": "Je kuit en pees rustig laten wennen aan belasting.",
+  "oefeningen": [
+   "Kuitheffing – staand met steun",
+   "Kuitheffing – op één been",
+   "Enkel wegduwen – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "15"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Achillespees – zwaarder belasten",
+  "categorie": "Enkel & voet",
+  "sub": "Langzaam laten zakken en trainen met gebogen knie.",
+  "oefeningen": [
+   "Kuit laten zakken op een verhoging – excentrisch",
+   "Kuitheffing – op een verhoging",
+   "Kuitheffing met gebogen knie – op één been",
+   "Kuitheffing – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "15"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Achillespees – veren en springen",
+  "categorie": "Enkel & voet",
+  "sub": "Je pees klaarmaken voor rennen en springen.",
+  "oefeningen": [
+   "Van een verhoging stappen en zacht landen",
+   "Pogosprongen – op de plaats",
+   "Hoppen op de plaats – op één been",
+   "Kuitheffing – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Artrose heup en knie – kracht met materiaal",
+  "categorie": "Heup & knie",
+  "sub": "Krachtoefeningen met bal, elastiek en glijschijf.",
+  "oefeningen": [
+   "Zijwaartse uitvalspas – glijdend met één voet",
+   "Uitvalspas achterwaarts – glijdend met één voet",
+   "Bruggen op bal",
+   "Heup naar binnen bewegen – met elastiek",
+   "Knie strekken – met elastiek",
+   "Crunch"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Enkelartrose – soepel en sterk",
+  "categorie": "Enkel & voet",
+  "sub": "Je enkel in alle richtingen bewegen, versterken en stabieler maken.",
+  "oefeningen": [
+   "Enkel optrekken – zittend actief",
+   "Voet naar binnen – zittend actief",
+   "Voet naar buiten – zittend actief",
+   "Enkel optrekken – met elastiek",
+   "Enkel wegduwen – met elastiek",
+   "Voet naar buiten – met elastiek",
+   "Staan op een balansmat – twee voeten"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Meniscus – sturing en kracht, stap 1",
+  "categorie": "Knie",
+  "sub": "Je knie leren sturen vanuit je heup, met elastiek en glijschijf.",
+  "oefeningen": [
+   "Zijwaartse uitvalspas – glijdend met één voet",
+   "Knie zijwaarts openen – staand met elastiek",
+   "Heup naar binnen bewegen – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Meniscus – sturing en kracht, stap 2",
+  "categorie": "Knie",
+  "sub": "Zwaardere oefeningen voor been, heup en romp.",
+  "oefeningen": [
+   "Zijwaartse uitvalspas – glijdend met één voet",
+   "Sterbalans – voet aantikken rondom",
+   "Plank met been heffen",
+   "Zijplank met been heffen",
+   "Step-down – op verhoging"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Slijtage meniscus – eerste kracht",
+  "categorie": "Knie",
+  "sub": "Je bovenbeen en bil rustig sterker maken.",
+  "oefeningen": [
+   "Terminal knee extension – met elastiek",
+   "Mini-squat – staand met steun",
+   "Brug – liggend",
+   "Quadriceps aanspannen – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Slijtage meniscus – kracht op wiebelige ondergrond",
+  "categorie": "Knie",
+  "sub": "Kniebuigen en opstappen met extra balans.",
+  "oefeningen": [
+   "Eenbenige kniebuiging – staand",
+   "Bosu squat",
+   "Step-up – op verhoging"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Beenkracht met eenvoudig materiaal",
+  "categorie": "Benen",
+  "sub": "Grote beenspieren trainen met je lichaamsgewicht, halters of elastiek.",
+  "oefeningen": [
+   "Zijwaartse uitvalspas – staand",
+   "Heup strekken – met elastiek",
+   "Dead lift"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Sterke enkel – basis",
+  "categorie": "Enkel & voet",
+  "sub": "Balans op één been na een verzwikte enkel.",
+  "oefeningen": [
+   "Renhouding op één been",
+   "Eenbeenstand – been zijwaarts zwaaien",
+   "Eenbeenstand – zonder steun",
+   "Kuitheffing – op één been"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Sterke enkel – gevorderd",
+  "categorie": "Enkel & voet",
+  "sub": "Balans op een wiebelige ondergrond en veren op je voorvoeten.",
+  "oefeningen": [
+   "Eenbeenstand – op een balanskussen",
+   "Renhouding op één been",
+   "Eenbeenstand – been zijwaarts zwaaien",
+   "Op je tenen lopen",
+   "Huppelen op de voorvoeten – gestrekte knieën"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Doorgezakte voet – voetspieren en soepelheid",
+  "categorie": "Enkel & voet",
+  "sub": "De kleine voetspieren activeren en je kuit soepel houden.",
+  "oefeningen": [
+   "Handdoek opzij vegen met je voet – zittend",
+   "Handdoek naar je toe krullen met je tenen – zittend",
+   "Knikkers oppakken met je tenen – zittend",
+   "Tenen heffen – zittend actief",
+   "Kuit rekken – voorvoet tegen de muur",
+   "Kuit rekken – langzit met handdoek",
+   "Voetzool rekken – tenen naar je toe trekken"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Doorgezakte voet – kracht met elastiek en kuit",
+  "categorie": "Enkel & voet",
+  "sub": "Je enkelspieren en kuit versterken om je voetboog te steunen.",
+  "oefeningen": [
+   "Enkel optrekken – met elastiek",
+   "Enkel wegduwen – met elastiek",
+   "Voet naar buiten – met elastiek",
+   "Kuitheffing met gebogen knie – op één been",
+   "Kniebuiging en op de tenen komen",
+   "Step-down – op verhoging"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "12"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Doorgezakte voet – balans en springen",
+  "categorie": "Enkel & voet",
+  "sub": "Stabiliteit op één been en de opbouw naar springen.",
+  "oefeningen": [
+   "Sterbalans – voet aantikken rondom",
+   "Armen strekken tegen elastiek – op één been",
+   "Uitvalspas – voorste voet op een balanskussen",
+   "Eenbenige kniebuiging – staand",
+   "Pogosprongen – op de plaats",
+   "Squat jumps"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Knie na een meniscusoperatie – eerste weken",
+  "categorie": "Knie",
+  "sub": "Buigen, strekken en je bovenbeen weer aanspannen.",
+  "oefeningen": [
+   "Knie buigen – zittend met hulp van het andere been",
+   "Knie strekken – liggend",
+   "Quadriceps aanspannen – liggend",
+   "Straight leg raise – liggend"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Zwanger – bekken soepel houden",
+  "categorie": "Zwangerschap",
+  "sub": "Rustige bewegingen voor je bekken en onderrug.",
+  "oefeningen": [
+   "Bekken cirkelen – staand met handen op tafel",
+   "Romp opzij krommen – op handen en knieën",
+   "Rug bol en hol – op handen en knieën",
+   "Bekken kantelen – staand"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Zwanger – rug ontlasten",
+  "categorie": "Zwangerschap",
+  "sub": "Je rug en buik ontspannen in de laatste maanden.",
+  "oefeningen": [
+   "Bekken wiegen – op handen en knieën",
+   "Yoga extended child's pose",
+   "Rug bol en hol – op handen en knieën",
+   "Bekken kantelen – zittend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ }
+]

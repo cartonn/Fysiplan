@@ -1,0 +1,245 @@
+[
+ {
+  "naam": "Scherp blijven zien – stap 1",
+  "categorie": "Duizeligheid en evenwicht",
+  "sub": "Eerste oefeningen om je blik stil te houden terwijl je hoofd beweegt, liggend en zittend.",
+  "oefeningen": [
+   "Blikstabilisatie horizontaal – ruglig",
+   "Blikstabilisatie verticaal – ruglig",
+   "Blikstabilisatie horizontaal – zittend langzaam",
+   "Blikstabilisatie verticaal – zittend langzaam",
+   "Nek buigen – zittend actief"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Scherp blijven zien – stap 2",
+  "categorie": "Duizeligheid en evenwicht",
+  "sub": "Je blik stilhouden terwijl je staat op een smalle of zachte ondergrond.",
+  "oefeningen": [
+   "Voeten samen op balansmat – hoofd draaien",
+   "Voeten samen op balansmat – hoofd op en neer",
+   "Tandemstand – met hoofdbeweging",
+   "Blikstabilisatie horizontaal – staand langzaam",
+   "Blikstabilisatie verticaal – staand langzaam"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Wennen aan beweging – stap 1",
+  "categorie": "Duizeligheid en evenwicht",
+  "sub": "Rustige hoofd- en oogbewegingen in ruglig om duizeligheid stap voor stap te laten afnemen.",
+  "oefeningen": [
+   "Nek draaien – liggend ondersteund",
+   "Ogen op en neer – ruglig",
+   "Ogen heen en weer – ruglig",
+   "Duim naar de neus – ruglig"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Wennen aan beweging – stap 2",
+  "categorie": "Duizeligheid en evenwicht",
+  "sub": "Oefenen met gaan liggen, overeind komen en bukken, zodat houdingswissels minder duizelig maken.",
+  "oefeningen": [
+   "Van zitten naar liggen – op de bedrand",
+   "Van liggen naar zitten – over de zij uit bed",
+   "Bukken en oprichten – zittend",
+   "Buigen en oprichten – staand langzaam"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "5"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Wennen aan beweging – stap 3",
+  "categorie": "Duizeligheid en evenwicht",
+  "sub": "Staand oefenen met bewegende beelden en draaien, voor wie de eerdere stappen goed verdraagt.",
+  "oefeningen": [
+   "Bal van hand naar hand gooien – staand",
+   "Bal opgooien en nakijken – staand",
+   "Draaiende paraplu volgen – staand",
+   "Draaien op de plaats – zonder steun"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Sterke benen bij heup- of knieartrose – start",
+  "categorie": "Artrose",
+  "sub": "Lichte kracht- en opstaoefeningen met steun, als begin van een opbouw bij slijtage van heup of knie.",
+  "oefeningen": [
+   "Sit-to-stand – staand met steun",
+   "Knie strekken – met elastiek",
+   "Been naar achteren laten glijden – met handdoek",
+   "Mini-squat – staand met steun",
+   "Heup zijwaarts heffen – staand met steun",
+   "Crunch"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Evenwichtsorgaan na hersenschudding – deel 1",
+  "categorie": "Hersenschudding",
+  "sub": "Blik stilhouden op een wiebelige ondergrond: zittend op een bal en staand op een mat.",
+  "oefeningen": [
+   "Blikstabilisatie horizontaal – zittend op een bal",
+   "Blikstabilisatie verticaal – zittend op een bal",
+   "Voeten samen op balansmat – hoofd draaien"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Evenwichtsorgaan na hersenschudding – deel 2",
+  "categorie": "Hersenschudding",
+  "sub": "Lopen terwijl je hoofd beweegt en je ogen op één punt blijven.",
+  "oefeningen": [
+   "Blikstabilisatie verticaal – tijdens lopen",
+   "Blikstabilisatie horizontaal – tijdens lopen",
+   "Voet voor voet lopen – met hoofd knikken",
+   "Voet voor voet lopen – met hoofd draaien"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10 meter"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Evenwichtsorgaan na hersenschudding – deel 3",
+  "categorie": "Hersenschudding",
+  "sub": "Op één been staan met een extra taak voor armen, hoofd of ogen.",
+  "oefeningen": [
+   "Eenbeenstand – armen om de beurt heffen",
+   "Eenbeenstand – met hoofdbeweging",
+   "Eenbeenstand – been zijwaarts zwaaien",
+   "Eenbeenstand – ogen dicht"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "30 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Oogoefeningen na hersenschudding – niveau 1",
+  "categorie": "Hersenschudding",
+  "sub": "Zittend je ogen laten samenwerken: dichtbij scherpstellen, een doel volgen en van punt naar punt kijken.",
+  "oefeningen": [
+   "Duim naar de neus – zittend",
+   "Doel volgen – zittend langzaam",
+   "Doel volgen verticaal – zittend",
+   "Ogen naar doelen – zittend langzaam"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Oogoefeningen na hersenschudding – niveau 2",
+  "categorie": "Hersenschudding",
+  "sub": "Een bewegend doel volgen in lastigere patronen en in stand.",
+  "oefeningen": [
+   "Duim volgen in een achtje – zittend",
+   "Duim volgen met hoofd en ogen samen – staand",
+   "Eenbeenstand – duim volgen met je ogen",
+   "Ogen naar doelen – staand langzaam"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Oogoefeningen na hersenschudding – niveau 3",
+  "categorie": "Hersenschudding",
+  "sub": "Snelle, grote bewegingen volgen terwijl je staat en je evenwicht bewaart.",
+  "oefeningen": [
+   "Handen draaien en volgen met je ogen – staand",
+   "Bal van hand naar hand gooien – staand",
+   "Duim volgen in een achtje – staand",
+   "Bal opgooien en nakijken – staand"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nek soepel na hersenschudding – deel 1",
+  "categorie": "Hersenschudding",
+  "sub": "Rustig rekken en bewegen om stijfheid en spanning in de nek te verminderen.",
+  "oefeningen": [
+   "Bovenste trapezius rek – zittend actief",
+   "Levator scapulae rek – zittend actief",
+   "Nek draaien – zittend actief",
+   "Kin intrekken – zittend actief"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "20 sec"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Nek sturen na hersenschudding – deel 2",
+  "categorie": "Hersenschudding",
+  "sub": "Precies leren sturen met je hoofd en de nekspieren licht aanspannen zonder te bewegen.",
+  "oefeningen": [
+   "Hoofd sturen met laserlampje – zittend",
+   "Nek draaien – isometrisch",
+   "Nek isometrisch – voor, achter en opzij",
+   "Diepe nekflexoren activeren – zittend actief",
+   "Nekrotatie met oogfixatie – zittend actief"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ },
+ {
+  "naam": "Armkracht met elastiek en evenwicht",
+  "categorie": "Neurologie",
+  "sub": "Je arm sterker maken tegen een elastiek, met een smalle stand als extra uitdaging voor je balans.",
+  "oefeningen": [
+   "Arm schuin omhoog trekken – met elastiek",
+   "Schouder zijwaarts heffen – met elastiek",
+   "Tandemstand – zonder steun"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  },
+  "actie": "nieuw"
+ }
+]
