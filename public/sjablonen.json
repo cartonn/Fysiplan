@@ -813,6 +813,11 @@
     "n": "Step up with knee raise",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Bal tegen de muur gooien – squat op een bosu",
+    "s": "3",
+    "h": "8"
    }
   ]
  },
@@ -1159,6 +1164,11 @@
     "n": "Rug strekken – liggend",
     "s": "3",
     "h": "10 × 5 sec"
+   },
+   {
+    "n": "Kuitheffing – op één been",
+    "s": "2",
+    "h": "10"
    }
   ]
  },
@@ -1403,6 +1413,11 @@
     "n": "Knie opzij laten zakken – liggend",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Kuitheffing – op één been",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1557,6 +1572,11 @@
     "n": "Zijplank – op knieën",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Clamshell – zijlig",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -1707,6 +1727,11 @@
    },
    {
     "n": "Squat lunges",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Kuitheffing – op één been",
     "s": "3",
     "h": "10"
    }
@@ -1880,6 +1905,11 @@
    },
    {
     "n": "Knie optillen tot 90 graden – ruglig",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Clamshell – zijlig",
     "s": "3",
     "h": "10"
    }
@@ -2059,6 +2089,11 @@
     "n": "Straight leg raise – liggend",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Eenbenige kniebuiging – staand",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2085,6 +2120,11 @@
    },
    {
     "n": "Crabwalk",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Eenbenige kniebuiging – staand",
     "s": "3",
     "h": "10"
    }
@@ -2198,6 +2238,11 @@
     "n": "Clamshell – zijlig",
     "s": "3",
     "h": "10"
+   },
+   {
+    "n": "Binnenkant bovenbeen rekken – zijwaarts uitstappen",
+    "s": "3",
+    "h": "10"
    }
   ]
  },
@@ -2259,6 +2304,11 @@
    },
    {
     "n": "Landing op twee benen – techniek langzaam",
+    "s": "3",
+    "h": "8"
+   },
+   {
+    "n": "Bal tegen de muur gooien – squat op een bosu",
     "s": "3",
     "h": "8"
    }
@@ -2363,6 +2413,11 @@
    },
    {
     "n": "Bruggen 1 been liften",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Stevig doorwandelen – buiten",
     "s": "3",
     "h": "10"
    }
@@ -2553,6 +2608,11 @@
    },
    {
     "n": "Heup zijwaarts heffen – met elastiek",
+    "s": "3",
+    "h": "10"
+   },
+   {
+    "n": "Eenbenige kniebuiging – staand",
     "s": "3",
     "h": "10"
    }
@@ -5171,7 +5231,8 @@
   "oefeningen": [
    "Schouderblad naar achteren – met elastiek",
    "Schouderbladen plat in ruglig – arm heffen",
-   "Schouderbladen laten zakken en duwen – handen en knieën"
+   "Schouderbladen laten zakken en duwen – handen en knieën",
+   "Schouderblad naar achteren – zittend met arm op een bal"
   ],
   "dosering": {
    "s": "3",
@@ -5866,7 +5927,8 @@
    "Brug – met bal tussen de knieën",
    "Romp draaien – liggend",
    "Rug extensie",
-   "Knie opzij laten zakken – liggend"
+   "Knie opzij laten zakken – liggend",
+   "Kuitheffing – op een verhoging"
   ],
   "dosering": {
    "s": "3",
@@ -5939,7 +6001,8 @@
    "Kin intrekken – zittend actief",
    "Nek isometrisch – voor, achter en opzij",
    "Bovenste trapezius rek – zittend actief",
-   "Schouderblad naar achteren – actief"
+   "Schouderblad naar achteren – actief",
+   "Ellebogen naar achteren trekken – zittend zonder gewicht"
   ],
   "dosering": {
    "s": "2",
@@ -6555,6 +6618,64 @@
   "dosering": {
    "s": "3",
    "h": "30 sec"
+  }
+ },
+ {
+  "naam": "Neurologie: schouder en schouderblad met elastiek",
+  "sub": "Schouder en schouderblad sterker maken met elastiek na een neurologische aandoening.",
+  "categorie": "Neurologie en duizeligheid",
+  "oefeningen": [
+   "Schouder naar binnen draaien – met elastiek",
+   "Schouder naar buiten draaien – met elastiek",
+   "Schouderblad naar achteren – met elastiek"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Heupprothese fase 3 – kracht",
+  "sub": "Beenkracht opbouwen in de laatste fase na een heupprothese.",
+  "categorie": "Heup en bovenbeen",
+  "fase": 3,
+  "oefeningen": [
+   "Lunges",
+   "Mini-squat – met elastiek",
+   "Wall sit"
+  ],
+  "dosering": {
+   "s": "3",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Heup: labrumletsel fase 1",
+  "sub": "Rustig bewegen en bil- en bovenbeenspieren activeren bij een beschadigde kraakbeenring van de heup.",
+  "categorie": "Heup en bovenbeen",
+  "fase": 1,
+  "oefeningen": [
+   "Been opzij schuiven – ruglig",
+   "Glute bridges",
+   "Straight leg raise – liggend"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
+  }
+ },
+ {
+  "naam": "Bekken: bekkenpijn bij zwangerschap",
+  "sub": "Rustige oefeningen voor bekken en heupen bij bekkenpijn tijdens de zwangerschap.",
+  "categorie": "Rug en bekken",
+  "oefeningen": [
+   "Rug bol en hol – op handen en knieën",
+   "Been optillen met gebogen knie – liggend",
+   "Clamshell – zijlig"
+  ],
+  "dosering": {
+   "s": "2",
+   "h": "10"
   }
  }
 ]

@@ -2,15 +2,15 @@
  "scope": "Basiscatalogus in de repository (public/oefeningen-v2.json). Runtime-overrides op de server niet meegeteld; die gaan altijd voor.",
  "inputs": {
   "public/oefeningen-v2.json": "932ac3af5809d80a",
-  "public/mobile-media-review.json": "61571507309754de",
-  "public/mobile-narration-review.json": "a2f39a635521cb30",
+  "public/mobile-media-review.json": "c51a92ee01950ff1",
+  "public/mobile-narration-review.json": "84b81b4aea229e74",
   "public/index.html": "785ba562286c5cf7",
   "content/category-secondary-evidence.json": "1877ac95d64b6a66"
  },
  "totals": {
   "records": 748,
-  "available": 637,
-  "withoutAsset": 111,
+  "available": 719,
+  "withoutAsset": 29,
   "withSecondary": 246,
   "secondaryLabels": 315,
   "evidence": {
@@ -23,29 +23,29 @@
  "assetGaps": [
   {
    "category": "Bovenste extremiteit",
-   "missingAssets": 37,
-   "availableIncludingSecondary": 163,
+   "missingAssets": 10,
+   "availableIncludingSecondary": 190,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
   {
    "category": "Core",
-   "missingAssets": 19,
-   "availableIncludingSecondary": 75,
+   "missingAssets": 6,
+   "availableIncludingSecondary": 88,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
   {
    "category": "Onderste extremiteit",
-   "missingAssets": 48,
-   "availableIncludingSecondary": 212,
+   "missingAssets": 12,
+   "availableIncludingSecondary": 248,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   },
   {
    "category": "Conditie",
-   "missingAssets": 7,
-   "availableIncludingSecondary": 23,
+   "missingAssets": 1,
+   "availableIncludingSecondary": 29,
    "noAutoFill": false,
    "note": "Deels beschikbaar; ontbrekende records hebben een beeld nodig."
   }
@@ -81,83 +81,18 @@
    ],
    "records": 200,
    "primary": 160,
-   "primaryAvailable": 123,
+   "primaryAvailable": 150,
    "secondary": 40,
    "secondaryAvailable": 40,
-   "available": 163,
-   "availableClean": 163,
+   "available": 190,
+   "availableClean": 190,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [
     {
-     "name": "Schouder voorwaarts heffen – actief",
-     "exerciseId": "fp_4f0ea626e702ca39",
-     "coreExerciseId": "fc_666979ac93a2d017"
-    },
-    {
-     "name": "Schouder voorwaarts heffen – isometrisch tegen de muur",
-     "exerciseId": "fp_c68f1cebe61232f9",
-     "coreExerciseId": "fc_7518bd9bb71d880c"
-    },
-    {
-     "name": "Schouder voorwaarts heffen – met elastiek",
-     "exerciseId": "fp_a0dcb069d6808a3c",
-     "coreExerciseId": "fc_4387146876fecac9"
-    },
-    {
-     "name": "Schouder voorwaarts heffen – functioneel reikend",
-     "exerciseId": "fp_878a8fecc7a01576",
-     "coreExerciseId": "fc_33a2d93ee11092b9"
-    },
-    {
-     "name": "Schouder zijwaarts heffen – isometrisch tegen de muur",
-     "exerciseId": "fp_7a8d4d496c9cd754",
-     "coreExerciseId": "fc_4f7f0c8b2dfad8a8"
-    },
-    {
-     "name": "Schouder zijwaarts heffen – met elastiek",
-     "exerciseId": "fp_b893849d2bafc7e6",
-     "coreExerciseId": "fc_9708918c7ba49ccb"
-    },
-    {
-     "name": "Schouder zijwaarts heffen – functioneel reikend",
-     "exerciseId": "fp_c18a49ef2077eb55",
-     "coreExerciseId": "fc_225dc6fc519468b4"
-    },
-    {
      "name": "Schouder naar binnen draaien – actief",
      "exerciseId": "fp_5a026256b63f0d32",
      "coreExerciseId": "fc_d5bcb3482574858c"
-    },
-    {
-     "name": "Schouderblad naar achteren – isometrisch tegen de muur",
-     "exerciseId": "fp_e6f5f6aa3b504dcc",
-     "coreExerciseId": "fc_d6e63ed52511fe51"
-    },
-    {
-     "name": "Schouderblad omhoog draaien – actief",
-     "exerciseId": "fp_c9aa75b6015af04d",
-     "coreExerciseId": "fc_882c1efe227e803f"
-    },
-    {
-     "name": "Schouderblad omhoog draaien – functioneel reikend",
-     "exerciseId": "fp_6afc4c673a341e55",
-     "coreExerciseId": "fc_92838c7fb57617c5"
-    },
-    {
-     "name": "Serratus punch – actief",
-     "exerciseId": "fp_646a8c9f17d5c52d",
-     "coreExerciseId": "fc_1cdc2eb9fe86602e"
-    },
-    {
-     "name": "Serratus punch – met elastiek",
-     "exerciseId": "fp_d5d7f3ed37392004",
-     "coreExerciseId": "fc_540306ad67f2e937"
-    },
-    {
-     "name": "Serratus punch – functioneel reikend",
-     "exerciseId": "fp_b881d90fe1a8ac24",
-     "coreExerciseId": "fc_dfc23a987e0016bb"
     },
     {
      "name": "Schouder extensie – actief",
@@ -165,54 +100,14 @@
      "coreExerciseId": "fc_774d7be8975277a9"
     },
     {
-     "name": "Schouder extensie – met elastiek",
-     "exerciseId": "fp_e232cb6a8a000a92",
-     "coreExerciseId": "fc_f73a99bdb059c276"
-    },
-    {
      "name": "Schouder extensie – functioneel reikend",
      "exerciseId": "fp_1628ca7fef32cc92",
      "coreExerciseId": "fc_324b7e2d789f67f5"
     },
     {
-     "name": "Horizontaal openen – actief",
-     "exerciseId": "fp_79ccdb96161428b8",
-     "coreExerciseId": "fc_75a086465fd56913"
-    },
-    {
-     "name": "Onderste trapezius heffen – actief",
-     "exerciseId": "fp_46ce9ae616a83d4d",
-     "coreExerciseId": "fc_39388c406779ff27"
-    },
-    {
-     "name": "Onderste trapezius heffen – functioneel reikend",
-     "exerciseId": "fp_6d640337db208d8d",
-     "coreExerciseId": "fc_66908d9476f84888"
-    },
-    {
      "name": "Schouder pendelen – actief",
      "exerciseId": "fp_6bcfafbeb75d6479",
      "coreExerciseId": "fc_8b0a8bf5b0f7db0a"
-    },
-    {
-     "name": "Hand achter de rug brengen – actief",
-     "exerciseId": "fp_57da7438fd7e53bd",
-     "coreExerciseId": "fc_726482f04280ec44"
-    },
-    {
-     "name": "Hand achter de rug brengen – functioneel reikend",
-     "exerciseId": "fp_f041e0b083f54569",
-     "coreExerciseId": "fc_3ec079807b5e79c2"
-    },
-    {
-     "name": "Elleboog buigen – actief",
-     "exerciseId": "fp_76115f29a8301476",
-     "coreExerciseId": "fc_582042140a2a460a"
-    },
-    {
-     "name": "Elleboog buigen – met lichte weerstand",
-     "exerciseId": "fp_a13e066b2da428a6",
-     "coreExerciseId": "fc_08a6d319558fbe91"
     },
     {
      "name": "Elleboog strekken – actief",
@@ -230,19 +125,9 @@
      "coreExerciseId": "fc_08cfeeedfb4b8f9f"
     },
     {
-     "name": "Pols omhoog – met lichte weerstand",
-     "exerciseId": "fp_f59b9c981aac6c74",
-     "coreExerciseId": "fc_5532da663c73f31f"
-    },
-    {
      "name": "Pols omlaag – actief",
      "exerciseId": "fp_850cbacf580b69d4",
      "coreExerciseId": "fc_ce2477410cacb518"
-    },
-    {
-     "name": "Pols naar duimzijde – actief",
-     "exerciseId": "fp_121c180f39b70ea8",
-     "coreExerciseId": "fc_ef4a28637f676c77"
     },
     {
      "name": "Pols naar pinkzijde – actief",
@@ -250,29 +135,9 @@
      "coreExerciseId": "fc_e5aae2103437529f"
     },
     {
-     "name": "Vingers openen en sluiten – actief",
-     "exerciseId": "fp_41a774f90b07b2b8",
-     "coreExerciseId": "fc_f4dd93506ea188d9"
-    },
-    {
-     "name": "Duim oppositie – actief",
-     "exerciseId": "fp_9572ec02c8b7e467",
-     "coreExerciseId": "fc_01cd46a33951413d"
-    },
-    {
-     "name": "Peesglijden hand – actief",
-     "exerciseId": "fp_42a36ebb50836370",
-     "coreExerciseId": "fc_8c7d1c62f818b029"
-    },
-    {
      "name": "Knijpkracht – actief",
      "exerciseId": "fp_509e6f3e795db0ee",
      "coreExerciseId": "fc_7f91fb8f38c1440f"
-    },
-    {
-     "name": "Knijpkracht – met lichte weerstand",
-     "exerciseId": "fp_ea414e78a78a73de",
-     "coreExerciseId": "fc_b765e6c4113807c7"
     }
    ],
    "secondaryRecords": [
@@ -376,11 +241,11 @@
    ],
    "records": 94,
    "primary": 54,
-   "primaryAvailable": 35,
+   "primaryAvailable": 48,
    "secondary": 40,
    "secondaryAvailable": 40,
-   "available": 75,
-   "availableClean": 75,
+   "available": 88,
+   "availableClean": 88,
    "mediaRejected": 0,
    "explanationHeld": 0,
    "missingAssets": [
@@ -388,11 +253,6 @@
      "name": "Bekken kantelen – liggend",
      "exerciseId": "fp_5a4c52a711bbd0da",
      "coreExerciseId": "fc_e67719afce6ea283"
-    },
-    {
-     "name": "Bekken kantelen – op handen en knieën",
-     "exerciseId": "fp_08279fc71366aa1d",
-     "coreExerciseId": "fc_164ceca2c451a6e9"
     },
     {
      "name": "Bekken kantelen – zittend",
@@ -410,74 +270,14 @@
      "coreExerciseId": "fc_49f10d332d302a5e"
     },
     {
-     "name": "Brug – liggend",
-     "exerciseId": "fp_c1a2674e6e8b37a1",
-     "coreExerciseId": "fc_e07aeef0bf691a98"
-    },
-    {
-     "name": "Brug – met lichte weerstand",
-     "exerciseId": "fp_c8c2ca23e18524ec",
-     "coreExerciseId": "fc_892e99f2581bea53"
-    },
-    {
-     "name": "Bird dog – op handen en knieën",
-     "exerciseId": "fp_b3167682caa64b67",
-     "coreExerciseId": "fc_a6edd896bd4200e0"
-    },
-    {
-     "name": "Bird dog – staand",
-     "exerciseId": "fp_e0c0ce4d53b50784",
-     "coreExerciseId": "fc_af144d48d2fa6bec"
-    },
-    {
-     "name": "Bird dog – met lichte weerstand",
-     "exerciseId": "fp_4dd3d123298d83bc",
-     "coreExerciseId": "fc_10ac6e1c7e7b1021"
-    },
-    {
-     "name": "Dead bug – liggend",
-     "exerciseId": "fp_5f412398211b18c6",
-     "coreExerciseId": "fc_ec806bc50d827710"
-    },
-    {
      "name": "Dead bug – staand",
      "exerciseId": "fp_d3a6a1473849ade1",
      "coreExerciseId": "fc_6e6f41316acc5234"
     },
     {
-     "name": "Dead bug – met lichte weerstand",
-     "exerciseId": "fp_68e71498e04bde3d",
-     "coreExerciseId": "fc_9127466e54d4048a"
-    },
-    {
-     "name": "Romp heupscharnier – op handen en knieën",
-     "exerciseId": "fp_9338043c94c52f1f",
-     "coreExerciseId": "fc_9a7d1074950fc14d"
-    },
-    {
-     "name": "Romp heupscharnier – zittend",
-     "exerciseId": "fp_cfe79b68bb2bbb79",
-     "coreExerciseId": "fc_dfaf4f468f172ed9"
-    },
-    {
-     "name": "Romp heupscharnier – met lichte weerstand",
-     "exerciseId": "fp_50fd5edeb35381b1",
-     "coreExerciseId": "fc_b9afb611bed36add"
-    },
-    {
      "name": "Romp draaien – met lichte weerstand",
      "exerciseId": "fp_c6c8158023b28d42",
      "coreExerciseId": "fc_91ec773b4aa918aa"
-    },
-    {
-     "name": "Romp zijwaarts buigen – met lichte weerstand",
-     "exerciseId": "fp_f15b1f5dd1dfb35c",
-     "coreExerciseId": "fc_79460ae8de6fef00"
-    },
-    {
-     "name": "Rug strekken – met lichte weerstand",
-     "exerciseId": "fp_c591d23beb426e98",
-     "coreExerciseId": "fc_e8afdecc8524d6b3"
     }
    ],
    "secondaryRecords": [
@@ -533,79 +333,14 @@
    ],
    "records": 260,
    "primary": 156,
-   "primaryAvailable": 108,
+   "primaryAvailable": 144,
    "secondary": 104,
    "secondaryAvailable": 104,
-   "available": 212,
-   "availableClean": 211,
+   "available": 248,
+   "availableClean": 247,
    "mediaRejected": 1,
    "explanationHeld": 0,
    "missingAssets": [
-    {
-     "name": "Heup buigen – staand met steun",
-     "exerciseId": "fp_2442578ed434c991",
-     "coreExerciseId": "fc_95baf5a1bc158012"
-    },
-    {
-     "name": "Heup strekken – staand met steun",
-     "exerciseId": "fp_3b09b6d8e6e2a89e",
-     "coreExerciseId": "fc_29bf469def9af11d"
-    },
-    {
-     "name": "Heup strekken – met elastiek",
-     "exerciseId": "fp_49e22b60cab127a7",
-     "coreExerciseId": "fc_e1912b396a0b944a"
-    },
-    {
-     "name": "Heup strekken – functioneel op één been",
-     "exerciseId": "fp_81ca3c9d4887fa2e",
-     "coreExerciseId": "fc_c7a486edc3a5dbf9"
-    },
-    {
-     "name": "Heup zijwaarts heffen – zijlig",
-     "exerciseId": "fp_23d1de4a8b378576",
-     "coreExerciseId": "fc_a7f69b78b58ddd94"
-    },
-    {
-     "name": "Heup zijwaarts heffen – staand met steun",
-     "exerciseId": "fp_fd8d7ed993823c24",
-     "coreExerciseId": "fc_8ac3c5c338ab978e"
-    },
-    {
-     "name": "Heup zijwaarts heffen – functioneel op één been",
-     "exerciseId": "fp_6c4b9fe382a9a553",
-     "coreExerciseId": "fc_1df334465ad24f57"
-    },
-    {
-     "name": "Heup naar binnen bewegen – liggend ondersteund",
-     "exerciseId": "fp_958b99cdf5b5e6c0",
-     "coreExerciseId": "fc_5f8844f9bbb06397"
-    },
-    {
-     "name": "Heup naar binnen bewegen – staand met steun",
-     "exerciseId": "fp_3a2ef9719718735e",
-     "coreExerciseId": "fc_4dd878a45a183483"
-    },
-    {
-     "name": "Heup naar binnen bewegen – met elastiek",
-     "exerciseId": "fp_14b7d61e0c630576",
-     "coreExerciseId": "fc_ed5bb5f9d781b648"
-    },
-    {
-     "name": "Heup naar buiten draaien – liggend ondersteund",
-     "exerciseId": "fp_778c03647d3cc0b6",
-     "coreExerciseId": "fc_08a9b920254252a0"
-    },
-    {
-     "name": "Heup naar buiten draaien – zijlig",
-     "exerciseId": "fp_8f27db7e8ae72b97",
-     "coreExerciseId": "fc_d2e5f8139cc22cdd"
-    },
-    {
-     "name": "Heup naar buiten draaien – met elastiek",
-     "exerciseId": "fp_60927af16ff9cebf",
-     "coreExerciseId": "fc_4b5697d0ce0df620"
-    },
     {
      "name": "Heup naar binnen draaien – liggend ondersteund",
      "exerciseId": "fp_412a3406b5f02752",
@@ -615,91 +350,6 @@
      "name": "Heup naar binnen draaien – staand met steun",
      "exerciseId": "fp_419f67ee6d78f8d2",
      "coreExerciseId": "fc_448fc075c6aebc6b"
-    },
-    {
-     "name": "Heupscharnier – staand met steun",
-     "exerciseId": "fp_a0c83f527f9c64ad",
-     "coreExerciseId": "fc_1f604a59f34b394e"
-    },
-    {
-     "name": "Monster walk – met elastiek",
-     "exerciseId": "fp_a76c2e853febd057",
-     "coreExerciseId": "fc_8e5e5f492d29ec15"
-    },
-    {
-     "name": "Piriformis rek – liggend ondersteund",
-     "exerciseId": "fp_f2a4168f46ca44a5",
-     "coreExerciseId": "fc_d5a58bb89d05489d"
-    },
-    {
-     "name": "Knie buigen – met elastiek",
-     "exerciseId": "fp_8b85531676bedc74",
-     "coreExerciseId": "fc_2f41adc210b215b9"
-    },
-    {
-     "name": "Knie strekken – staand met steun",
-     "exerciseId": "fp_5910886c0aa7c37b",
-     "coreExerciseId": "fc_6c0928ca205ec113"
-    },
-    {
-     "name": "Knie strekken – met elastiek",
-     "exerciseId": "fp_44ba6cae2dd7c64e",
-     "coreExerciseId": "fc_857d7528724b059b"
-    },
-    {
-     "name": "Quadriceps aanspannen – zittend",
-     "exerciseId": "fp_7af0332b608e00e2",
-     "coreExerciseId": "fc_7e52a7a1b76ba444"
-    },
-    {
-     "name": "Straight leg raise – met elastiek",
-     "exerciseId": "fp_6c757ecc4e08464e",
-     "coreExerciseId": "fc_d3eff36bf1ee840d"
-    },
-    {
-     "name": "Mini-squat – staand met steun",
-     "exerciseId": "fp_5c9ceb20055a6f8a",
-     "coreExerciseId": "fc_f193144158ac3ec6"
-    },
-    {
-     "name": "Sit-to-stand – staand met steun",
-     "exerciseId": "fp_3ca340b82645738c",
-     "coreExerciseId": "fc_cc2f1ec88c684e6a"
-    },
-    {
-     "name": "Sit-to-stand – met elastiek",
-     "exerciseId": "fp_b818d1bc299e7372",
-     "coreExerciseId": "fc_782cedbf98d756df"
-    },
-    {
-     "name": "Step-up – staand met steun",
-     "exerciseId": "fp_af17701903e878be",
-     "coreExerciseId": "fc_d1c46fb7bd403cf8"
-    },
-    {
-     "name": "Step-down – staand met steun",
-     "exerciseId": "fp_4403411960b569c9",
-     "coreExerciseId": "fc_215436c0f6cb427a"
-    },
-    {
-     "name": "Step-down – met elastiek",
-     "exerciseId": "fp_bca1643a66aeffc5",
-     "coreExerciseId": "fc_9b1abb39c8c262c5"
-    },
-    {
-     "name": "Step-down – op verhoging",
-     "exerciseId": "fp_df94638bc908713b",
-     "coreExerciseId": "fc_7caaff5192b04a39"
-    },
-    {
-     "name": "Split squat – staand met steun",
-     "exerciseId": "fp_6e87eedd7cabe09b",
-     "coreExerciseId": "fc_70cc761a1e937456"
-    },
-    {
-     "name": "Split squat – op verhoging",
-     "exerciseId": "fp_4f0b87f8ff4f694d",
-     "coreExerciseId": "fc_6d48f173cbfddeab"
     },
     {
      "name": "Hamstring curl – zittend",
@@ -712,26 +362,6 @@
      "coreExerciseId": "fc_c8932f764884054a"
     },
     {
-     "name": "Enkel optrekken – staand met steun",
-     "exerciseId": "fp_816f941423e962c1",
-     "coreExerciseId": "fc_4b2033291c37810c"
-    },
-    {
-     "name": "Enkel optrekken – met elastiek",
-     "exerciseId": "fp_1c7ffbe372c209b3",
-     "coreExerciseId": "fc_726673a29888da6e"
-    },
-    {
-     "name": "Enkel wegduwen – staand met steun",
-     "exerciseId": "fp_e51702036d380ba9",
-     "coreExerciseId": "fc_2d4b2c1aa32d949c"
-    },
-    {
-     "name": "Enkel wegduwen – met elastiek",
-     "exerciseId": "fp_6f26283408684703",
-     "coreExerciseId": "fc_9431de5590406368"
-    },
-    {
      "name": "Voet naar binnen – zittend actief",
      "exerciseId": "fp_dc5a7f2e795a3b94",
      "coreExerciseId": "fc_cda0be17235beeed"
@@ -740,16 +370,6 @@
      "name": "Kuitheffing – staand met steun",
      "exerciseId": "fp_880081ade491ab91",
      "coreExerciseId": "fc_34b8c7bede0e1ff1"
-    },
-    {
-     "name": "Knie naar voren over voet – staand met steun",
-     "exerciseId": "fp_7952d84f09bb790e",
-     "coreExerciseId": "fc_cef24992348e8f7d"
-    },
-    {
-     "name": "Knie naar voren over voet – op een verhoging",
-     "exerciseId": "fp_596b9f510139c3b0",
-     "coreExerciseId": "fc_334166261c069b4a"
     },
     {
      "name": "Tenen heffen – zittend actief",
@@ -1071,11 +691,11 @@
    ],
    "records": 30,
    "primary": 19,
-   "primaryAvailable": 12,
+   "primaryAvailable": 18,
    "secondary": 11,
    "secondaryAvailable": 11,
-   "available": 23,
-   "availableClean": 22,
+   "available": 29,
+   "availableClean": 28,
    "mediaRejected": 0,
    "explanationHeld": 1,
    "missingAssets": [
@@ -1083,36 +703,6 @@
      "name": "Diafragma-ademhaling – zittend",
      "exerciseId": "fp_6aa232defeec08a5",
      "coreExerciseId": "fc_b21fb04b055a6374"
-    },
-    {
-     "name": "Armen en adem koppelen – met armtaak",
-     "exerciseId": "fp_1a438295edbadd06",
-     "coreExerciseId": "fc_9cf150b2fdc6ab06"
-    },
-    {
-     "name": "Marcheren – interval kort",
-     "exerciseId": "fp_c40ad48736e35070",
-     "coreExerciseId": "fc_53b03384ce37fa2e"
-    },
-    {
-     "name": "Marcheren – interval langer",
-     "exerciseId": "fp_5068cca4a447884a",
-     "coreExerciseId": "fc_b01a96a8a69a7a9b"
-    },
-    {
-     "name": "Opstaan herhalen – interval kort",
-     "exerciseId": "fp_b453c5b39234338f",
-     "coreExerciseId": "fc_4b8218bffa6c5564"
-    },
-    {
-     "name": "Thorax openen – met armtaak",
-     "exerciseId": "fp_0e256fccffffbcff",
-     "coreExerciseId": "fc_c1ba6bba58f0ea88"
-    },
-    {
-     "name": "Zijwaarts stappen – interval kort",
-     "exerciseId": "fp_58610b4cd72c412b",
-     "coreExerciseId": "fc_83e5712db724fbc2"
     }
    ],
    "secondaryRecords": [

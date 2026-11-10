@@ -48,3 +48,4 @@ Nieuwe oefeningen en kaarten per regio komen erin met `scripts/importeer-regio-o
 - Basisoefeningen uit de catalogus die nog geen beeld hadden (schouder, voet en enkel, knie, neurologie): 30 oefeningen kregen lijntekening en avatar, 16 nieuwe kaarten.
 - Arm: 13 nieuwe oefeningen, beeld bij 2 bestaande, 8 nieuwe kaarten.
 - Overig (hart, vaten en longen, algemeen en sport, werk): 16 nieuwe oefeningen, beeld bij 6 bestaande, 7 nieuwe kaarten en 21 aanvullingen.
+- Rest van de catalogusoefeningen zonder beeld: 82 oefeningen kregen lijntekening en avatar (24 matige nog niet), 4 nieuwe kaarten en 15 aanvullingen.
