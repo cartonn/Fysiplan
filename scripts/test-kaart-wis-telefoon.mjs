@@ -32,7 +32,7 @@ assert.match(html, /replaceState\(null,'','\/k\?gewist=1'\)/);
 // Legal 2026-11-09: ook de oefenbeelden van deze kaart uit de offline-cache, en de hele
 // cache als er geen andere kaart op de telefoon staat.
 assert.match(html, /wisOfflineKopie\(\)\.then\(klaar,klaar\)/, "wissen gebruikt wisOfflineKopie");
-assert.match(html, /if\(!anderen\)return caches\.delete\(n\)/, "geen andere kaart: hele cache weg");
+assert.match(html, /if\(!Object\.keys\(andereIds\)\.length\)return caches\.delete\(n\)/, "geen andere kaart: hele cache weg");
 assert.match(html, /beelden\[u\.pathname\]/, "beelden van deze kaart gaan mee");
 console.log("test-kaart-wis-telefoon: statisch OK");
 

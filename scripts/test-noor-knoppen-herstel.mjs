@@ -100,7 +100,7 @@ function maakKaart(chosen,{abort=false}={}){
     throw Error('onverwachte selector: '+sel);
   }};
   const ctx=vm.createContext({document,window:{NoorAudio:n.N},NoorAudio:n.N,K:null,TAAL:'nl',VERT:{},
-    tr:k=>k==='stop'?'Stop':k,alert:m=>meldingen.push(String(m)),demoGeluidKnop(){},tekenMeting(){},
+    tr:k=>({stop:'Stop',holdBeeld:'De oefenafbeelding wordt gecontroleerd en is tijdelijk niet zichtbaar.',holdUitleg:'De algemene uitleg wordt gecontroleerd.'})[k]||k,alert:m=>meldingen.push(String(m)),demoGeluidKnop(){},tekenMeting(){},
     DRIEHOEK:'',VIDEO_META:{},VIDEO_META_CONCEPT:{},
     fetch:async url=>{
       if(url==='/mobile-media-review.json')return {ok:true,json:async()=>JSON.parse(JSON.stringify(REVIEW))};

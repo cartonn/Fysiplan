@@ -104,7 +104,10 @@
     "test:uitnodigingpraktijk": "node scripts/test-sweep-uitnodiging-praktijk.mjs",
     "test:rempraktijk": "node scripts/test-rem-praktijk.mjs",
     "test:uitloggenprint": "node scripts/test-sweep-uitloggen-print.mjs",
-    "test:wachtrijmelding": "node scripts/test-sweep-wachtrij-melding.mjs"
+    "test:wachtrijmelding": "node scripts/test-sweep-wachtrij-melding.mjs",
+    "test:controletaal": "node scripts/test-sweep-controle-taal.mjs",
+    "test:wistweekaarten": "node scripts/test-sweep-wis-twee-kaarten.mjs",
+    "test:emojiinitialen": "node scripts/test-sweep-emoji-initialen.mjs"
   },
   "engines": {
     "node": ">=20"
