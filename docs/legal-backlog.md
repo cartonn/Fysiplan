@@ -15,13 +15,24 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-10 01u (vertaalcache hield namen van eigen oefeningen na "Alles wissen" en na verwijderen tot de volgende herstart; /privacy noemde de beheerderslogin op /v2/gegevens niet; download bevat geen geheimen, wel alle kaartvelden) |
 | (f) cookies en lokale opslag | 2026-11-09 21u (Cache Storage van /k: "Wis deze kaart" liet oefenbeelden en bibliotheek staan, opgelost; cookies en localStorage ongewijzigd sinds 8-11) |
 | (g) MDR en AI-verordening | 2026-11-09 01u (vraaghulp gaf mogelijk doseringsadvies: opgelost; videolabels AI-concept/klinisch gecontroleerd volgen de reviewstatus; landing en app zonder sorteer- of doseringsbelofte) |
-| (h) WGBO en KNGF-beroepsregels | 2026-11-08 21u (werknotitie mee naar het dossier, dossierlabel vervalt bij nieuwe praktijkregels, datum heet nu "laatst opgeslagen") |
+| (h) WGBO en KNGF-beroepsregels | 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
 | (i) begrijpelijkheid (B1) | 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (h) WGBO, dan (g) MDR, dan (d) code tegen tekst. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (g) MDR, dan (d) code tegen tekst, dan (a) privacyverklaring. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **MIDDEL — WGBO + code tegen tekst (2026-11-10 09u): de verdwijndatum klopte niet als de hele praktijk gewist wordt.**
+  Fysiplan is geen dossier; de praktijk kopieert naar het EPD vóór een kaart verdwijnt. Het overzicht ("verloopt over
+  N dagen"), de weekbrief, de dossiertekst en de patiëntkaart ("Mijn gegevens") toonden alleen de bewaartermijn van de
+  kaart zelf (90 dagen na de laatste activiteit). Na een proef zonder abonnement of een opgezegd abonnement wist
+  Fysiplan 30 dagen later de hele praktijk, ook die kaarten. Een praktijk zag dan "nog 89 dagen" terwijl alles over
+  20 dagen weg was, en kreeg geen waarschuwing om naar het dossier te kopiëren. OPGELOST 2026-11-10 (deze PR):
+  `verdwijntOp` (server.js) neemt de vroegste van kaartdatum en praktijkwisdatum (`praktijkWisOp`). Het wissen zelf
+  verandert niet. Test `scripts/test-verdwijndatum-praktijk.mjs` (in test:privacy en CI, faalt zonder fix: 89 ≠ 20).
+  Bron: WGBO art. 7:454 BW (dossierplicht bij de hulpverlener), AVG art. 28 lid 3 g. Open (LAAG): een mail aan de
+  praktijk vóór het wissen staat als keuze voor Ahmed in docs/mensenwerk.md.
 
 - **MIDDEL — voorwaarden (c) + code tegen tekst (d), van de praktijk-routine 2026-11-10: maandincasso gebouwd, tekst nog niet.**
   Met `MOLLIE_INCASSO=aan` schrijft Fysiplan na maand 1 elke maand af op de machtiging (recurring), met een aankondiging
