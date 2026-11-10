@@ -192,8 +192,10 @@ systeemstem, captions, compositing, QA en upload. Hij is geen avatarproductie. A
 
 De gebruiker heeft gekozen om de conceptvideo's vóór fysiobeoordeling te laten maken. Daarom mag de
 graph ze na technische QA koppelen, maar bewaart de server `reviewStatus: concept`. Op de
-patiëntkaart staat dan in de gekozen taal zichtbaar **“AI-concept · beoordeling door
-fysiotherapeut volgt”**. Pas na twee inhoudelijke reviews mag de status naar klinisch gecontroleerd.
+patiëntkaart staat dan in de gekozen taal zichtbaar één zin die zegt dat de video met AI is gemaakt
+(**“De video is met AI gemaakt en laat de algemene uitvoering zien. Volg daarnaast de dosering en
+opmerkingen van je behandelaar op.”**; sinds 2026-11-10, daarvoor het label “AI-concept · beoordeling
+door fysiotherapeut volgt”). Pas na twee inhoudelijke reviews mag de status naar klinisch gecontroleerd.
 Een handmatig opgenomen therapeutvideo blijft gewoon een menselijke praktijkvideo en krijgt deze
 AI-markering niet.
 

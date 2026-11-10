@@ -86,6 +86,10 @@ De kaart /k heeft nu twee standen met dezelfde oefeningen (zelfde DOM, zelfde kn
   oefening; na de eerste tik stond de volgende er al. Nu neemt de knop zelf één tik per 700 ms aan (`KLAAR_SLOT`).
 - **OPGELOST — MIDDEL /k: weinig hoogte** (telefoon liggend, heel grote letters): onder 26em hoogte een kleiner beeld en
   "Vandaag gedaan" naast de knoppen in plaats van erboven.
+- **AI-label bij de video (keuze Ahmed 2026-11-10).** Het losse label "AI-concept · beoordeling door fysiotherapeut volgt" is
+  weg. Er staat één zin: "De stem en video zijn met AI gemaakt en leggen de algemene uitvoering uit. Volg daarnaast de dosering
+  en opmerkingen van je behandelaar op." (zonder luisterknop: "De video is met AI gemaakt en laat de algemene uitvoering zien.
+  …", 9 talen). Zet het losse label niet terug; de AI-melding zelf moet blijven (AI-verordening art. 50).
 - Nog open uit de sweep van 10u: het privacyblok vult bij de eerste opening het eerste scherm (ook op main); na alles gedaan is er
   geen knop voor een tweede ronde; "Toch niet gedaan" gaat zonder internet niet in de wachtrij.
 - Nog open: "Ik heb een vraag" met vrije tekst (productkeuze, MDR) en de juridische tekst in het grote beeld (legal).

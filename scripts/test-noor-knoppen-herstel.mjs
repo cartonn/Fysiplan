@@ -101,7 +101,9 @@ function maakKaart(chosen,{abort=false}={}){
   }};
   const ctx=vm.createContext({document,window:{NoorAudio:n.N},NoorAudio:n.N,K:null,TAAL:'nl',VERT:{},
     tr:k=>({stop:'Stop',holdBeeld:'De oefenafbeelding wordt gecontroleerd en is tijdelijk niet zichtbaar.',holdUitleg:'De algemene uitleg wordt gecontroleerd.'})[k]||k,alert:m=>meldingen.push(String(m)),demoGeluidKnop(){},tekenMeting(){},
-    DRIEHOEK:'',VIDEO_META:{},VIDEO_META_CONCEPT:{},
+    DRIEHOEK:'',VIDEO_META:{},VIDEO_META_CONCEPT:{},aiVideoNoot:()=>'',
+    // de echte zinnen uit de kaart: zonder AI-video noemt de luisterregel alleen de stem
+    STEM_NOOT:(html.match(/var STEM_NOOT='([^']+)';/)||[])[1],STEM_VIDEO_NOOT:(html.match(/var STEM_VIDEO_NOOT='([^']+)';/)||[])[1],
     fetch:async url=>{
       if(url==='/mobile-media-review.json')return {ok:true,json:async()=>JSON.parse(JSON.stringify(REVIEW))};
       if(url==='/mobile-narration-review.json')return {ok:true,json:async()=>lees('public/mobile-narration-review.json')};
@@ -126,7 +128,7 @@ const knoppenIn=s=>[...s.matchAll(/data-noor="(\d+)"/g)].map(m=>Number(m[1]));
 const wachtIn=s=>[...s.matchAll(/data-noor-wacht="(\d+)"/g)].map(m=>Number(m[1]));
 // alles behalve de luisterregels zelf: moet na herstel byte voor byte gelijk zijn
 const zonderLuisterregels=s=>s
-  .replace(/<button type="button" class="vbtn" data-noor="\d+">Luister naar deze oefening<\/button><div class="vmeta">De stem legt[^<]*<\/div>/g,'#NOOR#')
+  .replace(/<button type="button" class="vbtn" data-noor="\d+">Luister naar deze oefening<\/button><div class="vmeta">De stem [^<]*<\/div>/g,'#NOOR#')
   .replace(WACHT,'#NOOR#');
 
 // ---- de oefeningen: uit de echte bibliotheek, met de echte beoordeling ----

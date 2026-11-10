@@ -867,7 +867,16 @@
   };
   var SPRAAK={nl:'nl-NL',en:'en-GB',de:'de-DE',fr:'fr-FR',es:'es-ES',pl:'pl-PL',tr:'tr-TR',ar:'ar-SA',uk:'uk-UA'};
   var VIDEO_META={nl:'AI-demonstratie · klinisch gecontroleerd',en:'AI demonstration · clinically reviewed',de:'KI-Demonstration · klinisch geprüft',fr:'Démonstration IA · vérifiée cliniquement',es:'Demostración con IA · revisada clínicamente',pl:'Demonstracja AI · sprawdzona klinicznie',tr:'Yapay zekâ gösterimi · klinik olarak kontrol edildi',ar:'عرض بالذكاء الاصطناعي · تمت مراجعته سريريًا',uk:'ШІ-демонстрація · клінічно перевірено'};
-  var VIDEO_META_CONCEPT={nl:'AI-concept · beoordeling door fysiotherapeut volgt',en:'AI concept · physiotherapist review pending',de:'KI-Konzept · physiotherapeutische Prüfung folgt',fr:'Concept IA · validation du kinésithérapeute à venir',es:'Concepto de IA · pendiente de revisión fisioterapéutica',pl:'Koncepcja AI · oczekuje na ocenę fizjoterapeuty',tr:'Yapay zekâ taslağı · fizyoterapist incelemesi bekleniyor',ar:'مسودة بالذكاء الاصطناعي · بانتظار مراجعة أخصائي العلاج الطبيعي',uk:'ШІ-концепт · очікує перевірки фізіотерапевта'};
+  // AI-video zonder klinische controle: één gewone zin in plaats van het oude losse label.
+  // Dat de video met AI is gemaakt blijft erin staan (AI-verordening art. 50 lid 4), in alle negen talen.
+  var VIDEO_META_CONCEPT={nl:'De video is met AI gemaakt en laat de algemene uitvoering zien. Volg daarnaast de dosering en opmerkingen van je behandelaar op.',en:'This video was made with AI and shows the general movement. Also follow the dosage and notes from your therapist.',de:'Das Video wurde mit KI erstellt und zeigt die allgemeine Ausführung. Halte dich außerdem an die Dosierung und die Hinweise deiner Therapeutin oder deines Therapeuten.',fr:'Cette vidéo a été créée avec l’IA et montre l’exécution générale. Suis aussi le dosage et les remarques de ton thérapeute.',es:'Este vídeo se ha creado con IA y muestra la ejecución general. Sigue además la dosis y las indicaciones de tu terapeuta.',pl:'Ten film został stworzony przy użyciu AI i pokazuje ogólne wykonanie. Stosuj się też do dawkowania i uwag swojego terapeuty.',tr:'Bu video yapay zekâ ile oluşturuldu ve genel uygulamayı gösterir. Ayrıca terapistinin belirlediği doz ve notlara uy.',ar:'أُنشئ هذا الفيديو بالذكاء الاصطناعي ويعرض طريقة الأداء العامة. اتبع كذلك الجرعة وملاحظات معالجك.',uk:'Це відео створено за допомогою ШІ, воно показує загальне виконання. Також дотримуйся дозування та зауважень свого терапевта.'};
+  // Staat de luisterknop erbij (Nederlands), dan zegt één zin het voor stem en video samen.
+  var STEM_NOOT='De stem legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op.';
+  var STEM_VIDEO_NOOT='De stem en video zijn met AI gemaakt en leggen de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op.';
+  function aiVideoNoot(meta){
+    if(meta.clinicallyReviewed===true)return '<div class="vmeta">'+esc(VIDEO_META[TAAL]||VIDEO_META.nl)+'</div>';
+    return '<div class="vmeta" data-ai="1">'+esc(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl)+'</div>';
+  }
   // Onder de twee houdingen: waar de beelden vandaan komen en wat het wisselen niet is.
   var DEMO_BRON={
     nl:'Twee uitsnedes uit dezelfde oefenfoto. Het wisselen laat beide houdingen zien en is geen oefentempo. De uitvoering is niet door een fysiotherapeut goedgekeurd.',
@@ -1557,10 +1566,10 @@
       if(eigen){
         var eigenMeta=praktijkEigen&&o.video&&o.video.eigenMeta;
         knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" data-vbron="'+(eigenMeta&&eigenMeta.aiGenerated?'bibliotheek" data-avatar="1':'praktijk')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+'<span class="vlab">'+esc(eigenMeta&&eigenMeta.aiGenerated?tr('vidYt'):tr('vidEigen'))+'</span></button>'+
-          (eigenMeta&&eigenMeta.aiGenerated?'<div class="vmeta">'+esc(eigenMeta.clinicallyReviewed===true?(VIDEO_META[TAAL]||VIDEO_META.nl):(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl))+'</div>':'');
+          (eigenMeta&&eigenMeta.aiGenerated?aiVideoNoot(eigenMeta):'');
       }
       else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'" data-vbron="'+(catalogus&&catalogus.iframe===stream?'bibliotheek':'praktijk')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+'<span class="vlab">'+esc(tr('vidYt'))+'</span></button>'+
-        (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.clinicallyReviewed===true?(VIDEO_META[TAAL]||VIDEO_META.nl):(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl))+'</div>':'');
+        (aiVideo.aiGenerated?aiVideoNoot(aiVideo):'');
       else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" data-vbron="'+(persoonlijkYt?'praktijk':'bibliotheek')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+'<span class="vlab">'+esc(tr('vidYt'))+'</span></button>';
       if(hideMedia||holdExplanation){
         // Het bibliotheekbeeld of de algemene uitleg wordt gecontroleerd. Een video die
@@ -1586,6 +1595,10 @@
         :((o&&o.uitleg)?'<span class="infobadge" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35M11 8v0M11 11v3"/></svg></span>':'');
       // beschrijvend label voor toetsenbord- en screenreadergebruik
       var fotoLabel=esc(vt(x.n))+': '+esc(heeftVideo?tr('fotoVideo'):tr('fotoBekijk'));
+      // één zin per oefening: staat de luisterknop erbij, dan noemt die zin stem en video samen
+      var aiNoot=knop.indexOf('<div class="vmeta" data-ai="1">')>-1;
+      var stemRegel=(!hideMedia&&!holdExplanation&&TAAL==='nl'&&o&&o.uitleg)?noorRegel(o,idx,aiNoot):'';
+      if(aiNoot&&stemRegel.indexOf(' data-noor="')>-1)knop=knop.replace(/<div class="vmeta" data-ai="1">[^<]*<\/div>/,'');
       html+='<div class="oef" data-oidx="'+idx+'"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
         (o&&!hideMedia&&beeldpad?'<button type="button" class="fotoknop" aria-label="'+fotoLabel+'"><img src="'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
           '" data-h="'+esc(eersteH)+'" data-audio-naam="'+esc(o.naam)+'" data-oef-id="'+esc(o.exerciseId||'')+'" data-pose="'+esc(mediaKey(o))+'" data-uitleg="'+esc(holdExplanation?'':(o.uitleg||''))+'" data-heeft-video="'+(heeftVideo?'1':'0')+'"/>'+
@@ -1597,8 +1610,7 @@
         (holdExplanation?'<p class="vmeta">'+esc(tr('holdUitleg'))+'</p>':
           // Wordt het beeld teruggehouden, dan bieden we ook de uitleg erbij niet aan:
           // dezelfde oefening half wel en half niet presenteren is misleidend.
-          (hideMedia?'':
-          (TAAL==='nl'&&o&&o.uitleg?noorRegel(o,idx):'')))+
+          (hideMedia?'':stemRegel))+
         oefUitlegBlok(o,hideMedia||holdExplanation)+
         '<button type="button" class="oefzwaar" data-zidx="'+idx+'"></button>'+
         '<button type="button" class="oefdone" data-idx="'+idx+'" aria-pressed="false"><span class="odv" aria-hidden="true"></span><span class="odt"></span></button></div>';
@@ -2358,13 +2370,13 @@
   // Eén plek voor de luisterregel bij een oefening, zodat tekenen en herstellen precies
   // dezelfde knop opleveren. Alleen voor een oefening waarvan beeld en uitleg niet worden
   // tegengehouden; dat bewaken tekenKaart en herstelNoorKnoppen.
-  function noorRegel(o,idx){
+  function noorRegel(o,idx,metAiVideo){
     // tekent de kaart opnieuw terwijl Noor bij deze oefening praat, dan blijft het een stopknop
     var aan=bezigLezen&&noorBron===idx;
     if(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg))return '<button type="button" class="vbtn" data-noor="'+idx+'"'+(aan?' aria-pressed="true"':'')+'>'+(aan?tr('stop'):NOOR_LABEL)+'</button>'+
       // De opname bevat de algemene uitvoering, niet de dosering of de opmerkingen
       // van de behandelaar. Dat hoort de patiënt te weten voordat hij luistert.
-      '<div class="vmeta">De stem legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.</div>';
+      '<div class="vmeta">'+(metAiVideo?STEM_VIDEO_NOOT:STEM_NOOT)+'</div>';
     // herkenbaar, zodat herstelNoorKnoppen deze regel later kan omzetten
     return '<div class="vmeta" data-noor-wacht="'+idx+'"></div>';
   }
@@ -2383,7 +2395,10 @@
       // zelfde voorwaarden als bij het tekenen: een tegengehouden beeld of tegengehouden
       // uitleg krijgt nooit een knop, en zonder actuele opname blijft de regel staan
       if(!o||!o.uitleg||mediaWithheld(o)||explanationWithheld(o)||!NoorAudio.match(o.naam,o.uitleg))return;
-      regel.outerHTML=noorRegel(o,idx);
+      // stond de losse videozin er nog (de opname was er bij het tekenen nog niet), dan neemt de stemzin hem over
+      var oefEl=regel.closest?regel.closest('.oef'):null,ai=oefEl?oefEl.querySelector('.vmeta[data-ai]'):null;
+      regel.outerHTML=noorRegel(o,idx,!!ai);
+      if(ai&&ai.parentNode)ai.parentNode.removeChild(ai);
     });
   }
 
