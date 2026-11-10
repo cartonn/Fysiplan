@@ -10,7 +10,7 @@ import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
 import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN,
-  incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
+  incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
 import { volgendFactuurNr, factuurHtml, isFactuur } from "./lib/factuur.js";
 
 const port = Number(process.env.PORT || 3000);
@@ -810,7 +810,8 @@ async function incassoRondeStap(p, nu) {
   }
   if (stap === "incasseren") {
     try {
-      const betaling = await mollie("/payments", { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS, methode: "POST", body: incassoVerzoek(p, INCASSO_WEBHOOK) });
+      const betaling = await mollie("/payments", { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS, methode: "POST", body: incassoVerzoek(p, INCASSO_WEBHOOK),
+        sleutelVoorEenmaal: incassoSleutel(p) });
       if (!geldigBetaalId(betaling?.id)) throw new Error("mollie zonder betaal-id");
       markeerIncassoGestart(p, betaling, nu);
       mollieBetaalIndex.set(betaling.id, p.id);
@@ -876,7 +877,15 @@ function proefMeldAhmed(onderwerp, p, regel) {
 }
 // één keer per uur: herinnering twee dagen voor het einde (aan de aanmelder en
 // aan beheer, zodat er gebeld kan worden) en het automatisch wissen na afloop
+// nooit twee rondes tegelijk: een trage ronde (Mollie, wissen) mag niet overlappen met de
+// volgende, anders kunnen twee rondes voor dezelfde maand een incasso aanmaken
+let proefRondeBezig = false;
 async function proefRonde() {
+  if (proefRondeBezig) return;
+  proefRondeBezig = true;
+  try { await proefRondeEen(); } finally { proefRondeBezig = false; }
+}
+async function proefRondeEen() {
   const nu = Date.now();
   let gewijzigd = false;
   for (const p of Object.values(proeven)) {

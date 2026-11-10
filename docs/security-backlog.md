@@ -14,12 +14,24 @@ daaruit tot en met 2026-11-06.
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-10 00u (statisch alle 30 kaartroutes: patiëntroutes met `vindKaart` + misrem + `kruisSite`, therapeutroutes met `eisBeveiligdePraktijk` en alleen de eigen map, /api/kaart met allowlist, /k zonder bestaan-orakel, demo per verzoek vers. Teamsjablonen lezen/verwijderen zonder wachtwoord: opgelost) · 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP) |
 | (e) uploads (video, logo, opname /o) | 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-09 08u (runtime met Chromium: payloads in teamnaam, uitnodiging, eigen oefening, teamsjabloon, alle kaartvelden, bericht, notitie, behandelaar, doel; app-start, Kaarten-paneel, inbox, Team, Activiteit, Rapport, Sjablonen, /k in nl/en/ar: niets geïnjecteerd, geen CSP-melding. CSV-exports met formule-escape, afspraak-ICS zonder regelinjectie. Geen gat) |
-| (g) security-headers, CSP, cookies, CSRF | 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat); 2026-11-09 08u: `kruisSite` liet same-site door, opgelost) |
+| (g) security-headers, CSP, cookies, CSRF | 2026-11-10 04u (runtime: CSP/frame-ancestors/nosniff/referrer/no-store op 13 V2-routes ook /v2/gegevens, /v2/uitnodiging, /aanmeldingen, factuur; cookies fp1/fpproef HttpOnly+SameSite=Lax(+Secure achter https); cross-site POST op alle /v2/proef/*-acties, /v2/gegevens en /api/praktijk* → 403; geen CORS-headers, ook niet op OPTIONS. Geen gat) · 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat); 2026-11-09 08u: `kruisSite` liet same-site door, opgelost) |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-09 16u (statisch: alle `sendJson`/`send` met `err.message`/`e.stack` in server.js, routes/ en lib/ sinds 8-11, ook opzeggen, factuur, wissen na proef: interne fouten gaan alleen naar het serverlog. Geen gat) · 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-09 20u (remmen: schrijf-/leesrem per IP zette een hele praktijk achter één wifi plus de patiënten daar op 429: opgelost met een rem per praktijk; plafonds per praktijk ongewijzigd) · 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
 | (j) npm audit | 2026-11-09 20u (0 meldingen, ook dev) |
 
-Volgende run: (g) headers/CSP/cookies, daarna (a) beheer en (b) accountlaag.
+Volgende run: (a) beheer, daarna (b) accountlaag en (e) uploads.
+
+Sanity 2026-11-10 04u op #151–#155 (maandincasso, factuur per maand, vertaalcache wissen, print/uitloggen): de factuur
+`?nr=` zoekt alleen in de eigen proef (404 voor een andere praktijk), de webhook beoordeelt alleen eigen betaal-id's met
+metadata, periode en bedrag, mails zijn platte tekst, `rij()` in de factuur escapet. Wel gevonden (OPGELOST, zie hieronder):
+een weggevallen Mollie-antwoord kon een tweede afschrijving geven.
+
+- **OPGELOST 2026-11-10 (deze PR) — MIDDEL — maandincasso kon dubbel afschrijven.** `POST /payments` heeft een time-out
+  van 15 s. Maakte Mollie de betaling wel aan maar viel het antwoord weg (time-out, 5xx), dan was er lokaal niets opgeslagen
+  en maakte de volgende uurronde een tweede incasso voor dezelfde maand op het mandaat van de praktijk. Ook konden twee
+  overlappende rondes (een trage ronde plus het uur-interval) dezelfde maand tegelijk incasseren. Fix: vaste
+  `Idempotency-Key` per praktijk en periode (`incassoSleutel`), en `proefRonde` draait nooit twee keer tegelijk.
+  Test `scripts/test-incasso-dubbel.mjs` (in `test:abonnement`). Alleen actief met `MOLLIE_INCASSO=aan`, dat staat nog uit.
 
 Sanity 2026-11-10 00u op #143–#150 (Physitrack-avatars, regio-oefeningen en 116 nieuwe behandelkaarten, categorie-indeling,
 niet-vertaalde uitleg op /k): geen wijziging in server.js of lib/ sinds #141; de nieuwe melding op /k is `textContent`, de
