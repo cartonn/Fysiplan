@@ -8,6 +8,7 @@
 //   omschrijvingen.csv        naam, omschrijving (eigen tekst)
 //   proefset/ of beelden/: beoordeling.md met tabel "| slug | oefening | **oordeel** | opmerking |"
 //   proefset/<slug>.png en <slug>-avatar.png
+//   (omschrijvingen.csv mag een kolom "groep" hebben: de catalogusgroep per oefening)
 //   kaarten.json              voorgestelde kaarten in het formaat van public/sjablonen.json
 //
 // Alleen oefeningen met oordeel "goed" gaan erin. Een oefening die al in de catalogus staat maar
@@ -28,7 +29,7 @@ const bron = arg("--bron");
 const GROEP = arg("--groep");
 if (!bron || !GROEP) throw new Error('Gebruik: --bron <map> --groep "<catalogusgroep>" [--write]');
 const schrijf = process.argv.includes("--write");
-const MAP = GROEP.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/&/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const mapVan = (groep) => groep.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/&/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const regio = path.basename(path.resolve(bron));
 const BEELDEN = existsSync(path.join(bron, "beelden")) ? "beelden" : "proefset";
 
@@ -77,7 +78,10 @@ for (const regel of (await readFile(path.join(bron, BEELDEN, "beoordeling.md"), 
   if (m) oordelen.push({ slug: m[1], naam: m[2], oordeel: m[3] });
 }
 if (!oordelen.length) throw new Error("Geen eindstand-tabel met slugs in beoordeling.md");
-const omschrijving = new Map(leesCsv(await readFile(path.join(bron, "omschrijvingen.csv"), "utf8")).map((r) => [r.naam.trim(), r.omschrijving.trim()]));
+const csvRijen = leesCsv(await readFile(path.join(bron, "omschrijvingen.csv"), "utf8"));
+const omschrijving = new Map(csvRijen.map((r) => [r.naam.trim(), r.omschrijving.trim()]));
+// Optionele kolom "groep" in omschrijvingen.csv: de catalogusgroep per oefening; anders geldt --groep.
+const groepVan = new Map(csvRijen.filter((r) => (r.groep || "").trim()).map((r) => [r.naam.trim(), r.groep.trim()]));
 const catalogusPad = path.join(root, "public", "oefeningen-v2.json");
 const registerPad = path.join(root, "content", "nieuwe-lijntekeningen.json");
 const catalogus = JSON.parse(await readFile(catalogusPad, "utf8"));
@@ -101,9 +105,11 @@ for (const o of oordelen) {
   } else {
     const uitleg = omschrijving.get(o.naam);
     if (!uitleg) { verslag.overgeslagen.push(`${o.naam} (geen omschrijving)`); continue; }
-    img = `images/${MAP}/${o.slug}-line-v1.png`;
+    const groep = groepVan.get(o.naam) || GROEP;
+    if (!catalogus.some((e) => e.groep === groep)) { verslag.overgeslagen.push(`${o.naam} (onbekende groep ${groep})`); continue; }
+    img = `images/${mapVan(groep)}/${o.slug}-line-v1.png`;
     if (catalogus.some((e) => e.img === img)) { verslag.overgeslagen.push(`${o.naam} (pad ${img} is al in gebruik)`); continue; }
-    record = { naam: o.naam, groep: GROEP, img, uitleg };
+    record = { naam: o.naam, groep, img, uitleg };
     nieuweOefening = true;
   }
   const kaartImg = img.replace(/-line-v1\.png$/, "-avatar-v8.jpg");
