@@ -3307,7 +3307,7 @@ bridge2.jpg</div>
             if(!r.ok){msg(r.fout||'Uitnodigen lukte niet.');return;}
             laadTeam(function(){
               var lk=document.getElementById('tm_link');if(!lk)return;
-              lk.innerHTML="<div style='margin-top:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px'>"+(r.gemaild?'Uitnodiging gemaild. ':'')+
+              lk.innerHTML="<div style='margin-top:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px'>"+(r.gemaild?'Uitnodiging gemaild. ':r.mailLimiet?'Vandaag mailen we geen uitnodigingen meer namens je praktijk. ':'')+
                 "Stuur je collega deze link (7 dagen geldig):<div style='font:12px/1.5 ui-monospace,monospace;word-break:break-all;user-select:all;margin:4px 0'>"+esc(r.link)+"</div>"+
                 "<button class='btn' id='tm_kopie' type='button'>Kopieer link</button></div>";
               document.getElementById('tm_kopie').addEventListener('click',function(){
