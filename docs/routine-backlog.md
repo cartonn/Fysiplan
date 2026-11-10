@@ -57,6 +57,47 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+### Herontwerp patiëntkaart 2026-11-10 (thread "Verbeter de mobiele ervaring voor patiënten", test:patientmobiel)
+De kaart /k heeft nu twee standen met dezelfde oefeningen (zelfde DOM, zelfde knoppen):
+- **Overzicht:** datum, "Jouw oefeningen", doel, voortgang, één knop "Begin met oefenen", korte rijen (avatar, naam, "3 × 10",
+  vinkje). Daaronder "Hoe ging het vandaag?" (pijnscore eerst), contact (afspraak, seintjes, bellen) en "Meer" (agenda, schema,
+  Mijn gegevens, Print/Deel).
+- **Oefenstand (`body.sessie`):** één oefening per scherm met groot beeld, dosering in grote cijfers, stemknop, "Zo doe je het"
+  per zin, "Te zwaar?" en de pijnregel; onderin vast "Gedaan" met vorige/volgende. Na de laatste oefening sta je bij de pijnvraag.
+  De terugknop van de telefoon sluit de oefening (eerst het grote beeld), niet de kaart.
+- Wie een test voor /k schrijft: stemknop, video, "Te zwaar?" en uitleg zijn in het overzicht verborgen; open eerst de oefening
+  (`#startknop` of een tik op de rij).
+- **OPGELOST — /k: uitleg alleen in de lightbox.** Staat nu bij de oefening zelf, 9 talen.
+- **OPGELOST — /k: lijntekening op de telefoon** bij een oefening zonder avatar. Nu alleen `kaartImg`; zonder avatar het volgnummer.
+- **OPGELOST — /k: "Zet op beginscherm"-balk na 2,5 s over de oefeningen.** Komt pas na de pijnscore of "Ik heb vandaag geoefend",
+  nooit over de oefenstand.
+- **OPGELOST — tikdoelen /k** minstens 44 px. De pijncijfers zijn sinds de pijnschuif 44 px hoog en op 320 px 26 px breed; de baan
+  erboven is 64 px hoog en is het grote doel.
+- **OPGELOST — /k: letters in px.** Alles in rem (behalve het grote beeld/lightbox); schaalt mee met de telefooninstelling.
+- **OPGELOST — /k: lange pagina zonder houvast.** Vier blokken met één hoofdknop; drie afvinkroutes zijn er nog, maar de oefenstand
+  is de hoofdroute en "Ik heb vandaag geoefend" gaat vanzelf aan als alles is afgevinkt.
+- **Pijnschuif (zelfde PR).** Boven de elf cijferknoppen ligt een baan die naar "ergste pijn" dikker wordt (`.pschuif`, één kleur,
+  bewust geen groen-naar-rood en geen woorden per cijfer: de kaart duidt de score niet). Slepen laat het cijfer meelopen (met een
+  vinger komt het rondje boven de duim uit), loslaten of tikken klikt op de cijferknop eronder. De knoppen blijven dus de echte
+  bediening (schermlezer, bezig-stand, wachtrij zonder internet, foutmelding); de schuif is `aria-hidden`. Omhoog en omlaag vegen
+  bladert (`touch-action:pan-y`, pas schuiven na 8 px opzij). Zelfde schuif bij de doelactiviteit (PSK).
+- **Video op de plek van het beeld (zelfde PR).** In de oefenstand delen beeld, afspeelknop en video één rastervak. Afspeelknop
+  midden op het beeld met de tekst onderaan; eigen en avatarvideo krijgen rechtsboven een kruisje, YouTube/Stream houden een
+  gewone knop onder de dosering. "Video laden…" en de foutmelding staan op de video. In het overzicht een afspeelteken op het
+  plaatje. Wie in een test op het midden van het beeld van een video-oefening klikt, raakt de afspeelknop (dat is de bedoeling).
+- **OPGELOST — HOOG /k: dubbeltik op "Gedaan" vinkte ook de volgende oefening af** (gebruikers-sweep 10u). Het slot zat per
+  oefening; na de eerste tik stond de volgende er al. Nu neemt de knop zelf één tik per 700 ms aan (`KLAAR_SLOT`).
+- **OPGELOST — MIDDEL /k: weinig hoogte** (telefoon liggend, heel grote letters): onder 26em hoogte een kleiner beeld en
+  "Vandaag gedaan" naast de knoppen in plaats van erboven.
+- **AI-label bij de video (keuze Ahmed 2026-11-10).** Het losse label "AI-concept · beoordeling door fysiotherapeut volgt" is
+  weg. Er staat één zin: "De stem en video zijn met AI gemaakt en leggen de algemene uitvoering uit. Volg daarnaast de dosering
+  en opmerkingen van je behandelaar op." (zonder luisterknop: "De video is met AI gemaakt en laat de algemene uitvoering zien.
+  …", 9 talen). Zet het losse label niet terug; de AI-melding zelf moet blijven (AI-verordening art. 50).
+- Nog open uit de sweep van 10u: het privacyblok vult bij de eerste opening het eerste scherm (ook op main); na alles gedaan is er
+  geen knop voor een tweede ronde; "Toch niet gedaan" gaat zonder internet niet in de wachtrij.
+- Nog open: "Ik heb een vraag" met vrije tekst (productkeuze, MDR) en de juridische tekst in het grote beeld (legal).
+
+
 ### Sweep 2026-11-10 06u
 - **OPGELOST 2026-11-10 06u (deze PR, test:controletaal) — MIDDEL /k: Engelse kaart toonde de Nederlandse zinnen "De oefenafbeelding
   wordt gecontroleerd…" en "De algemene uitleg wordt gecontroleerd…"** (Jayden). Nu `tr('holdBeeld')`/`tr('holdUitleg')` in alle negen

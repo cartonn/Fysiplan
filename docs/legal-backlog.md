@@ -154,6 +154,12 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   kost de patiënt niets.
   Gecontroleerd zonder gat: videolabel "AI-demonstratie · klinisch gecontroleerd" verschijnt alleen bij
   `clinicallyReviewed === true`, anders "AI-concept · beoordeling volgt" (AI-verordening art. 50 lid 4, alle 9 talen);
+  **gewijzigd 2026-11-10 (keuze Ahmed, PR #162):** het losse label "AI-concept · beoordeling door fysiotherapeut volgt" is
+  vervangen door één gewone zin die nog steeds zegt dat de video met AI is gemaakt: "De video is met AI gemaakt en laat de
+  algemene uitvoering zien. Volg daarnaast de dosering en opmerkingen van je behandelaar op." (9 talen); staat de
+  luisterknop erbij: "De stem en video zijn met AI gemaakt en leggen de algemene uitvoering uit. …". De belofte
+  "beoordeling door fysiotherapeut volgt" is vervallen (Physitrack is de maatstaf, besluit 2026-11-08). Jurist laten
+  toetsen of deze zin volstaat voor art. 50 lid 4; `test:patientmobiel` bewaakt dat de AI-melding in alle talen blijft;
   landingsfoto's dragen "AI-bewerkt"; zoekhulp geeft geen dosering; sorteren "meldingen eerst" gaat alleen over
   meldingen die de patiënt zelf stuurde, niet over scores (geen "wie slechter wordt komt bovenaan").
 - **LAAG — landing: "auditlogboek is openbaar" linkte naar het oude `docs/security-log.md`** (sinds 7 nov niet meer

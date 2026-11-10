@@ -33,6 +33,7 @@ jobs:
       - run: npm run test:oudeproef
       - run: npm run test:abonnement
       - run: npm run test:sweep
+      - run: npm run test:patientmobiel
       - run: npm run test:offline
       - run: npm run test:tablet
       - run: npm run test:praktijkslot

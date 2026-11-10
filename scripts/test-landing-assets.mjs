@@ -13,7 +13,7 @@ assert.ok(html.includes('/images/landing/trainingskaart-12.png'));
 assert.ok(html.includes('/images/onderste-extremiteit/chair-squat-avatar-v7.jpg'));
 assert.ok(html.includes('/images/onderste-extremiteit/calf-raises-avatar-v7.jpg'));
 const patient=await fs.readFile('public/kaart.html','utf8');
-assert.ok(patient.includes("var beeldpad=o?(o.kaartImg||o.img):'';"),'Patient view must prefer existing avatar');
+assert.ok(patient.includes("var beeldpad=o&&o.kaartImg?o.kaartImg:'';"),'Patient view shows only the avatar');
 assert.ok(!html.includes('/images/landing/kaart-papier-1000.jpg'));
 assert.ok(!html.includes('/images/landing/kaart-telefoon-1000.jpg'));
 assert.ok(!html.includes('zes genummerde oefeningen'));

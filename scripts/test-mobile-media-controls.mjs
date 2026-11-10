@@ -178,13 +178,18 @@ assert.equal(played,beforeCancelled,'stop while manifest loading prevents delaye
 assert.ok(html.includes("if(explanationWithheld(bron))uitleg='';"),'other languages also suppress held explanation');
 // teruggehouden beeld/uitleg: geen bibliotheek- of AI-video; alleen een video die de
 // therapeut zelf opnam of per kaart koppelde blijft, zonder de algemene uitlegtekst
-const holdBlok=html.slice(html.indexOf("if(hideMedia||holdExplanation){"),html.indexOf("var beeldpad=o?(o.kaartImg||o.img):'';"));
+const holdBlok=html.slice(html.indexOf("if(hideMedia||holdExplanation){"),html.indexOf("var beeldpad=o&&o.kaartImg?o.kaartImg:'';"));
 assert.ok(holdBlok.length>0&&holdBlok.length<1500,'held content block present');
 assert.ok(/else knop='';\s*\}/.test(holdBlok),'held content cannot expose a library video play button');
 assert.ok(holdBlok.includes("!(o.video.eigenMeta&&o.video.eigenMeta.aiGenerated)"),'held content never keeps a generated video');
 assert.ok(!holdBlok.includes('vtekst')&&!holdBlok.includes('videoTekstData'),'held content keeps no explanation on the therapist video');
 assert.ok(html.includes("(hideMedia?'':"),'teruggehouden beeld biedt ook geen stemopname aan');
-assert.ok(html.includes("clinicallyReviewed===true?(VIDEO_META[TAAL]"),'het label klinisch gecontroleerd vraagt een positieve bevestiging');
+// sinds 2026-11-10 op één plek (aiVideoNoot): alleen een uitdrukkelijke true geeft "klinisch gecontroleerd",
+// al het andere krijgt de zin die zegt dat de video met AI is gemaakt
+assert.ok(html.includes("if(meta.clinicallyReviewed===true)return '<div class=\"vmeta\">'+esc(VIDEO_META[TAAL]||VIDEO_META.nl)+'</div>';"),'het label klinisch gecontroleerd vraagt een positieve bevestiging');
+assert.ok(html.includes("return '<div class=\"vmeta\" data-ai=\"1\">'+esc(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl)+'</div>';"),'zonder bevestiging staat er dat de video met AI is gemaakt');
+assert.equal((html.match(/aiGenerated\?aiVideoNoot\(/g)||[]).length,2,'eigen video en Stream-video gaan allebei langs aiVideoNoot');
+assert.ok(!/clinicallyReviewed(?!===true)/.test(html.slice(html.indexOf('<script>'))),'nergens een lossere toets op klinische controle');
 console.log('Mobile media: mutual exclusion, audio button state, canonical names, source-bound poses, fail-closed review and syntax passed.');
 
 // ---- een video van de praktijk draagt nooit de kop "uitleg bij de video" ----

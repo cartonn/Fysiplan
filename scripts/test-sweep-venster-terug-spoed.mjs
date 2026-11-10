@@ -112,17 +112,26 @@ try {
       await page.goto(origin + "/privacy", { waitUntil: "domcontentloaded" });
       await page.goto(origin + "/k/" + id + "?taal=en", { waitUntil: "networkidle" });
       const foto = page.locator("#oefs .oef img").first();
+      // eerste tik opent de oefening, een tik op het grote beeld daarna de vergroting
+      await foto.click();
+      await page.waitForSelector("body.sessie #oefs .oef.actief img");
       await foto.click();
       await page.waitForSelector("#lightbox.open");
       await page.goBack();
       await wacht(150);
       assert.match(page.url(), new RegExp("/k/" + id), toestel + ": terug met open foto blijft op de kaart");
       assert.equal(await page.locator("#lightbox.open").count(), 0, toestel + ": terug sluit de foto");
+      assert.equal(await page.locator("body.sessie").count(), 1, toestel + ": na de foto sta je weer bij de oefening");
       await foto.click();
       await page.waitForSelector("#lightbox.open");
       await page.click("#lbsluit");
       await wacht(150);
       assert.match(page.url(), new RegExp("/k/" + id), toestel + ": sluiten met × blijft op de kaart");
+      // terug vanuit de oefening: naar het overzicht, nog steeds op de kaart
+      await page.goBack();
+      await wacht(150);
+      assert.match(page.url(), new RegExp("/k/" + id), toestel + ": terug vanuit de oefening blijft op de kaart");
+      assert.equal(await page.locator("body.sessie").count(), 0, toestel + ": terug sluit de oefening");
       await page.goBack();
       await wacht(150);
       assert.match(page.url(), /\/privacy/, toestel + ": daarna gaat terug gewoon naar de vorige pagina");

@@ -4,8 +4,8 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="color-scheme" content="light"/>
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f2e9"/>
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171512"/>
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff"/>
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#131416"/>
 <meta name="robots" content="noindex"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
@@ -31,74 +31,558 @@
 <meta name="twitter:description" content="Opent gewoon in je browser — zonder app of account."/>
 <meta name="twitter:image" content="https://fysiplan.nl/images/og-oefenkaart.png"/>
 <style>
+  /* Patiëntkaart, herontwerp 2026-11-10.
+     Uitgangspunt: de patiënt doet thuis één ding tegelijk. Het overzicht is een korte
+     lijst met één duidelijke startknop; een oefening opent schermvullend (oefenstand)
+     met groot beeld, dosering, uitleg en stem. Rustig en vlak: één merkkleur, groen
+     alleen voor "gedaan", lijnen in plaats van kaders met schaduw, letters in rem
+     zodat de lettergrootte van de telefoon meetelt. */
   :root{
-    --blauw:#2456a6; --blauw-d:#1c4487; --blauw-05:#edf2fa; --blauw-10:#d9e4f5;
-    --inkt:#232019; --tekst:#3d3a31; --grijs:#777162; --zacht:#a39c8a;
-    --bg:#f6f2e9; --vlak:#fffefa; --lijn:#e7e0cf; --lijn2:#f0ebdd;
-    --chip:#faf7ef; --veilig-bg:#fdf6e8; --veilig-rand:#eeddb8; --veilig-tekst:#7a622e;
-    --sh:0 1px 2px rgba(80,64,32,.05),0 6px 24px rgba(80,64,32,.08);
-    --disp:'Avenir Next',Seravek,'Segoe UI',system-ui,sans-serif;
+    --blauw:#2456a6; --blauw-d:#1c4487; --blauw-05:#eef3fb; --blauw-10:#d6e2f5;
+    --kn:#2456a6; --kn-d:#1c4487;
+    --inkt:#16181c; --tekst:#2a2d33; --grijs:#5c606a; --zacht:#5c606a;
+    --bg:#ffffff; --vlak:#ffffff; --band:#f2f1ec; --lijn:#dfddd5; --lijn2:#ebe9e2; --rand:#aeaba0;
+    --chip:#f6f5f1;
+    --groen:#1f7a43; --groen-vul:#23824a; --groen-bg:#e8f3ec;
+    --veilig-bg:#fdf5dc; --veilig-rand:#e9cf8a; --veilig-tekst:#5f4700;
+    --goot:20px;
+    --disp:'Avenir Next',Seravek,'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;
   }
   /* donkere stand voor wie 's avonds oefent; printen blijft altijd licht */
   @media screen and (prefers-color-scheme:dark){
     :root{
-      --blauw:#7aa4e8; --blauw-d:#93b5ee; --blauw-05:#1d2836; --blauw-10:#28374d;
-      --inkt:#efece4; --tekst:#d7d3c9; --grijs:#a49d8e; --zacht:#7e786b;
-      --bg:#171512; --vlak:#211e19; --lijn:#37332a; --lijn2:#2c2922;
-      --chip:#2a2721; --veilig-bg:#2b2517; --veilig-rand:#4a3f26; --veilig-tekst:#d9bf82;
-      --sh:0 1px 2px rgba(0,0,0,.35),0 6px 24px rgba(0,0,0,.4);
+      --blauw:#8fb4f0; --blauw-d:#a9c5f4; --blauw-05:#1a2536; --blauw-10:#27364f;
+      --kn:#3468c0; --kn-d:#2a59a8;
+      --inkt:#f1f1f2; --tekst:#dcdde0; --grijs:#a4a8b0; --zacht:#a4a8b0;
+      --bg:#131416; --vlak:#131416; --band:#0a0b0c; --lijn:#2e3035; --lijn2:#25272b; --rand:#6a6e77;
+      --chip:#1c1e22;
+      --groen:#6fcf91; --groen-vul:#2c9156; --groen-bg:#16281d;
+      --veilig-bg:#2a2412; --veilig-rand:#57481c; --veilig-tekst:#e6cf8f;
     }
     .agrij input[type=time]::-webkit-calendar-picker-indicator{filter:invert(.85)}
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-text-size-adjust:100%}
-  body{font:17px/1.55 Charter,Georgia,'Times New Roman',serif;color:var(--tekst);
-    background:
-      radial-gradient(900px 420px at 90% -8%, rgba(36,86,166,.06), transparent 60%),
-      var(--bg);
-    min-height:100vh}
-  .wrap{max-width:660px;margin:0 auto;padding:18px 14px calc(56px + env(safe-area-inset-bottom))}
+  body{font:400 1.0625rem/1.5 var(--disp);color:var(--tekst);background:var(--bg);min-height:100vh}
+  button,select,input{font:inherit;color:inherit}
+  button{-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none !important}
+  .wrap{max-width:640px;margin:0 auto;padding:0 var(--goot) calc(32px + env(safe-area-inset-bottom))}
+  @media (max-width:340px){:root{--goot:16px}}
+  @media screen and (min-width:700px){
+    body{background:var(--band)}
+    .wrap{background:var(--bg);margin:24px auto;border-radius:16px;overflow:hidden}
+  }
 
-  /* koptekst van de praktijk */
-  .kop{background:var(--vlak);border:1px solid var(--lijn);border-radius:20px;padding:22px 20px 18px;box-shadow:var(--sh);position:relative;overflow:hidden}
-  .kop::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--blauw),#4f7fc9 55%,#eb6834)}
-  .eyebrow{font:700 11px/1 var(--disp);letter-spacing:.14em;color:var(--blauw);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-  .eyebrow::after{content:"";flex:1;height:1px;background:var(--lijn2)}
-  .kop img.logo{max-height:46px;max-width:200px;object-fit:contain;object-position:left;display:block;margin-bottom:8px}
-  .kop h1{font:700 24px/1.2 var(--disp);color:var(--inkt);letter-spacing:-.015em}
-  .kop .adres{font-size:14px;color:var(--grijs);margin-top:5px}
-  .kop .adres a{color:var(--blauw);text-decoration:none;border-bottom:1px solid var(--blauw-10)}
-  .client{margin-top:16px;padding-top:14px;border-top:1px solid var(--lijn2);display:flex;flex-direction:column;gap:6px}
-  .client .rij{display:flex;gap:10px;font-size:16px}
+  /* knoppen: één hoofdactie per scherm (.kn1), de rest is rustig */
+  .kn1,.agbtn,.vkaart .vgo{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;
+    padding:12px 18px;border:0;border-radius:12px;background:var(--kn);color:#fff;
+    font:700 1.0625rem/1.2 var(--disp);cursor:pointer}
+  .kn1:active,.agbtn:active,.vkaart .vgo:active{background:var(--kn-d)}
+
+  /* kop: de praktijk, klein. De kaart gaat over de oefeningen, niet over het briefhoofd. */
+  .kop{padding:16px 0 16px}
+  .eyebrow{display:none}
+  .kop img.logo{max-height:40px;max-width:180px;object-fit:contain;object-position:left;display:block;margin-bottom:10px}
+  .kop h1{font:700 1.125rem/1.3 var(--disp);color:var(--inkt);overflow-wrap:anywhere}
+  .kop .adres{font-size:.9375rem;color:var(--grijs);margin-top:2px;overflow-wrap:anywhere}
+  .kop .adres a{color:var(--blauw);text-decoration:underline;text-underline-offset:2px}
+  /* taalkeuze en voorlezen: de kaart is er ook voor wie geen Nederlands leest of slecht ziet */
+  .kopacties{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .kopacties select,.kopacties button{min-height:44px;font:600 .9375rem/1 var(--disp);color:var(--inkt);
+    background:var(--bg);border:1px solid var(--rand);border-radius:10px;padding:0 12px;cursor:pointer}
+  .kopacties select{max-width:180px}
+  .kopacties button{display:inline-flex;align-items:center;gap:8px}
+  .kopacties button:active,.kopacties button.aan{background:var(--inkt);border-color:var(--inkt);color:var(--bg)}
+  /* grotere letters: één tik vergroot de hele kaart (57% van de 70-plussers wil
+     papier — wie tóch digitaal kijkt, verdient tekst zonder knijpzoomen) */
+  html.groot body{zoom:1.16}
+  @media print{html.groot body{zoom:1}}
+
+  /* blokken: volle breedte, gescheiden door een brede band in plaats van losse kaarten */
+  .blok{border-top:8px solid var(--band);margin:0 calc(-1*var(--goot));padding:26px var(--goot) 28px}
+  h2{font:700 1.25rem/1.25 var(--disp);color:var(--inkt);margin:0 0 14px;overflow-wrap:anywhere}
+  .blok>h2:not(:first-child){margin-top:30px}
+  h2 .tel{display:none}
+  .datum{font:500 .9375rem/1.3 var(--disp);color:var(--grijs);margin-bottom:4px}
+  .datum::first-letter{text-transform:uppercase}
+  #b_oef>h2{font-size:1.625rem;line-height:1.15;letter-spacing:-.015em;margin:0 0 14px}
+  /* wat de fysiotherapeut erbij schreef: voor wie, het doel, en waar je op moet letten */
+  .client{display:flex;flex-direction:column;gap:6px;margin:0 0 18px}
+  .client .rij{display:block;font-size:1rem;line-height:1.45;overflow-wrap:anywhere}
+  .client .rij b{font-weight:600;color:var(--grijs)}
+  .client .rij b::after{content:": "}
   .client .rij span{min-width:0;overflow-wrap:anywhere}
-  .client .rij b{font:600 12.5px/1.7 var(--disp);color:var(--zacht);text-transform:uppercase;letter-spacing:.06em;flex:0 0 74px}
+  .client .rij span{color:var(--inkt)}
 
-  /* oefeningen */
-  h2{font:700 19px/1.3 var(--disp);color:var(--inkt);margin:30px 4px 12px;display:flex;align-items:baseline;gap:8px}
-  h2 .tel{font:600 13px/1 var(--disp);color:var(--blauw);background:var(--blauw-05);border:1px solid var(--blauw-10);padding:4px 10px;border-radius:999px}
-  .oef{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);margin-bottom:12px;overflow:hidden}
-  .oefkop{display:flex;gap:14px;align-items:center;padding:14px 16px 14px 14px}
-  .nr{flex:0 0 30px;height:30px;border-radius:999px;background:var(--blauw);color:#fff;
-    display:flex;align-items:center;justify-content:center;font:700 14px/1 var(--disp);
-    box-shadow:0 2px 6px rgba(36,86,166,.28)}
-  .oefkop img{width:88px;height:88px;flex:0 0 88px;object-fit:contain;background:#fff;
-    border:1px solid var(--lijn);border-radius:14px;padding:4px;cursor:zoom-in}
-  /* afspeelteken op de miniatuur: nodigt uit om de demonstratie te openen.
-     een echte knop, zodat de foto ook met toetsenbord en screenreader werkt */
-  .fotoknop{position:relative;flex:0 0 88px;display:block;padding:0;border:none;background:none;
-    cursor:zoom-in;-webkit-tap-highlight-color:transparent}
-  .fotoknop img{display:block}
-  .fotoknop:focus-visible{outline:3px solid var(--blauw);outline-offset:2px;border-radius:16px}
-  .demobadge{position:absolute;right:3px;bottom:3px;width:24px;height:24px;border-radius:999px;
-    background:var(--blauw);color:#fff;display:flex;align-items:center;justify-content:center;
-    box-shadow:0 1px 5px rgba(36,86,166,.4);pointer-events:none}
+  /* vaste veiligheidsregel op elke kaart */
+  .veilig{display:flex;gap:10px;align-items:flex-start;margin:22px 0 0;padding:12px 14px;
+    background:var(--veilig-bg);border-radius:10px;font:500 .9375rem/1.45 var(--disp);color:var(--veilig-tekst)}
+  .veilig svg{flex:0 0 16px;margin-top:3px}
+
+  /* voortgang van vandaag en de startknop */
+  .oefvoortgang{display:flex;flex-wrap:wrap;flex-direction:column;gap:8px;margin:0 0 14px}
+  .ovtekst{order:-1;min-width:0;font:600 .9375rem/1.3 var(--disp);color:var(--grijs);overflow-wrap:anywhere}
+  .oefvoortgang.klaar .ovtekst{color:var(--groen)}
+  .ovbalk{height:6px;border-radius:3px;background:var(--lijn2);overflow:hidden}
+  .ovbalk i{display:block;height:100%;width:0;border-radius:3px;background:var(--groen-vul);transition:width .28s ease}
+  #startknop{margin:0}
+  /* de hele kaart laten voorlezen: rustig onder de startknop */
+  .leesrij{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;margin-top:6px}
+  .leesrij button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 2px;border:0;background:none;
+    font:600 .9375rem/1.2 var(--disp);color:var(--blauw);cursor:pointer}
+  .leesrij button.aan{color:var(--inkt)}
+  .leesrij label{display:inline-flex;align-items:center;gap:6px;font:600 .9375rem/1 var(--disp);color:var(--grijs)}
+  .leesrij select{min-height:44px;max-width:170px;font:600 .9375rem/1 var(--disp);color:var(--inkt);background:var(--bg);border:1px solid var(--rand);border-radius:10px;padding:0 8px}
+  /* alles-in-één-tik: de hele kaart gedaan zonder elke oefening los af te vinken */
+  .ovalles{display:inline-flex;align-items:center;min-height:44px;margin-top:6px;padding:0 2px;border:0;background:none;
+    font:600 .9375rem/1.2 var(--disp);color:var(--blauw);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
+  /* ---- oefeningen: in het overzicht een rij, in de oefenstand het hele scherm ---- */
+  #oefs{margin-top:8px}
+  .oef{display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--lijn)}
+  .oef:first-child{border-top:1px solid var(--lijn)}
+  .oef:not(.actief)>*:not(.oefkop):not(.oefdone){display:none !important}
+  .oef>.oefkop{display:flex;flex:1 1 auto;min-width:0;align-items:center;gap:14px;padding:10px 0;cursor:pointer}
+  .nr{display:none}
+  .fotoknop{position:relative;flex:0 0 64px;display:block;padding:0;border:none;background:none;cursor:pointer}
+  .fotoknop img{display:block;width:64px;height:64px;object-fit:contain;background:#fff;border:1px solid var(--lijn);border-radius:10px}
+  /* zonder avatar geen leeg vlak: het volgnummer van de oefening staat erin */
+  #oefs{counter-reset:oef}
+  .oef{counter-increment:oef}
+  .geenfoto{flex:0 0 64px;height:64px;border-radius:10px;background:var(--chip);display:flex;align-items:center;justify-content:center;
+    font:600 1.25rem/1 var(--disp);color:var(--grijs)}
+  .geenfoto::before{content:counter(oef)}
+  .fotoknop:focus-visible{outline:3px solid var(--blauw);outline-offset:2px;border-radius:12px}
+  .demobadge,.infobadge{display:none;position:absolute;right:8px;bottom:8px;width:36px;height:36px;border-radius:50%;
+    align-items:center;justify-content:center;pointer-events:none;
+    background:rgba(22,24,28,.72);color:#fff}
   .demobadge .driehoek{display:flex}
-  /* foto zonder video maar met uitleg: subtiel vergrootteken, zodat de patient weet
-     dat een tik de oefening met uitleg groot opent */
-  .infobadge{position:absolute;right:3px;bottom:3px;width:22px;height:22px;border-radius:999px;
-    background:var(--vlak);border:1px solid var(--lijn);color:var(--grijs);
-    display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(80,64,32,.15);
-    pointer-events:none}
+  .demobadge svg,.infobadge svg{width:16px;height:16px}
+  .oefinfo{flex:1;min-width:0}
+  .oefinfo[role=button]:focus-visible{outline:3px solid var(--blauw);outline-offset:4px;border-radius:6px}
+  .naam{overflow-wrap:anywhere}
+  .naam{font:600 1.0625rem/1.3 var(--disp);color:var(--inkt)}
+  /* dosering: in de lijst één grijze regel, in de oefenstand grote cijfers */
+  .dosis{margin-top:2px;font:400 .9375rem/1.4 var(--disp);color:var(--grijs);overflow-wrap:anywhere}
+  .chips{display:none}
+  .chip{max-width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere}
+  /* afvinken per oefening: een tik "gedaan vandaag" terwijl je je set afwerkt.
+     Lokaal per kaart per dag; vult zichzelf 's nachts weer leeg. Alle oefeningen
+     afgevinkt bevestigt automatisch de dag-teller ("ik heb vandaag geoefend"). */
+  .oef>.oefdone{display:flex;flex:0 0 48px;width:48px;height:56px;align-items:center;justify-content:center;
+    padding:0;border:0;background:none;cursor:pointer}
+  .oefdone .odv{flex:0 0 30px;width:30px;height:30px;border-radius:50%;border:2px solid var(--rand);background:var(--bg)}
+  .oefdone .odt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .oefdone.aan .odv{border-color:var(--groen-vul);background:var(--groen-vul)}
+  .oefdone.aan .odv::after{content:"";display:block;width:8px;height:14px;margin:3px 0 0 9px;
+    border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(42deg)}
+  .oefdone:focus-visible{outline:3px solid var(--blauw);outline-offset:-4px;border-radius:12px}
+
+  /* oefenstand: alleen de open oefening, de rest van de kaart wacht */
+  body.sessie .wrap{padding-top:0;padding-bottom:calc(132px + env(safe-area-inset-bottom))}
+  body.sessie .wrap>*:not(#b_oef),body.sessie #b_oef>*:not(#oefs):not(#veilig),body.sessie .oef:not(.actief){display:none !important}
+  body.sessie .blok{border-top:0;padding-top:0;padding-bottom:0}
+  body.sessie #oefs{margin-top:0}
+  body.sessie .oef.actief{display:grid;grid-template-columns:minmax(0,1fr);border:0;padding:16px 0 8px}
+  .oef.actief>*{display:block}
+  /* Het beeld, de afspeelknop en de video delen één plek bovenaan (rij 1): de video speelt waar
+     het beeld stond, zodat naam, dosering en "Gedaan" blijven staan. De kop en de open
+     videohouder lossen op in het raster (display:contents); de rest volgt in de gewone volgorde. */
+  .oef.actief>.oefkop{display:contents;cursor:default}
+  .oef.actief>.oefdone,.oef.actief>.vhouder,.oef.actief .geenfoto{display:none}
+  .oef.actief>.vhouder.open{display:contents;animation:none}
+  .oef.actief .fotoknop,.oef.actief>.vbtn:not([data-noor])[aria-expanded="false"],.oef.actief>.vbtn[data-eigen][aria-expanded="true"],
+  .oef.actief>.vhouder.open>video,.oef.actief>.vhouder.open>iframe{grid-row:1;grid-column:1}
+  /* position:relative erbij: zonder positie negeert Chromium de z-index van deze rastervakken */
+  .oef.actief>.vbtn:not([data-noor])[aria-expanded="false"],.oef.actief>.vbtn[data-eigen][aria-expanded="true"],
+  .oef.actief>.vhouder.open>video,.oef.actief>.vhouder.open>iframe{position:relative}
+  .oef.actief .fotoknop{justify-self:center;width:-moz-fit-content;width:fit-content;max-width:100%;margin:0;
+    background:#fff;border-radius:12px;overflow:hidden;cursor:zoom-in}
+  .oef.actief .fotoknop img{width:auto;height:auto;max-width:100%;max-height:min(46vh,420px);border:0;border-radius:0}
+  @media (max-height:600px){.oef.actief .fotoknop img{max-height:42vh}}
+  .oef.actief .infobadge{display:flex}
+  /* in de lijst: een klein afspeelteken op het plaatje van een oefening met video */
+  .oef:not(.actief) .demobadge{display:flex;right:3px;bottom:3px;width:22px;height:22px}
+  .oef:not(.actief) .demobadge svg{width:9px;height:9px}
+  .oef.actief .naam{font:700 1.5rem/1.2 var(--disp);letter-spacing:-.01em;margin-top:18px}
+  .oef.actief .chips{display:flex;flex-wrap:wrap;gap:12px 0;margin-top:14px;color:var(--grijs)}
+  .oef.actief .chip{display:block;padding:0 18px;border-inline-start:1px solid var(--lijn);font:500 .9375rem/1.3 var(--disp)}
+  .oef.actief .chip:first-child{padding-inline-start:0;border-inline-start:0}
+  .oef.actief .dosis{display:none}
+  .oef.actief .chip b{display:block;font:700 1.75rem/1.1 var(--disp);color:var(--inkt);letter-spacing:-.01em}
+  /* uitleg bij de oefening: gewoon leesbaar onder het beeld, niet weggestopt achter een tik */
+  .oefuitleg{margin-top:26px}
+  .oefuitleg h3{font:700 1.125rem/1.3 var(--disp);color:var(--inkt);margin-bottom:8px}
+  .oefuitleg p{font:400 1.0625rem/1.6 var(--disp);color:var(--tekst);max-width:68ch}
+  .oefuitleg p+p{margin-top:10px}
+  /* speelt de video met zijn eigen tekstblok, dan niet dezelfde uitleg er nog eens onder */
+  .oef:has(.vhouder.open .vtekst)>.oefuitleg{display:none}
+  .nietvertaald{margin-top:8px;font:italic 400 .875rem/1.45 var(--disp);color:var(--grijs)}
+  /* "te zwaar"-tik: de patiënt wijst de oefening aan die niet gaat, zonder bericht te typen */
+  .oefzwaar{min-height:44px;margin-top:18px;padding:0 2px;border:0;background:none;
+    font:600 .9375rem/1.2 var(--disp);color:var(--blauw);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+  .oefzwaar.aan{color:var(--groen);text-decoration:none;cursor:default}
+  .oefzwaar:disabled{opacity:1}
+
+  /* video en stem */
+  .vbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:50px;margin:14px 0 0;
+    font:600 1.0625rem/1.2 var(--disp);padding:10px 16px;border-radius:12px;cursor:pointer;
+    border:1.5px solid var(--rand);background:var(--bg);color:var(--inkt)}
+  .oef.actief>.vbtn{display:flex}
+  .vbtn:active{background:var(--chip)}
+  .vbtn.eigen{background:var(--kn);border-color:var(--kn);color:#fff}
+  .vbtn.eigen:active{background:var(--kn-d)}
+  .vbtn .driehoek{width:24px;height:24px;border-radius:50%;background:var(--inkt);color:var(--bg);
+    display:inline-flex;align-items:center;justify-content:center;flex:0 0 24px}
+  .vbtn.eigen .driehoek{background:rgba(255,255,255,.24);color:#fff}
+  .vbtn .driehoek svg{margin-left:1.5px}
+  .vbtn[aria-expanded="true"] .driehoek svg{margin:0;transform:rotate(90deg)}
+  /* luisterknop: luidspreker, en een blokje zolang de stem praat (dan is het de stopknop) */
+  .vbtn[data-noor]::before{content:"";flex:0 0 20px;width:20px;height:20px;background:currentColor;
+    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13'/%3E%3C/svg%3E") center/contain no-repeat;
+    mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13'/%3E%3C/svg%3E") center/contain no-repeat}
+  .vbtn[data-noor][aria-pressed="true"]{background:var(--inkt);border-color:var(--inkt);color:var(--bg)}
+  .vbtn[data-noor][aria-pressed="true"]::before{-webkit-mask:none;mask:none;flex-basis:14px;width:14px;height:14px;border-radius:3px}
+  .vmeta{font:400 .875rem/1.45 var(--disp);color:var(--grijs);margin:8px 0 0}
+  #oefs [data-noor-wacht]{display:none !important}
+  /* afspeelknop midden op het beeld; het hele beeld is ook de knop */
+  .vlab{min-width:0;overflow-wrap:anywhere}
+  .oef.actief>.vbtn:not([data-noor])[aria-expanded="false"]{z-index:3;place-self:stretch center;display:grid;grid-template-rows:1fr auto 1fr;
+    justify-items:center;align-items:center;width:auto;max-width:90%;min-height:0;margin:0;padding:0;border:0;background:none;color:#fff}
+  .oef.actief>.vbtn:not([data-noor])[aria-expanded="false"] .driehoek{width:68px;height:68px;flex:0 0 68px;
+    background:rgba(22,24,28,.86);color:#fff;box-shadow:0 2px 12px rgba(22,24,28,.28)}
+  .oef.actief>.vbtn.eigen[data-vbron="praktijk"][aria-expanded="false"] .driehoek{background:var(--kn)}
+  .oef.actief>.vbtn:not([data-noor])[aria-expanded="false"] .driehoek svg{width:24px;height:24px;margin-left:4px}
+  .oef.actief>.vbtn:not([data-noor])[aria-expanded="false"] .vlab{padding:7px 12px;border-radius:9px;
+    background:rgba(22,24,28,.86);font:600 .875rem/1.25 var(--disp);text-align:center;grid-row:3;align-self:end;margin-bottom:10px}
+  .oef.actief>.vbtn:not([data-noor])[aria-expanded="false"] .driehoek{grid-row:2}
+  .oef.actief>.vbtn:not([data-noor])[aria-expanded="false"]:active .driehoek{transform:scale(.94)}
+  /* zonder beeld is er niets om de knop op te leggen: dan een gewone knop in de rij */
+  .oef.actief:has(.geenfoto)>.vbtn:not([data-noor])[aria-expanded="false"]{grid-row:auto;z-index:auto;place-self:stretch;display:flex;flex-direction:row;
+    width:100%;max-width:none;min-height:50px;margin:14px 0 0;padding:10px 16px;border:1.5px solid var(--rand);background:var(--bg);color:var(--inkt)}
+  .oef.actief:has(.geenfoto)>.vbtn:not([data-noor])[aria-expanded="false"] .driehoek{width:24px;height:24px;flex:0 0 24px;background:var(--inkt);color:var(--bg);box-shadow:none}
+  .oef.actief:has(.geenfoto)>.vbtn:not([data-noor])[aria-expanded="false"] .driehoek svg{width:10px;height:10px;margin-left:1.5px}
+  .oef.actief:has(.geenfoto)>.vbtn:not([data-noor])[aria-expanded="false"] .vlab{padding:0;margin:0;background:none;font:inherit}
+  /* de video speelt: een eigen of avatarvideo krijgt rechtsboven een sluitknop (terug naar het beeld);
+     bij YouTube en Stream staat de knop gewoon onder de dosering, hun speler heeft daar eigen knoppen */
+  .oef.actief>.vbtn[data-eigen][aria-expanded="true"]{z-index:4;place-self:start end;width:44px;height:44px;min-height:0;margin:8px;padding:0;
+    border:0;border-radius:50%;background:rgba(22,24,28,.78);color:#fff;font-size:0}
+  .oef.actief>.vbtn[data-eigen][aria-expanded="true"] .driehoek{display:none}
+  .oef.actief>.vbtn[data-eigen][aria-expanded="true"] .vlab{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .oef.actief>.vbtn[data-eigen][aria-expanded="true"]::before{content:"";width:18px;height:18px;background:currentColor;
+    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.8' stroke-linecap='round'%3E%3Cpath d='M5 5l14 14M19 5L5 19'/%3E%3C/svg%3E") center/contain no-repeat;
+    mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.8' stroke-linecap='round'%3E%3Cpath d='M5 5l14 14M19 5L5 19'/%3E%3C/svg%3E") center/contain no-repeat}
+  /* speelt de staande video, dan is het beeld onzichtbaar maar houdt het zijn plek vast: geen sprong */
+  .oef.actief:has(>.vhouder.open) .fotoknop{visibility:hidden}
+  .oef.actief>.vhouder.open>video,.oef.actief>.vhouder.open>iframe{z-index:2;justify-self:start;align-self:center;
+    width:calc(100% + 2*var(--goot));max-width:none;margin:-16px calc(-1*var(--goot)) 0}
+  /* staande avatarvideo: eigen verhouding, iets groter dan het beeld, wit zoals het beeld */
+  .oef.actief>.vhouder.open>video.avatar{justify-self:center;width:auto;max-width:100%;height:auto;max-height:min(52vh,460px);
+    margin:0;border-radius:12px}
+  /* een liggende video (eigen opname, YouTube, Stream) vervangt het beeld helemaal */
+  .oef.actief:has(>.vhouder.open>iframe) .fotoknop,.oef.actief:has(>.vhouder.open>video:not(.avatar)) .fotoknop{display:none}
+  /* de teksten van de video (herkomst, uitleg, melding) lopen gewoon mee in de kolom */
+  .oef.actief>.vhouder.open>.vmeta{margin:10px 0 0}
+  .oef.actief>.vhouder.open>.vtekst,.oef.actief>.vhouder.open>.ytextern{padding-inline:0}
+  /* "Video laden…" en "kan niet worden afgespeeld" staan op de video zelf, linksboven naast de sluitknop:
+     onder de dosering zou de patiënt de melding niet zien */
+  .oef.actief>.vhouder.open>.vstatus{grid-row:1;grid-column:1;position:relative;z-index:3;place-self:start;max-width:calc(100% - 60px);
+    margin:14px 0 0;padding:7px 12px;border-radius:9px;background:rgba(22,24,28,.86);color:#fff;font:600 .875rem/1.35 var(--disp)}
+  .oef.actief>.vhouder.open>.vstatus button{margin:8px 0 4px;border:1.5px solid rgba(255,255,255,.7);border-radius:9px;background:none;color:#fff;font:inherit;cursor:pointer}
+  .vhouder{display:none;margin:14px calc(-1*var(--goot)) 0}
+  .vhouder.open{display:block;animation:vopen .25s ease-out}
+  @keyframes vopen{from{opacity:0}to{opacity:1}}
+  .vhouder video,.vhouder iframe{display:block;width:100%;aspect-ratio:16/10;border:none;background:#000}
+  .vhouder video{object-fit:contain}
+  /* avatarvideo's zijn staand (2:3 of 9:16): eigen verhouding, niet hoger dan het scherm */
+  .vhouder > .vmeta{margin:10px var(--goot) 0}
+  .vhouder video.avatar{aspect-ratio:auto;height:auto;max-height:72vh;background:#fff}
+  .vstatus{padding:10px var(--goot);font-size:.9375rem;line-height:1.4}
+  .vstatus button{margin:8px 0 0;padding:8px 12px;min-height:44px;display:block}
+  .vhouder .ytextern{display:block;padding:10px var(--goot) 4px;text-align:center;font:600 .875rem/1.35 var(--disp);color:var(--grijs);text-decoration:underline}
+  .vtekst{margin:0;padding:16px var(--goot) 4px;background:var(--bg)}
+  .vtekst-label{margin-bottom:6px;font:700 1.125rem/1.3 var(--disp);color:var(--inkt)}
+  .vtekst p{margin:0;max-width:68ch;font:400 1.0625rem/1.6 var(--disp);color:var(--tekst)}
+  .noormelding{margin:10px 0 0;white-space:pre-line;color:var(--ink,#1d2b36);background:#f3f6fa;border-color:#d9e2ec}
+  .vbtn+.noormelding,.vmeta+.noormelding{margin:10px 0 0}
+
+  /* vaste balken van de oefenstand */
+  .skop,.sbalk{left:0;right:0;z-index:20;background:var(--bg)}
+  .sbalk{position:fixed}
+  body.sessie #offlijn{position:static !important}
+  .skop[hidden],.sbalk[hidden]{display:none}
+  .skop{position:sticky;top:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    padding:calc(4px + env(safe-area-inset-top)) 8px 0;border-bottom:1px solid var(--lijn)}
+  .sterug{justify-self:start;display:inline-flex;align-items:center;gap:4px;min-height:48px;padding:0 10px 0 4px;border:0;background:none;
+    font:600 1rem/1 var(--disp);color:var(--blauw);cursor:pointer}
+  .stel{padding:0 12px;font:600 1rem/1.2 var(--disp);color:var(--grijs);outline:none}
+  .sstip{flex:1 1 100%;display:flex;gap:4px;padding:2px 12px 10px}
+  .sstip:empty{padding:0}
+  .sstip i{flex:1;height:4px;border-radius:2px;background:var(--lijn)}
+  .sstip i.aan{background:var(--groen-vul)}
+  .sstip i.nu{background:var(--inkt)}
+  .sbalk{bottom:0;padding:10px var(--goot) calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--lijn)}
+  .srij{display:flex;gap:10px;max-width:600px;margin:0 auto}
+  .srij .kn1{flex:1;min-width:0}
+  .spijl{flex:0 0 54px;height:54px;display:flex;align-items:center;justify-content:center;border-radius:12px;
+    border:1.5px solid var(--rand);background:var(--bg);color:var(--inkt);cursor:pointer}
+  .spijl:disabled{opacity:.35;cursor:default}
+  /* Arabisch leest van rechts naar links: de pijlen wijzen dan de andere kant op */
+  [dir=rtl] .spijl svg,[dir=rtl] .sterug svg{transform:scaleX(-1)}
+  .sstatus{display:flex;align-items:center;gap:8px;max-width:600px;margin:0 auto 10px;font:600 .9375rem/1.3 var(--disp);color:var(--groen)}
+  .sstatus[hidden]{display:none}
+  /* weinig hoogte (telefoon liggend, of heel grote letters): kleiner beeld, en "Vandaag gedaan" naast de knoppen */
+  @media (max-height:26em){
+    .oef.actief .fotoknop img{max-height:34vh}
+    .oef.actief>.vhouder.open>video.avatar{max-height:40vh}
+    .sbalk{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+    .sstatus{flex:1 1 14em;margin:0}
+    .srij{flex:1 1 18em;margin:0}
+  }
+  .svink{flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:var(--groen-vul)}
+  .svink::after{content:"";display:block;width:5px;height:10px;margin:3px 0 0 7px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .songedaan{margin-inline-start:auto;min-height:44px;padding:0 2px;border:0;background:none;
+    font:600 .9375rem/1.2 var(--disp);color:var(--blauw);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+  body.sessie .appbanner{display:none !important}
+
+  /* ---- na het oefenen: pijnscore 0-10 in één tik, daarna het vinkje en de oefenweek ---- */
+  .mkaart,.agkaart,.skaart,.vkaart{margin:0}
+  .mvraag{font:600 1.0625rem/1.4 var(--disp);color:var(--inkt);margin-bottom:12px}
+  /* pijnschuif: schuiven of een cijfer tikken. De baan wordt dikker naar "ergste pijn", zodat je
+     ziet welke kant meer is. Bewust één kleur en geen groen-naar-rood: de kaart toont de score
+     en duidt hem niet. De schuif is een hulpmiddel bovenop de elf knoppen; die doen het werk. */
+  .pschuif{position:relative;height:64px;touch-action:pan-y;cursor:pointer;
+    -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  .psvorm{position:absolute;top:0;bottom:0;inset-inline:calc(100%/22);background:var(--lijn);
+    clip-path:polygon(0 44%,100% 24%,100% 76%,0 56%)}
+  [dir=rtl] .psvorm{clip-path:polygon(0 24%,100% 44%,100% 56%,0 76%)}
+  .psvul{position:absolute;top:0;bottom:0;inset-inline-start:0;width:0;background:var(--kn)}
+  .psknop{position:absolute;top:50%;inset-inline-start:50%;width:48px;height:48px;margin-top:-24px;margin-inline-start:-24px;
+    display:none;align-items:center;justify-content:center;border-radius:50%;border:2px solid var(--kn);
+    background:var(--kn);color:#fff;font:700 1.25rem/1 var(--disp);box-shadow:0 1px 4px rgba(22,24,28,.22);
+    transition:inset-inline-start .16s ease-out,transform .12s}
+  .pschuif.gekozen .psknop,.pschuif.sleept .psknop{display:flex}
+  .pschuif.sleept .psknop{background:var(--bg);color:var(--kn);transform:scale(1.12);transition:transform .12s}
+  /* met een vinger zit het rondje onder de duim: dan komt het erboven uit, zodat je het cijfer blijft zien */
+  .pschuif.sleept.vinger .psknop{transform:translateY(-46px) scale(1.12)}
+  .pschuif.sleept .psvul{opacity:.55}
+  @media(prefers-reduced-motion:reduce){.psknop{transition:none}}
+  .mschaal{display:grid;grid-template-columns:repeat(11,minmax(0,1fr))}
+  .mschaal button{min-height:44px;padding:0;border:0;border-radius:8px;background:none;cursor:pointer;
+    font:600 1rem/1 var(--disp);color:var(--grijs);transition:color .12s}
+  .mschaal button:active{color:var(--kn)}
+  /* bezig: de tik is gezien en wordt bewaard (trage lijn), zodat niemand blijft tikken */
+  .mschaal button.bezig,.pskschaal button.bezig,[data-psk].bezig{color:var(--kn);
+    animation:fpBezig 1s ease-in-out infinite alternate}
+  @keyframes fpBezig{from{opacity:1}to{opacity:.55}}
+  @media(prefers-reduced-motion:reduce){.mschaal button.bezig,[data-psk].bezig{animation:none}}
+  .mschaal button.aan{color:var(--kn);font-weight:800}
+  /* de woorden staan boven de baan, bij het dunne en het dikke eind: je leest eerst welke kant meer is */
+  .mlabels{display:flex;justify-content:space-between;gap:12px;font:500 .875rem/1.3 var(--disp);color:var(--grijs);margin:8px 0 2px}
+  .mlabels span:last-child{text-align:end}
+  .mdank,.sdank{font:600 .9375rem/1.4 var(--disp);color:var(--groen);background:var(--groen-bg);border:1px solid transparent;
+    border-radius:10px;padding:11px 13px;margin-top:12px}
+  /* fout en wachtrij niet in de groene "gelukt"-opmaak (sweep 2026-11-09, Jayden) */
+  .mdank.fout,.sdank.fout{color:#a12a1f;background:#fdeeec;border-color:#f2c9c4}
+  .mdank.wacht,.sdank.wacht{color:#1d2b36;background:#f3f6fa;border-color:#d9e2ec}
+  /* rustige nudge bij een hoge pijnscore: alleen aandacht + de praktijk één tik weg,
+     nooit een oordeel of advies (MDR: registreren en tonen, duiding bij de fysiotherapeut) */
+  .mnudge{font:500 .9375rem/1.5 var(--disp);color:var(--veilig-tekst);background:var(--veilig-bg);
+    border-radius:10px;padding:12px 14px;margin-top:10px;display:flex;flex-direction:column;gap:10px}
+  .mnudge a{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:44px;font:600 .9375rem/1 var(--disp);
+    color:#fff;background:var(--kn);border-radius:10px;padding:0 16px;text-decoration:none}
+  .mnudge a:active{background:var(--kn-d)}
+  /* oefenvinkje: één tik "ik heb vandaag geoefend", met de oefenweek eronder */
+  .gdaan{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;margin-top:22px;padding:10px 0;
+    border:0;border-top:1px solid var(--lijn);background:none;cursor:pointer;text-align:start;
+    font:600 1.0625rem/1.3 var(--disp);color:var(--inkt)}
+  .gdaan .gvink{flex:0 0 28px;height:28px;border-radius:8px;border:2px solid var(--rand);background:var(--bg)}
+  .gdaan.aan .gvink{border-color:var(--groen-vul);background:var(--groen-vul)}
+  .gdaan.aan .gvink::after{content:"";display:block;width:7px;height:13px;margin:2px 0 0 8px;
+    border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(42deg)}
+  .gweek{display:flex;flex-direction:column;align-items:stretch;gap:0;padding-top:4px}
+  .gtitel{font:600 .875rem/1.3 var(--disp);color:var(--grijs);margin-bottom:8px}
+  .gdots{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;max-width:340px}
+  .gdots span{display:flex;flex-direction:column;align-items:center;gap:5px;font:600 .8125rem/1 var(--disp);color:var(--grijs)}
+  .gdots i{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--rand);background:var(--bg)}
+  .gdots .aan i{background:var(--groen-vul);border-color:var(--groen-vul)}
+  .gdots .aan i::after{content:"";display:block;width:6px;height:11px;margin:4px 0 0 8.5px;
+    border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
+  /* korte, aanmoedigende samenvatting onder de oefenweek: zelfmonitoring + een
+     schouderklopje op inzet (nooit een oordeel over pijn of herstel) */
+  .gsom{font:500 .9375rem/1.45 var(--disp);color:var(--grijs);margin-top:12px}
+  .gsom.sterk{color:var(--groen)}
+  .greeks{align-items:center;gap:7px;align-self:flex-start;font:600 .9375rem/1.3 var(--disp);color:var(--groen);margin-top:12px}
+  .greeks svg{display:none}
+  .mhist{margin-top:22px;padding-top:20px;border-top:1px solid var(--lijn)}
+  .mhist .mtitel{font:700 1.0625rem/1.3 var(--disp);color:var(--inkt);margin-bottom:12px}
+  .mbars{display:flex;align-items:flex-end;gap:8px;height:100px}
+  .mbar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:0}
+  .mbar .staaf{width:100%;max-width:34px;border-radius:4px 4px 0 0;min-height:6px}
+  .mbar .mdat{font:500 .75rem/1 var(--disp);color:var(--grijs);white-space:nowrap;margin-top:3px}
+  .mbar .mval{font:700 .875rem/1 var(--disp);color:var(--inkt)}
+  /* neutrale, feitelijke samenvatting van de scores; bewust geen kleuroordeel,
+     de duiding blijft bij de fysiotherapeut */
+  .mtrend{display:flex;align-items:flex-start;gap:8px;margin-top:14px;font:500 .9375rem/1.45 var(--disp);color:var(--tekst)}
+  .mtrend svg{flex:0 0 16px;margin-top:3px;color:var(--grijs)}
+  /* vergeleken-met-je-start: alleen zichtbaar bij een duidelijk lagere score */
+  .mstart{color:var(--groen)}
+  .mnoot{font:400 .875rem/1.5 var(--disp);color:var(--grijs);margin-top:14px}
+
+  /* vraag het aan je kaart: korte AI-uitleg over de eigen oefeningen */
+  #vraagkop{margin-top:30px}
+  .vkaart .vrij{display:flex;gap:8px}
+  .vkaart input{flex:1;min-width:0;min-height:54px;font:400 1.0625rem/1.3 var(--disp);color:var(--inkt);
+    background:var(--bg);border:1.5px solid var(--rand);border-radius:12px;padding:0 14px}
+  .vkaart input::placeholder{color:var(--grijs)}
+  .vkaart .vgo{width:auto;flex:0 0 auto}
+  .vkaart .vgo:disabled{opacity:.55;cursor:default}
+  .vknoot{font:400 .875rem/1.5 var(--disp);color:var(--grijs);margin-bottom:10px}
+  .vantwoord{margin-top:12px;padding:12px 14px;background:var(--blauw-05,#edf2fa);
+    border-radius:10px;font:400 1rem/1.55 var(--disp);color:var(--tekst)}
+  .vantwoord .vlabel{display:block;font:600 .875rem/1.4 var(--disp);color:var(--grijs);margin-bottom:5px}
+
+  /* meldingen bovenaan */
+  .privregel{display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px;margin:0 0 16px;padding:12px 14px;border-radius:10px;background:var(--chip);font:400 .875rem/1.5 var(--disp);color:var(--tekst)}
+  .privregel>span{flex:1 1 12em;min-width:0;overflow-wrap:anywhere}
+  .privregel a{color:var(--blauw)}
+  .privregel button{flex:0 0 auto;min-height:44px;max-width:100%;font:600 .9375rem/1 var(--disp);color:var(--inkt);background:var(--bg);border:1px solid var(--rand);border-radius:10px;padding:8px 14px;cursor:pointer}
+  .wachtrij{font:600 .9375rem/1.5 var(--disp);color:#8a5a00;background:#fff7e6;border:1px solid #f2d999;border-radius:10px;padding:10px 13px;margin:0 0 16px}
+  .wachtrij.klaar{color:#3e7a52;background:#eef6ef;border-color:#d7e8da}
+  /* antwoord van de therapeut op een seintje, en de volgende afspraak: vallen op, printen niet mee */
+  .akaart{background:var(--blauw-05,#f0f5fd);border-radius:12px;padding:14px 16px;margin:0 0 20px}
+  .akaart .akop{font:600 .875rem/1.3 var(--disp);color:var(--grijs);margin-bottom:4px}
+  .akaart .atekst{margin:0 0 10px;font:600 1.0625rem/1.45 var(--disp);color:var(--inkt);white-space:pre-wrap;overflow-wrap:anywhere}
+  .akaart .adatum{font-size:.875rem;color:var(--grijs);margin-bottom:10px}
+  .akaart .aweg{display:inline-flex;align-items:center;min-height:44px;font:600 .9375rem/1.2 var(--disp);padding:8px 14px;border-radius:10px;
+    border:1px solid var(--rand);background:var(--bg);color:var(--inkt);cursor:pointer;text-decoration:none}
+
+  /* seintje naar de praktijk: één tik, vaste soort, geen vrij tekstveld (dus geen
+     persoonsgegevens). App-vrije tweerichting-terugkoppeling. */
+  .sintro{font:400 .9375rem/1.5 var(--disp);color:var(--grijs);margin-bottom:14px}
+  .sknoppen{display:flex;flex-direction:column;gap:8px}
+  .sbtn{min-width:0;min-height:52px;font:600 1.0625rem/1.25 var(--disp);color:var(--inkt);text-align:start;
+    background:var(--bg);border:1.5px solid var(--rand);border-radius:12px;padding:12px 16px;
+    cursor:pointer;transition:background .12s,border-color .12s,color .12s}
+  .sbtn:active{background:var(--chip)}
+  .sbtn.aan{background:var(--kn);border-color:var(--kn);color:#fff}
+  .sbtn.sgoed.aan{background:var(--groen-vul);border-color:var(--groen-vul)}
+  #hsknoppen button{min-height:48px}
+  .sspoed{font:400 .9375rem/1.5 var(--disp);color:var(--tekst);margin:18px 0 0;padding-top:16px;border-top:1px solid var(--lijn)}
+  .sspoed b{color:var(--inkt)}
+  .sspoed .spoedtel{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;font-weight:700;color:var(--inkt);white-space:nowrap}
+  /* bel de praktijk: een gewone knop bij het contact, niet meer zwevend over de oefeningen */
+  .belknop{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;margin-top:14px;padding:10px 16px;
+    font:600 1.0625rem/1.2 var(--disp);color:var(--inkt);background:var(--bg);border:1.5px solid var(--rand);border-radius:12px;
+    cursor:pointer;text-decoration:none}
+  .belknop:active{background:var(--chip)}
+
+  /* uitklapregels: wat je niet elke dag nodig hebt */
+  .rustblok{border-bottom:1px solid var(--lijn)}
+  #b_meer>h2+.rustblok,#b_na>.rustblok{border-top:1px solid var(--lijn)}
+  #b_na>.rustblok{margin-top:26px}
+  .rustblok>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:8px 0;
+    cursor:pointer;list-style:none;color:var(--inkt);font:600 1.0625rem/1.35 var(--disp)}
+  .rustblok>summary::-webkit-details-marker{display:none}
+  .rustblok>summary::after{content:"";flex:0 0 9px;width:9px;height:9px;margin:0 6px 4px 0;
+    border:solid var(--grijs);border-width:0 2px 2px 0;transform:rotate(45deg);transition:transform .15s}
+  .rustblok[open]>summary::after{transform:rotate(-135deg);margin-bottom:-4px}
+  .rustblok>summary h2{display:inline;margin:0;font:inherit;color:inherit}
+  .rustblok>summary:focus-visible{outline:3px solid var(--blauw);outline-offset:2px;border-radius:6px}
+  .rustblok>.mkaart,.rustblok>.agkaart,.rustblok>.mgkaart{padding:4px 0 22px}
+  #hsknoppen{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  #hsknoppen button:last-child{grid-column:1 / -1}
+  @media print{.rustblok{display:none!important}}
+
+  /* herinnering in de agenda van de telefoon */
+  .agkaart p{font-size:1rem;margin-bottom:12px}
+  .agdagen{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:14px}
+  .agdagen button{min-height:44px;font:600 .9375rem/1 var(--disp);padding:0;border-radius:10px;cursor:pointer;
+    border:1.5px solid var(--rand);background:var(--bg);color:var(--inkt);
+    transition:background .12s,color .12s,border-color .12s}
+  .agdagen button.aan{background:var(--kn);border-color:var(--kn);color:#fff}
+  .agrij{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .agrij label{font:600 .9375rem/1 var(--disp);color:var(--grijs)}
+  .agrij input[type=time]{min-height:44px;font:600 1.0625rem/1 var(--disp);color:var(--inkt);padding:0 10px;
+    border:1.5px solid var(--rand);border-radius:10px;background:var(--bg)}
+  .agbtn{margin-top:14px}
+  .aghint{font:400 .875rem/1.5 var(--disp);color:var(--grijs);margin-top:10px;margin-bottom:0}
+
+  /* schema */
+  .schemakaart{padding-bottom:20px}
+  .schemawrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--lijn);border-radius:10px}
+  table{border-collapse:separate;border-spacing:0;font:.875rem/1.4 var(--disp);min-width:100%}
+  th,td{border-bottom:1px solid var(--lijn2);border-right:1px solid var(--lijn2);padding:8px 9px;text-align:center;white-space:nowrap}
+  thead th{background:var(--chip);color:var(--grijs);font-weight:600}
+  tr:last-child td{border-bottom:none}
+  td.dat,th.dat{position:sticky;left:0;background:var(--chip);font-weight:700;color:var(--inkt);z-index:1;border-right:1px solid var(--lijn)}
+  .schemahint{font:400 .875rem/1.5 var(--disp);color:var(--grijs);padding:10px 0 0;display:flex;align-items:center;gap:7px}
+
+  /* mijn gegevens */
+  .mgkaart{font:400 1rem/1.55 var(--disp);color:var(--tekst)}
+  .mgkaart h3{font:700 1rem/1.3 var(--disp);color:var(--inkt);margin:14px 0 4px}
+  .mgkaart ul{margin:0;padding-inline-start:20px}
+  .mgkaart li{margin:3px 0}
+  .mgkaart p{margin:4px 0}
+  .mgknoppen{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .mgknoppen button{flex:1 1 200px;min-height:50px;font:600 1rem/1.2 var(--disp);border-radius:12px;padding:12px 14px;cursor:pointer;border:1.5px solid var(--rand);background:var(--bg);color:var(--inkt)}
+  .mgknoppen button.mgwis{color:#a5372b;border-color:#e8c4bf;background:#fdf3f2}
+  .mgmelding{margin-top:12px;font:600 .9375rem/1.4 var(--disp);color:var(--groen)}
+
+  /* printen en delen: onderaan, je gebruikt ze zelden */
+  .voetacties{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+  .voetacties button{flex:1 1 130px;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;font:600 1rem/1 var(--disp);
+    padding:10px 16px;border-radius:12px;cursor:pointer;border:1.5px solid var(--rand);background:var(--bg);color:var(--inkt)}
+
+  /* voet */
+  .voet{border-top:8px solid var(--band);margin:0 calc(-1*var(--goot));padding:24px var(--goot) 0;text-align:center;font-size:.9375rem;color:var(--grijs)}
+  .voet a{color:var(--blauw);text-decoration:underline;text-underline-offset:2px}
+  .voet .merk{font:600 .875rem/1.4 var(--disp);color:var(--grijs);margin-top:10px;
+    display:inline-flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:7px;max-width:100%}
+  .voet .merk svg{opacity:.75}
+  /* laden: nooit een leeg scherm of een half Nederlandse kaart (sweep 2026-11-09, Jayden en Truus) */
+  .laden{margin-top:26vh;text-align:center;font:600 1rem/1.5 var(--disp);color:var(--grijs)}
+  .laden i{display:block;width:34px;height:34px;margin:0 auto 14px;border:3px solid var(--lijn);border-top-color:var(--blauw);border-radius:50%;animation:ldraai 1s linear infinite}
+  @keyframes ldraai{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.laden i{animation:none}}
+  .fout{max-width:520px;margin:22vh auto 0;padding:0 24px;text-align:center}
+  .fout h1{font:700 1.375rem/1.3 var(--disp);color:var(--inkt);margin-bottom:8px}
+
+  /* uitnodiging om de kaart als app op het beginscherm te zetten */
+  .appbanner{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:12;
+    background:#16181c;color:#f4f4f2;border-radius:14px;padding:12px 8px 12px 14px;
+    display:none;align-items:center;gap:12px;box-shadow:0 8px 28px rgba(0,0,0,.28)}
+  .appbanner.aan{display:flex}
+  .appbanner img{width:34px;height:34px;border-radius:9px;flex:0 0 34px}
+  .appbanner .tekst{flex:1;font:500 .875rem/1.4 var(--disp)}
+  .appbanner button{font:600 .875rem/1 var(--disp);border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
+  .appbanner .doen{min-height:44px;background:#fff;color:#16181c}
+  .appbanner .weg{min-width:44px;min-height:44px;background:transparent;color:#d9d9d6;padding:10px 6px;font-size:1.375rem}
+  @media (min-width:720px){.appbanner{display:none !important}}
+
+  /* één duidelijk zichtbare toetsenbord-focus op álle bedienbare elementen (WCAG 2.4.7):
+     ook de taalkeuze en het tijdveld, die eerder op de browserstandaard terugvielen */
+  button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{
+    outline:3px solid rgba(36,86,166,.6);outline-offset:2px}
+
+  /* op papier: de oefeningen met beeld, dosering en uitleg, en het ingevulde schema */
+  @media print{
+    body{background:#fff}
+    .wrap{padding:0;max-width:none}
+    .blok,.voet{border-top:0;margin:0;padding:0}
+    .kopacties,.leesrij,.skop,.sbalk,#startknop,.oefvoortgang,.ovalles,.oefdone,.oefzwaar,.vbtn,.vhouder,.vmeta,.demobadge,.infobadge,.geenfoto,
+    .mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,#hskop,#pskkop,#meerkop,#offlijn,.belknop,.appbanner,
+    .afgerondbanner,.privregel,.wachtrij,.voetacties,.datum,.lightbox{display:none !important}
+    .oef{flex-wrap:wrap;break-inside:avoid;padding:6px 0}
+    #oefs .oef>.oefuitleg{display:block !important;flex:1 1 100%;margin:0 0 8px 78px}
+    #oefs .oefuitleg p{font-size:.875rem;line-height:1.45;margin:0 0 3px}
+    .oefuitleg h3{display:none}
+    .rustblok.schemablok{display:block!important;border:0;margin:18px 0 0}
+    .schemablok>summary{padding:0;min-height:0}
+    .schemablok>summary::after{display:none}
+    .schemablok>summary h2{display:block;margin:0 0 10px}
+  }
 
   /* tik op een oefenfoto: groot bekijken, één tik terug */
   /* scrollbaar en 'safe center': op een kleine telefoon of bij grote letters valt de foto
@@ -145,7 +629,6 @@
     padding:10px 8px 0;min-height:28px}
   .lightbox .demouitleg{text-align:center;font:400 12.5px/1.5 var(--disp);color:#6b6455;
     padding:2px 10px 2px;max-width:420px;margin:0 auto}
-  .nietvertaald{margin-top:6px;font:italic 400 12.5px/1.45 var(--disp);color:#5a5345}
   /* het merk staat buiten de houding-uitsnede en bij beide houdingen op dezelfde plek */
   .lightbox .demobeeld .demomerk{position:absolute;left:10px;top:8px;z-index:2}
   /* één merk voor de hele kaart: icoon + naam, bij de foto en bij de houdingen gelijk */
@@ -160,318 +643,9 @@
     .lightbox.open .lbfoto{animation:lbin .18s ease-out}
     @keyframes lbin{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
   }
-  .oefinfo{flex:1;min-width:0}
-  .naam{font:700 17.5px/1.25 var(--disp);color:var(--inkt);letter-spacing:-.01em}
-  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
-  .chip{font:600 12.5px/1 var(--disp);color:var(--grijs);background:var(--chip);border:1px solid var(--lijn);
-    padding:5px 10px;border-radius:999px;white-space:nowrap}
-  /* grote systeemtekst (200 %): een chip breder dan de kaart breekt af in plaats van
-     de dosering weg te knippen; de naam breekt lange woorden af (sweep 2026-11-09) */
-  .chip{max-width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:1.25}
-  .naam{overflow-wrap:anywhere}
-  .chip b{color:var(--inkt)}
-  /* afvinken per oefening: een tik "gedaan vandaag" terwijl je je set afwerkt.
-     Lokaal per kaart per dag; vult zichzelf 's nachts weer leeg. Alle oefeningen
-     afgevinkt bevestigt automatisch de dag-teller ("ik heb vandaag geoefend"). */
-  .oefdone{display:flex;align-items:center;gap:10px;width:calc(100% - 28px);margin:0 14px 14px;
-    font:700 14.5px/1 var(--disp);color:var(--grijs);background:var(--chip);border:1px solid var(--lijn);
-    border-radius:14px;padding:12px 14px;cursor:pointer;text-align:left;
-    -webkit-tap-highlight-color:transparent;transition:background .12s,border-color .12s,color .12s}
-  .oefdone .odv{flex:0 0 22px;height:22px;border-radius:7px;border:2px solid var(--zacht);background:var(--vlak)}
-  .oefdone.aan{background:#eef6ef;border-color:#d7e8da;color:#3e7a52}
-  .oefdone.aan .odv{border-color:#3e8e5a;background:#3e8e5a}
-  .oefdone.aan .odv::after{content:"";display:block;width:6px;height:11px;margin:1px 0 0 6px;
-    border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(42deg)}
-  /* "te zwaar"-tik: bescheiden tekstknopje onder de gedaan-knop — de patiënt
-     wijst de oefening aan die niet gaat, zonder bericht te typen */
-  .oefzwaar{display:block;margin:-8px 14px 12px auto;padding:4px 14px 4px 4px;
-    font:400 12.5px/1 var(--disp);color:var(--grijs);background:none;border:none;
-    text-decoration:underline dotted;cursor:pointer;-webkit-tap-highlight-color:transparent}
-  .oefzwaar.aan{color:#3e7a52;text-decoration:none;cursor:default}
-  /* voortgangsbalk boven de oefeningen: hoeveel oefeningen vandaag afgevinkt */
-  .oefvoortgang{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:-4px 0 14px}
-  .ovbalk{flex:1 1 90px;min-width:90px;height:8px;border-radius:999px;background:var(--chip);border:1px solid var(--lijn);overflow:hidden}
-  .ovbalk i{display:block;height:100%;width:0;border-radius:999px;background:#3e8e5a;transition:width .28s ease}
-  .ovtekst{flex:0 1 auto;min-width:0;font:700 12.5px/1.25 var(--disp);color:var(--grijs);overflow-wrap:anywhere}
-  .oefvoortgang.klaar .ovtekst{color:#3e7a52}
-  /* alles-in-één-tik: de hele kaart gedaan zonder elke oefening los af te vinken */
-  .ovalles{flex:0 0 auto;font:600 12.5px/1 var(--disp);padding:7px 12px;border-radius:999px;
-    border:1.5px solid #3e8e5a;background:var(--vlak);color:#3e7a52;cursor:pointer}
-  .vbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:calc(100% - 28px);margin:0 14px 14px;min-height:44px;
-    font:600 15px/1 var(--disp);padding:13px 16px;border-radius:14px;cursor:pointer;
-    border:1px solid var(--blauw-10);background:var(--blauw-05);color:var(--blauw);
-    transition:background .15s,color .15s;-webkit-tap-highlight-color:transparent}
-  .vbtn:active{background:var(--blauw-10)}
-  .vbtn.eigen{background:var(--blauw);border-color:var(--blauw);color:#fff}
-  .vbtn.eigen:active{background:var(--blauw-d)}
-  .vbtn .driehoek{width:22px;height:22px;border-radius:999px;background:rgba(255,255,255,.22);
-    display:inline-flex;align-items:center;justify-content:center;flex:0 0 22px}
-  .vbtn:not(.eigen) .driehoek{background:var(--blauw-10)}
-  .vbtn .driehoek svg{margin-left:1.5px}
-  .vbtn[aria-expanded="true"] .driehoek svg{margin:0;transform:rotate(90deg)}
-  .vmeta{font:600 11.5px/1.3 var(--disp);color:var(--zacht);text-align:center;margin:-6px 14px 13px}
-  .vhouder{display:none;background:#fff;border-top:1px solid var(--lijn2)}
-  .vhouder.open{display:block;animation:vopen .25s ease-out}
-  @keyframes vopen{from{opacity:0}to{opacity:1}}
-  .vhouder video,.vhouder iframe{display:block;width:100%;aspect-ratio:16/10;border:none;background:#000}
-  .vhouder video{object-fit:contain}
-  /* avatarvideo's zijn staand (2:3 of 9:16): eigen verhouding, niet hoger dan het scherm */
-  .vhouder > .vmeta{margin:10px 14px 10px}
-  .vhouder video.avatar{aspect-ratio:auto;height:auto;max-height:72vh;background:#fff}
-  .vstatus{padding:10px 14px;font-size:14px;line-height:1.4}
-  .vstatus button{margin:8px 0 0;padding:8px 12px;min-height:44px;display:block}
-  .vhouder .ytextern{display:block;padding:10px 14px 4px;text-align:center;font:600 13px/1.35 var(--disp);color:var(--zacht);text-decoration:underline}
-  .vtekst{margin:0;padding:15px 17px 17px;background:var(--vlak);border-top:1px solid var(--lijn2)}
-  .vtekst-label{display:flex;align-items:center;gap:7px;margin-bottom:6px;font:700 11px/1.2 var(--disp);
-    color:var(--blauw);letter-spacing:.055em;text-transform:uppercase}
-  .vtekst-label:before{content:'';width:7px;height:7px;border-radius:999px;background:var(--blauw);flex:0 0 7px}
-  .vtekst p{margin:0;max-width:68ch;font:500 15px/1.62 var(--disp);color:var(--tekst)}
-
-  /* schema */
-  .schemakaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);overflow:hidden}
-  .schemawrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  table{border-collapse:separate;border-spacing:0;font:13px/1.4 var(--disp);min-width:100%}
-  th,td{border-bottom:1px solid var(--lijn2);border-right:1px solid var(--lijn2);padding:8px 9px;text-align:center;white-space:nowrap}
-  thead th{background:#fbf8f0;color:var(--grijs);font-weight:600;font-size:12px}
-  tr:last-child td{border-bottom:none}
-  td.dat,th.dat{position:sticky;left:0;background:#fbf8f0;font-weight:700;color:var(--inkt);z-index:1;border-right:1px solid var(--lijn)}
-  tbody tr:nth-child(even) td:not(.dat){background:#fbf9f2}
-  .schemahint{font:500 12.5px/1.5 var(--disp);color:var(--zacht);padding:10px 14px;border-top:1px solid var(--lijn2);display:flex;align-items:center;gap:7px}
-
-  /* taalkeuze en voorlezen: de kaart is er ook voor wie geen Nederlands leest of slecht ziet */
-  .kopacties{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-  .kopacties select{font:600 13.5px/1 var(--disp);color:var(--tekst);padding:9px 10px;
-    border:1px solid var(--lijn);border-radius:10px;background:var(--vlak);max-width:180px}
-  .kopacties button{display:inline-flex;align-items:center;gap:7px;font:600 13.5px/1 var(--disp);
-    padding:9px 13px;border-radius:10px;cursor:pointer;border:1px solid var(--blauw-10);
-    background:var(--blauw-05);color:var(--blauw);-webkit-tap-highlight-color:transparent}
-  .kopacties button:active,.kopacties button.aan{background:var(--blauw);border-color:var(--blauw);color:#fff}
-  /* grotere letters: één tik vergroot de hele kaart (57% van de 70-plussers wil
-     papier — wie tóch digitaal kijkt, verdient tekst zonder knijpzoomen) */
-  html.groot body{zoom:1.16}
-  @media print{html.groot body{zoom:1}}
-
-  /* uitnodiging om de kaart als app op het beginscherm te zetten */
-  .appbanner{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:12;
-    background:var(--inkt);color:#f6f2e9;border-radius:16px;padding:13px 15px;
-    display:none;align-items:center;gap:12px;box-shadow:0 12px 34px rgba(0,0,0,.35)}
-  .appbanner.aan{display:flex}
-  .appbanner img{width:34px;height:34px;border-radius:9px;flex:0 0 34px}
-  .appbanner .tekst{flex:1;font:500 13.5px/1.4 var(--disp)}
-  .appbanner button{font:600 13.5px/1 var(--disp);border:none;border-radius:999px;padding:10px 14px;cursor:pointer;
-    -webkit-tap-highlight-color:transparent}
-  .appbanner .doen{background:var(--blauw);color:#fff}
-  .appbanner .weg{background:transparent;color:#b9b2a0;padding:10px 6px}
-  @media (min-width:720px){.appbanner{display:none !important}}
-
-  /* zwevende belknop op de telefoon: de praktijk is altijd één tik weg */
-  .belknop{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:9;
-    display:flex;align-items:center;gap:8px;font:600 14px/1 var(--disp);color:#fff;
-    background:var(--blauw);border:none;border-radius:999px;padding:13px 17px;cursor:pointer;
-    box-shadow:0 6px 20px rgba(36,86,166,.35);text-decoration:none}
-  .belknop:active{background:var(--blauw-d)}
-  @media (min-width:720px){.belknop{display:none !important}}
-
-  /* vaste veiligheidsregel op elke kaart */
-  .veilig{display:flex;gap:9px;align-items:flex-start;margin-top:12px;padding:11px 14px;
-    background:var(--veilig-bg);border:1px solid var(--veilig-rand);border-radius:14px;
-    font:500 13.5px/1.5 var(--disp);color:var(--veilig-tekst)}
-  .veilig svg{margin-top:2px}
-
-  /* Hoe ging het vandaag: pijnscore 0-10 in één tik */
-  .mkaart,.agkaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
-  .mvraag{font-size:15.5px;color:var(--tekst);margin-bottom:12px}
-  /* oefenvinkje: één tik "ik heb vandaag geoefend", met de oefenweek eronder
-     (zelfde groentinten als de dank-melding, leesbaar in licht en donker) */
-  .gdaan{display:flex;align-items:center;gap:10px;width:100%;font:700 15.5px/1.25 var(--disp);
-    color:var(--tekst);background:var(--chip);border:1px solid var(--lijn);border-radius:12px;
-    padding:13px 14px;cursor:pointer;margin-bottom:12px;text-align:left;
-    -webkit-tap-highlight-color:transparent;transition:background .12s,border-color .12s}
-  .gdaan .gvink{flex:0 0 22px;height:22px;border-radius:7px;border:2px solid var(--zacht);background:var(--vlak)}
-  .gdaan.aan{background:#eef6ef;border-color:#d7e8da;color:#3e7a52}
-  .gdaan.aan .gvink{border-color:#3e8e5a;background:#3e8e5a}
-  .gdaan.aan .gvink::after{content:"";display:block;width:6px;height:11px;margin:1px 0 0 6px;
-    border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(42deg)}
-  .gweek{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
-  .gtitel{font:700 11px/1 var(--disp);letter-spacing:.08em;text-transform:uppercase;color:var(--grijs)}
-  .gdots{display:flex;gap:7px}
-  .gdots span{display:flex;flex-direction:column;align-items:center;gap:3px;
-    font:600 9.5px/1 var(--disp);color:var(--zacht)}
-  .gdots i{width:16px;height:16px;border-radius:999px;border:1.5px solid var(--lijn);background:var(--chip)}
-  .gdots .aan i{background:#3e8e5a;border-color:#3e8e5a}
-  /* korte, aanmoedigende samenvatting onder de oefenweek: zelfmonitoring + een
-     schouderklopje op inzet (nooit een oordeel over pijn of herstel) */
-  .gsom{flex-basis:100%;font:600 12.5px/1.5 var(--disp);color:var(--grijs);margin-top:2px}
-  /* zachte momentum-badge: aantal weken op rij dat er geoefend is. Alleen belonen
-     (nooit een oordeel); verdwijnt vanzelf na een rustige periode, geen "0". */
-  .greeks{flex-basis:100%;display:inline-flex;align-items:center;gap:7px;align-self:flex-start;
-    font:700 12.5px/1 var(--disp);color:#3e7a52;background:#eef6ef;border:1px solid #d7e8da;
-    border-radius:999px;padding:6px 12px;margin-top:2px}
-  .greeks svg{flex:0 0 14px}
-  .gsom.sterk{color:#3e7a52}
-  /* vraag het aan je kaart: korte AI-uitleg over de eigen oefeningen */
-  .vkaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
-  .vkaart .vrij{display:flex;gap:8px}
-  .vkaart input{flex:1;min-width:0;font:500 15.5px/1.3 var(--disp);color:var(--tekst);
-    background:var(--chip);border:1px solid var(--lijn);border-radius:12px;padding:12px 14px}
-  .vkaart input::placeholder{color:var(--zacht)}
-  .vkaart .vgo{font:700 15px/1 var(--disp);color:#fff;background:var(--blauw);border:none;
-    border-radius:12px;padding:12px 18px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-  .vkaart .vgo:disabled{opacity:.55;cursor:default}
-  .vknoot{font:500 12.5px/1.5 var(--disp);color:var(--zacht);margin-bottom:10px}
-  .vantwoord{margin-top:12px;padding:12px 14px;background:var(--blauw-05,#edf2fa);
-    border:1px solid var(--lijn);border-radius:12px;font:500 15px/1.55 var(--disp);color:var(--tekst)}
-  .privregel{display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px;margin:0 0 12px;padding:10px 12px;border:1px solid var(--lijn);border-radius:14px;background:var(--vlak);font:500 13px/1.5 var(--disp);color:var(--grijs)}
-  .privregel>span{flex:1 1 12em;min-width:0;overflow-wrap:anywhere}
-  .privregel a{color:var(--blauw)}
-  .privregel button{flex:0 0 auto;min-height:44px;max-width:100%;font:700 12.5px/1 var(--disp);color:var(--blauw);background:transparent;border:1px solid var(--lijn);border-radius:999px;padding:8px 12px;cursor:pointer}
-  .vantwoord .vlabel{display:block;font:700 11.5px/1.4 var(--disp);color:var(--zacht);letter-spacing:.04em;text-transform:uppercase;margin-bottom:5px}
-  .mschaal{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:6px}
-  .mschaal button{min-height:44px}
-  .rustblok{margin:16px 0;border:1px solid var(--lijn);border-radius:16px;background:var(--vlak);overflow:hidden}
-  .rustblok>summary{cursor:pointer;padding:16px;min-height:48px;color:var(--tekst);font:600 16px/1.4 var(--disp)}
-  .rustblok>summary h2{display:inline;margin:0;font:inherit;color:inherit}
-  .rustblok>summary:focus-visible{outline:3px solid var(--blauw);outline-offset:-4px;border-radius:14px}
-  .rustblok[open]>summary{border-bottom:1px solid var(--lijn)}
-  .rustblok>.mkaart,.rustblok>.agkaart{border:0;box-shadow:none;margin:0;border-radius:0}
-  #meting{box-shadow:none}
-  #hsknoppen{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  #hsknoppen button{min-height:48px}
-  #hsknoppen button:last-child{grid-column:1 / -1}
-  @media(max-width:600px){.mschaal{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.mschaal button{min-height:46px;font-size:17px}}
-  @media print{.rustblok{display:none!important}}
-  .mschaal button{font:700 15px/1 var(--disp);padding:12px 0;border-radius:10px;cursor:pointer;
-    border:1px solid var(--lijn);background:var(--chip);color:var(--tekst);
-    -webkit-tap-highlight-color:transparent;transition:background .12s,color .12s,border-color .12s}
-  .mschaal button:active{background:var(--blauw-10)}
-  /* bezig: de tik is gezien en wordt bewaard (trage lijn), zodat niemand blijft tikken */
-  .mschaal button.bezig,.pskschaal button.bezig,[data-psk].bezig{background:var(--blauw-10);border-color:var(--blauw);color:var(--tekst);
-    animation:fpBezig 1s ease-in-out infinite alternate}
-  @keyframes fpBezig{from{opacity:1}to{opacity:.55}}
-  @media(prefers-reduced-motion:reduce){.mschaal button.bezig,[data-psk].bezig{animation:none}}
-  /* fout en wachtrij niet in de groene "gelukt"-opmaak (sweep 2026-11-09, Jayden) */
-  .mdank.fout,.sdank.fout{color:#a12a1f;background:#fdeeec;border-color:#f2c9c4}
-  .mdank.wacht,.sdank.wacht{color:#1d2b36;background:#f3f6fa;border-color:#d9e2ec}
-  .mschaal button.aan{background:var(--blauw);border-color:var(--blauw);color:#fff;
-    box-shadow:0 2px 6px rgba(36,86,166,.28)}
-  .mlabels{display:flex;justify-content:space-between;font:600 11.5px/1 var(--disp);color:var(--zacht);margin-top:8px}
-  .noormelding{margin:10px 0 0;white-space:pre-line;color:var(--ink,#1d2b36);background:#f3f6fa;border-color:#d9e2ec}
-  .vbtn+.noormelding,.vmeta+.noormelding{margin:0 14px 14px}
-  .mdank{font:600 14px/1.4 var(--disp);color:#3e7a52;background:#eef6ef;border:1px solid #d7e8da;
-    border-radius:10px;padding:10px 12px;margin-top:12px}
-  /* rustige nudge bij een hoge pijnscore: alleen aandacht + de praktijk één tik weg,
-     nooit een oordeel of advies (MDR: registreren en tonen, duiding bij de fysiotherapeut) */
-  .mnudge{font:500 13.5px/1.5 var(--disp);color:#8a5a00;background:#fff7e6;border:1px solid #f2d999;
-    border-radius:10px;padding:11px 13px;margin-top:10px;display:flex;flex-direction:column;gap:9px}
-  .mnudge a{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;font:600 13.5px/1 var(--disp);
-    color:#fff;background:var(--blauw);border-radius:999px;padding:9px 14px;text-decoration:none}
-  .mnudge a:active{background:var(--blauw-d)}
-  .mnoot{font:500 12.5px/1.5 var(--disp);color:var(--zacht);margin-top:12px}
-  /* seintje naar de praktijk: één tik, vaste soort, geen vrij tekstveld (dus geen
-     persoonsgegevens). App-vrije tweerichting-terugkoppeling. */
-  .skaart{background:var(--vlak);border:1px solid var(--lijn);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
-  /* antwoord van de therapeut op een seintje: valt op, maar print niet mee */
-  .akaart{background:var(--blauw-05,#f0f5fd);border:1px solid var(--blauw,#7aa4e8);border-radius:18px;box-shadow:var(--sh);padding:16px;margin-bottom:12px}
-  .akaart .akop{font-weight:700;font-size:14px;letter-spacing:.02em;margin-bottom:6px}
-  .akaart .atekst{margin:0 0 8px;white-space:pre-wrap;overflow-wrap:anywhere}
-  .akaart .adatum{font-size:12.5px;color:var(--zacht);margin-bottom:10px}
-  .akaart .aweg{font:inherit;font-size:14px;padding:8px 14px;border-radius:99px;border:1px solid var(--lijn);background:var(--vlak);color:var(--tekst);cursor:pointer}
-  .sintro{font:500 14px/1.5 var(--disp);color:var(--grijs);margin-bottom:12px}
-  .sknoppen{display:flex;flex-wrap:wrap;gap:8px}
-  .sbtn{flex:1 1 auto;min-width:0;font:700 14.5px/1.2 var(--disp);color:var(--tekst);
-    background:var(--chip);border:1px solid var(--lijn);border-radius:12px;padding:13px 14px;
-    cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s,border-color .12s,color .12s}
-  .sbtn:active{background:var(--blauw-05)}
-  .sbtn.aan{background:var(--blauw);border-color:var(--blauw);color:#fff}
-  .sbtn.sgoed.aan{background:#3e8e5a;border-color:#3e8e5a}
-  .sspoed{font:500 13.5px/1.5 var(--disp);color:var(--grijs);margin:12px 0 0;padding-top:10px;border-top:1px dashed var(--lijn2)}
-  .sspoed b{color:var(--tekst)}
-  .sspoed .spoedtel{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;font-weight:700;color:var(--tekst);white-space:nowrap}
-  .wachtrij{font:600 13.5px/1.5 var(--disp);color:#8a5a00;background:#fff7e6;border:1px solid #f2d999;border-radius:12px;padding:10px 13px;margin:12px 0}
-  .wachtrij.klaar{color:#3e7a52;background:#eef6ef;border-color:#d7e8da}
-  .mgkaart{padding:4px 16px 16px;font:500 14.5px/1.55 var(--disp);color:var(--tekst)}
-  .mgkaart h3{font:700 12px/1.3 var(--disp);letter-spacing:.06em;text-transform:uppercase;color:var(--grijs);margin:14px 0 6px}
-  .mgkaart ul{margin:0;padding-left:20px}
-  .mgkaart li{margin:3px 0}
-  .mgkaart p{margin:6px 0}
-  .mgknoppen{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-  .mgknoppen button{flex:1 1 200px;min-height:46px;font:700 14px/1.2 var(--disp);border-radius:12px;padding:12px 14px;cursor:pointer;border:1px solid var(--lijn);background:var(--chip);color:var(--tekst)}
-  .mgknoppen button.mgwis{color:#a5372b;border-color:#e8c4bf;background:#fdf3f2}
-  .mgmelding{margin-top:12px;font:600 14px/1.4 var(--disp);color:#3e7a52}
-  .sdank{font:600 14px/1.4 var(--disp);color:#3e7a52;background:#eef6ef;border:1px solid #d7e8da;
-    border-radius:10px;padding:11px 13px;margin-top:12px}
-  .mhist{margin-top:14px;padding-top:12px;border-top:1px solid var(--lijn2)}
-  .mhist .mtitel{font:700 12px/1 var(--disp);letter-spacing:.08em;text-transform:uppercase;color:var(--grijs);margin-bottom:10px}
-  .mbars{display:flex;align-items:flex-end;gap:6px;height:92px;padding:10px 10px 8px;
-    background:var(--chip);border:1px solid var(--lijn2);border-radius:12px}
-  .mbar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:0}
-  .mbar .staaf{width:100%;max-width:30px;border-radius:6px 6px 2px 2px;min-height:6px;box-shadow:0 1px 2px rgba(20,30,50,.12)}
-  .mbar .mdat{font:600 10px/1 var(--disp);color:var(--zacht);white-space:nowrap;margin-top:2px}
-  .mbar .mval{font:700 12px/1 var(--disp);color:var(--tekst)}
-  /* neutrale, feitelijke samenvatting van de scores; bewust geen kleuroordeel,
-     de duiding blijft bij de fysiotherapeut */
-  .mtrend{display:flex;align-items:center;gap:7px;margin-top:12px;padding:9px 12px;
-    background:var(--chip);border:1px solid var(--lijn);border-radius:10px;
-    font:600 13px/1.4 var(--disp);color:var(--tekst)}
-  .mtrend svg{flex:0 0 16px;color:var(--grijs)}
-  /* vergeleken-met-je-start: alleen zichtbaar bij een duidelijk lagere score,
-     dus een rustig groen accent mag hier wel — het feit ís al positief */
-  .mstart{background:#eef6ef;border-color:#d7e8da;color:#3e7a52}
-
-  /* herinnering in de agenda van de telefoon */
-  .agkaart p{font-size:15.5px;margin-bottom:12px}
-  .agdagen{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:12px}
-  .agdagen button{font:700 13px/1 var(--disp);padding:11px 0;border-radius:10px;cursor:pointer;
-    border:1px solid var(--lijn);background:var(--chip);color:var(--tekst);
-    -webkit-tap-highlight-color:transparent;transition:background .12s,color .12s,border-color .12s}
-  .agdagen button.aan{background:var(--blauw);border-color:var(--blauw);color:#fff}
-  .agrij{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .agrij label{font:600 13.5px/1 var(--disp);color:var(--grijs)}
-  .agrij input[type=time]{font:600 15px/1 var(--disp);color:var(--inkt);padding:9px 10px;
-    border:1px solid var(--lijn);border-radius:10px;background:var(--vlak)}
-  .agbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:12px;
-    font:600 15px/1 var(--disp);padding:13px 16px;border-radius:14px;cursor:pointer;
-    border:1px solid var(--blauw);background:var(--blauw);color:#fff;
-    -webkit-tap-highlight-color:transparent}
-  .agbtn:active{background:var(--blauw-d)}
-  .aghint{font:500 12.5px/1.5 var(--disp);color:var(--zacht);margin-top:10px;margin-bottom:0}
-
-  /* voet */
-  .voet{margin-top:36px;text-align:center;font-size:14px;color:var(--grijs)}
-  .voet a{color:var(--blauw);text-decoration:none;border-bottom:1px solid var(--blauw-10)}
-  .voet .merk{font:700 13px/1.4 var(--disp);letter-spacing:.02em;color:var(--zacht);margin-top:10px;
-    display:inline-flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:7px;max-width:100%}
-  /* laden: nooit een leeg scherm of een half Nederlandse kaart (sweep 2026-11-09, Jayden en Truus) */
-  .laden{margin-top:26vh;text-align:center;font:600 16px/1.5 var(--disp);color:var(--grijs)}
-  .laden i{display:block;width:34px;height:34px;margin:0 auto 14px;border:3px solid var(--lijn);border-top-color:var(--blauw);border-radius:50%;animation:ldraai 1s linear infinite}
-  @keyframes ldraai{to{transform:rotate(360deg)}}
-  @media (prefers-reduced-motion:reduce){.laden i{animation:none}}
-  .voet .merk svg{opacity:.75}
-
-  .fout{background:var(--vlak);border:1px solid var(--lijn);border-radius:20px;padding:34px 24px;text-align:center;margin-top:26vh;box-shadow:var(--sh)}
-  .fout h1{font:700 20px/1.3 var(--disp);color:var(--inkt);margin-bottom:8px}
-
-  /* rustige binnenkomst */
-  @media (prefers-reduced-motion:no-preference){
-    .kop,.oef,.schemakaart{animation:kom .4s ease-out backwards}
-    .oef:nth-child(1){animation-delay:.05s}.oef:nth-child(2){animation-delay:.09s}
-    .oef:nth-child(3){animation-delay:.13s}.oef:nth-child(4){animation-delay:.17s}
-    .oef:nth-child(n+5){animation-delay:.2s}
-    @keyframes kom{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-  }
-  @media (min-width:520px){
-    .wrap{padding-top:32px}
-    .oefkop{padding:16px 18px 16px 16px}
-  }
-  /* één duidelijk zichtbare toetsenbord-focus op álle bedienbare elementen (WCAG 2.4.7):
-     ook de taalkeuze en het tijdveld, die eerder op de browserstandaard terugvielen */
-  button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{
-    outline:3px solid rgba(36,86,166,.6);outline-offset:2px}
-  @media print{
-    body{background:#fff}
-    .vbtn,.vhouder,.mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,#hskop,#pskkop,#offlijn,.kopacties,.belknop,.appbanner,.demobadge,.infobadge,.oefdone,.oefzwaar,.oefvoortgang,.afgerondbanner,.privregel{display:none !important}
-    .kop,.oef,.schemakaart{box-shadow:none}
-  }
+  /* de uitleg in het vergrote beeld is een eigen wit vlak op de donkere achtergrond */
+  .lightbox .lbuitleg{padding:16px 18px 18px}
+  .lightbox .lbuitleg .vtekst-label{font-size:1rem}
 </style>
 </head>
 <body>
@@ -479,6 +653,11 @@
 <!-- afgeronde behandeling: vriendelijke regel dat de kaart van de patiënt blijft -->
 <div id="afgerond" class="afgerondbanner" style="display:none;font:500 13.5px/1.5 var(--disp);color:#3e7a52;background:#eef6ef;border-bottom:1px solid #d7e8da;padding:9px 16px;text-align:center" role="note"></div>
 <div class="laden" id="laden" role="status" aria-live="polite"><i aria-hidden="true"></i><span id="laden_tekst">Je kaart wordt geladen…</span></div>
+<div class="skop" id="sessiekop" hidden>
+  <button type="button" class="sterug" id="sterug"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span id="sterugTxt">Overzicht</span></button>
+  <span class="stel" id="stel" tabindex="-1"></span>
+  <div class="sstip" id="sstip" aria-hidden="true"></div>
+</div>
 <div class="wrap" id="wrap" style="display:none">
   <header class="kop">
     <div class="eyebrow">Trainingskaart</div>
@@ -493,23 +672,33 @@
         <option value="tr">T&uuml;rk&ccedil;e</option><option value="ar">&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</option>
         <option value="uk">&#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1089;&#1100;&#1082;&#1072;</option>
       </select>
-      <label id="stemlabel" hidden>Stem <select id="stemsel" aria-label="Voorleesstem"><option value="">Automatisch</option></select></label>
-      <button type="button" id="leesBtn" style="display:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg><span id="leesTxt">Lees voor</span></button>
       <button type="button" id="grootBtn" aria-pressed="false" title="Grotere letters"><span aria-hidden="true" style="font-size:11px;font-weight:800;line-height:1">A</span><span aria-hidden="true" style="font-size:16px;font-weight:800;line-height:1">A</span></button>
-      <button type="button" id="printBtn" title="Print of bewaar als PDF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg><span id="printTxt">Print</span></button>
-      <button type="button" id="deelBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7l6.8-4.4M8.6 13.3l6.8 4.4"/></svg><span id="deelTxt">Deel</span></button>
     </div>
     <div class="mdank noormelding" id="noorMelding" role="status" aria-live="polite" hidden></div>
-    <div class="client" id="clientblok" style="display:none"></div>
   </header>
 
+  <div class="akaart" id="antwoordblok" style="display:none" role="status" aria-live="polite">
+    <div class="akop" id="akop">Bericht van je fysiotherapeut</div>
+    <p class="atekst" id="atekst"></p>
+    <div class="adatum" id="adatum"></div>
+    <button type="button" class="aweg" id="aweg">Begrepen, haal weg</button>
+  </div>
   <div class="privregel" id="privregel" role="note" style="display:none"><span><span id="privtekst"></span><a id="privmeer" href="/privacy#patient" hreflang="nl" target="_blank" rel="noopener">Privacy</a></span><button type="button" id="privok">Begrepen</button></div>
   <div class="wachtrij" id="wachtrij" role="status" aria-live="polite" style="display:none"></div>
-  <div class="veilig" id="veilig"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 16px"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18.1a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span id="veiligTxt"></span></div>
 
+  <section class="blok" id="b_oef">
+  <p class="datum" id="vandaag"></p>
   <h2><span id="oefkop">Jouw oefeningen</span> <span class="tel" id="oeftel"></span></h2>
-  <div class="oefvoortgang" id="oefvoortgang" style="display:none"><span class="ovbalk" aria-hidden="true"><i id="ovvul"></i></span><span class="ovtekst" id="ovtekst"></span><button type="button" class="ovalles" id="ovalles" style="display:none"></button></div>
+  <div class="client" id="clientblok" style="display:none"></div>
+  <div class="oefvoortgang" id="oefvoortgang" style="display:none"><span class="ovbalk" aria-hidden="true"><i id="ovvul"></i></span><span class="ovtekst" id="ovtekst"></span></div>
+  <button type="button" class="kn1" id="startknop" style="display:none"></button>
+  <div class="leesrij">
+    <button type="button" id="leesBtn" style="display:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg><span id="leesTxt">Lees voor</span></button>
+    <label id="stemlabel" hidden>Stem <select id="stemsel" aria-label="Voorleesstem"><option value="">Automatisch</option></select></label>
+  </div>
   <div id="oefs"></div>
+  <button type="button" class="ovalles" id="ovalles" style="display:none"></button>
+  <div class="veilig" id="veilig"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 16px"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18.1a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span id="veiligTxt"></span></div>
 
   <h2 id="vraagkop" style="display:none">Vraag over je oefeningen (AI)</h2>
   <div class="vkaart" id="vraagkaart" style="display:none">
@@ -520,16 +709,19 @@
     </form>
     <div class="vantwoord" id="vantwoord" role="status" aria-live="polite" style="display:none"></div>
   </div>
+  </section>
 
+  <section class="blok" id="b_na">
   <h2 id="metingkop">Hoe ging het vandaag?</h2>
   <div class="mkaart" id="meting">
-    <button type="button" class="gdaan" id="gdaan" aria-pressed="false"><span class="gvink" aria-hidden="true"></span><span id="gdaanTxt">Ik heb vandaag geoefend</span></button>
-    <div class="gweek" id="gweek" style="display:none"><span class="gtitel" id="gweekTitel">Jouw oefenweek</span><div class="gdots" id="gdots"></div><div class="greeks" id="greeks" style="display:none"></div><div class="gsom" id="gweeksom"></div></div>
-    <p class="mvraag" id="mvraag">Klaar met oefenen? Tik aan hoeveel pijn je had tijdens het oefenen.</p>
-    <div class="mschaal" id="mschaal" role="group" aria-labelledby="mvraag"></div>
+    <p class="mvraag" id="mvraag">Klaar met oefenen? Schuif of tik aan hoeveel pijn je had tijdens het oefenen.</p>
     <div class="mlabels"><span id="ml0">0 = geen pijn</span><span id="ml10">10 = ergste pijn</span></div>
+    <div class="pschuif" data-schaal="mschaal" aria-hidden="true"><div class="psvorm"><div class="psvul"></div></div><div class="psknop"></div></div>
+    <div class="mschaal" id="mschaal" role="group" aria-labelledby="mvraag"></div>
     <div class="mdank" id="mdank" role="status" aria-live="polite" style="display:none"></div>
     <div class="mnudge" id="mnudge" role="status" aria-live="polite" style="display:none"></div>
+    <button type="button" class="gdaan" id="gdaan" aria-pressed="false"><span class="gvink" aria-hidden="true"></span><span id="gdaanTxt">Ik heb vandaag geoefend</span></button>
+    <div class="gweek" id="gweek" style="display:none"><span class="gtitel" id="gweekTitel">Jouw oefenweek</span><div class="gdots" id="gdots"></div><div class="greeks" id="greeks" style="display:none"></div><div class="gsom" id="gweeksom"></div></div>
     <div class="mhist" id="mhist" style="display:none">
       <div class="mtitel" id="mtitel">Jouw verloop</div>
       <div class="mbars" id="mbars"></div>
@@ -538,13 +730,17 @@
     </div>
     <p class="mnoot" id="mnoot">Je score wordt bij je kaart bewaard, zodat je fysiotherapeut je voortgang kan volgen. Er telt één score per dag; tik een ander cijfer aan om die te wijzigen.</p>
   </div>
-
-  <div class="akaart" id="afspraakblok" style="display:none">
-    <div class="akop" id="afkop">Je volgende afspraak</div>
-    <p class="atekst" id="aftekst"></p>
-    <a class="aweg" id="afics" href="#" style="text-decoration:none;display:inline-block">Zet in mijn agenda</a>
+  <!-- PSK: alleen zichtbaar als de therapeut een doelactiviteit heeft gezet -->
+  <h2 id="pskkop" style="display:none">Jouw doelactiviteit</h2>
+  <div class="mkaart" id="pskblok" style="display:none">
+    <p class="mvraag" id="pskvraag"></p>
+    <div class="mlabels"><span id="pskl0"></span><span id="pskl10"></span></div>
+    <div class="pschuif" data-schaal="pskschaal" aria-hidden="true"><div class="psvorm"><div class="psvul"></div></div><div class="psknop"></div></div>
+    <div class="mschaal" id="pskschaal" role="group" aria-labelledby="pskvraag"></div>
+    <div class="mdank" id="pskdank" role="status" aria-live="polite" style="display:none"></div>
+    <div class="mtrend mstart" id="pskstart" style="display:none"></div>
+    <p class="mnoot" id="psknoot"></p>
   </div>
-
   <details class="rustblok">
   <summary><h2 id="hskop">Hoe gaat het nu vergeleken met de start?</h2></summary>
   <div class="mkaart" id="hsblok">
@@ -561,25 +757,14 @@
   </div>
 
   </details>
+  </section>
 
-  <!-- PSK: alleen zichtbaar als de therapeut een doelactiviteit heeft gezet -->
-  <h2 id="pskkop" style="display:none">Jouw doelactiviteit</h2>
-  <div class="mkaart" id="pskblok" style="display:none">
-    <p class="mvraag" id="pskvraag"></p>
-    <div class="mschaal" id="pskschaal" role="group" aria-labelledby="pskvraag"></div>
-    <div class="mlabels"><span id="pskl0"></span><span id="pskl10"></span></div>
-    <div class="mdank" id="pskdank" role="status" aria-live="polite" style="display:none"></div>
-    <div class="mtrend mstart" id="pskstart" style="display:none"></div>
-    <p class="mnoot" id="psknoot"></p>
+  <section class="blok" id="b_contact">
+  <div class="akaart" id="afspraakblok" style="display:none">
+    <div class="akop" id="afkop">Je volgende afspraak</div>
+    <p class="atekst" id="aftekst"></p>
+    <a class="aweg" id="afics" href="#">Zet in mijn agenda</a>
   </div>
-
-  <div class="akaart" id="antwoordblok" style="display:none" role="status" aria-live="polite">
-    <div class="akop" id="akop">Bericht van je fysiotherapeut</div>
-    <p class="atekst" id="atekst"></p>
-    <div class="adatum" id="adatum"></div>
-    <button type="button" class="aweg" id="aweg">Begrepen, haal weg</button>
-  </div>
-
   <h2 id="seinkop">Je fysiotherapeut iets laten weten</h2>
   <div class="skaart" id="sein">
     <p class="sintro" id="sintro">Eén tik en je fysiotherapeut ziet je seintje bij deze kaart. Geen bericht typen, geen app.</p>
@@ -590,8 +775,12 @@
     </div>
     <div class="sdank" id="sdank" role="status" aria-live="polite" style="display:none"></div>
     <p class="sspoed" id="sspoed"><b>Spoed?</b> Wacht niet op een antwoord. Bel de praktijk of je huisarts. Bij nood: 112.</p>
+    <a class="belknop" id="belknop" style="display:none" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg><span id="beltxt">Bel de praktijk</span></a>
   </div>
+  </section>
 
+  <section class="blok" id="b_meer">
+  <h2 id="meerkop">Meer</h2>
   <details class="rustblok">
   <summary><h2 id="agendakop">Herinnering in je agenda</h2></summary>
   <div class="agkaart">
@@ -606,9 +795,7 @@
   </div>
 
   </details>
-
   <div id="schema"></div>
-
   <details class="rustblok" id="mgblok" style="display:none">
   <summary><h2 id="mg_kop">Mijn gegevens</h2></summary>
   <div class="mgkaart">
@@ -625,16 +812,29 @@
     <div class="mgmelding" id="mg_melding" role="status" aria-live="polite"></div>
   </div>
   </details>
+  <div class="voetacties" id="voetacties">
+    <button type="button" id="printBtn" title="Print of bewaar als PDF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg><span id="printTxt">Print</span></button>
+    <button type="button" id="deelBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7l6.8-4.4M8.6 13.3l6.8 4.4"/></svg><span id="deelTxt">Deel</span></button>
+  </div>
+  </section>
 
   <div class="voet">
     <span id="voet1">Vragen over de uitvoering? Neem contact op met je praktijk.</span><br/>
-    <span class="merk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a39c8a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
+    <span class="merk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>
     <span id="gemaakt">Gemaakt met</span> <a href="https://fysiplan.nl/v2">Fysiplan</a> · <a id="privlink" href="/privacy#patient" hreflang="nl" target="_blank" rel="noopener">Privacy</a></span>
+  </div>
+</div>
+<!-- oefenstand: één oefening per scherm, met een vaste balk boven en onder -->
+<div class="sbalk" id="sessiebalk" hidden>
+  <div class="sstatus" id="sstatus" hidden><span class="svink" aria-hidden="true"></span><span id="sstatusTxt"></span><button type="button" class="songedaan" id="songedaan"></button></div>
+  <div class="srij">
+    <button type="button" class="spijl" id="svorige"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button type="button" class="kn1" id="sklaar"></button>
+    <button type="button" class="spijl" id="svolgende"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
   </div>
 </div>
 <div class="lightbox" id="lightbox" role="dialog" aria-label="vergrote oefenfoto"><button type="button" class="lbsluit" id="lbsluit" aria-label="Sluiten">×</button><div class="lbknoppen"><button type="button" class="lbknop" id="lbdemoKnop" aria-pressed="false" hidden></button><button type="button" class="lbknop" id="lbgeluid" aria-pressed="false" hidden></button></div><div class="lbfoto" id="lbfoto"><span class="fpmerk" aria-hidden="true">Fysiplan</span><span class="lbbeeld"><img id="lbimg" alt=""/><i class="merkdek" id="lbdek" hidden></i></span></div><div class="vtekst lbuitleg" id="lbuitleg" hidden></div><div class="demowrap" id="lbdemo" hidden></div><div class="lbnaam" id="lbnaam" dir="auto"></div></div>
 <div class="appbanner" id="appbanner"><img src="/images/icoon-192.png" alt=""/><span class="tekst" id="ab_tekst"></span><button type="button" class="doen" id="ab_doen"></button><button type="button" class="weg" id="ab_weg" aria-label="sluiten">×</button></div>
-<a class="belknop" id="belknop" style="display:none" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg><span id="beltxt">Bel de praktijk</span></a>
 <div class="fout" id="fout" style="display:none">
   <h1 id="fout_kop">Kaart niet gevonden</h1>
   <span id="fout_tekst">Deze trainingskaart bestaat niet (meer). Vraag je fysiotherapeut om een nieuwe QR-code.</span>
@@ -655,19 +855,28 @@
 
   // ---- vaste teksten in negen talen; de kaartinhoud zelf vertaalt de server op verzoek ----
   var T={
-  nl:{eyebrow:'Trainingskaart',oefkop:'Jouw oefeningen',geenoef:'Er staan nog geen oefeningen op deze kaart.',series:'series',herh:'herhalingen',vidEigen:'Video van je therapeut',vidYt:'Bekijk instructievideo',veilig:'Neem pijn serieus: stop bij toenemende pijn en overleg met je fysiotherapeut.',metingkop:'Hoe ging het vandaag?',mvraag:'Klaar met oefenen? Tik aan hoeveel pijn je had tijdens het oefenen.',ml0:'0 = geen pijn',ml10:'10 = ergste pijn',mtitel:'Jouw verloop',mnoot:'Je score wordt bij je kaart bewaard, zodat je fysiotherapeut je voortgang kan volgen. Er telt één score per dag; tik een ander cijfer aan om die te wijzigen.',mdank:'Genoteerd, dank je wel. Je fysiotherapeut kan je verloop bij deze kaart zien.',mfout:'Opslaan is niet gelukt, probeer het zo nog eens.',agendakop:'Herinnering in je agenda',agintro:'Vergeet je oefeningen niet: zet vaste oefenmomenten in de agenda van je telefoon. Kies je dagen en tijdstip.',aglabel:'Tijdstip',agknop:'Zet in mijn agenda',aghint:'Je telefoon opent een agenda-uitnodiging die zichzelf elke week herhaalt. Dit werkt op iPhone en Android, zonder app of account.',agleeg:'Kies minstens één dag voor je oefenmomenten.',dagen:['Ma','Di','Wo','Do','Vr','Za','Zo'],schemakop:'Ingevuld schema',datum:'Datum',schemahint:'S = series, H = herhalingen, W = gewicht. Veeg opzij voor alle oefeningen.',voet1:'Vragen over de uitvoering? Neem contact op met je praktijk.',gemaakt:'Gemaakt met',voor:'Voor',doel:'Doel',letop:'Let op',lees:'Lees voor',stop:'Stop',oefening:'Oefening',bel:'Bel de praktijk',inst:'Zet deze kaart op je beginscherm, dan opent hij als app',instDoen:'Zet op beginscherm',instIos:'Tik op de deelknop en kies "Zet op beginscherm"',demo:'Houdingen tonen',demoUit:'Foto tonen',houding1:'Beginhouding',houding2:'Eindhouding',geluidAan:'Geluid aan',geluidUit:'Geluid uit',uitlegKop:'Uitleg bij de oefening',uitleg1:'Beweeg rustig van de beginhouding naar de eindhouding en weer terug.',uitleg2:'Adem rustig door en stop bij toenemende pijn.',fotoVideo:'video afspelen',fotoBekijk:'groter bekijken',agdagenKop:'Kies je oefendagen',dagenVol:['Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag','Zondag'],mstart:'Vergeleken met je start: je eerste score was {a}, nu {b}.',mtrendLager:'Je laatste score is lager dan je eerdere scores.',mtrendGelijk:'Je laatste score lijkt op je eerdere scores.',mtrendHoger:'Je laatste score is hoger dan je eerdere scores.',leesUitlegCheck:'Niet voorgelezen, omdat de uitleg nog wordt gecontroleerd: {n}.',leesBeeldCheck:'Niet voorgelezen, omdat de oefenafbeelding nog wordt gecontroleerd: {n}.',leesNiets:'Er wordt nu niets voorgelezen voor deze selectie.',leesDosering:'Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.',leesGeenControle:'De controle van de algemene uitleg kon niet laden. Ververs de kaart. Je persoonlijke dosering blijft op de kaart staan.',ytOpen:'Open deze video op YouTube (externe website)',holdBeeld:'De oefenafbeelding wordt gecontroleerd en is tijdelijk niet zichtbaar. Je dosering blijft op deze kaart staan.',holdUitleg:'De algemene uitleg wordt gecontroleerd. Vraag je behandelaar om de uitvoering; je persoonlijke dosering blijft staan.'},
-  en:{eyebrow:'Training card',oefkop:'Your exercises',geenoef:'There are no exercises on this card yet.',series:'sets',herh:'repetitions',vidEigen:'Video from your therapist',vidYt:'Watch instruction video',veilig:'Take pain seriously: stop if the pain increases and contact your physiotherapist.',metingkop:'How did it go today?',mvraag:'Finished exercising? Tap how much pain you felt while exercising.',ml0:'0 = no pain',ml10:'10 = worst pain',mtitel:'Your progress',mnoot:'Your score is saved with your card so your physiotherapist can follow your progress. One score counts per day; tap another number to change it.',mdank:'Saved, thank you. Your physiotherapist can see your progress on this card.',mfout:'Saving did not work, please try again in a moment.',agendakop:'Reminder in your calendar',agintro:'Do not forget your exercises: put fixed exercise moments in the calendar of your phone. Choose your days and time.',aglabel:'Time',agknop:'Add to my calendar',aghint:'Your phone opens a calendar invitation that repeats every week. Works on iPhone and Android, without an app or account.',agleeg:'Choose at least one day for your exercises.',dagen:['Mo','Tu','We','Th','Fr','Sa','Su'],schemakop:'Completed schedule',datum:'Date',schemahint:'S = sets, H = repetitions, W = weight. Swipe sideways to see all exercises.',voet1:'Questions about how to do an exercise? Contact your practice.',gemaakt:'Made with',voor:'For',doel:'Goal',letop:'Note',lees:'Read aloud',stop:'Stop',oefening:'Exercise',bel:'Call your practice',inst:'Add this card to your home screen and it opens like an app',instDoen:'Add to home screen',instIos:'Tap the share button and choose "Add to Home Screen"',demo:'Show positions',demoUit:'Show photo',houding1:'Start position',houding2:'End position',geluidAan:'Sound on',geluidUit:'Sound off',uitlegKop:'How to do this exercise',uitleg1:'Move calmly from the start position to the end position and back.',uitleg2:'Keep breathing steadily and stop if the pain increases.',fotoVideo:'play video',fotoBekijk:'view larger',agdagenKop:'Choose your exercise days',dagenVol:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],mstart:'Compared with your start: your first score was {a}, now {b}.',mtrendLager:'Your latest score is lower than your earlier scores.',mtrendGelijk:'Your latest score is similar to your earlier scores.',mtrendHoger:'Your latest score is higher than your earlier scores.',leesUitlegCheck:'Not read aloud because the explanation is still being checked: {n}.',leesBeeldCheck:'Not read aloud because the exercise image is still being checked: {n}.',leesNiets:'Nothing is read aloud for this selection right now.',leesDosering:'Also follow the dosage and notes from your therapist on this card.',leesGeenControle:'The check of the general explanation could not load. Refresh the card. Your personal dosage stays on the card.',ytOpen:'Open this video on YouTube (external website)',holdBeeld:'The exercise image is being checked and is temporarily hidden. Your dosage stays on this card.',holdUitleg:'The general explanation is being checked. Ask your therapist how to do this exercise; your personal dosage stays on the card.'},
-  de:{eyebrow:'Trainingskarte',oefkop:'Deine Übungen',geenoef:'Auf dieser Karte stehen noch keine Übungen.',series:'Sätze',herh:'Wiederholungen',vidEigen:'Video von deinem Therapeuten',vidYt:'Anleitungsvideo ansehen',veilig:'Nimm Schmerzen ernst: höre auf, wenn der Schmerz zunimmt, und sprich mit deinem Physiotherapeuten.',metingkop:'Wie ist es heute gelaufen?',mvraag:'Fertig mit den Übungen? Tippe an, wie viel Schmerz du beim Üben hattest.',ml0:'0 = kein Schmerz',ml10:'10 = stärkster Schmerz',mtitel:'Dein Verlauf',mnoot:'Dein Wert wird bei deiner Karte gespeichert, damit dein Physiotherapeut deinen Fortschritt verfolgen kann. Es zählt ein Wert pro Tag; tippe eine andere Zahl an, um ihn zu ändern.',mdank:'Gespeichert, danke. Dein Physiotherapeut kann deinen Verlauf bei dieser Karte sehen.',mfout:'Speichern hat nicht geklappt, versuche es gleich noch einmal.',agendakop:'Erinnerung in deinem Kalender',agintro:'Vergiss deine Übungen nicht: trage feste Übungszeiten in den Kalender deines Handys ein. Wähle deine Tage und die Uhrzeit.',aglabel:'Uhrzeit',agknop:'In meinen Kalender',aghint:'Dein Handy öffnet eine Kalendereinladung, die sich jede Woche wiederholt. Funktioniert auf iPhone und Android, ohne App oder Konto.',agleeg:'Wähle mindestens einen Tag für deine Übungen.',dagen:['Mo','Di','Mi','Do','Fr','Sa','So'],schemakop:'Ausgefülltes Schema',datum:'Datum',schemahint:'S = Sätze, H = Wiederholungen, W = Gewicht. Wische zur Seite für alle Übungen.',voet1:'Fragen zur Ausführung? Wende dich an deine Praxis.',gemaakt:'Erstellt mit',voor:'Für',doel:'Ziel',letop:'Beachte',lees:'Vorlesen',stop:'Stopp',oefening:'Übung',bel:'Praxis anrufen',inst:'Lege diese Karte auf deinen Startbildschirm, dann öffnet sie sich wie eine App',instDoen:'Zum Startbildschirm',instIos:'Tippe auf Teilen und wähle "Zum Home-Bildschirm"',demo:'Positionen zeigen',demoUit:'Foto zeigen',houding1:'Ausgangsposition',houding2:'Endposition',geluidAan:'Ton an',geluidUit:'Ton aus',uitlegKop:'So geht die Übung',uitleg1:'Bewege dich ruhig von der Ausgangsposition in die Endposition und wieder zurück.',uitleg2:'Atme ruhig weiter und höre auf, wenn der Schmerz zunimmt.',fotoVideo:'Video abspielen',fotoBekijk:'größer ansehen',agdagenKop:'Wähle deine Übungstage',dagenVol:['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'],mstart:'Im Vergleich zum Start: dein erster Wert war {a}, jetzt {b}.',mtrendLager:'Dein letzter Wert ist niedriger als deine früheren Werte.',mtrendGelijk:'Dein letzter Wert ähnelt deinen früheren Werten.',mtrendHoger:'Dein letzter Wert ist höher als deine früheren Werte.',leesUitlegCheck:'Nicht vorgelesen, weil die Anleitung noch geprüft wird: {n}.',leesBeeldCheck:'Nicht vorgelesen, weil das Übungsbild noch geprüft wird: {n}.',leesNiets:'Für diese Auswahl wird gerade nichts vorgelesen.',leesDosering:'Beachte außerdem die Dosierung und die Hinweise deines Therapeuten auf dieser Karte.',leesGeenControle:'Die Prüfung der allgemeinen Anleitung konnte nicht geladen werden. Lade die Karte neu. Deine persönliche Dosierung bleibt auf der Karte stehen.',ytOpen:'Dieses Video auf YouTube öffnen (externe Website)',holdBeeld:'Das Übungsbild wird geprüft und ist vorübergehend nicht sichtbar. Deine Dosierung bleibt auf dieser Karte stehen.',holdUitleg:'Die allgemeine Anleitung wird geprüft. Frag deine Therapeutin oder deinen Therapeuten nach der Ausführung; deine persönliche Dosierung bleibt stehen.'},
-  fr:{eyebrow:"Carte d'entraînement",oefkop:'Tes exercices',geenoef:"Il n'y a pas encore d'exercices sur cette carte.",series:'séries',herh:'répétitions',vidEigen:'Vidéo de ton kinésithérapeute',vidYt:'Voir la vidéo d’instruction',veilig:'Prends la douleur au sérieux : arrête si la douleur augmente et contacte ton kinésithérapeute.',metingkop:"Comment ça s'est passé aujourd'hui ?",mvraag:'Exercices terminés ? Indique la douleur ressentie pendant les exercices.',ml0:'0 = pas de douleur',ml10:'10 = douleur maximale',mtitel:'Ton évolution',mnoot:'Ton score est enregistré avec ta carte pour que ton kinésithérapeute puisse suivre tes progrès. Un score compte par jour ; touche un autre chiffre pour le modifier.',mdank:'Enregistré, merci. Ton kinésithérapeute peut voir ton évolution sur cette carte.',mfout:"L'enregistrement n'a pas fonctionné, réessaie dans un instant.",agendakop:'Rappel dans ton agenda',agintro:"N'oublie pas tes exercices : ajoute des moments fixes dans l'agenda de ton téléphone. Choisis tes jours et l'heure.",aglabel:'Heure',agknop:'Ajouter à mon agenda',aghint:"Ton téléphone ouvre une invitation d'agenda qui se répète chaque semaine. Fonctionne sur iPhone et Android, sans application ni compte.",agleeg:'Choisis au moins un jour pour tes exercices.',dagen:['Lu','Ma','Me','Je','Ve','Sa','Di'],schemakop:'Schéma rempli',datum:'Date',schemahint:'S = séries, H = répétitions, W = poids. Fais glisser sur le côté pour tous les exercices.',voet1:"Des questions sur l'exécution ? Contacte ton cabinet.",gemaakt:'Créé avec',voor:'Pour',doel:'Objectif',letop:'Attention',lees:'Lire à voix haute',stop:'Stop',oefening:'Exercice',bel:'Appeler le cabinet',inst:"Ajoute cette carte à ton écran d'accueil, elle s'ouvrira comme une appli",instDoen:"Ajouter à l'écran d'accueil",instIos:'Touche le bouton de partage puis "Sur l\'écran d\'accueil"',demo:'Voir les positions',demoUit:'Voir la photo',houding1:'Position de départ',houding2:'Position finale',geluidAan:'Activer le son',geluidUit:'Couper le son',uitlegKop:'Comment faire cet exercice',uitleg1:'Passe calmement de la position de départ à la position finale, puis reviens.',uitleg2:'Respire calmement et arrête si la douleur augmente.',fotoVideo:'lire la vidéo',fotoBekijk:'voir en plus grand',agdagenKop:'Choisis tes jours d\'exercice',dagenVol:['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'],mstart:'Par rapport au début : votre premier score était {a}, maintenant {b}.',mtrendLager:'Ta dernière note est plus basse que tes notes précédentes.',mtrendGelijk:'Ta dernière note ressemble à tes notes précédentes.',mtrendHoger:'Ta dernière note est plus haute que tes notes précédentes.',leesUitlegCheck:'Non lu à voix haute, car l\'explication est encore en cours de vérification : {n}.',leesBeeldCheck:'Non lu à voix haute, car l\'image de l\'exercice est encore en cours de vérification : {n}.',leesNiets:'Rien n\'est lu à voix haute pour cette sélection pour le moment.',leesDosering:'Suis aussi le dosage et les remarques de ton kinésithérapeute sur cette carte.',leesGeenControle:'La vérification de l\'explication générale n\'a pas pu se charger. Actualise la carte. Ton dosage personnel reste sur la carte.',ytOpen:'Ouvrir cette vidéo sur YouTube (site externe)',holdBeeld:'L’image de l’exercice est en cours de vérification et temporairement masquée. Ton dosage reste sur cette carte.',holdUitleg:'L’explication générale est en cours de vérification. Demande à ton kiné comment faire l’exercice ; ton dosage personnel reste sur la carte.'},
-  es:{eyebrow:'Tarjeta de entrenamiento',oefkop:'Tus ejercicios',geenoef:'Todavía no hay ejercicios en esta tarjeta.',series:'series',herh:'repeticiones',vidEigen:'Vídeo de tu fisioterapeuta',vidYt:'Ver el vídeo de instrucciones',veilig:'Toma el dolor en serio: para si el dolor aumenta y consulta a tu fisioterapeuta.',metingkop:'¿Cómo ha ido hoy?',mvraag:'¿Has terminado? Toca cuánto dolor sentiste durante los ejercicios.',ml0:'0 = sin dolor',ml10:'10 = dolor máximo',mtitel:'Tu evolución',mnoot:'Tu puntuación se guarda con tu tarjeta para que tu fisioterapeuta pueda seguir tu progreso. Cuenta una puntuación por día; toca otro número para cambiarla.',mdank:'Guardado, gracias. Tu fisioterapeuta puede ver tu evolución en esta tarjeta.',mfout:'No se pudo guardar, inténtalo de nuevo en un momento.',agendakop:'Recordatorio en tu calendario',agintro:'No olvides tus ejercicios: pon momentos fijos en el calendario de tu teléfono. Elige tus días y la hora.',aglabel:'Hora',agknop:'Añadir a mi calendario',aghint:'Tu teléfono abre una invitación de calendario que se repite cada semana. Funciona en iPhone y Android, sin aplicación ni cuenta.',agleeg:'Elige al menos un día para tus ejercicios.',dagen:['Lu','Ma','Mi','Ju','Vi','Sá','Do'],schemakop:'Esquema completado',datum:'Fecha',schemahint:'S = series, H = repeticiones, W = peso. Desliza hacia un lado para ver todos los ejercicios.',voet1:'¿Preguntas sobre la ejecución? Contacta con tu consulta.',gemaakt:'Hecho con',voor:'Para',doel:'Objetivo',letop:'Atención',lees:'Leer en voz alta',stop:'Parar',oefening:'Ejercicio',bel:'Llamar a la consulta',inst:'Añade esta tarjeta a tu pantalla de inicio y se abrirá como una app',instDoen:'Añadir a inicio',instIos:'Toca el botón de compartir y elige "Añadir a pantalla de inicio"',demo:'Ver las posiciones',demoUit:'Ver la foto',houding1:'Posición inicial',houding2:'Posición final',geluidAan:'Activar sonido',geluidUit:'Silenciar',uitlegKop:'Cómo hacer este ejercicio',uitleg1:'Pasa con calma de la posición inicial a la posición final y vuelve.',uitleg2:'Respira con calma y para si el dolor aumenta.',fotoVideo:'reproducir vídeo',fotoBekijk:'ver más grande',agdagenKop:'Elige tus días de ejercicio',dagenVol:['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'],mstart:'Comparado con tu inicio: tu primera puntuación fue {a}, ahora {b}.',mtrendLager:'Tu última puntuación es más baja que las anteriores.',mtrendGelijk:'Tu última puntuación es parecida a las anteriores.',mtrendHoger:'Tu última puntuación es más alta que las anteriores.',leesUitlegCheck:'No se lee en voz alta porque la explicación todavía se está revisando: {n}.',leesBeeldCheck:'No se lee en voz alta porque la imagen del ejercicio todavía se está revisando: {n}.',leesNiets:'Ahora no se lee nada en voz alta para esta selección.',leesDosering:'Sigue también la dosificación y las indicaciones de tu fisioterapeuta en esta tarjeta.',leesGeenControle:'No se pudo cargar la revisión de la explicación general. Actualiza la tarjeta. Tu dosificación personal sigue en la tarjeta.',ytOpen:'Abrir este vídeo en YouTube (sitio web externo)',holdBeeld:'La imagen del ejercicio se está revisando y no se ve por ahora. Tu dosificación sigue en esta tarjeta.',holdUitleg:'La explicación general se está revisando. Pregunta a tu fisioterapeuta cómo hacer el ejercicio; tu dosificación personal sigue en la tarjeta.'},
-  pl:{eyebrow:'Karta treningowa',oefkop:'Twoje ćwiczenia',geenoef:'Na tej karcie nie ma jeszcze ćwiczeń.',series:'serie',herh:'powtórzenia',vidEigen:'Wideo od twojego fizjoterapeuty',vidYt:'Zobacz film instruktażowy',veilig:'Traktuj ból poważnie: przerwij, gdy ból narasta, i skontaktuj się z fizjoterapeutą.',metingkop:'Jak poszło dzisiaj?',mvraag:'Skończyłeś ćwiczyć? Zaznacz, jak silny ból odczuwałeś podczas ćwiczeń.',ml0:'0 = brak bólu',ml10:'10 = najsilniejszy ból',mtitel:'Twój przebieg',mnoot:'Twój wynik jest zapisywany przy karcie, aby fizjoterapeuta mógł śledzić twoje postępy. Liczy się jeden wynik dziennie; dotknij innej cyfry, aby go zmienić.',mdank:'Zapisano, dziękujemy. Twój fizjoterapeuta może zobaczyć twoje postępy przy tej karcie.',mfout:'Zapis się nie udał, spróbuj ponownie za chwilę.',agendakop:'Przypomnienie w kalendarzu',agintro:'Nie zapominaj o ćwiczeniach: ustaw stałe momenty ćwiczeń w kalendarzu telefonu. Wybierz dni i godzinę.',aglabel:'Godzina',agknop:'Dodaj do kalendarza',aghint:'Telefon otworzy zaproszenie do kalendarza, które powtarza się co tydzień. Działa na iPhonie i Androidzie, bez aplikacji i konta.',agleeg:'Wybierz co najmniej jeden dzień na ćwiczenia.',dagen:['Pn','Wt','Śr','Cz','Pt','So','Nd'],schemakop:'Wypełniony harmonogram',datum:'Data',schemahint:'S = serie, H = powtórzenia, W = ciężar. Przesuń w bok, aby zobaczyć wszystkie ćwiczenia.',voet1:'Pytania o wykonanie? Skontaktuj się ze swoim gabinetem.',gemaakt:'Stworzone w',voor:'Dla',doel:'Cel',letop:'Uwaga',lees:'Przeczytaj na głos',stop:'Stop',oefening:'Ćwiczenie',bel:'Zadzwoń do gabinetu',inst:'Dodaj tę kartę do ekranu początkowego, otworzy się jak aplikacja',instDoen:'Dodaj do ekranu',instIos:'Stuknij przycisk udostępniania i wybierz "Do ekranu początkowego"',demo:'Pokaż pozycje',demoUit:'Pokaż zdjęcie',houding1:'Pozycja początkowa',houding2:'Pozycja końcowa',geluidAan:'Włącz dźwięk',geluidUit:'Wyłącz dźwięk',uitlegKop:'Jak wykonać to ćwiczenie',uitleg1:'Przechodź spokojnie z pozycji początkowej do końcowej i z powrotem.',uitleg2:'Oddychaj spokojnie i przerwij, gdy ból narasta.',fotoVideo:'odtwórz wideo',fotoBekijk:'zobacz większe',agdagenKop:'Wybierz dni ćwiczeń',dagenVol:['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'],mstart:'W porównaniu z początkiem: twój pierwszy wynik to {a}, teraz {b}.',mtrendLager:'Twój ostatni wynik jest niższy niż wcześniejsze.',mtrendGelijk:'Twój ostatni wynik jest podobny do wcześniejszych.',mtrendHoger:'Twój ostatni wynik jest wyższy niż wcześniejsze.',leesUitlegCheck:'Nie odczytano, ponieważ opis jest jeszcze sprawdzany: {n}.',leesBeeldCheck:'Nie odczytano, ponieważ obraz ćwiczenia jest jeszcze sprawdzany: {n}.',leesNiets:'Dla tego wyboru nic nie jest teraz odczytywane.',leesDosering:'Stosuj się też do dawkowania i uwag fizjoterapeuty na tej karcie.',leesGeenControle:'Nie udało się wczytać weryfikacji ogólnego opisu. Odśwież kartę. Twoje osobiste dawkowanie pozostaje na karcie.',ytOpen:'Otwórz ten film w YouTube (zewnętrzna strona)',holdBeeld:'Obraz ćwiczenia jest sprawdzany i chwilowo niewidoczny. Twoje dawkowanie pozostaje na tej karcie.',holdUitleg:'Ogólny opis jest sprawdzany. Zapytaj fizjoterapeutę, jak wykonać ćwiczenie; twoje osobiste dawkowanie pozostaje na karcie.'},
-  tr:{eyebrow:'Antrenman kartı',oefkop:'Egzersizlerin',geenoef:'Bu kartta henüz egzersiz yok.',series:'set',herh:'tekrar',vidEigen:'Terapistinden video',vidYt:'Eğitim videosunu izle',veilig:'Ağrıyı ciddiye al: ağrı artarsa dur ve fizyoterapistinle görüş.',metingkop:'Bugün nasıl geçti?',mvraag:'Egzersiz bitti mi? Egzersiz sırasında ne kadar ağrı hissettiğini işaretle.',ml0:'0 = ağrı yok',ml10:'10 = en şiddetli ağrı',mtitel:'Gelişimin',mnoot:'Puanın kartınla birlikte kaydedilir, böylece fizyoterapistin ilerlemeni takip edebilir. Günde bir puan sayılır; değiştirmek için başka bir sayıya dokun.',mdank:'Kaydedildi, teşekkürler. Fizyoterapistin bu karttaki gelişimini görebilir.',mfout:'Kaydetme başarısız oldu, birazdan tekrar dene.',agendakop:'Takviminde hatırlatma',agintro:'Egzersizlerini unutma: telefonunun takvimine sabit egzersiz zamanları ekle. Günlerini ve saatini seç.',aglabel:'Saat',agknop:'Takvimime ekle',aghint:'Telefonun her hafta tekrarlanan bir takvim daveti açar. iPhone ve Android üzerinde, uygulama veya hesap olmadan çalışır.',agleeg:'Egzersizlerin için en az bir gün seç.',dagen:['Pt','Sa','Ça','Pe','Cu','Ct','Pa'],schemakop:'Doldurulan program',datum:'Tarih',schemahint:'S = set, H = tekrar, W = ağırlık. Tüm egzersizler için yana kaydır.',voet1:'Uygulama hakkında soruların mı var? Kliniğinle iletişime geç.',gemaakt:'Hazırlayan:',voor:'Kim için',doel:'Hedef',letop:'Dikkat',lees:'Sesli oku',stop:'Durdur',oefening:'Egzersiz',bel:'Kliniği ara',inst:'Bu kartı ana ekranına ekle, uygulama gibi açılır',instDoen:'Ana ekrana ekle',instIos:'Paylaş düğmesine dokun ve "Ana Ekrana Ekle" seçeneğini seç',demo:'Pozisyonları göster',demoUit:'Fotoğrafı göster',houding1:'Başlangıç pozisyonu',houding2:'Bitiş pozisyonu',geluidAan:'Sesi aç',geluidUit:'Sesi kapat',uitlegKop:'Bu egzersiz nasıl yapılır',uitleg1:'Başlangıç pozisyonundan bitiş pozisyonuna sakin bir şekilde geç ve geri dön.',uitleg2:'Sakin nefes almaya devam et, ağrı artarsa dur.',fotoVideo:'videoyu oynat',fotoBekijk:'daha büyük gör',agdagenKop:'Egzersiz günlerini seç',dagenVol:['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'],mstart:'Başlangıcına göre: ilk puanın {a} idi, şimdi {b}.',mtrendLager:'Son puanın önceki puanlarından daha düşük.',mtrendGelijk:'Son puanın önceki puanlarına benziyor.',mtrendHoger:'Son puanın önceki puanlarından daha yüksek.',leesUitlegCheck:'Sesli okunmadı, çünkü açıklama hâlâ kontrol ediliyor: {n}.',leesBeeldCheck:'Sesli okunmadı, çünkü egzersiz görseli hâlâ kontrol ediliyor: {n}.',leesNiets:'Bu seçim için şu anda hiçbir şey sesli okunmuyor.',leesDosering:'Ayrıca bu karttaki terapistinin dozaj ve notlarına uy.',leesGeenControle:'Genel açıklamanın kontrolü yüklenemedi. Kartı yenile. Kişisel dozajın kartta kalır.',ytOpen:'Bu videoyu YouTube\'da aç (harici web sitesi)',holdBeeld:'Egzersiz görseli kontrol ediliyor ve geçici olarak gizli. Dozajın bu kartta kalır.',holdUitleg:'Genel açıklama kontrol ediliyor. Egzersizi nasıl yapacağını fizyoterapistine sor; kişisel dozajın kartta kalır.'},
-  ar:{eyebrow:'بطاقة التمارين',oefkop:'تمارينك',geenoef:'لا توجد تمارين على هذه البطاقة بعد.',series:'مجموعات',herh:'تكرارات',vidEigen:'فيديو من معالجك',vidYt:'شاهد فيديو التعليمات',veilig:'خذ الألم على محمل الجد: توقف إذا زاد الألم وتواصل مع أخصائي العلاج الطبيعي.',metingkop:'كيف سار الأمر اليوم؟',mvraag:'انتهيت من التمارين؟ اضغط على مقدار الألم الذي شعرت به أثناء التمرين.',ml0:'0 = لا ألم',ml10:'10 = أسوأ ألم',mtitel:'تقدمك',mnoot:'يتم حفظ نتيجتك مع بطاقتك حتى يتمكن أخصائي العلاج الطبيعي من متابعة تقدمك. تُحتسب نتيجة واحدة في اليوم؛ اضغط على رقم آخر لتغييرها.',mdank:'تم الحفظ، شكرًا لك. يمكن لمعالجك رؤية تقدمك في هذه البطاقة.',mfout:'لم ينجح الحفظ، حاول مرة أخرى بعد قليل.',agendakop:'تذكير في التقويم',agintro:'لا تنسَ تمارينك: أضف أوقات تمرين ثابتة إلى تقويم هاتفك. اختر الأيام والوقت.',aglabel:'الوقت',agknop:'أضف إلى تقويمي',aghint:'يفتح هاتفك دعوة تقويم تتكرر كل أسبوع. يعمل على iPhone وAndroid، بدون تطبيق أو حساب.',agleeg:'اختر يومًا واحدًا على الأقل لتمارينك.',dagen:['اث','ثل','أر','خم','جم','سب','أح'],schemakop:'الجدول المعبأ',datum:'التاريخ',schemahint:'S = مجموعات، H = تكرارات، W = وزن. اسحب جانبًا لرؤية كل التمارين.',voet1:'أسئلة حول طريقة الأداء؟ تواصل مع عيادتك.',gemaakt:'صُنع بواسطة',voor:'لـ',doel:'الهدف',letop:'تنبيه',lees:'اقرأ بصوت عالٍ',stop:'إيقاف',oefening:'تمرين',bel:'اتصل بالعيادة',inst:'أضف هذه البطاقة إلى الشاشة الرئيسية لتفتح مثل التطبيق',instDoen:'أضف إلى الشاشة الرئيسية',instIos:'اضغط على زر المشاركة واختر "إضافة إلى الشاشة الرئيسية"',demo:'عرض الوضعيتين',demoUit:'عرض الصورة',houding1:'وضعية البداية',houding2:'وضعية النهاية',geluidAan:'تشغيل الصوت',geluidUit:'إيقاف الصوت',uitlegKop:'كيفية أداء هذا التمرين',uitleg1:'انتقل بهدوء من وضعية البداية إلى وضعية النهاية ثم عد.',uitleg2:'واصل التنفس بهدوء وتوقف إذا زاد الألم.',fotoVideo:'تشغيل الفيديو',fotoBekijk:'عرض أكبر',agdagenKop:'اختر أيام تمارينك',dagenVol:['الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت','الأحد'],mstart:'مقارنة ببدايتك: كانت أول درجة لك {a}، والآن {b}.',mtrendLager:'نتيجتك الأخيرة أقل من نتائجك السابقة.',mtrendGelijk:'نتيجتك الأخيرة مشابهة لنتائجك السابقة.',mtrendHoger:'نتيجتك الأخيرة أعلى من نتائجك السابقة.',leesUitlegCheck:'لم تتم القراءة بصوت عالٍ لأن الشرح لا يزال قيد المراجعة: {n}.',leesBeeldCheck:'لم تتم القراءة بصوت عالٍ لأن صورة التمرين لا تزال قيد المراجعة: {n}.',leesNiets:'لا تتم قراءة أي شيء لهذا الاختيار الآن.',leesDosering:'اتبع أيضًا الجرعة وملاحظات معالجك الموجودة على هذه البطاقة.',leesGeenControle:'تعذر تحميل مراجعة الشرح العام. حدّث البطاقة. تبقى جرعتك الشخصية على البطاقة.',ytOpen:'افتح هذا الفيديو على YouTube (موقع خارجي)',holdBeeld:'صورة التمرين قيد المراجعة ومخفية مؤقتًا. تبقى جرعتك على هذه البطاقة.',holdUitleg:'الشرح العام قيد المراجعة. اسأل معالجك الفيزيائي عن طريقة أداء التمرين؛ تبقى جرعتك الشخصية على البطاقة.'},
-  uk:{eyebrow:'Картка вправ',oefkop:'Твої вправи',geenoef:'На цій картці ще немає вправ.',series:'підходи',herh:'повторення',vidEigen:'Відео від твого терапевта',vidYt:'Переглянути відеоінструкцію',veilig:'Стався до болю серйозно: зупинися, якщо біль посилюється, і звернися до фізіотерапевта.',metingkop:'Як пройшло сьогодні?',mvraag:'Закінчив вправи? Натисни, наскільки сильним був біль під час вправ.',ml0:'0 = болю немає',ml10:'10 = найсильніший біль',mtitel:'Твій прогрес',mnoot:'Твій результат зберігається з карткою, щоб фізіотерапевт міг стежити за прогресом. Зараховується один результат на день; натисни іншу цифру, щоб змінити його.',mdank:'Збережено, дякуємо. Твій фізіотерапевт може бачити твій прогрес на цій картці.',mfout:'Не вдалося зберегти, спробуй ще раз за мить.',agendakop:'Нагадування в календарі',agintro:'Не забувай про вправи: додай постійний час вправ у календар телефона. Обери дні та час.',aglabel:'Час',agknop:'Додати в календар',aghint:'Телефон відкриє запрошення в календар, що повторюється щотижня. Працює на iPhone та Android, без застосунку чи облікового запису.',agleeg:'Обери хоча б один день для вправ.',dagen:['Пн','Вт','Ср','Чт','Пт','Сб','Нд'],schemakop:'Заповнена схема',datum:'Дата',schemahint:'S = підходи, H = повторення, W = вага. Гортай убік, щоб побачити всі вправи.',voet1:'Питання щодо виконання? Звернися до своєї практики.',gemaakt:'Створено з',voor:'Для',doel:'Мета',letop:'Увага',lees:'Читати вголос',stop:'Стоп',oefening:'Вправа',bel:'Подзвонити у практику',inst:'Додай цю картку на головний екран, і вона відкриється як застосунок',instDoen:'На головний екран',instIos:'Натисни кнопку "Поділитися" і вибери "На головний екран"',demo:'Показати положення',demoUit:'Показати фото',houding1:'Початкове положення',houding2:'Кінцеве положення',geluidAan:'Увімкнути звук',geluidUit:'Вимкнути звук',uitlegKop:'Як виконувати цю вправу',uitleg1:'Спокійно переходь із початкового положення в кінцеве і назад.',uitleg2:'Дихай спокійно і зупинися, якщо біль посилюється.',fotoVideo:'відтворити відео',fotoBekijk:'переглянути більше',agdagenKop:'Обери дні вправ',dagenVol:['Понеділок','Вівторок','Середа','Четвер','П\'ятниця','Субота','Неділя'],mstart:'Порівняно з початком: твій перший результат був {a}, тепер {b}.',mtrendLager:'Твоя остання оцінка нижча за попередні.',mtrendGelijk:'Твоя остання оцінка схожа на попередні.',mtrendHoger:'Твоя остання оцінка вища за попередні.',leesUitlegCheck:'Не прочитано вголос, бо пояснення ще перевіряється: {n}.',leesBeeldCheck:'Не прочитано вголос, бо зображення вправи ще перевіряється: {n}.',leesNiets:'Зараз для цього вибору нічого не читається вголос.',leesDosering:'Також дотримуйся дозування та порад свого терапевта на цій картці.',leesGeenControle:'Не вдалося завантажити перевірку загального пояснення. Онови картку. Твоє особисте дозування залишається на картці.',ytOpen:'Відкрити це відео на YouTube (зовнішній сайт)',holdBeeld:'Зображення вправи перевіряється і тимчасово приховане. Твоє дозування залишається на цій картці.',holdUitleg:'Загальне пояснення перевіряється. Запитай свого фізіотерапевта, як виконувати вправу; твоє особисте дозування залишається на картці.'}
+  nl:{eyebrow:'Trainingskaart',oefkop:'Jouw oefeningen',geenoef:'Er staan nog geen oefeningen op deze kaart.',series:'series',herh:'herhalingen',vidEigen:'Video van je therapeut',vidYt:'Bekijk instructievideo',veilig:'Neem pijn serieus: stop bij toenemende pijn en overleg met je fysiotherapeut.',metingkop:'Hoe ging het vandaag?',mvraag:'Klaar met oefenen? Schuif of tik aan hoeveel pijn je had tijdens het oefenen.',ml0:'0 = geen pijn',ml10:'10 = ergste pijn',mtitel:'Jouw verloop',mnoot:'Je score wordt bij je kaart bewaard, zodat je fysiotherapeut je voortgang kan volgen. Er telt één score per dag; tik een ander cijfer aan om die te wijzigen.',mdank:'Genoteerd, dank je wel. Je fysiotherapeut kan je verloop bij deze kaart zien.',mfout:'Opslaan is niet gelukt, probeer het zo nog eens.',agendakop:'Herinnering in je agenda',agintro:'Vergeet je oefeningen niet: zet vaste oefenmomenten in de agenda van je telefoon. Kies je dagen en tijdstip.',aglabel:'Tijdstip',agknop:'Zet in mijn agenda',aghint:'Je telefoon opent een agenda-uitnodiging die zichzelf elke week herhaalt. Dit werkt op iPhone en Android, zonder app of account.',agleeg:'Kies minstens één dag voor je oefenmomenten.',dagen:['Ma','Di','Wo','Do','Vr','Za','Zo'],schemakop:'Ingevuld schema',datum:'Datum',schemahint:'S = series, H = herhalingen, W = gewicht. Veeg opzij voor alle oefeningen.',voet1:'Vragen over de uitvoering? Neem contact op met je praktijk.',gemaakt:'Gemaakt met',voor:'Voor',doel:'Doel',letop:'Let op',lees:'Lees voor',stop:'Stop',oefening:'Oefening',bel:'Bel de praktijk',inst:'Zet deze kaart op je beginscherm, dan opent hij als app',instDoen:'Zet op beginscherm',instIos:'Tik op de deelknop en kies "Zet op beginscherm"',demo:'Houdingen tonen',demoUit:'Foto tonen',houding1:'Beginhouding',houding2:'Eindhouding',geluidAan:'Geluid aan',geluidUit:'Geluid uit',uitlegKop:'Uitleg bij de oefening',uitleg1:'Beweeg rustig van de beginhouding naar de eindhouding en weer terug.',uitleg2:'Adem rustig door en stop bij toenemende pijn.',fotoVideo:'video afspelen',fotoBekijk:'groter bekijken',agdagenKop:'Kies je oefendagen',dagenVol:['Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag','Zondag'],mstart:'Vergeleken met je start: je eerste score was {a}, nu {b}.',mtrendLager:'Je laatste score is lager dan je eerdere scores.',mtrendGelijk:'Je laatste score lijkt op je eerdere scores.',mtrendHoger:'Je laatste score is hoger dan je eerdere scores.',leesUitlegCheck:'Niet voorgelezen, omdat de uitleg nog wordt gecontroleerd: {n}.',leesBeeldCheck:'Niet voorgelezen, omdat de oefenafbeelding nog wordt gecontroleerd: {n}.',leesNiets:'Er wordt nu niets voorgelezen voor deze selectie.',leesDosering:'Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.',leesGeenControle:'De controle van de algemene uitleg kon niet laden. Ververs de kaart. Je persoonlijke dosering blijft op de kaart staan.',ytOpen:'Open deze video op YouTube (externe website)',holdBeeld:'De oefenafbeelding wordt gecontroleerd en is tijdelijk niet zichtbaar. Je dosering blijft op deze kaart staan.',holdUitleg:'De algemene uitleg wordt gecontroleerd. Vraag je behandelaar om de uitvoering; je persoonlijke dosering blijft staan.'},
+  en:{eyebrow:'Training card',oefkop:'Your exercises',geenoef:'There are no exercises on this card yet.',series:'sets',herh:'repetitions',vidEigen:'Video from your therapist',vidYt:'Watch instruction video',veilig:'Take pain seriously: stop if the pain increases and contact your physiotherapist.',metingkop:'How did it go today?',mvraag:'Finished exercising? Slide or tap how much pain you felt while exercising.',ml0:'0 = no pain',ml10:'10 = worst pain',mtitel:'Your progress',mnoot:'Your score is saved with your card so your physiotherapist can follow your progress. One score counts per day; tap another number to change it.',mdank:'Saved, thank you. Your physiotherapist can see your progress on this card.',mfout:'Saving did not work, please try again in a moment.',agendakop:'Reminder in your calendar',agintro:'Do not forget your exercises: put fixed exercise moments in the calendar of your phone. Choose your days and time.',aglabel:'Time',agknop:'Add to my calendar',aghint:'Your phone opens a calendar invitation that repeats every week. Works on iPhone and Android, without an app or account.',agleeg:'Choose at least one day for your exercises.',dagen:['Mo','Tu','We','Th','Fr','Sa','Su'],schemakop:'Completed schedule',datum:'Date',schemahint:'S = sets, H = repetitions, W = weight. Swipe sideways to see all exercises.',voet1:'Questions about how to do an exercise? Contact your practice.',gemaakt:'Made with',voor:'For',doel:'Goal',letop:'Note',lees:'Read aloud',stop:'Stop',oefening:'Exercise',bel:'Call your practice',inst:'Add this card to your home screen and it opens like an app',instDoen:'Add to home screen',instIos:'Tap the share button and choose "Add to Home Screen"',demo:'Show positions',demoUit:'Show photo',houding1:'Start position',houding2:'End position',geluidAan:'Sound on',geluidUit:'Sound off',uitlegKop:'How to do this exercise',uitleg1:'Move calmly from the start position to the end position and back.',uitleg2:'Keep breathing steadily and stop if the pain increases.',fotoVideo:'play video',fotoBekijk:'view larger',agdagenKop:'Choose your exercise days',dagenVol:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],mstart:'Compared with your start: your first score was {a}, now {b}.',mtrendLager:'Your latest score is lower than your earlier scores.',mtrendGelijk:'Your latest score is similar to your earlier scores.',mtrendHoger:'Your latest score is higher than your earlier scores.',leesUitlegCheck:'Not read aloud because the explanation is still being checked: {n}.',leesBeeldCheck:'Not read aloud because the exercise image is still being checked: {n}.',leesNiets:'Nothing is read aloud for this selection right now.',leesDosering:'Also follow the dosage and notes from your therapist on this card.',leesGeenControle:'The check of the general explanation could not load. Refresh the card. Your personal dosage stays on the card.',ytOpen:'Open this video on YouTube (external website)',holdBeeld:'The exercise image is being checked and is temporarily hidden. Your dosage stays on this card.',holdUitleg:'The general explanation is being checked. Ask your therapist how to do this exercise; your personal dosage stays on the card.'},
+  de:{eyebrow:'Trainingskarte',oefkop:'Deine Übungen',geenoef:'Auf dieser Karte stehen noch keine Übungen.',series:'Sätze',herh:'Wiederholungen',vidEigen:'Video von deinem Therapeuten',vidYt:'Anleitungsvideo ansehen',veilig:'Nimm Schmerzen ernst: höre auf, wenn der Schmerz zunimmt, und sprich mit deinem Physiotherapeuten.',metingkop:'Wie ist es heute gelaufen?',mvraag:'Fertig mit den Übungen? Schiebe oder tippe an, wie viel Schmerz du beim Üben hattest.',ml0:'0 = kein Schmerz',ml10:'10 = stärkster Schmerz',mtitel:'Dein Verlauf',mnoot:'Dein Wert wird bei deiner Karte gespeichert, damit dein Physiotherapeut deinen Fortschritt verfolgen kann. Es zählt ein Wert pro Tag; tippe eine andere Zahl an, um ihn zu ändern.',mdank:'Gespeichert, danke. Dein Physiotherapeut kann deinen Verlauf bei dieser Karte sehen.',mfout:'Speichern hat nicht geklappt, versuche es gleich noch einmal.',agendakop:'Erinnerung in deinem Kalender',agintro:'Vergiss deine Übungen nicht: trage feste Übungszeiten in den Kalender deines Handys ein. Wähle deine Tage und die Uhrzeit.',aglabel:'Uhrzeit',agknop:'In meinen Kalender',aghint:'Dein Handy öffnet eine Kalendereinladung, die sich jede Woche wiederholt. Funktioniert auf iPhone und Android, ohne App oder Konto.',agleeg:'Wähle mindestens einen Tag für deine Übungen.',dagen:['Mo','Di','Mi','Do','Fr','Sa','So'],schemakop:'Ausgefülltes Schema',datum:'Datum',schemahint:'S = Sätze, H = Wiederholungen, W = Gewicht. Wische zur Seite für alle Übungen.',voet1:'Fragen zur Ausführung? Wende dich an deine Praxis.',gemaakt:'Erstellt mit',voor:'Für',doel:'Ziel',letop:'Beachte',lees:'Vorlesen',stop:'Stopp',oefening:'Übung',bel:'Praxis anrufen',inst:'Lege diese Karte auf deinen Startbildschirm, dann öffnet sie sich wie eine App',instDoen:'Zum Startbildschirm',instIos:'Tippe auf Teilen und wähle "Zum Home-Bildschirm"',demo:'Positionen zeigen',demoUit:'Foto zeigen',houding1:'Ausgangsposition',houding2:'Endposition',geluidAan:'Ton an',geluidUit:'Ton aus',uitlegKop:'So geht die Übung',uitleg1:'Bewege dich ruhig von der Ausgangsposition in die Endposition und wieder zurück.',uitleg2:'Atme ruhig weiter und höre auf, wenn der Schmerz zunimmt.',fotoVideo:'Video abspielen',fotoBekijk:'größer ansehen',agdagenKop:'Wähle deine Übungstage',dagenVol:['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'],mstart:'Im Vergleich zum Start: dein erster Wert war {a}, jetzt {b}.',mtrendLager:'Dein letzter Wert ist niedriger als deine früheren Werte.',mtrendGelijk:'Dein letzter Wert ähnelt deinen früheren Werten.',mtrendHoger:'Dein letzter Wert ist höher als deine früheren Werte.',leesUitlegCheck:'Nicht vorgelesen, weil die Anleitung noch geprüft wird: {n}.',leesBeeldCheck:'Nicht vorgelesen, weil das Übungsbild noch geprüft wird: {n}.',leesNiets:'Für diese Auswahl wird gerade nichts vorgelesen.',leesDosering:'Beachte außerdem die Dosierung und die Hinweise deines Therapeuten auf dieser Karte.',leesGeenControle:'Die Prüfung der allgemeinen Anleitung konnte nicht geladen werden. Lade die Karte neu. Deine persönliche Dosierung bleibt auf der Karte stehen.',ytOpen:'Dieses Video auf YouTube öffnen (externe Website)',holdBeeld:'Das Übungsbild wird geprüft und ist vorübergehend nicht sichtbar. Deine Dosierung bleibt auf dieser Karte stehen.',holdUitleg:'Die allgemeine Anleitung wird geprüft. Frag deine Therapeutin oder deinen Therapeuten nach der Ausführung; deine persönliche Dosierung bleibt stehen.'},
+  fr:{eyebrow:"Carte d'entraînement",oefkop:'Tes exercices',geenoef:"Il n'y a pas encore d'exercices sur cette carte.",series:'séries',herh:'répétitions',vidEigen:'Vidéo de ton kinésithérapeute',vidYt:'Voir la vidéo d’instruction',veilig:'Prends la douleur au sérieux : arrête si la douleur augmente et contacte ton kinésithérapeute.',metingkop:"Comment ça s'est passé aujourd'hui ?",mvraag:'Exercices terminés ? Fais glisser ou touche pour indiquer la douleur ressentie pendant les exercices.',ml0:'0 = pas de douleur',ml10:'10 = douleur maximale',mtitel:'Ton évolution',mnoot:'Ton score est enregistré avec ta carte pour que ton kinésithérapeute puisse suivre tes progrès. Un score compte par jour ; touche un autre chiffre pour le modifier.',mdank:'Enregistré, merci. Ton kinésithérapeute peut voir ton évolution sur cette carte.',mfout:"L'enregistrement n'a pas fonctionné, réessaie dans un instant.",agendakop:'Rappel dans ton agenda',agintro:"N'oublie pas tes exercices : ajoute des moments fixes dans l'agenda de ton téléphone. Choisis tes jours et l'heure.",aglabel:'Heure',agknop:'Ajouter à mon agenda',aghint:"Ton téléphone ouvre une invitation d'agenda qui se répète chaque semaine. Fonctionne sur iPhone et Android, sans application ni compte.",agleeg:'Choisis au moins un jour pour tes exercices.',dagen:['Lu','Ma','Me','Je','Ve','Sa','Di'],schemakop:'Schéma rempli',datum:'Date',schemahint:'S = séries, H = répétitions, W = poids. Fais glisser sur le côté pour tous les exercices.',voet1:"Des questions sur l'exécution ? Contacte ton cabinet.",gemaakt:'Créé avec',voor:'Pour',doel:'Objectif',letop:'Attention',lees:'Lire à voix haute',stop:'Stop',oefening:'Exercice',bel:'Appeler le cabinet',inst:"Ajoute cette carte à ton écran d'accueil, elle s'ouvrira comme une appli",instDoen:"Ajouter à l'écran d'accueil",instIos:'Touche le bouton de partage puis "Sur l\'écran d\'accueil"',demo:'Voir les positions',demoUit:'Voir la photo',houding1:'Position de départ',houding2:'Position finale',geluidAan:'Activer le son',geluidUit:'Couper le son',uitlegKop:'Comment faire cet exercice',uitleg1:'Passe calmement de la position de départ à la position finale, puis reviens.',uitleg2:'Respire calmement et arrête si la douleur augmente.',fotoVideo:'lire la vidéo',fotoBekijk:'voir en plus grand',agdagenKop:'Choisis tes jours d\'exercice',dagenVol:['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'],mstart:'Par rapport au début : votre premier score était {a}, maintenant {b}.',mtrendLager:'Ta dernière note est plus basse que tes notes précédentes.',mtrendGelijk:'Ta dernière note ressemble à tes notes précédentes.',mtrendHoger:'Ta dernière note est plus haute que tes notes précédentes.',leesUitlegCheck:'Non lu à voix haute, car l\'explication est encore en cours de vérification : {n}.',leesBeeldCheck:'Non lu à voix haute, car l\'image de l\'exercice est encore en cours de vérification : {n}.',leesNiets:'Rien n\'est lu à voix haute pour cette sélection pour le moment.',leesDosering:'Suis aussi le dosage et les remarques de ton kinésithérapeute sur cette carte.',leesGeenControle:'La vérification de l\'explication générale n\'a pas pu se charger. Actualise la carte. Ton dosage personnel reste sur la carte.',ytOpen:'Ouvrir cette vidéo sur YouTube (site externe)',holdBeeld:'L’image de l’exercice est en cours de vérification et temporairement masquée. Ton dosage reste sur cette carte.',holdUitleg:'L’explication générale est en cours de vérification. Demande à ton kiné comment faire l’exercice ; ton dosage personnel reste sur la carte.'},
+  es:{eyebrow:'Tarjeta de entrenamiento',oefkop:'Tus ejercicios',geenoef:'Todavía no hay ejercicios en esta tarjeta.',series:'series',herh:'repeticiones',vidEigen:'Vídeo de tu fisioterapeuta',vidYt:'Ver el vídeo de instrucciones',veilig:'Toma el dolor en serio: para si el dolor aumenta y consulta a tu fisioterapeuta.',metingkop:'¿Cómo ha ido hoy?',mvraag:'¿Has terminado? Desliza o toca cuánto dolor sentiste durante los ejercicios.',ml0:'0 = sin dolor',ml10:'10 = dolor máximo',mtitel:'Tu evolución',mnoot:'Tu puntuación se guarda con tu tarjeta para que tu fisioterapeuta pueda seguir tu progreso. Cuenta una puntuación por día; toca otro número para cambiarla.',mdank:'Guardado, gracias. Tu fisioterapeuta puede ver tu evolución en esta tarjeta.',mfout:'No se pudo guardar, inténtalo de nuevo en un momento.',agendakop:'Recordatorio en tu calendario',agintro:'No olvides tus ejercicios: pon momentos fijos en el calendario de tu teléfono. Elige tus días y la hora.',aglabel:'Hora',agknop:'Añadir a mi calendario',aghint:'Tu teléfono abre una invitación de calendario que se repite cada semana. Funciona en iPhone y Android, sin aplicación ni cuenta.',agleeg:'Elige al menos un día para tus ejercicios.',dagen:['Lu','Ma','Mi','Ju','Vi','Sá','Do'],schemakop:'Esquema completado',datum:'Fecha',schemahint:'S = series, H = repeticiones, W = peso. Desliza hacia un lado para ver todos los ejercicios.',voet1:'¿Preguntas sobre la ejecución? Contacta con tu consulta.',gemaakt:'Hecho con',voor:'Para',doel:'Objetivo',letop:'Atención',lees:'Leer en voz alta',stop:'Parar',oefening:'Ejercicio',bel:'Llamar a la consulta',inst:'Añade esta tarjeta a tu pantalla de inicio y se abrirá como una app',instDoen:'Añadir a inicio',instIos:'Toca el botón de compartir y elige "Añadir a pantalla de inicio"',demo:'Ver las posiciones',demoUit:'Ver la foto',houding1:'Posición inicial',houding2:'Posición final',geluidAan:'Activar sonido',geluidUit:'Silenciar',uitlegKop:'Cómo hacer este ejercicio',uitleg1:'Pasa con calma de la posición inicial a la posición final y vuelve.',uitleg2:'Respira con calma y para si el dolor aumenta.',fotoVideo:'reproducir vídeo',fotoBekijk:'ver más grande',agdagenKop:'Elige tus días de ejercicio',dagenVol:['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'],mstart:'Comparado con tu inicio: tu primera puntuación fue {a}, ahora {b}.',mtrendLager:'Tu última puntuación es más baja que las anteriores.',mtrendGelijk:'Tu última puntuación es parecida a las anteriores.',mtrendHoger:'Tu última puntuación es más alta que las anteriores.',leesUitlegCheck:'No se lee en voz alta porque la explicación todavía se está revisando: {n}.',leesBeeldCheck:'No se lee en voz alta porque la imagen del ejercicio todavía se está revisando: {n}.',leesNiets:'Ahora no se lee nada en voz alta para esta selección.',leesDosering:'Sigue también la dosificación y las indicaciones de tu fisioterapeuta en esta tarjeta.',leesGeenControle:'No se pudo cargar la revisión de la explicación general. Actualiza la tarjeta. Tu dosificación personal sigue en la tarjeta.',ytOpen:'Abrir este vídeo en YouTube (sitio web externo)',holdBeeld:'La imagen del ejercicio se está revisando y no se ve por ahora. Tu dosificación sigue en esta tarjeta.',holdUitleg:'La explicación general se está revisando. Pregunta a tu fisioterapeuta cómo hacer el ejercicio; tu dosificación personal sigue en la tarjeta.'},
+  pl:{eyebrow:'Karta treningowa',oefkop:'Twoje ćwiczenia',geenoef:'Na tej karcie nie ma jeszcze ćwiczeń.',series:'serie',herh:'powtórzenia',vidEigen:'Wideo od twojego fizjoterapeuty',vidYt:'Zobacz film instruktażowy',veilig:'Traktuj ból poważnie: przerwij, gdy ból narasta, i skontaktuj się z fizjoterapeutą.',metingkop:'Jak poszło dzisiaj?',mvraag:'Skończyłeś ćwiczyć? Przesuń lub dotknij, jak silny ból odczuwałeś podczas ćwiczeń.',ml0:'0 = brak bólu',ml10:'10 = najsilniejszy ból',mtitel:'Twój przebieg',mnoot:'Twój wynik jest zapisywany przy karcie, aby fizjoterapeuta mógł śledzić twoje postępy. Liczy się jeden wynik dziennie; dotknij innej cyfry, aby go zmienić.',mdank:'Zapisano, dziękujemy. Twój fizjoterapeuta może zobaczyć twoje postępy przy tej karcie.',mfout:'Zapis się nie udał, spróbuj ponownie za chwilę.',agendakop:'Przypomnienie w kalendarzu',agintro:'Nie zapominaj o ćwiczeniach: ustaw stałe momenty ćwiczeń w kalendarzu telefonu. Wybierz dni i godzinę.',aglabel:'Godzina',agknop:'Dodaj do kalendarza',aghint:'Telefon otworzy zaproszenie do kalendarza, które powtarza się co tydzień. Działa na iPhonie i Androidzie, bez aplikacji i konta.',agleeg:'Wybierz co najmniej jeden dzień na ćwiczenia.',dagen:['Pn','Wt','Śr','Cz','Pt','So','Nd'],schemakop:'Wypełniony harmonogram',datum:'Data',schemahint:'S = serie, H = powtórzenia, W = ciężar. Przesuń w bok, aby zobaczyć wszystkie ćwiczenia.',voet1:'Pytania o wykonanie? Skontaktuj się ze swoim gabinetem.',gemaakt:'Stworzone w',voor:'Dla',doel:'Cel',letop:'Uwaga',lees:'Przeczytaj na głos',stop:'Stop',oefening:'Ćwiczenie',bel:'Zadzwoń do gabinetu',inst:'Dodaj tę kartę do ekranu początkowego, otworzy się jak aplikacja',instDoen:'Dodaj do ekranu',instIos:'Stuknij przycisk udostępniania i wybierz "Do ekranu początkowego"',demo:'Pokaż pozycje',demoUit:'Pokaż zdjęcie',houding1:'Pozycja początkowa',houding2:'Pozycja końcowa',geluidAan:'Włącz dźwięk',geluidUit:'Wyłącz dźwięk',uitlegKop:'Jak wykonać to ćwiczenie',uitleg1:'Przechodź spokojnie z pozycji początkowej do końcowej i z powrotem.',uitleg2:'Oddychaj spokojnie i przerwij, gdy ból narasta.',fotoVideo:'odtwórz wideo',fotoBekijk:'zobacz większe',agdagenKop:'Wybierz dni ćwiczeń',dagenVol:['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'],mstart:'W porównaniu z początkiem: twój pierwszy wynik to {a}, teraz {b}.',mtrendLager:'Twój ostatni wynik jest niższy niż wcześniejsze.',mtrendGelijk:'Twój ostatni wynik jest podobny do wcześniejszych.',mtrendHoger:'Twój ostatni wynik jest wyższy niż wcześniejsze.',leesUitlegCheck:'Nie odczytano, ponieważ opis jest jeszcze sprawdzany: {n}.',leesBeeldCheck:'Nie odczytano, ponieważ obraz ćwiczenia jest jeszcze sprawdzany: {n}.',leesNiets:'Dla tego wyboru nic nie jest teraz odczytywane.',leesDosering:'Stosuj się też do dawkowania i uwag fizjoterapeuty na tej karcie.',leesGeenControle:'Nie udało się wczytać weryfikacji ogólnego opisu. Odśwież kartę. Twoje osobiste dawkowanie pozostaje na karcie.',ytOpen:'Otwórz ten film w YouTube (zewnętrzna strona)',holdBeeld:'Obraz ćwiczenia jest sprawdzany i chwilowo niewidoczny. Twoje dawkowanie pozostaje na tej karcie.',holdUitleg:'Ogólny opis jest sprawdzany. Zapytaj fizjoterapeutę, jak wykonać ćwiczenie; twoje osobiste dawkowanie pozostaje na karcie.'},
+  tr:{eyebrow:'Antrenman kartı',oefkop:'Egzersizlerin',geenoef:'Bu kartta henüz egzersiz yok.',series:'set',herh:'tekrar',vidEigen:'Terapistinden video',vidYt:'Eğitim videosunu izle',veilig:'Ağrıyı ciddiye al: ağrı artarsa dur ve fizyoterapistinle görüş.',metingkop:'Bugün nasıl geçti?',mvraag:'Egzersiz bitti mi? Kaydırarak veya dokunarak egzersiz sırasında ne kadar ağrı hissettiğini işaretle.',ml0:'0 = ağrı yok',ml10:'10 = en şiddetli ağrı',mtitel:'Gelişimin',mnoot:'Puanın kartınla birlikte kaydedilir, böylece fizyoterapistin ilerlemeni takip edebilir. Günde bir puan sayılır; değiştirmek için başka bir sayıya dokun.',mdank:'Kaydedildi, teşekkürler. Fizyoterapistin bu karttaki gelişimini görebilir.',mfout:'Kaydetme başarısız oldu, birazdan tekrar dene.',agendakop:'Takviminde hatırlatma',agintro:'Egzersizlerini unutma: telefonunun takvimine sabit egzersiz zamanları ekle. Günlerini ve saatini seç.',aglabel:'Saat',agknop:'Takvimime ekle',aghint:'Telefonun her hafta tekrarlanan bir takvim daveti açar. iPhone ve Android üzerinde, uygulama veya hesap olmadan çalışır.',agleeg:'Egzersizlerin için en az bir gün seç.',dagen:['Pt','Sa','Ça','Pe','Cu','Ct','Pa'],schemakop:'Doldurulan program',datum:'Tarih',schemahint:'S = set, H = tekrar, W = ağırlık. Tüm egzersizler için yana kaydır.',voet1:'Uygulama hakkında soruların mı var? Kliniğinle iletişime geç.',gemaakt:'Hazırlayan:',voor:'Kim için',doel:'Hedef',letop:'Dikkat',lees:'Sesli oku',stop:'Durdur',oefening:'Egzersiz',bel:'Kliniği ara',inst:'Bu kartı ana ekranına ekle, uygulama gibi açılır',instDoen:'Ana ekrana ekle',instIos:'Paylaş düğmesine dokun ve "Ana Ekrana Ekle" seçeneğini seç',demo:'Pozisyonları göster',demoUit:'Fotoğrafı göster',houding1:'Başlangıç pozisyonu',houding2:'Bitiş pozisyonu',geluidAan:'Sesi aç',geluidUit:'Sesi kapat',uitlegKop:'Bu egzersiz nasıl yapılır',uitleg1:'Başlangıç pozisyonundan bitiş pozisyonuna sakin bir şekilde geç ve geri dön.',uitleg2:'Sakin nefes almaya devam et, ağrı artarsa dur.',fotoVideo:'videoyu oynat',fotoBekijk:'daha büyük gör',agdagenKop:'Egzersiz günlerini seç',dagenVol:['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'],mstart:'Başlangıcına göre: ilk puanın {a} idi, şimdi {b}.',mtrendLager:'Son puanın önceki puanlarından daha düşük.',mtrendGelijk:'Son puanın önceki puanlarına benziyor.',mtrendHoger:'Son puanın önceki puanlarından daha yüksek.',leesUitlegCheck:'Sesli okunmadı, çünkü açıklama hâlâ kontrol ediliyor: {n}.',leesBeeldCheck:'Sesli okunmadı, çünkü egzersiz görseli hâlâ kontrol ediliyor: {n}.',leesNiets:'Bu seçim için şu anda hiçbir şey sesli okunmuyor.',leesDosering:'Ayrıca bu karttaki terapistinin dozaj ve notlarına uy.',leesGeenControle:'Genel açıklamanın kontrolü yüklenemedi. Kartı yenile. Kişisel dozajın kartta kalır.',ytOpen:'Bu videoyu YouTube\'da aç (harici web sitesi)',holdBeeld:'Egzersiz görseli kontrol ediliyor ve geçici olarak gizli. Dozajın bu kartta kalır.',holdUitleg:'Genel açıklama kontrol ediliyor. Egzersizi nasıl yapacağını fizyoterapistine sor; kişisel dozajın kartta kalır.'},
+  ar:{eyebrow:'بطاقة التمارين',oefkop:'تمارينك',geenoef:'لا توجد تمارين على هذه البطاقة بعد.',series:'مجموعات',herh:'تكرارات',vidEigen:'فيديو من معالجك',vidYt:'شاهد فيديو التعليمات',veilig:'خذ الألم على محمل الجد: توقف إذا زاد الألم وتواصل مع أخصائي العلاج الطبيعي.',metingkop:'كيف سار الأمر اليوم؟',mvraag:'انتهيت من التمارين؟ اسحب أو اضغط لتحديد مقدار الألم الذي شعرت به أثناء التمرين.',ml0:'0 = لا ألم',ml10:'10 = أسوأ ألم',mtitel:'تقدمك',mnoot:'يتم حفظ نتيجتك مع بطاقتك حتى يتمكن أخصائي العلاج الطبيعي من متابعة تقدمك. تُحتسب نتيجة واحدة في اليوم؛ اضغط على رقم آخر لتغييرها.',mdank:'تم الحفظ، شكرًا لك. يمكن لمعالجك رؤية تقدمك في هذه البطاقة.',mfout:'لم ينجح الحفظ، حاول مرة أخرى بعد قليل.',agendakop:'تذكير في التقويم',agintro:'لا تنسَ تمارينك: أضف أوقات تمرين ثابتة إلى تقويم هاتفك. اختر الأيام والوقت.',aglabel:'الوقت',agknop:'أضف إلى تقويمي',aghint:'يفتح هاتفك دعوة تقويم تتكرر كل أسبوع. يعمل على iPhone وAndroid، بدون تطبيق أو حساب.',agleeg:'اختر يومًا واحدًا على الأقل لتمارينك.',dagen:['اث','ثل','أر','خم','جم','سب','أح'],schemakop:'الجدول المعبأ',datum:'التاريخ',schemahint:'S = مجموعات، H = تكرارات، W = وزن. اسحب جانبًا لرؤية كل التمارين.',voet1:'أسئلة حول طريقة الأداء؟ تواصل مع عيادتك.',gemaakt:'صُنع بواسطة',voor:'لـ',doel:'الهدف',letop:'تنبيه',lees:'اقرأ بصوت عالٍ',stop:'إيقاف',oefening:'تمرين',bel:'اتصل بالعيادة',inst:'أضف هذه البطاقة إلى الشاشة الرئيسية لتفتح مثل التطبيق',instDoen:'أضف إلى الشاشة الرئيسية',instIos:'اضغط على زر المشاركة واختر "إضافة إلى الشاشة الرئيسية"',demo:'عرض الوضعيتين',demoUit:'عرض الصورة',houding1:'وضعية البداية',houding2:'وضعية النهاية',geluidAan:'تشغيل الصوت',geluidUit:'إيقاف الصوت',uitlegKop:'كيفية أداء هذا التمرين',uitleg1:'انتقل بهدوء من وضعية البداية إلى وضعية النهاية ثم عد.',uitleg2:'واصل التنفس بهدوء وتوقف إذا زاد الألم.',fotoVideo:'تشغيل الفيديو',fotoBekijk:'عرض أكبر',agdagenKop:'اختر أيام تمارينك',dagenVol:['الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت','الأحد'],mstart:'مقارنة ببدايتك: كانت أول درجة لك {a}، والآن {b}.',mtrendLager:'نتيجتك الأخيرة أقل من نتائجك السابقة.',mtrendGelijk:'نتيجتك الأخيرة مشابهة لنتائجك السابقة.',mtrendHoger:'نتيجتك الأخيرة أعلى من نتائجك السابقة.',leesUitlegCheck:'لم تتم القراءة بصوت عالٍ لأن الشرح لا يزال قيد المراجعة: {n}.',leesBeeldCheck:'لم تتم القراءة بصوت عالٍ لأن صورة التمرين لا تزال قيد المراجعة: {n}.',leesNiets:'لا تتم قراءة أي شيء لهذا الاختيار الآن.',leesDosering:'اتبع أيضًا الجرعة وملاحظات معالجك الموجودة على هذه البطاقة.',leesGeenControle:'تعذر تحميل مراجعة الشرح العام. حدّث البطاقة. تبقى جرعتك الشخصية على البطاقة.',ytOpen:'افتح هذا الفيديو على YouTube (موقع خارجي)',holdBeeld:'صورة التمرين قيد المراجعة ومخفية مؤقتًا. تبقى جرعتك على هذه البطاقة.',holdUitleg:'الشرح العام قيد المراجعة. اسأل معالجك الفيزيائي عن طريقة أداء التمرين؛ تبقى جرعتك الشخصية على البطاقة.'},
+  uk:{eyebrow:'Картка вправ',oefkop:'Твої вправи',geenoef:'На цій картці ще немає вправ.',series:'підходи',herh:'повторення',vidEigen:'Відео від твого терапевта',vidYt:'Переглянути відеоінструкцію',veilig:'Стався до болю серйозно: зупинися, якщо біль посилюється, і звернися до фізіотерапевта.',metingkop:'Як пройшло сьогодні?',mvraag:'Закінчив вправи? Пересунь або натисни, наскільки сильним був біль під час вправ.',ml0:'0 = болю немає',ml10:'10 = найсильніший біль',mtitel:'Твій прогрес',mnoot:'Твій результат зберігається з карткою, щоб фізіотерапевт міг стежити за прогресом. Зараховується один результат на день; натисни іншу цифру, щоб змінити його.',mdank:'Збережено, дякуємо. Твій фізіотерапевт може бачити твій прогрес на цій картці.',mfout:'Не вдалося зберегти, спробуй ще раз за мить.',agendakop:'Нагадування в календарі',agintro:'Не забувай про вправи: додай постійний час вправ у календар телефона. Обери дні та час.',aglabel:'Час',agknop:'Додати в календар',aghint:'Телефон відкриє запрошення в календар, що повторюється щотижня. Працює на iPhone та Android, без застосунку чи облікового запису.',agleeg:'Обери хоча б один день для вправ.',dagen:['Пн','Вт','Ср','Чт','Пт','Сб','Нд'],schemakop:'Заповнена схема',datum:'Дата',schemahint:'S = підходи, H = повторення, W = вага. Гортай убік, щоб побачити всі вправи.',voet1:'Питання щодо виконання? Звернися до своєї практики.',gemaakt:'Створено з',voor:'Для',doel:'Мета',letop:'Увага',lees:'Читати вголос',stop:'Стоп',oefening:'Вправа',bel:'Подзвонити у практику',inst:'Додай цю картку на головний екран, і вона відкриється як застосунок',instDoen:'На головний екран',instIos:'Натисни кнопку "Поділитися" і вибери "На головний екран"',demo:'Показати положення',demoUit:'Показати фото',houding1:'Початкове положення',houding2:'Кінцеве положення',geluidAan:'Увімкнути звук',geluidUit:'Вимкнути звук',uitlegKop:'Як виконувати цю вправу',uitleg1:'Спокійно переходь із початкового положення в кінцеве і назад.',uitleg2:'Дихай спокійно і зупинися, якщо біль посилюється.',fotoVideo:'відтворити відео',fotoBekijk:'переглянути більше',agdagenKop:'Обери дні вправ',dagenVol:['Понеділок','Вівторок','Середа','Четвер','П\'ятниця','Субота','Неділя'],mstart:'Порівняно з початком: твій перший результат був {a}, тепер {b}.',mtrendLager:'Твоя остання оцінка нижча за попередні.',mtrendGelijk:'Твоя остання оцінка схожа на попередні.',mtrendHoger:'Твоя остання оцінка вища за попередні.',leesUitlegCheck:'Не прочитано вголос, бо пояснення ще перевіряється: {n}.',leesBeeldCheck:'Не прочитано вголос, бо зображення вправи ще перевіряється: {n}.',leesNiets:'Зараз для цього вибору нічого не читається вголос.',leesDosering:'Також дотримуйся дозування та порад свого терапевта на цій картці.',leesGeenControle:'Не вдалося завантажити перевірку загального пояснення. Онови картку. Твоє особисте дозування залишається на картці.',ytOpen:'Відкрити це відео на YouTube (зовнішній сайт)',holdBeeld:'Зображення вправи перевіряється і тимчасово приховане. Твоє дозування залишається на цій картці.',holdUitleg:'Загальне пояснення перевіряється. Запитай свого фізіотерапевта, як виконувати вправу; твоє особисте дозування залишається на картці.'}
   };
   var SPRAAK={nl:'nl-NL',en:'en-GB',de:'de-DE',fr:'fr-FR',es:'es-ES',pl:'pl-PL',tr:'tr-TR',ar:'ar-SA',uk:'uk-UA'};
   var VIDEO_META={nl:'AI-demonstratie · klinisch gecontroleerd',en:'AI demonstration · clinically reviewed',de:'KI-Demonstration · klinisch geprüft',fr:'Démonstration IA · vérifiée cliniquement',es:'Demostración con IA · revisada clínicamente',pl:'Demonstracja AI · sprawdzona klinicznie',tr:'Yapay zekâ gösterimi · klinik olarak kontrol edildi',ar:'عرض بالذكاء الاصطناعي · تمت مراجعته سريريًا',uk:'ШІ-демонстрація · клінічно перевірено'};
-  var VIDEO_META_CONCEPT={nl:'AI-concept · beoordeling door fysiotherapeut volgt',en:'AI concept · physiotherapist review pending',de:'KI-Konzept · physiotherapeutische Prüfung folgt',fr:'Concept IA · validation du kinésithérapeute à venir',es:'Concepto de IA · pendiente de revisión fisioterapéutica',pl:'Koncepcja AI · oczekuje na ocenę fizjoterapeuty',tr:'Yapay zekâ taslağı · fizyoterapist incelemesi bekleniyor',ar:'مسودة بالذكاء الاصطناعي · بانتظار مراجعة أخصائي العلاج الطبيعي',uk:'ШІ-концепт · очікує перевірки фізіотерапевта'};
+  // AI-video zonder klinische controle: één gewone zin in plaats van het oude losse label.
+  // Dat de video met AI is gemaakt blijft erin staan (AI-verordening art. 50 lid 4), in alle negen talen.
+  var VIDEO_META_CONCEPT={nl:'De video is met AI gemaakt en laat de algemene uitvoering zien. Volg daarnaast de dosering en opmerkingen van je behandelaar op.',en:'This video was made with AI and shows the general movement. Also follow the dosage and notes from your therapist.',de:'Das Video wurde mit KI erstellt und zeigt die allgemeine Ausführung. Halte dich außerdem an die Dosierung und die Hinweise deiner Therapeutin oder deines Therapeuten.',fr:'Cette vidéo a été créée avec l’IA et montre l’exécution générale. Suis aussi le dosage et les remarques de ton thérapeute.',es:'Este vídeo se ha creado con IA y muestra la ejecución general. Sigue además la dosis y las indicaciones de tu terapeuta.',pl:'Ten film został stworzony przy użyciu AI i pokazuje ogólne wykonanie. Stosuj się też do dawkowania i uwag swojego terapeuty.',tr:'Bu video yapay zekâ ile oluşturuldu ve genel uygulamayı gösterir. Ayrıca terapistinin belirlediği doz ve notlara uy.',ar:'أُنشئ هذا الفيديو بالذكاء الاصطناعي ويعرض طريقة الأداء العامة. اتبع كذلك الجرعة وملاحظات معالجك.',uk:'Це відео створено за допомогою ШІ, воно показує загальне виконання. Також дотримуйся дозування та зауважень свого терапевта.'};
+  // Staat de luisterknop erbij (Nederlands), dan zegt één zin het voor stem en video samen.
+  var STEM_NOOT='De stem legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op.';
+  var STEM_VIDEO_NOOT='De stem en video zijn met AI gemaakt en leggen de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op.';
+  function aiVideoNoot(meta){
+    if(meta.clinicallyReviewed===true)return '<div class="vmeta">'+esc(VIDEO_META[TAAL]||VIDEO_META.nl)+'</div>';
+    return '<div class="vmeta" data-ai="1">'+esc(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl)+'</div>';
+  }
   // Onder de twee houdingen: waar de beelden vandaan komen en wat het wisselen niet is.
   var DEMO_BRON={
     nl:'Twee uitsnedes uit dezelfde oefenfoto. Het wisselen laat beide houdingen zien en is geen oefentempo. De uitvoering is niet door een fysiotherapeut goedgekeurd.',
@@ -1084,6 +1293,7 @@
       var t=b.querySelector('.odt');if(t)t.textContent=trg('oefdaan');
     });
     tekenZwaar();
+    if(typeof tekenSessie==='function')tekenSessie();
     var gedaanN=st.done.filter(function(i){return i<totaal;}).length;
     var vp=document.getElementById('oefvoortgang');
     if(!vp)return;
@@ -1138,11 +1348,20 @@
     if(totaal>0&&st.done.filter(function(i){return i<totaal;}).length>=totaal)bevestigGedaan();
   }
   // dag-teller bevestigen; slaat over als vandaag al geregistreerd is
+  // de voorbeeldkaart bewaart niets op de server: de dag staat dan alleen op het scherm,
+  // zodat het voorbeeld laat zien wat een echte kaart doet
+  function zetGedaanLokaal(aan){
+    var vandaag=dagStr(Date.now());
+    var g=((K&&K.kaart&&K.kaart.gedaan)||[]).filter(function(x){return dagStr(x.t)!==vandaag;});
+    if(aan)g.push({t:Date.now()});
+    K.kaart.gedaan=g;tekenGedaan();
+  }
   function bevestigGedaan(){
-    if(!id||id==='demo')return;
+    if(!id)return;
     var g=(K&&K.kaart&&K.kaart.gedaan)||[];
     var vandaag=dagStr(Date.now());
     if(g.some(function(x){return dagStr(x.t)===vandaag;}))return;
+    if(id==='demo'){zetGedaanLokaal(true);return;}
     var knop=document.getElementById('gdaan');
     if(knop&&knop.dataset.bezig)return;if(knop)knop.dataset.bezig='1';
     stuur('/api/kaart/gedaan',{id:id,aan:true})
@@ -1168,6 +1387,21 @@
   function nietVertaaldNoot(){
     var n=document.createElement('div');n.className='nietvertaald';n.setAttribute('role','note');
     n.textContent=NIET_VERTAALD[TAAL]||NIET_VERTAALD.en;return n;
+  }
+  // Uitleg bij de oefening zelf (herontwerp 2026-11-10): eerst stond de tekst alleen in het
+  // vergrote beeld, en wie niet op de foto tikte, zag nooit hoe de oefening moest. In de
+  // oefenstand staat hij onder het beeld, per zin een eigen alinea: dat leest op een
+  // telefoon rustiger dan één blok. Een verkeerde knip is alleen een regeleinde.
+  var ZO_DOE={nl:'Zo doe je het',en:'How to do it',de:'So geht es',fr:'Comment faire',es:'Cómo hacerlo',pl:'Jak to zrobić',tr:'Nasıl yapılır',ar:'طريقة الأداء',uk:'Як виконувати'};
+  function uitlegZinnen(t){
+    return String(t||'').replace(/([.!?…])\s+(?=[A-ZÀ-ÖØ-ÞĄ-Ž\u0400-\u042F¿¡])/g,'$1\n').split('\n').map(function(z){return z.trim();}).filter(Boolean);
+  }
+  function oefUitlegBlok(o,gehouden){
+    if(gehouden||!o||!o.uitleg)return '';
+    var nl=uitlegNietVertaald(o.uitleg);
+    return '<div class="oefuitleg"><h3>'+esc(ZO_DOE[TAAL]||ZO_DOE.nl)+'</h3>'+
+      uitlegZinnen(vt(o.uitleg)).map(function(z){return '<p dir="auto"'+(nl?' lang="nl"':'')+'>'+esc(z)+'</p>';}).join('')+
+      (nl?'<div class="nietvertaald" role="note">'+esc(NIET_VERTAALD[TAAL]||NIET_VERTAALD.en)+'</div>':'')+'</div>';
   }
   // Uitwijklink onder een ingesloten YouTube-video. Dit herstelt de ingesloten speler niet:
   // YouTube verwacht een Referer en de kaart stuurt bewust geen (referrer-policy same-origin;
@@ -1215,6 +1449,11 @@
     zet('agknopTxt',tr('agknop'));zet('aghint',tr('aghint'));
     zet('voet1',tr('voet1'));zet('gemaakt',tr('gemaakt'));
     zet('beltxt',tr('bel'));
+    // de datum van vandaag boven de oefeningen: je ziet meteen dat de vinkjes van vandaag zijn
+    try{zet('vandaag',new Date().toLocaleDateString(SPRAAK[TAAL]||'nl-NL',{weekday:'long',day:'numeric',month:'long'}));}catch(e){}
+    zet('meerkop',trse('meer'));zet('sterugTxt',trse('overzicht'));zet('sstatusTxt',trse('status'));zet('songedaan',trse('ongedaan'));
+    var pv=document.getElementById('svorige'),pn=document.getElementById('svolgende');
+    if(pv)pv.setAttribute('aria-label',trse('vorige'));if(pn)pn.setAttribute('aria-label',trse('volgende'));
     zet('seinkop',trs('seinkop'));zet('sintro',trs('sintro'));
     zet('s_vraag',trs('vraag'));zet('s_pijn',trs('pijn'));zet('s_goed',trs('goed'));
     zet('akop',trs('akop'));zet('aweg',trs('aweg'));
@@ -1286,14 +1525,21 @@
       if(hideMedia&&o&&mediaReviewReady)teControleren.push(mediaKey(o));
       var key=cellPrefix(x)+'.'+(x.i||0);
       // voorschrift: eerste ingevulde rij van het schema als losse chips
-      var chips='',eersteS='',eersteH='';
+      var chips='',eersteS='',eersteH='',kort='';
       for(var r=0;r<12;r++){
         var s=cells[key+'|r'+r+'|S'],h=cells[key+'|r'+r+'|H'],w=cells[key+'|r'+r+'|W'];
         if(s||h||w){
           eersteS=s||'';eersteH=h||'';
-          if(s)chips+='<span class="chip"><b>'+esc(s)+'</b>&nbsp;'+esc(tr('series'))+'</span>';
-          if(h)chips+='<span class="chip"><b>'+esc(h)+'</b>&nbsp;'+esc(tr('herh'))+'</span>';
+          if(s)chips+='<span class="chip"><b>'+esc(s)+'</b> '+esc(tr('series'))+'</span>';
+          // "30 sec" of "1 min" is een tijd, geen aantal: dan niet "herhalingen" erachter
+          if(h)chips+='<span class="chip"><b>'+esc(h)+'</b>'+(/^\s*\d+([-–]\d+)?\s*x?\s*$/i.test(String(h))?' '+esc(tr('herh')):'')+'</span>';
           if(w)chips+='<span class="chip"><b>'+esc(w)+'</b></span>';
+          // in de lijst past "3 series · 10 herhalingen" niet op een smalle telefoon:
+          // daar staat "3 × 10", de woorden staan groot in de oefenstand
+          var telt=/^\s*\d+([-–]\d+)?\s*$/;
+          kort=(s&&h&&telt.test(String(s))?esc(String(s).trim())+' × '+esc(String(h).trim())
+            :[s?esc(s)+' '+esc(tr('series')):'',h?esc(h)+(telt.test(String(h))?' '+esc(tr('herh')):''):''].filter(Boolean).join(' · '))+
+            (w?(s||h?' · ':'')+esc(w):'');
           break;
         }
       }
@@ -1319,23 +1565,25 @@
       var videoTekstData=videoTekst?' data-vtekst="'+esc(videoTekst)+'"':'';
       if(eigen){
         var eigenMeta=praktijkEigen&&o.video&&o.video.eigenMeta;
-        knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" data-vbron="'+(eigenMeta&&eigenMeta.aiGenerated?'bibliotheek" data-avatar="1':'praktijk')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(eigenMeta&&eigenMeta.aiGenerated?tr('vidYt'):tr('vidEigen'))+'</button>'+
-          (eigenMeta&&eigenMeta.aiGenerated?'<div class="vmeta">'+esc(eigenMeta.clinicallyReviewed===true?(VIDEO_META[TAAL]||VIDEO_META.nl):(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl))+'</div>':'');
+        knop='<button class="vbtn eigen" data-eigen="/'+esc(eigen)+'" data-vbron="'+(eigenMeta&&eigenMeta.aiGenerated?'bibliotheek" data-avatar="1':'praktijk')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+'<span class="vlab">'+esc(eigenMeta&&eigenMeta.aiGenerated?tr('vidYt'):tr('vidEigen'))+'</span></button>'+
+          (eigenMeta&&eigenMeta.aiGenerated?aiVideoNoot(eigenMeta):'');
       }
-      else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'" data-vbron="'+(catalogus&&catalogus.iframe===stream?'bibliotheek':'praktijk')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>'+
-        (aiVideo.aiGenerated?'<div class="vmeta">'+esc(aiVideo.clinicallyReviewed===true?(VIDEO_META[TAAL]||VIDEO_META.nl):(VIDEO_META_CONCEPT[TAAL]||VIDEO_META_CONCEPT.nl))+'</div>':'');
-      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" data-vbron="'+(persoonlijkYt?'praktijk':'bibliotheek')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
+      else if(stream)knop='<button class="vbtn" data-stream="'+esc(stream)+'" data-vbron="'+(catalogus&&catalogus.iframe===stream?'bibliotheek':'praktijk')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+'<span class="vlab">'+esc(tr('vidYt'))+'</span></button>'+
+        (aiVideo.aiGenerated?aiVideoNoot(aiVideo):'');
+      else if(yt)knop='<button class="vbtn" data-yt="'+esc(yt)+'" data-vbron="'+(persoonlijkYt?'praktijk':'bibliotheek')+'"'+videoTekstData+' aria-expanded="false">'+DRIEHOEK+'<span class="vlab">'+esc(tr('vidYt'))+'</span></button>';
       if(hideMedia||holdExplanation){
         // Het bibliotheekbeeld of de algemene uitleg wordt gecontroleerd. Een video die
         // de therapeut zelf opnam of per kaart koppelde staat daar los van en blijft
         // staan, zonder de algemene uitlegtekst (gebruikers-sweep 2026-11-06/07, Truus).
         var praktijkEigenMens=praktijkEigen&&!(o.video.eigenMeta&&o.video.eigenMeta.aiGenerated);
         var therapeutVideo=persoonlijk||praktijkEigenMens;
-        if(therapeutVideo)knop='<button class="vbtn eigen" data-eigen="/'+esc(therapeutVideo)+'" data-vbron="praktijk" aria-expanded="false">'+DRIEHOEK+esc(tr('vidEigen'))+'</button>';
-        else if(persoonlijkYt)knop='<button class="vbtn" data-yt="'+esc(persoonlijkYt)+'" data-vbron="praktijk" aria-expanded="false">'+DRIEHOEK+esc(tr('vidYt'))+'</button>';
+        if(therapeutVideo)knop='<button class="vbtn eigen" data-eigen="/'+esc(therapeutVideo)+'" data-vbron="praktijk" aria-expanded="false">'+DRIEHOEK+'<span class="vlab">'+esc(tr('vidEigen'))+'</span></button>';
+        else if(persoonlijkYt)knop='<button class="vbtn" data-yt="'+esc(persoonlijkYt)+'" data-vbron="praktijk" aria-expanded="false">'+DRIEHOEK+'<span class="vlab">'+esc(tr('vidYt'))+'</span></button>';
         else knop='';
       }
-      var beeldpad=o?(o.kaartImg||o.img):'';
+      // Op de telefoon alleen de avatar (kaartImg), nooit de lijntekening (img): die hoort bij
+      // de therapeut en de print (Ahmed 2026-11-08). Zonder avatar geen beeld, wel de uitleg.
+      var beeldpad=o&&o.kaartImg?o.kaartImg:'';
       // het v2-kanaal levert al absolute paden (/v2/images/...); oudere relatieve paden
       // krijgen zelf een schuine streep, zodat er nooit een dubbele ontstaat
       if(beeldpad&&beeldpad.charAt(0)!=='/')beeldpad='/'+beeldpad;
@@ -1347,21 +1595,25 @@
         :((o&&o.uitleg)?'<span class="infobadge" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35M11 8v0M11 11v3"/></svg></span>':'');
       // beschrijvend label voor toetsenbord- en screenreadergebruik
       var fotoLabel=esc(vt(x.n))+': '+esc(heeftVideo?tr('fotoVideo'):tr('fotoBekijk'));
-      html+='<div class="oef"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
-        (o&&!hideMedia?'<button type="button" class="fotoknop" aria-label="'+fotoLabel+'"><img src="'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
+      // één zin per oefening: staat de luisterknop erbij, dan noemt die zin stem en video samen
+      var aiNoot=knop.indexOf('<div class="vmeta" data-ai="1">')>-1;
+      var stemRegel=(!hideMedia&&!holdExplanation&&TAAL==='nl'&&o&&o.uitleg)?noorRegel(o,idx,aiNoot):'';
+      if(aiNoot&&stemRegel.indexOf(' data-noor="')>-1)knop=knop.replace(/<div class="vmeta" data-ai="1">[^<]*<\/div>/,'');
+      html+='<div class="oef" data-oidx="'+idx+'"><div class="oefkop"><span class="nr">'+(idx+1)+'</span>'+
+        (o&&!hideMedia&&beeldpad?'<button type="button" class="fotoknop" aria-label="'+fotoLabel+'"><img src="'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
           '" data-h="'+esc(eersteH)+'" data-audio-naam="'+esc(o.naam)+'" data-oef-id="'+esc(o.exerciseId||'')+'" data-pose="'+esc(mediaKey(o))+'" data-uitleg="'+esc(holdExplanation?'':(o.uitleg||''))+'" data-heeft-video="'+(heeftVideo?'1':'0')+'"/>'+
-          badge+'</button>':'')+
+          badge+'</button>':'<span class="geenfoto" aria-hidden="true"></span>')+
         '<div class="oefinfo"><div class="naam" dir="auto">'+esc(vt(x.n))+'</div>'+
-        (chips?'<div class="chips">'+chips+'</div>':'')+'</div></div>'+
+        (chips?'<div class="dosis">'+kort+'</div><div class="chips">'+chips+'</div>':'')+'</div></div>'+
         knop+'<div class="vhouder"></div>'+
         (hideMedia?'<p class="vmeta">'+esc(tr('holdBeeld'))+'</p>':'')+
         (holdExplanation?'<p class="vmeta">'+esc(tr('holdUitleg'))+'</p>':
           // Wordt het beeld teruggehouden, dan bieden we ook de uitleg erbij niet aan:
           // dezelfde oefening half wel en half niet presenteren is misleidend.
-          (hideMedia?'':
-          (TAAL==='nl'&&o&&o.uitleg?noorRegel(o,idx):'')))+
-        '<button type="button" class="oefdone" data-idx="'+idx+'" aria-pressed="false"><span class="odv" aria-hidden="true"></span><span class="odt"></span></button>'+
-        '<button type="button" class="oefzwaar" data-zidx="'+idx+'"></button></div>';
+          (hideMedia?'':stemRegel))+
+        oefUitlegBlok(o,hideMedia||holdExplanation)+
+        '<button type="button" class="oefzwaar" data-zidx="'+idx+'"></button>'+
+        '<button type="button" class="oefdone" data-idx="'+idx+'" aria-pressed="false"><span class="odv" aria-hidden="true"></span><span class="odt"></span></button></div>';
     });
     document.getElementById('oefs').innerHTML=html||'<div class="oef"><div class="oefkop">'+esc(tr('geenoef'))+'</div></div>';
     if(teControleren.length)herzieAfgekeurd(teControleren);
@@ -1377,7 +1629,7 @@
     });
     var schemaEl=document.getElementById('schema');
     if(gevuld.length){
-      var t='<h2>'+esc(tr('schemakop'))+'</h2><div class="schemakaart"><div class="schemawrap"><table><thead><tr><th class="dat">'+esc(tr('datum'))+'</th>';
+      var t='<details class="rustblok schemablok"><summary><h2>'+esc(tr('schemakop'))+'</h2></summary><div class="schemakaart"><div class="schemawrap"><table><thead><tr><th class="dat">'+esc(tr('datum'))+'</th>';
       chosen.forEach(function(x,idx){t+='<th colspan="3" dir="auto">'+(idx+1)+'. '+esc(vt(x.n))+'</th>';});
       t+='</tr><tr><th class="dat"></th>';
       chosen.forEach(function(){t+='<th>S</th><th>H</th><th>W</th>';});
@@ -1390,7 +1642,7 @@
         });
         t+='</tr>';
       });
-      t+='</tbody></table></div><div class="schemahint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'+esc(tr('schemahint'))+'</div></div>';
+      t+='</tbody></table></div><div class="schemahint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'+esc(tr('schemahint'))+'</div></div></details>';
       schemaEl.innerHTML=t;
     }else schemaEl.innerHTML='';
     tekenMeting();
@@ -1908,7 +2160,7 @@
     noorRequest++;
     // de knop per oefening die Noor startte, terug naar luisteren (zie zetNoorKnop)
     var nk=noorBron>=0&&document.querySelector?document.querySelector('#oefs [data-noor="'+noorBron+'"]'):null;
-    if(nk){nk.textContent='Luister naar Noor';nk.setAttribute('aria-pressed','false');}
+    if(nk){nk.textContent=NOOR_LABEL;nk.setAttribute('aria-pressed','false');}
     noorBron=-1;
     if(window.NoorAudio)NoorAudio.stop();
     if(window.speechSynthesis)speechSynthesis.cancel();
@@ -2090,10 +2342,11 @@
   // De knop "Luister naar Noor" bij een oefening is ook de stopknop: tijdens het luisteren
   // heet hij "Stop" en stopt een tweede tik de stem (sweep 2026-11-09, Truus op iPhone SE:
   // alleen de knop bovenaan werd Stop, buiten beeld, en een tweede tik begon opnieuw).
+  var NOOR_LABEL='Luister naar deze oefening';
   function noorKnop(i){return i>=0&&document.querySelector?document.querySelector('#oefs [data-noor="'+i+'"]'):null;}
   function zetNoorKnop(knop,aan){
     if(!knop)return;
-    knop.textContent=aan?tr('stop'):'Luister naar Noor';
+    knop.textContent=aan?tr('stop'):NOOR_LABEL;
     knop.setAttribute('aria-pressed',aan?'true':'false');
   }
   // Meldingen bij het luisteren staan op de pagina, naast de knop die ze veroorzaakte, in
@@ -2117,15 +2370,15 @@
   // Eén plek voor de luisterregel bij een oefening, zodat tekenen en herstellen precies
   // dezelfde knop opleveren. Alleen voor een oefening waarvan beeld en uitleg niet worden
   // tegengehouden; dat bewaken tekenKaart en herstelNoorKnoppen.
-  function noorRegel(o,idx){
+  function noorRegel(o,idx,metAiVideo){
     // tekent de kaart opnieuw terwijl Noor bij deze oefening praat, dan blijft het een stopknop
     var aan=bezigLezen&&noorBron===idx;
-    if(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg))return '<button type="button" class="vbtn" data-noor="'+idx+'"'+(aan?' aria-pressed="true"':'')+'>'+(aan?tr('stop'):'Luister naar Noor')+'</button>'+
+    if(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg))return '<button type="button" class="vbtn" data-noor="'+idx+'"'+(aan?' aria-pressed="true"':'')+'>'+(aan?tr('stop'):NOOR_LABEL)+'</button>'+
       // De opname bevat de algemene uitvoering, niet de dosering of de opmerkingen
       // van de behandelaar. Dat hoort de patiënt te weten voordat hij luistert.
-      '<div class="vmeta">De stem legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op deze kaart.</div>';
+      '<div class="vmeta">'+(metAiVideo?STEM_VIDEO_NOOT:STEM_NOOT)+'</div>';
     // herkenbaar, zodat herstelNoorKnoppen deze regel later kan omzetten
-    return '<div class="vmeta" data-noor-wacht="'+idx+'">Natuurlijke stemopname nog niet beschikbaar. De uitleg staat bij de afbeelding.</div>';
+    return '<div class="vmeta" data-noor-wacht="'+idx+'"></div>';
   }
   // Mislukt of verloopt het eerste laden van het stemmanifest, dan staat bij elke oefening
   // "nog niet beschikbaar". Lukt een latere poging (bijvoorbeeld via de knop bovenaan), dan
@@ -2142,7 +2395,10 @@
       // zelfde voorwaarden als bij het tekenen: een tegengehouden beeld of tegengehouden
       // uitleg krijgt nooit een knop, en zonder actuele opname blijft de regel staan
       if(!o||!o.uitleg||mediaWithheld(o)||explanationWithheld(o)||!NoorAudio.match(o.naam,o.uitleg))return;
-      regel.outerHTML=noorRegel(o,idx);
+      // stond de losse videozin er nog (de opname was er bij het tekenen nog niet), dan neemt de stemzin hem over
+      var oefEl=regel.closest?regel.closest('.oef'):null,ai=oefEl?oefEl.querySelector('.vmeta[data-ai]'):null;
+      regel.outerHTML=noorRegel(o,idx,!!ai);
+      if(ai&&ai.parentNode)ai.parentNode.removeChild(ai);
     });
   }
 
@@ -2187,11 +2443,19 @@
       try{localStorage.setItem('fp_app_weg','1');}catch(e){}
     });
     if(standalone||weg)return;
+    // De uitnodiging komt pas nadat de patiënt zijn pijnscore gaf of "vandaag geoefend"
+    // aantikte: dan is hij klaar en weet hij waar de kaart voor is. Eerder lag de balk over
+    // de oefeningen, of precies over de pijnvraag (herontwerp 2026-11-10).
+    var straks=null;
     window.addEventListener('beforeinstallprompt',function(e){
-      e.preventDefault();installEvent=e;toonBanner(false);
+      e.preventDefault();installEvent=e;straks=function(){toonBanner(false);};
     });
     // iPhone kent het installatie-event niet: toon daar eenmalig een korte uitleg
-    if(/iphone|ipad|ipod/i.test(navigator.userAgent))setTimeout(function(){toonBanner(true);},2500);
+    if(/iphone|ipad|ipod/i.test(navigator.userAgent))straks=function(){toonBanner(true);};
+    document.addEventListener('click',function(e){
+      if(!straks||!e.target.closest||!e.target.closest('#gdaan,#mschaal button'))return;
+      var f=straks;straks=null;setTimeout(f,2500);
+    },true);
   }
 
   // Pose controls require reviewed source-specific metadata; otherwise show the full image.
@@ -2493,10 +2757,217 @@
     if(v.error)meld(tekst.fout,true);
   }
 
+  // ---- oefenstand: één oefening per scherm (herontwerp 2026-11-10) ----
+  // Het overzicht is een korte lijst. Een tik op een oefening, of op de startknop, opent die
+  // oefening schermvullend: groot beeld, dosering, stem, uitleg, en onderaan één knop
+  // "Gedaan" die meteen naar de volgende oefening gaat. Het is dezelfde .oef uit de lijst,
+  // alleen anders opgemaakt (body.sessie + .actief), dus video, stem, vergrote foto,
+  // afvinken en "te zwaar" werken precies zoals ze al werkten.
+  var TSES={
+    nl:{door:'Volgende',start:'Begin met oefenen',verder:'Ga verder met oefenen',overzicht:'Overzicht',nvan:'Oefening {n} van {t}',volgende:'Volgende oefening',klaar:'Klaar',vorige:'Vorige oefening',status:'Vandaag gedaan',ongedaan:'Toch niet gedaan',meer:'Meer'},
+    en:{door:'Next',start:'Start exercising',verder:'Continue exercising',overzicht:'Overview',nvan:'Exercise {n} of {t}',volgende:'Next exercise',klaar:'Finish',vorige:'Previous exercise',status:'Done today',ongedaan:'Not done after all',meer:'More'},
+    de:{door:'Weiter',start:'Mit dem Üben beginnen',verder:'Weiter üben',overzicht:'Übersicht',nvan:'Übung {n} von {t}',volgende:'Nächste Übung',klaar:'Fertig',vorige:'Vorherige Übung',status:'Heute erledigt',ongedaan:'Doch nicht erledigt',meer:'Mehr'},
+    fr:{door:'Suivant',start:'Commencer les exercices',verder:'Continuer les exercices',overzicht:'Aperçu',nvan:'Exercice {n} sur {t}',volgende:'Exercice suivant',klaar:'Terminer',vorige:'Exercice précédent',status:'Fait aujourd’hui',ongedaan:'Finalement pas fait',meer:'Plus'},
+    es:{door:'Siguiente',start:'Empezar los ejercicios',verder:'Seguir con los ejercicios',overzicht:'Resumen',nvan:'Ejercicio {n} de {t}',volgende:'Siguiente ejercicio',klaar:'Terminar',vorige:'Ejercicio anterior',status:'Hecho hoy',ongedaan:'Al final no lo hice',meer:'Más'},
+    pl:{door:'Dalej',start:'Zacznij ćwiczyć',verder:'Ćwicz dalej',overzicht:'Przegląd',nvan:'Ćwiczenie {n} z {t}',volgende:'Następne ćwiczenie',klaar:'Zakończ',vorige:'Poprzednie ćwiczenie',status:'Zrobione dzisiaj',ongedaan:'Jednak niezrobione',meer:'Więcej'},
+    tr:{door:'Sonraki',start:'Egzersize başla',verder:'Egzersize devam et',overzicht:'Genel bakış',nvan:'Egzersiz {n} / {t}',volgende:'Sonraki egzersiz',klaar:'Bitir',vorige:'Önceki egzersiz',status:'Bugün yapıldı',ongedaan:'Aslında yapılmadı',meer:'Daha fazla'},
+    ar:{door:'التالي',start:'ابدأ التمارين',verder:'تابع التمارين',overzicht:'نظرة عامة',nvan:'التمرين {n} من {t}',volgende:'التمرين التالي',klaar:'إنهاء',vorige:'التمرين السابق',status:'تم اليوم',ongedaan:'لم أقم به',meer:'المزيد'},
+    uk:{door:'Далі',start:'Почати вправи',verder:'Продовжити вправи',overzicht:'Огляд',nvan:'Вправа {n} з {t}',volgende:'Наступна вправа',klaar:'Завершити',vorige:'Попередня вправа',status:'Зроблено сьогодні',ongedaan:'Все ж не зроблено',meer:'Більше'}
+  };
+  function trse(k){var d=TSES[TAAL]||TSES.nl;return d[k]!=null?d[k]:TSES.nl[k];}
+  var SESSIE=-1,SESSIE_SCROLL=0,SESSIE_BEELD=-1,SESSIE_TERUG=false,KLAAR_SLOT=0;
+  function oefRijen(){return document.querySelectorAll('#oefs .oef[data-oidx]');}
+  function oefIsDaan(i){return leesOefDaan().done.indexOf(i)>-1;}
+  // eerstvolgende oefening die vandaag nog niet is afgevinkt, te beginnen ná 'van'
+  function volgendeOpen(van){
+    var n=oefRijen().length,st=leesOefDaan();
+    for(var k=1;k<=n;k++){var i=(van+k)%n;if(st.done.indexOf(i)===-1)return i;}
+    return -1;
+  }
+  function tekenSessie(){
+    var rijen=oefRijen(),n=rijen.length;
+    if(SESSIE>=n)SESSIE=-1;
+    var open=SESSIE>-1,st=leesOefDaan();
+    var gedaanN=st.done.filter(function(i){return i<n;}).length;
+    document.body.classList.toggle('sessie',open);
+    rijen.forEach(function(r){
+      var i=Number(r.dataset.oidx),info=r.querySelector('.oefinfo');
+      r.classList.toggle('actief',i===SESSIE);
+      if(!info)return;
+      // in de lijst is de naam met dosering de knop die de oefening opent
+      if(open){info.removeAttribute('role');info.removeAttribute('tabindex');}
+      else{info.setAttribute('role','button');info.setAttribute('tabindex','0');}
+    });
+    var start=document.getElementById('startknop');
+    if(start){
+      start.style.display=(n>0&&gedaanN<n)?'':'none';
+      start.textContent=gedaanN>0?trse('verder'):trse('start');
+    }
+    document.getElementById('sessiekop').hidden=!open;
+    document.getElementById('sessiebalk').hidden=!open;
+    if(open){
+      var daan=st.done.indexOf(SESSIE)>-1;
+      document.getElementById('stel').textContent=trse('nvan').replace('{n}',SESSIE+1).replace('{t}',n);
+      var stip='';
+      for(var k=0;k<n;k++)stip+='<i class="'+(k===SESSIE?'nu':(st.done.indexOf(k)>-1?'aan':''))+'"></i>';
+      document.getElementById('sstip').innerHTML=n>1&&n<=24?stip:'';
+      document.getElementById('sklaar').textContent=daan?(SESSIE+1<n?trse('door'):trse('klaar')):trg('oefdaan');
+      document.getElementById('sstatus').hidden=!daan;
+      document.getElementById('svorige').disabled=SESSIE===0;
+      document.getElementById('svolgende').disabled=SESSIE>=n-1;
+    }
+    // het afdekvlak over een ingebakken merk is in pixels geplaatst: verandert het beeld van
+    // miniatuur naar groot of terug, dan opnieuw meten (zelfde controle als bij het laden)
+    if(SESSIE_BEELD!==SESSIE){
+      var oud=SESSIE_BEELD;SESSIE_BEELD=SESSIE;
+      (window.requestAnimationFrame||setTimeout)(function(){herplaatsMerk(oud);herplaatsMerk(SESSIE_BEELD);});
+    }
+  }
+  function herplaatsMerk(i){
+    if(i<0)return;
+    var img=document.querySelector('#oefs .oef[data-oidx="'+i+'"] .fotoknop img');
+    if(img&&merkDek[img.dataset.pose||'']&&img.complete&&img.naturalWidth)dekMiniatuur(img);
+  }
+  function openOef(i){
+    if(!(i>=0&&i<oefRijen().length))return;
+    var was=SESSIE>-1;
+    stopLezen();stopVideos();
+    if(!was){
+      SESSIE_SCROLL=window.pageYOffset||0;
+      // de terugknop van de telefoon gaat naar het overzicht, niet de kaart uit
+      try{history.scrollRestoration='manual';}catch(e){}
+      try{if(!(history.state&&history.state.fpoef))history.pushState({fpoef:1},'');}catch(e){}
+    }
+    SESSIE=i;tekenSessie();
+    window.scrollTo(0,0);
+    var t=document.getElementById('stel');
+    try{t.focus({preventScroll:true});}catch(e){}
+  }
+  // naKlaar: alles is afgevinkt, dus door naar "Hoe ging het vandaag?"
+  function sluitOef(naKlaar,viaTerug){
+    if(SESSIE<0)return;
+    var was=SESSIE;
+    stopLezen();stopVideos();
+    SESSIE=-1;tekenSessie();
+    // history.back() komt pas even later aan; SESSIE_TERUG onthoudt dat die stap van ons is
+    if(!viaTerug){try{if(history.state&&history.state.fpoef){SESSIE_TERUG=true;history.back();}}catch(e){}}
+    var kop=document.getElementById('metingkop');
+    if(naKlaar&&kop){
+      kop.setAttribute('tabindex','-1');
+      window.scrollTo(0,Math.max(0,kop.getBoundingClientRect().top+(window.pageYOffset||0)-16));
+      try{kop.focus({preventScroll:true});}catch(e){}
+    }else{
+      window.scrollTo(0,SESSIE_SCROLL);
+      var info=document.querySelector('#oefs .oef[data-oidx="'+was+'"] .oefinfo');
+      try{if(info)info.focus({preventScroll:true});}catch(e){}
+    }
+  }
+  function bindSessie(){
+    try{if(history.state&&history.state.fpoef)history.replaceState(null,'');}catch(e){}
+    document.getElementById('startknop').addEventListener('click',function(){
+      var v=volgendeOpen(-1);openOef(v>-1?v:0);
+    });
+    document.getElementById('sterug').addEventListener('click',function(){sluitOef(false);});
+    document.getElementById('svorige').addEventListener('click',function(){openOef(SESSIE-1);});
+    document.getElementById('svolgende').addEventListener('click',function(){openOef(SESSIE+1);});
+    document.getElementById('songedaan').addEventListener('click',function(){
+      if(SESSIE>-1&&oefIsDaan(SESSIE))toggleOefDaan(SESSIE);
+    });
+    document.getElementById('sklaar').addEventListener('click',function(){
+      var i=SESSIE,n=oefRijen().length;if(i<0)return;
+      // slot op de knop zelf: na een tik staat de volgende oefening er al, en de tweede tik van een
+      // dubbeltik zou die ongezien afvinken (of er één overslaan). Het slot per oefening vangt dat niet.
+      var nu=Date.now();if(nu<KLAAR_SLOT)return;KLAAR_SLOT=nu+700;
+      if(oefIsDaan(i)){
+        if(i+1<n)openOef(i+1);else sluitOef(volgendeOpen(i)===-1);
+        return;
+      }
+      // zelfde slot als het vinkje in de lijst: een dubbeltik vinkt niet aan en weer uit
+      if(OEF_SLOT[i])return;OEF_SLOT[i]=1;setTimeout(function(){delete OEF_SLOT[i];},700);
+      toggleOefDaan(i);
+      var v=volgendeOpen(i);
+      if(v===-1)sluitOef(true);else openOef(v);
+    });
+    document.getElementById('oefs').addEventListener('keydown',function(e){
+      if(SESSIE>-1||(e.key!=='Enter'&&e.key!==' '))return;
+      var info=e.target.closest&&e.target.closest('.oefinfo[role=button]');
+      if(!info)return;
+      e.preventDefault();openOef(Number(info.closest('.oef').dataset.oidx));
+    });
+    var rz=null;
+    window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(function(){herplaatsMerk(SESSIE);},200);});
+    // printen vanuit de oefenstand: eerst terug naar het overzicht, anders staat er één oefening op papier
+    window.addEventListener('beforeprint',function(){if(SESSIE>-1)sluitOef(false);});
+  }
+
+  // ---- pijnschuif: dezelfde elf knoppen, maar je kunt er ook naartoe schuiven ----
+  // De schuif bewaart zelf niets. Loslaten of tikken is een tik op het cijfer eronder, dus de
+  // bezig-stand, de wachtrij zonder internet en de foutmelding blijven die van de knoppen.
+  function zetSchuif(el,v,gekozen){
+    var knop=el.querySelector('.psknop'),vul=el.querySelector('.psvul');
+    el.classList.toggle('gekozen',!!gekozen&&v>-1);
+    if(v<0){knop.textContent='';vul.style.width='0';return;}
+    knop.textContent=v;
+    knop.style.insetInlineStart=((v+.5)/11*100)+'%';
+    vul.style.width=(v*10)+'%';
+  }
+  // stand overnemen van de knoppen: het cijfer dat bewaard wordt of al bewaard is
+  function schuifStand(el){
+    var schaal=document.getElementById(el.dataset.schaal);if(!schaal)return;
+    var k=schaal.querySelector('button.bezig')||schaal.querySelector('button.aan');
+    el.classList.remove('sleept','vinger');
+    zetSchuif(el,k?Array.prototype.indexOf.call(schaal.children,k):-1,true);
+  }
+  function bindSchuif(el){
+    var schaal=document.getElementById(el.dataset.schaal);if(!schaal)return;
+    var s=null,sleepte=0;
+    function vanX(x){
+      var r=el.getBoundingClientRect(),f=r.width?(x-r.left)/r.width:0;
+      if(document.documentElement.dir==='rtl')f=1-f;
+      return Math.max(0,Math.min(10,Math.floor(f*11)));
+    }
+    function kies(v){var k=schaal.children[v];if(k)k.click();schuifStand(el);}
+    el.addEventListener('pointerdown',function(e){
+      if(e.button)return;
+      s={x:e.clientX,v:-1,sleept:false};
+      el.classList.toggle('vinger',e.pointerType!=='mouse');
+      try{el.setPointerCapture(e.pointerId);}catch(_){}
+    });
+    // pas schuiven na 8 px opzij: een veeg omlaag om te scrollen verzet de schuif niet
+    // (touch-action:pan-y geeft die veeg aan de pagina en meldt hier pointercancel)
+    el.addEventListener('pointermove',function(e){
+      if(!s)return;
+      if(!s.sleept&&Math.abs(e.clientX-s.x)<8)return;
+      s.sleept=true;
+      var v=vanX(e.clientX);
+      if(v!==s.v){s.v=v;el.classList.add('sleept');zetSchuif(el,v,false);}
+    });
+    el.addEventListener('pointerup',function(){
+      var klaar=s;s=null;
+      if(klaar&&klaar.sleept){sleepte=Date.now();kies(klaar.v);}
+    });
+    el.addEventListener('pointercancel',function(){s=null;schuifStand(el);});
+    // een gewone tik op de baan: de browser geeft die als klik (niet na een veeg of om scrollen te stoppen)
+    el.addEventListener('click',function(e){if(Date.now()-sleepte<400)return;kies(vanX(e.clientX));});
+    // de knoppen zijn de bron: wisselt daar iets (bewaard, bezig, mislukt), dan volgt de schuif
+    if(window.MutationObserver){
+      new MutationObserver(function(){if(!(s&&s.sleept))schuifStand(el);})
+        .observe(schaal,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+    }
+    schuifStand(el);
+  }
+
   // ---- alle knoppen één keer koppelen; hertekenen vervangt alleen de inhoud ----
   function bindEens(){
+    bindSessie();
+    if(document.querySelectorAll)document.querySelectorAll('.pschuif').forEach(bindSchuif);
     // video laden bij een tik; één tegelijk open, de rest pauzeert vanzelf
     document.getElementById('oefs').addEventListener('click',function(e){
+      // overzicht: een tik op de rij (beeld, naam of dosering) opent de oefening
+      if(SESSIE<0){
+        var rij=e.target.closest('.oefkop'),rijOef=rij?rij.closest('.oef'):null;
+        if(rijOef&&rijOef.dataset.oidx!=null){openOef(Number(rijOef.dataset.oidx));return;}
+      }
       var noor=e.target.closest('[data-noor]');
       if(noor){
         var x=(K.kaart.chosen||[])[Number(noor.dataset.noor)];
@@ -2630,7 +3101,11 @@
       }
       houder.classList.add('open');
       b.setAttribute('aria-expanded','true');
-      setTimeout(function(){houder.scrollIntoView({block:'nearest',behavior:'smooth'});},120);
+      setTimeout(function(){
+        if(typeof SESSIE!=='undefined'&&SESSIE>-1&&typeof window!=='undefined'&&window.scrollTo){
+          try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
+        }else houder.scrollIntoView({block:'nearest',behavior:'smooth'});
+      },120);
     });
     document.getElementById('mschaal').addEventListener('click',function(e){
       var b=e.target.closest('button[data-score]');if(!b)return;
@@ -2668,7 +3143,7 @@
       stuur('/api/kaart/gedaan',{id:id,aan:wil})
         .then(function(d){
           if(d.ok){
-            K.kaart.gedaan=d.gedaan||[];tekenGedaan();
+            if(id==='demo')zetGedaanLokaal(wil);else{K.kaart.gedaan=d.gedaan||[];tekenGedaan();}
             // dag weer uit: de vinkjes per oefening gaan mee uit, anders zegt de kaart
             // "alles gedaan" terwijl de therapeut geen oefendag ziet
             if(!wil){var st=leesOefDaan();st.done.slice().forEach(function(i){toggleOefDaan(i);});}
@@ -2812,10 +3287,20 @@
       try{if(was&&history.state&&history.state.fplb)history.back();}catch(e){}
     }
     window.addEventListener('popstate',function(){
-      if(lbox.classList.contains('open')){lbox.classList.remove('open');demoStop();}
+      // onze eigen stap terug na "Overzicht" of "Klaar": wie intussen alweer een oefening
+      // opende, blijft daar staan (en krijgt de stap voor de terugknop opnieuw)
+      if(SESSIE_TERUG){
+        SESSIE_TERUG=false;
+        if(SESSIE>-1){try{history.pushState({fpoef:1},'');}catch(e){}}
+        return;
+      }
+      if(lbox.classList.contains('open')){lbox.classList.remove('open');demoStop();return;}
+      // terug vanuit de oefenstand: naar het overzicht
+      if(SESSIE>-1&&!(history.state&&history.state.fpoef))sluitOef(false,true);
     });
     document.addEventListener('keydown',function(e){
-      if(e.key==='Escape')lbSluit();
+      if(e.key!=='Escape')return;
+      if(lbox.classList.contains('open'))lbSluit();else if(SESSIE>-1)sluitOef(false);
     });
     window.addEventListener('pagehide',function(){stopLezen();stopVideos();demoStop();bewaarBeeldenLijst();});
     if(document.readyState==='complete')setTimeout(bewaarBeeldenLijst,0);else window.addEventListener('load',function(){setTimeout(bewaarBeeldenLijst,0);});
@@ -2849,6 +3334,9 @@
       window.addEventListener('afterprint',terug);
       window.print();
     });
+    // het ingeklapte schema hoort wél op de print
+    window.addEventListener('beforeprint',function(){document.querySelectorAll('.schemablok:not([open])').forEach(function(d){d.open=true;d.dataset.dicht='1';});});
+    window.addEventListener('afterprint',function(){document.querySelectorAll('.schemablok[data-dicht]').forEach(function(d){d.open=false;delete d.dataset.dicht;});});
     if(window.speechSynthesis||window.NoorAudio){
       var lb=document.getElementById('leesBtn');
       lb.style.display='';
