@@ -117,12 +117,19 @@ const STREAM_API_BASIS = String(process.env.STREAM_API_BASIS || "https://api.clo
 // constant-time vergelijking: het antwoordtempo verraadt niets over de sleutel
 // Een IP dat op de rem van `denied()` staat (te veel foute sleutels), komt ook met de
 // juiste sleutel niet binnen tot de rem afloopt: anders houdt de rem het raden niet tegen.
+// Elke foute sleutel telt mee voor de rem, ook op routes die beheer alleen als extra
+// recht gebruiken en daarom niet via denied() lopen (GET /api/praktijken geeft beheer de
+// hele lijst, /api/opname/start en POST /api/kaarten een ander antwoord). Zonder dit
+// waren dat orakels om de sleutel te raden zonder ooit op de rem te lopen (security
+// 2026-11-10). Eén keer per verzoek; denied() telt een al getelde poging niet opnieuw.
 const isAdmin = (req) => {
   const a = Buffer.from(String(req.headers["x-admin-sleutel"] || ""));
   if (!ADMIN_KEY) return false;
   if (a.length && beheerOpRem(req)) return false;
   const b = Buffer.from(ADMIN_KEY);
-  return a.length === b.length && timingSafeEqual(a, b);
+  const goed = a.length === b.length && timingSafeEqual(a, b);
+  if (!goed && a.length && !req.beheerMisGeteld) { req.beheerMisGeteld = true; telBeheerMis(req); }
+  return goed;
 };
 
 // versie-info voor /health: welke commit draait er en hoeveel oefeningen levert de server
@@ -2246,16 +2253,22 @@ function beheerOpRem(req) {
   const t = adminMisTeller.get(ipSleutel(req));
   return !!(t && Date.now() - t.start <= BEHEER_REM_MS && t.n > 20);
 }
-const denied = (req, res, pad, melding = "Alleen beschikbaar voor beheer.") => {
-  logGeweigerd(req, pad);
+// telt één geweigerde beheerpoging; true zodra dit IP over de rem is
+function telBeheerMis(req) {
   const nu = Date.now();
   if (adminMisTeller.size > 5000) {
-    for (const [k, v] of adminMisTeller) if (nu - v.start > 5 * 60 * 1000) adminMisTeller.delete(k);
+    for (const [k, v] of adminMisTeller) if (nu - v.start > BEHEER_REM_MS) adminMisTeller.delete(k);
   }
   const ip = ipSleutel(req);
   const t = adminMisTeller.get(ip);
-  if (!t || nu - t.start > 5 * 60 * 1000) adminMisTeller.set(ip, { start: nu, n: 1 });
-  else if (++t.n > 20) return send429(res, 300, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
+  if (!t || nu - t.start > BEHEER_REM_MS) { adminMisTeller.set(ip, { start: nu, n: 1 }); return false; }
+  return ++t.n > 20;
+}
+const denied = (req, res, pad, melding = "Alleen beschikbaar voor beheer.") => {
+  logGeweigerd(req, pad);
+  const opRem = req.beheerMisGeteld ? beheerOpRem(req) : telBeheerMis(req);
+  req.beheerMisGeteld = true;
+  if (opRem) return send429(res, 300, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
   return sendJson(res, 403, { ok: false, fout: melding });
 };
 
