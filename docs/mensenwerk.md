@@ -44,8 +44,9 @@ kijken of je een maximum per jaar of een vergoeding voor jouw tijd wilt.
 **Wat de code nu doet:** na opzeggen loopt het abonnement tot het einde van de betaalde maand. Daarna is de
 praktijk geen klant meer (geen nieuwe kaarten), en 30 dagen later wist Fysiplan alles van die praktijk; alleen
 naam, e-mail, praktijknaam en betaling blijven 7 jaar. Jij krijgt een mail op de dag dat het abonnement stopt.
-**Wat jij moet kiezen:** (1) wil je dat de praktijk een paar dagen vóór het wissen nog een mail krijgt? Advies: ja,
-zodra er een maandincasso is. (2) Teruggave van geld bij opzeggen halverwege de maand: de code boekt niets terug;
+**Wat jij moet kiezen:** (1) GEDAAN 2026-11-10 (livegang): een week vóór het wissen krijgen de aanmelder en de
+beheerders van de praktijk één mail (wanneer, wat er weggaat, doorgaan, kopiëren naar het dossier, downloaden). Dat geldt
+ook na een proef zonder abonnement. Alleen als de mail is ingesteld (`MAIL_API_SLEUTEL` + `MAIL_AFZENDER`). (2) Teruggave van geld bij opzeggen halverwege de maand: de code boekt niets terug;
 zet je keuze in de voorwaarden (art. 5) of laat de jurist het zeggen. (3) De opzegtermijn in art. 5 is nog een invulplek.
 
 ### Vraaghulp op de kaart (legal, 2026-11-07)

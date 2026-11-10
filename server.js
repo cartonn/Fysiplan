@@ -903,6 +903,7 @@ function proefMeldAhmed(onderwerp, p, regel) {
 // aan beheer, zodat er gebeld kan worden) en het automatisch wissen na afloop
 // nooit twee rondes tegelijk: een trage ronde (Mollie, wissen) mag niet overlappen met de
 // volgende, anders kunnen twee rondes voor dezelfde maand een incasso aanmaken
+const WIS_VOORAF_DAGEN = 7; // zoveel dagen voor het wissen krijgt de praktijk een mail
 let proefRondeBezig = false;
 async function proefRonde() {
   if (proefRondeBezig) return;
@@ -924,7 +925,13 @@ async function proefRondeEen() {
         await praktijkAllesWissen(pk).then(() => auditLog("(gewist)", "praktijk-gewist-na-proef", null))
           .catch((e) => console.error("wissen na proef:", e.message));
       }
-      proefWis(p.id); gewijzigd = true; continue;
+      // heeft deze praktijk ooit online betaald (opgezegd en gestopt, of door beheer op "geen
+      // klant" gezet), dan blijft wat de fiscale bewaarplicht vraagt 7 jaar staan. Kaal wissen
+      // gooide hier ook de betaling en het factuurnummer weg: een gestopt abonnement is
+      // "geen klant" en kwam 30 dagen later eerst langs deze tak in plaats van langs "wissen".
+      const rest = Object.hasOwn(proeven, p.id) ? proeven[p.id] : null;
+      if (rest && !rest.gewist) proefNaPraktijkWissen(p.id, nu);
+      gewijzigd = true; continue;
     }
     if (p.gewist && nu >= Number(p.bewaarTot || 0)) { proefWis(p.id); gewijzigd = true; continue; }
     if (p.gewist) continue;
@@ -938,6 +945,32 @@ async function proefRondeEen() {
         NA_EINDE_WISSEN_DAGEN + " dagen wist Fysiplan de kaarten van deze praktijk.");
     }
     if (await incassoRondeStap(p, nu)) gewijzigd = true;
+    // een week voor het wissen: één mail aan de aanmelder en de beheerders van de praktijk,
+    // zodat ze nog naar het dossier kunnen kopiëren, alles kunnen downloaden of doorgaan.
+    // Alleen als er een praktijk aan de proef hangt (anders valt er niets te redden).
+    if (!p.klant && !p.wisGemeld && mailIngesteld()) {
+      const wisOp = p.verloopt + PROEF_BEWAAR_DAGEN * 86400000;
+      if (nu >= wisOp - WIS_VOORAF_DAGEN * 86400000 && nu < wisOp) {
+        const pks = Object.keys(praktijkAccounts).filter((k) => String(praktijkAccounts[k].proef?.id || "") === p.id);
+        if (pks.length) {
+          p.wisGemeld = nu; gewijzigd = true;
+          const aan = new Map([[p.email, p.naam]]);
+          for (const pk of pks) for (const l of ledenVan(pk)) if (l.rol === "beheerder" && lidActief(l) && l.email && !aan.has(l.email)) aan.set(l.email, l.naam || "");
+          const aantal = pks.reduce((n, pk) => n + Object.keys(kaarten[pk] || {}).length, 0);
+          for (const [adres, naam] of aan) proefMail(adres, "Op " + datumNl(wisOp) + " wissen we je Fysiplan-gegevens",
+            "Hoi" + (naam ? " " + String(naam).split(/\s+/)[0] : "") + ",\n\n" +
+            (p.abonnement ? "Je abonnement op Fysiplan is gestopt" : "Je gratis proef van Fysiplan is voorbij en je hebt geen abonnement") +
+            ". Daarom wissen we op " + datumNl(wisOp) + " alles van je praktijk" + (p.praktijk ? " (" + p.praktijk + ")" : "") + ": " +
+            (aantal ? "de " + aantal + " gedeelde kaart" + (aantal === 1 ? "" : "en") + ", ook als een patiënt die nog gebruikt, " : "") +
+            "je account, team, sjablonen en eigen oefeningen.\n\n" +
+            "Wat je nu nog kunt doen:\n" +
+            "- Doorgaan met Fysiplan: https://fysiplan.nl/v2/proef?mijn=1\n" +
+            "- Bewaren wat in het dossier hoort: open de kaart en kies \"Kopieer voor dossier\".\n" +
+            "- Alles downloaden (of nu al zelf wissen): https://fysiplan.nl/v2/gegevens\n\n" +
+            "Doe je niets, dan verdwijnt alles vanzelf. Patiënten kunnen hun kaart daarna niet meer openen.\n\nGroet,\nFysiplan");
+        }
+      }
+    }
     if (einde === "wissen") {
       const pk = Object.keys(praktijkAccounts).find((k) => String(praktijkAccounts[k].proef?.id || "") === p.id);
       if (pk) await praktijkAllesWissen(pk).then(() => auditLog("(gewist)", "praktijk-gewist-na-einde", null)).catch((e) => console.error("wissen na einde:", e.message));
