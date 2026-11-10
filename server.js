@@ -12,6 +12,7 @@ import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } fr
 import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
 import { volgendFactuurNr, factuurHtml, isFactuur } from "./lib/factuur.js";
+import { backupInstellingen, stuurNaarElders } from "./lib/backup-elders.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -1839,7 +1840,36 @@ function leesLimiet(req, res) {
 // accountlaag valt dan weg en de kaarten staan weer open), en zonder v1-accounts.json
 // verliezen de v1-gebruikers hun inlog. De insteltokens zijn bewust kortlevend en
 // blijven buiten de back-up.
-const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, accountsPath, v1AccountsPath, proefPath];
+// ook de eigen oefeningen van praktijken, het logboek en de start van de bewaartermijn: zonder
+// die drie kwam een praktijk na een restore terug zonder eigen oefeningen en zonder logboek
+const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, praktijkOefeningenPath, accountsPath, auditPath, bewaarPath, v1AccountsPath, proefPath];
+// reservekopie buiten Railway (lib/backup-elders.js): dezelfde bestanden, versleuteld, naar een
+// S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
+// loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
+const backupElders = backupInstellingen();
+const backupEldersStatus = { ok: null, fout: null, foutMail: 0 };
+async function maakBackupElders() {
+  if (!backupElders) return;
+  try {
+    const bestanden = {};
+    for (const pad of backupBestanden) {
+      try { bestanden[pad.split(sep).pop()] = await readFile(pad); } catch {}
+    }
+    await stuurNaarElders(backupElders, bestanden);
+    backupEldersStatus.ok = Date.now();
+    backupEldersStatus.fout = null;
+  } catch (err) {
+    backupEldersStatus.fout = Date.now();
+    console.error("reservekopie elders mislukt:", err.message);
+    if (mailIngesteld() && proefMeldingAan.length && Date.now() - backupEldersStatus.foutMail > 23 * 60 * 60 * 1000) {
+      backupEldersStatus.foutMail = Date.now();
+      for (const aan of proefMeldingAan) stuurMail(aan, "Fysiplan: reservekopie buiten Railway mislukt",
+        "De dagelijkse versleutelde reservekopie naar de opslag buiten Railway is niet gelukt (" + err.message + ").\n"
+        + "De kopie op Railway zelf is wel gemaakt. Controleer de BACKUP_-variabelen en de opslagbak. Morgen volgt een nieuwe poging.")
+        .catch(() => {});
+    }
+  }
+}
 async function maakBackup() {
   try {
     const dag = new Date().toISOString().slice(0, 10);
@@ -1858,6 +1888,7 @@ async function maakBackup() {
     for (const d of statDagen.slice(0, Math.max(0, statDagen.length - 120))) delete stats.dagen[d];
     bewaarStats();
   } catch {}
+  await maakBackupElders();
 }
 // eerst de reservekopie van vandaag; de opruimtaken (bewaartermijn, oude kaartvelden,
 // vertaalcache) starten pas als de server luistert (zie server.listen onderaan): ze
@@ -2331,7 +2362,10 @@ async function afhandelen(request, response) {
       videoOpslag: STREAM_ENABLED ? "cloudflare-stream" : "railway-volume",
       // zichtbaar maken of de data op een blijvend volume staat (waar zonder
       // geheimen): zo is "overleeft een herstart" in één blik te controleren
-      volumeActief: dataDir === "/data" || !!process.env.DATA_DIR
+      volumeActief: dataDir === "/data" || !!process.env.DATA_DIR,
+      // reservekopie buiten Railway: "uit" (niet ingesteld), "ok", "fout" of "wacht" (nog niet gedraaid)
+      backupElders: !backupElders ? "uit" : backupEldersStatus.fout ? "fout" : backupEldersStatus.ok ? "ok" : "wacht",
+      backupEldersOp: backupEldersStatus.ok ? new Date(backupEldersStatus.ok).toISOString() : null
     });
     return;
   }
@@ -6193,6 +6227,9 @@ async function afhandelen(request, response) {
         BETAAL_RIJ_HTML: mollieAan() ? '<tr id="betalen"><td>Betaling: naam van de praktijk (of je eigen naam), e-mail, aantal therapeuten, bedrag, '
           + "en de kenmerken van klant, betaling en machtiging bij Mollie. Geen rekeningnummer of kaartgegevens; die vul je alleen bij Mollie in.</td>"
           + "<td>Het abonnement afrekenen en vastleggen dat je klant bent</td><td>Zolang je klant bent; facturen en betaalgegevens daarna 7 jaar, omdat de wet dat vraagt (fiscale bewaarplicht)</td></tr>" : "",
+        // de opslag van de versleutelde reservekopie staat er alleen als die aan staat én benoemd is
+        BACKUP_RIJ_HTML: backupElders && backupElders.leverancier ? "<tr id=\"reservekopie\"><td>" + htmlEsc(backupElders.leverancier) + "</td><td>Reservekopie buiten Railway, elke dag, 7 dagen bewaard</td>"
+          + "<td>Een versleutelde kopie van alles wat op deze pagina staat, behalve video&rsquo;s, foto&rsquo;s en logo&rsquo;s. De partij kan de inhoud niet lezen; alleen Fysiplan heeft de sleutel.</td></tr>" : "",
         BETAAL_PARTIJ_HTML: mollieAan() ? "<p><b>Betalen.</b> Reken je online af, dan stuurt Fysiplan de naam van je praktijk (of je eigen naam), je e-mailadres en het bedrag "
           + "naar Mollie B.V. (Amsterdam, Nederland). Mollie handelt de betaling af en is daarvoor zelf verantwoordelijk; zie de privacyverklaring van Mollie. "
           + "Mollie krijgt geen pati&euml;ntgegevens.</p>" : ""

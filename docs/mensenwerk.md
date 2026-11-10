@@ -4,6 +4,25 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Reservekopie buiten Railway (livegang, 2026-11-10)
+**Wat de code nu doet:** de dagelijkse reservekopie stond alleen op hetzelfde Railway-volume als de gegevens zelf. Nu
+stuurt de server dezelfde bestanden elke dag (en bij elke start) **versleuteld** naar een opslagbak buiten Railway, in
+één bestand per weekdag (`fysiplan-ma.fpb` … `fysiplan-zo.fpb`), dus elders staat nooit meer dan 7 dagen. De opslagdienst
+kan de inhoud niet lezen. Video's, foto's en logo's gaan niet mee. Zonder de variabelen hieronder gebeurt er niets.
+`/health` toont `backupElders`: `uit`, `ok` of `fout`; bij een fout krijg je hooguit één mail per dag.
+**Wat jij moet doen:**
+1. Maak bij een Europese opslagdienst een privé-bak (bucket) aan, bijvoorbeeld Scaleway Object Storage (Amsterdam) of
+   Cloudflare R2 met regio EU, en maak een toegangssleutel die alleen in die bak mag schrijven en lezen.
+2. Zet op Railway: `BACKUP_S3_URL` (adres met de bak erin, bv. `https://s3.nl-ams.scw.cloud/fysiplan-reserve`),
+   `BACKUP_S3_REGIO` (bv. `nl-ams`; bij R2 `auto`), `BACKUP_S3_SLEUTEL_ID`, `BACKUP_S3_GEHEIM`, en `BACKUP_SLEUTEL`:
+   een zelfgekozen lange wachtzin (minstens 24 tekens). **Bewaar die wachtzin ook buiten Railway** (wachtwoordkluis):
+   zonder de wachtzin is de reservekopie niet terug te lezen.
+3. Zet `BACKUP_LEVERANCIER` op de naam en plaats van de dienst (bv. `Scaleway (Amsterdam, Nederland)`). Dan staat
+   de partij vanzelf in de lijst op /privacy. Het is een nieuwe subverwerker: meld hem vooraf aan praktijken die al
+   akkoord gaven (verwerkersovereenkomst) en sluit met de dienst een verwerkersovereenkomst.
+4. Controleer daarna https://fysiplan.nl/health: `backupElders` moet `ok` zijn.
+5. Terugzetten (één keer oefenen): `BACKUP_SLEUTEL=… node scripts/backup-terugzetten.mjs <bestand.fpb> <lege map>`.
+
 ### Fysiplan gebruiken zonder proef of abonnement (security, 2026-11-09 20u)
 **Wat de code nu doet:** wie /v2/app opent zonder de proef te starten, kan een praktijk beveiligen en kaarten maken, zonder
 einddatum. De proefgrens zit alleen op praktijken die bij de proef horen. Een team met een verlopen proef kan zo met een
