@@ -108,7 +108,10 @@
     "test:wachtrijmelding": "node scripts/test-sweep-wachtrij-melding.mjs",
     "test:controletaal": "node scripts/test-sweep-controle-taal.mjs",
     "test:wistweekaarten": "node scripts/test-sweep-wis-twee-kaarten.mjs",
-    "test:emojiinitialen": "node scripts/test-sweep-emoji-initialen.mjs"
+    "test:emojiinitialen": "node scripts/test-sweep-emoji-initialen.mjs",
+    "test:proeftweedeapparaat": "node scripts/test-sweep-proef-tweede-apparaat.mjs",
+    "test:printgroot": "node scripts/test-sweep-print-groot.mjs",
+    "test:vuleersterij": "node scripts/test-sweep-vul-eerste-rij.mjs"
   },
   "engines": {
     "node": ">=20"

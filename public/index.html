@@ -1661,8 +1661,11 @@ bridge2.jpg</div>
         "<small>alleen lege vakjes; per oefening aanpassen kan daarna gewoon</small>";
       elMon.parentNode.insertBefore(el,elMon);
       el.querySelector('#bd_do').addEventListener('click',function(){
-        var s=el.querySelector('#bd_s').value.trim().slice(0,4),h=el.querySelector('#bd_h').value.trim().slice(0,6);
-        if(!s&&!h)return;
+        // leeg = de voorgestelde 3 × 10 die in de vakjes staat: die zag de therapeut als ingevuld,
+        // en de knop deed dan stil niets (gebruikers-sweep 2026-11-10, Truus)
+        var bs=el.querySelector('#bd_s'),bh=el.querySelector('#bd_h');
+        var s=bs.value.trim().slice(0,4),h=bh.value.trim().slice(0,6);
+        if(!s&&!h){s=bs.placeholder;h=bh.placeholder;}
         chosen.forEach(function(c){
           var pre='e'+c.o+'.'+(c.i||0);
           if(s&&!GRID.cells[pre+'|r0|S'])GRID.cells[pre+'|r0|S']=s;
@@ -3153,6 +3156,8 @@ bridge2.jpg</div>
         if(pr!==PRAKSLOT.nieuwVoor)PRAKSLOT.nieuw=false;
         if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
         rendPrakSlot();
+        // verlopen proef op een apparaat zonder proefcookie (ingelogde collega): meteen de balk
+        if(d.proefVerlopen&&!PROEF_VOORBIJ)toonProefVoorbij(null,true);
       }).catch(function(code){
         // een 429/5xx of geen verbinding is niet "nog niet beveiligd": niets laten beveiligen
         var st=document.getElementById('ps_status'),form=document.getElementById('ps_form');
@@ -3301,6 +3306,9 @@ bridge2.jpg</div>
       var uDo=document.getElementById('tm_udo');
       if(uDo)uDo.addEventListener('click',function(){
         uDo.disabled=true;
+        // de link van een vorige uitnodiging weg: bij een weigering stond die anders onder de
+        // fout en kon hij naar de verkeerde collega gaan (gebruikers-sweep 2026-11-10, Mark)
+        var oudLk=document.getElementById('tm_link');if(oudLk)oudLk.innerHTML='';
         teamPost('uitnodigen',{naam:document.getElementById('tm_unaam').value,email:document.getElementById('tm_uemail').value,rol:document.getElementById('tm_urol').value})
           .then(function(r){
             uDo.disabled=false;
@@ -4679,7 +4687,11 @@ bridge2.jpg</div>
     var skn=this;if(skn.dataset.bezig)return;skn.dataset.bezig='1';
     saveServerCard(naam,function(d){
       delete skn.dataset.bezig;
-      if(!d.ok){alert(d.fout||'Kaart delen is niet gelukt.');return;}
+      if(!d.ok){
+        // verlopen proef: de proefbalk met "Wil je doorgaan?", geen kale melding
+        if(d.proefVerlopen){toonProefVoorbij(skn);return;}
+        alert(d.fout||'Kaart delen is niet gelukt.');return;
+      }
       document.getElementById('k_result').textContent='Kaart “'+naam+'” gedeeld met de praktijk.';
       toonSrvKaarten();ping('kaart-opgeslagen');
     });

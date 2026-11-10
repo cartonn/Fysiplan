@@ -2728,7 +2728,10 @@ async function afhandelen(request, response) {
       perEmail: !ingelogd && accountsMetNaam(nk).length > 0 && accountsMetNaam(nk).every((k) => praktijkAccounts[k].gedeeldUit),
       bewaar: { stil: BEWAAR_STIL_DAGEN, afgerond: BEWAAR_AFGEROND_DAGEN },
       // het akkoord van de praktijk; beheer: alleen een beheerder kan opnieuw akkoord gaan
-      akkoord: ingelogd ? { ...akkoordStatus(praktijkAccounts[eigen]), beheer: isBeheer(sessieVan(request)) } : undefined });
+      akkoord: ingelogd ? { ...akkoordStatus(praktijkAccounts[eigen]), beheer: isBeheer(sessieVan(request)) } : undefined,
+      // verlopen proef (dit apparaat of de ingelogde praktijk): de app toont het meteen bij
+      // het laden, niet pas na de eerste geweigerde opslag (gebruikers-sweep, tweede apparaat)
+      proefVerlopen: proefVerlopen(proefVan(request)) || (ingelogd && praktijkProefVerlopen(eigen)) || undefined });
     return;
   }
 
