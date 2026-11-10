@@ -222,6 +222,10 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **NAKIJKEN (doorgezet door de gebruikers-sweep 2026-11-10 14u, niet gereproduceerd) — `/api/praktijk/wachtwoord`: een fout eigen
+  wachtwoord van een lid telt via `loginMisTel(pk)` mee op de sleutel van de hele praktijk.** Na genoeg pogingen kan `loginOpSlot(pk)`
+  mogelijk de hele praktijk (ook de beheerder) op 429 zetten. Nagaan of de gewone login dezelfde sleutel gebruikt (Mark, code gelezen).
+
 - **LAAG (doorgezet door de gebruikers-sweep 2026-11-10 02u) — twee gelijktijdige "Nodig uit"-verzoeken geven allebei 200 met
   twee verschillende links, maar per collega wordt maar één hash bewaard** (server.js r. ~2830 overschrijft). De eerste link is dan
   dood (404 "werkt niet meer"). In de app zelf is dubbelklik opgevangen; dit is de serverkant (Mark, API).

@@ -48,6 +48,9 @@ if (pw) {
   try {
     for (let i = 0; i < 100; i++) { try { if ((await fetch(origin + "/health")).ok) break; } catch {} await wacht(50); }
     const ctx = await browser.newContext({ ...pw.devices["iPad (gen 7)"], extraHTTPHeaders: { "x-forwarded-for": "10.9.1.1" } });
+    // het venster "Nieuw in Fysiplan" (release-notes.js) hoort niet bij deze test: als gezien markeren
+    const rnVersie = (await readFile(join(root, "public/release-notes.js"), "utf8")).match(/version='([^']+)'/)[1];
+    await ctx.addInitScript((v) => { try { localStorage.setItem("fysiplan_release_seen", v); } catch {} }, rnVersie);
     const page = await ctx.newPage();
     await page.goto(origin + "/v2/app");
     await page.waitForSelector("[data-add]", { timeout: 15000 });

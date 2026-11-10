@@ -370,8 +370,11 @@
   .pschuif.sleept .psvul{opacity:.55}
   @media(prefers-reduced-motion:reduce){.psknop{transition:none}}
   .mschaal{display:grid;grid-template-columns:repeat(11,minmax(0,1fr))}
-  .mschaal button{min-height:44px;padding:0;border:0;border-radius:8px;background:none;cursor:pointer;
+  .mschaal button{min-height:44px;min-width:0;padding:0;border:0;border-radius:8px;background:none;cursor:pointer;
     font:600 1rem/1 var(--disp);color:var(--grijs);transition:color .12s}
+  /* elf cijfers naast elkaar: bij heel grote letters (200 %) liepen 9 en 10 in elkaar over ("910");
+     het cijfer groeit mee tot het vak vol is (de schuif erboven toont het gekozen cijfer groot) */
+  .mschaal button{font-size:min(1rem,5.2vw);letter-spacing:-.02em}
   .mschaal button:active{color:var(--kn)}
   /* bezig: de tik is gezien en wordt bewaard (trage lijn), zodat niemand blijft tikken */
   .mschaal button.bezig,.pskschaal button.bezig,[data-psk].bezig{color:var(--kn);
@@ -498,8 +501,9 @@
 
   /* herinnering in de agenda van de telefoon */
   .agkaart p{font-size:1rem;margin-bottom:12px}
-  .agdagen{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:14px}
-  .agdagen button{min-height:44px;font:600 .9375rem/1 var(--disp);padding:0;border-radius:10px;cursor:pointer;
+  .agdagen{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-bottom:14px}
+  /* bij heel grote letters (200 %) stak "Zo" rechts buiten beeld: vakken krimpen niet onder hun tekst */
+  .agdagen button{min-height:44px;min-width:0;font:600 min(.9375rem,4.8vw)/1 var(--disp);padding:0;border-radius:10px;cursor:pointer;
     border:1.5px solid var(--rand);background:var(--bg);color:var(--inkt);
     transition:background .12s,color .12s,border-color .12s}
   .agdagen button.aan{background:var(--kn);border-color:var(--kn);color:#fff}
@@ -1134,14 +1138,19 @@
     var m=knop.parentNode.querySelector('.agmelding');
     if(!m){m=document.createElement('p');m.className='agmelding';m.setAttribute('role','status');
       m.style.cssText='margin:8px 0 0;font-size:15px;color:#7a3b12';knop.insertAdjacentElement('afterend',m);}
+    // dubbeltik gaf twee downloads (iOS: twee keer het toevoegscherm): één tegelijk, en kort na een download niet opnieuw
+    if(knop.dataset.bezig)return;
+    knop.dataset.bezig='1';
+    var vrij=function(ms){setTimeout(function(){delete knop.dataset.bezig;},ms);};
     m.textContent='';
     fetch(url,{cache:'no-store'})
       .then(function(r){
-        if(r.ok){location.href=url;return;}
+        if(r.ok){location.href=url;vrij(1500);return;}
+        vrij(0);
         if(afspraak&&r.status===404){m.textContent=trag('weg');if(K&&K.kaart)K.kaart.afspraak=null;return;}
         m.textContent=trag('fout');
       })
-      .catch(function(){m.textContent=trag('fout');});
+      .catch(function(){vrij(0);m.textContent=trag('fout');});
   }
   var TAFHER={nl:'wekelijks, nog {n} keer',en:'weekly, {n} more times',de:'wöchentlich, noch {n} Mal',fr:'chaque semaine, encore {n} fois',es:'semanal, {n} veces más',pl:'co tydzień, jeszcze {n} razy',tr:'haftalık, {n} kez daha',ar:'أسبوعيًا، {n} مرات متبقية',uk:'щотижня, ще {n} разів'};
   // PSK (Patiënt Specifieke Klachten): de doelactiviteit die de therapeut zette,
@@ -1723,7 +1732,7 @@
     if(at<Date.now()-2*3600000){blok.style.display='none';return;}
     document.getElementById('afkop').textContent=TAF[TAAL]||TAF.nl;
     var d=new Date(at);
-    var tekst=d.toLocaleString(TAAL==='nl'?'nl-NL':TAAL,{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+    var tekst=d.toLocaleString(SPRAAK[TAAL]||'nl-NL',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});
     // vandaag of morgen? dan het accentwoord ervoor, zodat de dag zelf opvalt
     var rel=TAFREL[TAAL]||TAFREL.nl;
     var vandaagD=new Date();var morgenD=new Date(Date.now()+864e5);
