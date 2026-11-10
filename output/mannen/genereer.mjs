@@ -17,7 +17,7 @@ const MANNEN = {
   A: { l: "a man of about 35 with fair (white) skin, short light-brown hair, clean-shaven", a: "a man of about 35 with fair, light (white European) skin, short light-brown hair, clean-shaven, friendly face, slim athletic build" },
   B: { l: "a man of about 35 with light-brown skin (draw only contour lines, no shading), short black curly hair, a short neat beard", a: "a man of about 35 with medium-brown skin (clearly a shade darker than lightly tanned; mixed North-African/Middle-Eastern), short black curly hair, a short neat beard, friendly face, slim athletic build" },
 };
-const MAN = MANNEN[process.env.MAN || "A"], MAN_L = MAN.l, MAN_A = MAN.a;
+const MAN = MANNEN[process.env.MAN || "B"], MAN_L = MAN.l, MAN_A = MAN.a;
 const LIJN = [
   "Draw ONE new black-and-white exercise illustration in exactly the same style as the reference image:",
   `the same clean single-weight black contour lines and the same drawing style, BUT the figure is NOT the woman of the reference: draw this man instead: ${MAN_L}, short-sleeved t-shirt, long joggers, athletic sneakers.`,

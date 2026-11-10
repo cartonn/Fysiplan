@@ -1,6 +1,6 @@
 # Referentie: twee mannen
 
-Voorstel voor de volgende batch: om en om man A en man B, in dezelfde stijl als de huidige oefeningen.
+**Besluit Ahmed (10-11-2026): voor de volgende batch alleen man B (de getinte man).** Man A is alleen ter vergelijking gemaakt. De generator gebruikt standaard man B.
 
 - **Man A:** blanke man, kort lichtbruin haar, gladgeschoren.
 - **Man B:** man met medium bruine huid (een tint donkerder dan de eerste versie), kort zwart krullend haar, kort baardje.
