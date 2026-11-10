@@ -365,7 +365,7 @@
   .pschuif.gekozen .psknop,.pschuif.sleept .psknop{display:flex}
   .pschuif.sleept .psknop{background:var(--bg);color:var(--kn);transform:scale(1.12);transition:transform .12s}
   /* met een vinger zit het rondje onder de duim: dan komt het erboven uit, zodat je het cijfer blijft zien */
-  .pschuif.sleept.vinger .psknop{transform:translateY(-54px) scale(1.12)}
+  .pschuif.sleept.vinger .psknop{transform:translateY(-46px) scale(1.12)}
   .pschuif.sleept .psvul{opacity:.55}
   @media(prefers-reduced-motion:reduce){.psknop{transition:none}}
   .mschaal{display:grid;grid-template-columns:repeat(11,minmax(0,1fr))}
@@ -379,7 +379,7 @@
   @media(prefers-reduced-motion:reduce){.mschaal button.bezig,[data-psk].bezig{animation:none}}
   .mschaal button.aan{color:var(--kn);font-weight:800}
   /* de woorden staan boven de baan, bij het dunne en het dikke eind: je leest eerst welke kant meer is */
-  .mlabels{display:flex;justify-content:space-between;gap:12px;font:500 .875rem/1.3 var(--disp);color:var(--grijs);margin-bottom:2px}
+  .mlabels{display:flex;justify-content:space-between;gap:12px;font:500 .875rem/1.3 var(--disp);color:var(--grijs);margin:8px 0 2px}
   .mlabels span:last-child{text-align:end}
   .mdank,.sdank{font:600 .9375rem/1.4 var(--disp);color:var(--groen);background:var(--groen-bg);border:1px solid transparent;
     border-radius:10px;padding:11px 13px;margin-top:12px}
