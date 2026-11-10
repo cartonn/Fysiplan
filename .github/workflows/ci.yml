@@ -97,3 +97,6 @@ jobs:
       - run: npm run test:sjablonenslot
       - run: npm run test:uitloggenprint
       - run: npm run test:wachtrijmelding
+      - run: npm run test:controletaal
+      - run: npm run test:wistweekaarten
+      - run: npm run test:emojiinitialen

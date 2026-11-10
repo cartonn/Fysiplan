@@ -1210,11 +1210,15 @@ bridge2.jpg</div>
   var AV_KLEUREN=[['#1d4ed8','#fff'],['#15803d','#fff'],['#c2410c','#fff'],['#6d28d9','#fff'],['#be123c','#fff'],
     ['#0f766e','#fff'],['#a16207','#fff'],['#334155','#fff'],['#a21caf','#fff'],['#4d7c0f','#fff'],['#4338ca','#fff'],['#9a3412','#fff']];
   function avInitialen(naam){
-    var w=String(naam||'').replace(/@.*/,'').replace(/[._]+/g,' ').trim().split(/\s+/).filter(Boolean);
+    // Gebruikers-sweep 2026-11-10 (Sanne): een emoji vooraan ("😀 Sanne", "🦵 Fysio…") gaf met
+    // charAt(0) een half teken "�". Woorden zonder letter of cijfer tellen niet mee, en het
+    // eerste teken wordt per codepunt genomen (Array.from), nooit een losse surrogaathelft.
+    var w=String(naam||'').replace(/@.*/,'').replace(/[._]+/g,' ').trim().split(/\s+/).filter(function(x){return /[\p{L}\p{N}]/u.test(x);});
     if(!w.length)return '?';
     var eerste=w[0],rest=w.slice(1).filter(function(x){return !TUSSEN[x.toLowerCase()];});
     var achter=rest.length?rest[rest.length-1]:'';
-    return ((eerste.charAt(0)||'')+(achter.replace(/^[^A-Za-zÀ-ÿ]+/,'').charAt(0)||'')).toUpperCase()||'?';
+    var letter=function(x){return Array.from(String(x).replace(/^[^\p{L}\p{N}]+/u,''))[0]||'';};
+    return (letter(eerste)+letter(achter)).toUpperCase()||'?';
   }
   function avKleur(naam){
     var t=String(naam||'').trim().toLowerCase(),h=0;
