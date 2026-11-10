@@ -67,6 +67,8 @@ assert.ok(!isAantal("30 sec") && !isAantal("1 min") && !isAantal("2x30s"));
 assert.ok(!/setTimeout\(function\(\)\{toonBanner\(true\);\},2500\)/.test(html), "geen balk 2,5 s na het openen");
 assert.ok(html.includes("closest('#gdaan,#mschaal button')"), "balk pas na de pijnscore of 'geoefend'");
 assert.ok(html.includes("body.sessie .appbanner{display:none !important}"), "geen balk over de oefenstand");
+// "Gedaan" neemt één tik per 700 ms aan: het slot zit op de knop, niet alleen op de oefening
+assert.ok(html.includes("var nu=Date.now();if(nu<KLAAR_SLOT)return;KLAAR_SLOT=nu+700;"), "slot op de knop Gedaan");
 
 // opbouw: oefeningen eerst, daarna "Hoe ging het", contact, Meer; Print en Deel onderaan
 const volgorde = ['id="b_oef"', 'id="startknop"', 'id="oefs"', 'id="b_na"', 'id="b_contact"', 'id="b_meer"', 'id="printBtn"', 'id="sessiebalk"'];
@@ -80,6 +82,22 @@ const css = html.slice(html.indexOf("<style>"), html.indexOf("</style>"));
 const voorLightbox = css.slice(0, css.indexOf("/* tik op een oefenfoto"));
 assert.ok(voorLightbox.length > 5000 && !/font-size:\s*[\d.]+px|font:[^;}]*\s[\d.]+px[/ ;}]/.test(voorLightbox), "lettergroottes in rem");
 assert.ok(!/\.mschaal button\[data-score="\d+"\]\{[^}]*(background|color)/.test(css), "geen kleur per pijncijfer");
+
+// pijnschuif: een baan die naar 10 toe dikker wordt, in één kleur. De elf cijferknoppen
+// blijven de echte bediening (ook voor schermlezers); de schuif klikt op zo'n knop.
+assert.equal((html.match(/<div class="pschuif" data-schaal="(mschaal|pskschaal)" aria-hidden="true">/g) || []).length, 2, "schuif bij de pijnscore en bij de doelactiviteit");
+assert.ok(/\.pschuif\{[^}]*touch-action:pan-y/.test(css), "omhoog en omlaag vegen blijft bladeren");
+assert.ok(/\.psvorm\{[^}]*clip-path:polygon/.test(css) && /\.psvul\{[^}]*background:var\(--kn\)/.test(css), "dikte toont de sterkte, één kleur");
+const schuifCss = css.slice(css.indexOf(".pschuif{"), css.indexOf(".mdank,.sdank"));
+assert.ok(schuifCss.length > 500 && !/gradient/i.test(schuifCss), "geen kleurverloop in de schuif");
+assert.deepEqual((schuifCss.match(/#[0-9a-f]{3,8}\b/gi) || []).filter((k) => k.toLowerCase() !== "#fff"), [], "geen eigen kleuren in de schuif: alleen de knopkleur van de kaart");
+assert.ok(html.includes("var k=schaal.children[v];if(k)k.click();"), "de schuif kiest via de cijferknop");
+for (const t of TALEN) assert.ok(new RegExp("\\b" + t + ":\\{[^\\n]*mvraag:'[^']*(Schuif|Slide|Schiebe|glisser|Desliza|Przesuń|Kaydırarak|اسحب|Пересунь)").test(html), "pijnvraag noemt schuiven: " + t);
+
+// video: in de oefenstand speelt de video op de plek van het beeld
+assert.ok(css.includes(".oef.actief>.vhouder.open{display:contents"), "videohouder doet mee in het raster van de oefening");
+assert.ok(/\.oef\.actief>\.vhouder\.open>video,\.oef\.actief>\.vhouder\.open>iframe\{grid-row:1;grid-column:1\}/.test(css), "video op de plek van het beeld");
+assert.equal((html.match(/DRIEHOEK\+'<span class="vlab">'/g) || []).length, 5, "elke videoknop heeft een tekst naast het afspeelteken");
 console.log("Patiëntkaart mobiel (statisch): uitleg per zin (9 talen), oefenstand in 9 talen, alleen avatars, tijd ≠ herhalingen, beginschermbalk na de pijnscore, opbouw, print.");
 
 // ---- browser: de oefenstand echt doorlopen ----
@@ -122,10 +140,16 @@ if (pw) {
       const maten = (sel) => p.evaluate((s) => [...document.querySelectorAll(s)].filter((e) => e.getClientRects().length)
         .map((e) => { const r = e.getBoundingClientRect(); return [e.id || e.className, Math.round(r.width), Math.round(r.height)]; }), sel);
       assert.deepEqual((await maten("#startknop,#oefs .oefdone,#taalsel,#grootBtn,#ovalles,#leesBtn,#gdaan")).filter((x) => x[1] < 44 || x[2] < 44), [], toestel + ": tikdoelen minstens 44 px");
-      // elf cijfers op 320 px: zes naast elkaar is 41 px breed, daarom zijn ze 52 px hoog
+      // pijnschuif: een brede baan van 64 px om te slepen of te tikken; de elf cijfers eronder
+      // blijven los aan te tikken (44 px hoog, op 320 px elk 26 px breed)
       const cijfers = await maten("#mschaal button");
       assert.equal(cijfers.length, 11);
-      assert.deepEqual(cijfers.filter((x) => x[1] < 40 || x[2] < 48), [], toestel + ": pijncijfers groot genoeg");
+      assert.deepEqual(cijfers.filter((x) => x[1] < 24 || x[2] < 44), [], toestel + ": pijncijfers blijven aan te tikken");
+      const baan = (await maten(".pschuif[data-schaal=mschaal]"))[0];
+      assert.ok(baan && baan[1] >= 280 && baan[2] >= 60, toestel + ": de schuifbaan is breed en hoog genoeg voor een duim");
+      assert.ok(!(await zicht(".pschuif[data-schaal=mschaal] .psknop")), toestel + ": zonder score staat er nog geen knop op de schuif");
+      const volg = await p.evaluate(() => ["#mvraag", "#ml0", ".pschuif[data-schaal=mschaal]", "#mschaal"].map((s) => Math.round(document.querySelector(s).getBoundingClientRect().top)));
+      assert.deepEqual(volg, [...volg].sort((a, b) => a - b), toestel + ": vraag, 'geen pijn / ergste pijn', de baan, de cijfers");
 
       // begin: de eerste oefening vult het scherm
       await p.click("#startknop");
@@ -143,10 +167,15 @@ if (pw) {
       const kn = await p.locator("#sklaar").boundingBox();
       assert.ok(kn.y + kn.height <= p.viewportSize().height && kn.height >= 48, toestel + ": Gedaan staat onderin in beeld");
 
-      // Gedaan vinkt af en gaat door naar de volgende
+      // Gedaan vinkt af en gaat door naar de volgende; een dubbeltik vinkt niet ook de volgende af
+      await p.click("#sklaar");
       await p.click("#sklaar");
       await p.waitForFunction(() => document.getElementById("stel").textContent.indexOf("2 ") > -1);
+      await wacht(300);
+      assert.equal(await p.textContent("#stel"), "Oefening 2 van " + n, toestel + ": een dubbeltik op Gedaan slaat geen oefening over");
       assert.equal(await p.getAttribute('#oefs .oefdone[data-idx="0"]', "aria-pressed"), "true");
+      assert.equal(await p.locator('#oefs .oefdone[aria-pressed="true"]').count(), 1, toestel + ": een dubbeltik vinkt alleen de oefening af die in beeld stond");
+      await wacht(450);
       // terug naar een afgevinkte oefening: status, ongedaan maken, en de knop heet Volgende
       await p.click("#svorige");
       assert.equal(await p.textContent("#sklaar"), "Volgende");
@@ -178,7 +207,7 @@ if (pw) {
       // alles doorlopen: na de laatste "Gedaan" sta je bij "Hoe ging het vandaag?"
       await wacht(750); // het dubbeltikslot van de eerste oefening (700 ms) is dan voorbij
       await p.click("#startknop");
-      for (let i = 0; i < n; i++) { await p.click("#sklaar"); await wacht(120); }
+      for (let i = 0; i < n; i++) { await p.click("#sklaar"); await wacht(720); } // de knop neemt één tik per 700 ms aan
       await p.waitForFunction(() => !document.body.classList.contains("sessie"));
       assert.equal(await p.locator('#oefs .oefdone[aria-pressed="true"]').count(), n, toestel + ": alles afgevinkt");
       await wacht(700);
@@ -186,6 +215,50 @@ if (pw) {
       assert.ok(kop && kop.y >= 0 && kop.y < p.viewportSize().height / 2, toestel + ": de pijnvraag staat in beeld");
       assert.ok(!(await zicht("#startknop")), toestel + ": na alles gedaan geen begin-knop meer");
       assert.equal(await p.evaluate(() => history.state), null, toestel + ": geen oefenstand meer in de geschiedenis");
+
+      // pijnschuif: slepen laat het cijfer meelopen en bewaart pas bij loslaten
+      const schuif = () => p.evaluate(() => { const e = document.querySelector(".pschuif[data-schaal=mschaal]"), r = e.getBoundingClientRect(), k = e.querySelector(".psknop");
+        const a = document.querySelector("#mschaal button.aan,#mschaal button.bezig");
+        return { x: r.x, y: r.y + r.height / 2, w: r.width, sleept: e.classList.contains("sleept"), gekozen: e.classList.contains("gekozen"), knop: k.textContent, vul: e.querySelector(".psvul").style.width, aan: a ? a.textContent : null, scroll: Math.round(scrollY) }; });
+      const bij = (st, v) => st.x + st.w * (v + 0.5) / 11;
+      let st = await schuif();
+      await p.mouse.move(bij(st, 1), st.y); await p.mouse.down();
+      await p.mouse.move(bij(st, 4), st.y, { steps: 4 }); await p.mouse.move(bij(st, 6), st.y, { steps: 4 });
+      st = await schuif();
+      assert.deepEqual([st.sleept, st.knop, st.vul, st.aan], [true, "6", "60%", null], toestel + ": tijdens het slepen loopt het cijfer mee en is er nog niets bewaard");
+      await p.mouse.up();
+      await p.waitForFunction(() => { const a = document.querySelector("#mschaal button.aan"); return a && a.textContent === "6" && !document.querySelector(".pschuif").classList.contains("sleept"); });
+      st = await schuif();
+      assert.deepEqual([st.gekozen, st.knop, st.aan], [true, "6", "6"], toestel + ": loslaten bewaart de score");
+      assert.ok(await zicht("#mdank"), toestel + ": bevestiging na het bewaren");
+      // één tik op de baan kiest ook, en een los cijfer aantikken blijft werken
+      await wacht(400);
+      await p.mouse.click(bij(st, 9), st.y);
+      await p.waitForFunction(() => { const a = document.querySelector("#mschaal button.aan"); return a && a.textContent === "9" && document.querySelector(".psknop").textContent === "9"; });
+      await p.click("#mschaal button:nth-child(3)");
+      await p.waitForFunction(() => { const a = document.querySelector("#mschaal button.aan"); return a && a.textContent === "2" && document.querySelector(".psknop").textContent === "2"; });
+      // omhoog vegen over de schuif bladert de pagina en verandert de score niet
+      const cdp = await c.newCDPSession(p);
+      st = await schuif();
+      await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: bij(st, 7), y: st.y }] });
+      for (let i = 1; i <= 10; i++) { await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: bij(st, 7) + i * 1.5, y: st.y - i * 12 }] }); await wacht(16); }
+      await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+      await wacht(500);
+      const na = await schuif();
+      assert.ok(na.scroll > st.scroll + 40, toestel + ": vegen over de schuif bladert de pagina");
+      assert.deepEqual([na.knop, na.aan, na.sleept], ["2", "2", false], toestel + ": bladeren verandert de pijnscore niet");
+      // met een vinger opzij schuiven: het cijfer komt boven de duim uit en loslaten bewaart
+      st = await schuif();
+      await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: bij(st, 2), y: st.y }] });
+      for (let i = 1; i <= 10; i++) { await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: bij(st, 2) + (bij(st, 5) - bij(st, 2)) * i / 10, y: st.y + i * 0.5 }] }); await wacht(16); }
+      await wacht(250);
+      const duim = await p.evaluate(() => { const e = document.querySelector(".pschuif"), k = e.querySelector(".psknop").getBoundingClientRect(), r = e.getBoundingClientRect(); return { cls: e.className, tekst: e.querySelector(".psknop").textContent, onder: k.bottom, midden: r.top + r.height / 2, scroll: Math.round(scrollY) }; });
+      assert.ok(/sleept/.test(duim.cls) && /vinger/.test(duim.cls) && duim.tekst === "5", toestel + ": schuiven met een vinger loopt mee");
+      assert.ok(duim.onder < duim.midden - 15, toestel + ": het cijfer komt boven de duim uit");
+      assert.equal(duim.scroll, st.scroll, toestel + ": opzij schuiven bladert niet");
+      await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+      await p.waitForFunction(() => { const a = document.querySelector("#mschaal button.aan"); return a && a.textContent === "5" && !document.querySelector(".pschuif").classList.contains("sleept"); });
+      assert.equal(await p.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0, toestel + ": de schuif steekt niet opzij uit");
       assert.deepEqual(fouten, [], toestel + ": geen scriptfouten");
       await c.close();
     }
@@ -203,8 +276,90 @@ if (pw) {
     assert.ok(ar.vorige > ar.volgende, "Arabisch: vorige staat rechts");
     assert.ok(/^matrix\(-1,/.test(ar.spiegel), "Arabisch: pijlen gespiegeld");
     assert.equal(ar.breed, 0, "Arabisch: niets steekt opzij uit");
+    // de schuif loopt mee van rechts naar links: links op de baan is 10
+    await p.click("#sterug");
+    await p.waitForFunction(() => !document.body.classList.contains("sessie"));
+    await p.evaluate(() => document.querySelector(".pschuif").scrollIntoView({ block: "center" }));
+    await wacht(300);
+    const rs = await p.evaluate(() => { const r = document.querySelector(".pschuif").getBoundingClientRect(); return { x: r.x, y: r.y + r.height / 2, w: r.width }; });
+    await p.mouse.click(rs.x + rs.w * 0.5 / 11, rs.y);
+    await p.waitForFunction(() => { const a = document.querySelector("#mschaal button.aan"); return a && a.textContent === "10"; });
+    const knopX = await p.evaluate(() => { const k = document.querySelector(".psknop").getBoundingClientRect(); return k.x + k.width / 2; });
+    assert.ok(knopX < rs.x + rs.w * 0.15, "Arabisch: de knop van 10 staat links");
     await c.close();
-    console.log("Patiëntkaart mobiel (browser): overzicht, oefenstand, Gedaan/Volgende/ongedaan, terugknop, groot beeld, afronden naar de pijnvraag, Arabisch (iPhone SE en Pixel 7).");
+
+    // video: speelt op de plek van het beeld, de naam, dosering en "Gedaan" blijven staan
+    for (const toestel of ["iPhone SE", "Pixel 7"]) {
+      const cv = await browser.newContext({ ...pw.devices[toestel], locale: "nl-NL", serviceWorkers: "block", extraHTTPHeaders: { "x-forwarded-for": "10.61.0." + (toestel === "iPhone SE" ? 4 : 5) } });
+      const pv = await cv.newPage();
+      const vfouten = [];
+      pv.on("pageerror", (e) => vfouten.push(e.message));
+      await pv.route("**/vidtest/*", (r) => r.fulfill({ status: 404, body: "" }));
+      // de eerste twee oefeningen van de demokaart krijgen een staande avatarvideo en een YouTube-video
+      const namen = await (await fetch(origin + "/api/kaart?id=demo")).json().then((d) => d.kaart.chosen.slice(0, 2).map((x) => x.n));
+      await pv.route("**/v2/oefeningen.json", async (route) => {
+        const r = await route.fetch(), d = await r.json();
+        for (const o of d) {
+          if (o.naam === namen[0]) o.video = { eigen: "vidtest/staand.webm", eigenMeta: { aiGenerated: true } };
+          if (o.naam === namen[1]) o.video = { yt: "aqz-KE-bpKQ" };
+        }
+        await route.fulfill({ response: r, json: d });
+      });
+      await pv.route("**://www.youtube-nocookie.com/**", (r) => r.fulfill({ status: 200, contentType: "text/html", body: "<body style='background:#000'></body>" }));
+      await pv.goto(origin + "/k/demo", { waitUntil: "networkidle" });
+      await pv.waitForFunction(() => document.querySelectorAll("#oefs .oef[data-oidx]").length > 0);
+      assert.ok(await pv.locator("#oefs .oef:nth-child(1) .vbtn[data-eigen]").count() === 1 && await pv.locator("#oefs .oef:nth-child(2) .vbtn[data-yt]").count() === 1, toestel + ": proefvideo's staan op de eerste twee oefeningen (" + namen.join(", ") + ")");
+      const vak = (sel) => pv.evaluate((s) => { const e = document.querySelector(s); if (!e || !e.getClientRects().length) return null; const r = e.getBoundingClientRect(); return { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.width), h: Math.round(r.height), zicht: getComputedStyle(e).visibility }; }, sel);
+      // in het overzicht: geen videoknop, wel een afspeelteken op het plaatje
+      assert.equal(await vak("#oefs .oef:nth-child(1) .vbtn[data-eigen]"), null, toestel + ": geen videoknop in het overzicht");
+      assert.ok(await vak("#oefs .oef:nth-child(1) .demobadge"), toestel + ": afspeelteken op het plaatje in het overzicht");
+      await pv.click("#oefs .oef:nth-child(1) .oefinfo");
+      await pv.waitForFunction(() => document.body.classList.contains("sessie"));
+      const foto = await vak("#oefs .oef.actief .fotoknop"), speel = await vak("#oefs .oef.actief .vbtn[data-eigen]");
+      assert.ok(foto && speel, toestel + ": beeld en afspeelknop staan er");
+      const midden = (v) => [v.x + v.w / 2, v.y + v.h / 2];
+      assert.ok(Math.abs(midden(speel)[0] - midden(foto)[0]) < 3 && Math.abs(midden(speel)[1] - midden(foto)[1]) < 3, toestel + ": afspeelknop staat midden op het beeld");
+      assert.ok(speel.w >= 68 && speel.h >= 68, toestel + ": afspeelknop is groot genoeg");
+      assert.equal(await pv.textContent("#oefs .oef.actief .vbtn[data-eigen] .vlab"), "Bekijk instructievideo");
+      await pv.click("#oefs .oef.actief .vbtn[data-eigen]");
+      await pv.waitForFunction(() => !!document.querySelector("#oefs .oef.actief .vhouder.open video"));
+      await wacht(400);
+      const video = await vak("#oefs .oef.actief .vhouder.open video"), sluit = await vak("#oefs .oef.actief .vbtn[data-eigen]"), naam = await vak("#oefs .oef.actief .naam");
+      assert.ok(video.y >= foto.y - 2 && video.y + video.h <= foto.y + Math.max(foto.h, video.h) + 2 && video.y < foto.y + foto.h, toestel + ": de video staat op de plek van het beeld");
+      assert.equal((await vak("#oefs .oef.actief .fotoknop")).zicht, "hidden", toestel + ": het beeld is weg zolang de video er staat");
+      assert.ok(naam.y >= video.y + video.h - 1, toestel + ": de naam staat onder de video");
+      assert.ok(sluit.w === 44 && sluit.h === 44 && sluit.x + sluit.w <= pv.viewportSize().width && sluit.y < video.y + 60, toestel + ": sluitknop rechtsboven op de video");
+      assert.equal(await pv.getAttribute("#oefs .oef.actief .vbtn[data-eigen]", "aria-expanded"), "true");
+      const gedaan = await vak("#sklaar");
+      assert.ok(gedaan.y + gedaan.h <= pv.viewportSize().height, toestel + ": Gedaan blijft in beeld bij de video");
+      assert.equal(await pv.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0, toestel + ": de video steekt niet opzij uit");
+      // het videobestand ontbreekt hier: de melding staat dan op de video, niet onder de vouw
+      await pv.waitForFunction(() => { const s = document.querySelector("#oefs .oef.actief .vstatus"); return s && !s.hidden && s.querySelector("button"); });
+      const melding = await vak("#oefs .oef.actief .vstatus");
+      assert.ok(melding.y >= foto.y - 2 && melding.y + melding.h <= naam.y + 2 && melding.x + melding.w <= sluit.x + 2, toestel + ": melding staat op de video, naast de sluitknop");
+      // sluiten zet het beeld terug; de volgende oefening sluit een open video
+      await pv.click("#oefs .oef.actief .vbtn[data-eigen]");
+      await pv.waitForFunction(() => !document.querySelector("#oefs .vhouder.open"));
+      assert.equal((await vak("#oefs .oef.actief .fotoknop")).zicht, "visible", toestel + ": na sluiten staat het beeld er weer");
+      await pv.click("#oefs .oef.actief .vbtn[data-eigen]");
+      await pv.waitForFunction(() => !!document.querySelector("#oefs .vhouder.open"));
+      await pv.click("#svolgende");
+      await pv.waitForFunction(() => document.getElementById("stel").textContent.indexOf("2 ") > -1);
+      assert.equal(await pv.locator("#oefs .vhouder.open").count(), 0, toestel + ": de volgende oefening sluit de video");
+      // YouTube: de speler komt in de plaats van het beeld, de knop blijft een gewone knop eronder
+      await wacht(750);
+      await pv.click("#oefs .oef.actief .vbtn[data-yt]");
+      await pv.waitForFunction(() => !!document.querySelector("#oefs .oef.actief .vhouder.open iframe"));
+      await wacht(300);
+      const speler = await vak("#oefs .oef.actief .vhouder.open iframe"), ytknop = await vak("#oefs .oef.actief .vbtn[data-yt]"), ytnaam = await vak("#oefs .oef.actief .naam");
+      assert.ok(speler.x === 0 && speler.w === pv.viewportSize().width, toestel + ": YouTube-speler over de volle breedte");
+      assert.equal(await vak("#oefs .oef.actief .fotoknop"), null, toestel + ": de speler vervangt het beeld");
+      assert.ok(ytnaam.y >= speler.y + speler.h - 1 && ytknop.y > ytnaam.y && ytknop.h >= 44, toestel + ": naam onder de speler, knop om te sluiten eronder");
+      assert.ok(await vak("#oefs .oef.actief .ytextern"), toestel + ": uitwijklink naar YouTube staat erbij");
+      assert.deepEqual(vfouten, [], toestel + ": geen scriptfouten bij video");
+      await cv.close();
+    }
+    console.log("Patiëntkaart mobiel (browser): overzicht, oefenstand, Gedaan/Volgende/ongedaan, terugknop, groot beeld, afronden naar de pijnvraag, pijnschuif (slepen, tikken, bladeren, Arabisch), video op de plek van het beeld (iPhone SE en Pixel 7).");
   } finally {
     if (browser) await browser.close();
     app.kill();
