@@ -9,6 +9,7 @@ import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promise
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 
 const root = process.cwd();
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-gegevens-"));
@@ -39,6 +40,12 @@ await writeFile(join(dataDir, "praktijk-sjablonen.json"), JSON.stringify({
 await writeFile(join(dataDir, "praktijken.json"), JSON.stringify({
   "fysio wis": { praktijk: "Fysio Wis", adres: "Straat 1", plaats: "Utrecht", logo: "uploads/logo-fysio-wis-1.png" },
   "fysio blijf": { praktijk: "Fysio Blijf", adres: "Straat 2", plaats: "Zeist", logo: "uploads/logo-fysio-blijf-1.png" }
+}));
+
+// vertaalcache: de namen van eigen oefeningen zijn vertaald (sleutel = hash van de Nederlandse naam)
+const vsleutel = (t) => createHash("sha256").update(t).digest("hex").slice(0, 16);
+await writeFile(join(dataDir, "vertalingen.json"), JSON.stringify({
+  en: { [vsleutel("Eigen brug")]: "Own bridge", [vsleutel("Eigen plank")]: "Own plank" }
 }));
 
 // ---- server ----
@@ -94,6 +101,8 @@ try {
   for (const pad of ["/privacy", "/verwerkersovereenkomst", "/voorwaarden"]) {
     assert.match(await (await fetch(origin + pad)).text(), /href="\/v2\/gegevens"/, pad + " linkt naar de gegevenspagina");
   }
+  // legal 2026-11-10: de pagina werkt ook met een eigen beheerderslogin; /privacy noemde alleen het praktijkwachtwoord
+  assert.match(await (await fetch(origin + "/privacy")).text(), /Gegevens van je praktijk<\/a>[^<]*als beheerder met je eigen e-mail en wachtwoord/);
 
   // ---- fout wachtwoord: niets, en geen hint of de praktijk bestaat ----
   const fout = await formulier("/v2/gegevens/download", { praktijk: "Fysio Wis", wachtwoord: "verkeerd-wachtwoord" });
@@ -150,6 +159,10 @@ try {
   for (const f of ["uploads/videos/v-aa11.mp4", "uploads/oef-aaaaaaaaaaaa.jpg", "uploads/logo-fysio-wis-1.png"]) {
     assert.equal(await bestaat(f), false, f + " is van de schijf");
   }
+  // legal 2026-11-10: de vertaling van de eigen oefening ging pas bij een herstart uit de cache
+  const cache = (await leesJson("vertalingen.json")).en || {};
+  assert.equal(cache[vsleutel("Eigen brug")], undefined, "vertaalde naam van de gewiste praktijk is weg");
+  assert.equal(cache[vsleutel("Eigen plank")], "Own plank", "vertaling van de andere praktijk blijft");
 
   // ---- de andere praktijk blijft ongemoeid en blijft ingelogd ----
   assert.ok((await leesJson("kaarten.json"))["fysio blijf"].cor);

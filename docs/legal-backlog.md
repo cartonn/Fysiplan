@@ -12,16 +12,28 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-09 13u (art. 28 lid 3 a/g/h en lid 4 langs de tekst; einde proef: kaarten bleven onbeperkt; subverwerkers tegen alle externe hosts in code: geen gat) |
 | (c) algemene voorwaarden | 2026-11-09 05u (opzeggen in de app, einde abonnement; `AV_VERSIE` 2026-11-09) |
 | (d) code tegen tekst | 2026-11-09 05u (einde abonnement: wissen 30 dagen na het einde gebouwd) |
-| (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-08 17u (patiënt: download klopt nu direct na vinkjes en seintje, niet pas na herladen) |
+| (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-10 01u (vertaalcache hield namen van eigen oefeningen na "Alles wissen" en na verwijderen tot de volgende herstart; /privacy noemde de beheerderslogin op /v2/gegevens niet; download bevat geen geheimen, wel alle kaartvelden) |
 | (f) cookies en lokale opslag | 2026-11-09 21u (Cache Storage van /k: "Wis deze kaart" liet oefenbeelden en bibliotheek staan, opgelost; cookies en localStorage ongewijzigd sinds 8-11) |
 | (g) MDR en AI-verordening | 2026-11-09 01u (vraaghulp gaf mogelijk doseringsadvies: opgelost; videolabels AI-concept/klinisch gecontroleerd volgen de reviewstatus; landing en app zonder sorteer- of doseringsbelofte) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-08 21u (werknotitie mee naar het dossier, dossierlabel vervalt bij nieuwe praktijkregels, datum heet nu "laatst opgeslagen") |
 | (i) begrijpelijkheid (B1) | 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (e) rechten van betrokkenen, dan (h) WGBO. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (h) WGBO, dan (g) MDR. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **LAAG — rechten (e) 2026-11-10: vertaalde namen van eigen oefeningen bleven na wissen in de vertaalcache.**
+  `vertalingen.json` bewaart per taal de vertaling van namen van eigen praktijkoefeningen. "Alles wissen" op
+  /v2/gegevens, het automatisch wissen na proef/abonnement (`praktijkAllesWissen`) en het verwijderen van een eigen
+  oefening lieten die staan tot `vertaalCacheOpschonen` bij de volgende herstart. Een naam kan een patiënt aanduiden.
+  OPGELOST 2026-11-10 (deze PR): beide routes ruimen de cache direct op; test in `scripts/test-praktijkgegevens.mjs`
+  (faalt zonder fix). Bron: AVG art. 17 lid 1 en art. 28 lid 3 g.
+- **LAAG — /privacy#rechten noemde alleen het praktijkwachtwoord voor /v2/gegevens (2026-11-10).** Sinds eigen logins
+  kan de beheerder het gedeelde wachtwoord uitzetten; dan leek downloaden/wissen onmogelijk. OPGELOST 2026-11-10 (deze
+  PR), `PRIVACY_VERSIE` 2026-11-10. Gecontroleerd zonder gat: de download bevat geen hashes, tokens of
+  uitnodigingscodes; teamleden staan erin zonder wachtwoord. Open (LAAG, ongewijzigd): media als pad, geen per-kaart
+  JSON-export (de praktijk filtert de volledige download of gebruikt "Kopieer voor dossier").
 
 - **LAAG (doorgezet door de gebruikers-sweep 2026-11-09 18u) — "Wis deze kaart van mijn telefoon" laat avatarbeelden van precies
   deze oefeningen en `oefeningen.json` in Cache Storage (`fysiplan-kaart-v2`)**; op een gedeelde telefoon verraadt dat welke

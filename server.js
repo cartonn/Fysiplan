@@ -69,7 +69,7 @@ const VWO_VERSIE = "2026-11-10";
 const AV_VERSIE = "2026-11-09-3";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-09";
+const PRIVACY_VERSIE = "2026-11-10";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -649,6 +649,9 @@ async function praktijkAllesWissen(pk) {
   for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
   // het logboek noemde de praktijknaam; alleen het feit dat er gewist is blijft, zonder naam
   praktijkAudit = praktijkAudit.filter((a) => a.praktijk !== pk);
+  // vertaalde namen van de eigen oefeningen staan los in de vertaalcache; die gaan nu
+  // ook weg, niet pas bij de volgende herstart (art. 17 AVG: echt alles van de praktijk)
+  try { await vertaalCacheOpschonen(); } catch {}
   return { aantalKaarten, proefUitkomst };
 }
 // wat de praktijk bij een download over de eigen aanmelding krijgt: alles behalve apparaat-tokens
@@ -3182,6 +3185,8 @@ async function afhandelen(request, response) {
       const [weg] = lijst.splice(idx, 1);
       await saveJson(praktijkOefeningenPath, praktijkOefeningen);
       if (/^uploads\/oef-[a-f0-9]{12}\.(jpg|png)$/.test(weg.img)) { try { await unlink(join(dataDir, weg.img)); } catch {} }
+      // ook de vertalingen van de naam (tenzij een bibliotheek- of andere eigen oefening zo heet)
+      try { await vertaalCacheOpschonen(); } catch {}
       await sendJson(response, 200, { ok: true, oefeningen: lijst });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
