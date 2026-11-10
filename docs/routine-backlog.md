@@ -57,6 +57,11 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+- **MIDDEL (gemeld door security 2026-11-10 12u) — `test:tablet` is lokaal rood op main (met Chromium).** De
+  iPad-check vindt het tikvlak van de video-knop 24×24 px: het venster "Nieuw in Fysiplan" ligt eroverheen
+  (`naastRaakt:false`, `naast` = de dialog). In CI is er geen Playwright, dus daar slaat de test het browserdeel over en
+  blijft hij groen. Waarschijnlijk sinds #162/#164. Fix: in de test het welkomstvenster sluiten, of de knop echt 44 px.
+
 ### Herontwerp patiëntkaart 2026-11-10 (thread "Verbeter de mobiele ervaring voor patiënten", test:patientmobiel)
 De kaart /k heeft nu twee standen met dezelfde oefeningen (zelfde DOM, zelfde knoppen):
 - **Overzicht:** datum, "Jouw oefeningen", doel, voortgang, één knop "Begin met oefenen", korte rijen (avatar, naam, "3 × 10",

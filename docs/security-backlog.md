@@ -8,7 +8,7 @@ daaruit tot en met 2026-11-06.
 
 | Gebied | Laatst geaudit |
 |---|---|
-| (a) beheer-endpoints en de admin-sleutel | 2026-11-09 12u (statisch: 17 `isAdmin`-routes, /aanmeldingen en /medewerkers alleen `ACCOUNT_BEHEER_EMAILS`, geen admin88 in publieke bestanden, productie zonder eigen `ADMIN_KEY` dicht, rem vóór sleutel. Geen gat) |
+| (a) beheer-endpoints en de admin-sleutel | 2026-11-10 12u (na #159: sleutelformulier controleert via /api/dashboard, sleutel alleen in sessionStorage, geen sleutel in publieke bestanden; productie zonder eigen `ADMIN_KEY` dicht. Gevonden: foute sleutels op routes waar beheer een extra recht is, telden niet mee voor de rem, opgelost) · 2026-11-09 12u (statisch: 17 `isAdmin`-routes, /aanmeldingen en /medewerkers alleen `ACCOUNT_BEHEER_EMAILS`, geen admin88 in publieke bestanden, productie zonder eigen `ADMIN_KEY` dicht, rem vóór sleutel. Geen gat) |
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-09 12u (team: eigen login, uitnodigen, verwijderen, rol, gedeeld uit; uitnodiging verzilveren; wachtwoord per lid; v1-login/registratie. Nieuw: LAAG uitnodigingsmail als spamkanaal, zie Open) · 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
 | (c) proef-tokens en verlopen proeven | 2026-11-09 16u (koppelen van een account aan een proef bij inloggen, nu ook gevolgd door wissen na 30 dagen: oude proefcookie hing een gewone praktijk aan een verlopen proef, opgelost; claim, slot en wissen alleen voor de eigen proef) · 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-10 00u (statisch alle 30 kaartroutes: patiëntroutes met `vindKaart` + misrem + `kruisSite`, therapeutroutes met `eisBeveiligdePraktijk` en alleen de eigen map, /api/kaart met allowlist, /k zonder bestaan-orakel, demo per verzoek vers. Teamsjablonen lezen/verwijderen zonder wachtwoord: opgelost) · 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP) |
@@ -19,7 +19,21 @@ daaruit tot en met 2026-11-06.
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-09 20u (remmen: schrijf-/leesrem per IP zette een hele praktijk achter één wifi plus de patiënten daar op 429: opgelost met een rem per praktijk; plafonds per praktijk ongewijzigd) · 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
 | (j) npm audit | 2026-11-10 08u (0 meldingen) · 2026-11-09 20u (0 meldingen, ook dev) |
 
-Volgende run: (a) beheer en (b) accountlaag (open PR #159 verandert het sleutelformulier: na merge nalopen), daarna (f) XSS.
+Volgende run: (b) accountlaag (runtime), daarna (f) XSS met de nieuwe patiëntkaart (#162).
+
+Sanity 2026-11-10 12u op #159–#164 (sleutelformulier beheer, mailrem uitnodigingen, verdwijndatum praktijk, verlopen
+proef op tweede apparaat, nieuwe patiëntkaart): `proefVerlopen` in de praktijkstatus komt alleen uit de eigen proefcookie
+of de ingelogde praktijk; `verdwijntOp` leest alleen de eigen proef; het beheerformulier zet vaste tekst in `innerHTML`
+en de foutmelding via `textContent`. Geen nieuw gat.
+
+- **OPGELOST 2026-11-10 (deze PR) — MIDDEL — beheersleutel raden zonder rem.** De rem (20 foute pogingen per 5 min per
+  IP) telde alleen in `denied()`. Routes die beheer als extra recht gebruiken roepen `isAdmin` aan zonder `denied`:
+  GET `/api/praktijken` (beheer krijgt de hele praktijkenlijst, anders alleen de eigen), `/api/opname/start` met
+  `doel: "oefening"`, de videopaden in POST `/api/kaarten`, en de schrijf-/leesremmen. Het antwoord verschilt bij de
+  juiste sleutel, dus daar kon je onbeperkt raden (alleen de leesrem van 120 per 5 min, met een nieuw IP opnieuw).
+  Repro lokaal: 21 foute sleutels op GET `/api/praktijken` gaven elk 200, daarna opende de juiste sleutel `/api/dashboard`
+  nog gewoon. Nu telt `isAdmin` zelf elke foute, niet-lege sleutel (één keer per verzoek). Verzoeken zonder sleutel
+  tellen niet. Test: stap 7 in `scripts/test-beheersleutel.mjs` (`test:beheer`).
 
 Sanity 2026-11-10 08u op #157–#158 (voorwaarden art. 4 incasso, controlezinnen in de kaarttaal, wissen spaart beelden
 van een andere kaart, emoji-initiaal): server.js alleen een nieuwe AV-versie en tekstvariabele; /k-meldingen via `tr()`
