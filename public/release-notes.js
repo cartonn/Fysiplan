@@ -10,6 +10,9 @@
   var text=document.createElement('p');text.textContent='Praktijkwebsite op de kaart, legenda voor series/herhalingen/weerstand, compacte beeldkeuze en sjablonen aanpassen als eigen variant. Op de mobiele kaart kun je een beschikbare voorleesstem kiezen.';dialog.appendChild(text);
   var note=document.createElement('p');note.textContent='Nieuwe tekeningen en inhoudelijk gewijzigde standaardsjablonen worden pas na beoordeling vrijgegeven. Bestaande kaarten blijven behouden.';dialog.appendChild(note);
   var close=document.createElement('button');close.className='btn primary';close.textContent='Begrepen';close.onclick=function(){try{localStorage.setItem(key,version);}catch(e){}dialog.close();};dialog.appendChild(close);
+  // Escape sluit het venster ook: dat telt als gezien, anders kwam het bij elke keer laden terug
+  // (gebruikers-sweep 2026-11-10 22u, Sanne)
+  dialog.addEventListener('close',function(){try{localStorage.setItem(key,version);}catch(e){}});
   document.body.appendChild(dialog);
   var button=document.createElement('button');button.type='button';button.className='mi';button.textContent='Updates';button.onclick=function(){if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');};
   var menu=document.querySelector('.topbar .menu');if(menu)menu.appendChild(button);

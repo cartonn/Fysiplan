@@ -225,6 +225,7 @@
     font:600 .9375rem/1.2 var(--disp);color:var(--blauw);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
   .oefzwaar.aan{color:var(--groen);text-decoration:none;cursor:default}
   .oefzwaar:disabled{opacity:1}
+  .oefzwaar.wacht{color:var(--grijs);text-decoration:none;cursor:default;text-align:start}
 
   /* video en stem */
   .vbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:50px;margin:14px 0 0;
@@ -717,7 +718,7 @@
   <div class="leesrij">
     <button type="button" id="leesBtn" style="display:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg><span id="leesTxt">Lees voor</span></button>
     <p class="vmeta stemnoot" id="leesNoot" hidden>De stem is met AI gemaakt.</p>
-    <label id="stemlabel" hidden>Stem <select id="stemsel" aria-label="Voorleesstem"><option value="">Automatisch</option></select></label>
+    <label id="stemlabel" hidden><span id="stemtxt">Stem</span> <select id="stemsel" aria-label="Voorleesstem"><option value="">Automatisch</option></select></label>
   </div>
   <div id="oefs"></div>
   <button type="button" class="ovalles" id="ovalles" style="display:none"></button>
@@ -1345,10 +1346,13 @@
   }
   function tekenZwaar(){
     var st=leesZwaar();
+    // staat de melding nog in de wachtrij (aangetikt zonder internet), dan zegt de knop dat
+    var wacht={};try{Object.keys(leesWacht()).forEach(function(k){var m=/^\/api\/kaart\/oefzwaar#(\d+)@/.exec(k);if(m)wacht[m[1]]=1;});}catch(e){}
     document.querySelectorAll('#oefs .oefzwaar').forEach(function(b){
-      var aan=st.idx.indexOf(Number(b.dataset.zidx))>-1;
-      b.classList.toggle('aan',aan);
-      b.textContent=aan?trg('zwaardank'):trg('zwaar');
+      var aan=st.idx.indexOf(Number(b.dataset.zidx))>-1,inWacht=aan&&!!wacht[b.dataset.zidx];
+      b.classList.toggle('aan',aan&&!inWacht);
+      b.classList.toggle('wacht',inWacht);
+      b.textContent=inWacht?trw('een'):aan?trg('zwaardank'):trg('zwaar');
       b.disabled=aan;
     });
   }
@@ -1871,6 +1875,7 @@
     // alles verstuurd: de meldingen "Opgeslagen op je telefoon…" onder pijnscore en seintjes
     // kloppen dan niet meer (gebruikers-sweep 2026-11-10, Truus)
     if(!n&&klaar)document.querySelectorAll('.mdank.wacht,.sdank.wacht').forEach(function(d){d.classList.remove('wacht');d.textContent='';d.style.display='none';});
+    if(document.querySelector('#oefs .oefzwaar.wacht'))tekenZwaar();
     if(n){el.className='wachtrij';el.textContent=trw('n').replace('{n}',n);el.style.display='block';}
     else if(klaar){el.className='wachtrij klaar';el.textContent=trw('ok');el.style.display='block';setTimeout(function(){if(!Object.keys(leesWacht()).length)el.style.display='none';},6000);}
     else el.style.display='none';
@@ -2106,8 +2111,11 @@
   // elk beeld staan dat een andere kaart op deze telefoon nog gebruikt. Weten we dat van een
   // andere kaart niet (geopend vóór deze lijst bestond), dan blijven de beelden staan.
   var BEELDEN_PREFIX='fp_beelden_';
+  // na "Wis van dit apparaat" niets meer terugschrijven: pagehide bewaarde de lijst anders
+  // opnieuw onder fp_beelden_<id>, en dat id is de toegang tot de kaart (sweep 2026-11-10 22u, Truus)
+  var KAART_GEWIST=false;
   function bewaarBeeldenLijst(){
-    if(!id)return;
+    if(!id||KAART_GEWIST)return;
     try{
       var oud={};try{(JSON.parse(localStorage.getItem(BEELDEN_PREFIX+id)||'[]')||[]).forEach(function(p){oud[p]=1;});}catch(e){}
       var nu=beeldenVanDezeKaart();Object.keys(nu).forEach(function(p){oud[p]=1;});
@@ -2143,6 +2151,7 @@
     var nWacht=Object.keys(leesWacht()).length;
     var vraag=trmg('zeker')+(nWacht?'\n\n'+trmg('wacht').replace('{n}',nWacht):'');
     if(!window.confirm(vraag))return;
+    KAART_GEWIST=true;
     vergeetKaartHier();
     try{localStorage.removeItem(wachtSleutel());}catch(e){}
     wisSleutelsVanTelefoon();
@@ -2502,12 +2511,20 @@
   // waar mogelijk een vrouwelijke stem van het toestel (Claire of Fenna op iPhone,
   // de Google-stem op Android), anders de standaardstem van die taal
   var STEMMEN={};
+  // [label, aria-label, standaardkeuze]
+  var TSTEM={nl:['Stem','Voorleesstem','Automatisch'],en:['Voice','Read-aloud voice','Automatic'],de:['Stimme','Vorlesestimme','Automatisch'],
+    fr:['Voix','Voix de lecture','Automatique'],es:['Voz','Voz de lectura','Automática'],pl:['Głos','Głos lektora','Automatycznie'],
+    tr:['Ses','Sesli okuma sesi','Otomatik'],ar:['الصوت','صوت القراءة','تلقائي'],uk:['Голос','Голос читання','Автоматично']};
   function vulStemmen(){
     if(TAAL==='nl'){document.getElementById('stemlabel').hidden=true;return;}
     if(!window.speechSynthesis)return;
     var sel=document.getElementById('stemsel'),lang=SPRAAK[TAAL]||'nl-NL',voorkeur='';
     try{voorkeur=localStorage.getItem('fp_stem_'+lang)||'';}catch(e){}
-    sel.replaceChildren(new Option('Automatisch',''));
+    // de stemkiezer staat alleen op een kaart in een andere taal: dus ook in die taal
+    // (stond in het Nederlands op een Engelse kaart; sweep 2026-11-10 22u, Jayden)
+    var ts=TSTEM[TAAL]||TSTEM.en;
+    document.getElementById('stemtxt').textContent=ts[0];sel.setAttribute('aria-label',ts[1]);
+    sel.replaceChildren(new Option(ts[2],''));
     speechSynthesis.getVoices().filter(function(v){return v.lang.slice(0,2).toLowerCase()===lang.slice(0,2).toLowerCase();}).forEach(function(v){sel.add(new Option(v.name+' ('+v.lang+')',v.voiceURI));});
     sel.value=voorkeur;if(sel.selectedIndex<0)sel.value='';
     document.getElementById('stemlabel').hidden=sel.options.length<2;
@@ -3035,7 +3052,9 @@
         // of 5xx gaf eerst stil "Doorgegeven ✓" terwijl de therapeut niets kreeg
         oz.dataset.bezig='1';oz.disabled=true;oz.textContent=trg('zwaarbezig');
         fetch('/api/kaart/oefzwaar',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id,oef:zidx})})
-          .catch(function(){zetInWacht('/api/kaart/oefzwaar',{id:id,oef:zidx});return {ok:true};})
+          // zonder internet: in de wachtrij en dat ook zeggen ("Opgeslagen op je telefoon…"),
+          // niet "Doorgegeven ✓" terwijl de therapeut nog niets heeft (sweep 2026-11-10 22u, Truus en Jayden)
+          .catch(function(){WACHT_REDEN='net';zetInWacht('/api/kaart/oefzwaar',{id:id,oef:zidx});return {ok:true,wacht:true};})
           .then(function(r){if(!r.ok)throw r.status;delete oz.dataset.bezig;zetZwaar();})
           .catch(function(){delete oz.dataset.bezig;oz.disabled=false;oz.textContent=trg('zwaarmis');});
         return;

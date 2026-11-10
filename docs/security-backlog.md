@@ -24,6 +24,13 @@ Volgende run: (c) proef-tokens, daarna (h) foutmeldingen.
 Sanity 2026-11-10 20u op #170 en #171 (privacyverklaring patiënten, herstelknoppen/laadtekst op /k): alleen tekst en
 `public/kaart.html` zonder nieuwe `innerHTML` met invoer, geen serverwijziging. Geen gat.
 
+- **HOOG (gebruikers-sweep 2026-11-10 22u, Mark; NAKIJKEN) — elke therapeut kan elke patiëntkaart van de praktijk
+  definitief verwijderen, zonder logboekregel.** Collega "Piet" (rol therapeut) stuurde `POST /api/kaarten/verwijder` voor de
+  kaart "Voorbeeldpatiënt" van Mark: 200, kaart met video's weg, niets in Activiteit (geen `auditLog`). Bij sjablonen en eigen
+  oefeningen geeft hetzelfde 403 (`magGedeeldAanpassen`). In de app staat "×" bij elke kaart, ook bij een collega (iPad).
+  server.js r. ~4393–4421. Voorstel: verwijderen alleen door maker of `beheer`, of in elk geval een auditregel; wacht op #167
+  (server.js). Productkeuze voor Ahmed of een collega dit mag; het ontbrekende logboek is in elk geval een gat (WGBO-spoor).
+
 - **OPGELOST 2026-11-10 (deze PR) — LAAG — collega kon met foute pogingen bij wachtwoord wijzigen de praktijk op slot
   zetten** (NAKIJKEN van de gebruikers-sweep 14u, nu bevestigd). `/api/praktijk/wachtwoord` telde een fout eigen wachtwoord
   van een lid via `loginMisTel(pk)` op de sleutel van de praktijk. Repro lokaal: lid tikt 10× een fout huidig wachtwoord,
