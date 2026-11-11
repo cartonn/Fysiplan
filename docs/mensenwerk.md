@@ -23,7 +23,15 @@ poging en 10 MiB gegevensbestanden. Dit is geen onbeperkte opslaggarantie. Bij o
 uploads worden gegevens en een expliciete lijst ontbrekende uploads bewaard; /health meldt
 `deels` en de beheerder krijgt een melding. `ok` betekent dat alle geïnventariseerde bestanden
 zijn opgeslagen en de objectgroottes zijn gecontroleerd. Herstel controleert encryptie en hashes.
-Een herstart herhaalt binnen 24 uur geen uploadpoging. Eén migratie van formaat 2 naar 3 is mogelijk.
+Elke 24-uurscyclus heeft maximaal vier pogingen: de eerste plus herkansingen na 15 minuten,
+1 uur en 4 uur vanaf de vorige poging (de server controleert iedere 5 minuten). Een persistent
+transferjournaal reserveert bytes vóór iedere PUT, ook voor mislukte verzoeken. Alle pogingen delen
+hetzelfde budget van 200 MiB. Reeds aangekomen uploadobjecten worden via het journaal hergebruikt.
+Een geslaagde cyclus wordt na herstart niet opnieuw uitgevoerd. Een onderbroken oude poging met
+onbekend verbruik wacht conservatief tot de volgende cyclus.
+Publiek toont /health alleen de back-upstatus en het tijdstip van de laatste VOLLEDIGE kopie.
+Details staan achter de beheersleutel op GET /api/beheer/backup-status; geen sleutels of bestandsnamen
+worden teruggegeven.
 
 Herstellen: `scripts/backup-terugzetten.mjs` leest oude zelfstandige FPB1-bestanden en nieuwe
 indexbestanden met S3-referenties. Bij het nieuwe formaat zijn ook de S3-instellingen nodig.

@@ -7,7 +7,7 @@ import {spawn} from 'node:child_process';
 import {randomBytes} from 'node:crypto';
 import {maakSnapshot,leesManifest,herstelUpload,LIMITS,MANIFEST} from '../lib/backup-snapshots.js';
 import {ontsleutel,versleutel} from '../lib/backup-elders.js';
-const objects=new Map();let copied=0,putBytes=0,copyError=false;
+const objects=new Map();let copied=0,putBytes=0,copyError=false,failUploadOnce=false;
 const srv=createServer(async(req,res)=>{
  const chunks=[];for await(const c of req)chunks.push(c);const body=Buffer.concat(chunks);
  if(req.method==='PUT'){
@@ -18,7 +18,9 @@ const srv=createServer(async(req,res)=>{
    if(!objects.has(source)){res.writeHead(404);return res.end();}
    objects.set(req.url,Buffer.from(objects.get(source)));copied++;res.writeHead(200);return res.end('<CopyObjectResult><ETag>ok</ETag></CopyObjectResult>');
   }
-  objects.set(req.url,body);putBytes+=body.length;res.writeHead(200);return res.end();
+  objects.set(req.url,body);putBytes+=body.length;
+  if(failUploadOnce && req.url.includes("/snapshots/")){failUploadOnce=false;res.writeHead(503);return res.end();}
+  res.writeHead(200);return res.end();
  }
  const b=objects.get(req.url);if(!b){res.writeHead(404);return res.end();}
  res.writeHead(200,{'content-length':b.length});res.end(req.method==='HEAD'?undefined:b);
@@ -73,6 +75,20 @@ try{
  assert.notEqual(await cli(index,join(root,'corrupt')),0);objects.set('/bak/'+ref.object,saved);
  await writeFile(index,objects.get('/bak/'+f.object));assert.notEqual(await cli(index,join(root,'partial')),0);
  assert.equal(await cli(index,join(root,'partial-explicit'),['--onvolledig']),0);
+ // Verbinding kan falen nadat de upload is aangekomen. Na herstart hergebruiken we die.
+ let journal={bytes:0,uploads:{}};let disk;
+ const saveJournal=async j=>{disk=JSON.stringify(j);};
+ failUploadOnce=true;
+ const interrupted=await maakSnapshot(inst,root,paths,{nu:day(20),journal,saveJournal});
+ assert.equal(interrupted.deels,true);const spent=journal.bytes;const network=putBytes;
+ journal=JSON.parse(disk);
+ const retried=await maakSnapshot(inst,root,paths,{nu:day(20),journal,saveJournal});
+ assert.equal(retried.deels,false);assert.equal(retried.uploaded,0);assert.equal(retried.copied,1);
+ assert.ok(putBytes-network<10000,'geen tweede video-upload na verloren antwoord');
+ assert.ok(journal.bytes>spent,'ook indextransfers tellen mee');
+ const fullJournal={bytes:LIMITS.transfer,uploads:journal.uploads};const beforeBudget=putBytes;
+ await assert.rejects(maakSnapshot(inst,root,paths,{nu:day(20),journal:fullJournal}),/transferbudget/);
+ assert.equal(putBytes,beforeBudget,'vol dagbudget mag geen nieuwe PUT versturen');
  // Path traversal / vreemde remote bestemming wordt afgewezen vóór schrijven.
  const evil={version:2,complete:true,missing:[],uploads:{'../escape':ref}};
  await writeFile(index,versleutel({[MANIFEST]:Buffer.from(JSON.stringify(evil))},inst.sleutel));assert.notEqual(await cli(index,join(root,'unsafe')),0);
