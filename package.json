@@ -130,7 +130,8 @@
     "test:profielbeheer": "node scripts/test-profiel-beheer.mjs",
     "test:opzeggenbeheer": "node scripts/test-opzeggen-beheer.mjs",
     "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs",
-    "test:prullenbak": "node scripts/test-kaart-prullenbak.mjs"
+    "test:prullenbak": "node scripts/test-kaart-prullenbak.mjs",
+    "test:beveiligingfeedback": "node scripts/test-beveiliging-feedback.mjs"
   },
   "engines": {
     "node": ">=20"

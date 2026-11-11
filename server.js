@@ -3760,7 +3760,7 @@ async function afhandelen(request, response) {
       const acc = v1Accounts[email];
       if (!acc || acc.geblokkeerd || !checkHash(ww, acc.hash)) {
         v1LoginMisTel(email || "?");
-        await denied(request, response, "v1-login");
+        await denied(request, response, "v1-login", "Dat e-mailadres of wachtwoord klopt niet.");
         return;
       }
       v1LoginMis.delete(email);

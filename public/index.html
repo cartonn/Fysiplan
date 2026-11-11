@@ -197,6 +197,15 @@
   .proef-voorbij-ov a{color:#5a3300;font-weight:600}
   .modal{background:#fff;border-radius:16px;width:400px;max-width:100%;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain;padding:22px 24px;box-shadow:var(--sh-lg);animation:pop .15s ease}
   @keyframes pop{from{transform:translateY(6px) scale(.985);opacity:0}to{transform:none;opacity:1}}
+  /* beveiligingsblok: een melding over iets wat ontbreekt valt op (rood, schudt bij
+     elke klik), en het veld dat mist krijgt een rode rand */
+  #ps_msg{font-size:12px;color:var(--muted);margin-top:6px}
+  #ps_msg.fout{color:#b42318;background:#fef3f2;border:1px solid #fecdca;border-radius:8px;padding:7px 9px;font-size:12.5px;font-weight:600}
+  #ps_msg.flits{animation:psflits .4s ease}
+  @keyframes psflits{20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+  @media (prefers-reduced-motion:reduce){#ps_msg.flits{animation:none}}
+  #prakslot input.mist{border-color:#d92d20;box-shadow:0 0 0 3px rgba(217,45,32,.16)}
+  #prakslot label.mist{color:#b42318 !important;outline:2px solid #fda29b;outline-offset:3px;border-radius:6px}
   /* gratis proef (v2): smalle balk onder de kopregel, nooit op de print */
   .proefbalk{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;padding:9px 22px;background:#fff7ed;border-bottom:1px solid #f6d7b8;font-size:13.5px;color:#6b3a12}
   .proefbalk[hidden]{display:none}
@@ -3139,11 +3148,12 @@ bridge2.jpg</div>
       "<div id='ps_hcform' style='display:none;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px'>"+
         "<input id='ps_hchuidig' type='password' autocomplete='current-password' placeholder='Huidig wachtwoord' style='flex:1;min-width:130px'/>"+
         "<button class='btn' id='ps_hcdo' type='button' title='Maakt een nieuwe herstelcode; de oude werkt daarna niet meer'>Maak nieuwe code</button></div>"+
-      "<div id='ps_msg' style='font-size:12px;color:var(--muted);margin-top:6px;display:none'></div>"+
+      "<div id='ps_msg' role='status' aria-live='polite' aria-atomic='true' style='display:none'></div>"+
       "<div id='ps_activiteit' style='font-size:12px;color:var(--muted);margin-top:6px;display:none'></div>";
     blok.insertBefore(s,blok.firstChild);
     document.getElementById('ps_do').addEventListener('click',prakSlotActie);
     document.getElementById('ps_ww').addEventListener('keydown',function(e){if(e.key==='Enter')prakSlotActie();});
+    s.addEventListener('input',psLive);s.addEventListener('change',psLive);
     document.getElementById('ps_wdo').addEventListener('click',prakWachtwoord);
     document.getElementById('ps_hdo').addEventListener('click',prakHerstel);
     document.getElementById('ps_hcdo').addEventListener('click',prakNieuweCode);
@@ -3424,7 +3434,7 @@ bridge2.jpg</div>
   function toonHerstelcode(code,intro){
     var msg=document.getElementById('ps_msg');
     if(!msg||!code)return;
-    msg.style.display='';
+    msg.style.display='';msg.classList.remove('fout','flits');PS_MIS=false;
     msg.innerHTML=esc(intro||'Bewaar deze herstelcode op een veilige plek (bijvoorbeeld de praktijkmap). Hiermee zet je een nieuw wachtwoord als het huidige kwijt is. Hij wordt maar één keer getoond:')+
       "<div style='font:700 15px/1.6 ui-monospace,monospace;user-select:all;margin-top:4px'>"+esc(code)+"</div>"+
       // de code raakt in de praktijk anders gewoon kwijt: één tik kopieert hem,
@@ -3455,49 +3465,56 @@ bridge2.jpg</div>
   // de oude code vervalt direct en de nieuwe wordt één keer getoond
   function prakNieuweCode(){
     var hu=document.getElementById('ps_hchuidig'),knop=document.getElementById('ps_hcdo');
-    if(!hu.value){toonPsMsg('Vul je huidige wachtwoord in.');return;}
+    if(!hu.value){psFout('Vul je huidige wachtwoord in.',hu);return;}
     knop.disabled=true;
     fetch('api/praktijk/herstelcode',{method:'POST',headers:PJSON(),
       body:JSON.stringify({praktijk:PRAKSLOT.pr,huidig:hu.value})})
       .then(function(r){return r.json().catch(function(){return{ok:false};});})
       .then(function(d){
         knop.disabled=false;
-        if(!d.ok){toonPsMsg(d.fout||'Dat lukte niet. Controleer je wachtwoord.');return;}
+        if(!d.ok){psFout(d.fout||'Dat lukte niet. Controleer je wachtwoord.',hu,true);return;}
         hu.value='';document.getElementById('ps_hcform').style.display='none';
         toonHerstelcode(d.herstelcode,'Dit is je nieuwe herstelcode (de oude werkt niet meer); bewaar hem op een veilige plek:');
       })
-      .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
+      .catch(function(){knop.disabled=false;psFout('Geen verbinding met de server. Probeer het zo opnieuw.');});
   }
   function prakHerstel(){
     var code=document.getElementById('ps_hcode'),nw=document.getElementById('ps_hnieuw'),knop=document.getElementById('ps_hdo');
-    if(!code.value.trim()){toonPsMsg('Vul je herstelcode in.');return;}
-    if(nw.value.length<8){toonPsMsg('Kies een nieuw wachtwoord van minstens 8 tekens.');return;}
+    if(!code.value.trim()){psFout('Vul je herstelcode in.',code);return;}
+    if(nw.value.length<8){psFout('Kies een nieuw wachtwoord van minstens 8 tekens'+psNu(nw)+'.',nw);return;}
     knop.disabled=true;
     fetch('api/praktijk/herstel',{method:'POST',headers:{'content-type':'application/json'},
       body:JSON.stringify({praktijk:PRAKSLOT.pr,herstelcode:code.value.trim(),nieuw:nw.value})})
       .then(function(r){return r.json().catch(function(){return{ok:false};});})
       .then(function(d){
         knop.disabled=false;
-        if(!d.ok){toonPsMsg(d.fout||'Dat lukte niet. Controleer de herstelcode.');return;}
+        if(!d.ok){psFout(d.fout||'Dat lukte niet. Controleer de herstelcode.',code,true);return;}
         setPrakSes(d.sessie);code.value='';nw.value='';
         document.getElementById('ps_herstel').style.display='none';
         PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();reloadLibraryKeepingCard();
         toonHerstelcode(d.herstelcode,'Je wachtwoord is vernieuwd. Dit is je nieuwe herstelcode (de oude werkt niet meer); bewaar hem op een veilige plek:');
       })
-      .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
+      .catch(function(){knop.disabled=false;psFout('Geen verbinding met de server. Probeer het zo opnieuw.');});
+  }
+  // wat er voor Beveiligen nog ontbreekt, alles in één keer, met de velden die het betreft
+  function psOntbreekt(){
+    var ww=document.getElementById('ps_ww'),vwo=document.getElementById('ps_vwo'),mis=[],velden=[];
+    if(ww.value.length<8){mis.push('een wachtwoord van minstens 8 tekens'+psNu(ww));velden.push(ww);}
+    if(!(vwo&&vwo.checked)){mis.push('een vinkje bij de algemene voorwaarden en de verwerkersovereenkomst');velden.push(vwo);}
+    return {tekst:mis.length?'Nog nodig: '+mis.join(' en ')+'.':'',velden:velden};
   }
   function prakSlotActie(){
-    var knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww'),msg=document.getElementById('ps_msg');
+    var knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww'),vwo=document.getElementById('ps_vwo');
     var act=knop.dataset.act,w=ww.value;
-    if(act==='claim'&&w.length<8){toonPsMsg('Kies een wachtwoord van minstens 8 tekens.');return;}
-    if(!w){toonPsMsg('Vul je wachtwoord in.');return;}
-    var vwo=document.getElementById('ps_vwo');
-    if(act==='claim'&&!(vwo&&vwo.checked)){toonPsMsg('Vink aan dat je namens de praktijk akkoord gaat met de algemene voorwaarden en de verwerkersovereenkomst.');return;}
+    if(act==='claim'){
+      var o=psOntbreekt();
+      if(o.tekst){psFout(o.tekst,o.velden);PS_MIS=true;return;}
+    }else if(!w){psFout('Vul het wachtwoord van je praktijk in.',ww);return;}
     knop.disabled=true;
     var lijf={praktijk:PRAKSLOT.pr,wachtwoord:w};
     var emv=(document.getElementById('ps_email')||{}).value||'';
     if(act==='login'&&emv.trim())lijf.email=emv.trim();
-    if(act==='login'&&PRAKSLOT.perEmail&&!lijf.email){knop.disabled=false;toonPsMsg('Vul je e-mailadres in. Deze praktijk logt in met je eigen login.');return;}
+    if(act==='login'&&PRAKSLOT.perEmail&&!lijf.email){knop.disabled=false;psFout('Vul je e-mailadres in. Deze praktijk logt in met je eigen login.',document.getElementById('ps_email'));return;}
     if(act==='claim')lijf.akkoord=true;
     if(act==='claim'&&PRAKSLOT.nieuw)lijf.nieuw=true;
     fetch('api/praktijk/'+(act==='claim'?'claim':'login'),{method:'POST',headers:{'content-type':'application/json'},
@@ -3506,7 +3523,8 @@ bridge2.jpg</div>
       .then(function(d){
         knop.disabled=false;
         if(!d.ok){
-          toonPsMsg(d.fout||'Dat lukte niet.');
+          psFout(d.fout||'Dat lukte niet.',d.akkoord?vwo:(act==='login'?ww:null),act==='login');
+          if(d.login&&act==='claim')toonPrakSlot(PRAKSLOT.pr);
           // zonder proef of na de proef: de weg naar de proefpagina erbij
           if(d.proefNodig||d.proefVerlopen){
             var pm=document.getElementById('ps_msg');
@@ -3514,7 +3532,7 @@ bridge2.jpg</div>
           }
           return;
         }
-        setPrakSes(d.sessie);ww.value='';document.getElementById('ps_msg').style.display='none';
+        psGeenMist();setPrakSes(d.sessie);ww.value='';document.getElementById('ps_msg').style.display='none';
         PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;PRAKSLOT.nieuw=false;rendPrakSlot();toonPrakSlot(PRAKSLOT.pr);toonSrvKaarten();reloadLibraryKeepingCard();
         if(d.herstelcode)toonHerstelcode(d.herstelcode);
         // de kaart in de editor mag nu gedeeld worden: de QR komt er vanzelf op
@@ -3522,27 +3540,27 @@ bridge2.jpg</div>
         // het praktijkprofiel (adres, telefoon) wordt pas na beveiligen bewaard; stuur het nu mee
         if(IS_V2&&act==='claim')upsertPraktijk();
       })
-      .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
+      .catch(function(){knop.disabled=false;psFout('Geen verbinding met de server. Probeer het zo opnieuw.');});
   }
   // wachtwoord wijzigen: huidig + nieuw insturen; bij succes vervallen alle oude
   // sessies (ook elders) en gaan we verder op de vers uitgegeven sessie
   function prakWachtwoord(){
     var hu=document.getElementById('ps_huidig'),nw=document.getElementById('ps_nieuw'),knop=document.getElementById('ps_wdo');
-    if(!hu.value){toonPsMsg('Vul je huidige wachtwoord in.');return;}
-    if(nw.value.length<8){toonPsMsg('Kies een nieuw wachtwoord van minstens 8 tekens.');return;}
+    if(!hu.value){psFout('Vul je huidige wachtwoord in.',hu);return;}
+    if(nw.value.length<8){psFout('Kies een nieuw wachtwoord van minstens 8 tekens'+psNu(nw)+'.',nw);return;}
     knop.disabled=true;
     fetch('api/praktijk/wachtwoord',{method:'POST',headers:PJSON(),
       body:JSON.stringify({praktijk:PRAKSLOT.pr,huidig:hu.value,nieuw:nw.value})})
       .then(function(r){return r.json().catch(function(){return{ok:false};});})
       .then(function(d){
         knop.disabled=false;
-        if(!d.ok){toonPsMsg(d.fout||'Wijzigen is niet gelukt.');return;}
+        if(!d.ok){psFout(d.fout||'Wijzigen is niet gelukt.',hu,true);return;}
         setPrakSes(d.sessie);hu.value='';nw.value='';
         document.getElementById('ps_wijzig').style.display='none';
         if(d.herstelcode)toonHerstelcode(d.herstelcode,'Wachtwoord gewijzigd. Dit account had nog geen herstelcode; bewaar deze op een veilige plek (hij wordt maar één keer getoond):');
         else toonPsMsg('Wachtwoord gewijzigd. Andere apparaten zijn uitgelogd.');
       })
-      .catch(function(){knop.disabled=false;toonPsMsg('Geen verbinding.');});
+      .catch(function(){knop.disabled=false;psFout('Geen verbinding met de server. Probeer het zo opnieuw.');});
   }
   // ---- één akkoord: nieuwe voorwaarden tonen met wat er veranderd is ----
   function tekenAkkoord(){
@@ -3602,7 +3620,48 @@ bridge2.jpg</div>
     if(typeof normalizePrintableTextFields==='function')normalizePrintableTextFields();
     render();
   }
-  function toonPsMsg(t){var m=document.getElementById('ps_msg');if(m){m.textContent=t;m.style.display='';}}
+  // meldingen in het beveiligingsblok. Een uitleg is grijs; een fout (iets ontbreekt
+  // of de server weigert) is rood en schudt kort, zodat ook een tweede klik met
+  // dezelfde melding zichtbaar iets doet
+  var PS_MIS=false; // de melding somt op wat er voor Beveiligen nog ontbreekt
+  function toonPsMsg(t,fout){
+    var m=document.getElementById('ps_msg');if(!m)return;
+    PS_MIS=false;
+    m.textContent=t;m.style.display='';
+    m.classList.toggle('fout',!!fout);
+    m.classList.remove('flits');
+    if(fout){void m.offsetWidth;m.classList.add('flits');}
+  }
+  // fout tonen, de betrokken velden rood omranden en het eerste in beeld en in focus
+  // zetten. kiesAlles: bij een geweigerd wachtwoord of code de inhoud selecteren, zodat
+  // opnieuw typen hem vervangt (bij te kort juist niet: dan typ je erachter verder)
+  function psFout(t,velden,kiesAlles){
+    var lijst=!velden?[]:(velden.tagName?[velden]:velden);
+    psGeenMist();
+    lijst.forEach(function(v){if(v){(v.id==='ps_vwo'?document.getElementById('ps_vwolab'):v).classList.add('mist');v.setAttribute('aria-invalid','true');v.setAttribute('aria-describedby','ps_msg');}});
+    toonPsMsg(t,true);
+    var eerste=lijst[0];
+    if(eerste){eerste.focus();if(kiesAlles&&eerste.select)eerste.select();}
+    var m=document.getElementById('ps_msg');if(m&&m.scrollIntoView)m.scrollIntoView({block:'nearest'});
+  }
+  function psNu(veld){var n=veld.value.length;return n?' (nu '+n+')':'';}
+  function psGeenMist(){document.querySelectorAll('#prakslot .mist, #prakslot [aria-invalid]').forEach(function(e){e.classList.remove('mist');e.removeAttribute('aria-invalid');e.removeAttribute('aria-describedby');});}
+  // tijdens het herstellen: het rood verdwijnt zodra een veld in orde is, en de
+  // opsomming van wat er voor Beveiligen nog ontbreekt loopt mee
+  function psLive(e){
+    var el=e.target;if(!el||!el.id)return;
+    var claim=document.getElementById('ps_do').dataset.act==='claim';
+    if(el.id==='ps_vwo'){if(el.checked){document.getElementById('ps_vwolab').classList.remove('mist');el.removeAttribute('aria-invalid');el.removeAttribute('aria-describedby');}}
+    else if(el.classList.contains('mist')){
+      var nieuw=el.id==='ps_hnieuw'||el.id==='ps_nieuw'||(el.id==='ps_ww'&&claim);
+      if(nieuw?el.value.length>=8:!!el.value){el.classList.remove('mist');el.removeAttribute('aria-invalid');el.removeAttribute('aria-describedby');}
+    }
+    if(PS_MIS&&claim&&(el.id==='ps_ww'||el.id==='ps_vwo')){
+      var o=psOntbreekt();
+      if(o.tekst)document.getElementById('ps_msg').textContent=o.tekst;
+      else toonPsMsg('Alles ingevuld. Klik op Beveiligen.');
+    }
+  }
 
   // ---- gedeelde kaarten van de praktijk (v2): server-side, voor alle collega's ----
   // de praktijk leest haar eigen kaart via de praktijkroute (met sessie); de
