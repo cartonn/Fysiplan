@@ -958,6 +958,10 @@
     }catch(e){}
     return 'nl';
   })();
+  // tabtitel en taal van de pagina meteen goed: tijdens het laden en in elke foutstaat stond
+  // "Trainingskaart — Fysiplan" in het Nederlands (sweep 2026-11-11 02u/06u)
+  function neutraleTitel(){try{document.title=tr('eyebrow')+' — Fysiplan';document.documentElement.lang=TAAL;}catch(e){}}
+  neutraleTitel();
   var VERT={};
   var K=null;
   var mediaReviewReady=false,blockedMedia={},explanationHolds=[],poseKeuring={},merkDek={},bronGecontroleerd={},hercontroleGedaan={};
@@ -1188,6 +1192,8 @@
       })
       .catch(function(){vrij(0);m.textContent=trag('fout');});
   }
+  // enkelvoud voor "nog 1 keer" waar de taal dat vraagt (de rest gebruikt TAFHER)
+  var TAFHER1={en:'weekly, 1 more time',es:'semanal, 1 vez más',pl:'co tydzień, jeszcze 1 raz',ar:'أسبوعيًا، مرة واحدة متبقية',uk:'щотижня, ще 1 раз'};
   var TAFHER={nl:'wekelijks, nog {n} keer',en:'weekly, {n} more times',de:'wöchentlich, noch {n} Mal',fr:'chaque semaine, encore {n} fois',es:'semanal, {n} veces más',pl:'co tydzień, jeszcze {n} razy',tr:'haftalık, {n} kez daha',ar:'أسبوعيًا، {n} مرات متبقية',uk:'щотижня, ще {n} разів'};
   // PSK (Patiënt Specifieke Klachten): de doelactiviteit die de therapeut zette,
   // met de vraag hoe lastig die nu is (0 = geen moeite, 10 = onmogelijk)
@@ -1788,6 +1794,11 @@
     }
   }
 
+  // een week later op dezelfde klokketijd in de praktijk (Europe/Amsterdam), zoals de agenda (RRULE met TZID).
+  // Vaste 7×24 uur gaf na de zomertijdwissel 15:00 in plaats van 14:00 (sweep 2026-11-11 06u, Mark).
+  function amsVerschil(t){try{var p={};new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Amsterdam',hourCycle:'h23',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',second:'numeric'}).formatToParts(new Date(t)).forEach(function(x){p[x.type]=x.value;});
+    return Date.UTC(+p.year,+p.month-1,+p.day,+p.hour%24,+p.minute,+p.second)-Math.floor(t/1000)*1000;}catch(e){return 0;}}
+  function weekLater(t){var n=t+7*864e5;return n+(amsVerschil(t)-amsVerschil(n));}
   // volgende afspraak: tonen zolang hij niet ruim voorbij is, met agenda-knop (.ics)
   function tekenAfspraak(){
     var blok=document.getElementById('afspraakblok');if(!blok)return;
@@ -1796,7 +1807,7 @@
     // wekelijkse reeks: is de eerste afspraak voorbij, rol dan door naar de
     // eerstvolgende in de reeks, zodat de kaart altijd de échte volgende toont
     var at=a.t,rest=Number(a.herhaal)||0;
-    if(rest>=2){while(at<Date.now()-2*3600000&&rest>1){at+=7*864e5;rest--;}}
+    if(rest>=2){while(at<Date.now()-2*3600000&&rest>1){at=weekLater(at);rest--;}}
     if(at<Date.now()-2*3600000){blok.style.display='none';return;}
     document.getElementById('afkop').textContent=TAF[TAAL]||TAF.nl;
     var d=new Date(at);
@@ -1809,8 +1820,10 @@
     el.textContent='';
     if(relW){var b=document.createElement('b');b.textContent=relW+' — ';el.appendChild(b);}
     el.appendChild(document.createTextNode(tekst));
-    // de reeks erbij: "wekelijks, nog N keer" ná de eerstvolgende datum
-    if(rest>=2){el.appendChild(document.createTextNode(' · '+(TAFHER[TAAL]||TAFHER.nl).replace('{n}',rest)));}
+    // de reeks erbij: "wekelijks, nog N keer" ná de getoonde datum. `rest` telt de getoonde
+    // afspraak zelf mee (COUNT in de agenda); "nog 4 keer" bij een reeks van 4 las als vijf (sweep 2026-11-10 22u, Mark)
+    var nogN=rest-1;
+    if(nogN>=1){el.appendChild(document.createTextNode(' · '+(nogN===1&&TAFHER1[TAAL]?TAFHER1[TAAL]:(TAFHER[TAAL]||TAFHER.nl).replace('{n}',nogN))));}
     var ics=document.getElementById('afics');
     ics.textContent=tr('agknop');
     ics.href='/api/kaart/afspraak.ics?id='+encodeURIComponent(id)+'&taal='+encodeURIComponent(TAAL);
@@ -2205,7 +2218,9 @@
     vergeetKaartHier();
     try{localStorage.removeItem(wachtSleutel());}catch(e){}
     wisSleutelsVanTelefoon();
-    try{if(history.replaceState)history.replaceState(null,'','/k?gewist=1');}catch(e){}
+    // de praktijknaam stond nog in de tab/tabwisselaar, en na herladen werd de pagina Nederlands (sweep 2026-11-11 06u, Jayden)
+    neutraleTitel();
+    try{if(history.replaceState)history.replaceState(null,'','/k?gewist=1'+(TAAL!=='nl'?'&taal='+encodeURIComponent(TAAL):''));}catch(e){}
     var klaar=function(){
       document.getElementById('wrap').style.display='none';
       var ab=document.getElementById('appbanner');if(ab)ab.classList.remove('aan');

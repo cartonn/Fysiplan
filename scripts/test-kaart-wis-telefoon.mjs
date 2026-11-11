@@ -28,7 +28,7 @@ assert.doesNotMatch(TPRIV.nl.b, /alleen je voornaam|verdwijnt de kaart vanzelf/,
 assert.match(TPRIV.nl.b, /fysiotherapeut erbij schreef/);
 assert.match(TMG.nl.l1, /fysiotherapeut erbij schreef/, "Mijn gegevens noemt ook doel en opmerking");
 assert.doesNotMatch(html, /\.privregel\{[^}]*color:var\(--zacht\)/, "privacyregel met leesbaar contrast");
-assert.match(html, /replaceState\(null,'','\/k\?gewist=1'\)/);
+assert.match(html, /replaceState\(null,'','\/k\?gewist=1'(\+\(TAAL!=='nl'\?'&taal='\+encodeURIComponent\(TAAL\):''\))?\)/);
 // Legal 2026-11-09: ook de oefenbeelden van deze kaart uit de offline-cache, en de hele
 // cache als er geen andere kaart op de telefoon staat.
 assert.match(html, /wisOfflineKopie\(\)\.then\(klaar,klaar\)/, "wissen gebruikt wisOfflineKopie");
