@@ -100,6 +100,16 @@ try {
   assert.equal((await post("/api/praktijk/oefeningen/verwijder", { praktijk: P, id: oS }, M)).status, 403, "ook niet die van de beheerder");
   const lijst = (await (await get("/api/praktijk/oefeningen?praktijk=" + encodeURIComponent(P), M)).json()).oefeningen;
   assert.equal(lijst.length, 2, "beide oefeningen staan er nog");
+  // magWeg per oefening: de app toont het kruisje alleen bij wie mag (gebruikers-sweep 2026-11-11 14u)
+  const oefWeg = async (H) => Object.fromEntries((await (await get("/api/praktijk/oefeningen?praktijk=" + encodeURIComponent(P), H)).json()).oefeningen.map((o) => [o.naam, o.magWeg]));
+  assert.deepEqual(await oefWeg(M), { "Joris oefening": false, "Sanne oefening": false }, "Mark (therapeut) mag geen eigen oefening van een ander verwijderen");
+  assert.deepEqual(await oefWeg(J), { "Joris oefening": true, "Sanne oefening": false }, "Joris alleen zijn eigen oefening");
+  assert.deepEqual(await oefWeg(S), { "Joris oefening": true, "Sanne oefening": true }, "beheerder alles");
+  const naToevoegen = await (await post("/api/praktijk/oefeningen", { praktijk: P, naam: "Mark oefening", img: png }, M)).json();
+  assert.deepEqual(Object.fromEntries(naToevoegen.oefeningen.map((o) => [o.naam, o.magWeg])),
+    { "Joris oefening": false, "Sanne oefening": false, "Mark oefening": true }, "na toevoegen: alleen de eigen oefening verwijderbaar");
+  assert.match(html, /o\.magWeg!==false\?"<button class='btn' type='button' data-eoweg=/, "app toont het kruisje alleen bij magWeg");
+  assert.match(html, /alleen die collega of een beheerder van de praktijk verwijderen/, "app legt uit wie het wel mag");
   assert.equal((await post("/api/praktijk/oefeningen/verwijder", { praktijk: P, id: oJ }, J)).status, 200, "Joris verwijdert zijn eigen oefening");
   assert.equal((await post("/api/praktijk/oefeningen/verwijder", { praktijk: P, id: oS }, S)).status, 200, "beheerder verwijdert");
 

@@ -338,6 +338,13 @@ const isBeheer = (s) => !!s && (!s.lid || (sessieLid(s) || {}).rol === "beheerde
 // het maakte (lid-id in `door`) of een beheerder. Zonder sessie kwam de aanvraag langs het
 // beheer of v1 (eisBeveiligdePraktijk) en mag het. Oud werk zonder maker: alleen beheerder.
 const magGedeeldAanpassen = (s, item, pk) => !s || s.pk !== pk || isBeheer(s) || (!!item && !!item.door && item.door === s.lid);
+// Eigen oefeningen voor de app, met magWeg: alleen de maker of een beheerder ziet het kruisje.
+// Een therapeut zag "×" bij de oefening van een collega en kreeg pas na bevestigen een 403
+// (gebruikers-sweep 2026-11-11).
+const oefeningenVoorApp = (request, pk) => {
+  const sessie = sessieVan(request);
+  return (praktijkOefeningen[pk] || []).map((o) => ({ ...o, magWeg: magGedeeldAanpassen(sessie, o, pk) }));
+};
 // Teamsjablonen voor de app, met magWeg: alleen de deler of een beheerder ziet "Verwijderen voor de praktijk".
 // Een therapeut kreeg die knop bij andermans sjabloon en pas na bevestigen een 403 (gebruikers-sweep 2026-11-11).
 const sjablonenVoorApp = (request, pk) => {
@@ -3460,7 +3467,7 @@ async function afhandelen(request, response) {
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const pk = praktijkVan(request, q.get("praktijk"));
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
-    await sendJson(response, 200, { ok: true, oefeningen: praktijkOefeningen[pk] || [] });
+    await sendJson(response, 200, { ok: true, oefeningen: oefeningenVoorApp(request, pk) });
     return;
   }
   // eigen oefening toevoegen: naam, foto (JPEG/PNG, max 600 kB) en uitleg
@@ -3495,7 +3502,7 @@ async function afhandelen(request, response) {
       } catch (e) { const i = lijst.indexOf(rij); if (i > -1) lijst.splice(i, 1); throw e; }
       await saveJson(praktijkOefeningenPath, praktijkOefeningen);
       auditLog(pk, "oefening-toegevoegd", request);
-      await sendJson(response, 200, { ok: true, oefeningen: lijst });
+      await sendJson(response, 200, { ok: true, oefeningen: oefeningenVoorApp(request, pk) });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
@@ -3519,7 +3526,7 @@ async function afhandelen(request, response) {
       if (/^uploads\/oef-[a-f0-9]{12}\.(jpg|png)$/.test(weg.img)) { try { await unlink(join(dataDir, weg.img)); } catch {} }
       // ook de vertalingen van de naam (tenzij een bibliotheek- of andere eigen oefening zo heet)
       try { await vertaalCacheOpschonen(); } catch {}
-      await sendJson(response, 200, { ok: true, oefeningen: lijst });
+      await sendJson(response, 200, { ok: true, oefeningen: oefeningenVoorApp(request, pk) });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }

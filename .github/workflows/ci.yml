@@ -76,6 +76,9 @@ jobs:
       - run: npm run test:seintje
       - run: npm run test:sweepoverzicht
       - run: npm run test:gedeeldwerk
+      - run: npm run test:weekverder
+      - run: npm run test:daguitvraag
+      - run: npm run test:profielcollega
       - run: npm run test:prullenbak
       - run: npm run test:wachtrijdagen
       - run: npm run test:agendamelding

@@ -73,6 +73,7 @@ try {
     const tel = await browser.newContext({ ...pw.devices["iPhone SE"], locale: "nl-NL", timezoneId: "Europe/Amsterdam", extraHTTPHeaders: { "x-forwarded-for": "10.3.1.1" } });
     const tab = await browser.newContext({ ...pw.devices["iPad (gen 7)"], locale: "nl-NL", timezoneId: "Europe/Amsterdam", extraHTTPHeaders: { "x-forwarded-for": "10.3.1.2" } });
     const p1 = await tel.newPage();
+    p1.on("dialog", (d) => d.accept()); // dag uitzetten vraagt eerst (test:daguitvraag)
     await p1.goto(origin + "/k/" + ID);
     await p1.waitForSelector("#oefs .oefdone[data-idx='2']", { state: "attached", timeout: 15000 });
     for (const i of [0, 2]) {
@@ -81,6 +82,7 @@ try {
       assert.equal((await klaar).status(), 200);
     }
     const p2 = await tab.newPage();
+    p2.on("dialog", (d) => d.accept()); // dag uitzetten vraagt eerst (test:daguitvraag)
     await p2.goto(origin + "/k/" + ID);
     await p2.waitForSelector("#oefs .oefdone[data-idx='2']", { state: "attached", timeout: 15000 });
     const aan = (p) => p.$$eval("#oefs .oefdone", (bs) => bs.map((b) => b.getAttribute("aria-pressed")));
