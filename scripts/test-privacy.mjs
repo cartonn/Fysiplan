@@ -139,7 +139,7 @@ try {
   const { sessie } = await claim.json();
   assert.ok(sessie);
   const accounts = await leesJson("praktijk-accounts.json");
-  assert.match(accounts["fysio privacy"].vwo.versie, /^\d{4}-\d{2}-\d{2}$/, "versie van de verwerkersovereenkomst vastgelegd");
+  assert.match(accounts["fysio privacy"].vwo.versie, /^\d{4}-\d{2}-\d{2}(-\d+)?$/, "versie van de verwerkersovereenkomst vastgelegd");
   assert.ok(accounts["fysio privacy"].vwo.t);
 
   // ---- delen na het beveiligen: leeftijd en Casus blijven thuis ----
@@ -235,6 +235,19 @@ try {
   const privacy = await (await fetch(origin + "/privacy")).text();
   assert.match(privacy, /Anthropic/);
   {
+    // code tegen tekst (legal 2026-11-11 09u): de Resend-rij noemde alleen proef en uitnodigingen, maar de server
+    // mailt ook wachtwoordlinks, opzegbevestiging, de wismelding en de maandbetaling met het bedrag
+    const resendRij = privacy.split("<td>Resend</td>")[1].split("</tr>")[0];
+    const bron = await readFile(new URL("../server.js", import.meta.url), "utf8");
+    const onderwerpen = [...bron.matchAll(/(?:stuurMail|proefMail)\([^,]+,\s*"([^"]+)"/g)].map((m) => m[1]);
+    const thema = [[/wachtwoord/i, /wachtwoord/], [/opgezegd/i, /opzeggen/], [/wissen/i, /wissen/], [/maandbetaling/i, /maandbetaling/], [/uitgenodigd/i, /uitnodiging/], [/proef/i, /proef/]];
+    for (const [inMail, inRij] of thema) {
+      if (onderwerpen.some((o) => inMail.test(o))) assert.match(resendRij, inRij, "Resend-rij noemt mail over " + inRij.source);
+    }
+    if (/EUR " \+ maandBedrag/.test(bron)) assert.match(resendRij, /bedrag/, "Resend-rij noemt het bedrag van de maandbetaling");
+    assert.match(resendRij, /geen pati&euml;ntgegevens/);
+  }
+  {
     // code tegen tekst (legal 2026-11-10 21u): de rij zei "geen vrije tekst van de
     // therapeut" en "bibliotheekteksten", maar namen van eigen oefeningen gaan mee
     const anthropicRij = privacy.split("<td>Anthropic</td>")[1].split("</tr>")[0];
@@ -312,7 +325,7 @@ try {
   assert.equal(logPad("/v2/app"), "/v2/app");
   assert.doesNotMatch(serverBron, /console\.error\("verzoek mislukt:", request\.method, request\.url/);
   const vwo = await (await fetch(origin + "/verwerkersovereenkomst")).text();
-  const vwoVersie = serverBron.match(/const VWO_VERSIE = "(\d{4}-\d{2}-\d{2})"/)[1];
+  const vwoVersie = serverBron.match(/const VWO_VERSIE = "(\d{4}-\d{2}-\d{2})(?:-\d+)?"/)[1];
   const vwoDatum = new Date(vwoVersie + "T12:00:00Z").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Amsterdam" });
   assert.ok(vwo.includes("Versie " + vwoDatum), "verwerkersovereenkomst toont haar eigen versie (" + vwoDatum + ")");
   assert.match(vwo, /subverwerker/i);
@@ -333,6 +346,7 @@ try {
     const uitleg = {
       id: null, demo: null, praktijk: null, ts: null, chosen: null, rows: null, cells: null,
       gearchiveerd: null, gearchiveerdOp: null, inboxGezien: null, notitieT: null, dossier: null,
+      maker: /account-id van de maker/, verwijderdOp: /verwijdermoment/, herstelTot: /hersteldatum/,
       naam: /naam die de praktijk de kaart geeft/, vids: /eigen video of foto/, doel: /weekdoel/,
       afspraak: /afspraakmomenten/, antwoord: /berichten van de praktijk/, pskDoel: /doelactiviteit/,
       psk: /PSK-score/, metingen: /pijnscore/, ervaring: /ervaren herstel/, gedaan: /oefenvinkjes/,

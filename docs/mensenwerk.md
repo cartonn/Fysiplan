@@ -12,25 +12,35 @@ oefeningen mag alleen de maker of een beheerder verwijderen; kaarten onthouden (
 verwijderen, de rest kan archiveren. Advies: (2), omdat het een medisch dossier raakt; laat het weten, dan bouwt de
 security-routine het.
 
-### Reservekopie buiten Railway (livegang, 2026-11-10; AAN sinds 2026-11-11)
-**Wat de code nu doet:** GEDAAN 2026-11-11: de server stuurt elke dag een **versleutelde** kopie van alle databestanden
-én de uploads (video's, foto's, logo's) naar een privé-bak bij Scaleway in Amsterdam, in één bestand per weekdag
-(`fysiplan-ma.fpb` … `fysiplan-zo.fpb`), dus elders staat nooit meer dan 7 dagen. Scaleway kan de inhoud niet lezen en
-staat als partij op /privacy. `/health` toont `backupElders`: `ok`, `deels` of `fout`. Wordt de kopie groter dan 200 MB
-(aan de bron, of pas na verpakken en versleutelen; in de praktijk vanaf ongeveer 150 MB aan uploads), dan gaan alleen de
-gegevensbestanden mee (`deels`). `/health` toont dan `backupEldersUploadsOntbreken` en je krijgt een mail met hoeveel
-uploads ontbreken. Let op: bij `deels` worden de oudere kopieën mét uploads binnen 7 dagen overschreven; regel dus binnen
-een week een grotere of aparte kopie voor de uploads. Bij een fout krijg je hooguit één mail per dag. De grens kan met
-`BACKUP_MAX_MB` alleen lager (1 t/m 200), niet hoger.
-De wachtzin en de sleutel staan op Railway en in de sleutelhanger van je Mac; de handleiding staat in
-`/Users/builder/Fysiplan-reserve/DAGELIJKSE-BACKUPS.txt`.
-**Wat jij nog moet doen:**
-1. Scaleway is een nieuwe subverwerker: meld hem aan praktijken die al akkoord gaven (verwerkersovereenkomst).
-2. Het Scaleway-account staat op je eigen naam. Zet het om naar een bedrijfsaccount zodra het bedrijf is ingeschreven.
-3. Bewaar de wachtzin ook buiten je Mac (wachtwoordkluis): zonder de wachtzin is de reservekopie niet terug te lezen.
-   De kopieën in `/Users/builder/Fysiplan-reserve` op je Mac bevatten patiëntgegevens en vallen ook onder de bewaartermijn
-   van 7 dagen: wis ze of ververs ze binnen een week.
-4. Terugzetten: `BACKUP_SLEUTEL=… node scripts/backup-terugzetten.mjs <bestand.fpb> <lege map>`.
+### Reservekopie buiten Railway (Scaleway, Amsterdam)
+Dagelijkse versleutelde dagkopie: applicatiegegevens plus uploads. Uploads krijgen per dag
+aparte objecten. Ongewijzigde inhoud wordt binnen Scaleway gekopieerd; alleen gewijzigde
+inhoud gaat opnieuw over het Railway-netwerk. Iedere dagkopie is zelfstandig herstelbaar.
+De bestaande bucket-lifecycle verwijdert objecten na zeven dagen (afhandeling kan vertraagd zijn).
+
+Budgetbeveiliging: maximaal 1 GiB inhoud per dagkopie, 200 MiB nieuwe transfer per dagelijkse
+poging en 10 MiB gegevensbestanden. Dit is geen onbeperkte opslaggarantie. Bij ontbrekende
+uploads worden gegevens en een expliciete lijst ontbrekende uploads bewaard; /health meldt
+`deels` en de beheerder krijgt een melding. `ok` betekent dat alle geïnventariseerde bestanden
+zijn opgeslagen en de objectgroottes zijn gecontroleerd. Herstel controleert encryptie en hashes.
+Elke 24-uurscyclus heeft maximaal vier pogingen: de eerste plus herkansingen na 15 minuten,
+1 uur en 4 uur vanaf de vorige poging (de server controleert iedere 5 minuten). Een persistent
+transferjournaal reserveert bytes vóór iedere PUT, ook voor mislukte verzoeken. Alle pogingen delen
+hetzelfde budget van 200 MiB. Reeds aangekomen uploadobjecten worden via het journaal hergebruikt.
+Een geslaagde cyclus wordt na herstart niet opnieuw uitgevoerd. Een onderbroken oude poging met
+onbekend verbruik wacht conservatief tot de volgende cyclus.
+Publiek toont /health alleen de back-upstatus en het tijdstip van de laatste VOLLEDIGE kopie.
+Details staan achter de beheersleutel op GET /api/beheer/backup-status; geen sleutels of bestandsnamen
+worden teruggegeven.
+
+Herstellen: `scripts/backup-terugzetten.mjs` leest oude zelfstandige FPB1-bestanden en nieuwe
+indexbestanden met S3-referenties. Bij het nieuwe formaat zijn ook de S3-instellingen nodig.
+Een onvolledige kopie wordt standaard geweigerd; alleen bewust `--onvolledig` gebruiken.
+Gebruik altijd een aparte lege map. De Mac-handleiding staat in Fysiplan-reserve.
+
+Nog organisatorisch: Scaleway aan bestaande praktijken melden volgens de verwerkersafspraken,
+het account bij inschrijving op de juiste bedrijfsgegevens zetten, en de ontsleutelwachtzin
+ook in een onafhankelijke wachtwoordkluis bewaren. Railway blijft US West; opslagbackup is Amsterdam.
 
 ### Fysiplan gebruiken zonder proef of abonnement (security 2026-11-09, gebouwd 2026-11-10)
 **Wat de code nu doet:** GEDAAN 2026-11-10 (livegang, Ahmed: "verbeter alle punten die je zelf kan"): een **nieuwe**

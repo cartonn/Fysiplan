@@ -198,6 +198,8 @@ html.v2 #a4::after{content:"Neem pijn serieus: stop bij toenemende pijn en overl
   /* Compacte kaart: kleinere plaatjes zodat het invulgrid meer ruimte krijgt */
   html.v2.print-compact #a4 .pic img{width:62px !important;height:62px !important}
   html.v2.print-compact #a4 table.mon thead tr:nth-child(2) .pic{min-height:0}
+  html.v2.print-compact #a4 .pic{aspect-ratio:auto;height:18mm}
+  html.v2.print-compact #a4 table.mon tbody tr.xr{display:table-row}
 
   /* praktijklogo compact meeprinten in de kaartkop */
   html.v2 #a4 .prak #prakLogo{max-height:10mm;max-width:45mm;margin-bottom:1.5mm}

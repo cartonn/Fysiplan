@@ -5,7 +5,11 @@
     "buildCommand": "npm run build"
   },
   "deploy": {
-    "multiRegionConfig": null,
+    "multiRegionConfig": {
+      "europe-west4-drams3a": {
+        "numReplicas": 1
+      }
+    },
     "startCommand": "npm run start",
     "healthcheckPath": "/health",
     "healthcheckTimeout": 120,

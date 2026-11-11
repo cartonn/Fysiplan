@@ -56,7 +56,7 @@ try {
     sessies[naam] = (await r.json()).sessie;
     const o = await fetch(origin + "/v2/proef/opzeggen", { method: "POST", redirect: "manual",
       headers: { "content-type": "application/x-www-form-urlencoded", cookie: "fpproef=" + token, "x-forwarded-for": "10.3.1." + (ip++) },
-      body: "actie=opzeggen&zeker=1" });
+      body: "actie=opzeggen&zeker=1&wachtwoord=" + encodeURIComponent("wachtwoord-" + token.slice(0, 6)) });
     assert.equal(o.status, 200, naam + " opzeggen");
     assert.match(await o.text(), /30 dagen later wissen we alles/);
   }

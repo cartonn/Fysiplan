@@ -72,6 +72,17 @@ try {
   assert.equal(weg1.status, 403, "Mark verwijdert het sjabloon van Joris niet");
   assert.equal((await post("/api/praktijk/sjablonen/verwijder", { praktijk: P, naam: "Rug" }, M)).status, 403, "ook niet dat van de beheerder");
   assert.deepEqual(await sjabNamen(M), ["Knie:Squat", "Rug:Brug"], "niets veranderd");
+  // gebruikers-sweep 2026-11-11: de app toont "Verwijderen voor de praktijk" alleen aan wie het mag
+  const magWeg = async (H) => Object.fromEntries((await (await get("/api/praktijk/sjablonen?praktijk=" + encodeURIComponent(P), H)).json()).sjablonen.map((s) => [s.naam, s.magWeg]));
+  assert.deepEqual(await magWeg(M), { Knie: false, Rug: false }, "Mark (therapeut) mag geen van beide verwijderen");
+  assert.deepEqual(await magWeg(J), { Knie: true, Rug: false }, "Joris alleen zijn eigen sjabloon");
+  assert.deepEqual(await magWeg(S), { Knie: true, Rug: true }, "beheerder alles");
+  const naDelen = await (await deel("Enkel", "Hielheffen", M)).json();
+  assert.equal(naDelen.sjablonen.find((s) => s.naam === "Enkel").magWeg, true, "na delen: eigen sjabloon verwijderbaar");
+  assert.equal(naDelen.sjablonen.find((s) => s.naam === "Knie").magWeg, false, "na delen: andermans sjabloon niet");
+  assert.equal((await post("/api/praktijk/sjablonen/verwijder", { praktijk: P, naam: "Enkel" }, M)).status, 200, "Mark verwijdert zijn eigen sjabloon");
+  const html = await readFile(join(process.cwd(), "public/index.html"), "utf8");
+  assert.match(html, /it\.bron==='praktijk'&&it\.s\.magWeg!==false/, "app toont de knop alleen bij magWeg");
 
   assert.equal((await deel("Knie", "Lunge", J)).status, 200, "Joris werkt zijn eigen sjabloon bij");
   assert.equal((await deel("Knie", "Step-up", S)).status, 200, "beheerder mag bijwerken");

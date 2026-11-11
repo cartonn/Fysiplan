@@ -7,7 +7,7 @@ import { mkdtemp, readFile, readdir, rm, writeFile, mkdir, symlink } from "node:
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { backupInstellingen, objectNaam, ontsleutel, s3Headers, versleutel, verzamelBackup, maakPakketMetTerugval, telUploads, veiligBackupPad } from "../lib/backup-elders.js";
+import { backupInstellingen, objectNaam, ontsleutel, s3Headers, versleutel, verzamelBackup, veiligBackupPad } from "../lib/backup-elders.js";
 
 // 1. handtekening: de twee voorbeelden uit de AWS-documentatie (Signature Version 4, S3)
 const aws = { regio: "us-east-1", id: "AKIAIOSFODNN7EXAMPLE", geheim: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", nu: new Date("2013-05-24T00:00:00Z") };
@@ -46,46 +46,11 @@ await writeFile(join(dataDir, "uploads", "videos", "test.mp4"), video);
 assert.equal(veiligBackupPad('../buiten.json'), false);
 assert.equal(veiligBackupPad('/buiten.json'), false);
 await assert.rejects(verzamelBackup(dataDir, [], 2), /budgetgrens/);
-// Te groot voor de grens: de gegevensbestanden gaan alleen, en dat is zichtbaar (deels, met hoeveel
-// uploads ontbreken). Twee gevallen: de bron is al te groot, of het pakket komt pas na verpakken en
-// versleutelen boven de grens. Passen ook de gegevens niet, dan is het een fout.
-{
-  const { randomBytes } = await import("node:crypto");
-  const kaartenPad = join(dataDir, "kaarten.json");
-  const grootte = (await readFile(kaartenPad)).length;
-  const zonderUploads = (r) => Object.keys(ontsleutel(r.body, wachtzin).bestanden);
-  // een onsamendrukbare upload die veel groter is dan de gegevens
-  const ruis = randomBytes(6000);
-  await writeFile(join(dataDir, "uploads", "videos", "ruis.mp4"), ruis);
-  const alleUploads = { aantal: 2, bytes: video.length + ruis.length };
-  // (a) bron te groot: de grens ligt ruim boven de gegevens, maar onder de uploads
-  const krap = await maakPakketMetTerugval(dataDir, [kaartenPad], wachtzin, Date.now(), grootte + 3000);
-  assert.equal(krap.deels, true, "uploads passen niet: deelkopie");
-  assert.deepEqual(zonderUploads(krap), ["kaarten.json"], "alleen gegevensbestanden, geen uploads");
-  assert.deepEqual(krap.ontbreekt, alleUploads, "zichtbaar hoeveel uploads ontbreken");
-  // (b) bron past, maar het versleutelde pakket niet: grens precies op de bron
-  const bron = grootte + video.length + ruis.length;
-  assert.ok(Object.keys(await verzamelBackup(dataDir, [kaartenPad], bron)).length === 3, "de bron past binnen de grens");
-  assert.ok(versleutel(await verzamelBackup(dataDir, [kaartenPad], bron), wachtzin).length > bron, "het pakket is groter dan de bron");
-  const naVerpakken = await maakPakketMetTerugval(dataDir, [kaartenPad], wachtzin, Date.now(), bron);
-  assert.equal(naVerpakken.deels, true, "te groot na verpakken: ook dan de deelkopie in plaats van niets");
-  assert.ok(naVerpakken.body.length <= bron);
-  assert.deepEqual(zonderUploads(naVerpakken), ["kaarten.json"]);
-  assert.deepEqual(naVerpakken.ontbreekt, alleUploads);
-  assert.deepEqual(await telUploads(dataDir), alleUploads);
-  await rm(join(dataDir, "uploads", "videos", "ruis.mp4"));
-  // (c) ook de gegevens passen niet: fout, geen lege kopie
-  await assert.rejects(maakPakketMetTerugval(dataDir, [kaartenPad], wachtzin, Date.now(), 2), /budgetgrens/);
-  // (d) alles past: volledig
-  const ruim = await maakPakketMetTerugval(dataDir, [kaartenPad], wachtzin);
-  assert.equal(ruim.deels, false);
-  assert.deepEqual(ruim.ontbreekt, { aantal: 0, bytes: 0 });
-  assert.ok(ontsleutel(ruim.body, wachtzin).bestanden["uploads/videos/test.mp4"], "past alles, dan gaan de uploads mee");
-}
 await symlink('/etc/passwd', join(dataDir, 'uploads', 'link'));
 await assert.rejects(verzamelBackup(dataDir, []), /symbolische link/);
 await rm(join(dataDir, 'uploads', 'link'));
 const ontvangen = [];
+const objects = new Map();
 let antwoord = 200;
 const nep = createServer((req, res) => {
   const stukken = [];
@@ -93,7 +58,10 @@ const nep = createServer((req, res) => {
   req.on("end", () => {
     if (req.url === "/emails") { ontvangen.push({ mail: JSON.parse(Buffer.concat(stukken).toString()) }); res.writeHead(200, { "content-type": "application/json" }); return res.end('{"id":"m"}'); }
     ontvangen.push({ methode: req.method, url: req.url, headers: req.headers, body: Buffer.concat(stukken) });
-    res.writeHead(antwoord); res.end();
+    if(antwoord!==200){res.writeHead(antwoord);return res.end();}
+    if(req.method==='PUT') {objects.set(req.url,Buffer.concat(stukken));res.writeHead(200);return res.end();}
+    const obj=objects.get(req.url);if(!obj){res.writeHead(404);return res.end();}
+    res.writeHead(200,{'content-length':obj.length});res.end(req.method==='HEAD'?undefined:obj);
   });
 });
 await new Promise((r) => nep.listen(0, "127.0.0.1", r));
@@ -119,7 +87,7 @@ async function start(env) {
 }
 const wacht = async (klaar) => { for (let i = 0; i < 100 && !(await klaar()); i++) await new Promise((r) => setTimeout(r, 100)); };
 const health = async (origin) => (await fetch(origin + "/health")).json();
-const aan = { BACKUP_S3_URL: nepUrl + "/bak", BACKUP_S3_SLEUTEL_ID: "sleutelid", BACKUP_S3_GEHEIM: "geheim", BACKUP_SLEUTEL: wachtzin, BACKUP_LEVERANCIER: "Scaleway (Amsterdam, Nederland)" };
+const aan = { ADMIN_KEY:"test-beheersleutel", BACKUP_S3_URL: nepUrl + "/bak", BACKUP_S3_SLEUTEL_ID: "sleutelid", BACKUP_S3_GEHEIM: "geheim", BACKUP_SLEUTEL: wachtzin, BACKUP_LEVERANCIER: "Scaleway (Amsterdam, Nederland)" };
 
 try {
   // uit: niets verstuurd, /health zegt "uit", de privacyverklaring noemt geen extra partij
@@ -135,15 +103,20 @@ try {
   const h = await health(app.origin);
   assert.equal(h.backupElders, "ok", app.uitvoer());
   assert.ok(h.backupEldersOp);
-  assert.equal(h.backupEldersUploadsOntbreken, 0);
+  assert.ok(!("backupEldersDetails" in h));
+  assert.equal((await fetch(app.origin+"/api/beheer/backup-status")).status,403);
+  const beheer=await fetch(app.origin+"/api/beheer/backup-status",{headers:{"x-admin-sleutel":"test-beheersleutel"}});
+  assert.equal(beheer.status,200);assert.equal((await beheer.json()).details.uploads,1);
   assert.ok(!JSON.stringify(h).includes("geheim") && !JSON.stringify(h).includes(wachtzin), "/health lekt geen sleutels");
-  const put = ontvangen.find((o) => o.methode === "PUT");
+  const put = ontvangen.find((o) => o.methode === "PUT" && o.url === "/bak/" + objectNaam());
   assert.equal(put.url, "/bak/" + objectNaam());
   assert.match(put.headers.authorization, /^AWS4-HMAC-SHA256 Credential=sleutelid\//);
   assert.ok(!put.body.includes("Geheimenaam"), "patiëntgegevens gaan niet leesbaar de deur uit");
   const terug = ontsleutel(put.body, wachtzin).bestanden;
   assert.equal(JSON.parse(terug["kaarten.json"])["Test Fysio"][0].naam, "Geheimenaam");
-  assert.deepEqual(terug["uploads/videos/test.mp4"], video);
+  const manifest=JSON.parse(terug["__fysiplan_manifest__.json"]);
+  assert.equal(manifest.complete,true);
+  assert.deepEqual(ontsleutel(objects.get("/bak/"+manifest.uploads["uploads/videos/test.mp4"].object),wachtzin).bestanden.data,video);
   assert.ok(terug["praktijk-oefeningen.json"], "eigen oefeningen van praktijken zitten in de reservekopie");
   // ook de kopie op het volume zelf heeft de eigen oefeningen nu
   const dagmap = (await readdir(join(dataDir, "backups")))[0];
@@ -151,15 +124,14 @@ try {
   // de privacyverklaring noemt de opslagpartij
   const privacy = await (await fetch(app.origin + "/privacy")).text();
   assert.ok(privacy.includes('id="reservekopie"') && privacy.includes("Scaleway (Amsterdam, Nederland)"));
-  // de tekst klopt met wat er meegaat: ook de uploads
-  assert.ok(/reservekopie[\s\S]{0,400}ook video/.test(privacy) && !/behalve video/.test(privacy));
+  assert.ok(!privacy.includes("behalve video"));
   await app.stop();
 
   // terugzetten met het script
   const pakketPad = join(dataDir, "terug.fpb"), doel = join(dataDir, "teruggezet");
   await writeFile(pakketPad, put.body);
   const code = await new Promise((r) => spawn(process.execPath, ["scripts/backup-terugzetten.mjs", pakketPad, doel],
-    { env: { ...process.env, BACKUP_SLEUTEL: wachtzin }, stdio: "ignore" }).on("exit", r));
+    { env: { ...process.env, ...aan }, stdio: "ignore" }).on("exit", r));
   assert.equal(code, 0);
   assert.equal(JSON.parse(await readFile(join(doel, "kaarten.json"), "utf8"))["Test Fysio"][0].naam, "Geheimenaam");
 
@@ -184,35 +156,7 @@ try {
   assert.ok(mail && /reservekopie/i.test(mail.mail.subject), "mail aan de beheerder bij een mislukte reservekopie");
   assert.ok(!JSON.stringify(mail.mail).includes(wachtzin));
   await app.stop();
-
-  // uploads te groot voor de grens: de gegevens gaan wel, /health zegt "deels" met het aantal
-  // ontbrekende uploads, en de beheerder krijgt een mail die zegt wat er ontbreekt
-  await rm(join(dataDir, 'backup-elders-status.json'));
-  const { randomBytes } = await import("node:crypto");
-  await writeFile(join(dataDir, "uploads", "videos", "groot.mp4"), randomBytes(1024 * 1024 + 4096));
-  ontvangen.length = 0;
-  antwoord = 200;
-  app = await start({ ...aan, BACKUP_MAX_MB: "1", MAIL_API_SLEUTEL: "nep", MAIL_AFZENDER: "fysiplan@voorbeeld.nl", MAIL_API_BASIS: nepUrl, PROEF_MELDING_AAN: "beheer@voorbeeld.nl" });
-  await wacht(async () => (await health(app.origin)).backupElders === "deels" && ontvangen.some((o) => o.mail));
-  const hd = await health(app.origin);
-  assert.equal(hd.backupElders, "deels", app.uitvoer());
-  assert.equal(hd.backupEldersUploadsOntbreken, 2, "/health zegt hoeveel uploads ontbreken");
-  const deelPut = ontvangen.find((o) => o.methode === "PUT");
-  const deel = ontsleutel(deelPut.body, wachtzin).bestanden;
-  assert.ok(deel["kaarten.json"] && !Object.keys(deel).some((n) => n.startsWith("uploads/")), "gegevens wel, uploads niet");
-  const deelMail = ontvangen.find((o) => o.mail).mail;
-  assert.match(deelMail.subject, /onvolledig/);
-  assert.match(JSON.stringify(deelMail), /alle 2 uploads/);
-  assert.match(JSON.stringify(deelMail), /7 dagen/);
-  await app.stop();
-  // na een herstart binnen 24 uur blijft "deels" zichtbaar (niet stil terug naar "ok")
-  ontvangen.length = 0;
-  app = await start({ ...aan, BACKUP_MAX_MB: "1" });
-  await wacht(async () => (await health(app.origin)).backupElders === "deels");
-  assert.equal((await health(app.origin)).backupEldersUploadsOntbreken, 2);
-  assert.equal(ontvangen.length, 0);
-  await app.stop();
-  console.log("Reservekopie buiten Railway: handtekening, versleuteling, verzenden, terugzetten, foutmelding en deelkopie kloppen.");
+  console.log("Reservekopie buiten Railway: handtekening, versleuteling, verzenden, terugzetten en foutmelding kloppen.");
 } finally {
   nep.close();
   await rm(dataDir, { recursive: true, force: true });

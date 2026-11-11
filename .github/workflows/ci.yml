@@ -41,6 +41,7 @@ jobs:
       - run: npm run test:agendadubbel
       - run: npm run test:offline
       - run: npm run test:tablet
+      - run: npm run test:beveiligingfeedback
       - run: npm run test:praktijkslot
       - run: npm run test:tezwaar
       - run: npm run test:opname-eigen
@@ -75,12 +76,15 @@ jobs:
       - run: npm run test:seintje
       - run: npm run test:sweepoverzicht
       - run: npm run test:gedeeldwerk
+      - run: npm run test:prullenbak
       - run: npm run test:wachtrijdagen
       - run: npm run test:agendamelding
       - run: npm run test:oefvinkje
       - run: npm run test:seintjevoorrang
       - run: npm run test:qrtaal
       - run: npm run test:eerstedeling
+      - run: npm run test:printcompact
+      - run: npm run test:storingtaal
       - run: npm run test:dubbeltik
       - run: npm run test:kaartroutes
       - run: npm run test:landingprint
@@ -117,6 +121,7 @@ jobs:
       - run: npm run test:wachtwoordrem
       - run: npm run test:auditspoor
       - run: npm run test:profielbeheer
+      - run: npm run test:opzeggenbeheer
       - run: npm run test:zwaaroffline
       - run: npm run test:dagwisseltaal
       - run: npm run test:reekstitel
