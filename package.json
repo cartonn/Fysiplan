@@ -128,6 +128,7 @@
     "test:reekstitel": "node scripts/test-kaart-reeks-titel.mjs",
     "test:auditspoor": "node scripts/test-audit-spoor.mjs",
     "test:profielbeheer": "node scripts/test-profiel-beheer.mjs",
+    "test:opzeggenbeheer": "node scripts/test-opzeggen-beheer.mjs",
     "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs"
   },
   "engines": {
