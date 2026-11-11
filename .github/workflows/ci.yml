@@ -30,6 +30,7 @@ jobs:
       - run: npm run test:drafts
       - run: npm run test:beheer
       - run: npm run test:backup
+      - run: npm run test:sessieherstart
       - run: npm run test:proefpoort
       - run: npm run test:proefverplicht
       - run: npm run test:wisvooraf

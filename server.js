@@ -14,6 +14,8 @@ import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetali
 import { volgendFactuurNr, factuurHtml, isFactuur, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
 import { backupInstellingen } from "./lib/backup-elders.js";
 import { runBackup } from "./lib/backup-runner.js";
+import { gegevensRuimte } from "./lib/backup-snapshots.js";
+import { SESSIE_MS, SessieTabel, laadSessies, sessieSleutel, wachtwoordAfdruk } from "./lib/sessie-opslag.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -188,8 +190,12 @@ let praktijkAudit = []; // laatste gebeurtenissen: { t, praktijk, actie, ip }
 const AUDIT_RUIS = new Set(["toegang-geweigerd", "login-mislukt", "herstel-mislukt", "opzeggen-mislukt"]);
 const AUDIT_PER_PRAKTIJK = 300, AUDIT_RUIS_PER_PRAKTIJK = 50, AUDIT_TOTAAL = 5000;
 try { praktijkAudit = JSON.parse(await readFile(auditPath, "utf8")); } catch {}
-// sessies bewust in het geheugen: bij een herstart logt de praktijk opnieuw in
-const praktijkSessies = new Map(); // token -> { pk, t }
+// Sessies overleven een herstart: elke uitrol logde anders alle therapeuten uit. Ze staan
+// in het geheugen én in praktijk-sessies.json, met alleen de SHA-256 van het token als
+// sleutel (lib/sessie-opslag.js). Elke set of delete zet het bestand opnieuw op schijf.
+const sessiesPath = join(dataDir, "praktijk-sessies.json");
+const praktijkSessies = new SessieTabel((inhoud) => saveJson(sessiesPath, inhoud)); // sha256(token) -> { pk, t, lid?, w }
+praktijkSessies.vul(await laadSessies(sessiesPath));
 
 function maakHash(wachtwoord) {
   const salt = randomBytes(16);
@@ -227,7 +233,7 @@ function loginMisTel(pk) {
 function nieuweSessie(pk, lid) {
   const nu = Date.now();
   if (praktijkSessies.size > 5000) {
-    for (const [tok, s] of praktijkSessies) if (nu - s.t > 30 * 86400000) praktijkSessies.delete(tok);
+    for (const [tok, s] of praktijkSessies) if (nu - s.t > SESSIE_MS) praktijkSessies.delete(tok);
     // harde bovengrens: bij extreme groei de oudste sessies laten vallen
     if (praktijkSessies.size > 50000) {
       const oud = [...praktijkSessies.entries()].sort((a, b) => a[1].t - b[1].t).slice(0, praktijkSessies.size - 50000);
@@ -235,7 +241,10 @@ function nieuweSessie(pk, lid) {
     }
   }
   const token = randomBytes(24).toString("hex");
-  praktijkSessies.set(token, lid ? { pk, t: nu, lid } : { pk, t: nu });
+  // w: afdruk van het wachtwoord waarmee nu is ingelogd; sessieVan vergelijkt hem bij elk verzoek
+  const bron = lid ? lidVan(pk, lid) : praktijkAccounts[pk];
+  const w = wachtwoordAfdruk(bron && bron.hash);
+  praktijkSessies.set(sessieSleutel(token), lid ? { pk, t: nu, lid, w } : { pk, t: nu, w });
   return token;
 }
 // leesbare herstelcode (vier blokken van vijf): sterk genoeg om niet te raden,
@@ -315,11 +324,18 @@ const lidActief = (l) => !!(l && l.hash);
 function sessieVan(req) {
   const token = String(req.headers["x-praktijk-sessie"] || "").trim();
   if (!token) return null;
-  const s = praktijkSessies.get(token);
+  const sleutel = sessieSleutel(token);
+  const s = praktijkSessies.get(sleutel);
   if (!s) return null;
-  if (Date.now() - s.t > 30 * 86400000) { praktijkSessies.delete(token); return null; }
-  if (!praktijkGeclaimd(s.pk)) return null;
-  if (s.lid ? !lidActief(lidVan(s.pk, s.lid)) : praktijkAccounts[s.pk].gedeeldUit) { praktijkSessies.delete(token); return null; }
+  if (Date.now() - s.t > SESSIE_MS) { praktijkSessies.delete(sleutel); return null; }
+  if (!praktijkGeclaimd(s.pk)) { praktijkSessies.delete(sleutel); return null; }
+  if (s.lid ? !lidActief(lidVan(s.pk, s.lid)) : praktijkAccounts[s.pk].gedeeldUit) { praktijkSessies.delete(sleutel); return null; }
+  // De sessie hoort bij het wachtwoord waarmee is ingelogd. Sessies overleven een herstart,
+  // dus dit is het vangnet: na een wachtwoordwijziging, of als iemand anders dezelfde
+  // praktijknaam opnieuw beveiligt, werkt een oude sessie niet meer, ook als hij nog in het
+  // sessiebestand stond (bijvoorbeeld na het terugzetten van een reservekopie).
+  const bron = s.lid ? lidVan(s.pk, s.lid) : praktijkAccounts[s.pk];
+  if (s.w !== wachtwoordAfdruk(bron.hash)) { praktijkSessies.delete(sleutel); return null; }
   return s;
 }
 function praktijkSessieVan(req) {
@@ -1998,7 +2014,7 @@ const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPat
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
 const backupElders = backupInstellingen();
-const backupEldersStatus = { ok: null, fout: null, foutMail: 0, deels: false, resultaat: null, pogingen: 0, volgende: null };
+const backupEldersStatus = { ok: null, fout: null, foutMail: 0, deels: false, resultaat: null, pogingen: 0, volgende: null, ruimte: null };
 let backupEldersBezig = false;
 async function maakBackupElders() {
   if (!backupElders || backupEldersBezig) return;
@@ -2011,6 +2027,18 @@ async function maakBackupElders() {
     backupEldersStatus.resultaat=state.resultaat||null;
     backupEldersStatus.pogingen=state.attempts;
     backupEldersStatus.volgende=state.done?null:new Date(state.attempts>=4?state.started+24*60*60*1000:state.nextAt).toISOString();
+    // Hoe vol de grens voor gegevensbestanden zit (lib/backup-snapshots.js). Boven die grens
+    // mislukt de hele dagkopie; vanaf de helft krijgt de beheerder daarom bericht, op tijd om
+    // er iets aan te doen: op maandag, en boven de 80 procent na elke nieuwe dagkopie.
+    const gegevens=state.resultaat&&Number.isFinite(state.resultaat.gegevensBytes)?gegevensRuimte(state.resultaat.gegevensBytes):null;
+    backupEldersStatus.ruimte=gegevens;
+    if(state.attempted && gegevens && gegevens.krap && mailIngesteld() && proefMeldingAan.length
+      && (gegevens.procent>=80 || new Date().toLocaleDateString("en-US",{timeZone:"Europe/Amsterdam",weekday:"short"})==="Mon")){
+      const mib=(b)=>(b/1048576).toFixed(1).replace(".",",")+" MiB";
+      for(const aan of proefMeldingAan) stuurMail(aan,"Fysiplan: gegevens over de helft van de grens van de reservekopie",
+        "De gegevensbestanden zijn samen "+mib(gegevens.bytes)+", "+gegevens.procent+" procent van de grens van "+mib(gegevens.grens)+". Boven die grens mislukt de dagelijkse reservekopie buiten Railway. "+(state.status==="ok"?"De kopie van vandaag is gelukt. ":"")+"Plan de overstap naar een database of verhoog de grens in lib/backup-snapshots.js voordat de grens bereikt is.")
+        .catch(()=>{});
+    }
     if(state.attempted && state.status!=='ok') throw Object.assign(new Error(state.error||'reservekopie mislukt'),{deels:state.status==='deels'});
   } catch (err) {
     backupEldersStatus.fout=Date.now();
@@ -2504,7 +2532,8 @@ async function afhandelen(request, response) {
     if (!isAdmin(request)) { await denied(request,response,urlPath); return; }
     await sendJson(response,200,{status:!backupElders?'uit':backupEldersStatus.deels?'deels':backupEldersStatus.fout?'fout':backupEldersStatus.ok?'ok':'wacht',
       laatsteVolledigeKopie:backupEldersStatus.ok?new Date(backupEldersStatus.ok).toISOString():null,
-      details:backupEldersStatus.resultaat,pogingen:backupEldersStatus.pogingen,volgendePoging:backupEldersStatus.volgende});return;
+      details:backupEldersStatus.resultaat,pogingen:backupEldersStatus.pogingen,volgendePoging:backupEldersStatus.volgende,
+      gegevens:backupEldersStatus.ruimte});return;
   }
   if (urlPath === "/health") {
     // /health is publiek en wordt continu gepingd; de tellingen bouwen beide
@@ -2546,7 +2575,10 @@ async function afhandelen(request, response) {
       volumeActief: dataDir === "/data" || !!process.env.DATA_DIR,
       // reservekopie buiten Railway: "uit" (niet ingesteld), "ok", "fout" of "wacht" (nog niet gedraaid)
       backupElders: !backupElders ? "uit" : backupEldersStatus.deels ? "deels" : backupEldersStatus.fout ? "fout" : backupEldersStatus.ok ? "ok" : "wacht",
-      backupEldersOp: backupEldersStatus.ok ? new Date(backupEldersStatus.ok).toISOString() : null
+      backupEldersOp: backupEldersStatus.ok ? new Date(backupEldersStatus.ok).toISOString() : null,
+      // gegevensbestanden tegenover de grens van de reservekopie: "krap" = over de helft
+      // (boven de grens mislukt de dagkopie); null zolang er nog geen kopie met telling is
+      backupRuimte: backupEldersStatus.ruimte ? (backupEldersStatus.ruimte.krap ? "krap" : "ok") : null
     });
     return;
   }
@@ -3268,7 +3300,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/praktijk/logout" && request.method === "POST") {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     const token = String(request.headers["x-praktijk-sessie"] || "").trim();
-    if (token) praktijkSessies.delete(token);
+    if (token) praktijkSessies.delete(sessieSleutel(token));
     // "Wis Fysiplan van dit apparaat": ook de proefcookie weg, anders zag de volgende
     // gebruiker van deze computer de proef (naam, e-mail) en kon hij hem stoppen. De proef
     // zelf blijft; met hetzelfde e-mailadres opnieuw aanmelden geeft hem terug.
@@ -6781,6 +6813,27 @@ async function afhandelen(request, response) {
 // De site blijft bereikbaar; de fout staat in de Railway-logs om op te pakken.
 process.on("uncaughtException", (err) => { console.error("uncaughtException:", err); });
 process.on("unhandledRejection", (err) => { console.error("unhandledRejection:", err); });
+
+// Nette afsluiting bij een uitrol (SIGTERM) of Ctrl-C: geen nieuwe verbindingen meer, lopende
+// verzoeken afmaken, het sessiebestand op schijf, en dan stoppen. Duurt dat langer dan vijf
+// seconden, dan stopt het proces alsnog. Zonder dit brak een uitrol elk lopend verzoek af.
+let stoppen = false;
+async function netjesStoppen(signaal) {
+  if (stoppen) return;
+  stoppen = true;
+  console.log(`${signaal}: afsluiten`);
+  setTimeout(() => process.exit(0), 5000).unref();
+  const dicht = new Promise((klaar) => server.close(() => klaar()));
+  // verbindingen die niets doen houden het afsluiten anders op tot hun keep-alive verloopt
+  const veeg = setInterval(() => server.closeIdleConnections(), 100);
+  server.closeIdleConnections();
+  await dicht;
+  clearInterval(veeg);
+  try { await praktijkSessies.opSchijf(); } catch {}
+  process.exit(0);
+}
+process.on("SIGTERM", () => { netjesStoppen("SIGTERM"); });
+process.on("SIGINT", () => { netjesStoppen("SIGINT"); });
 
 server.listen(port, host, () => {
   console.log(`Fysiplan listening on ${host}:${port} (data: ${dataDir})`);
