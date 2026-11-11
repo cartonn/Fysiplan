@@ -321,6 +321,42 @@ try {
   assert.match(vwo, /In het kort[\s\S]*binnen 48 uur[\s\S]*De artikelen hieronder gelden/);
   assert.match(vwo, /class="concept"><b>Concept\.<\/b>/);
   assert.match(vwo, /na 90 dagen zonder gebruik/);
+  {
+    // art. 28 lid 3 AVG (legal 2026-11-11): de overeenkomst noemt de soort gegevens.
+    // Fail-closed: elk kaartveld dat de patiënt krijgt (PATIENT_VELDEN) of dat de
+    // server op een kaart zet, moet in artikel 2 uitgelegd zijn (of hier als techniek staan).
+    const art2 = vwo.split("<h2>2. ")[1].split("<h2>")[0];
+    const velden = new Set([
+      ...JSON.parse(serverBron.match(/const PATIENT_VELDEN = (\[[^\]]+\])/)[1].replace(/\s+/g, " ")),
+      ...[...serverBron.matchAll(/\b(?:kaart|found)\.([a-zA-Z]+) = /g)].map((m) => m[1])
+    ]);
+    const uitleg = {
+      id: null, demo: null, praktijk: null, ts: null, chosen: null, rows: null, cells: null,
+      gearchiveerd: null, gearchiveerdOp: null, inboxGezien: null, notitieT: null, dossier: null,
+      naam: /naam die de praktijk de kaart geeft/, vids: /eigen video of foto/, doel: /weekdoel/,
+      afspraak: /afspraakmomenten/, antwoord: /berichten van de praktijk/, pskDoel: /doelactiviteit/,
+      psk: /PSK-score/, metingen: /pijnscore/, ervaring: /ervaren herstel/, gedaan: /oefenvinkjes/,
+      oefTrouw: /oefenvinkjes/, oefZwaar: /te zwaar/, seintje: /seintjes/,
+      notitie: /werknotitie/, behandelaar: /behandelaar/, contact: /logboek van het contact/
+    };
+    for (const veld of velden) {
+      assert.ok(Object.hasOwn(uitleg, veld), "kaartveld '" + veld + "' staat niet in artikel 2 van de verwerkersovereenkomst");
+      if (uitleg[veld]) assert.match(art2, uitleg[veld], "verwerkersovereenkomst art. 2 noemt " + veld);
+    }
+    // art. 5 beloofde "vrije tekst van de therapeut gaat niet naar AI-diensten", maar de
+    // naam van een eigen oefening gaat mee naar de vertaling (zie de nagebootste AI-dienst hierboven)
+    assert.doesNotMatch(vwo, /vrije tekst van de therapeut gaat niet naar/, "onjuiste AI-belofte is weg");
+    assert.match(vwo, /Wel de namen van oefeningen, ook van eigen oefeningen van de praktijk/);
+  }
+  {
+    // /privacy#praktijk: bewaartermijn van het logboek volgt de plafonds uit de code (#175)
+    const per = serverBron.match(/const AUDIT_PER_PRAKTIJK = (\d+), AUDIT_RUIS_PER_PRAKTIJK = (\d+)/);
+    assert.ok(per, "plafonds van het logboek gevonden");
+    const rij = privacy.split("<tr><td>Accountactiviteit")[1].split("</tr>")[0];
+    assert.match(rij, new RegExp("Per praktijk de laatste " + per[1] + " gebeurtenissen, plus de laatste " + per[2] + " mislukte"));
+    const kaartRij = privacy.split('id="praktijk"')[1].split("</tr>")[1];
+    assert.match(kaartRij, /werknotitie, de behandelaar en een logboek van het contact/);
+  }
   // algemene voorwaarden (concept): proef en abonnement, beoogd gebruik, geen dossier,
   // stoppen sluit aan op de verwerkersovereenkomst, en zakelijke keuzes als invulplek
   const av = await (await fetch(origin + "/voorwaarden")).text();
