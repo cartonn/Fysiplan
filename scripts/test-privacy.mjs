@@ -265,7 +265,7 @@ try {
   assert.match(privacy, /binnen een maand antwoord/);
   assert.match(privacy, /alleen door een computer/);
   assert.match(privacy, /zonder die gegevens kunnen we de proef niet starten/);
-  assert.match(privacy, /Versie 10 november 2026/);
+  assert.match(privacy, /Versie 11 november 2026/);
   assert.match(privacy, /hoe vaak, hoeveel of hoe zwaar je oefent/, "privacyverklaring noemt dat doseringsvragen niet naar de AI-dienst gaan");
   assert.match(privacy, /Foutlog/);
   // code tegen tekst (legal 2026-11-10 17u): alles wat de patiëntroute /api/kaart laat
@@ -358,6 +358,20 @@ try {
   assert.match(landing, /href="\/verwerkersovereenkomst"/);
   assert.match(landing, /href="\/voorwaarden"/);
   assert.doesNotMatch(landing, /AI-kaartassistent|startdosering|komt vanzelf bovenaan/);
+
+  // Legal 2026-11-11 (gebruikers-sweep, Jayden): /privacy is alleen Nederlands. Op een kaart in een
+  // andere taal zegt de privacylink dat, anders opent een patiënt zonder waarschuwing een pagina die
+  // hij niet kan lezen (AVG art. 12 lid 1: begrijpelijk). Nederlands blijft gewoon "Privacy".
+  {
+    const kaartBron = await readFile(join(root, "public/kaart.html"), "utf8");
+    const tpriv = kaartBron.slice(kaartBron.indexOf("var TPRIV"), kaartBron.indexOf("function trp("));
+    const labels = Object.fromEntries([...tpriv.matchAll(/^\s{4}([a-z]{2}):\{.*?,l:'([^']*)'/gm)].map((m) => [m[1], m[2]]));
+    assert.equal(labels.nl, "Privacy");
+    for (const t of ["en", "de", "fr", "es", "pl", "tr", "ar", "uk"]) {
+      assert.ok(labels[t], `privacylabel ${t}`);
+      assert.match(labels[t], /\(.+\)$/, `privacylink in ${t} zegt dat de pagina Nederlands is`);
+    }
+  }
 
   console.log("Privacypakket: alle controles geslaagd.");
 } catch (fout) {
