@@ -611,7 +611,9 @@ function praktijkProefVerlopen(pk) {
   const k = pk && Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk].proef : null;
   if (!k) return false;
   const p = Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
-  return p ? proefVerlopen(p) : Date.now() >= Number(k.verloopt || 0);
+  // een aanmelding die al is teruggebracht tot de fiscale bewaarplicht (gewist) draagt geen
+  // abonnement meer: de praktijk erachter maakt geen nieuwe kaarten (security 2026-11-11)
+  return p ? (!!p.gewist || proefVerlopen(p)) : Date.now() >= Number(k.verloopt || 0);
 }
 // alle schrijfroutes van de therapeut; lezen, verwijderen, archiveren, "gezien",
 // wachtwoord en uitloggen blijven open, net als alle patiëntroutes (/k)
@@ -5747,6 +5749,21 @@ async function afhandelen(request, response) {
     // (gebruikers-sweep 2026-11-09, Mark iPad)
     if (wb.zeker !== "1") { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     const p = proefVan(request);
+    // Security (2026-11-11): met een betaald abonnement en een gekoppelde praktijk wiste deze
+    // route (alleen de proefcookie nodig, geen beheerdersrol) de aanmelding tot de fiscale rest
+    // met klant: true. De incasso stopte, het abonnement liep nooit af en de praktijk bleef
+    // gratis en voor altijd open; na een beëindigd abonnement ging de app zo weer open.
+    // Opzeggen (dan wist de server alles 30 dagen na het einde) of "Alles wissen" op
+    // Mijn gegevens, met het wachtwoord van de praktijk, doen dit wel volledig.
+    if (p && p.abonnement && p.abonnement.eersteBetaling &&
+      Object.values(praktijkAccounts).some((acc) => String(acc?.proef?.id || "") === String(p.id))) {
+      await serveerProef(request, response, "bericht", { TITEL: "Gegevens wissen", ETIKET: "Abonnement",
+        KOP: "Bij een abonnement wis je je gegevens op een andere plek.",
+        TEKST: "Er is niets gewist. Zeg je abonnement op; " + NA_EINDE_WISSEN_DAGEN + " dagen na het einde wissen we alles van je praktijk vanzelf. " +
+          "Wil je alles meteen wissen? Doe dat op Mijn gegevens, met het wachtwoord van je praktijk.",
+        KNOP_HTML: '<a class="knop oranje" href="/v2/gegevens">Naar Mijn gegevens</a> <a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Naar mijn abonnement</a>' }, 409);
+      return;
+    }
     // na een online betaling blijft wat de fiscale bewaarplicht vraagt (7 jaar); de rest gaat weg
     if (p) { proefNaPraktijkWissen(p.id); await bewaarProeven(); }
     response.setHeader("set-cookie", proefCookie("", request));

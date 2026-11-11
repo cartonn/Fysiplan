@@ -10,7 +10,7 @@ daaruit tot en met 2026-11-06.
 |---|---|
 | (a) beheer-endpoints en de admin-sleutel | 2026-11-10 12u (na #159: sleutelformulier controleert via /api/dashboard, sleutel alleen in sessionStorage, geen sleutel in publieke bestanden; productie zonder eigen `ADMIN_KEY` dicht. Gevonden: foute sleutels op routes waar beheer een extra recht is, telden niet mee voor de rem, opgelost) · 2026-11-09 12u (statisch: 17 `isAdmin`-routes, /aanmeldingen en /medewerkers alleen `ACCOUNT_BEHEER_EMAILS`, geen admin88 in publieke bestanden, productie zonder eigen `ADMIN_KEY` dicht, rem vóór sleutel. Geen gat) |
 | (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-10 20u (NAKIJKEN van de sweep bevestigd: missers van een lid bij wachtwoord wijzigen telden op de praktijksleutel, opgelost) · 2026-11-10 16u (runtime: inlogrem per IP remde niet echt, goed wachtwoord na 20 missers nog binnen; /v2/gegevens en /v2/proef/overzicht telden missers niet per IP: opgelost. Sessies 30 dagen, ingetrokken bij verwijderen/wachtwoord/gedeeld uit; rol live uit het lid; uitnodigingstoken 192 bits met misrem; herstelcode 80 bits. Verder geen gat) · 2026-11-09 12u (team: eigen login, uitnodigen, verwijderen, rol, gedeeld uit; uitnodiging verzilveren; wachtwoord per lid; v1-login/registratie. Nieuw: LAAG uitnodigingsmail als spamkanaal, zie Open) · 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
-| (c) proef-tokens en verlopen proeven | 2026-11-09 16u (koppelen van een account aan een proef bij inloggen, nu ook gevolgd door wissen na 30 dagen: oude proefcookie hing een gewone praktijk aan een verlopen proef, opgelost; claim, slot en wissen alleen voor de eigen proef) · 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
+| (c) proef-tokens en verlopen proeven | 2026-11-11 04u (statisch + runtime alle /v2/proef/*-routes met de proefcookie: wissen, opzeggen, factuurgegevens, betalen, doorgaan, factuur, terug. "Gegevens wissen" met een betaald abonnement maakte de praktijk gratis en voor altijd klant: opgelost. Nieuw LAAG: abonnementsacties zonder beheerdersrol, welkomstlink = blijvend apparaattoken, zie Open) · 2026-11-09 16u (koppelen van een account aan een proef bij inloggen, nu ook gevolgd door wissen na 30 dagen: oude proefcookie hing een gewone praktijk aan een verlopen proef, opgelost; claim, slot en wissen alleen voor de eigen proef) · 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-10 00u (statisch alle 30 kaartroutes: patiëntroutes met `vindKaart` + misrem + `kruisSite`, therapeutroutes met `eisBeveiligdePraktijk` en alleen de eigen map, /api/kaart met allowlist, /k zonder bestaan-orakel, demo per verzoek vers. Teamsjablonen lezen/verwijderen zonder wachtwoord: opgelost) · 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP) |
 | (e) uploads (video, logo, opname /o) | 2026-11-10 08u (statisch + runtime: /uploads met ../, %2e%2e, %2f, %5c, %00, dubbele codering → 403/404; opname-upload chunked 70 MB zonder content-length → 413 vóór bufferen, geen bestand; type/magische bytes; token blijft na fout bruikbaar; eigenVideoPad alleen eigen opnames; wissen ruimt foto's, logo en video's op. Geen gat) · 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-10 20u (runtime met Chromium, CSP uit zodat ook inline handlers zouden afgaan, op de nieuwe /k van #162 en #171: payloads in praktijknaam, adres, plaats, telefoon, e-mail, website (javascript:), kaartnaam, roepnaam, doel, let op, oefennaam, schemacellen, antwoord, behandelaar, PSK, notitie, afspraak, seintje; overzicht, oefenstand, Gedaan, foto, video, pijnscore in nl en ar: niets uitgevoerd of geïnjecteerd. Statisch: alle 27 `innerHTML` in kaart.html gaan door `esc()`, `vids`/`yt` alleen via de serverwhitelist. Geen gat) · 2026-11-09 08u (runtime met Chromium: payloads in teamnaam, uitnodiging, eigen oefening, teamsjabloon, alle kaartvelden, bericht, notitie, behandelaar, doel; app-start, Kaarten-paneel, inbox, Team, Activiteit, Rapport, Sjablonen, /k in nl/en/ar: niets geïnjecteerd, geen CSP-melding. CSV-exports met formule-escape, afspraak-ICS zonder regelinjectie. Geen gat) |
@@ -19,7 +19,22 @@ daaruit tot en met 2026-11-06.
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-09 20u (remmen: schrijf-/leesrem per IP zette een hele praktijk achter één wifi plus de patiënten daar op 429: opgelost met een rem per praktijk; plafonds per praktijk ongewijzigd) · 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
 | (j) npm audit | 2026-11-10 08u (0 meldingen) · 2026-11-09 20u (0 meldingen, ook dev) |
 
-Volgende run: (c) proef-tokens, daarna (h) foutmeldingen.
+Volgende run: (h) foutmeldingen, daarna (i) denial of service.
+
+Sanity 2026-11-11 04u op #176–#178 (wissen op de telefoon, vinkjes/taal op /k, factuurgegevens): nieuwe POST
+`/v2/proef/factuurgegevens` heeft `kruisSite`, body ≤ 4 KB, alleen de eigen proefcookie met een actief/opgezegd
+abonnement, lengte- en regelgrens, alles door `htmlEsc`/`esc` (ook op de factuur, CSP `default-src 'none'`).
+`kaart.html` zonder nieuwe `innerHTML` met invoer. Geen gat.
+
+- **OPGELOST 2026-11-11 (deze PR) — MIDDEL — "Gegevens wissen" op /v2/proef maakte een betalende praktijk gratis en
+  voor altijd klant.** `/v2/proef/wissen` (alleen de proefcookie, geen beheerdersrol) bracht de aanmelding met een betaald
+  abonnement terug tot de fiscale rest met `klant: true` en `gewist`. De proefronde slaat gewiste aanmeldingen over: geen
+  maandincasso meer, het abonnement liep nooit af, de praktijk werd nooit gewist en bleef kaarten maken. Na een beëindigd
+  abonnement zette dezelfde knop `klant` weer op true: de app ging weer open. Repro lokaal: claim met proefcookie, wissen
+  → 200, daarna `POST /api/kaarten` met de praktijksessie 200. Nu: met een betaald abonnement en een gekoppelde praktijk
+  geeft de route 409 en verwijst naar opzeggen of Mijn gegevens; een praktijk aan een gewiste aanmelding staat op slot
+  (`praktijkProefVerlopen`). Test: `npm run test:proefwissenklant`. Gevolg voor UI (gebruikers-sweep): het blok "Je gegevens
+  wissen" op Mijn proef staat er nog bij een abonnement; de knop legt nu uit waar het wel kan.
 
 Sanity 2026-11-11 00u op #172–#174 (wachtwoordrem per lid, privacytekst, Annuleren/te zwaar offline/wissen op /k):
 #173 en #174 raken geen server, geen nieuwe `innerHTML` met invoer. Geen gat.
@@ -263,6 +278,16 @@ Sanity 2026-11-07 08u op #57 (Mollie), #59, #60 (kaart hernoemen): geen gat. De 
 zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaartId alleen in de eigen praktijk.
 
 ## Open
+
+- **LAAG (2026-11-11) — abonnementsacties zonder beheerdersrol.** Opzeggen, factuurgegevens, betalen en wissen op
+  /v2/proef hangen alleen aan de proefcookie van het apparaat. Op een gedeelde praktijkcomputer kan elke collega het
+  abonnement opzeggen; 30 dagen na de betaalde maand wist de server dan alle patiëntkaarten. Verzachting: bevestigingsmail
+  aan de aanmelder, intrekken kan tot het einde, Ahmed krijgt een melding. Voorstel: bij een gekoppelde praktijk ook een
+  beheerderssessie van die praktijk eisen (of het wachtwoord laten intikken) voor opzeggen.
+- **LAAG (2026-11-11) — welkomstlink is een blijvend apparaattoken.** De link in de welkomstmail (`/v2/proef/terug?code=`)
+  is hetzelfde token als de cookie van het eerste apparaat en blijft geldig zolang de aanmelding bestaat (tot 5 apparaten).
+  Wie de mail later leest (gedeelde mailbox), krijgt zo het abonnementsbeheer. Voorstel: een apart maillink-token dat na
+  gebruik of 7 dagen vervalt, los van de cookie.
 
 - **MIDDEL (doorgezet door de gebruikers-sweep 2026-11-11 02u, Mark) — collega met rol therapeut wijzigt het praktijkprofiel.**
   `POST /api/praktijken` (server.js r. ~3655) heeft alleen `eisBeveiligdePraktijk`, geen beheercheck. Repro lokaal: therapeut
