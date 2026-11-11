@@ -4,6 +4,14 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Wie mag een patiëntkaart verwijderen? (security, 2026-11-11)
+**Wat de code nu doet:** elke therapeut van de praktijk kan elke gedeelde patiëntkaart definitief verwijderen, ook die van
+een collega, met de video's erbij. Sinds deze week staat dat wel in Activiteit (wie, wanneer). Bij sjablonen en eigen
+oefeningen mag alleen de maker of een beheerder verwijderen; kaarten onthouden (nog) geen maker.
+**Wat jij moet kiezen:** (1) zo laten (collega's nemen elkaars patiënten over), of (2) alleen de maker en de beheerder mogen
+verwijderen, de rest kan archiveren. Advies: (2), omdat het een medisch dossier raakt; laat het weten, dan bouwt de
+security-routine het.
+
 ### Fysiplan gebruiken zonder proef of abonnement (security, 2026-11-09 20u)
 **Wat de code nu doet:** wie /v2/app opent zonder de proef te starten, kan een praktijk beveiligen en kaarten maken, zonder
 einddatum. De proefgrens zit alleen op praktijken die bij de proef horen. Een team met een verlopen proef kan zo met een

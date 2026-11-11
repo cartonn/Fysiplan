@@ -21,15 +21,24 @@ daaruit tot en met 2026-11-06.
 
 Volgende run: (c) proef-tokens, daarna (h) foutmeldingen.
 
+Sanity 2026-11-11 00u op #172–#174 (wachtwoordrem per lid, privacytekst, Annuleren/te zwaar offline/wissen op /k):
+#173 en #174 raken geen server, geen nieuwe `innerHTML` met invoer. Geen gat.
+
 Sanity 2026-11-10 20u op #170 en #171 (privacyverklaring patiënten, herstelknoppen/laadtekst op /k): alleen tekst en
 `public/kaart.html` zonder nieuwe `innerHTML` met invoer, geen serverwijziging. Geen gat.
 
-- **HOOG (gebruikers-sweep 2026-11-10 22u, Mark; NAKIJKEN) — elke therapeut kan elke patiëntkaart van de praktijk
-  definitief verwijderen, zonder logboekregel.** Collega "Piet" (rol therapeut) stuurde `POST /api/kaarten/verwijder` voor de
-  kaart "Voorbeeldpatiënt" van Mark: 200, kaart met video's weg, niets in Activiteit (geen `auditLog`). Bij sjablonen en eigen
-  oefeningen geeft hetzelfde 403 (`magGedeeldAanpassen`). In de app staat "×" bij elke kaart, ook bij een collega (iPad).
-  server.js r. ~4393–4421. Voorstel: verwijderen alleen door maker of `beheer`, of in elk geval een auditregel; wacht op #167
-  (server.js). Productkeuze voor Ahmed of een collega dit mag; het ontbrekende logboek is in elk geval een gat (WGBO-spoor).
+- **OPGELOST 2026-11-11 (deze PR), deels — HOOG (gebruikers-sweep 2026-11-10 22u, Mark) — elke therapeut kan elke
+  patiëntkaart van de praktijk definitief verwijderen, zonder logboekregel.** Bevestigd lokaal: collega met rol therapeut →
+  `POST /api/kaarten/verwijder` 200, kaart en video's weg, niets in het logboek. Nu: `kaart-verwijderd` met wie het deed in
+  het logboek en in Activiteit (zonder kaartnaam of kaart-id). Kaarten hebben geen maker-veld; óf alleen maker/beheer mag
+  verwijderen is een productkeuze en staat in `docs/mensenwerk.md`. Test: `npm run test:auditspoor`.
+
+- **OPGELOST 2026-11-11 (deze PR) — MIDDEL — een buitenstaander kon het logboek van elke praktijk wegdrukken.**
+  `praktijkAudit` was één lijst van 500 regels voor alle praktijken samen. Elk verzoek zonder login op een kaartroute van een
+  beveiligde praktijk schrijft `toegang-geweigerd`, elke foute login op een verzonnen naam `login-mislukt`. Repro lokaal:
+  300× `GET /api/kaarten?praktijk=<naam>` zonder sessie + 300 foute logins op verzonnen namen (wisselende IP's) → Activiteit
+  van de praktijk leeg, ook "beveiligd" en "kaart verwijderd" weg. Nu: plafond per praktijk (300 gewone regels, 50 regels die
+  iemand zonder login kan veroorzaken), totaal 5000, en bij vol eerst de oudste ruis weg. Test: `npm run test:auditspoor`.
 
 - **OPGELOST 2026-11-10 (deze PR) — LAAG — collega kon met foute pogingen bij wachtwoord wijzigen de praktijk op slot
   zetten** (NAKIJKEN van de gebruikers-sweep 14u, nu bevestigd). `/api/praktijk/wachtwoord` telde een fout eigen wachtwoord

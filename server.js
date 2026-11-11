@@ -179,6 +179,8 @@ const auditPath = join(dataDir, "praktijk-audit.json");
 let praktijkAccounts = {}; // { praktijkKey: { hash, gemaakt } }  hash = "scrypt$saltHex$hashHex"
 try { praktijkAccounts = JSON.parse(await readFile(accountsPath, "utf8")); } catch {}
 let praktijkAudit = []; // laatste gebeurtenissen: { t, praktijk, actie, ip }
+const AUDIT_RUIS = new Set(["toegang-geweigerd", "login-mislukt", "herstel-mislukt"]);
+const AUDIT_PER_PRAKTIJK = 300, AUDIT_RUIS_PER_PRAKTIJK = 50, AUDIT_TOTAAL = 5000;
 try { praktijkAudit = JSON.parse(await readFile(auditPath, "utf8")); } catch {}
 // sessies bewust in het geheugen: bij een herstart logt de praktijk opnieuw in
 const praktijkSessies = new Map(); // token -> { pk, t }
@@ -372,8 +374,28 @@ function auditLog(pk, actie, req, wieExpliciet) {
   let wie = wieExpliciet || "";
   if (!wie && req) { const l = sessieLid(sessieVan(req)); if (l) wie = l.naam || l.email; }
   praktijkAudit.unshift({ t: new Date().toISOString(), praktijk: pk, actie, ip: req ? maskIp(clientIp(req)) : "", ...(wie ? { wie } : {}) });
-  praktijkAudit = praktijkAudit.slice(0, 500);
+  auditSnoei(pk, AUDIT_RUIS.has(actie));
   saveJson(auditPath, praktijkAudit).catch(() => {});
+}
+// Het logboek was één lijst van 500 voor alle praktijken samen. Wie zonder login
+// steeds een kaartroute van een praktijk opvraagt ("toegang-geweigerd") of foute
+// logins op verzonnen namen stuurt, schoof zo binnen minuten het spoor van
+// iedere praktijk eruit (wie logde in, wie verwijderde een kaart). Nu heeft elke
+// praktijk een eigen plafond, apart voor regels die iemand zonder login kan
+// veroorzaken (ruis), en bij een vol logboek gaat eerst de oudste ruis weg.
+function auditSnoei(pk, ruis) {
+  const max = ruis ? AUDIT_RUIS_PER_PRAKTIJK : AUDIT_PER_PRAKTIJK;
+  let n = 0;
+  for (let i = 0; i < praktijkAudit.length; i++) {
+    const a = praktijkAudit[i];
+    if (a && a.praktijk === pk && AUDIT_RUIS.has(a.actie) === ruis && ++n > max) { praktijkAudit.splice(i, 1); break; }
+  }
+  while (praktijkAudit.length > AUDIT_TOTAAL) {
+    let j = -1;
+    for (let i = praktijkAudit.length - 1; i >= 0; i--) if (!praktijkAudit[i] || AUDIT_RUIS.has(praktijkAudit[i].actie)) { j = i; break; }
+    if (j < 0) j = praktijkAudit.length - 1;
+    praktijkAudit.splice(j, 1);
+  }
 }
 // expliciete allowlist voor het publieke praktijkprofiel (zelfde les als de
 // /api/kaart-allowlist): de twee leesroutes die profielen naar buiten sturen —
@@ -2916,7 +2938,7 @@ async function afhandelen(request, response) {
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
       "claim-gereset-door-beheer", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
-      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord"]);
+      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
       .slice(0, 15)
@@ -4412,6 +4434,9 @@ async function afhandelen(request, response) {
       delete kaarten[pk][kk];
       if (!Object.keys(kaarten[pk]).length) delete kaarten[pk];
       await saveJson(kaartenPath, kaarten);
+      // definitief weg (met video's): het logboek houdt bij wie het deed, zonder de
+      // kaartnaam (roepnaam/cliëntcode) en zonder kaart-id (dat is de toegang tot /k)
+      auditLog(pk, "kaart-verwijderd", request);
       await ruimKaartVideosOp(wegVids);
       await sendJson(response, 200, { ok: true });
     } catch {
