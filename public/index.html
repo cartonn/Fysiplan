@@ -957,6 +957,22 @@ bridge2.jpg</div>
     }catch(e){}
     planAutoDeel();
   }
+  // Kaart die in deze editor open staat en intussen verwijderd is (prullenbak of definitief).
+  // Dan geen stille nieuwe kaart meer bij autosave, QR of printen: eerst een vraag
+  // (sweep 2026-11-11 18u, Sanne: na "Definitief verwijderen" maakte één klik op "Test de QR"
+  // de patiëntkaart stil opnieuw aan, met een nieuwe link). Bewaard over herladen heen.
+  var KAART_WEG='';
+  try{KAART_WEG=localStorage.getItem('fp_kaartweg')||'';}catch(e){}
+  function kaartIsWeg(){return !!(KAART_WEG&&KAART_ID&&KAART_WEG===KAART_ID);}
+  function zetKaartWeg(id){KAART_WEG=id||'';try{if(KAART_WEG)localStorage.setItem('fp_kaartweg',KAART_WEG);else localStorage.removeItem('fp_kaartweg');}catch(e){}}
+  function markeerKaartWeg(id){
+    if(!id||!KAART_ID||id!==KAART_ID)return;
+    zetKaartWeg(id);laatsteDeel='';
+    toonKaartWegHint();
+  }
+  function toonKaartWegHint(){
+    toonQrHint('Deze kaart is verwijderd; de oude QR-code werkt niet meer.',[{act:'opnieuwdelen',label:'Opnieuw delen met een nieuwe QR-code'}]);
+  }
   function zetKaartId(id,ts){
     KAART_ID=id||'';KAART_TS=Number(ts)||0;
     try{var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');st.kaartId=KAART_ID;st.kaartTs=KAART_TS;localStorage.setItem('fysiplan_state',JSON.stringify(st));}catch(e){}
@@ -2354,6 +2370,7 @@ bridge2.jpg</div>
         [{act:'roepnaam',label:'Maak er \u201c'+voorstel+'\u201d van'},{act:'naamok',label:'Toch zo laten'}]);
       laatsteDeel='';return;
     }
+    if(kaartIsWeg()){toonKaartWegHint();return;}
     var c=serverKaart(naam);
     // vergelijken zonder tijdstempel en kaart-id: alleen een echte wijziging wordt een POST
     var afdruk=JSON.stringify(Object.assign({},c,{ts:0,kaartId:'',overschrijf:false,basisTs:0}));
@@ -2404,6 +2421,7 @@ bridge2.jpg</div>
       else if(a==='naamok'){NAAM_OK=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
       else if(a==='hernoem'){HERNOEM_VOOR=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
       else if(a==='nieuwkaart'){zetKaartId('',0);laatsteDeel='';deelNu();}
+      else if(a==='opnieuwdelen'){zetKaartWeg('');zetKaartId('',0);laatsteDeel='';deelNu();}
       return;
     }
     if(e.target.id!=='qrx')return;
@@ -3691,6 +3709,12 @@ bridge2.jpg</div>
     if(typeof ensureQr==='function')ensureQr(function(){toonQr(d.id);});
   }
   function saveServerCard(naam,cb,keuze){
+    if(kaartIsWeg()){
+      if(!confirm('Deze kaart is verwijderd. Opnieuw delen maakt een nieuwe patiëntkaart met een nieuwe QR-code.\n\nOK = opnieuw delen\nAnnuleren = niets delen')){
+        cb({ok:false,geannuleerd:true,fout:'Niet gedeeld: deze kaart is verwijderd.'});return;
+      }
+      zetKaartWeg('');zetKaartId('',0);keuze='nieuw';
+    }
     var c=serverKaart(naam);
     if(keuze==='hernoem')c.hernoem=true;
     else if(keuze==='nieuw'){c.kaartId='';delete c.basisTs;}
@@ -4145,7 +4169,7 @@ bridge2.jpg</div>
         if(!confirm('Deze kaart en de opnames erbij nu definitief verwijderen? Dit kan niet ongedaan worden gemaakt. Wat de praktijk moet bewaren, staat in het eigen dossier.'))return;
         d0.disabled=true;
         fetch('api/kaarten/definitief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:d0.dataset.pruldef})})
-          .then(function(r){return r.json();}).then(function(d){if(d.ok){var r0=d0.closest('p');if(r0)r0.remove();}else{d0.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
+          .then(function(r){return r.json();}).then(function(d){if(d.ok){markeerKaartWeg(d0.dataset.pruldef);var r0=d0.closest('p');if(r0)r0.remove();}else{d0.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
           .catch(function(){d0.disabled=false;alert('Geen verbinding. Probeer opnieuw.');});
         return;
       }
@@ -4153,7 +4177,7 @@ bridge2.jpg</div>
       if(!confirm('Deze kaart herstellen? De bestaande patiëntlink werkt daarna weer.'))return;
       b.disabled=true;
       fetch('api/kaarten/herstel',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:b.dataset.prulherstel})})
-        .then(function(r){return r.json();}).then(function(d){if(d.ok)toonSrvKaarten();else{b.disabled=false;alert(d.fout||'Herstellen is niet gelukt.');}})
+        .then(function(r){return r.json();}).then(function(d){if(d.ok){if(KAART_WEG===b.dataset.prulherstel){zetKaartWeg('');laatsteDeel='';deelNu();}toonSrvKaarten();}else{b.disabled=false;alert(d.fout||'Herstellen is niet gelukt.');}})
         .catch(function(){b.disabled=false;alert('Geen verbinding. Probeer opnieuw.');});
     };
   }
@@ -5125,7 +5149,7 @@ bridge2.jpg</div>
       x.disabled=true;
       fetch('api/kaarten/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',naam:nm,id:x.dataset.sdelid})})
         .then(function(r){return r.json();})
-        .then(function(d){if(d.ok){toonSrvKaarten();ping('kaart-verwijderd');}else{x.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
+        .then(function(d){if(d.ok){markeerKaartWeg(x.dataset.sdelid);toonSrvKaarten();ping('kaart-verwijderd');}else{x.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
         .catch(function(){x.disabled=false;alert('Verwijderen is niet gelukt: geen verbinding.');})
         .then(delVrij);
     }

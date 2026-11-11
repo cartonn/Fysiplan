@@ -815,3 +815,21 @@ html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
  html.v2 .smart-filters button,html.v2 .row .add{background:#2b5054;color:#fff;border-color:#658087}
  html.v2 .smart-filters button.on,html.v2 .row .add:hover,html.v2 .row .add.on{background:#b9e34b;color:#18343b;border-color:#b9e34b}
 }
+/* Donker thema: vlakken die nog licht waren terwijl de tekst wit werd (sweep 2026-11-11 18u,
+   Karin en Mark: Team-venster en Kaarten-paneel ±1,1:1). Alleen op het scherm; de A4 blijft papier. */
+@media screen{
+ html.v2{--naamblok:#2b5054;--naamblok-rand:#496766;--chip:#2b5054}
+ html.v2 .fp-av{box-shadow:0 0 0 2px #20464f}
+ html.v2 #ovKaarten .modal>h3,html.v2 #ovKaarten .modal>.acts{background:rgba(32,70,79,.96);color:#fff}
+ html.v2 #prakslot .ps-acties a,html.v2 #prakslot .ps-acties a#ps_wis{background:#20464f;color:#fff;border-color:#658087}
+ html.v2 #prakslot .ps-acties a:hover{background:#365e64;color:#fff;border-color:#8aa3a8}
+ html.v2 #prakslot .ps-acties a#ps_team{background:#b9e34b;border-color:#b9e34b;color:#18343b}
+ html.v2 #prakslot .ps-acties a#ps_wis{color:#ffb4a8}
+ html.v2 #k_inbox .ib-tel{background:#b9e34b;color:#18343b}
+ html.v2 #k_inbox .ib-av{background:#20464f;color:#fff}
+ html.v2 .tm-lid.uitgenodigd .tm-av{background:#20464f;color:#e0eae7;border-color:#658087}
+ html.v2 .tm-rol{background:#18343b;color:#fff}
+ html.v2 .tm-lid select,html.v2 .tm-uitnodig input,html.v2 .tm-uitnodig select{background:#112c32;color:#fff;border-color:#658087}
+ html.v2 .tm-uitnodig{background:#20464f}
+ html.v2 #k_srv_rap,html.v2 #k_srv_csv{color:#fff}
+}

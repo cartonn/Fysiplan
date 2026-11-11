@@ -4,8 +4,8 @@
 //   zonder oefeningen, aantikbare Nederlandse knoppen);
 // - onbekend id met ?taal=en: Nederlandse "Kaart niet gevonden";
 // - 200 % tekst: "Begrepen" in de privacyregel en "Gemaakt met Fysiplan" maakten de pagina 392 px breed op 320.
-// Nu een laadscherm in de taal van de patiënt tot de kaart in die taal getekend is (max 8 s wachten
-// op de vertaling), een vertaalde niet-gevonden-pagina en afbrekende privacyregel/voet.
+// Nu een laadscherm in de taal van de patiënt tot de kaart in die taal getekend is (sinds 2026-11-11 18u
+// max 1,5 s wachten op de vertaling, zie test-sweep-vertaal-laat.mjs), een vertaalde niet-gevonden-pagina en afbrekende privacyregel/voet.
 // Sweep 2026-11-10 18u (Jayden, Pixel 7, trage lijn): de laadtekst bleef ±1,5 s Nederlands ("Je kaart wordt
 // geladen…") omdat het hoofdscript (na /noor-audio.js) hem pas vertaalde. Nu zet een klein script direct na het
 // laadscherm de tekst in de taal van de patiënt.
@@ -95,7 +95,7 @@ try {
     tekst: document.getElementById("laden").textContent, wrap: getComputedStyle(document.getElementById("wrap")).display }));
   assert.ok(s.laden && /Loading your card/.test(s.tekst), "trage kaart: Engels laadscherm: " + JSON.stringify(s));
   assert.equal(s.wrap, "none");
-  await wacht(2000); // kaart binnen, vertaling nog onderweg
+  await wacht(1100); // kaart binnen, vertaling nog onderweg (de kaart wacht er hooguit VERTAAL_WACHT op)
   s = await pe.evaluate(() => ({ laden: getComputedStyle(document.getElementById("laden")).display !== "none",
     wrap: getComputedStyle(document.getElementById("wrap")).display }));
   assert.ok(s.laden && s.wrap === "none", "trage vertaling: nog laadscherm, geen half Nederlandse kaart: " + JSON.stringify(s));
