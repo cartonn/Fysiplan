@@ -24,7 +24,7 @@ async function draai(antwoorden) {
     serverKaart: (naam) => ({ naam, kaartId: "8b29eda692f7", basisTs: 1 }),
     PJSON: () => ({}),
     KAART_ID: "8b29eda692f7",
-    zetKaartId: () => {}, volgNieuweKaart: () => {},
+    zetKaartId: () => {}, volgNieuweKaart: () => {}, kaartIsWeg: () => false, zetKaartWeg: () => {},
     confirm: (t) => { vragen.push(t); return antwoorden.shift() ?? false; },
     fetch: async (_url, opt) => {
       const body = JSON.parse(opt.body);

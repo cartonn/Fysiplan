@@ -76,6 +76,9 @@ jobs:
       - run: npm run test:seintje
       - run: npm run test:sweepoverzicht
       - run: npm run test:gedeeldwerk
+      - run: npm run test:weekverder
+      - run: npm run test:daguitvraag
+      - run: npm run test:profielcollega
       - run: npm run test:prullenbak
       - run: npm run test:wachtrijdagen
       - run: npm run test:agendamelding
@@ -104,6 +107,9 @@ jobs:
       - run: npm run test:proefwissen
       - run: npm run test:pijnscorebezig
       - run: npm run test:nietvertaald
+      - run: npm run test:vertaallaat
+      - run: npm run test:kaartweg
+      - run: npm run test:v2contrast
       - run: npm run test:qrroepnaam
       - run: npm run test:uitnodigingpraktijk
       - run: npm run test:rempraktijk
@@ -126,3 +132,4 @@ jobs:
       - run: npm run test:dagwisseltaal
       - run: npm run test:reekstitel
       - run: npm run test:annulerenhernoem
+      - run: npm run test:welkomlink

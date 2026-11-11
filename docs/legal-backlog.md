@@ -10,18 +10,43 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 |---|---|
 | (a) privacyverklaring (art. 13/14 AVG) | 2026-11-10 21u (Anthropic-rij beloofde "geen vrije tekst van de therapeut" en "bibliotheekteksten", maar namen van eigen oefeningen gaan mee naar vertaling en vraaghulp: opgelost; bron van teamledengegevens (art. 14 lid 2 f): opgelost; proefvelden, externe hosts in code, Cloudflare Stream (alleen bibliotheekvideo's van beheer), rechten en klachtrecht: klopt; Resend-rij wacht nog op #167) |
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-11 05u (art. 5 beloofde "vrije tekst van de therapeut gaat niet naar AI-diensten", maar namen van eigen oefeningen gaan mee: opgelost; art. 2 miste kaartnaam, doelactiviteit, weekdoel, werknotitie, behandelaar en contactlogboek: opgelost, fail-closed test; /privacy logboekregel zei 500, code houdt 300 + 50 per praktijk: opgelost; externe hosts in code tegen subverwerkerslijst (Railway, Anthropic, Cloudflare, YouTube, Resend, Mollie apart): geen gat; art. 28 lid 3 a-h verder ongewijzigd) · 2026-11-09 13u |
-| (c) algemene voorwaarden | 2026-11-10 05u (art. 4 beschrijft de maandincasso: afschrijven via machtiging, mail 5 dagen vooraf als afgesproken kortere termijn, mislukt = contact, factuur per maand; `AV_VERSIE` 2026-11-10) |
+| (c) algemene voorwaarden | 2026-11-11 21u (landing belooft "je prijs staat minstens 24 maanden vast" en "24 maanden prijsgarantie", art. 4 zei alleen "nieuwe prijs 30 dagen vooraf": opgelost, `AV_VERSIE` 2026-11-11-2; opzeggen/intrekken, mislukte incasso zonder herkansing, geen kaarten na de proef, btw exclusief, links vanaf landing/proef/app: klopt met de code) · 2026-11-10 05u |
 | (d) code tegen tekst | 2026-11-11 09u (na #167 en #183: reservekopie buiten Railway bevat nu ook uploads, /privacy zei "behalve video's": wacht op open PR #184; Resend-rij te smal: opgelost; inleiding subverwerkers zei "het zijn Amerikaanse bedrijven", terwijl de reservekopie-partij Europees kan zijn: opgelost) · 2026-11-10 17u (patiëntroute `PATIENT_VELDEN` tegen /privacy#patient: doelactiviteit, bericht van de praktijk, weekdoel en eigen video/foto ontbraken, afspraak stond onder "zelf aantikt"; opgelost. Mails via Resend gaan ook over betaling en wachtwoord: open tot #167 gemerged is. Logs, auditlog 500, cookies, reservekopie 7 dagen, uitnodiging 7 dagen: klopt) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-11 13u (na #191 prullenbak: een praktijk kon een kaart niet meer meteen wissen, alleen na 7 dagen of door de hele praktijk te wissen, en /privacy zei daarom "buiten gebruik stellen": opgelost met Definitief verwijderen; download gaf kaarten in de prullenbak verlooptOp 1970: opgelost; VWO art. 10 was gewijzigd zonder nieuwe versie: opgelost) · 2026-11-10 01u (vertaalcache hield namen van eigen oefeningen na "Alles wissen"; download bevat geen geheimen, wel alle kaartvelden) |
 | (f) cookies en lokale opslag | 2026-11-11 01u (alle localStorage-, sessionStorage-, Cache- en IndexedDB-sleutels van /k en /v2/app tegen /privacy#opslag; kaart weg bij de praktijk (404): `fp_beelden_<id>` (kaart-id + oefenbeelden) en de beelden zelf bleven op de telefoon, opgelost; privacylink op een anderstalige kaart zegt nu dat de pagina Nederlands is; cookies `fpproef`/`fp1` en "Wis Fysiplan van dit apparaat" (alle `fp_`/`fysiplan`-sleutels, IndexedDB, caches): klopt) · 2026-11-09 21u |
 | (g) MDR en AI-verordening | 2026-11-10 13u (nieuwe patiëntkaart #162: de AI-stem bij oefeningen zonder AI-video en via de knop bovenaan/vergroting had geen AI-melding: opgelost; landing, app en kaart zonder diagnose-, doserings- of sorteerbelofte; vraaghulp-grens ongewijzigd) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
-| (i) begrijpelijkheid (B1) | 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
+| (i) begrijpelijkheid (B1) | 2026-11-11 17u (gemeten op /privacy, /verwerkersovereenkomst, /voorwaarden, /v2/proef, /v2/gegevens en /v2: gem. 9–12 woorden per zin, juridische pagina's geen zin > 40, patiëntdeel ≤ 30; /v2/gegevens zei "Een losse kaart wis je met Verwijderen" terwijl die sinds #191 nog 7 dagen in de prullenbak staat: opgelost; waarschuwing bij Alles wissen 35 woorden: opgelost als lijst; /v2/gegevens nu ook in `test-juridisch-b1.mjs`) · 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (i) B1, dan (h) WGBO, dan (a) privacyverklaring. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (h) WGBO, dan (g) MDR, dan (a) privacyverklaring (landing is door #197 in de Active Tech-stijl herschreven: nieuwe hero met een persoon in squathouding; nagaan of dat beeld een foto of AI-beeld is en of het een melding of 'Fotomontage' nodig heeft). Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **MIDDEL — voorwaarden (c) 2026-11-11 21u: de prijsbelofte van de landing stond niet in de voorwaarden.**
+  /v2 (sinds de Active Tech-landing #197) zegt "je prijs staat minstens 24 maanden vast" en "De prijsbelofte", en bij de
+  oprichters "met 24 maanden prijsgarantie". Art. 4 van de voorwaarden zei alleen "een nieuwe prijs melden we minstens 30
+  dagen vooraf", en de samenvatting zegt "de artikelen hieronder gelden". Een praktijk leest dan twee verschillende
+  afspraken; onduidelijke voorwaarden worden uitgelegd in het nadeel van wie ze opstelde (art. 6:238 lid 2 BW) en
+  reclame die niet klopt met het contract is misleidend (art. 6:194 BW). De belofte staat al publiek, dus Fysiplan is er
+  waarschijnlijk toch aan gebonden; de voorwaarden zeggen het nu ook.
+  OPGELOST 2026-11-11 (deze PR): art. 4 "Prijsbelofte" (24 maanden vanaf de start van het abonnement) en "Prijswijziging
+  na die 24 maanden" (30 dagen vooraf), regel in In het kort, `AV_VERSIE` 2026-11-11-2 met regel in `AKKOORD_WIJZIGINGEN`.
+  Test in `scripts/test-juridisch-b1.mjs`: elke "minstens N maanden vast" of "N maanden prijsgarantie" op /v2 moet in
+  art. 4 en de samenvatting staan (faalt zonder fix). Voor Ahmed: bevestigen of terugdraaien, zie `docs/mensenwerk.md`.
+  Nog niet in de voorwaarden (LAAG): de oprichtersbelofte "60 dagen begeleide start, gratis import van logo en sjablonen".
+
+- **MIDDEL — begrijpelijkheid (i) / rechten (e) 2026-11-11 17u: /v2/gegevens beschreef verwijderen van een losse kaart verkeerd.**
+  De pagina voor inzage, meenemen en wissen zei "Een losse kaart wis je in de app met Verwijderen". Sinds #191 staat die
+  kaart dan nog 7 dagen herstelbaar in de prullenbak; meteen wissen (art. 17, bijvoorbeeld op verzoek van de patiënt) kan
+  alleen met "Definitief verwijderen" (#194). Ook stond de waarschuwing bij Alles wissen in één zin van 35 woorden.
+  OPGELOST 2026-11-11 (deze PR): tekst noemt maker/beheerder, de prullenbak met termijn uit `KAART_HERSTEL_MS` en
+  "Definitief verwijderen"; Alles wissen als korte lijst, met "ook die in de prullenbak" (klopt: `praktijkAllesWissen`
+  wist heel `kaarten[pk]`); VWO art. 8 noemt de knop ook (redactioneel, art. 10 had het al, geen nieuwe versie).
+  Test: `/v2/gegevens` in `scripts/test-juridisch-b1.mjs` (zinnen ≤ 30 woorden, tekst tegen code; faalt zonder fix).
+  Bron: AVG art. 12 lid 1 (beknopt, begrijpelijk, duidelijke taal) en art. 17.
+- **LAAG — landing (voor de gebruikers-sweep, niet zelf gebouwd wegens open PR #196 op v2.html):** typfout "exporteert lle
+  kaarten" in de FAQ van /v2, en een zin met `fysiplan.nl/v2/app#client={naam}` zonder leesteken ervoor.
 
 - **MIDDEL — rechten van betrokkenen (e) 2026-11-11 13u: na de prullenbak (#191) kon een praktijk een kaart niet meer meteen wissen.**
   Sinds #191 gaat verwijderen eerst 7 dagen naar de prullenbak; er was geen knop om een kaart daaruit definitief te wissen.

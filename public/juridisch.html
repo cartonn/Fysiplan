@@ -4,8 +4,8 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="color-scheme" content="light"/>
-<meta name="theme-color" content="#f6f2e9"/>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232456a6'/%3E%3Cpath d='M5 16h5l2.5 6 5-12 2.5 7h7' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+<meta name="theme-color" content="#18343b"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2318343b'/%3E%3Cg transform='translate(8.4 6.5) scale(.75)'%3E%3Cpath fill='%23fff' d='M17 9h44l-5 9c-2 4-6 6-12 6H8l9-15Z'/%3E%3Cpath fill='%23b9e34b' d='M21 31h29l-6 10H29l-7 13c-2 4-6 5-10 5H2l13-23c1-3 3-5 6-5Z'/%3E%3C/g%3E%3C/svg%3E"/>
 <title>__TITEL__ · Fysiplan</title>
 <link rel="preload" href="/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin/>
 <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin/>
@@ -60,6 +60,45 @@
   .concept{background:#fff4e5;border:1px solid #f3c58f;border-radius:4px;padding:12px 16px;margin:16px 0;font:500 14.5px/1.5 var(--disp);color:#6b3a12}
   .invul{background:#fff4e5;border:1px dashed #d98a3a;border-radius:3px;padding:0 4px;font:500 .92em/1.5 var(--disp);color:#6b3a12}
   footer{max-width:860px;margin:0 auto;padding:0 24px 40px;font:400 13px/1.5 var(--disp);color:var(--zacht)}
+</style>
+<style>
+/* Shared Active Tech identity for the public account and legal pages. */
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-wght-normal.woff2') format('woff2')}
+:root{--bg:#f2f5f3;--papier:#fff;--inkt:#18343b;--tekst:#314d53;--demp:#526b70;--zacht:#61777b;--blauw:#20464f;--blauw-05:#e8f0ea;--oranje:#b9e34b;--oranje-d:#a9d33b;--lijn:#d9e3df;--lijn-z:#e7eeea;--serif:Inter,system-ui,sans-serif;--disp:Inter,system-ui,sans-serif}
+body{font-family:var(--disp);background:var(--bg)}
+nav{background:#18343b;border-bottom:1px solid #ffffff24}
+nav .rij{height:76px}
+nav .naam{font-size:20px;font-weight:850;font-style:italic;text-transform:uppercase;letter-spacing:-.7px;color:#b9e34b}
+nav .mark{width:32px;height:32px;border-radius:0;background:transparent url('/images/fysiplan-active-mark.svg') center/contain no-repeat}
+nav .mark svg{visibility:hidden}
+nav .terug,nav .terug:hover{color:#fff}
+main{padding-top:54px}
+h1{font-weight:800;letter-spacing:-.04em}
+.knop{border-radius:9px;font-weight:750}
+.knop.oranje{background:#b9e34b;color:#18343b;box-shadow:none}
+.knop.oranje:hover{background:#a9d33b}
+.etiket{color:#20464f}
+.blad{border-radius:16px;border-top:5px solid #b9e34b;box-shadow:0 16px 40px -28px #18343b66}
+.veld input,.veld textarea{border-color:#a9bcb6;border-radius:9px}
+.veld input:focus,.veld textarea:focus{border-color:#20464f;box-shadow:0 0 0 3px #20464f22}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #668c15;outline-offset:3px}
+@media(max-width:560px){nav .rij{height:66px;padding-inline:18px}nav .naam{font-size:18px}nav .terug{font-size:12px}main{padding-top:30px}.blad{padding:22px}}
+</style>
+<style>
+/* Full petrol surfaces, as requested; lime is reserved for actions and emphasis. */
+@media screen{
+:root{--bg:#18343b;--papier:#20464f;--inkt:#fff;--tekst:#e0eae7;--demp:#bdcfca;--zacht:#abc2bc;--blauw:#b9e34b;--blauw-d:#c9ed75;--blauw-05:#2b5054;--blauw-10:#3b6264;--oranje:#b9e34b;--lijn:#416068;--lijn-z:#34545c}
+body{background:#18343b;color:#e0eae7}
+nav{background:#18343b}
+h1,h2,h3,h4{color:#fff}
+.etiket,.folio .etiket,.feiten .cel .etiket,.stat .cijfer{color:#b9e34b}
+.blad,.overzicht li{background:#20464f;border-color:#416068;color:#e0eae7}
+.veld input,.veld textarea{background:#112c32;border-color:#658087;color:#fff}
+input::placeholder,textarea::placeholder{color:#b2c5c0;opacity:1}
+.veld input:focus,.veld textarea:focus{border-color:#b9e34b;box-shadow:0 0 0 3px #b9e34b33}
+a:focus-visible,button:focus-visible,input:focus-visible{outline-color:#b9e34b}
+.knop.oranje{background:#b9e34b;color:#18343b}
+}
 </style>
 </head>
 <body>
@@ -240,7 +279,7 @@ __INHOUD__
   <p>Een aantal subverwerkers is Amerikaans. Doorgifte gebeurt alleen op basis van het EU-VS Data Privacy Framework of de standaardcontractbepalingen van de Europese Commissie.</p>
 
   <h2>8. Hulp aan de praktijk</h2>
-  <p>Fysiplan helpt de praktijk bij verzoeken van pati&euml;nten (inzage, verbetering, wissen); de app heeft daar knoppen voor (&ldquo;Kopieer voor dossier&rdquo;, &ldquo;Nieuwe link&rdquo;, &ldquo;Verwijderen&rdquo;), en op <a href="/v2/gegevens">Gegevens van je praktijk</a> downloadt of wist de praktijk alles in &eacute;&eacute;n keer. Fysiplan geeft ook de informatie die de praktijk nodig heeft voor een DPIA of een vraag van de toezichthouder.</p>
+  <p>Fysiplan helpt de praktijk bij verzoeken van pati&euml;nten (inzage, verbetering, wissen); de app heeft daar knoppen voor (&ldquo;Kopieer voor dossier&rdquo;, &ldquo;Nieuwe link&rdquo;, &ldquo;Verwijderen&rdquo; en in de prullenbak &ldquo;Definitief verwijderen&rdquo;), en op <a href="/v2/gegevens">Gegevens van je praktijk</a> downloadt of wist de praktijk alles in &eacute;&eacute;n keer. Fysiplan geeft ook de informatie die de praktijk nodig heeft voor een DPIA of een vraag van de toezichthouder.</p>
 
   <h2>9. Datalekken</h2>
   <p>Ontdekt Fysiplan een inbreuk op de beveiliging die pati&euml;ntgegevens raakt (een datalek), dan meldt Fysiplan dat zo snel mogelijk aan de praktijk, en uiterlijk binnen 48 uur. In die melding staat wat er bekend is: wat er gebeurde, hoeveel gegevens en pati&euml;nten het raakt, wat de gevolgen kunnen zijn en wat Fysiplan al heeft gedaan. De praktijk beslist over een melding aan de Autoriteit Persoonsgegevens en aan pati&euml;nten.</p>
@@ -267,7 +306,7 @@ __INHOUD__
     <p><b>In het kort</b></p>
     <ul>
       <li>De proef duurt __PROEF_DAGEN__ dagen, is gratis en gaat niet vanzelf over in een betaald abonnement.</li>
-      <li>Een abonnement betaal je per therapeut per maand. Elke eigen login telt als &eacute;&eacute;n therapeut.</li>
+      <li>Een abonnement betaal je per therapeut per maand. Elke eigen login telt als &eacute;&eacute;n therapeut. Je prijs staat minstens 24 maanden vast.</li>
       <li>Je kiest zelf de oefeningen en de dosering. Fysiplan stelt geen diagnose en is geen dossier.</li>
       <li>Zet geen achternaam, geboortedatum of BSN op een gedeelde kaart. Een roepnaam is genoeg.</li>
       <li>Je kunt maandelijks opzeggen. Het abonnement stopt aan het einde van de maand die je al betaald hebt. __NA_EINDE__ dagen later wissen we alles van je praktijk, ook de gedeelde kaarten.</li>
@@ -310,7 +349,8 @@ __INHOUD__
     <li>Na elke betaling staat je factuur of betaalbewijs onder Mijn proef, en krijg je een mail.</li>
     <li>Lukt een afschrijving niet, dan proberen we het niet vanzelf opnieuw. We nemen contact met je op om de betaling te regelen.</li>
     <li>Zolang het automatisch afschrijven nog niet aanstaat, spreken we de betaling na de eerste maand met je af. Er wordt dan niets afgeschreven.</li>
-    <li>Prijswijziging: we melden een nieuwe prijs minstens 30 dagen vooraf, per e-mail. Wil je de nieuwe prijs niet betalen, dan kun je opzeggen voordat hij ingaat.</li>
+    <li id="prijsbelofte">Prijsbelofte: je prijs per therapeut staat minstens 24 maanden vast, gerekend vanaf de start van je abonnement. Dat beloven we ook op <a href="/v2#prijs">fysiplan.nl</a>.</li>
+    <li>Prijswijziging na die 24 maanden: we melden een nieuwe prijs minstens 30 dagen vooraf, per e-mail. Wil je de nieuwe prijs niet betalen, dan kun je opzeggen voordat hij ingaat.</li>
   </ul>
 
   <h2 id="stoppen">5. Looptijd en stoppen</h2>

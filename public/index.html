@@ -957,6 +957,22 @@ bridge2.jpg</div>
     }catch(e){}
     planAutoDeel();
   }
+  // Kaart die in deze editor open staat en intussen verwijderd is (prullenbak of definitief).
+  // Dan geen stille nieuwe kaart meer bij autosave, QR of printen: eerst een vraag
+  // (sweep 2026-11-11 18u, Sanne: na "Definitief verwijderen" maakte één klik op "Test de QR"
+  // de patiëntkaart stil opnieuw aan, met een nieuwe link). Bewaard over herladen heen.
+  var KAART_WEG='';
+  try{KAART_WEG=localStorage.getItem('fp_kaartweg')||'';}catch(e){}
+  function kaartIsWeg(){return !!(KAART_WEG&&KAART_ID&&KAART_WEG===KAART_ID);}
+  function zetKaartWeg(id){KAART_WEG=id||'';try{if(KAART_WEG)localStorage.setItem('fp_kaartweg',KAART_WEG);else localStorage.removeItem('fp_kaartweg');}catch(e){}}
+  function markeerKaartWeg(id){
+    if(!id||!KAART_ID||id!==KAART_ID)return;
+    zetKaartWeg(id);laatsteDeel='';
+    toonKaartWegHint();
+  }
+  function toonKaartWegHint(){
+    toonQrHint('Deze kaart is verwijderd; de oude QR-code werkt niet meer.',[{act:'opnieuwdelen',label:'Opnieuw delen met een nieuwe QR-code'}]);
+  }
   function zetKaartId(id,ts){
     KAART_ID=id||'';KAART_TS=Number(ts)||0;
     try{var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');st.kaartId=KAART_ID;st.kaartTs=KAART_TS;localStorage.setItem('fysiplan_state',JSON.stringify(st));}catch(e){}
@@ -1100,7 +1116,9 @@ bridge2.jpg</div>
   // praktijkroutes. In v1 wordt er nooit een token opgeslagen, dus deze helpers
   // geven daar altijd de kale headers terug — v1-gedrag verandert niet.
   function prakSes(){try{return localStorage.getItem('fp_praksessie')||'';}catch(e){return '';}}
-  function setPrakSes(t){try{if(t)localStorage.setItem('fp_praksessie',t);else localStorage.removeItem('fp_praksessie');}catch(e){}}
+  function setPrakSes(t){try{if(t)localStorage.setItem('fp_praksessie',t);else localStorage.removeItem('fp_praksessie');}catch(e){}
+    // net ingelogd: het praktijkprofiel (adres, logo) ophalen voor dit apparaat
+    if(t&&typeof window.fpLaadPraktijken==='function')window.fpLaadPraktijken();}
   function PJSON(){var h={'content-type':'application/json'};var s=prakSes();if(s)h['x-praktijk-sessie']=s;return h;}
   function PGET(){var o={cache:'no-cache'};var s=prakSes();if(s)o.headers={'x-praktijk-sessie':s};return o;}
   // V2 en beheer gebruiken de gekoppelde avatarlibrary; de V1-root gebruikt
@@ -2352,6 +2370,7 @@ bridge2.jpg</div>
         [{act:'roepnaam',label:'Maak er \u201c'+voorstel+'\u201d van'},{act:'naamok',label:'Toch zo laten'}]);
       laatsteDeel='';return;
     }
+    if(kaartIsWeg()){toonKaartWegHint();return;}
     var c=serverKaart(naam);
     // vergelijken zonder tijdstempel en kaart-id: alleen een echte wijziging wordt een POST
     var afdruk=JSON.stringify(Object.assign({},c,{ts:0,kaartId:'',overschrijf:false,basisTs:0}));
@@ -2402,6 +2421,7 @@ bridge2.jpg</div>
       else if(a==='naamok'){NAAM_OK=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
       else if(a==='hernoem'){HERNOEM_VOOR=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
       else if(a==='nieuwkaart'){zetKaartId('',0);laatsteDeel='';deelNu();}
+      else if(a==='opnieuwdelen'){zetKaartWeg('');zetKaartId('',0);laatsteDeel='';deelNu();}
       return;
     }
     if(e.target.id!=='qrx')return;
@@ -2508,10 +2528,22 @@ bridge2.jpg</div>
     var cur=(SET.praktijk||'').toLowerCase();
     PRAKTIJKEN.forEach(function(p,i){if(p.praktijk.toLowerCase()===cur)prakSel.value=String(i);});
   }
-  function loadPraktijken(){
-    fetch('api/praktijken',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];})
-      .then(function(l){PRAKTIJKEN=Array.isArray(l)?l:[];renderPrakSelect();}).catch(function(){});
+  // v2 geeft het eigen profiel alleen met de praktijksessie terug. Zonder die header kreeg een collega
+  // op een nieuw apparaat nooit adres, telefoon of logo van de praktijk (gebruikers-sweep 2026-11-11 14u).
+  // Lege velden op dit apparaat worden aangevuld uit het profiel; wat hier al staat blijft staan.
+  function vulUitProfiel(){
+    if(!IS_V2)return;
+    var cur=(SET.praktijk||'').trim().toLowerCase();if(!cur)return;
+    var p=PRAKTIJKEN.filter(function(x){return String(x.praktijk||'').toLowerCase()===cur;})[0];if(!p)return;
+    var veranderd=false;
+    ['adres','plaats','tel','email','website','logo'].forEach(function(k){if(!SET[k]&&p[k]){SET[k]=p[k];veranderd=true;}});
+    if(veranderd){saveSettings();applySettings();}
   }
+  function loadPraktijken(){
+    fetch('api/praktijken',PGET()).then(function(r){return r.ok?r.json():[];})
+      .then(function(l){PRAKTIJKEN=Array.isArray(l)?l:[];renderPrakSelect();vulUitProfiel();}).catch(function(){});
+  }
+  window.fpLaadPraktijken=loadPraktijken;
   prakSel.addEventListener('change',function(){
     var p=PRAKTIJKEN[+prakSel.value];if(!p)return;
     SET.praktijk=p.praktijk;SET.adres=p.adres||'';SET.plaats=p.plaats||'';SET.tel=p.tel||'';SET.email=p.email||'';
@@ -3677,6 +3709,12 @@ bridge2.jpg</div>
     if(typeof ensureQr==='function')ensureQr(function(){toonQr(d.id);});
   }
   function saveServerCard(naam,cb,keuze){
+    if(kaartIsWeg()){
+      if(!confirm('Deze kaart is verwijderd. Opnieuw delen maakt een nieuwe patiëntkaart met een nieuwe QR-code.\n\nOK = opnieuw delen\nAnnuleren = niets delen')){
+        cb({ok:false,geannuleerd:true,fout:'Niet gedeeld: deze kaart is verwijderd.'});return;
+      }
+      zetKaartWeg('');zetKaartId('',0);keuze='nieuw';
+    }
     var c=serverKaart(naam);
     if(keuze==='hernoem')c.hernoem=true;
     else if(keuze==='nieuw'){c.kaartId='';delete c.basisTs;}
@@ -3932,10 +3970,13 @@ bridge2.jpg</div>
   }
   // eerstvolgende afspraak van een kaart, mét doorrollen van een wekelijkse reeks:
   // precies wat de patiëntkaart ook toont. Geeft null als alles voorbij is.
+  // een week later op dezelfde kloktijd: niet 7×24 uur, anders schuift het uur over de zomertijd
+  // (di 24-03 14:00 + 1 week werd 31-03 15:00; gebruikers-sweep 2026-11-11)
+  function weekVerder(t){var d=new Date(t);d.setDate(d.getDate()+7);return d.getTime();}
   function volgendeAfspraak(c){
     if(!c.afspraak||!c.afspraak.t)return null;
     var t=c.afspraak.t,rest=Number(c.afspraak.herhaal)||0,grens=Date.now()-2*3600000;
-    if(rest>=2){while(t<grens&&rest>1){t+=7*864e5;rest--;}}
+    if(rest>=2){while(t<grens&&rest>1){t=weekVerder(t);rest--;}}
     if(t<grens)return null;
     return {t:t,rest:rest>=2?rest:0};
   }
@@ -4128,7 +4169,7 @@ bridge2.jpg</div>
         if(!confirm('Deze kaart en de opnames erbij nu definitief verwijderen? Dit kan niet ongedaan worden gemaakt. Wat de praktijk moet bewaren, staat in het eigen dossier.'))return;
         d0.disabled=true;
         fetch('api/kaarten/definitief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:d0.dataset.pruldef})})
-          .then(function(r){return r.json();}).then(function(d){if(d.ok){var r0=d0.closest('p');if(r0)r0.remove();}else{d0.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
+          .then(function(r){return r.json();}).then(function(d){if(d.ok){markeerKaartWeg(d0.dataset.pruldef);var r0=d0.closest('p');if(r0)r0.remove();}else{d0.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
           .catch(function(){d0.disabled=false;alert('Geen verbinding. Probeer opnieuw.');});
         return;
       }
@@ -4136,7 +4177,7 @@ bridge2.jpg</div>
       if(!confirm('Deze kaart herstellen? De bestaande patiëntlink werkt daarna weer.'))return;
       b.disabled=true;
       fetch('api/kaarten/herstel',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:b.dataset.prulherstel})})
-        .then(function(r){return r.json();}).then(function(d){if(d.ok)toonSrvKaarten();else{b.disabled=false;alert(d.fout||'Herstellen is niet gelukt.');}})
+        .then(function(r){return r.json();}).then(function(d){if(d.ok){if(KAART_WEG===b.dataset.prulherstel){zetKaartWeg('');laatsteDeel='';deelNu();}toonSrvKaarten();}else{b.disabled=false;alert(d.fout||'Herstellen is niet gelukt.');}})
         .catch(function(){b.disabled=false;alert('Geen verbinding. Probeer opnieuw.');});
     };
   }
@@ -4922,7 +4963,7 @@ bridge2.jpg</div>
       if(veldW){
         var basisW=veldW.value?new Date(veldW.value).getTime():Date.now();
         if(!isFinite(basisW))basisW=Date.now();
-        var dW=new Date(basisW+7*864e5),pz=function(n){return ('0'+n).slice(-2);};
+        var dW=new Date(weekVerder(basisW)),pz=function(n){return ('0'+n).slice(-2);};
         veldW.value=dW.getFullYear()+'-'+pz(dW.getMonth()+1)+'-'+pz(dW.getDate())+'T'+pz(dW.getHours())+':'+pz(dW.getMinutes());
         var okW=document.querySelector("[data-safspraakopslaan='"+aw.dataset.safweek+"']");
         if(okW)okW.click();
@@ -5108,7 +5149,7 @@ bridge2.jpg</div>
       x.disabled=true;
       fetch('api/kaarten/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',naam:nm,id:x.dataset.sdelid})})
         .then(function(r){return r.json();})
-        .then(function(d){if(d.ok){toonSrvKaarten();ping('kaart-verwijderd');}else{x.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
+        .then(function(d){if(d.ok){markeerKaartWeg(x.dataset.sdelid);toonSrvKaarten();ping('kaart-verwijderd');}else{x.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
         .catch(function(){x.disabled=false;alert('Verwijderen is niet gelukt: geen verbinding.');})
         .then(delVrij);
     }
@@ -5188,7 +5229,7 @@ bridge2.jpg</div>
     var klaar=function(lijst){
       lijst.forEach(function(e){
         var pad='/'+String(e.img||'').replace(/^\/+/,'');
-        OEF.push({id:OEF.length,naam:e.naam,groep:EIGEN_GROEP,s:3,h:12,bron:'praktijk',exerciseId:e.id,uitleg:e.uitleg||'',
+        OEF.push({id:OEF.length,naam:e.naam,groep:EIGEN_GROEP,s:3,h:12,bron:'praktijk',exerciseId:e.id,uitleg:e.uitleg||'',magWeg:e.magWeg!==false,
           starthouding:'',uitvoering:'',opmerking:'',imgs:[{type:'img',src:pad,lineSrc:pad,colorSrc:pad,label:'Plaatje'}]});
       });
       if(GROUPS){
@@ -5327,9 +5368,12 @@ bridge2.jpg</div>
   function toonEigenLijst(){
     var el=document.getElementById('eo_lijst');if(!el)return;
     var eigen=OEF.filter(function(o){return o.bron==='praktijk';});
+    // het kruisje alleen bij wie mag (maker of beheerder); de rest ziet waarom niet
+    var nietWeg=eigen.some(function(o){return o.magWeg===false;});
     el.innerHTML=eigen.length?"<div class='hint' style='font-weight:600;margin-bottom:4px'>Jullie eigen oefeningen</div>"+eigen.map(function(o){
-      return "<div style='display:flex;align-items:center;gap:8px;padding:4px 0;border-top:1px solid var(--line)'><span style='flex:1'>"+esc(o.naam)+"</span><button class='btn' type='button' data-eoweg='"+esc(o.exerciseId)+"' aria-label='verwijderen'>&times;</button></div>";
-    }).join(''):'';
+      return "<div style='display:flex;align-items:center;gap:8px;padding:4px 0;border-top:1px solid var(--line);min-height:44px'><span style='flex:1'>"+esc(o.naam)+"</span>"+
+        (o.magWeg!==false?"<button class='btn' type='button' data-eoweg='"+esc(o.exerciseId)+"' aria-label='"+esc(o.naam)+" verwijderen' style='min-width:44px;min-height:44px'>&times;</button>":"")+"</div>";
+    }).join('')+(nietWeg?"<div class='hint' id='eo_wie' style='margin-top:6px'>Een oefening van een collega kan alleen die collega of een beheerder van de praktijk verwijderen.</div>":""):'';
   }
   document.getElementById('eigenOefBtn').addEventListener('click',openEigenOef);
 

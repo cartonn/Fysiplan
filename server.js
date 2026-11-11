@@ -69,7 +69,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-11-2";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-11";
+const AV_VERSIE = "2026-11-11-2";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-11";
@@ -91,6 +91,7 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-10", tekst: "Betalen na de eerste maand: we schrijven elke maand automatisch af via je machtiging, met minstens " + INCASSO_VOORAF_DAGEN + " dagen vooraf een mail. Lukt het niet, dan nemen we contact op." },
   { stuk: "av", versie: "2026-11-11", tekst: "Ingevuld: een nieuwe prijs melden we minstens 30 dagen vooraf per e-mail, en er is geen opzegtermijn (opzeggen kan elke dag, het abonnement stopt aan het einde van de betaalde maand)." },
   { stuk: "vwo", versie: "2026-11-11", tekst: "Gegevens: de lijst noemt nu ook de kaartnaam, doelactiviteit, weekdoel, werknotitie, behandelaar en het contactlogboek. AI: namen van eigen oefeningen gaan mee naar de vertaal- en vraaghulp; roepnaam, scores en notities niet." },
+  { stuk: "av", versie: "2026-11-11-2", tekst: "Prijsbelofte: je prijs per therapeut staat minstens 24 maanden vast vanaf de start van je abonnement, zoals op fysiplan.nl staat. Pas daarna kan een nieuwe prijs ingaan, met 30 dagen vooraf een mail." },
   { stuk: "vwo", versie: "2026-11-11-2", tekst: "Bewaartermijn: een verwijderde kaart staat eerst hooguit 7 dagen in de prullenbak, waar de maker of een beheerder hem kan herstellen of meteen definitief kan verwijderen (bijvoorbeeld als een patiënt om wissen vraagt)." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
@@ -338,6 +339,13 @@ const isBeheer = (s) => !!s && (!s.lid || (sessieLid(s) || {}).rol === "beheerde
 // het maakte (lid-id in `door`) of een beheerder. Zonder sessie kwam de aanvraag langs het
 // beheer of v1 (eisBeveiligdePraktijk) en mag het. Oud werk zonder maker: alleen beheerder.
 const magGedeeldAanpassen = (s, item, pk) => !s || s.pk !== pk || isBeheer(s) || (!!item && !!item.door && item.door === s.lid);
+// Eigen oefeningen voor de app, met magWeg: alleen de maker of een beheerder ziet het kruisje.
+// Een therapeut zag "×" bij de oefening van een collega en kreeg pas na bevestigen een 403
+// (gebruikers-sweep 2026-11-11).
+const oefeningenVoorApp = (request, pk) => {
+  const sessie = sessieVan(request);
+  return (praktijkOefeningen[pk] || []).map((o) => ({ ...o, magWeg: magGedeeldAanpassen(sessie, o, pk) }));
+};
 // Teamsjablonen voor de app, met magWeg: alleen de deler of een beheerder ziet "Verwijderen voor de praktijk".
 // Een therapeut kreeg die knop bij andermans sjabloon en pas na bevestigen een 403 (gebruikers-sweep 2026-11-11).
 const sjablonenVoorApp = (request, pk) => {
@@ -675,6 +683,17 @@ function proefNieuwToken(p) {
   proefTokenIndex.set(h, p.id);
   return token;
 }
+// Persoonlijke link in de welkomstmail (security 2026-11-11): een eigen token, los van de
+// proefcookie. Voorheen stond het cookietoken van het eerste apparaat in de mail; die link
+// bleef zo lang de aanmelding bestond geldig en gaf iedereen die de mail later las (gedeelde
+// mailbox, doorgestuurd bericht) het abonnementsbeheer. Nu: 7 dagen, hooguit 3 apparaten.
+const WELKOM_LINK_MS = 7 * 86400000;
+const WELKOM_LINK_KEER = 3;
+function proefWelkomLink(p, nu = Date.now()) {
+  const code = randomBytes(24).toString("hex");
+  p.welkomLink = { h: tokenHash(code), verloopt: nu + WELKOM_LINK_MS, over: WELKOM_LINK_KEER };
+  return code;
+}
 function proefWis(id) {
   const p = proeven[id];
   if (!p) return;
@@ -739,7 +758,7 @@ async function praktijkAllesWissen(pk) {
 function proefVoorDownload(id) {
   const p = Object.hasOwn(proeven, String(id)) ? proeven[String(id)] : null;
   if (!p) return null;
-  const { tokens, mailLink, ...rest } = p;
+  const { tokens, mailLink, welkomLink, ...rest } = p;
   return rest;
 }
 const datumNl = (ms) => new Date(ms).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Amsterdam" });
@@ -750,7 +769,7 @@ async function serveerProef(request, response, blok, vars = {}, status = 200) {
   const m = bron.match(new RegExp("<!--blok:" + blok + "-->([\\s\\S]*?)<!--/blok-->"));
   const schil = bron.split("<!--blok:")[0].replace(/\s+$/, "\n");
   let html = schil.replace("__INHOUD__", m ? m[1] : "");
-  const alle = { PROEF_DAGEN: String(PROEF_DAGEN), BEWAAR_DAGEN: String(PROEF_BEWAAR_DAGEN), TITEL: "Gratis proberen", ...vars };
+  const alle = { PROEF_DAGEN: String(PROEF_DAGEN), BEWAAR_DAGEN: String(PROEF_BEWAAR_DAGEN), HERSTEL_DAGEN: String(Math.round(KAART_HERSTEL_MS / 86400000)), TITEL: "Gratis proberen", ...vars };
   // waarden met een _HTML-achtervoegsel zijn al door de server opgebouwd en veilig
   html = html.replace(/__([A-Z_]+)__/g, (heel, k) => k in alle ? (k.endsWith("_HTML") ? alle[k] : htmlEsc(alle[k]))
     : (k + "_HTML") in alle ? alle[k + "_HTML"] : "");
@@ -3460,7 +3479,7 @@ async function afhandelen(request, response) {
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const pk = praktijkVan(request, q.get("praktijk"));
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
-    await sendJson(response, 200, { ok: true, oefeningen: praktijkOefeningen[pk] || [] });
+    await sendJson(response, 200, { ok: true, oefeningen: oefeningenVoorApp(request, pk) });
     return;
   }
   // eigen oefening toevoegen: naam, foto (JPEG/PNG, max 600 kB) en uitleg
@@ -3495,7 +3514,7 @@ async function afhandelen(request, response) {
       } catch (e) { const i = lijst.indexOf(rij); if (i > -1) lijst.splice(i, 1); throw e; }
       await saveJson(praktijkOefeningenPath, praktijkOefeningen);
       auditLog(pk, "oefening-toegevoegd", request);
-      await sendJson(response, 200, { ok: true, oefeningen: lijst });
+      await sendJson(response, 200, { ok: true, oefeningen: oefeningenVoorApp(request, pk) });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
@@ -3519,7 +3538,7 @@ async function afhandelen(request, response) {
       if (/^uploads\/oef-[a-f0-9]{12}\.(jpg|png)$/.test(weg.img)) { try { await unlink(join(dataDir, weg.img)); } catch {} }
       // ook de vertalingen van de naam (tenzij een bibliotheek- of andere eigen oefening zo heet)
       try { await vertaalCacheOpschonen(); } catch {}
-      await sendJson(response, 200, { ok: true, oefeningen: lijst });
+      await sendJson(response, 200, { ok: true, oefeningen: oefeningenVoorApp(request, pk) });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
@@ -5908,15 +5927,16 @@ async function afhandelen(request, response) {
     p.vwo = { versie: VWO_VERSIE, t: new Date().toISOString() };
     p.av = { versie: AV_VERSIE, t: p.vwo.t };
     const token = proefNieuwToken(p);
+    const welkomCode = nieuw ? proefWelkomLink(p) : "";
     await bewaarProeven();
     if (nieuw) {
       proefMeldAhmed("Nieuwe proefaanmelding: " + (p.praktijk || p.naam), p, "Er heeft zich zojuist iemand aangemeld voor de gratis proef van Fysiplan.");
       const host = eigenHost(request);
       const kaal = host.split(":")[0];
-      const terug = ((kaal === "localhost" || kaal === "127.0.0.1") ? "http://" : "https://") + host + "/v2/proef/terug?code=" + token;
+      const terug = ((kaal === "localhost" || kaal === "127.0.0.1") ? "http://" : "https://") + host + "/v2/proef/terug?code=" + welkomCode;
       proefMail(p.email, "Je gratis Fysiplan-proef staat klaar",
         "Hoi " + p.naam + ",\n\nWelkom bij Fysiplan. Je proef loopt tot en met " + datumNl(p.verloopt) + ".\n\n" +
-        "Verder op een andere computer of je telefoon? Open deze persoonlijke link (deel hem niet):\n" + terug + "\n\n" +
+        "Verder op een andere computer of je telefoon? Open deze persoonlijke link (deel hem niet; " + WELKOM_LINK_MS / 86400000 + " dagen geldig, op hooguit " + WELKOM_LINK_KEER + " apparaten):\n" + terug + "\n\n" +
         "Tip: zet eerst een wachtwoord op je praktijk (knop Kaarten), vul bij de voorbeeldkaart een roepnaam in, print hem en scan de QR-code met je eigen telefoon. " +
         "Dan zie je precies wat je patiënt ziet.\n\nVragen? Antwoord gewoon op deze mail.\n\nGroet,\nFysiplan");
     }
@@ -5944,10 +5964,14 @@ async function afhandelen(request, response) {
     } else code = String(new URL(request.url, "http://x").searchParams.get("code") || "");
     const geldig = /^[a-f0-9]{48}$/.test(code);
     const h = geldig ? tokenHash(code) : "";
-    let id = geldig ? proefTokenIndex.get(h) : null;
-    // of de eenmalige link na opnieuw aanmelden met een bestaand e-mailadres
-    const q = !id && geldig ? Object.values(proeven).find((x) => x.mailLink && x.mailLink.h === h && x.mailLink.verloopt > Date.now()) : null;
-    if (q) id = q.id;
+    // Alleen links uit een mail: de welkomstlink (7 dagen, hooguit 3 apparaten) of de eenmalige
+    // link na opnieuw aanmelden. Een proefcookie-token is hier geen sleutel meer: dat stond
+    // vroeger in de welkomstmail en werkte zo lang de aanmelding bestond.
+    const nuT = Date.now();
+    const q = geldig ? Object.values(proeven).find((x) => x.mailLink && x.mailLink.h === h && x.mailLink.verloopt > nuT) : null;
+    const w = geldig && !q ? Object.values(proeven).find((x) => x.welkomLink && x.welkomLink.h === h &&
+      x.welkomLink.verloopt > nuT && x.welkomLink.over > 0) : null;
+    const id = q ? q.id : w ? w.id : null;
     if (!id || !proeven[id]) {
       if (kaartMisLimiet(request, response)) return;
       await serveerProef(request, response, "bericht", { TITEL: "Link werkt niet", ETIKET: "Link verlopen", KOP: "Deze link werkt niet meer.",
@@ -5966,7 +5990,8 @@ async function afhandelen(request, response) {
       return;
     }
     if (q) delete q.mailLink;
-    // een vers token voor dít apparaat; de maillink blijft bruikbaar voor het volgende
+    if (w && --w.welkomLink.over <= 0) delete w.welkomLink;
+    // een vers token voor dít apparaat
     const token = proefNieuwToken(proeven[id]);
     await bewaarProeven();
     response.writeHead(303, { location: proefVerlopen(proeven[id]) ? "/v2/proef" : "/v2/app", "set-cookie": proefCookie(token, request) });
@@ -6509,7 +6534,7 @@ async function afhandelen(request, response) {
       const proefJs = proef ? ";window.FYSIPLAN_PROEF=" + JSON.stringify({ naam: (proef.naam || "").split(" ")[0], praktijk: proef.praktijk || "",
         dagenOver: proef.klant ? null : dagenOver(proef.verloopt), tot: datumNl(proef.verloopt), klant: !!proef.klant }).replace(/</g, "\\u003c") : "";
       html = html.replace("<head>", () => '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true' + proefJs + '</script>');
-      html = html.replace("</head>", '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'8\' fill=\'%232456a6\'/%3E%3Cpath d=\'M5 16h5l2.5 6 5-12 2.5 7h7\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'2.6\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E"/><link rel="stylesheet" href="/v2.css"/><script src="/qr.js" defer></script></head>');
+      html = html.replace("</head>", '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'14\' fill=\'%2318343b\'/%3E%3Cg transform=\'translate(8.4 6.5) scale(.75)\'%3E%3Cpath fill=\'%23fff\' d=\'M17 9h44l-5 9c-2 4-6 6-12 6H8l9-15Z\'/%3E%3Cpath fill=\'%23b9e34b\' d=\'M21 31h29l-6 10H29l-7 13c-2 4-6 5-10 5H2l13-23c1-3 3-5 6-5Z\'/%3E%3C/g%3E%3C/svg%3E"/><link rel="stylesheet" href="/v2.css?v=active-tech-1"/><script src="/qr.js" defer></script></head>');
       // nonce op de inline scripts (na alle injecties); de externe /qr.js houdt zijn src en valt onder 'self'
       html = nonceInlineScripts(html, nonce);
       await send(response, 200, "text/html; charset=utf-8", html);

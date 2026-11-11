@@ -6,6 +6,14 @@
 // - de privacy-samenvatting had niets voor de therapeut;
 // - de opslag op de patiënttelefoon stond in één zin van 61 woorden, het datalekartikel in 41;
 // - de abonnementstermijn stond als vaste "30" in de tekst in plaats van uit de code.
+// Legal 2026-11-11 17u, /v2/gegevens (de pagina voor inzage, meenemen en wissen):
+// - "Een losse kaart wis je in de app met Verwijderen" klopte sinds de prullenbak (#191) niet meer:
+//   de kaart blijft dan nog dagen herstelbaar; meteen wissen kan alleen met Definitief verwijderen;
+// - de waarschuwing bij Alles wissen stond in één zin van 35 woorden.
+// Legal 2026-11-11 21u, voorwaarden (c): de landing belooft "je prijs staat minstens 24 maanden vast"
+// (ook als "prijsgarantie" bij de oprichters), maar art. 4 zei alleen "een nieuwe prijs melden we
+// 30 dagen vooraf" en "de artikelen hieronder gelden". Elke prijsbelofte op /v2 moet nu ook in de
+// voorwaarden staan, in het artikel én in de samenvatting.
 // Zonder browser. `npm run test:privacy`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -17,6 +25,7 @@ import { NA_EINDE_WISSEN_DAGEN } from "../lib/mollie.js";
 
 const serverBron = await readFile("server.js", "utf8");
 const proefBewaar = Number(serverBron.match(/const PROEF_BEWAAR_DAGEN = (\d+)/)[1]);
+const herstelDagen = Number(serverBron.match(/const KAART_HERSTEL_MS = (\d+) \* 86400000/)[1]);
 const bron = await readFile("public/juridisch.html", "utf8");
 // termijnen van het einde staan niet als vast getal in de tekst, maar komen uit de code
 assert.doesNotMatch(bron, /binnen \d+ dagen na het einde|\d+ dagen na het einde wissen|wissen we alles binnen \d+ dagen/,
@@ -63,12 +72,30 @@ try {
   const patient = pag.privacy.split('id="patient"')[1].split("<h2")[0];
   for (const z of zinnen(patient)) assert.ok(woorden(z) <= 30, "patiëntdeel: zin van " + woorden(z) + " woorden: " + z.slice(0, 120));
 
+  // /v2/gegevens: korte zinnen, en de uitleg over een losse kaart klopt met de prullenbak
+  const gegevens = await (await fetch(origin + "/v2/gegevens")).text();
+  assert.doesNotMatch(gegevens, /__[A-Z_]+__/, "gegevens: geen open plekhouders");
+  for (const z of zinnen(gegevens)) assert.ok(woorden(z) <= 30, "gegevens: zin van " + woorden(z) + " woorden: " + z.slice(0, 120));
+  assert.doesNotMatch(gegevens, /Een losse kaart wis je in de app met/, "gegevens: Verwijderen wist niet meteen (prullenbak)");
+  assert.match(gegevens, new RegExp("hooguit " + herstelDagen + " dagen in de prullenbak"), "gegevens: hersteltermijn uit KAART_HERSTEL_MS");
+  assert.match(gegevens, /&ldquo;Definitief verwijderen&rdquo;/, "gegevens: noemt Definitief verwijderen");
+  assert.match(gegevens, /alle kaarten, ook die in de prullenbak/, "gegevens: Alles wissen neemt de prullenbak mee");
+
   // voorwaarden: samenvatting volgt art. 3 en 5
   const avKort = kort(pag.voorwaarden);
   assert.match(avKort, /einde van de maand die je al betaald hebt/, "voorwaarden kort: abonnement stopt aan het einde van de betaalde maand");
   assert.match(avKort, new RegExp(NA_EINDE_WISSEN_DAGEN + " dagen later wissen we alles"), "voorwaarden kort: wissen na het einde");
   assert.match(avKort, new RegExp("geen klant, dan wissen we alles van je praktijk " + proefBewaar + " dagen na de proef"), "voorwaarden kort: einde proef");
   assert.doesNotMatch(avKort, /Daarna wissen we je kaarten binnen/, "oude, onjuiste samenvatting is weg");
+  // prijsbelofte van de landing staat ook in de voorwaarden (art. 4 en In het kort)
+  const landing = await (await fetch(origin + "/v2")).text();
+  const beloftes = [...landing.matchAll(/minstens (\d+) maanden vast|(\d+) maanden prijsgarantie/g)].map((m) => m[1] || m[2]);
+  for (const n of new Set(beloftes)) {
+    const art4 = pag.voorwaarden.split('id="abonnement"')[1].split("<h2")[0];
+    assert.match(art4, new RegExp("staat minstens " + n + " maanden vast, gerekend vanaf de start van je abonnement"), "voorwaarden art. 4: prijsbelofte van " + n + " maanden van /v2");
+    assert.match(art4, new RegExp("Prijswijziging na die " + n + " maanden"), "voorwaarden art. 4: prijswijziging pas na de belofte");
+    assert.match(avKort, new RegExp("Je prijs staat minstens " + n + " maanden vast"), "voorwaarden kort: prijsbelofte");
+  }
   // privacy: samenvatting ook voor de therapeut
   assert.match(kort(pag.privacy), /Therapeut\?[\s\S]*href="#einde"/, "privacy kort: regel voor de therapeut");
   assert.match(kort(pag.privacy), new RegExp(NA_EINDE_WISSEN_DAGEN + " dagen na het einde van je abonnement, of " + proefBewaar + " dagen na de proef"));

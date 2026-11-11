@@ -60,6 +60,7 @@ if (pw) {
 
     const ctx = await browser.newContext({ ...pw.devices["iPhone SE"], locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.8.9.1" } });
     const page = await ctx.newPage();
+    page.on("dialog", (d) => d.accept()); // dag uitzetten vraagt eerst (test:daguitvraag)
     const fouten = [];
     page.on("pageerror", (err) => fouten.push(String(err)));
     await page.goto(origin + "/k/" + id);
