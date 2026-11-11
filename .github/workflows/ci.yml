@@ -129,3 +129,4 @@ jobs:
       - run: npm run test:dagwisseltaal
       - run: npm run test:reekstitel
       - run: npm run test:annulerenhernoem
+      - run: npm run test:welkomlink

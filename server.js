@@ -682,6 +682,17 @@ function proefNieuwToken(p) {
   proefTokenIndex.set(h, p.id);
   return token;
 }
+// Persoonlijke link in de welkomstmail (security 2026-11-11): een eigen token, los van de
+// proefcookie. Voorheen stond het cookietoken van het eerste apparaat in de mail; die link
+// bleef zo lang de aanmelding bestond geldig en gaf iedereen die de mail later las (gedeelde
+// mailbox, doorgestuurd bericht) het abonnementsbeheer. Nu: 7 dagen, hooguit 3 apparaten.
+const WELKOM_LINK_MS = 7 * 86400000;
+const WELKOM_LINK_KEER = 3;
+function proefWelkomLink(p, nu = Date.now()) {
+  const code = randomBytes(24).toString("hex");
+  p.welkomLink = { h: tokenHash(code), verloopt: nu + WELKOM_LINK_MS, over: WELKOM_LINK_KEER };
+  return code;
+}
 function proefWis(id) {
   const p = proeven[id];
   if (!p) return;
@@ -746,7 +757,7 @@ async function praktijkAllesWissen(pk) {
 function proefVoorDownload(id) {
   const p = Object.hasOwn(proeven, String(id)) ? proeven[String(id)] : null;
   if (!p) return null;
-  const { tokens, mailLink, ...rest } = p;
+  const { tokens, mailLink, welkomLink, ...rest } = p;
   return rest;
 }
 const datumNl = (ms) => new Date(ms).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Amsterdam" });
@@ -5915,15 +5926,16 @@ async function afhandelen(request, response) {
     p.vwo = { versie: VWO_VERSIE, t: new Date().toISOString() };
     p.av = { versie: AV_VERSIE, t: p.vwo.t };
     const token = proefNieuwToken(p);
+    const welkomCode = nieuw ? proefWelkomLink(p) : "";
     await bewaarProeven();
     if (nieuw) {
       proefMeldAhmed("Nieuwe proefaanmelding: " + (p.praktijk || p.naam), p, "Er heeft zich zojuist iemand aangemeld voor de gratis proef van Fysiplan.");
       const host = eigenHost(request);
       const kaal = host.split(":")[0];
-      const terug = ((kaal === "localhost" || kaal === "127.0.0.1") ? "http://" : "https://") + host + "/v2/proef/terug?code=" + token;
+      const terug = ((kaal === "localhost" || kaal === "127.0.0.1") ? "http://" : "https://") + host + "/v2/proef/terug?code=" + welkomCode;
       proefMail(p.email, "Je gratis Fysiplan-proef staat klaar",
         "Hoi " + p.naam + ",\n\nWelkom bij Fysiplan. Je proef loopt tot en met " + datumNl(p.verloopt) + ".\n\n" +
-        "Verder op een andere computer of je telefoon? Open deze persoonlijke link (deel hem niet):\n" + terug + "\n\n" +
+        "Verder op een andere computer of je telefoon? Open deze persoonlijke link (deel hem niet; " + WELKOM_LINK_MS / 86400000 + " dagen geldig, op hooguit " + WELKOM_LINK_KEER + " apparaten):\n" + terug + "\n\n" +
         "Tip: zet eerst een wachtwoord op je praktijk (knop Kaarten), vul bij de voorbeeldkaart een roepnaam in, print hem en scan de QR-code met je eigen telefoon. " +
         "Dan zie je precies wat je patiënt ziet.\n\nVragen? Antwoord gewoon op deze mail.\n\nGroet,\nFysiplan");
     }
@@ -5951,10 +5963,14 @@ async function afhandelen(request, response) {
     } else code = String(new URL(request.url, "http://x").searchParams.get("code") || "");
     const geldig = /^[a-f0-9]{48}$/.test(code);
     const h = geldig ? tokenHash(code) : "";
-    let id = geldig ? proefTokenIndex.get(h) : null;
-    // of de eenmalige link na opnieuw aanmelden met een bestaand e-mailadres
-    const q = !id && geldig ? Object.values(proeven).find((x) => x.mailLink && x.mailLink.h === h && x.mailLink.verloopt > Date.now()) : null;
-    if (q) id = q.id;
+    // Alleen links uit een mail: de welkomstlink (7 dagen, hooguit 3 apparaten) of de eenmalige
+    // link na opnieuw aanmelden. Een proefcookie-token is hier geen sleutel meer: dat stond
+    // vroeger in de welkomstmail en werkte zo lang de aanmelding bestond.
+    const nuT = Date.now();
+    const q = geldig ? Object.values(proeven).find((x) => x.mailLink && x.mailLink.h === h && x.mailLink.verloopt > nuT) : null;
+    const w = geldig && !q ? Object.values(proeven).find((x) => x.welkomLink && x.welkomLink.h === h &&
+      x.welkomLink.verloopt > nuT && x.welkomLink.over > 0) : null;
+    const id = q ? q.id : w ? w.id : null;
     if (!id || !proeven[id]) {
       if (kaartMisLimiet(request, response)) return;
       await serveerProef(request, response, "bericht", { TITEL: "Link werkt niet", ETIKET: "Link verlopen", KOP: "Deze link werkt niet meer.",
@@ -5973,7 +5989,8 @@ async function afhandelen(request, response) {
       return;
     }
     if (q) delete q.mailLink;
-    // een vers token voor dít apparaat; de maillink blijft bruikbaar voor het volgende
+    if (w && --w.welkomLink.over <= 0) delete w.welkomLink;
+    // een vers token voor dít apparaat
     const token = proefNieuwToken(proeven[id]);
     await bewaarProeven();
     response.writeHead(303, { location: proefVerlopen(proeven[id]) ? "/v2/proef" : "/v2/app", "set-cookie": proefCookie(token, request) });
