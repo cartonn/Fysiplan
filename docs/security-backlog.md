@@ -318,6 +318,12 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **NAKIJKEN (van de gebruikers-sweep 2026-11-11 18u, Karin) — LAAG:** zolang het gedeelde praktijkwachtwoord aan staat, kan een sessie
+  met dat wachtwoord elke beheerder met eigen login naar therapeut zetten (`/api/praktijk/team/rol`, server.js r. ~3221: de check geldt
+  alleen bij `acc.gedeeldUit` of voor jezelf). Gemeten: 200, daarna 0 beheerders met eigen login. Klopt met het ontwerp (gedeeld =
+  beheerder), maar zonder waarschuwing en zonder logregel met naam. Overwegen: rolwijziging van een eigen-login-beheerder alleen door een
+  beheerder met eigen login, of in Activiteit vastleggen.
+
 - **OPGELOST 2026-11-11 12u (opzeggen), zie boven, deze PR. LAAG (2026-11-11) — abonnementsacties zonder beheerdersrol.** Opzeggen, factuurgegevens, betalen en wissen op
   /v2/proef hangen alleen aan de proefcookie van het apparaat. Op een gedeelde praktijkcomputer kan elke collega het
   abonnement opzeggen; 30 dagen na de betaalde maand wist de server dan alle patiëntkaarten. Verzachting: bevestigingsmail

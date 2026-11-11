@@ -1540,8 +1540,24 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function staafKleur(){return '#7d8aa6';}
 
   // ---- vaste teksten van de pagina in de gekozen taal zetten ----
+  // schermlezerlabels die in de HTML in het Nederlands staan (sweep 2026-11-11 18u, Jayden: Engelse kaart las "sluiten")
+  var TARIA={nl:{vraag:'Vraag over je oefeningen (AI)',lb:'vergrote oefenfoto',sluit:'Sluiten'},
+    en:{vraag:'Question about your exercises (AI)',lb:'enlarged exercise photo',sluit:'Close'},
+    de:{vraag:'Frage zu deinen Übungen (KI)',lb:'vergrößertes Übungsfoto',sluit:'Schließen'},
+    fr:{vraag:'Question sur vos exercices (IA)',lb:'photo d’exercice agrandie',sluit:'Fermer'},
+    es:{vraag:'Pregunta sobre tus ejercicios (IA)',lb:'foto del ejercicio ampliada',sluit:'Cerrar'},
+    pl:{vraag:'Pytanie o twoje ćwiczenia (AI)',lb:'powiększone zdjęcie ćwiczenia',sluit:'Zamknij'},
+    tr:{vraag:'Egzersizlerinle ilgili soru (yapay zekâ)',lb:'büyütülmüş egzersiz fotoğrafı',sluit:'Kapat'},
+    ar:{vraag:'سؤال عن تمارينك (ذكاء اصطناعي)',lb:'صورة التمرين مكبّرة',sluit:'إغلاق'},
+    uk:{vraag:'Питання про твої вправи (ШІ)',lb:'збільшене фото вправи',sluit:'Закрити'}};
+  function zetAria(){
+    var a=TARIA[TAAL]||TARIA.nl;
+    function l(i,t){var el=document.getElementById(i);if(el)el.setAttribute('aria-label',t);}
+    l('vraagveld',a.vraag);l('lightbox',a.lb);l('lbsluit',a.sluit);l('ab_weg',a.sluit);
+  }
   function tekenStatisch(){
     document.documentElement.lang=TAAL;
+    zetAria();
     document.documentElement.dir=(TAAL==='ar')?'rtl':'ltr';
     function zet(i,t){var el=document.getElementById(i);if(el)el.textContent=t;}
     document.querySelector('.eyebrow').textContent=tr('eyebrow');
@@ -2261,7 +2277,21 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   // klaar: pas na het tekenen in de nieuwe taal (bij het openen blijft tot dan het
   // laadscherm staan; anders zag een Engelse patiënt eerst een half lege Nederlandse kaart).
-  // Een vertaling die na 8 s niet binnen is, wacht niet langer: dan de vaste teksten.
+  // Een vertaling die na VERTAAL_WACHT ms niet binnen is, wacht niet langer: dan tekenen we met de
+  // vaste teksten in de eigen taal (oefennamen nog Nederlands) en zetten de vertaling erin zodra hij komt.
+  // Sweep 2026-11-11 18u (Jayden, trage lijn): met 8 s wachten stond een Duitse kaart pas na 8 s in beeld.
+  var VERTAAL_WACHT=1500;
+  // Niet hertekenen terwijl de patiënt iets doet dat een hertekening zou afbreken: een video of
+  // voorlezen loopt, de vergroting staat open of hij typt. Dan straks opnieuw proberen.
+  function kaartBezig(){
+    if(bezigLezen)return true;
+    var lb=document.getElementById('lightbox');if(lb&&lb.classList.contains('open'))return true;
+    var ae=document.activeElement;if(ae&&(ae.tagName==='INPUT'||ae.tagName==='TEXTAREA')&&ae.type!=='range')return true;
+    var vs=document.querySelectorAll('#oefs video');
+    for(var i=0;i<vs.length;i++)if(!vs[i].paused&&!vs[i].ended)return true;
+    return false;
+  }
+  function laatVertaald(taal){if(TAAL!==taal)return;if(kaartBezig()){setTimeout(function(){laatVertaald(taal);},1500);return;}alles();}
   function wisselTaal(t,klaar){
     TAAL=isTaal(t)?t:'nl';
     try{localStorage.setItem('fp_taal',TAAL);}catch(e){}
@@ -2269,10 +2299,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var gedaan=false,taal=TAAL;
     var af=function(teksten){if(gedaan)return;gedaan=true;if(!VERT[taal]&&teksten)VERT[taal]=teksten;if(TAAL===taal)alles();if(klaar)klaar();};
     if(TAAL!=='nl'&&!VERT[TAAL]){
-      setTimeout(function(){af(null);},8000);
+      setTimeout(function(){af(null);},VERTAAL_WACHT);
       fetch('/api/kaart/vertaal?id='+id+'&taal='+TAAL,{cache:'no-cache'})
         .then(function(r){return r.json();})
-        .then(function(d){var tk=(d&&d.ok&&d.teksten)||null;if(gedaan&&tk){VERT[taal]=tk;if(TAAL===taal)alles();}else af(tk);})
+        .then(function(d){var tk=(d&&d.ok&&d.teksten)||null;if(gedaan&&tk){VERT[taal]=tk;laatVertaald(taal);}else af(tk);})
         .catch(function(){af(null);});
     }else af(null);
   }
