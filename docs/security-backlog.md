@@ -349,6 +349,11 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   twee verschillende links, maar per collega wordt maar één hash bewaard** (server.js r. ~2830 overschrijft). De eerste link is dan
   dood (404 "werkt niet meer"). In de app zelf is dubbelklik opgevangen; dit is de serverkant (Mark, API).
 
+- **NAKIJKEN (van de gebruikers-sweep 2026-11-11 22u, Karin) — LAAG:** een beheerder van praktijk Y kan via POST /api/praktijken
+  het profiel en `account.naam` hernoemen naar de exacte naam van een andere beveiligde praktijk X (200, geen vraag; server.js r. ~3890).
+  Geen datalek (/v2/gegevens en team blijven per account gescheiden), maar patiëntkaarten en uitnodigingen van Y lijken dan van X te
+  komen, en bij X valt de hint "log in met je eigen e-mail" weg (`every(gedeeldUit)` over accounts met die naam). Bij claimen moet
+  "andere praktijk met deze naam" juist bewust gekozen worden. Overwegen: zelfde botsingscheck als bij claimen.
 - **AFGESLOTEN 2026-11-10 (geen gat) — beoordeeld door security:** de proefmails zijn platte tekst, de adressen in HTML gaan
   door `htmlEsc` en de CSV van /api/aanmeldingen zet `'` voor `= + - @` (formule-escape). Een strengere regex mag (UX), is geen securityfix.
 - **LAAG (doorgezet door de gebruikers-sweep 2026-11-09 22u, ter info) — e-mailcheck van de proef keurt `=hyperlink("http://evil")@x.nl`
