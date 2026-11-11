@@ -496,14 +496,106 @@ __FAQ_SCHEMA__
      scroll-animatie; op papier moet alles gewoon zichtbaar zijn (sweep 2026-11-08). */
   @media print{*,*::before,*::after{animation:none!important;transition:none!important}
     body::before{display:none!important}}
+  /* ==== Huisstijl "Active Tech" (2026-11-11): donker petrol #18343B, limoen #B9E34B,
+     lichtgrijs #F2F5F3 en wit; Inter als enige letter; schuine limoenvlakken als vormtaal.
+     Limoen alleen als vlak (knoppen, accenten), nooit als kleine tekst op licht. ==== */
+  :root{
+    --bg:#f2f5f3; --papier:#ffffff; --inkt:#18343b; --tekst:#2f454b; --demp:#56686d; --zacht:#7e8f93;
+    --blauw:#18343b; --blauw-d:#0f262c; --navy:#18343b; --blauw-05:#eef5e0; --blauw-10:#dcebc0;
+    --oranje:#18343b; --oranje-d:#0f262c; --lime:#b9e34b; --lime-d:#a6d13a;
+    --lijn:#dde5e1; --lijn-z:#e8eeeb;
+    --serif:'Inter','Avenir Next',Seravek,'Segoe UI',system-ui,-apple-system,sans-serif;
+  }
+  body{font-size:17px;line-height:1.6}
+  ::selection{background:rgba(185,227,75,.45)}
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--inkt);outline-offset:3px}
+  h2,.hero h1,.stat .cijfer,.plan .prijs,.ru .bedrag{font-weight:800;letter-spacing:-.025em}
+  .tl,.kvlink,.hero .noot,.bijschrift p,footer p,.slot .noot,.a4 .voetje span{font-style:normal}
+  .etiket{font-weight:700;letter-spacing:.2em;color:var(--inkt)}
+  .folio .etiket{color:var(--inkt)}
+  .folio .nr{display:inline-block;background:var(--lime);color:var(--inkt);font:800 12px/1 var(--disp);
+    padding:5px 9px;transform:skewX(-14deg)}
+
+  /* knoppen: limoen met petrol tekst (contrast 9:1) */
+  .knop{border-radius:8px}
+  .knop.oranje{background:var(--lime);color:var(--inkt);box-shadow:0 10px 26px -12px rgba(24,52,59,.55)}
+  .knop.oranje:hover{background:var(--lime-d)}
+  .knop.omlijnd{border-color:var(--inkt);color:var(--inkt)}
+
+  /* navigatie: petrol balk met het nieuwe beeldmerk */
+  nav{background:rgba(24,52,59,.97);border-bottom:1px solid rgba(255,255,255,.08)}
+  nav .rij{border-color:rgba(255,255,255,.08)!important}
+  nav .logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:16px}
+  nav .logo svg{display:block}
+  nav .woord{font:800 19px/1 var(--disp);letter-spacing:-.01em;color:#fff;transform:skewX(-10deg);display:inline-block}
+  nav .woord b{color:var(--lime);font-weight:800}
+  nav .links a{color:#c3d0cd}
+  nav .links a:hover{color:#fff}
+  nav .in{color:#fff;border-color:rgba(255,255,255,.55);border-radius:8px}
+  nav .in:hover{background:#fff;color:var(--inkt)}
+  nav .probeer{background:var(--lime);border-color:var(--lime);color:var(--inkt);border-radius:8px}
+  nav .probeer:hover{background:var(--lime-d);border-color:var(--lime-d)}
+
+  /* hero: petrol vlak met een schuine limoenbaan achter het product */
+  .hero{background:var(--inkt);position:relative;overflow:hidden;isolation:isolate}
+  .hero::before{content:"";position:absolute;z-index:-1;right:-6%;bottom:-2px;width:62%;height:58%;
+    background:var(--lime);clip-path:polygon(38% 100%,100% 22%,100% 100%)}
+  .hero::after{content:"";position:absolute;z-index:-1;right:-6%;bottom:-2px;width:62%;height:58%;
+    background:rgba(185,227,75,.14);clip-path:polygon(18% 100%,100% 0,100% 12%,30% 100%)}
+  .hero .kolom{border-color:rgba(255,255,255,.07)!important}
+  .hero .kicker .etiket{color:var(--lime)}
+  .hero h1{color:#fff;font-size:clamp(40px,4.4vw,62px);line-height:1.04}
+  .hero h1 em{font-style:normal;color:var(--lime)}
+  .hero .sub{color:#c6d3d0;font-size:18px}
+  .hero .tl{color:#fff;text-decoration-color:rgba(255,255,255,.4)}
+  .hero .tl:hover{text-decoration-color:#fff}
+  .hero .noot{color:#93a7a3}
+  .hero .bijschrift p{color:#c6d3d0}
+  .hero .bijschrift b{color:#fff}
+  .hero .bijschrift a{color:#fff}
+  .hero .bijschrift .pijl{color:var(--lime)}
+  .a4{border-color:transparent;box-shadow:0 30px 70px -20px rgba(0,0,0,.55)}
+  .tel{background:#0b1c20}
+  .tel .notch{background:#0b1c20}
+  .tel .pijn i.aan{background:var(--inkt);border-color:var(--inkt)}
+  .tel .video{color:var(--inkt)}
+  .tel .driehoek{border-left-color:var(--inkt)}
+  @media (max-width:980px){
+    .hero::before{width:100%;height:30%;clip-path:polygon(0 100%,100% 10%,100% 100%)}
+    .hero::after{display:none}
+  }
+
+  /* feitenstrip en secties: licht, met limoen als markering */
+  .feiten{background:#fff}
+  .stat .cijfer,.plan .prijs,.ru .bedrag{color:var(--inkt)}
+  .stat .cijfer{background:linear-gradient(transparent 68%,var(--lime) 68%,var(--lime) 90%,transparent 90%);display:inline}
+  .stap .nr{color:var(--inkt);font-weight:800}
+  .hp.pat .etiket{color:var(--inkt)}
+  .vgl .vb.groen{color:#2c6a33}
+
+  /* slot en voet: petrol met limoen */
+  .slot{background:var(--inkt);color:#c6d3d0;position:relative;overflow:hidden;isolation:isolate}
+  .slot::before{content:"";position:absolute;z-index:-1;left:-4%;top:0;width:34%;height:100%;
+    background:var(--lime);clip-path:polygon(0 0,62% 0,22% 100%,0 100%);opacity:.95}
+  .slot p{color:#c6d3d0}
+  .slot .noot{color:#93a7a3}
+  .slot .knop.oranje{box-shadow:0 14px 34px -12px rgba(0,0,0,.6)}
+  @media (max-width:700px){.slot::before{width:40%;opacity:.25}}
+  footer{background:#0f262c}
+  footer p,footer .beoogd{color:#8ea19d}
+  footer a{color:#c6d3d0}
+  .duim{background:rgba(242,245,243,.95)!important}
+  @media (prefers-reduced-motion:no-preference){
+    .knop:hover{box-shadow:0 10px 22px rgba(24,52,59,.22)}
+    @supports (animation-timeline:view()){body::before{background:var(--lime)}}
+  }
 </style>
 </head>
 <body>
 
 <nav aria-label="Hoofdnavigatie">
   <div class="rij">
-    <span class="mark"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg></span>
-    <span class="naam">Fysiplan</span>
+    <a class="logo" href="/v2" aria-label="Fysiplan, naar het begin"><svg width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M8 0h22l-3 6H5z" fill="#b9e34b"/><path d="M3.6 9h16l-3 6H.6z" fill="#b9e34b"/><path d="M.4 15.4h6.4L4.2 24H-2.2z" fill="#b9e34b" transform="translate(2.2 0)"/></svg><span class="woord">FYSI<b>PLAN</b></span></a>
     <div class="links">
       <a href="#keuze">Waarom Fysiplan</a>
       <a href="#hulp">Voor wie</a>
@@ -522,7 +614,7 @@ __FAQ_SCHEMA__
     <div class="twee">
       <div>
         <div class="kicker"><span class="etiket">Voor fysiotherapeuten, naast elk EPD</span></div>
-        <h1>E&eacute;n kaart.<br/>Op papier &eacute;n<br/>op de telefoon.</h1>
+        <h1>E&eacute;n kaart.<br/>Op papier &eacute;n<br/><em>op de telefoon.</em></h1>
         <p class="sub">Je pati&euml;nten worden steeds ouder, en juist die groep haakt af op apps en accounts. In Fysiplan maak je &eacute;&eacute;n kaart die iedereen bedient: een verzorgde A4 voor wie papier prettig vindt, en via de QR-code dezelfde kaart op de telefoon, met uitleg die zichzelf voorleest en bij de meeste oefeningen de beweging voorgedaan. Jouw pati&euml;nt kiest. Jij doet niets extra.</p>
         <div class="cta">
           <a class="knop oranje" href="/v2/proef">Probeer Fysiplan gratis</a>
