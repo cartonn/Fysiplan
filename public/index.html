@@ -3501,7 +3501,15 @@ bridge2.jpg</div>
       .then(function(r){return r.json().catch(function(){return{ok:false};});})
       .then(function(d){
         knop.disabled=false;
-        if(!d.ok){toonPsMsg(d.fout||'Dat lukte niet.');return;}
+        if(!d.ok){
+          toonPsMsg(d.fout||'Dat lukte niet.');
+          // zonder proef of na de proef: de weg naar de proefpagina erbij
+          if(d.proefNodig||d.proefVerlopen){
+            var pm=document.getElementById('ps_msg');
+            if(pm){var pa=document.createElement('a');pa.href='/v2/proef';pa.textContent=d.proefNodig?'Start de gratis proef':'Naar je proef';pm.appendChild(document.createTextNode(' '));pm.appendChild(pa);}
+          }
+          return;
+        }
         setPrakSes(d.sessie);ww.value='';document.getElementById('ps_msg').style.display='none';
         PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;PRAKSLOT.nieuw=false;rendPrakSlot();toonPrakSlot(PRAKSLOT.pr);toonSrvKaarten();reloadLibraryKeepingCard();
         if(d.herstelcode)toonHerstelcode(d.herstelcode);

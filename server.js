@@ -12,6 +12,7 @@ import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } fr
 import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
 import { volgendFactuurNr, factuurHtml, isFactuur, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
+import { backupInstellingen, stuurNaarElders } from "./lib/backup-elders.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -67,7 +68,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-11";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-10";
+const AV_VERSIE = "2026-11-11";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-11";
@@ -87,6 +88,7 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-09-3", tekst: "Proef: word je geen klant, dan wissen we al 30 dagen na de proef alles van je praktijk (was 90 dagen)." },
   { stuk: "vwo", versie: "2026-11-10", tekst: "Einde: na een proef zonder abonnement wissen we alles 30 dagen na de proef, net als na opzeggen." },
   { stuk: "av", versie: "2026-11-10", tekst: "Betalen na de eerste maand: we schrijven elke maand automatisch af via je machtiging, met minstens " + INCASSO_VOORAF_DAGEN + " dagen vooraf een mail. Lukt het niet, dan nemen we contact op." },
+  { stuk: "av", versie: "2026-11-11", tekst: "Ingevuld: een nieuwe prijs melden we minstens 30 dagen vooraf per e-mail, en er is geen opzegtermijn (opzeggen kan elke dag, het abonnement stopt aan het einde van de betaalde maand)." },
   { stuk: "vwo", versie: "2026-11-11", tekst: "Gegevens: de lijst noemt nu ook de kaartnaam, doelactiviteit, weekdoel, werknotitie, behandelaar en het contactlogboek. AI: namen van eigen oefeningen gaan mee naar de vertaal- en vraaghulp; roepnaam, scores en notities niet." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
@@ -627,6 +629,14 @@ function proefSlotVoor(req, urlPath) {
   if (ADMIN_KEY_EIGEN && isAdmin(req)) return false;
   return proefVerlopen(proefVan(req)) || praktijkProefVerlopen(praktijkSessieVan(req));
 }
+// Een nieuwe praktijk beveiligen (en daarmee kaarten delen) kan alleen vanuit een lopende
+// proef of als klant. Zonder deze poort kon iedereen /v2/app openen, een nieuwe praktijknaam
+// kiezen en zonder einddatum en zonder abonnement kaarten delen; een team met een verlopen
+// proef kwam zo met een andere naam weer binnen. Bestaande praktijken merken er niets van:
+// zij zijn al beveiligd en loggen gewoon in, en een collega komt binnen via een uitnodiging.
+// Standaard aan in productie; lokaal en in tests uit. PROEF_VERPLICHT=aan|uit dwingt het af.
+const PROEF_VERPLICHT = /^(aan|uit)$/.test(String(process.env.PROEF_VERPLICHT || ""))
+  ? process.env.PROEF_VERPLICHT === "aan" : IS_PRODUCTIE;
 function proefCookie(token, request) {
   const proxyProto = String(request.headers["x-forwarded-proto"] || "").split(",", 1)[0].trim().toLowerCase();
   const veilig = proxyProto === "https" || !!request.socket?.encrypted;
@@ -936,6 +946,7 @@ function proefMeldAhmed(onderwerp, p, regel) {
 // aan beheer, zodat er gebeld kan worden) en het automatisch wissen na afloop
 // nooit twee rondes tegelijk: een trage ronde (Mollie, wissen) mag niet overlappen met de
 // volgende, anders kunnen twee rondes voor dezelfde maand een incasso aanmaken
+const WIS_VOORAF_DAGEN = 7; // zoveel dagen voor het wissen krijgt de praktijk een mail
 let proefRondeBezig = false;
 async function proefRonde() {
   if (proefRondeBezig) return;
@@ -957,7 +968,13 @@ async function proefRondeEen() {
         await praktijkAllesWissen(pk).then(() => auditLog("(gewist)", "praktijk-gewist-na-proef", null))
           .catch((e) => console.error("wissen na proef:", e.message));
       }
-      proefWis(p.id); gewijzigd = true; continue;
+      // heeft deze praktijk ooit online betaald (opgezegd en gestopt, of door beheer op "geen
+      // klant" gezet), dan blijft wat de fiscale bewaarplicht vraagt 7 jaar staan. Kaal wissen
+      // gooide hier ook de betaling en het factuurnummer weg: een gestopt abonnement is
+      // "geen klant" en kwam 30 dagen later eerst langs deze tak in plaats van langs "wissen".
+      const rest = Object.hasOwn(proeven, p.id) ? proeven[p.id] : null;
+      if (rest && !rest.gewist) proefNaPraktijkWissen(p.id, nu);
+      gewijzigd = true; continue;
     }
     if (p.gewist && nu >= Number(p.bewaarTot || 0)) { proefWis(p.id); gewijzigd = true; continue; }
     if (p.gewist) continue;
@@ -971,6 +988,32 @@ async function proefRondeEen() {
         NA_EINDE_WISSEN_DAGEN + " dagen wist Fysiplan de kaarten van deze praktijk.");
     }
     if (await incassoRondeStap(p, nu)) gewijzigd = true;
+    // een week voor het wissen: één mail aan de aanmelder en de beheerders van de praktijk,
+    // zodat ze nog naar het dossier kunnen kopiëren, alles kunnen downloaden of doorgaan.
+    // Alleen als er een praktijk aan de proef hangt (anders valt er niets te redden).
+    if (!p.klant && !p.wisGemeld && mailIngesteld()) {
+      const wisOp = p.verloopt + PROEF_BEWAAR_DAGEN * 86400000;
+      if (nu >= wisOp - WIS_VOORAF_DAGEN * 86400000 && nu < wisOp) {
+        const pks = Object.keys(praktijkAccounts).filter((k) => String(praktijkAccounts[k].proef?.id || "") === p.id);
+        if (pks.length) {
+          p.wisGemeld = nu; gewijzigd = true;
+          const aan = new Map([[p.email, p.naam]]);
+          for (const pk of pks) for (const l of ledenVan(pk)) if (l.rol === "beheerder" && lidActief(l) && l.email && !aan.has(l.email)) aan.set(l.email, l.naam || "");
+          const aantal = pks.reduce((n, pk) => n + Object.keys(kaarten[pk] || {}).length, 0);
+          for (const [adres, naam] of aan) proefMail(adres, "Op " + datumNl(wisOp) + " wissen we je Fysiplan-gegevens",
+            "Hoi" + (naam ? " " + String(naam).split(/\s+/)[0] : "") + ",\n\n" +
+            (p.abonnement ? "Je abonnement op Fysiplan is gestopt" : "Je gratis proef van Fysiplan is voorbij en je hebt geen abonnement") +
+            ". Daarom wissen we op " + datumNl(wisOp) + " alles van je praktijk" + (p.praktijk ? " (" + p.praktijk + ")" : "") + ": " +
+            (aantal ? "de " + aantal + " gedeelde kaart" + (aantal === 1 ? "" : "en") + ", ook als een patiënt die nog gebruikt, " : "") +
+            "je account, team, sjablonen en eigen oefeningen.\n\n" +
+            "Wat je nu nog kunt doen:\n" +
+            "- Doorgaan met Fysiplan: https://fysiplan.nl/v2/proef?mijn=1\n" +
+            "- Bewaren wat in het dossier hoort: open de kaart en kies \"Kopieer voor dossier\".\n" +
+            "- Alles downloaden (of nu al zelf wissen): https://fysiplan.nl/v2/gegevens\n\n" +
+            "Doe je niets, dan verdwijnt alles vanzelf. Patiënten kunnen hun kaart daarna niet meer openen.\n\nGroet,\nFysiplan");
+        }
+      }
+    }
     if (einde === "wissen") {
       const pk = Object.keys(praktijkAccounts).find((k) => String(praktijkAccounts[k].proef?.id || "") === p.id);
       if (pk) await praktijkAllesWissen(pk).then(() => auditLog("(gewist)", "praktijk-gewist-na-einde", null)).catch((e) => console.error("wissen na einde:", e.message));
@@ -1881,7 +1924,36 @@ function leesLimiet(req, res) {
 // accountlaag valt dan weg en de kaarten staan weer open), en zonder v1-accounts.json
 // verliezen de v1-gebruikers hun inlog. De insteltokens zijn bewust kortlevend en
 // blijven buiten de back-up.
-const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, accountsPath, v1AccountsPath, proefPath];
+// ook de eigen oefeningen van praktijken, het logboek en de start van de bewaartermijn: zonder
+// die drie kwam een praktijk na een restore terug zonder eigen oefeningen en zonder logboek
+const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, praktijkOefeningenPath, accountsPath, auditPath, bewaarPath, v1AccountsPath, proefPath];
+// reservekopie buiten Railway (lib/backup-elders.js): dezelfde bestanden, versleuteld, naar een
+// S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
+// loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
+const backupElders = backupInstellingen();
+const backupEldersStatus = { ok: null, fout: null, foutMail: 0 };
+async function maakBackupElders() {
+  if (!backupElders) return;
+  try {
+    const bestanden = {};
+    for (const pad of backupBestanden) {
+      try { bestanden[pad.split(sep).pop()] = await readFile(pad); } catch {}
+    }
+    await stuurNaarElders(backupElders, bestanden);
+    backupEldersStatus.ok = Date.now();
+    backupEldersStatus.fout = null;
+  } catch (err) {
+    backupEldersStatus.fout = Date.now();
+    console.error("reservekopie elders mislukt:", err.message);
+    if (mailIngesteld() && proefMeldingAan.length && Date.now() - backupEldersStatus.foutMail > 23 * 60 * 60 * 1000) {
+      backupEldersStatus.foutMail = Date.now();
+      for (const aan of proefMeldingAan) stuurMail(aan, "Fysiplan: reservekopie buiten Railway mislukt",
+        "De dagelijkse versleutelde reservekopie naar de opslag buiten Railway is niet gelukt (" + err.message + ").\n"
+        + "De kopie op Railway zelf is wel gemaakt. Controleer de BACKUP_-variabelen en de opslagbak. Morgen volgt een nieuwe poging.")
+        .catch(() => {});
+    }
+  }
+}
 async function maakBackup() {
   try {
     const dag = new Date().toISOString().slice(0, 10);
@@ -1900,6 +1972,7 @@ async function maakBackup() {
     for (const d of statDagen.slice(0, Math.max(0, statDagen.length - 120))) delete stats.dagen[d];
     bewaarStats();
   } catch {}
+  await maakBackupElders();
 }
 // eerst de reservekopie van vandaag; de opruimtaken (bewaartermijn, oude kaartvelden,
 // vertaalcache) starten pas als de server luistert (zie server.listen onderaan): ze
@@ -2391,7 +2464,10 @@ async function afhandelen(request, response) {
       videoOpslag: STREAM_ENABLED ? "cloudflare-stream" : "railway-volume",
       // zichtbaar maken of de data op een blijvend volume staat (waar zonder
       // geheimen): zo is "overleeft een herstart" in één blik te controleren
-      volumeActief: dataDir === "/data" || !!process.env.DATA_DIR
+      volumeActief: dataDir === "/data" || !!process.env.DATA_DIR,
+      // reservekopie buiten Railway: "uit" (niet ingesteld), "ok", "fout" of "wacht" (nog niet gedraaid)
+      backupElders: !backupElders ? "uit" : backupEldersStatus.fout ? "fout" : backupEldersStatus.ok ? "ok" : "wacht",
+      backupEldersOp: backupEldersStatus.ok ? new Date(backupEldersStatus.ok).toISOString() : null
     });
     return;
   }
@@ -2837,6 +2913,11 @@ async function afhandelen(request, response) {
       // namens de praktijk akkoord met de verwerkersovereenkomst
       if (b.akkoord !== true) { await sendJson(response, 400, { ok: false, akkoord: true, fout: "Vink aan dat je namens de praktijk akkoord gaat met de voorwaarden en de verwerkersovereenkomst." }); return; }
       if (Object.keys(praktijkAccounts).length >= 1000) { await sendJson(response, 400, { ok: false, fout: "Maximum bereikt." }); return; }
+      if (PROEF_VERPLICHT && !(ADMIN_KEY_EIGEN && isAdmin(request))) {
+        const p = proefVan(request);
+        if (!p) { await sendJson(response, 403, { ok: false, proefNodig: true, fout: "Start eerst je gratis proef van " + PROEF_DAGEN + " dagen. Daarna beveilig je hier je praktijk en deel je kaarten. Werkt je praktijk al met Fysiplan? Vraag je collega dan om een uitnodiging." }); return; }
+        if (proefVerlopen(p)) { await sendJson(response, 403, { ok: false, proefVerlopen: true, fout: "Je gratis proef is voorbij. Wil je doorgaan? Kijk op fysiplan.nl/v2/proef." }); return; }
+      }
       // herstelcode: eenmalig getoond bij het claimen; er is geen e-mail in het
       // systeem, dus dit is de enige zelfbedieningsroute bij een vergeten wachtwoord
       const herstelcode = maakHerstelcode();
@@ -6312,6 +6393,9 @@ async function afhandelen(request, response) {
         BETAAL_RIJ_HTML: mollieAan() ? '<tr id="betalen"><td>Betaling: naam van de praktijk (of je eigen naam), e-mail, aantal therapeuten, bedrag, '
           + "en de kenmerken van klant, betaling en machtiging bij Mollie. Geen rekeningnummer of kaartgegevens; die vul je alleen bij Mollie in.</td>"
           + "<td>Het abonnement afrekenen en vastleggen dat je klant bent</td><td>Zolang je klant bent; facturen en betaalgegevens daarna 7 jaar, omdat de wet dat vraagt (fiscale bewaarplicht)</td></tr>" : "",
+        // de opslag van de versleutelde reservekopie staat er alleen als die aan staat én benoemd is
+        BACKUP_RIJ_HTML: backupElders && backupElders.leverancier ? "<tr id=\"reservekopie\"><td>" + htmlEsc(backupElders.leverancier) + "</td><td>Reservekopie buiten Railway, elke dag, 7 dagen bewaard</td>"
+          + "<td>Een versleutelde kopie van alles wat op deze pagina staat, behalve video&rsquo;s, foto&rsquo;s en logo&rsquo;s. De partij kan de inhoud niet lezen; alleen Fysiplan heeft de sleutel.</td></tr>" : "",
         BETAAL_PARTIJ_HTML: mollieAan() ? "<p><b>Betalen.</b> Reken je online af, dan stuurt Fysiplan de naam van je praktijk (of je eigen naam), je e-mailadres en het bedrag "
           + "naar Mollie B.V. (Amsterdam, Nederland). Mollie handelt de betaling af en is daarvoor zelf verantwoordelijk; zie de privacyverklaring van Mollie. "
           + "Mollie krijgt geen pati&euml;ntgegevens.</p>" : ""

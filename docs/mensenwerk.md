@@ -12,13 +12,33 @@ oefeningen mag alleen de maker of een beheerder verwijderen; kaarten onthouden (
 verwijderen, de rest kan archiveren. Advies: (2), omdat het een medisch dossier raakt; laat het weten, dan bouwt de
 security-routine het.
 
-### Fysiplan gebruiken zonder proef of abonnement (security, 2026-11-09 20u)
-**Wat de code nu doet:** wie /v2/app opent zonder de proef te starten, kan een praktijk beveiligen en kaarten maken, zonder
-einddatum. De proefgrens zit alleen op praktijken die bij de proef horen. Een team met een verlopen proef kan zo met een
-nieuwe (of verkeerd getypte) praktijknaam gewoon verder (gebruikers-sweep, Mark). Dit is geen beveiligingsgat maar een
-zakelijke keuze.
-**Wat jij moet kiezen:** (1) app zonder proef open laten zoals nu, of (2) beveiligen en kaarten delen alleen na een proef of
-abonnement (dan moet een collega altijd via een uitnodiging binnenkomen). Advies: (2) zodra de eerste praktijken betalen.
+### Reservekopie buiten Railway (livegang, 2026-11-10)
+**Wat de code nu doet:** de dagelijkse reservekopie stond alleen op hetzelfde Railway-volume als de gegevens zelf. Nu
+stuurt de server dezelfde bestanden elke dag (en bij elke start) **versleuteld** naar een opslagbak buiten Railway, in
+één bestand per weekdag (`fysiplan-ma.fpb` … `fysiplan-zo.fpb`), dus elders staat nooit meer dan 7 dagen. De opslagdienst
+kan de inhoud niet lezen. Video's, foto's en logo's gaan niet mee. Zonder de variabelen hieronder gebeurt er niets.
+`/health` toont `backupElders`: `uit`, `ok` of `fout`; bij een fout krijg je hooguit één mail per dag.
+**Wat jij moet doen:**
+1. Maak bij een Europese opslagdienst een privé-bak (bucket) aan, bijvoorbeeld Scaleway Object Storage (Amsterdam) of
+   Cloudflare R2 met regio EU, en maak een toegangssleutel die alleen in die bak mag schrijven en lezen.
+2. Zet op Railway: `BACKUP_S3_URL` (adres met de bak erin, bv. `https://s3.nl-ams.scw.cloud/fysiplan-reserve`),
+   `BACKUP_S3_REGIO` (bv. `nl-ams`; bij R2 `auto`), `BACKUP_S3_SLEUTEL_ID`, `BACKUP_S3_GEHEIM`, en `BACKUP_SLEUTEL`:
+   een zelfgekozen lange wachtzin (minstens 24 tekens). **Bewaar die wachtzin ook buiten Railway** (wachtwoordkluis):
+   zonder de wachtzin is de reservekopie niet terug te lezen.
+3. Zet `BACKUP_LEVERANCIER` op de naam en plaats van de dienst (bv. `Scaleway (Amsterdam, Nederland)`). Dan staat
+   de partij vanzelf in de lijst op /privacy. Het is een nieuwe subverwerker: meld hem vooraf aan praktijken die al
+   akkoord gaven (verwerkersovereenkomst) en sluit met de dienst een verwerkersovereenkomst.
+4. Controleer daarna https://fysiplan.nl/health: `backupElders` moet `ok` zijn.
+5. Terugzetten (één keer oefenen): `BACKUP_SLEUTEL=… node scripts/backup-terugzetten.mjs <bestand.fpb> <lege map>`.
+
+### Fysiplan gebruiken zonder proef of abonnement (security 2026-11-09, gebouwd 2026-11-10)
+**Wat de code nu doet:** GEDAAN 2026-11-10 (livegang, Ahmed: "verbeter alle punten die je zelf kan"): een **nieuwe**
+praktijk beveiligen, en dus kaarten delen, kan live alleen nog vanuit een lopende proef of als klant
+(`PROEF_VERPLICHT`, standaard aan in productie). Zonder proef zegt de app "Start eerst je gratis proef" met een link.
+Praktijken die al beveiligd waren merken niets; een collega komt binnen via een uitnodiging. Een team met een verlopen
+proef kan niet meer verder onder een nieuwe naam.
+**Wat jij kunt doen:** niets. Wil je het terug zoals het was, zet dan op Railway `PROEF_VERPLICHT` = `uit`.
+Nog open (LAAG): wie zich opnieuw aanmeldt met een ander e-mailadres krijgt een nieuwe proef van 14 dagen.
 
 ### Einde na de proef en controle door een praktijk (legal, 2026-11-09 13u)
 **Wat de code nu doet:** wordt een praktijk na de gratis proef geen klant, dan wist Fysiplan 30 dagen na de proef
@@ -32,8 +52,9 @@ kijken of je een maximum per jaar of een vergoeding voor jouw tijd wilt.
 **Wat de code nu doet:** na opzeggen loopt het abonnement tot het einde van de betaalde maand. Daarna is de
 praktijk geen klant meer (geen nieuwe kaarten), en 30 dagen later wist Fysiplan alles van die praktijk; alleen
 naam, e-mail, praktijknaam en betaling blijven 7 jaar. Jij krijgt een mail op de dag dat het abonnement stopt.
-**Wat jij moet kiezen:** (1) wil je dat de praktijk een paar dagen vóór het wissen nog een mail krijgt? Advies: ja,
-zodra er een maandincasso is. (2) Teruggave van geld bij opzeggen halverwege de maand: de code boekt niets terug;
+**Wat jij moet kiezen:** (1) GEDAAN 2026-11-10 (livegang): een week vóór het wissen krijgen de aanmelder en de
+beheerders van de praktijk één mail (wanneer, wat er weggaat, doorgaan, kopiëren naar het dossier, downloaden). Dat geldt
+ook na een proef zonder abonnement. Alleen als de mail is ingesteld (`MAIL_API_SLEUTEL` + `MAIL_AFZENDER`). (2) Teruggave van geld bij opzeggen halverwege de maand: de code boekt niets terug;
 zet je keuze in de voorwaarden (art. 5) of laat de jurist het zeggen. (3) De opzegtermijn in art. 5 is nog een invulplek.
 
 ### Vraaghulp op de kaart (legal, 2026-11-07)
@@ -151,8 +172,9 @@ Op https://fysiplan.nl/voorwaarden staat een concept, duidelijk gemarkeerd. Vul 
 (of laat een jurist ze voorstellen); ze staan in de tekst als oranje invulplek in
 `public/juridisch.html`, blok `voorwaarden`:
 1. ~~**Betaalwijze en factuur**~~ ingevuld 2026-11-10 volgens de gebouwde maandincasso (art. 4); wil je het anders, zeg het.
-2. **Prijswijziging:** hoeveel dagen vooraf je een nieuwe prijs meldt (gebruikelijk 30).
-3. **Opzegtermijn:** de landing belooft "maandelijks opzegbaar"; kies bijv. "tegen het einde van de lopende maand".
+2. ~~**Prijswijziging**~~ ingevuld 2026-11-10 (livegang): minstens 30 dagen vooraf, per e-mail. Wil je het anders, zeg het.
+3. ~~**Opzegtermijn**~~ ingevuld 2026-11-10 (livegang) zoals de code het doet: geen opzegtermijn, het abonnement stopt
+   aan het einde van de betaalde maand. Wil je het anders, zeg het.
 4. **Aansprakelijkheidsgrens:** bijv. maximaal het bedrag van 3 of 12 maanden abonnement.
 5. **Bevoegde rechtbank:** bijv. de rechtbank in het arrondissement van je vestigingsplaats.
 6. **KvK, rechtsvorm en adres** komen uit de Railway-variabelen FYSIPLAN_BEDRIJF, FYSIPLAN_KVK,
