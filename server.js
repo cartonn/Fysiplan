@@ -67,7 +67,7 @@ if (IS_PRODUCTIE && !ADMIN_KEY) console.warn("Beheer staat dicht: zet een eigen 
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-11";
+const VWO_VERSIE = "2026-11-11-2";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
 const AV_VERSIE = "2026-11-11";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
@@ -90,7 +90,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-10", tekst: "Einde: na een proef zonder abonnement wissen we alles 30 dagen na de proef, net als na opzeggen." },
   { stuk: "av", versie: "2026-11-10", tekst: "Betalen na de eerste maand: we schrijven elke maand automatisch af via je machtiging, met minstens " + INCASSO_VOORAF_DAGEN + " dagen vooraf een mail. Lukt het niet, dan nemen we contact op." },
   { stuk: "av", versie: "2026-11-11", tekst: "Ingevuld: een nieuwe prijs melden we minstens 30 dagen vooraf per e-mail, en er is geen opzegtermijn (opzeggen kan elke dag, het abonnement stopt aan het einde van de betaalde maand)." },
-  { stuk: "vwo", versie: "2026-11-11", tekst: "Gegevens: de lijst noemt nu ook de kaartnaam, doelactiviteit, weekdoel, werknotitie, behandelaar en het contactlogboek. AI: namen van eigen oefeningen gaan mee naar de vertaal- en vraaghulp; roepnaam, scores en notities niet." }
+  { stuk: "vwo", versie: "2026-11-11", tekst: "Gegevens: de lijst noemt nu ook de kaartnaam, doelactiviteit, weekdoel, werknotitie, behandelaar en het contactlogboek. AI: namen van eigen oefeningen gaan mee naar de vertaal- en vraaghulp; roepnaam, scores en notities niet." },
+  { stuk: "vwo", versie: "2026-11-11-2", tekst: "Bewaartermijn: een verwijderde kaart staat eerst hooguit 7 dagen in de prullenbak, waar de maker of een beheerder hem kan herstellen of meteen definitief kan verwijderen (bijvoorbeeld als een patiënt om wissen vraagt)." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -3082,7 +3083,7 @@ async function afhandelen(request, response) {
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
       "claim-gereset-door-beheer", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
-      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "kaart-hersteld", "profiel-gewijzigd",
+      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "kaart-hersteld", "kaart-definitief-verwijderd", "profiel-gewijzigd",
       "abonnement-opgezegd", "opzeggen-mislukt"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
@@ -4646,6 +4647,34 @@ async function afhandelen(request, response) {
       delete kaart.verwijderdOp; delete kaart.herstelTot;
       await saveJson(kaartenPath, kaarten);
       auditLog(pk, "kaart-hersteld", request);
+      await sendJson(response, 200, { ok: true });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+
+  // Definitief verwijderen uit de prullenbak (AVG art. 17): vraagt een patiënt de praktijk om
+  // wissen, of is een kaart per ongeluk met de verkeerde gegevens gedeeld, dan hoeft de praktijk
+  // niet zeven dagen te wachten. Zelfde rechten als verwijderen; kaart en opnames gaan meteen weg.
+  if (urlPath === "/api/kaarten/definitief" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = praktijkVan(request, b.praktijk);
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
+      const map = kaarten[pk] || {};
+      const kk = Object.keys(map).find((x) => map[x] && map[x].verwijderdOp && map[x].id === idTekst(b.id));
+      if (!kk) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Geen kaart in de prullenbak gevonden." }); return; }
+      if (!magKaartVerwijderen(request, pk, map[kk])) {
+        await sendJson(response, 403, { ok: false, fout: "Alleen de maker of een beheerder kan deze kaart definitief verwijderen." }); return;
+      }
+      const wegVids = Object.values(map[kk].vids || {});
+      delete map[kk];
+      if (!Object.keys(map).length) delete kaarten[pk];
+      await saveJson(kaartenPath, kaarten);
+      // zonder kaartnaam en kaart-id, net als bij "kaart-verwijderd"
+      auditLog(pk, "kaart-definitief-verwijderd", request);
+      await ruimKaartVideosOp(wegVids);
       await sendJson(response, 200, { ok: true });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
@@ -6371,7 +6400,8 @@ async function afhandelen(request, response) {
         // teamleden zonder wachtwoord of uitnodigingscode
         team: ledenVan(pk).map((l) => ({ naam: l.naam || "", email: l.email, rol: l.rol, actief: lidActief(l), laatst: l.laatst || null })),
         profiel: Object.entries(praktijken).filter(eigenProfiel).map(([, p]) => publiekProfiel(p)),
-        kaarten: Object.values(kaarten[pk] || {}).map((k) => { const v = verlooptOp(k); return { ...k, verlooptOp: Number.isFinite(v) ? new Date(v).toISOString() : null }; }),
+        // een kaart in de prullenbak verdwijnt op herstelTot (verlooptOp is dan 0 = 1970)
+        kaarten: Object.values(kaarten[pk] || {}).map((k) => { const v = k.verwijderdOp ? Math.min(Number(k.herstelTot) || 0, praktijkWisOp(pk)) : verlooptOp(k); return { ...k, ...(k.verwijderdOp ? { inPrullenbak: true } : {}), verlooptOp: Number.isFinite(v) && v > 0 ? new Date(v).toISOString() : null }; }),
         eigenOefeningen: praktijkOefeningen[pk] || [],
         sjablonen: praktijkSjablonen[pk] || [],
         logboek: praktijkAudit.filter((a) => a.praktijk === pk)

@@ -139,7 +139,7 @@ try {
   const { sessie } = await claim.json();
   assert.ok(sessie);
   const accounts = await leesJson("praktijk-accounts.json");
-  assert.match(accounts["fysio privacy"].vwo.versie, /^\d{4}-\d{2}-\d{2}$/, "versie van de verwerkersovereenkomst vastgelegd");
+  assert.match(accounts["fysio privacy"].vwo.versie, /^\d{4}-\d{2}-\d{2}(-\d+)?$/, "versie van de verwerkersovereenkomst vastgelegd");
   assert.ok(accounts["fysio privacy"].vwo.t);
 
   // ---- delen na het beveiligen: leeftijd en Casus blijven thuis ----
@@ -325,7 +325,7 @@ try {
   assert.equal(logPad("/v2/app"), "/v2/app");
   assert.doesNotMatch(serverBron, /console\.error\("verzoek mislukt:", request\.method, request\.url/);
   const vwo = await (await fetch(origin + "/verwerkersovereenkomst")).text();
-  const vwoVersie = serverBron.match(/const VWO_VERSIE = "(\d{4}-\d{2}-\d{2})"/)[1];
+  const vwoVersie = serverBron.match(/const VWO_VERSIE = "(\d{4}-\d{2}-\d{2})(?:-\d+)?"/)[1];
   const vwoDatum = new Date(vwoVersie + "T12:00:00Z").toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Amsterdam" });
   assert.ok(vwo.includes("Versie " + vwoDatum), "verwerkersovereenkomst toont haar eigen versie (" + vwoDatum + ")");
   assert.match(vwo, /subverwerker/i);

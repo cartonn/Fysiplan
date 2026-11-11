@@ -3416,7 +3416,7 @@ bridge2.jpg</div>
       'herstelcode-vernieuwen-mislukt':'nieuwe herstelcode geweigerd','claim-gereset-door-beheer':'beveiliging gereset door beheer',
       'kaart-link-vernieuwd':'kaartlink vernieuwd','eigen-login-gemaakt':'eigen login gemaakt','collega-uitgenodigd':'collega uitgenodigd',
       'uitnodiging-aangenomen':'uitnodiging aangenomen','collega-verwijderd':'collega verwijderd','rol-gewijzigd':'rol gewijzigd',
-      'praktijkwachtwoord-uit':'praktijkwachtwoord uitgezet','praktijkwachtwoord-aan':'praktijkwachtwoord weer aangezet','kaart-verwijderd':'patiëntkaart verwijderd','profiel-gewijzigd':'praktijkgegevens of logo gewijzigd','abonnement-opgezegd':'abonnement opgezegd','opzeggen-mislukt':'opzeggen geweigerd (fout wachtwoord)'};
+      'praktijkwachtwoord-uit':'praktijkwachtwoord uitgezet','praktijkwachtwoord-aan':'praktijkwachtwoord weer aangezet','kaart-verwijderd':'patiëntkaart naar de prullenbak','kaart-hersteld':'patiëntkaart hersteld uit de prullenbak','kaart-definitief-verwijderd':'patiëntkaart definitief verwijderd','profiel-gewijzigd':'praktijkgegevens of logo gewijzigd','abonnement-opgezegd':'abonnement opgezegd','opzeggen-mislukt':'opzeggen geweigerd (fout wachtwoord)'};
     fetch('api/praktijk/activiteit?praktijk='+encodeURIComponent((SET.praktijk||'').trim()),PGET())
       .then(function(r){return r.json();})
       .then(function(d){
@@ -4118,11 +4118,20 @@ bridge2.jpg</div>
       fetch('api/kaarten/prullenbak?praktijk='+encodeURIComponent(pr),PGET())
         .then(function(r){return r.json();}).then(function(d){
           if(!d.ok){uit.textContent=d.fout||'Prullenbak ophalen is niet gelukt.';return;}
-          uit.innerHTML='<p>Alleen de maker en beheerder kunnen herstellen. De patiëntlink werkt tot die tijd niet. Herstellen kan maximaal zeven dagen, nooit langer dan de bestaande bewaartermijn.</p>'+
-            (d.kaarten.length?d.kaarten.map(function(k){return "<p><b>"+esc(k.naam)+"</b> — herstellen tot "+esc(new Date(k.herstelTot).toLocaleString('nl-NL'))+" <button class='btn' data-prulherstel='"+esc(k.id)+"'>Herstellen</button></p>";}).join(''):'<p>Geen kaarten die je kunt herstellen.</p>');
+          uit.innerHTML='<p>Alleen de maker en beheerder kunnen herstellen. De patiëntlink werkt tot die tijd niet. Herstellen kan maximaal zeven dagen, nooit langer dan de bestaande bewaartermijn. Vraagt de patiënt om wissen, kies dan Definitief verwijderen.</p>'+
+            (d.kaarten.length?d.kaarten.map(function(k){return "<p><b>"+esc(k.naam)+"</b> — herstellen tot "+esc(new Date(k.herstelTot).toLocaleString('nl-NL'))+" <button class='btn' data-prulherstel='"+esc(k.id)+"'>Herstellen</button> <button class='btn' data-pruldef='"+esc(k.id)+"'>Definitief verwijderen</button></p>";}).join(''):'<p>Geen kaarten die je kunt herstellen.</p>');
         }).catch(function(){uit.textContent='Geen verbinding. Probeer opnieuw.';}).then(function(){knop.disabled=false;});
     };
     uit.onclick=function(e){
+      var d0=e.target.closest('[data-pruldef]');
+      if(d0){
+        if(!confirm('Deze kaart en de opnames erbij nu definitief verwijderen? Dit kan niet ongedaan worden gemaakt. Wat de praktijk moet bewaren, staat in het eigen dossier.'))return;
+        d0.disabled=true;
+        fetch('api/kaarten/definitief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:d0.dataset.pruldef})})
+          .then(function(r){return r.json();}).then(function(d){if(d.ok){var r0=d0.closest('p');if(r0)r0.remove();}else{d0.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
+          .catch(function(){d0.disabled=false;alert('Geen verbinding. Probeer opnieuw.');});
+        return;
+      }
       var b=e.target.closest('[data-prulherstel]');if(!b)return;
       if(!confirm('Deze kaart herstellen? De bestaande patiëntlink werkt daarna weer.'))return;
       b.disabled=true;

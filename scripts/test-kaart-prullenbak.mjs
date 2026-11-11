@@ -99,6 +99,28 @@ try {
   const legacy=await maak('Oud',G);
   assert.equal((await weg('Oud',J,legacy.id)).status,403,'zonder maker alleen beheer');
   assert.equal((await weg('Oud',S,legacy.id)).status,200);
+  // Definitief verwijderen (AVG art. 17): meteen weg met de opname, niet pas na zeven dagen.
+  const def=(id,H)=>post('/api/kaarten/definitief',{praktijk:P,id},H);
+  const w=await maak('Wissen',J);
+  assert.equal((await def(w.id,J)).status,404,'alleen vanuit de prullenbak');
+  assert.equal((await weg('Wissen',J,w.id)).status,200);
+  assert.equal((await def(w.id,M)).status,403,'andere therapeut mag niet');
+  assert.equal((await def(w.id,{})).status,401);
+  assert.equal((await def(w.id,J)).status,200);
+  assert.ok(!(await prul(J)).some((k)=>k.id===w.id),'niet meer in de prullenbak');
+  assert.equal((await terug(w.id,S)).status,404,'niet meer herstelbaar');
+  assert.equal((await def(w.id,J)).status,404);
+  const opSchijf=JSON.parse(await readFile(join(dataDir,'kaarten.json'),'utf8'));
+  assert.ok(!Object.values(opSchijf).some((m)=>Object.values(m).some((k)=>k.id===w.id)),'kaart meteen van schijf');
+  const log=await (await get('/api/praktijk/activiteit?praktijk='+encodeURIComponent(P),S)).json();
+  assert.ok(JSON.stringify(log).includes('kaart-definitief-verwijderd'),'staat in Activiteit');
+  // inzage-download: kaart in de prullenbak met echte verdwijndatum, niet 1970
+  const p2=await maak('Inzage',J);await weg('Inzage',J,p2.id);
+  const dl=await formulier('/v2/gegevens/download',{praktijk:P,email:'sanne@rollen.nl',wachtwoord:'sanne-wachtwoord'});
+  assert.equal(dl.status,200);
+  const k2=(await dl.json()).kaarten.find((k)=>k.id===p2.id);
+  assert.equal(k2.inPrullenbak,true);assert.ok(new Date(k2.verlooptOp).getTime()>Date.now(),'verlooptOp = herstelTot, niet 1970');
+  await def(p2.id,J);
   await maak('Verlopen',J);
   await weg('Verlopen',J);
   // Na herstart blijven prullenbak en rollen bestaan; verlopen kaart + privévideo worden opgeruimd.
