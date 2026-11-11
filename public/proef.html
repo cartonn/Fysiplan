@@ -291,7 +291,15 @@ __INHOUD__
     </div>
     <div class="blad" style="margin-top:28px">
       <h2>Alles wissen</h2>
-      <p class="klein" style="font-size:14.5px">Dit wist meteen alle kaarten van je praktijk (de links werken daarna niet meer), eigen oefeningen met foto&rsquo;s, eigen video&rsquo;s, sjablonen, je logo en praktijkgegevens, je proefaanmelding (naam, e-mail, telefoon), het wachtwoord en het logboek. Dit kun je niet ongedaan maken. In de dagelijkse reservekopie staat het nog hooguit 7 dagen. Kopieer eerst naar je dossier wat je moet bewaren.</p>
+      <p class="klein" style="font-size:14.5px">Dit wist meteen alles van je praktijk:</p>
+      <ul class="klein" style="font-size:14.5px;margin:6px 0 0 18px">
+        <li>alle kaarten, ook die in de prullenbak (de links werken daarna niet meer);</li>
+        <li>eigen oefeningen met foto&rsquo;s, eigen video&rsquo;s en sjablonen;</li>
+        <li>je logo en praktijkgegevens;</li>
+        <li>je proefaanmelding (naam, e-mail, telefoon);</li>
+        <li>het wachtwoord en het logboek.</li>
+      </ul>
+      <p class="klein" style="font-size:14.5px">Dit kun je niet ongedaan maken. In de dagelijkse reservekopie staat het nog hooguit 7 dagen. Kopieer eerst naar je dossier wat je moet bewaren.</p>
       <form method="post" action="/v2/gegevens/wissen" style="margin-top:12px">
         <div class="veld"><label for="ws_praktijk">Praktijknaam</label><input id="ws_praktijk" name="praktijk" maxlength="80" autocomplete="organization" required value="__V_PRAKTIJK__"/></div>
         <div class="veld" style="margin-top:12px"><label for="ws_email">Je e-mail <span style="font-weight:400">(alleen als je met een eigen login werkt; je moet beheerder zijn)</span></label><input id="ws_email" name="email" type="email" maxlength="120" autocomplete="username"/></div>
@@ -300,7 +308,7 @@ __INHOUD__
         <div class="knoppen"><button class="knop oranje" type="submit">Wis alles van mijn praktijk</button></div>
       </form>
     </div>
-    <p class="klein" style="margin-top:22px">Een losse kaart wis je in de app met &ldquo;Verwijderen&rdquo;. Je proefaanmelding alleen wissen, zonder de rest? Dat kan via <a href="/v2/proef">Mijn proef</a>. Namen en kaarten in de browser van je eigen computer wis je in de app bij Kaarten met &ldquo;Wis Fysiplan van dit apparaat&rdquo;. Meer in de <a href="/privacy#rechten">privacyverklaring</a>.</p>
+    <p class="klein" style="margin-top:22px">Een losse kaart verwijdert de maker of een beheerder in de app met &ldquo;Verwijderen&rdquo;. De kaart staat dan nog hooguit __HERSTEL_DAGEN__ dagen in de prullenbak (Kaarten &rarr; Prullenbak). Moet hij meteen weg, bijvoorbeeld omdat de pati&euml;nt om wissen vraagt? Kies daar &ldquo;Definitief verwijderen&rdquo;. Je proefaanmelding alleen wissen, zonder de rest? Dat kan via <a href="/v2/proef">Mijn proef</a>. Namen en kaarten in de browser van je eigen computer wis je in de app bij Kaarten met &ldquo;Wis Fysiplan van dit apparaat&rdquo;. Meer in de <a href="/privacy#rechten">privacyverklaring</a>.</p>
   </div>
 </main>
 <!--/blok-->

@@ -16,12 +16,24 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (f) cookies en lokale opslag | 2026-11-11 01u (alle localStorage-, sessionStorage-, Cache- en IndexedDB-sleutels van /k en /v2/app tegen /privacy#opslag; kaart weg bij de praktijk (404): `fp_beelden_<id>` (kaart-id + oefenbeelden) en de beelden zelf bleven op de telefoon, opgelost; privacylink op een anderstalige kaart zegt nu dat de pagina Nederlands is; cookies `fpproef`/`fp1` en "Wis Fysiplan van dit apparaat" (alle `fp_`/`fysiplan`-sleutels, IndexedDB, caches): klopt) · 2026-11-09 21u |
 | (g) MDR en AI-verordening | 2026-11-10 13u (nieuwe patiëntkaart #162: de AI-stem bij oefeningen zonder AI-video en via de knop bovenaan/vergroting had geen AI-melding: opgelost; landing, app en kaart zonder diagnose-, doserings- of sorteerbelofte; vraaghulp-grens ongewijzigd) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
-| (i) begrijpelijkheid (B1) | 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
+| (i) begrijpelijkheid (B1) | 2026-11-11 17u (gemeten op /privacy, /verwerkersovereenkomst, /voorwaarden, /v2/proef, /v2/gegevens en /v2: gem. 9–12 woorden per zin, juridische pagina's geen zin > 40, patiëntdeel ≤ 30; /v2/gegevens zei "Een losse kaart wis je met Verwijderen" terwijl die sinds #191 nog 7 dagen in de prullenbak staat: opgelost; waarschuwing bij Alles wissen 35 woorden: opgelost als lijst; /v2/gegevens nu ook in `test-juridisch-b1.mjs`) · 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (i) B1, dan (h) WGBO, dan (a) privacyverklaring. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (h) WGBO, dan (a) privacyverklaring, dan (g) MDR (landing is door #197 in de Active Tech-stijl herschreven: nieuwe hero met een persoon in squathouding; nagaan of dat beeld een foto of AI-beeld is en of het een melding of 'Fotomontage' nodig heeft). Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **MIDDEL — begrijpelijkheid (i) / rechten (e) 2026-11-11 17u: /v2/gegevens beschreef verwijderen van een losse kaart verkeerd.**
+  De pagina voor inzage, meenemen en wissen zei "Een losse kaart wis je in de app met Verwijderen". Sinds #191 staat die
+  kaart dan nog 7 dagen herstelbaar in de prullenbak; meteen wissen (art. 17, bijvoorbeeld op verzoek van de patiënt) kan
+  alleen met "Definitief verwijderen" (#194). Ook stond de waarschuwing bij Alles wissen in één zin van 35 woorden.
+  OPGELOST 2026-11-11 (deze PR): tekst noemt maker/beheerder, de prullenbak met termijn uit `KAART_HERSTEL_MS` en
+  "Definitief verwijderen"; Alles wissen als korte lijst, met "ook die in de prullenbak" (klopt: `praktijkAllesWissen`
+  wist heel `kaarten[pk]`); VWO art. 8 noemt de knop ook (redactioneel, art. 10 had het al, geen nieuwe versie).
+  Test: `/v2/gegevens` in `scripts/test-juridisch-b1.mjs` (zinnen ≤ 30 woorden, tekst tegen code; faalt zonder fix).
+  Bron: AVG art. 12 lid 1 (beknopt, begrijpelijk, duidelijke taal) en art. 17.
+- **LAAG — landing (voor de gebruikers-sweep, niet zelf gebouwd wegens open PR #196 op v2.html):** typfout "exporteert lle
+  kaarten" in de FAQ van /v2, en een zin met `fysiplan.nl/v2/app#client={naam}` zonder leesteken ervoor.
 
 - **MIDDEL — rechten van betrokkenen (e) 2026-11-11 13u: na de prullenbak (#191) kon een praktijk een kaart niet meer meteen wissen.**
   Sinds #191 gaat verwijderen eerst 7 dagen naar de prullenbak; er was geen knop om een kaart daaruit definitief te wissen.

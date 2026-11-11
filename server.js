@@ -768,7 +768,7 @@ async function serveerProef(request, response, blok, vars = {}, status = 200) {
   const m = bron.match(new RegExp("<!--blok:" + blok + "-->([\\s\\S]*?)<!--/blok-->"));
   const schil = bron.split("<!--blok:")[0].replace(/\s+$/, "\n");
   let html = schil.replace("__INHOUD__", m ? m[1] : "");
-  const alle = { PROEF_DAGEN: String(PROEF_DAGEN), BEWAAR_DAGEN: String(PROEF_BEWAAR_DAGEN), TITEL: "Gratis proberen", ...vars };
+  const alle = { PROEF_DAGEN: String(PROEF_DAGEN), BEWAAR_DAGEN: String(PROEF_BEWAAR_DAGEN), HERSTEL_DAGEN: String(Math.round(KAART_HERSTEL_MS / 86400000)), TITEL: "Gratis proberen", ...vars };
   // waarden met een _HTML-achtervoegsel zijn al door de server opgebouwd en veilig
   html = html.replace(/__([A-Z_]+)__/g, (heel, k) => k in alle ? (k.endsWith("_HTML") ? alle[k] : htmlEsc(alle[k]))
     : (k + "_HTML") in alle ? alle[k + "_HTML"] : "");
