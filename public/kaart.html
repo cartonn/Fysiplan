@@ -3515,11 +3515,35 @@
     if(t){document.getElementById('fout_kop').textContent=t[0];document.getElementById('fout_tekst').textContent=t[1];document.documentElement.lang=TAAL;}
     document.getElementById('fout').style.display='block';
   }
-  function toonStoring(){
+  // Storingsmelding in de taal van de kaart. 'net' = geen verbinding (verzoek kwam niet aan);
+  // 'druk' = de server antwoordde met een fout (429/5xx): dan ligt het niet aan de patiënt (sweep 2026-11-11).
+  var STORING={
+    nl:{net:['Even geen verbinding','Je kaart is er nog, maar hij laadt nu niet. Probeer het over een minuut opnieuw.','Opnieuw proberen'],
+      druk:['Het lukt even niet','Je kaart is er nog, maar Fysiplan reageert nu niet. Dat ligt niet aan je internet. Probeer het over een paar minuten opnieuw.','Opnieuw proberen']},
+    en:{net:['No connection right now','Your card is still there, but it is not loading right now. Please try again in a minute.','Try again'],
+      druk:['Not working right now','Your card is still there, but Fysiplan is not responding right now. It is not your internet connection. Please try again in a few minutes.','Try again']},
+    de:{net:['Gerade keine Verbindung','Deine Karte ist noch da, lädt aber gerade nicht. Bitte versuche es in einer Minute noch einmal.','Erneut versuchen'],
+      druk:['Gerade nicht erreichbar','Deine Karte ist noch da, aber Fysiplan antwortet gerade nicht. Das liegt nicht an deiner Internetverbindung. Bitte versuche es in ein paar Minuten noch einmal.','Erneut versuchen']},
+    fr:{net:['Pas de connexion pour le moment','Ta carte est toujours là, mais elle ne se charge pas pour le moment. Réessaie dans une minute.','Réessayer'],
+      druk:['Indisponible pour le moment','Ta carte est toujours là, mais Fysiplan ne répond pas pour le moment. Ce n’est pas ta connexion internet. Réessaie dans quelques minutes.','Réessayer']},
+    es:{net:['Sin conexión ahora mismo','Tu tarjeta sigue ahí, pero ahora no se carga. Inténtalo de nuevo en un minuto.','Reintentar'],
+      druk:['No disponible ahora mismo','Tu tarjeta sigue ahí, pero Fysiplan no responde ahora mismo. No es tu conexión a internet. Inténtalo de nuevo en unos minutos.','Reintentar']},
+    pl:{net:['Brak połączenia','Twoja karta nadal istnieje, ale teraz się nie ładuje. Spróbuj ponownie za minutę.','Spróbuj ponownie'],
+      druk:['Chwilowo niedostępne','Twoja karta nadal istnieje, ale Fysiplan teraz nie odpowiada. To nie wina Twojego internetu. Spróbuj ponownie za kilka minut.','Spróbuj ponownie']},
+    tr:{net:['Şu anda bağlantı yok','Kartın hâlâ duruyor ama şu anda yüklenmiyor. Bir dakika sonra tekrar dene.','Tekrar dene'],
+      druk:['Şu anda çalışmıyor','Kartın hâlâ duruyor ama Fysiplan şu anda yanıt vermiyor. Sorun senin internet bağlantında değil. Birkaç dakika sonra tekrar dene.','Tekrar dene']},
+    ar:{net:['لا يوجد اتصال الآن','بطاقتك لا تزال موجودة، لكنها لا تُحمَّل الآن. حاول مرة أخرى بعد دقيقة.','حاول مرة أخرى'],
+      druk:['الخدمة غير متاحة الآن','بطاقتك لا تزال موجودة، لكن Fysiplan لا يستجيب الآن. المشكلة ليست في اتصالك بالإنترنت. حاول مرة أخرى بعد بضع دقائق.','حاول مرة أخرى']},
+    uk:{net:['Зараз немає з’єднання','Ваша картка нікуди не зникла, але зараз не завантажується. Спробуйте ще раз за хвилину.','Спробувати ще раз'],
+      druk:['Зараз не працює','Ваша картка нікуди не зникла, але Fysiplan зараз не відповідає. Справа не у вашому інтернеті. Спробуйте ще раз за кілька хвилин.','Спробувати ще раз']}
+  };
+  function toonStoring(status){
     geenLaden();
-    var t={en:['No connection right now','Your card is still there, but it is not loading right now. Please try again in a minute.','Try again']}[TAAL];
-    if(t){document.getElementById('storing_kop').textContent=t[0];document.getElementById('storing_tekst').textContent=t[1];document.getElementById('storing_knop').textContent=t[2];}
-    document.getElementById('storing').style.display='block';
+    var soort=(status===429||status>=500)?'druk':'net';
+    var t=(STORING[TAAL]||STORING.nl)[soort];
+    document.getElementById('storing_kop').textContent=t[0];document.getElementById('storing_tekst').textContent=t[1];document.getElementById('storing_knop').textContent=t[2];
+    if(STORING[TAAL])document.documentElement.lang=TAAL;
+    var st=document.getElementById('storing');st.setAttribute('data-soort',soort);st.style.display='block';
   }
   document.getElementById('storing_knop').addEventListener('click',function(){location.reload();});
   if(!id){var fo=document.getElementById('fout');if(/[?&]gewist=1/.test(location.search)){geenLaden();fo.textContent='';var pg=document.createElement('p');pg.id='mg_weg';pg.style.cssText='font:600 16px/1.5 var(--disp)';pg.textContent=trmg('gewist');fo.appendChild(pg);fo.style.display='block';}else toonNietGevonden();}
@@ -3533,7 +3557,7 @@
       fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
       ,loadMobileReview().catch(function(){mediaReviewReady=false;})
     ]).then(function(res){
-      if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404){toonNietGevonden();vergeetKaartWeg();}else toonStoring();return;}
+      if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404){toonNietGevonden();vergeetKaartWeg();}else toonStoring(res[0]&&res[0].status);return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai,dag:typeof res[0].dag==='string'?res[0].dag:''};
       // Komt het stemmanifest pas na het tekenen binnen, dan zetten we alleen de wachtende
       // luisterregels om (herstelNoorKnoppen), dezelfde weg als een latere geslaagde poging.

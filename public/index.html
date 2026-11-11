@@ -162,6 +162,7 @@
   #a4 table.mon thead tr:nth-child(3){height:22px}
   #a4 table.mon thead tr:nth-child(4){height:22px}
   #a4 table.mon tbody tr{height:26px}
+  #a4 table.mon tbody tr.xr{display:none}
   #emptyA4{position:absolute;top:170px;left:26px;right:26px;z-index:2;pointer-events:none}
   /* knopjes op het plaatje: binnen het vak (het vak snijdt alles erbuiten af), zichtbaar bij aanwijzen */
   #a4 .pic .rm{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:#d92d20;color:#fff;font-size:15px;font-weight:700;line-height:21px;text-align:center;cursor:pointer;display:none;box-shadow:0 1px 5px rgba(16,24,40,.3)}
@@ -1624,8 +1625,8 @@ bridge2.jpg</div>
     head+="</tr><tr class='shw'><th class='dd'></th>";
     for(var d=0;d<12;d++)head+="<th colspan='3' class='shwgroup'><span>S</span><span>H</span><span>W</span></th>";
     head+="</tr></thead>";
-    function dateRow(r){
-      var tr="<tr><td class='dd'><input class='drow' data-row='"+r+"' value='"+esc(GRID.rows[r]||'')+"' placeholder='__-__'/></td>";
+    function dateRow(r,extra){
+      var tr="<tr"+(extra?" class='xr'":"")+"><td class='dd'><input class='drow' data-row='"+r+"' value='"+esc(GRID.rows[r]||'')+"' placeholder='__-__'/></td>";
       colKeys.forEach(function(ck){['S','H','W'].forEach(function(f){var key=ck+'|'+r+'|'+f;var gv=String(GRID.cells[key]||'');tr+="<td><input data-k='"+key+"'"+(gv.length>4?" class='kl'":"")+" value='"+esc(gv)+"'/></td>";});});
       return tr+"</tr>";
     }
@@ -1634,9 +1635,12 @@ bridge2.jpg</div>
       colKeys.forEach(function(ck){var key=ck+'|'+r+'|V';tr+="<td colspan='3'><input data-k='"+key+"' value='"+esc(GRID.cells[key]||'')+"'/></td>";});
       return tr+"</tr>";
     }
-    var rows='',ri=0;
+    var rows='',ri=0,XR_PER_BLOK=IS_V2?1:0;
     for(var b=0;b<2;b++){
       for(var i=0;i<6;i++)rows+=dateRow('r'+(ri++));
+      // Compacte kaart: de ruimte die de kleinere plaatjes vrijmaken wordt extra datumrijen
+      // (alleen zichtbaar bij het printen van de compacte kaart; sweep 2026-11-11)
+      for(var x=0;x<XR_PER_BLOK;x++)rows+=dateRow('r'+(12+b*XR_PER_BLOK+x),true);
       rows+=labelRow('BORG','borg'+b);
     }
     rows+=labelRow('XRM','xrm');
@@ -2673,7 +2677,7 @@ bridge2.jpg</div>
       if(IS_V2&&(SET.praktijk||'').trim())klein+="<button class='sjb-link' data-sjdo='deel' data-sj='"+sl+"' title='Deel deze kaart met de hele praktijk: elke collega kan hem dan op elk apparaat gebruiken'>Delen met de praktijk</button>";
       klein+="<button class='sjb-link rood' data-sjdo='weg' data-sj='"+sl+"'>Verwijderen</button>";
     }
-    if(it.bron==='praktijk')klein+="<button class='sjb-link rood' data-sjdo='weg' data-sj='"+sl+"' title='Verwijdert deze kaart voor de hele praktijk'>Verwijderen voor de praktijk</button>";
+    if(it.bron==='praktijk'&&it.s.magWeg!==false)klein+="<button class='sjb-link rood' data-sjdo='weg' data-sj='"+sl+"' title='Verwijdert deze kaart voor de hele praktijk'>Verwijderen voor de praktijk</button>";
     if(klein)h+="<div class='sjb-vb-klein'>"+klein+"</div>";
     if(it.bron==='std')h+="<p class='sjb-vb-noot'>Een standaardkaart blijft altijd zoals hij is. Wat je aanpast bewaar je als je eigen kaart.</p>";
     el.innerHTML=h;

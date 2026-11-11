@@ -117,6 +117,8 @@
     "test:agendadubbel": "node scripts/test-kaart-agenda-dubbel.mjs",
     "test:proeftweedeapparaat": "node scripts/test-sweep-proef-tweede-apparaat.mjs",
     "test:printgroot": "node scripts/test-sweep-print-groot.mjs",
+    "test:printcompact": "node scripts/test-sweep-print-compact.mjs",
+    "test:storingtaal": "node scripts/test-sweep-storing-taal.mjs",
     "test:vuleersterij": "node scripts/test-sweep-vul-eerste-rij.mjs",
     "test:inlogrem": "node scripts/test-inlogrem-ip.mjs",
     "test:annulerenhernoem": "node scripts/test-kaart-annuleren-hernoem.mjs",

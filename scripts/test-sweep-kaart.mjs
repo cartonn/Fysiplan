@@ -79,7 +79,7 @@ try {
   // zonder browser (CI heeft geen Playwright): de kaart onderscheidt 404 van de rest
   const kaartHtml = await readFile(join(root, "public/kaart.html"), "utf8");
   assert.match(kaartHtml, /id="storing"[^>]*role="alert"/, "storingsblok staat op de kaart");
-  assert.match(kaartHtml, /if\(res\[0\]&&res\[0\]\.status===404\)\{toonNietGevonden\(\);vergeetKaartWeg\(\);\}else toonStoring\(\);/,
+  assert.match(kaartHtml, /if\(res\[0\]&&res\[0\]\.status===404\)\{toonNietGevonden\(\);vergeetKaartWeg\(\);\}else toonStoring\(res\[0\]&&res\[0\]\.status\);/,
     "alleen een 404 toont 'bestaat niet (meer)'");
   assert.match(kaartHtml, /\}\)\.catch\(function\(\)\{toonStoring\(\);\}\);\n  \}\n\}\)\(\);/, "geen verbinding: storing");
   assert.equal((await fetch(origin + "/api/kaart?id=000000000000", { headers: { "x-forwarded-for": "10.1.0.2" } })).status, 404,
