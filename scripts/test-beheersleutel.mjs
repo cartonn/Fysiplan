@@ -92,4 +92,19 @@ await metServer({ RAILWAY_ENVIRONMENT: "production", ADMIN_KEY: "test-eigen-sleu
   assert.equal(await met("test-eigen-sleutel-123", "10.66.0.2"), 200, "rem van één IP sluit beheer voor iedereen");
 });
 
+// 7. ook routes waar beheer alleen een extra recht is (GET /api/praktijken geeft beheer de
+// hele lijst) tellen foute sleutels mee: anders kon je daar onbeperkt raden. Gewone
+// verzoeken zonder sleutel tellen niet mee, en het antwoord zelf blijft gewoon 200.
+await metServer({ RAILWAY_ENVIRONMENT: "production", ADMIN_KEY: "test-eigen-sleutel-123" }, async (basis) => {
+  const lijst = (ip, sleutel) => fetch(basis + "/api/praktijken",
+    { headers: { "x-forwarded-for": ip, ...(sleutel ? { "x-admin-sleutel": sleutel } : {}) } }).then((r) => r.status);
+  const met = (sleutel, ip) =>
+    fetch(basis + "/api/dashboard", { headers: { "x-admin-sleutel": sleutel, "x-forwarded-for": ip } }).then((r) => r.status);
+  for (let i = 0; i < 30; i++) assert.equal(await lijst("10.77.0.1"), 200);
+  assert.equal(await met("test-eigen-sleutel-123", "10.77.0.1"), 200, "verzoeken zonder sleutel zetten de beheerder op de rem");
+  for (let i = 0; i < 21; i++) assert.equal(await lijst("10.77.0.2", "fout-" + i), 200);
+  assert.equal(await met("test-eigen-sleutel-123", "10.77.0.2"), 429, "foute sleutels op /api/praktijken tellen niet mee voor de rem: raden zonder grens");
+  assert.equal(await met("test-eigen-sleutel-123", "10.77.0.3"), 200);
+});
+
 console.log("test-beheersleutel: ok");

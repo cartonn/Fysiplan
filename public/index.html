@@ -3402,7 +3402,7 @@ bridge2.jpg</div>
       'herstelcode-vernieuwen-mislukt':'nieuwe herstelcode geweigerd','claim-gereset-door-beheer':'beveiliging gereset door beheer',
       'kaart-link-vernieuwd':'kaartlink vernieuwd','eigen-login-gemaakt':'eigen login gemaakt','collega-uitgenodigd':'collega uitgenodigd',
       'uitnodiging-aangenomen':'uitnodiging aangenomen','collega-verwijderd':'collega verwijderd','rol-gewijzigd':'rol gewijzigd',
-      'praktijkwachtwoord-uit':'praktijkwachtwoord uitgezet','praktijkwachtwoord-aan':'praktijkwachtwoord weer aangezet'};
+      'praktijkwachtwoord-uit':'praktijkwachtwoord uitgezet','praktijkwachtwoord-aan':'praktijkwachtwoord weer aangezet','kaart-verwijderd':'patiëntkaart verwijderd'};
     fetch('api/praktijk/activiteit?praktijk='+encodeURIComponent((SET.praktijk||'').trim()),PGET())
       .then(function(r){return r.json();})
       .then(function(d){
@@ -3623,10 +3623,18 @@ bridge2.jpg</div>
         // andere naam dan de kaart die deze editor bewerkt: niet stil hernoemen, want dan
         // opent de al geprinte QR van de vorige patiënt deze kaart (sweep 2026-11-08, Sanne)
         if(d&&d.hernoemVraag&&!keuze){
-          var nieuw=confirm('Deze editor heeft de kaart van \u201c'+(d.naam||'')+'\u201d open, met een eigen QR-code.\n\n'+
-            'OK = nieuwe kaart voor \u201c'+naam+'\u201d met een eigen QR-code (andere pati\u00ebnt)\n'+
-            'Annuleren = alleen de naam van \u201c'+(d.naam||'')+'\u201d verbeteren naar \u201c'+naam+'\u201d (zelfde pati\u00ebnt en QR)');
-          saveServerCard(naam,cb,nieuw?'nieuw':'hernoem');return;
+          // Annuleren of Esc mag nooit een actie zijn: eerst hernoemde "Annuleren" de kaart van de
+          // vorige patiënt stil, en dan opende haar geprinte QR een kaart met een andere naam
+          // (sweep 2026-11-10 22u, Mark). Nu twee vragen; alleen OK doet iets.
+          if(confirm('Deze editor heeft de kaart van \u201c'+(d.naam||'')+'\u201d open, met een eigen QR-code.\n\n'+
+            'Is \u201c'+naam+'\u201d een andere pati\u00ebnt?\nOK = nieuwe kaart voor \u201c'+naam+'\u201d met een eigen QR-code')){
+            saveServerCard(naam,cb,'nieuw');return;
+          }
+          if(confirm('Alleen de naam van \u201c'+(d.naam||'')+'\u201d verbeteren naar \u201c'+naam+'\u201d?\n'+
+            'Zelfde pati\u00ebnt, zelfde QR-code.\n\nOK = naam verbeteren\nAnnuleren = niets opslaan')){
+            saveServerCard(naam,cb,'hernoem');return;
+          }
+          cb({ok:false,geannuleerd:true,fout:'Niet opgeslagen. De kaart van \u201c'+(d.naam||'')+'\u201d is niet veranderd.'});return;
         }
         // nieuwe kaart voor een andere patiënt: de editor volgt die kaart, dus ook het naamveld
         // (en daarmee QR en autosave). Bleef hier de oude naam staan, dan gaf elke autosave

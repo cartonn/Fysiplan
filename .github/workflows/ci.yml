@@ -37,6 +37,8 @@ jobs:
       - run: npm run test:abonnement
       - run: npm run test:sweep
       - run: npm run test:patientmobiel
+      - run: npm run test:grotelettersk
+      - run: npm run test:agendadubbel
       - run: npm run test:offline
       - run: npm run test:tablet
       - run: npm run test:praktijkslot
@@ -54,6 +56,7 @@ jobs:
       - run: node scripts/test-proef-einde-wissen.mjs
       - run: node scripts/test-verdwijndatum-praktijk.mjs
       - run: node scripts/test-juridisch-b1.mjs
+      - run: node scripts/test-stem-ai-melding.mjs
       - run: npm run test:kaartversie
       - run: npm run test:hernoem
       - run: npm run test:topbar
@@ -101,6 +104,7 @@ jobs:
       - run: npm run test:uitnodigingpraktijk
       - run: npm run test:rempraktijk
       - run: npm run test:sjablonenslot
+      - run: npm run test:proefwissenklant
       - run: npm run test:uitloggenprint
       - run: npm run test:wachtrijmelding
       - run: npm run test:controletaal
@@ -109,3 +113,10 @@ jobs:
       - run: npm run test:proeftweedeapparaat
       - run: npm run test:printgroot
       - run: npm run test:vuleersterij
+      - run: npm run test:inlogrem
+      - run: npm run test:wachtwoordrem
+      - run: npm run test:auditspoor
+      - run: npm run test:zwaaroffline
+      - run: npm run test:dagwisseltaal
+      - run: npm run test:reekstitel
+      - run: npm run test:annulerenhernoem

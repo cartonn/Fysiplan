@@ -8,18 +8,89 @@ daaruit tot en met 2026-11-06.
 
 | Gebied | Laatst geaudit |
 |---|---|
-| (a) beheer-endpoints en de admin-sleutel | 2026-11-09 12u (statisch: 17 `isAdmin`-routes, /aanmeldingen en /medewerkers alleen `ACCOUNT_BEHEER_EMAILS`, geen admin88 in publieke bestanden, productie zonder eigen `ADMIN_KEY` dicht, rem vóór sleutel. Geen gat) |
-| (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-09 12u (team: eigen login, uitnodigen, verwijderen, rol, gedeeld uit; uitnodiging verzilveren; wachtwoord per lid; v1-login/registratie. Nieuw: LAAG uitnodigingsmail als spamkanaal, zie Open) · 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
-| (c) proef-tokens en verlopen proeven | 2026-11-09 16u (koppelen van een account aan een proef bij inloggen, nu ook gevolgd door wissen na 30 dagen: oude proefcookie hing een gewone praktijk aan een verlopen proef, opgelost; claim, slot en wissen alleen voor de eigen proef) · 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
+| (a) beheer-endpoints en de admin-sleutel | 2026-11-10 12u (na #159: sleutelformulier controleert via /api/dashboard, sleutel alleen in sessionStorage, geen sleutel in publieke bestanden; productie zonder eigen `ADMIN_KEY` dicht. Gevonden: foute sleutels op routes waar beheer een extra recht is, telden niet mee voor de rem, opgelost) · 2026-11-09 12u (statisch: 17 `isAdmin`-routes, /aanmeldingen en /medewerkers alleen `ACCOUNT_BEHEER_EMAILS`, geen admin88 in publieke bestanden, productie zonder eigen `ADMIN_KEY` dicht, rem vóór sleutel. Geen gat) |
+| (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-10 20u (NAKIJKEN van de sweep bevestigd: missers van een lid bij wachtwoord wijzigen telden op de praktijksleutel, opgelost) · 2026-11-10 16u (runtime: inlogrem per IP remde niet echt, goed wachtwoord na 20 missers nog binnen; /v2/gegevens en /v2/proef/overzicht telden missers niet per IP: opgelost. Sessies 30 dagen, ingetrokken bij verwijderen/wachtwoord/gedeeld uit; rol live uit het lid; uitnodigingstoken 192 bits met misrem; herstelcode 80 bits. Verder geen gat) · 2026-11-09 12u (team: eigen login, uitnodigen, verwijderen, rol, gedeeld uit; uitnodiging verzilveren; wachtwoord per lid; v1-login/registratie. Nieuw: LAAG uitnodigingsmail als spamkanaal, zie Open) · 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
+| (c) proef-tokens en verlopen proeven | 2026-11-11 04u (statisch + runtime alle /v2/proef/*-routes met de proefcookie: wissen, opzeggen, factuurgegevens, betalen, doorgaan, factuur, terug. "Gegevens wissen" met een betaald abonnement maakte de praktijk gratis en voor altijd klant: opgelost. Nieuw LAAG: abonnementsacties zonder beheerdersrol, welkomstlink = blijvend apparaattoken, zie Open) · 2026-11-09 16u (koppelen van een account aan een proef bij inloggen, nu ook gevolgd door wissen na 30 dagen: oude proefcookie hing een gewone praktijk aan een verlopen proef, opgelost; claim, slot en wissen alleen voor de eigen proef) · 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-10 00u (statisch alle 30 kaartroutes: patiëntroutes met `vindKaart` + misrem + `kruisSite`, therapeutroutes met `eisBeveiligdePraktijk` en alleen de eigen map, /api/kaart met allowlist, /k zonder bestaan-orakel, demo per verzoek vers. Teamsjablonen lezen/verwijderen zonder wachtwoord: opgelost) · 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP) |
 | (e) uploads (video, logo, opname /o) | 2026-11-10 08u (statisch + runtime: /uploads met ../, %2e%2e, %2f, %5c, %00, dubbele codering → 403/404; opname-upload chunked 70 MB zonder content-length → 413 vóór bufferen, geen bestand; type/magische bytes; token blijft na fout bruikbaar; eigenVideoPad alleen eigen opnames; wissen ruimt foto's, logo en video's op. Geen gat) · 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
-| (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-09 08u (runtime met Chromium: payloads in teamnaam, uitnodiging, eigen oefening, teamsjabloon, alle kaartvelden, bericht, notitie, behandelaar, doel; app-start, Kaarten-paneel, inbox, Team, Activiteit, Rapport, Sjablonen, /k in nl/en/ar: niets geïnjecteerd, geen CSP-melding. CSV-exports met formule-escape, afspraak-ICS zonder regelinjectie. Geen gat) |
+| (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-10 20u (runtime met Chromium, CSP uit zodat ook inline handlers zouden afgaan, op de nieuwe /k van #162 en #171: payloads in praktijknaam, adres, plaats, telefoon, e-mail, website (javascript:), kaartnaam, roepnaam, doel, let op, oefennaam, schemacellen, antwoord, behandelaar, PSK, notitie, afspraak, seintje; overzicht, oefenstand, Gedaan, foto, video, pijnscore in nl en ar: niets uitgevoerd of geïnjecteerd. Statisch: alle 27 `innerHTML` in kaart.html gaan door `esc()`, `vids`/`yt` alleen via de serverwhitelist. Geen gat) · 2026-11-09 08u (runtime met Chromium: payloads in teamnaam, uitnodiging, eigen oefening, teamsjabloon, alle kaartvelden, bericht, notitie, behandelaar, doel; app-start, Kaarten-paneel, inbox, Team, Activiteit, Rapport, Sjablonen, /k in nl/en/ar: niets geïnjecteerd, geen CSP-melding. CSV-exports met formule-escape, afspraak-ICS zonder regelinjectie. Geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-11-10 04u (runtime: CSP/frame-ancestors/nosniff/referrer/no-store op 13 V2-routes ook /v2/gegevens, /v2/uitnodiging, /aanmeldingen, factuur; cookies fp1/fpproef HttpOnly+SameSite=Lax(+Secure achter https); cross-site POST op alle /v2/proef/*-acties, /v2/gegevens en /api/praktijk* → 403; geen CORS-headers, ook niet op OPTIONS. Geen gat) · 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat); 2026-11-09 08u: `kruisSite` liet same-site door, opgelost) |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-09 16u (statisch: alle `sendJson`/`send` met `err.message`/`e.stack` in server.js, routes/ en lib/ sinds 8-11, ook opzeggen, factuur, wissen na proef: interne fouten gaan alleen naar het serverlog. Geen gat) · 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-09 20u (remmen: schrijf-/leesrem per IP zette een hele praktijk achter één wifi plus de patiënten daar op 429: opgelost met een rem per praktijk; plafonds per praktijk ongewijzigd) · 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
 | (j) npm audit | 2026-11-10 08u (0 meldingen) · 2026-11-09 20u (0 meldingen, ook dev) |
 
-Volgende run: (a) beheer en (b) accountlaag (open PR #159 verandert het sleutelformulier: na merge nalopen), daarna (f) XSS.
+Volgende run: (h) foutmeldingen, daarna (i) denial of service.
+
+Sanity 2026-11-11 04u op #176–#178 (wissen op de telefoon, vinkjes/taal op /k, factuurgegevens): nieuwe POST
+`/v2/proef/factuurgegevens` heeft `kruisSite`, body ≤ 4 KB, alleen de eigen proefcookie met een actief/opgezegd
+abonnement, lengte- en regelgrens, alles door `htmlEsc`/`esc` (ook op de factuur, CSP `default-src 'none'`).
+`kaart.html` zonder nieuwe `innerHTML` met invoer. Geen gat.
+
+- **OPGELOST 2026-11-11 (deze PR) — MIDDEL — "Gegevens wissen" op /v2/proef maakte een betalende praktijk gratis en
+  voor altijd klant.** `/v2/proef/wissen` (alleen de proefcookie, geen beheerdersrol) bracht de aanmelding met een betaald
+  abonnement terug tot de fiscale rest met `klant: true` en `gewist`. De proefronde slaat gewiste aanmeldingen over: geen
+  maandincasso meer, het abonnement liep nooit af, de praktijk werd nooit gewist en bleef kaarten maken. Na een beëindigd
+  abonnement zette dezelfde knop `klant` weer op true: de app ging weer open. Repro lokaal: claim met proefcookie, wissen
+  → 200, daarna `POST /api/kaarten` met de praktijksessie 200. Nu: met een betaald abonnement en een gekoppelde praktijk
+  geeft de route 409 en verwijst naar opzeggen of Mijn gegevens; een praktijk aan een gewiste aanmelding staat op slot
+  (`praktijkProefVerlopen`). Test: `npm run test:proefwissenklant`. Gevolg voor UI (gebruikers-sweep): het blok "Je gegevens
+  wissen" op Mijn proef staat er nog bij een abonnement; de knop legt nu uit waar het wel kan.
+
+Sanity 2026-11-11 00u op #172–#174 (wachtwoordrem per lid, privacytekst, Annuleren/te zwaar offline/wissen op /k):
+#173 en #174 raken geen server, geen nieuwe `innerHTML` met invoer. Geen gat.
+
+Sanity 2026-11-10 20u op #170 en #171 (privacyverklaring patiënten, herstelknoppen/laadtekst op /k): alleen tekst en
+`public/kaart.html` zonder nieuwe `innerHTML` met invoer, geen serverwijziging. Geen gat.
+
+- **OPGELOST 2026-11-11 (deze PR), deels — HOOG (gebruikers-sweep 2026-11-10 22u, Mark) — elke therapeut kan elke
+  patiëntkaart van de praktijk definitief verwijderen, zonder logboekregel.** Bevestigd lokaal: collega met rol therapeut →
+  `POST /api/kaarten/verwijder` 200, kaart en video's weg, niets in het logboek. Nu: `kaart-verwijderd` met wie het deed in
+  het logboek en in Activiteit (zonder kaartnaam of kaart-id). Kaarten hebben geen maker-veld; óf alleen maker/beheer mag
+  verwijderen is een productkeuze en staat in `docs/mensenwerk.md`. Test: `npm run test:auditspoor`.
+
+- **OPGELOST 2026-11-11 (deze PR) — MIDDEL — een buitenstaander kon het logboek van elke praktijk wegdrukken.**
+  `praktijkAudit` was één lijst van 500 regels voor alle praktijken samen. Elk verzoek zonder login op een kaartroute van een
+  beveiligde praktijk schrijft `toegang-geweigerd`, elke foute login op een verzonnen naam `login-mislukt`. Repro lokaal:
+  300× `GET /api/kaarten?praktijk=<naam>` zonder sessie + 300 foute logins op verzonnen namen (wisselende IP's) → Activiteit
+  van de praktijk leeg, ook "beveiligd" en "kaart verwijderd" weg. Nu: plafond per praktijk (300 gewone regels, 50 regels die
+  iemand zonder login kan veroorzaken), totaal 5000, en bij vol eerst de oudste ruis weg. Test: `npm run test:auditspoor`.
+
+- **OPGELOST 2026-11-10 (deze PR) — LAAG — collega kon met foute pogingen bij wachtwoord wijzigen de praktijk op slot
+  zetten** (NAKIJKEN van de gebruikers-sweep 14u, nu bevestigd). `/api/praktijk/wachtwoord` telde een fout eigen wachtwoord
+  van een lid via `loginMisTel(pk)` op de sleutel van de praktijk. Repro lokaal: lid tikt 10× een fout huidig wachtwoord,
+  daarna gaf inloggen met het praktijkwachtwoord 429 (bij een praktijk met de naam als sleutel; anders alleen wachtwoord
+  wijzigen en herstelcode voor de beheerder). Een geslaagde wijziging door een lid wiste ook de teller van een lopende aanval
+  op het praktijkwachtwoord. Alleen voor iemand die al is ingelogd. Nu: missers van een lid tellen op `lid:<praktijk>:<id>`.
+  Test: `npm run test:wachtwoordrem`.
+
+Sanity 2026-11-10 16u op #166 en #168 (AI-melding voorleesstem, pijncijfers/agenda bij 200 % tekst): alleen
+`public/kaart.html` en `noor-audio.js`, geen nieuwe `innerHTML` met invoer, geen serverwijziging. Open PR #167
+(reservekopie buiten Railway, proef verplicht, mail vóór wissen) nagelopen: AES-256-GCM met scrypt-sleutel vóór verzenden,
+https verplicht, korte wachtzin = uit, geen geheimen in logs. Geen gat.
+
+- **OPGELOST 2026-11-10 (deze PR) — MIDDEL — inlogrem per IP liet een goed wachtwoord toch binnen.** Elke foute
+  inlogpoging telt via `denied()` in de rem per IP (20 per 5 min), maar `/api/praktijk/login`, `/api/praktijk/herstel` en
+  `/api/v1/login` keken vóór het controleren van het wachtwoord niet of het IP al op die rem stond. De rem veranderde dus
+  alleen het antwoord op een fout wachtwoord (429 in plaats van 403); een goed wachtwoord gaf nog 200. Omdat de rem per naam
+  per ingetikte naam telt, kon één IP zo een veelgebruikt wachtwoord over alle praktijknamen blijven proberen (alleen de
+  schrijfrem van 40 per 5 min). `/v2/gegevens/download|wissen` (download van alle kaarten) en `/v2/proef/overzicht`
+  telden foute pogingen helemaal niet per IP. Repro lokaal: 21 foute logins op steeds een andere naam, daarna het goede
+  wachtwoord vanaf hetzelfde IP → 200. Nu: `inlogOpRemIp` vóór de wachtwoordcontrole (429), en de twee formulieren tellen
+  missers mee. Een ander IP en gewone, geslaagde logins merken niets. Test: `npm run test:inlogrem`.
+
+Sanity 2026-11-10 12u op #159–#164 (sleutelformulier beheer, mailrem uitnodigingen, verdwijndatum praktijk, verlopen
+proef op tweede apparaat, nieuwe patiëntkaart): `proefVerlopen` in de praktijkstatus komt alleen uit de eigen proefcookie
+of de ingelogde praktijk; `verdwijntOp` leest alleen de eigen proef; het beheerformulier zet vaste tekst in `innerHTML`
+en de foutmelding via `textContent`. Geen nieuw gat.
+
+- **OPGELOST 2026-11-10 (deze PR) — MIDDEL — beheersleutel raden zonder rem.** De rem (20 foute pogingen per 5 min per
+  IP) telde alleen in `denied()`. Routes die beheer als extra recht gebruiken roepen `isAdmin` aan zonder `denied`:
+  GET `/api/praktijken` (beheer krijgt de hele praktijkenlijst, anders alleen de eigen), `/api/opname/start` met
+  `doel: "oefening"`, de videopaden in POST `/api/kaarten`, en de schrijf-/leesremmen. Het antwoord verschilt bij de
+  juiste sleutel, dus daar kon je onbeperkt raden (alleen de leesrem van 120 per 5 min, met een nieuw IP opnieuw).
+  Repro lokaal: 21 foute sleutels op GET `/api/praktijken` gaven elk 200, daarna opende de juiste sleutel `/api/dashboard`
+  nog gewoon. Nu telt `isAdmin` zelf elke foute, niet-lege sleutel (één keer per verzoek). Verzoeken zonder sleutel
+  tellen niet. Test: stap 7 in `scripts/test-beheersleutel.mjs` (`test:beheer`).
 
 Sanity 2026-11-10 08u op #157–#158 (voorwaarden art. 4 incasso, controlezinnen in de kaarttaal, wissen spaart beelden
 van een andere kaart, emoji-initiaal): server.js alleen een nieuwe AV-versie en tekstvariabele; /k-meldingen via `tr()`
@@ -207,6 +278,27 @@ Sanity 2026-11-07 08u op #57 (Mollie), #59, #60 (kaart hernoemen): geen gat. De 
 zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaartId alleen in de eigen praktijk.
 
 ## Open
+
+- **LAAG (2026-11-11) — abonnementsacties zonder beheerdersrol.** Opzeggen, factuurgegevens, betalen en wissen op
+  /v2/proef hangen alleen aan de proefcookie van het apparaat. Op een gedeelde praktijkcomputer kan elke collega het
+  abonnement opzeggen; 30 dagen na de betaalde maand wist de server dan alle patiëntkaarten. Verzachting: bevestigingsmail
+  aan de aanmelder, intrekken kan tot het einde, Ahmed krijgt een melding. Voorstel: bij een gekoppelde praktijk ook een
+  beheerderssessie van die praktijk eisen (of het wachtwoord laten intikken) voor opzeggen.
+- **LAAG (2026-11-11) — welkomstlink is een blijvend apparaattoken.** De link in de welkomstmail (`/v2/proef/terug?code=`)
+  is hetzelfde token als de cookie van het eerste apparaat en blijft geldig zolang de aanmelding bestaat (tot 5 apparaten).
+  Wie de mail later leest (gedeelde mailbox), krijgt zo het abonnementsbeheer. Voorstel: een apart maillink-token dat na
+  gebruik of 7 dagen vervalt, los van de cookie.
+
+- **MIDDEL (doorgezet door de gebruikers-sweep 2026-11-11 02u, Mark) — collega met rol therapeut wijzigt het praktijkprofiel.**
+  `POST /api/praktijken` (server.js r. ~3655) heeft alleen `eisBeveiligdePraktijk`, geen beheercheck. Repro lokaal: therapeut
+  stuurt `{tel:"0900-OPLICHTER", website:"https://example.org/phish"}` → 200, en /k van elke patiënt toont dat nummer en die
+  link bij de praktijknaam; geen logboekregel. Verwacht 403 zoals bij team/akkoord, of beheer + logboek. Raakt server.js (open PR #167).
+- **LAAG (sweep 2026-11-11 02u, Mark) — gelijktijdige schrijfacties op notitie/afspraak/behandelaar zonder versiecheck** (laatste
+  wint stil). Integriteit, geen toegang; staat ook in routine-backlog.
+
+- **OPGELOST 2026-11-10 20u (zie boven, deze PR).** NAKIJKEN (doorgezet door de gebruikers-sweep 2026-11-10 14u) — `/api/praktijk/wachtwoord`: een fout eigen
+  wachtwoord van een lid telt via `loginMisTel(pk)` mee op de sleutel van de hele praktijk.** Na genoeg pogingen kan `loginOpSlot(pk)`
+  mogelijk de hele praktijk (ook de beheerder) op 429 zetten. Nagaan of de gewone login dezelfde sleutel gebruikt (Mark, code gelezen).
 
 - **LAAG (doorgezet door de gebruikers-sweep 2026-11-10 02u) — twee gelijktijdige "Nodig uit"-verzoeken geven allebei 200 met
   twee verschillende links, maar per collega wordt maar één hash bewaard** (server.js r. ~2830 overschrijft). De eerste link is dan

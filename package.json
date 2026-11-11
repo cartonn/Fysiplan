@@ -41,8 +41,8 @@
     "test:proefverplicht": "node scripts/test-proef-verplicht.mjs",
     "test:wisvooraf": "node scripts/test-wis-vooraf-mail.mjs",
     "test:oudeproef": "node scripts/test-oude-proef-herstelcode.mjs",
-    "test:abonnement": "node scripts/test-abonnement-mollie.mjs && node scripts/test-abonnement-einde.mjs && node scripts/test-abonnement-incasso.mjs && node scripts/test-incasso-dubbel.mjs",
-    "test:privacy": "node scripts/test-vraaghulp-grens.mjs && node scripts/test-privacy.mjs && node scripts/test-praktijkgegevens.mjs && node scripts/test-gegevens-proef.mjs && node scripts/test-kaart-weg.mjs && node scripts/test-kaart-wis-telefoon.mjs && node scripts/test-mijn-gegevens.mjs && node scripts/test-dossier-contact.mjs && node scripts/test-wees-opnames.mjs && node scripts/test-proef-einde-wissen.mjs && node scripts/test-verdwijndatum-praktijk.mjs && node scripts/test-juridisch-b1.mjs",
+    "test:abonnement": "node scripts/test-abonnement-mollie.mjs && node scripts/test-abonnement-einde.mjs && node scripts/test-abonnement-incasso.mjs && node scripts/test-incasso-dubbel.mjs && node scripts/test-factuurgegevens.mjs",
+    "test:privacy": "node scripts/test-vraaghulp-grens.mjs && node scripts/test-stem-ai-melding.mjs && node scripts/test-privacy.mjs && node scripts/test-praktijkgegevens.mjs && node scripts/test-gegevens-proef.mjs && node scripts/test-kaart-weg.mjs && node scripts/test-kaart-wis-telefoon.mjs && node scripts/test-mijn-gegevens.mjs && node scripts/test-dossier-contact.mjs && node scripts/test-wees-opnames.mjs && node scripts/test-proef-einde-wissen.mjs && node scripts/test-verdwijndatum-praktijk.mjs && node scripts/test-juridisch-b1.mjs",
     "test:beheer": "node scripts/test-beheersleutel.mjs",
     "test:backup": "node scripts/test-backup-elders.mjs",
     "test:sweep": "node scripts/test-sweep-kaart.mjs",
@@ -113,9 +113,19 @@
     "test:wistweekaarten": "node scripts/test-sweep-wis-twee-kaarten.mjs",
     "test:emojiinitialen": "node scripts/test-sweep-emoji-initialen.mjs",
     "test:patientmobiel": "node scripts/test-patient-mobiel.mjs",
+    "test:grotelettersk": "node scripts/test-kaart-grote-letters.mjs",
+    "test:agendadubbel": "node scripts/test-kaart-agenda-dubbel.mjs",
     "test:proeftweedeapparaat": "node scripts/test-sweep-proef-tweede-apparaat.mjs",
     "test:printgroot": "node scripts/test-sweep-print-groot.mjs",
-    "test:vuleersterij": "node scripts/test-sweep-vul-eerste-rij.mjs"
+    "test:vuleersterij": "node scripts/test-sweep-vul-eerste-rij.mjs",
+    "test:inlogrem": "node scripts/test-inlogrem-ip.mjs",
+    "test:annulerenhernoem": "node scripts/test-kaart-annuleren-hernoem.mjs",
+    "test:zwaaroffline": "node scripts/test-kaart-zwaar-offline.mjs",
+    "test:proefwissenklant": "node scripts/test-proef-wissen-klant.mjs",
+    "test:dagwisseltaal": "node scripts/test-kaart-dagwissel-taal.mjs",
+    "test:reekstitel": "node scripts/test-kaart-reeks-titel.mjs",
+    "test:auditspoor": "node scripts/test-audit-spoor.mjs",
+    "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs"
   },
   "engines": {
     "node": ">=20"

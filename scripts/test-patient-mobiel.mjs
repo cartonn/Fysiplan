@@ -106,7 +106,7 @@ const conceptZin = html.slice(html.indexOf("  var VIDEO_META_CONCEPT={"), html.i
 const aiWoord = { nl: "met AI gemaakt", en: "made with AI", de: "mit KI erstellt", fr: "avec l’IA", es: "con IA", pl: "przy użyciu AI", tr: "yapay zekâ ile", ar: "بالذكاء الاصطناعي", uk: "за допомогою ШІ" };
 for (const t of TALEN) assert.ok(new RegExp("\\b" + t + ":'[^']*" + aiWoord[t] + "[^']*'").test(conceptZin), "AI-melding bij de video: " + t);
 const STEM_NOOT = (html.match(/var STEM_NOOT='([^']+)';/) || [])[1], STEM_VIDEO_NOOT = (html.match(/var STEM_VIDEO_NOOT='([^']+)';/) || [])[1];
-assert.equal(STEM_NOOT, "De stem legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op.");
+assert.equal(STEM_NOOT, "De stem is met AI gemaakt en legt de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op.");
 assert.equal(STEM_VIDEO_NOOT, "De stem en video zijn met AI gemaakt en leggen de algemene uitvoering uit. Volg daarnaast de dosering en opmerkingen van je behandelaar op.");
 console.log("Patiëntkaart mobiel (statisch): uitleg per zin (9 talen), oefenstand in 9 talen, alleen avatars, tijd ≠ herhalingen, beginschermbalk na de pijnscore, opbouw, print.");
 
@@ -335,7 +335,7 @@ if (pw) {
       const zinnen = await pv.evaluate(() => { const o = document.querySelector("#oefs .oef.actief"); return { stem: !!o.querySelector(".vbtn[data-noor]"), ai: [...o.querySelectorAll(".vmeta")].filter((e) => e.getClientRects().length).map((e) => e.textContent).filter((t) => /AI/.test(t)), alles: o.textContent }; });
       assert.equal(zinnen.ai.length, 1, toestel + ": precies één zin zegt dat de video met AI is gemaakt");
       assert.equal(zinnen.ai[0], zinnen.stem ? STEM_VIDEO_NOOT : "De video is met AI gemaakt en laat de algemene uitvoering zien. Volg daarnaast de dosering en opmerkingen van je behandelaar op.", toestel + ": de zin bij de AI-video");
-      assert.ok(!/AI-concept|De stem legt de algemene/.test(zinnen.alles), toestel + ": geen los label en geen dubbele zin");
+      assert.ok(!/AI-concept|De stem is met AI gemaakt en legt/.test(zinnen.alles), toestel + ": geen los label en geen dubbele zin");
       await pv.click("#oefs .oef.actief .vbtn[data-eigen]");
       await pv.waitForFunction(() => !!document.querySelector("#oefs .oef.actief .vhouder.open video"));
       await wacht(400);

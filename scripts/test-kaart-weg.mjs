@@ -97,14 +97,68 @@ assert.equal((await haal(`/api/kaart?id=${BLIJFT}`)).status, 200, "storing: laat
 
 // ---- de kaartpagina ruimt bij 'niet gevonden' ook haar eigen geheugen op ----
 const kaart = await readFile(join(root, "public/kaart.html"), "utf8");
-assert.match(kaart, /status===404\)\{toonNietGevonden\(\);vergeetKaartHier\(\);\}/);
+assert.match(kaart, /status===404\)\{toonNietGevonden\(\);vergeetKaartWeg\(\);\}/);
 const fn = kaart.match(/function vergeetKaartHier\(\)\{[^\n]*\}/);
 assert.ok(fn, "vergeetKaartHier staat in kaart.html");
-for (const sleutel of ["fp_oefdaan_", "fp_zwaar_", "fp_priv_"]) assert.ok(fn[0].includes(`'${sleutel}'`), sleutel);
-const ls = new Map([[`fp_oefdaan_${WEG}`, "1"], [`fp_zwaar_${WEG}`, "1"], [`fp_priv_${WEG}`, "1"], [`fp_priv_${BLIJFT}`, "1"], ["fp_taal", "en"]]);
-vm.runInNewContext(fn[0] + ";vergeetKaartHier();", {
+for (const sleutel of ["fp_oefdaan_", "fp_zwaar_", "fp_priv_", "fp_beelden_"]) assert.ok(fn[0].includes(`'${sleutel}'`), sleutel);
+const ls = new Map([[`fp_oefdaan_${WEG}`, "1"], [`fp_zwaar_${WEG}`, "1"], [`fp_priv_${WEG}`, "1"], [`fp_beelden_${WEG}`, "[]"], [`fp_priv_${BLIJFT}`, "1"], ["fp_taal", "en"]]);
+vm.runInNewContext("var KAART_GEWIST=false;" + fn[0] + ";vergeetKaartHier();", {
   id: WEG, localStorage: { removeItem: (k) => ls.delete(k) }
 });
 assert.deepEqual([...ls.keys()].sort(), [`fp_priv_${BLIJFT}`, "fp_taal"].sort(), "alleen deze kaart vergeten, taal blijft");
 
-console.log("test-kaart-weg: gewiste kaart verdwijnt ook offline van de telefoon");
+// ---- Legal 2026-11-11: bij 'niet gevonden' gaan ook de oefenbeelden van die kaart weg ----
+// Voorheen bleven fp_beelden_<id> (kaart-id + lijst van oefenbeelden) en de beelden zelf in de
+// offline-cache staan nadat de praktijk de kaart had gewist; /privacy#opslag belooft dat ze weggaan.
+// Beelden die een andere kaart op dezelfde telefoon nog gebruikt, blijven.
+{
+  const stuk = (van, tot) => { const a = kaart.indexOf(van), b = kaart.indexOf(tot, a); assert.ok(a > -1 && b > a, van); return kaart.slice(a, b); };
+  const fnWeg = kaart.match(/function vergeetKaartWeg\(\)\{[\s\S]*?\n  \}/);
+  assert.ok(fnWeg, "vergeetKaartWeg staat in kaart.html");
+  const code = "var KAART_GEWIST=false;" + fn[0] + "\n" + fnWeg[0] + "\n" + stuk("function kaartIdUitCache(", "function wisVanTelefoon(){");
+  const A = "1111aaaa2222", B = "3333bbbb4444";
+  const winkel = new Map();
+  const ls2 = new Map([
+    [`fp_beelden_${A}`, JSON.stringify(["/images/v2/alleen-a.webp", "/images/v2/gedeeld.webp"])],
+    [`fp_beelden_${B}`, JSON.stringify(["/images/v2/gedeeld.webp", "/images/v2/alleen-b.webp"])],
+    [`fp_oefdaan_${A}`, "{}"]
+  ]);
+  const localStorage = { getItem: (k) => (ls2.has(k) ? ls2.get(k) : null), setItem: (k, v) => ls2.set(k, String(v)), removeItem: (k) => ls2.delete(k) };
+  const nc = new NepCache();
+  winkel.set("fysiplan-kaart-v2", nc);
+  // de service worker heeft /k/A en /api/kaart?id=A al weggehaald (404); B staat er nog
+  for (const pad of [`/k/${B}`, `/api/kaart?id=${B}`, "/images/v2/alleen-a.webp", "/images/v2/gedeeld.webp", "/images/v2/alleen-b.webp", "/v2/oefeningen.json"])
+    await nc.put(pad, nepAntwoord(200));
+  const cachesNep = {
+    async open(n) { return winkel.get(n); }, async keys() { return [...winkel.keys()]; },
+    async delete(n) { return winkel.delete(n); }
+  };
+  const ctx2 = vm.createContext({
+    id: A, localStorage, caches: cachesNep, URL, Promise, JSON, Array, Object,
+    location: { href: ORIGIN + "/k/" + A }, window: { caches: cachesNep },
+    performance: { getEntriesByType: () => [] }, document: { querySelectorAll: () => [] }
+  });
+  vm.runInContext(code + ";var KLAAR=vergeetKaartWeg();", ctx2);
+  await ctx2.KLAAR;
+  const over = (await nc.keys()).map((r) => new URL(r.url).pathname);
+  assert.ok(!over.includes("/images/v2/alleen-a.webp"), "beeld van de gewiste kaart weg uit de offline-cache");
+  assert.ok(over.includes("/images/v2/gedeeld.webp"), "beeld dat kaart B nog gebruikt blijft");
+  assert.ok(over.includes("/images/v2/alleen-b.webp") && over.includes(`/k/${B}`), "kaart B blijft offline werken");
+  assert.equal(ls2.has(`fp_beelden_${A}`), false, "fp_beelden_<id> van de gewiste kaart weg");
+  assert.equal(ls2.has(`fp_oefdaan_${A}`), false);
+  assert.equal(ls2.has(`fp_beelden_${B}`), true, "lijst van kaart B blijft");
+  // daarna schrijft de pagina de lijst niet opnieuw (pagehide/load)
+  vm.runInContext("bewaarBeeldenLijst();", ctx2);
+  assert.equal(ls2.has(`fp_beelden_${A}`), false, "pagehide schrijft het kaart-id niet terug");
+
+  // alleen deze kaart op de telefoon: de hele offline-cache van /k gaat weg
+  winkel.set("fysiplan-kaart-v2", new NepCache());
+  await winkel.get("fysiplan-kaart-v2").put("/images/v2/alleen-a.webp", nepAntwoord(200));
+  ls2.set(`fp_beelden_${A}`, JSON.stringify(["/images/v2/alleen-a.webp"]));
+  ls2.delete(`fp_beelden_${B}`);
+  vm.runInContext("KLAAR=vergeetKaartWeg();", ctx2);
+  await ctx2.KLAAR;
+  assert.equal(winkel.size, 0, "geen andere kaart: offline-cache helemaal leeg");
+}
+
+console.log("test-kaart-weg: gewiste kaart verdwijnt ook offline van de telefoon, met haar oefenbeelden");
