@@ -39,7 +39,10 @@ inhoud gaat opnieuw over het Railway-netwerk. Iedere dagkopie is zelfstandig her
 De bestaande bucket-lifecycle verwijdert objecten na zeven dagen (afhandeling kan vertraagd zijn).
 
 Budgetbeveiliging: maximaal 1 GiB inhoud per dagkopie, 200 MiB nieuwe transfer per dagelijkse
-poging en 10 MiB gegevensbestanden. Dit is geen onbeperkte opslaggarantie. Bij ontbrekende
+poging en 64 MiB gegevensbestanden (was 10 MiB tot 12 november 2026; boven die grens mislukt de
+hele dagkopie). Vanaf de helft van die grens meldt /health `"backupRuimte":"krap"` en krijgt de
+beheerder een mail: op maandag, en boven de 80 procent na elke dagkopie. De getallen staan in
+`/api/beheer/backup-status` onder `gegevens`. Dit is geen onbeperkte opslaggarantie. Bij ontbrekende
 uploads worden gegevens en een expliciete lijst ontbrekende uploads bewaard; /health meldt
 `deels` en de beheerder krijgt een melding. `ok` betekent dat alle geïnventariseerde bestanden
 zijn opgeslagen en de objectgroottes zijn gecontroleerd. Herstel controleert encryptie en hashes.

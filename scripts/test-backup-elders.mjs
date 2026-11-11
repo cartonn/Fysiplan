@@ -106,7 +106,11 @@ try {
   assert.ok(!("backupEldersDetails" in h));
   assert.equal((await fetch(app.origin+"/api/beheer/backup-status")).status,403);
   const beheer=await fetch(app.origin+"/api/beheer/backup-status",{headers:{"x-admin-sleutel":"test-beheersleutel"}});
-  assert.equal(beheer.status,200);assert.equal((await beheer.json()).details.uploads,1);
+  assert.equal(beheer.status,200);const beheerStatus=await beheer.json();assert.equal(beheerStatus.details.uploads,1);
+  // hoe vol de grens voor gegevensbestanden zit: /health zegt alleen ok of krap, beheer ziet de getallen
+  assert.equal(h.backupRuimte, "ok");
+  assert.equal(beheerStatus.gegevens.grens, 64*1024*1024);
+  assert.ok(beheerStatus.gegevens.bytes > 0 && beheerStatus.gegevens.bytes === beheerStatus.details.gegevensBytes && beheerStatus.gegevens.krap === false);
   assert.ok(!JSON.stringify(h).includes("geheim") && !JSON.stringify(h).includes(wachtzin), "/health lekt geen sleutels");
   const put = ontvangen.find((o) => o.methode === "PUT" && o.url === "/bak/" + objectNaam());
   assert.equal(put.url, "/bak/" + objectNaam());

@@ -265,6 +265,13 @@ de verwerkersovereenkomst; de versie en het tijdstip staan bij het praktijkaccou
 - **De patiënt ziet** (`GET /api/kaart`): alleen het eerste woord van de roepnaam, het doel, de
   opmerking en de kaartinhoud. De volledige kaart staat alleen op `GET /api/praktijk/kaart`
   (ingelogde praktijk).
+- **Inloggen blijft over een uitrol heen:** praktijksessies staan in het geheugen en in
+  `praktijk-sessies.json` in de datamap (`lib/sessie-opslag.js`). Op schijf staat alleen de
+  SHA-256 van het sessietoken, nooit het token zelf. Een sessie geldt 30 dagen en hoort bij het
+  wachtwoord waarmee is ingelogd: na een wachtwoordwijziging werkt hij niet meer. Het bestand
+  gaat niet mee in de reservekopie. Wil je iedereen opnieuw laten inloggen (bijvoorbeeld na het
+  terugzetten van een reservekopie), verwijder dan dat bestand en herstart. Bij een uitrol
+  (SIGTERM) maakt de server lopende verzoeken af voordat hij stopt.
 - **Bewaartermijn** (automatisch, elke 6 uur en bij het opstarten): een kaart verdwijnt na
   `BEWAAR_STIL_DAGEN` (standaard 90) dagen zonder activiteit, of `BEWAAR_AFGEROND_DAGEN`
   (standaard 30) dagen na afronden (archiveren). Na de invoering geldt eenmalig een aanloop van

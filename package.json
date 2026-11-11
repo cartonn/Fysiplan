@@ -46,6 +46,7 @@
     "test:vraaghulpschakelaar": "node scripts/test-vraaghulp-schakelaar.mjs",
     "test:beheer": "node scripts/test-beheersleutel.mjs",
     "test:backup": "node scripts/test-backup-elders.mjs && node scripts/test-backup-snapshots.mjs && node scripts/test-backup-retries.mjs",
+    "test:sessieherstart": "node scripts/test-sessie-herstart.mjs",
     "test:sweep": "node scripts/test-sweep-kaart.mjs",
     "test:offline": "node scripts/test-kaart-offline.mjs",
     "test:tablet": "node scripts/test-tablet-knoppen.mjs",
