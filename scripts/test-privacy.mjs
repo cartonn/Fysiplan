@@ -235,6 +235,19 @@ try {
   const privacy = await (await fetch(origin + "/privacy")).text();
   assert.match(privacy, /Anthropic/);
   {
+    // code tegen tekst (legal 2026-11-11 09u): de Resend-rij noemde alleen proef en uitnodigingen, maar de server
+    // mailt ook wachtwoordlinks, opzegbevestiging, de wismelding en de maandbetaling met het bedrag
+    const resendRij = privacy.split("<td>Resend</td>")[1].split("</tr>")[0];
+    const bron = await readFile(new URL("../server.js", import.meta.url), "utf8");
+    const onderwerpen = [...bron.matchAll(/(?:stuurMail|proefMail)\([^,]+,\s*"([^"]+)"/g)].map((m) => m[1]);
+    const thema = [[/wachtwoord/i, /wachtwoord/], [/opgezegd/i, /opzeggen/], [/wissen/i, /wissen/], [/maandbetaling/i, /maandbetaling/], [/uitgenodigd/i, /uitnodiging/], [/proef/i, /proef/]];
+    for (const [inMail, inRij] of thema) {
+      if (onderwerpen.some((o) => inMail.test(o))) assert.match(resendRij, inRij, "Resend-rij noemt mail over " + inRij.source);
+    }
+    if (/EUR " \+ maandBedrag/.test(bron)) assert.match(resendRij, /bedrag/, "Resend-rij noemt het bedrag van de maandbetaling");
+    assert.match(resendRij, /geen pati&euml;ntgegevens/);
+  }
+  {
     // code tegen tekst (legal 2026-11-10 21u): de rij zei "geen vrije tekst van de
     // therapeut" en "bibliotheekteksten", maar namen van eigen oefeningen gaan mee
     const anthropicRij = privacy.split("<td>Anthropic</td>")[1].split("</tr>")[0];
