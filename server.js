@@ -13,7 +13,7 @@ import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetali
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
 import { volgendFactuurNr, factuurHtml, isFactuur, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
 import { backupInstellingen } from "./lib/backup-elders.js";
-import { maakSnapshot } from "./lib/backup-snapshots.js";
+import { runBackup } from "./lib/backup-runner.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -1932,54 +1932,31 @@ const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPat
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
 const backupElders = backupInstellingen();
-const backupEldersStatus = { ok: null, fout: null, foutMail: 0, deels: false, resultaat: null };
+const backupEldersStatus = { ok: null, fout: null, foutMail: 0, deels: false, resultaat: null, pogingen: 0, volgende: null };
 let backupEldersBezig = false;
-async function schrijfBackupStatus(marker, inhoud) {
-  const tmp=marker+'.tmp';
-  await writeFile(tmp,JSON.stringify(inhoud),{mode:0o600});
-  await rename(tmp,marker);
-}
 async function maakBackupElders() {
   if (!backupElders || backupEldersBezig) return;
   backupEldersBezig = true;
   try {
-    const marker = join(dataDir, "backup-elders-status.json");
-    let vorige;
-    try { vorige = JSON.parse(await readFile(marker, "utf8")); } catch (e) { if (e.code !== 'ENOENT') throw e; }
-    // Deploys mogen geen extra dagelijkse uploads en kosten veroorzaken.
-    if (vorige?.versie === 3 && vorige.url === backupElders.url && vorige.op <= Date.now() && Date.now() - vorige.op < 24 * 60 * 60 * 1000) {
-      backupEldersStatus.ok = vorige.op;
-      backupEldersStatus.deels = !!vorige.deels;
-      backupEldersStatus.resultaat = vorige.resultaat || null;
-      return;
-    }
-    if (vorige?.url === backupElders.url && vorige.poging <= Date.now() && Date.now() - vorige.poging < 24 * 60 * 60 * 1000) {
-      throw new Error('vorige uploadpoging niet afgerond; volgende poging na 24 uur');
-    }
-    // Poging vóór netwerkverkeer opslaan; een herstart mag geen extra transfer starten.
-    await schrijfBackupStatus(marker, { versie: 3, poging: Date.now(), url: backupElders.url, object: vorige?.object });
-    const resultaat = await maakSnapshot(backupElders, dataDir, backupBestanden, {vorigeObject:vorige?.object});
-    backupEldersStatus.ok = Date.now();
-    backupEldersStatus.deels = resultaat.deels;
-    backupEldersStatus.resultaat = resultaat;
-    await schrijfBackupStatus(marker, { versie: 3, op: backupEldersStatus.ok, url: backupElders.url, object:resultaat.object, deels:resultaat.deels, resultaat });
-    backupEldersStatus.fout = null;
-    if(resultaat.deels) throw Object.assign(new Error('onvolledige reservekopie: gegevens bewaard, ' + resultaat.ontbrekend + ' uploads ontbreken; inventarisfouten: ' + resultaat.errors), {deels:true});
-
+    const state=await runBackup(backupElders,dataDir,backupBestanden);
+    backupEldersStatus.ok=state.fullAt;
+    backupEldersStatus.deels=state.status==='deels';
+    backupEldersStatus.fout=state.status==='fout'?Date.now():null;
+    backupEldersStatus.resultaat=state.resultaat||null;
+    backupEldersStatus.pogingen=state.attempts;
+    backupEldersStatus.volgende=state.done?null:new Date(state.attempts>=4?state.started+24*60*60*1000:state.nextAt).toISOString();
+    if(state.attempted && state.status!=='ok') throw Object.assign(new Error(state.error||'reservekopie mislukt'),{deels:state.status==='deels'});
   } catch (err) {
-    backupEldersStatus.fout = Date.now();
-    backupEldersStatus.deels = !!err.deels;
-    console.error("reservekopie elders mislukt:", err.message);
-    if (mailIngesteld() && proefMeldingAan.length && Date.now() - backupEldersStatus.foutMail > 23 * 60 * 60 * 1000) {
-      backupEldersStatus.foutMail = Date.now();
-      for (const aan of proefMeldingAan) stuurMail(aan, "Fysiplan: reservekopie buiten Railway mislukt",
-        "De dagelijkse versleutelde reservekopie naar de opslag buiten Railway is niet gelukt (" + err.message + ").\n"
-        + "De kopie op Railway zelf is wel gemaakt. Controleer de BACKUP_-variabelen en de opslagbak. Morgen volgt een nieuwe poging.")
-        .catch(() => {});
+    backupEldersStatus.fout=Date.now();
+    backupEldersStatus.deels=!!err.deels;
+    console.error("reservekopie elders mislukt:",err.message);
+    if(mailIngesteld() && proefMeldingAan.length && Date.now()-backupEldersStatus.foutMail>23*60*60*1000){
+      backupEldersStatus.foutMail=Date.now();
+      for(const aan of proefMeldingAan) stuurMail(aan,"Fysiplan: reservekopie buiten Railway mislukt",
+        "De reservekopie is niet volledig afgerond ("+err.message+"). Er volgen maximaal drie begrensde herkansingen, na 15 minuten, 1 uur en 4 uur vanaf de vorige poging. Het transferbudget blijft gelijk. Controleer de back-upstatus.")
+        .catch(()=>{});
     }
-  } finally {
-    backupEldersBezig = false;
-  }
+  } finally {backupEldersBezig=false;}
 }
 async function maakBackup() {
   try {
@@ -2006,7 +1983,7 @@ async function maakBackup() {
 // lezen state die verderop in dit bestand pas wordt aangemaakt
 const eersteBackup = maakBackup();
 setInterval(maakBackup, 24 * 60 * 60 * 1000).unref();
-setInterval(maakBackupElders, 60 * 60 * 1000).unref();
+setInterval(maakBackupElders, 5 * 60 * 1000).unref();
 // bewaartermijn: elke zes uur verlopen kaarten met hun video's opruimen (vindKaart
 // en het overzicht negeren ze al zodra ze verlopen zijn)
 setInterval(() => bewaartermijnOpruimen().then(() => weesOpnamesOpruimen()).catch(() => {}), 6 * 60 * 60 * 1000).unref();
@@ -2457,6 +2434,12 @@ async function afhandelen(request, response) {
   // beheer-URL zonder slash, zodat relatieve paden (images/, api/) blijven kloppen
   if (urlPath === "/admin88/") { response.writeHead(301, { location: "/admin88" }); response.end(); return; }
 
+  if (urlPath === "/api/beheer/backup-status" && request.method === "GET") {
+    if (!isAdmin(request)) { await denied(request,response,urlPath); return; }
+    await sendJson(response,200,{status:!backupElders?'uit':backupEldersStatus.deels?'deels':backupEldersStatus.fout?'fout':backupEldersStatus.ok?'ok':'wacht',
+      laatsteVolledigeKopie:backupEldersStatus.ok?new Date(backupEldersStatus.ok).toISOString():null,
+      details:backupEldersStatus.resultaat,pogingen:backupEldersStatus.pogingen,volgendePoging:backupEldersStatus.volgende});return;
+  }
   if (urlPath === "/health") {
     // /health is publiek en wordt continu gepingd; de tellingen bouwen beide
     // manifesten op en worden daarom een minuut onthouden
@@ -2495,8 +2478,7 @@ async function afhandelen(request, response) {
       volumeActief: dataDir === "/data" || !!process.env.DATA_DIR,
       // reservekopie buiten Railway: "uit" (niet ingesteld), "ok", "fout" of "wacht" (nog niet gedraaid)
       backupElders: !backupElders ? "uit" : backupEldersStatus.deels ? "deels" : backupEldersStatus.fout ? "fout" : backupEldersStatus.ok ? "ok" : "wacht",
-      backupEldersOp: backupEldersStatus.ok ? new Date(backupEldersStatus.ok).toISOString() : null,
-      backupEldersDetails: backupEldersStatus.resultaat
+      backupEldersOp: backupEldersStatus.ok ? new Date(backupEldersStatus.ok).toISOString() : null
     });
     return;
   }

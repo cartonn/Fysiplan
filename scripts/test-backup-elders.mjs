@@ -87,7 +87,7 @@ async function start(env) {
 }
 const wacht = async (klaar) => { for (let i = 0; i < 100 && !(await klaar()); i++) await new Promise((r) => setTimeout(r, 100)); };
 const health = async (origin) => (await fetch(origin + "/health")).json();
-const aan = { BACKUP_S3_URL: nepUrl + "/bak", BACKUP_S3_SLEUTEL_ID: "sleutelid", BACKUP_S3_GEHEIM: "geheim", BACKUP_SLEUTEL: wachtzin, BACKUP_LEVERANCIER: "Scaleway (Amsterdam, Nederland)" };
+const aan = { ADMIN_KEY:"test-beheersleutel", BACKUP_S3_URL: nepUrl + "/bak", BACKUP_S3_SLEUTEL_ID: "sleutelid", BACKUP_S3_GEHEIM: "geheim", BACKUP_SLEUTEL: wachtzin, BACKUP_LEVERANCIER: "Scaleway (Amsterdam, Nederland)" };
 
 try {
   // uit: niets verstuurd, /health zegt "uit", de privacyverklaring noemt geen extra partij
@@ -103,6 +103,10 @@ try {
   const h = await health(app.origin);
   assert.equal(h.backupElders, "ok", app.uitvoer());
   assert.ok(h.backupEldersOp);
+  assert.ok(!("backupEldersDetails" in h));
+  assert.equal((await fetch(app.origin+"/api/beheer/backup-status")).status,403);
+  const beheer=await fetch(app.origin+"/api/beheer/backup-status",{headers:{"x-admin-sleutel":"test-beheersleutel"}});
+  assert.equal(beheer.status,200);assert.equal((await beheer.json()).details.uploads,1);
   assert.ok(!JSON.stringify(h).includes("geheim") && !JSON.stringify(h).includes(wachtzin), "/health lekt geen sleutels");
   const put = ontvangen.find((o) => o.methode === "PUT" && o.url === "/bak/" + objectNaam());
   assert.equal(put.url, "/bak/" + objectNaam());
