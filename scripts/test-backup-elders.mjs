@@ -3,11 +3,11 @@
 // opslag. Zonder variabelen gebeurt er niets. Zonder browser. `npm run test:backup`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, readdir, rm, writeFile, mkdir, symlink } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { backupInstellingen, objectNaam, ontsleutel, s3Headers, versleutel } from "../lib/backup-elders.js";
+import { backupInstellingen, objectNaam, ontsleutel, s3Headers, versleutel, verzamelBackup, veiligBackupPad } from "../lib/backup-elders.js";
 
 // 1. handtekening: de twee voorbeelden uit de AWS-documentatie (Signature Version 4, S3)
 const aws = { regio: "us-east-1", id: "AKIAIOSFODNN7EXAMPLE", geheim: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", nu: new Date("2013-05-24T00:00:00Z") };
@@ -40,6 +40,15 @@ assert.equal(objectNaam(new Date("2026-11-10T23:30:00Z")), "fysiplan-wo.fpb");
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-backup-"));
 await writeFile(join(dataDir, "kaarten.json"), JSON.stringify({ "Test Fysio": [{ id: "abc123abc123", naam: "Geheimenaam" }] }));
 await writeFile(join(dataDir, "praktijk-oefeningen.json"), JSON.stringify({ "test fysio": [{ naam: "Eigen oefening" }] }));
+await mkdir(join(dataDir, "uploads", "videos"), { recursive: true });
+const video = Buffer.from([0, 255, 1, 42, 0, 16]);
+await writeFile(join(dataDir, "uploads", "videos", "test.mp4"), video);
+assert.equal(veiligBackupPad('../buiten.json'), false);
+assert.equal(veiligBackupPad('/buiten.json'), false);
+await assert.rejects(verzamelBackup(dataDir, [], 2), /budgetgrens/);
+await symlink('/etc/passwd', join(dataDir, 'uploads', 'link'));
+await assert.rejects(verzamelBackup(dataDir, []), /symbolische link/);
+await rm(join(dataDir, 'uploads', 'link'));
 const ontvangen = [];
 let antwoord = 200;
 const nep = createServer((req, res) => {
@@ -97,6 +106,7 @@ try {
   assert.ok(!put.body.includes("Geheimenaam"), "patiëntgegevens gaan niet leesbaar de deur uit");
   const terug = ontsleutel(put.body, wachtzin).bestanden;
   assert.equal(JSON.parse(terug["kaarten.json"])["Test Fysio"][0].naam, "Geheimenaam");
+  assert.deepEqual(terug["uploads/videos/test.mp4"], video);
   assert.ok(terug["praktijk-oefeningen.json"], "eigen oefeningen van praktijken zitten in de reservekopie");
   // ook de kopie op het volume zelf heeft de eigen oefeningen nu
   const dagmap = (await readdir(join(dataDir, "backups")))[0];
@@ -114,8 +124,20 @@ try {
   assert.equal(code, 0);
   assert.equal(JSON.parse(await readFile(join(doel, "kaarten.json"), "utf8"))["Test Fysio"][0].naam, "Geheimenaam");
 
+  assert.deepEqual(await readFile(join(doel, "uploads", "videos", "test.mp4")), video);
+  // Een ontsleutelbaar maar onveilig archief mag geen bestand buiten de doelmap maken.
+  await writeFile(pakketPad, versleutel({ '../buiten.json': Buffer.from('bad') }, wachtzin));
+  const unsafe = await new Promise(r => spawn(process.execPath, ['scripts/backup-terugzetten.mjs', pakketPad, join(dataDir,'unsafe')], { env: {...process.env, BACKUP_SLEUTEL:wachtzin}, stdio:'ignore' }).on('exit',r));
+  assert.notEqual(unsafe,0);
+
   // opslag weigert: /health zegt "fout", de beheerder krijgt één mail, de server draait door
-  ontvangen.length = 0; antwoord = 403;
+  ontvangen.length = 0;
+  app = await start(aan);
+  await wacht(async () => (await health(app.origin)).backupElders === 'ok');
+  assert.equal(ontvangen.length, 0, 'herstart uploadt niet nogmaals binnen 24 uur');
+  await app.stop();
+  await rm(join(dataDir, 'backup-elders-status.json'));
+  antwoord = 403;
   app = await start({ ...aan, MAIL_API_SLEUTEL: "nep", MAIL_AFZENDER: "fysiplan@voorbeeld.nl", MAIL_API_BASIS: nepUrl, PROEF_MELDING_AAN: "beheer@voorbeeld.nl" });
   await wacht(async () => (await health(app.origin)).backupElders === "fout" && ontvangen.some((o) => o.mail));
   assert.equal((await health(app.origin)).backupElders, "fout");

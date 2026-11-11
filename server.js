@@ -12,7 +12,7 @@ import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } fr
 import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
 import { volgendFactuurNr, factuurHtml, isFactuur, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
-import { backupInstellingen, stuurNaarElders } from "./lib/backup-elders.js";
+import { backupInstellingen, stuurNaarElders, verzamelBackup } from "./lib/backup-elders.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -1932,15 +1932,27 @@ const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPat
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
 const backupElders = backupInstellingen();
 const backupEldersStatus = { ok: null, fout: null, foutMail: 0 };
+let backupEldersBezig = false;
 async function maakBackupElders() {
-  if (!backupElders) return;
+  if (!backupElders || backupEldersBezig) return;
+  backupEldersBezig = true;
   try {
-    const bestanden = {};
-    for (const pad of backupBestanden) {
-      try { bestanden[pad.split(sep).pop()] = await readFile(pad); } catch {}
+    const marker = join(dataDir, "backup-elders-status.json");
+    let vorige;
+    try { vorige = JSON.parse(await readFile(marker, "utf8")); } catch (e) { if (e.code !== 'ENOENT' && !(e instanceof SyntaxError)) throw e; }
+    // Deploys mogen geen extra dagelijkse uploads en kosten veroorzaken.
+    if (vorige?.versie === 2 && vorige.url === backupElders.url && vorige.op <= Date.now() && Date.now() - vorige.op < 24 * 60 * 60 * 1000) {
+      backupEldersStatus.ok = vorige.op;
+      return;
     }
-    await stuurNaarElders(backupElders, bestanden);
+    if (vorige?.url === backupElders.url && vorige.poging <= Date.now() && Date.now() - vorige.poging < 24 * 60 * 60 * 1000) {
+      throw new Error('vorige uploadpoging niet afgerond; volgende poging na 24 uur');
+    }
+    const bestanden = await verzamelBackup(dataDir, backupBestanden);
+    await writeFile(marker, JSON.stringify({ versie: 2, poging: Date.now(), url: backupElders.url }), { mode: 0o600 });
+    const resultaat = await stuurNaarElders(backupElders, bestanden);
     backupEldersStatus.ok = Date.now();
+    await writeFile(marker, JSON.stringify({ versie: 2, op: backupEldersStatus.ok, url: backupElders.url, bytes: resultaat.bytes }), { mode: 0o600 });
     backupEldersStatus.fout = null;
   } catch (err) {
     backupEldersStatus.fout = Date.now();
@@ -1952,6 +1964,8 @@ async function maakBackupElders() {
         + "De kopie op Railway zelf is wel gemaakt. Controleer de BACKUP_-variabelen en de opslagbak. Morgen volgt een nieuwe poging.")
         .catch(() => {});
     }
+  } finally {
+    backupEldersBezig = false;
   }
 }
 async function maakBackup() {
@@ -1979,6 +1993,7 @@ async function maakBackup() {
 // lezen state die verderop in dit bestand pas wordt aangemaakt
 const eersteBackup = maakBackup();
 setInterval(maakBackup, 24 * 60 * 60 * 1000).unref();
+setInterval(maakBackupElders, 60 * 60 * 1000).unref();
 // bewaartermijn: elke zes uur verlopen kaarten met hun video's opruimen (vindKaart
 // en het overzicht negeren ze al zodra ze verlopen zijn)
 setInterval(() => bewaartermijnOpruimen().then(() => weesOpnamesOpruimen()).catch(() => {}), 6 * 60 * 60 * 1000).unref();

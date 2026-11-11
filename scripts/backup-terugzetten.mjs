@@ -8,8 +8,8 @@
 // leeg zijn of nog niet bestaan. Kopieer de bestanden daarna zelf naar het volume (/data)
 // terwijl de server stilstaat.
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
-import { basename, join } from "node:path";
-import { backupInstellingen, haalVanElders, ontsleutel } from "../lib/backup-elders.js";
+import { dirname, join } from "node:path";
+import { backupInstellingen, haalVanElders, ontsleutel, veiligBackupPad } from "../lib/backup-elders.js";
 
 const [bron, doel] = process.argv.slice(2);
 const wachtzin = String(process.env.BACKUP_SLEUTEL || "");
@@ -28,7 +28,13 @@ let kopie;
 try { kopie = ontsleutel(buf, wachtzin); }
 catch { console.error("Ontsleutelen mislukt: verkeerde BACKUP_SLEUTEL of beschadigd bestand."); process.exit(1); }
 
-await mkdir(doel, { recursive: true });
+for (const naam of Object.keys(kopie.bestanden)) {
+  if (!veiligBackupPad(naam)) throw new Error("Onveilig pad in reservekopie");
+}
+await mkdir(doel, { recursive: true, mode: 0o700 });
 if ((await readdir(doel)).length) { console.error("De doelmap is niet leeg; kies een lege map."); process.exit(1); }
-for (const [naam, inhoud] of Object.entries(kopie.bestanden)) await writeFile(join(doel, basename(naam)), inhoud);
+for (const [naam, inhoud] of Object.entries(kopie.bestanden)) {
+  await mkdir(dirname(join(doel, naam)), { recursive: true, mode: 0o700 });
+  await writeFile(join(doel, naam), inhoud, { flag: 'wx', mode: 0o600 });
+}
 console.log("Reservekopie van " + kopie.gemaakt + ": " + Object.keys(kopie.bestanden).length + " bestanden in " + doel);
