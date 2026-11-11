@@ -3032,7 +3032,7 @@ async function afhandelen(request, response) {
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
       "claim-gereset-door-beheer", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
-      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd"]);
+      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "profiel-gewijzigd"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
       .slice(0, 15)
@@ -3774,6 +3774,22 @@ async function afhandelen(request, response) {
       // wachtwoord alleen v1 (eigen login) en een eigen beheersleutel (security 2026-11-09).
       if (await eisBeveiligdePraktijk(request, response, key,
         "Zet eerst een wachtwoord op je praktijk; daarna bewaren we het praktijkprofiel en logo.")) return;
+      // telefoon, e-mail, website en logo staan bij de praktijknaam op elke patiëntkaart.
+      // Een collega met rol therapeut kon ze stil vervangen (eigen nummer of phishinglink
+      // namens de praktijk, zonder logboekregel). Nu alleen een beheerder, net als team en
+      // akkoord; een ongewijzigd profiel (de app stuurt het bij elk verlaten van een veld)
+      // blijft gewoon 200, zodat een therapeut geen foutmelding krijgt (security 2026-11-11)
+      const sessie = sessieVan(request);
+      const eigenSessie = !!sessie && sessie.pk === key;
+      const oudProfiel = praktijken[key];
+      const gewijzigd = !oudProfiel || !!b.logo ||
+        ["praktijk", "adres", "plaats", "tel", "email"].some((v) => (oudProfiel[v] || "") !== p[v]) ||
+        (Object.hasOwn(b, "website") && (oudProfiel.website || "") !== p.website);
+      if (eigenSessie && !gewijzigd) { await sendJson(response, 200, { ok: true, logo: oudProfiel.logo || "" }); return; }
+      if (eigenSessie && !isBeheer(sessie)) {
+        await sendJson(response, 403, { ok: false, beheer: true, fout: "Alleen een beheerder van de praktijk kan het praktijkprofiel en het logo aanpassen." });
+        return;
+      }
       // hetzelfde dagplafond op níeuwe praktijken als op de kaarten- en claim-route:
       // zonder dit is dit profiel-endpoint de onbewaakte route waarlangs één IP de
       // 200-praktijken-namespace kan volzetten (elk met een 400 kB-logo) en zo echte
@@ -3836,6 +3852,7 @@ async function afhandelen(request, response) {
           } catch {}
         }
       });
+      if (praktijkGeclaimd(key)) auditLog(key, "profiel-gewijzigd", request);
       await sendJson(response, 200, { ok: true, logo: p.logo || "" });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of logo te groot)." });
