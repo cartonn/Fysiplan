@@ -6534,7 +6534,7 @@ async function afhandelen(request, response) {
       const proefJs = proef ? ";window.FYSIPLAN_PROEF=" + JSON.stringify({ naam: (proef.naam || "").split(" ")[0], praktijk: proef.praktijk || "",
         dagenOver: proef.klant ? null : dagenOver(proef.verloopt), tot: datumNl(proef.verloopt), klant: !!proef.klant }).replace(/</g, "\\u003c") : "";
       html = html.replace("<head>", () => '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true' + proefJs + '</script>');
-      html = html.replace("</head>", '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'8\' fill=\'%232456a6\'/%3E%3Cpath d=\'M5 16h5l2.5 6 5-12 2.5 7h7\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'2.6\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E"/><link rel="stylesheet" href="/v2.css?v=active-tech-1"/><script src="/qr.js" defer></script></head>');
+      html = html.replace("</head>", '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'14\' fill=\'%2318343b\'/%3E%3Cg transform=\'translate(8.4 6.5) scale(.75)\'%3E%3Cpath fill=\'%23fff\' d=\'M17 9h44l-5 9c-2 4-6 6-12 6H8l9-15Z\'/%3E%3Cpath fill=\'%23b9e34b\' d=\'M21 31h29l-6 10H29l-7 13c-2 4-6 5-10 5H2l13-23c1-3 3-5 6-5Z\'/%3E%3C/g%3E%3C/svg%3E"/><link rel="stylesheet" href="/v2.css?v=active-tech-1"/><script src="/qr.js" defer></script></head>');
       // nonce op de inline scripts (na alle injecties); de externe /qr.js houdt zijn src en valt onder 'self'
       html = nonceInlineScripts(html, nonce);
       await send(response, 200, "text/html; charset=utf-8", html);

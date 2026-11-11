@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light"/>
 <meta name="theme-color" content="#18343b"/>
 <meta name="description" content="Fysiplan geeft elke patiënt dezelfde trainingskaart op de manier die bij hem past: een verzorgde geprinte A4 voor wie papier prettig vindt, en via de QR-code een digitale kaart met oefenbeelden en uitleg, in negen talen en met voorlezen waar beschikbaar."/>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232456a6'/%3E%3Cpath d='M5 16h5l2.5 6 5-12 2.5 7h7' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2318343b'/%3E%3Cg transform='translate(8.4 6.5) scale(.75)'%3E%3Cpath fill='%23fff' d='M17 9h44l-5 9c-2 4-6 6-12 6H8l9-15Z'/%3E%3Cpath fill='%23b9e34b' d='M21 31h29l-6 10H29l-7 13c-2 4-6 5-10 5H2l13-23c1-3 3-5 6-5Z'/%3E%3C/g%3E%3C/svg%3E"/>
 <title>Fysiplan: één kaart, op papier én op de telefoon</title>
 <link rel="canonical" href="https://fysiplan.nl/v2"/>
 <!-- eigen lettertypes (OFL, in /fonts): de drukproef ziet er op Windows en Android
@@ -600,6 +600,19 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline-color:#b9e34b}
 .tel .scherm{--bg:#f2f5f3;--inkt:#18343b;--tekst:#314d53;--demp:#526b70;--zacht:#61777b;--blauw:#20464f;--blauw-05:#edf4e5;--lijn:#d9e3df;--lijn-z:#e7eeea;background:#f2f5f3;color:#314d53}
 .tel .oefkaartje{background:#fff;color:#18343b}.tel .oefkaartje b,.tel h4{color:#18343b}
 .tel .pijn i{background:#fff;color:#526b70}.tel .pijn i.aan{background:#20464f;color:white}
+/* Voorbeeldkaart-blok: het bijschrift hoort onder het vel. Het stond vanaf 1024 px breed over de
+   onderrand van de A4 (wit op wit) en tussen 841 en 980 px lag de telefoon eroverheen. Het vel
+   staat nu in de gewone stroom, de telefoon ligt ervoor en het bijschrift blijft links ervan. */
+@media (min-width:841px){
+.product-showcase .toon{display:flex;flex-direction:column;align-items:flex-start;min-height:590px;margin-top:0}
+.product-showcase .a4{position:relative;top:0;left:0;margin:20px 0 0;width:min(600px,100%);max-width:none}
+.product-showcase .tel{position:absolute;top:190px;right:0;margin:0}
+.product-showcase .bijschrift{position:relative;top:0;left:0;order:0;width:auto;margin:26px 0 0;max-width:calc(100% - 206px)}
+}
+@media (max-width:840px){.product-showcase .bijschrift{margin-top:20px}}
+/* 184 px breed: bij 170 px viel "met uitleg" in het telefoonvoorbeeld buiten beeld */
+.product-showcase .tel{width:184px}
+.product-showcase .bijschrift p{font-size:13px;line-height:1.55}
 </style></head>
 <body>
 
