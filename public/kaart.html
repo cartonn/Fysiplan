@@ -351,6 +351,14 @@
   body.krap .sstatus{flex:1 1 14em;margin:0}
   body.krap .srij{flex:1 1 18em;margin:0}
   body.krap .oef.actief .naam{font-size:min(1.5rem,7.5vw);margin-top:10px}
+  /* grote letters (200 % en/of "A A"): de onderbalk krimpt mee in plaats van de pijl "volgende" buiten beeld te
+     duwen (flex-items houden anders hun inhoudsbreedte), en een lang woord breekt af in plaats van de pagina te
+     verbreden (gebruikers-sweep 2026-11-11, Truus op iPhone SE) */
+  body{overflow-wrap:break-word}
+  body.krap .srij,body.krap .sstatus{min-width:0}
+  body.krap .sstatus{flex-wrap:wrap}
+  .srij .kn1{padding-inline:8px;overflow-wrap:anywhere}
+  body.krap .srij .kn1{font-size:min(1.0625rem,6vw)}
   .svink{flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:var(--groen-vul)}
   .svink::after{content:"";display:block;width:5px;height:10px;margin:3px 0 0 7px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
   .songedaan{margin-inline-start:auto;min-height:44px;padding:0 2px;border:0;background:none;
@@ -572,11 +580,14 @@
     display:none;align-items:center;gap:12px;box-shadow:0 8px 28px rgba(0,0,0,.28)}
   .appbanner.aan{display:flex}
   .appbanner img{width:34px;height:34px;border-radius:9px;flex:0 0 34px}
-  .appbanner .tekst{flex:1;font:500 .875rem/1.4 var(--disp)}
+  .appbanner .tekst{flex:1 1 8em;min-width:0;overflow-wrap:anywhere;font:500 .875rem/1.4 var(--disp)}
   .appbanner button{font:600 .875rem/1 var(--disp);border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
   .appbanner .doen{min-height:44px;background:#fff;color:#16181c}
   .appbanner .weg{min-width:44px;min-height:44px;background:transparent;color:#d9d9d6;padding:10px 6px;font-size:1.375rem}
   @media (min-width:720px){.appbanner{display:none !important}}
+  /* bij grote letters op een klein scherm (body.krap) bedekte de tip "Zet op beginscherm" een derde tot de helft van
+     het scherm, ook de knop "Ik heb een vraag", en stond × buiten beeld: dan liever geen tip (sweep 2026-11-11, Truus) */
+  body.krap .appbanner{display:none !important}
 
   /* één duidelijk zichtbare toetsenbord-focus op álle bedienbare elementen (WCAG 2.4.7):
      ook de taalkeuze en het tijdveld, die eerder op de browserstandaard terugvielen */
@@ -638,6 +649,10 @@
   .lightbox .demowrap{background:#fff;border-radius:18px;padding:10px;cursor:default;max-width:100%}
   .lightbox .demobeeld{position:relative;overflow:hidden;border-radius:10px;background:#fff;
     width:min(420px,calc(100vw - 60px),56vh);aspect-ratio:1;margin:0 auto}
+  /* "A A" vergroot de pagina met zoom:1.16, maar vw rekent dan ook mee: zonder deze deling stak de vergrote foto
+     en de uitleg rechts buiten beeld (gebruikers-sweep 2026-11-11, Truus) */
+  html.groot .lightbox .demobeeld{width:min(420px,calc((100vw - 60px) / 1.16),48vh)}
+  html.groot .lightbox .lbuitleg{max-width:min(calc(92vw / 1.16),440px)}
   .lightbox .demobeeld canvas{display:block;width:100%;height:100%;margin:0;border-radius:10px}
   .lightbox .demobeeld canvas.boven{position:absolute;inset:0;opacity:0;
     transition:opacity .85s cubic-bezier(.45,0,.55,1)}

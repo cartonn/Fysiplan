@@ -82,6 +82,15 @@
   }
   .klaarblok b{font-size:19px}
   .klaarblok p{color:var(--grijs);margin-top:8px;font-size:15px;line-height:1.55}
+  /* zonder camera: opnieuw proberen of een video uit de galerij kiezen */
+  .geencam{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+  .geencam button,.geencam label{display:flex;align-items:center;justify-content:center;min-height:52px;font:600 16px/1.2 var(--disp);
+    border-radius:14px;padding:12px 18px;cursor:pointer}
+  .geencam label{background:var(--blauw);color:#fff}
+  .geencam label:focus-within{outline:3px solid rgba(36,86,166,.4);outline-offset:2px}
+  .geencam input{position:absolute;width:1px;height:1px;opacity:0}
+  .geencam button{background:var(--vlak);border:1px solid var(--lijn);color:var(--inkt)}
+  .geencam .gcmsg{min-height:1.4em;color:var(--grijs);font-size:15px}
   button:focus-visible{outline:3px solid rgba(36,86,166,.4);outline-offset:2px}
 </style>
 </head>
@@ -106,11 +115,55 @@
       "<b>Video verstuurd</b><p>De video staat nu op het beeldscherm. Je kunt de telefoon weer wegleggen.</p></div>");
   }
   if(!token){fout('Deze opnamelink is niet geldig. Scan de QR-code op het beeldscherm opnieuw.');return;}
-  if(!navigator.mediaDevices||!window.MediaRecorder){fout('Deze browser ondersteunt geen video-opname. Probeer Safari (iPhone) of Chrome (Android).');return;}
+  var kanOpnemen=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);
+
+  // upload via XHR in plaats van fetch: een opname van een minuut is zo 10-30 MB en op
+  // mobiel uplink duurt dat even; de knop toont daarom de echte verstuurvoortgang.
+  // 99% blijft staan tot de server bevestigt.
+  function verstuur(blob,ct,knop,herstel,klaar){
+    var x=new XMLHttpRequest();
+    x.open('POST','/api/opname/upload?token='+token);
+    x.setRequestHeader('content-type',ct);
+    x.upload.onprogress=function(e){
+      if(e.lengthComputable)knop.textContent='Versturen… '+Math.min(99,Math.round(e.loaded/e.total*100))+'%';
+    };
+    x.onload=function(){
+      var d=null;try{d=JSON.parse(x.responseText);}catch(e){}
+      if(!d||!d.ok){herstel((d&&d.fout)||'Versturen is niet gelukt.');return;}
+      if(klaar)klaar();
+      klaarScherm();
+    };
+    x.onerror=function(){herstel('Versturen is niet gelukt: geen verbinding.');};
+    x.send(blob);
+  }
+  // geen camera (geweigerd, geen camera op het apparaat of een browser zonder opname):
+  // niet doodlopen, maar opnieuw laten proberen of een bestaande video laten kiezen
+  function geenCamera(msg){
+    toon("<div class='klaarblok'><b>Geen camera</b><p>"+esc(msg)+"</p>"+
+      "<div class='geencam'><label id='kieslabel'><input type='file' id='kies' accept='video/mp4,video/webm,video/quicktime,video/*'/>"+
+      "<span id='kiestekst'>Kies een video uit je galerij</span></label>"+
+      (kanOpnemen?"<button type='button' id='nogmaals'>Camera opnieuw proberen</button>":"")+
+      "<p class='gcmsg' id='gcmsg' role='status' aria-live='polite'></p></div></div>");
+    var kies=document.getElementById('kies'),tekst=document.getElementById('kiestekst'),meld=document.getElementById('gcmsg');
+    var nog=document.getElementById('nogmaals');
+    if(nog)nog.addEventListener('click',function(){location.reload();});
+    kies.addEventListener('change',function(){
+      var f=kies.files&&kies.files[0];
+      if(!f)return;
+      var t=String(f.type||'').toLowerCase(),naam=String(f.name||'').toLowerCase();
+      // een iPhone bewaart video als .mov; dat is hetzelfde mp4-formaat (ftyp-kop)
+      var ct=(t==='video/webm'||/\.webm$/.test(naam))?'video/webm':(t==='video/mp4'||t==='video/quicktime'||/\.(mp4|m4v|mov)$/.test(naam))?'video/mp4':null;
+      if(!ct){meld.textContent='Kies een video (mp4, mov of webm).';kies.value='';return;}
+      if(f.size>60*1024*1024){meld.textContent='Deze video is te groot (max. 60 MB). Kies een kortere video.';kies.value='';return;}
+      meld.textContent='';kies.disabled=true;tekst.textContent='Versturen… 0%';
+      verstuur(f,ct,tekst,function(m){kies.disabled=false;kies.value='';tekst.textContent='Kies een video uit je galerij';meld.textContent=m||'';});
+    });
+  }
 
   fetch('/api/opname/status?token='+token).then(function(r){return r.json();}).then(function(d){
     if(!d.ok){fout('Deze opnamelink is verlopen. Klik op het beeldscherm opnieuw op het camera-icoon en scan de nieuwe QR-code.');return;}
     if(d.klaar){klaarScherm();return;}
+    if(!kanOpnemen){geenCamera('Deze browser kan geen video opnemen. Kies een video uit je galerij, of open de link in Safari (iPhone) of Chrome (Android).');return;}
     start(d);
   }).catch(function(){fout('Geen verbinding met de server.');});
 
@@ -124,7 +177,7 @@
         .then(function(s){richting=facing;stream=s;gelukt();})
         .catch(mislukt);
     }
-    vraagCamera('environment',opnameUI,function(){fout('Geen toegang tot de camera. Geef de browser toestemming voor camera en microfoon en probeer het opnieuw.');});
+    vraagCamera('environment',opnameUI,function(){geenCamera('Geen toegang tot de camera. Geef de browser toestemming voor camera en microfoon en probeer het opnieuw, of kies een video die je al hebt.');});
 
     function spiegel(){
       // voorcamera gespiegeld tonen, zoals elke camera-app; de opname zelf blijft gewoon rechtop
@@ -191,26 +244,10 @@
         "<button class='blauw' id='stuur'>Gebruik deze video</button></div></div>");
       document.getElementById('opnieuw').addEventListener('click',opnameUI);
       document.getElementById('stuur').addEventListener('click',function(){
-        // upload via XHR in plaats van fetch: een opname van een minuut is zo
-        // 10-30 MB en op mobiel uplink duurt dat even — de knop toont daarom de
-        // echte verstuurvoortgang. 99% blijft staan tot de server bevestigt.
         var knop=this;knop.disabled=true;knop.textContent='Versturen… 0%';
         var ct=(rec.mimeType||mime).indexOf('mp4')>-1?'video/mp4':'video/webm';
-        var herstel=function(msg){knop.disabled=false;knop.textContent='Gebruik deze video';if(msg)alert(msg);};
-        var x=new XMLHttpRequest();
-        x.open('POST','/api/opname/upload?token='+token);
-        x.setRequestHeader('content-type',ct);
-        x.upload.onprogress=function(e){
-          if(e.lengthComputable)knop.textContent='Versturen… '+Math.min(99,Math.round(e.loaded/e.total*100))+'%';
-        };
-        x.onload=function(){
-          var d=null;try{d=JSON.parse(x.responseText);}catch(e){}
-          if(!d||!d.ok){herstel((d&&d.fout)||'Versturen is niet gelukt.');return;}
-          if(stream)stream.getTracks().forEach(function(t){t.stop();});
-          klaarScherm();
-        };
-        x.onerror=function(){herstel('Versturen is niet gelukt: geen verbinding.');};
-        x.send(blob);
+        verstuur(blob,ct,knop,function(msg){knop.disabled=false;knop.textContent='Gebruik deze video';if(msg)alert(msg);},
+          function(){if(stream)stream.getTracks().forEach(function(t){t.stop();});});
       });
     }
   }
