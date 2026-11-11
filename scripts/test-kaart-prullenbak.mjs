@@ -110,6 +110,7 @@ try {
   assert.equal((await prul(S2)).length,1,'alleen Oud staat nog in prullenbak');
   assert.equal((await prul(J2)).length,0);
   assert.equal((await get('/'+keep)).status,404,'oude videolink geblokkeerd in prullenbak');
+  assert.equal((await get('/'+keep.replace('uploads/','uploads//'))).status,404,'dubbele slash omzeilt videoblokkade niet');
   assert.equal((await readFile(join(dataDir,keep),'utf8')),'retained video');
   assert.equal((await terug(legacy.id,S2)).status,200);
   assert.equal((await get('/'+keep)).status,200,'opname terug na herstel');

@@ -5671,7 +5671,7 @@ async function afhandelen(request, response) {
   if (urlPath.startsWith("/uploads/")) {
     // Bewaar privéopnames voor herstel, maar serveer ze niet via een oude directe link
     // wanneer uitsluitend verwijderde kaarten er nog naar verwijzen.
-    const uploadPad = urlPath.slice(1);
+    const uploadPad = normalize(urlPath).slice(1);
     const verwijzingen = Object.values(kaarten).flatMap((m) => Object.values(m))
       .filter((k) => Object.values(k.vids || {}).includes(uploadPad));
     if (verwijzingen.length && verwijzingen.every((k) => k.verwijderdOp) &&
