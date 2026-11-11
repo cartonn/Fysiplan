@@ -1100,7 +1100,9 @@ bridge2.jpg</div>
   // praktijkroutes. In v1 wordt er nooit een token opgeslagen, dus deze helpers
   // geven daar altijd de kale headers terug — v1-gedrag verandert niet.
   function prakSes(){try{return localStorage.getItem('fp_praksessie')||'';}catch(e){return '';}}
-  function setPrakSes(t){try{if(t)localStorage.setItem('fp_praksessie',t);else localStorage.removeItem('fp_praksessie');}catch(e){}}
+  function setPrakSes(t){try{if(t)localStorage.setItem('fp_praksessie',t);else localStorage.removeItem('fp_praksessie');}catch(e){}
+    // net ingelogd: het praktijkprofiel (adres, logo) ophalen voor dit apparaat
+    if(t&&typeof window.fpLaadPraktijken==='function')window.fpLaadPraktijken();}
   function PJSON(){var h={'content-type':'application/json'};var s=prakSes();if(s)h['x-praktijk-sessie']=s;return h;}
   function PGET(){var o={cache:'no-cache'};var s=prakSes();if(s)o.headers={'x-praktijk-sessie':s};return o;}
   // V2 en beheer gebruiken de gekoppelde avatarlibrary; de V1-root gebruikt
@@ -2508,10 +2510,22 @@ bridge2.jpg</div>
     var cur=(SET.praktijk||'').toLowerCase();
     PRAKTIJKEN.forEach(function(p,i){if(p.praktijk.toLowerCase()===cur)prakSel.value=String(i);});
   }
-  function loadPraktijken(){
-    fetch('api/praktijken',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];})
-      .then(function(l){PRAKTIJKEN=Array.isArray(l)?l:[];renderPrakSelect();}).catch(function(){});
+  // v2 geeft het eigen profiel alleen met de praktijksessie terug. Zonder die header kreeg een collega
+  // op een nieuw apparaat nooit adres, telefoon of logo van de praktijk (gebruikers-sweep 2026-11-11 14u).
+  // Lege velden op dit apparaat worden aangevuld uit het profiel; wat hier al staat blijft staan.
+  function vulUitProfiel(){
+    if(!IS_V2)return;
+    var cur=(SET.praktijk||'').trim().toLowerCase();if(!cur)return;
+    var p=PRAKTIJKEN.filter(function(x){return String(x.praktijk||'').toLowerCase()===cur;})[0];if(!p)return;
+    var veranderd=false;
+    ['adres','plaats','tel','email','website','logo'].forEach(function(k){if(!SET[k]&&p[k]){SET[k]=p[k];veranderd=true;}});
+    if(veranderd){saveSettings();applySettings();}
   }
+  function loadPraktijken(){
+    fetch('api/praktijken',PGET()).then(function(r){return r.ok?r.json():[];})
+      .then(function(l){PRAKTIJKEN=Array.isArray(l)?l:[];renderPrakSelect();vulUitProfiel();}).catch(function(){});
+  }
+  window.fpLaadPraktijken=loadPraktijken;
   prakSel.addEventListener('change',function(){
     var p=PRAKTIJKEN[+prakSel.value];if(!p)return;
     SET.praktijk=p.praktijk;SET.adres=p.adres||'';SET.plaats=p.plaats||'';SET.tel=p.tel||'';SET.email=p.email||'';
@@ -3932,10 +3946,13 @@ bridge2.jpg</div>
   }
   // eerstvolgende afspraak van een kaart, mét doorrollen van een wekelijkse reeks:
   // precies wat de patiëntkaart ook toont. Geeft null als alles voorbij is.
+  // een week later op dezelfde kloktijd: niet 7×24 uur, anders schuift het uur over de zomertijd
+  // (di 24-03 14:00 + 1 week werd 31-03 15:00; gebruikers-sweep 2026-11-11)
+  function weekVerder(t){var d=new Date(t);d.setDate(d.getDate()+7);return d.getTime();}
   function volgendeAfspraak(c){
     if(!c.afspraak||!c.afspraak.t)return null;
     var t=c.afspraak.t,rest=Number(c.afspraak.herhaal)||0,grens=Date.now()-2*3600000;
-    if(rest>=2){while(t<grens&&rest>1){t+=7*864e5;rest--;}}
+    if(rest>=2){while(t<grens&&rest>1){t=weekVerder(t);rest--;}}
     if(t<grens)return null;
     return {t:t,rest:rest>=2?rest:0};
   }
@@ -4922,7 +4939,7 @@ bridge2.jpg</div>
       if(veldW){
         var basisW=veldW.value?new Date(veldW.value).getTime():Date.now();
         if(!isFinite(basisW))basisW=Date.now();
-        var dW=new Date(basisW+7*864e5),pz=function(n){return ('0'+n).slice(-2);};
+        var dW=new Date(weekVerder(basisW)),pz=function(n){return ('0'+n).slice(-2);};
         veldW.value=dW.getFullYear()+'-'+pz(dW.getMonth()+1)+'-'+pz(dW.getDate())+'T'+pz(dW.getHours())+':'+pz(dW.getMinutes());
         var okW=document.querySelector("[data-safspraakopslaan='"+aw.dataset.safweek+"']");
         if(okW)okW.click();
@@ -5188,7 +5205,7 @@ bridge2.jpg</div>
     var klaar=function(lijst){
       lijst.forEach(function(e){
         var pad='/'+String(e.img||'').replace(/^\/+/,'');
-        OEF.push({id:OEF.length,naam:e.naam,groep:EIGEN_GROEP,s:3,h:12,bron:'praktijk',exerciseId:e.id,uitleg:e.uitleg||'',
+        OEF.push({id:OEF.length,naam:e.naam,groep:EIGEN_GROEP,s:3,h:12,bron:'praktijk',exerciseId:e.id,uitleg:e.uitleg||'',magWeg:e.magWeg!==false,
           starthouding:'',uitvoering:'',opmerking:'',imgs:[{type:'img',src:pad,lineSrc:pad,colorSrc:pad,label:'Plaatje'}]});
       });
       if(GROUPS){
@@ -5327,9 +5344,12 @@ bridge2.jpg</div>
   function toonEigenLijst(){
     var el=document.getElementById('eo_lijst');if(!el)return;
     var eigen=OEF.filter(function(o){return o.bron==='praktijk';});
+    // het kruisje alleen bij wie mag (maker of beheerder); de rest ziet waarom niet
+    var nietWeg=eigen.some(function(o){return o.magWeg===false;});
     el.innerHTML=eigen.length?"<div class='hint' style='font-weight:600;margin-bottom:4px'>Jullie eigen oefeningen</div>"+eigen.map(function(o){
-      return "<div style='display:flex;align-items:center;gap:8px;padding:4px 0;border-top:1px solid var(--line)'><span style='flex:1'>"+esc(o.naam)+"</span><button class='btn' type='button' data-eoweg='"+esc(o.exerciseId)+"' aria-label='verwijderen'>&times;</button></div>";
-    }).join(''):'';
+      return "<div style='display:flex;align-items:center;gap:8px;padding:4px 0;border-top:1px solid var(--line);min-height:44px'><span style='flex:1'>"+esc(o.naam)+"</span>"+
+        (o.magWeg!==false?"<button class='btn' type='button' data-eoweg='"+esc(o.exerciseId)+"' aria-label='"+esc(o.naam)+" verwijderen' style='min-width:44px;min-height:44px'>&times;</button>":"")+"</div>";
+    }).join('')+(nietWeg?"<div class='hint' id='eo_wie' style='margin-top:6px'>Een oefening van een collega kan alleen die collega of een beheerder van de praktijk verwijderen.</div>":""):'';
   }
   document.getElementById('eigenOefBtn').addEventListener('click',openEigenOef);
 

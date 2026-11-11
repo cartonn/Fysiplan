@@ -4,7 +4,16 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Praktijk met één beheerder die het wachtwoord kwijt is (gebruikers-sweep, 2026-11-11 14u)
+**Wat de code nu doet:** na de overstap naar eigen logins ("praktijkwachtwoord uit") werkt de herstelcode niet meer. Een lid dat zijn
+wachtwoord kwijt is, moet de beheerder om een nieuwe uitnodiging vragen. Is die lid zelf de enige beheerder, dan is er geen weg terug
+(zichzelf opnieuw uitnodigen geeft 409). De app waarschuwt bij "Zet het praktijkwachtwoord uit" niet dat er twee beheerders horen te zijn.
+**Wat jij moet kiezen:** (1) een waarschuwing bij uitzetten met maar één beheerder ("wijs eerst een tweede beheerder aan"), (2) een
+herstel per e-mail voor eigen logins (mail staat aan op Railway), of (3) herstel alleen via jou (handmatig). Advies: (1) nu, (2) later;
+laat het weten, dan bouwt de sweep (1).
+
 ### Wie mag een patiëntkaart verwijderen? (security, 2026-11-11)
+**GEDAAN 2026-11-11 (PR #191, #194):** alleen maker en beheerder, 7 dagen in de prullenbak, daar ook definitief te verwijderen.
 **Wat de code nu doet:** elke therapeut van de praktijk kan elke gedeelde patiëntkaart definitief verwijderen, ook die van
 een collega, met de video's erbij. Sinds deze week staat dat wel in Activiteit (wie, wanneer). Bij sjablonen en eigen
 oefeningen mag alleen de maker of een beheerder verwijderen; kaarten onthouden (nog) geen maker.
