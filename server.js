@@ -337,6 +337,12 @@ const isBeheer = (s) => !!s && (!s.lid || (sessieLid(s) || {}).rol === "beheerde
 // het maakte (lid-id in `door`) of een beheerder. Zonder sessie kwam de aanvraag langs het
 // beheer of v1 (eisBeveiligdePraktijk) en mag het. Oud werk zonder maker: alleen beheerder.
 const magGedeeldAanpassen = (s, item, pk) => !s || s.pk !== pk || isBeheer(s) || (!!item && !!item.door && item.door === s.lid);
+// Teamsjablonen voor de app, met magWeg: alleen de deler of een beheerder ziet "Verwijderen voor de praktijk".
+// Een therapeut kreeg die knop bij andermans sjabloon en pas na bevestigen een 403 (gebruikers-sweep 2026-11-11).
+const sjablonenVoorApp = (request, pk) => {
+  const sessie = sessieVan(request);
+  return (praktijkSjablonen[pk] || []).map((sj) => ({ ...sj, magWeg: magGedeeldAanpassen(sessie, sj, pk) }));
+};
 // sessies van één lid (of alle sessies met het gedeelde praktijkwachtwoord) intrekken
 function trekSessiesIn(pk, lidId) {
   for (const [token, s] of praktijkSessies) if (s.pk === pk && (lidId ? s.lid === lidId : !s.lid)) praktijkSessies.delete(token);
@@ -3491,7 +3497,7 @@ async function afhandelen(request, response) {
     // eisBeveiligdePraktijk, niet eisPraktijk: sjablonen blijven staan na een claim-reset door
     // beheer of onder een oude naamsleutel; zonder wachtwoord kon iedereen ze dan op naam lezen
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
-    await sendJson(response, 200, { ok: true, sjablonen: praktijkSjablonen[pk] || [] });
+    await sendJson(response, 200, { ok: true, sjablonen: sjablonenVoorApp(request, pk) });
     return;
   }
   // delen/bijwerken: een sjabloon (naam + oefeningen met startdosering) bij de
@@ -3525,7 +3531,7 @@ async function afhandelen(request, response) {
       if (idx > -1) lijst[idx] = sjabloon; else lijst.unshift(sjabloon);
       await saveJson(praktijkSjablonenPath, praktijkSjablonen);
       auditLog(pk, "sjabloon-gedeeld", request);
-      await sendJson(response, 200, { ok: true, sjablonen: lijst });
+      await sendJson(response, 200, { ok: true, sjablonen: sjablonenVoorApp(request, pk) });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
@@ -3549,7 +3555,7 @@ async function afhandelen(request, response) {
       if (!lijst.length) delete praktijkSjablonen[pk];
       await saveJson(praktijkSjablonenPath, praktijkSjablonen);
       auditLog(pk, "sjabloon-verwijderd", request);
-      await sendJson(response, 200, { ok: true, sjablonen: praktijkSjablonen[pk] || [] });
+      await sendJson(response, 200, { ok: true, sjablonen: sjablonenVoorApp(request, pk) });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }

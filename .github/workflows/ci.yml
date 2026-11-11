@@ -81,6 +81,8 @@ jobs:
       - run: npm run test:seintjevoorrang
       - run: npm run test:qrtaal
       - run: npm run test:eerstedeling
+      - run: npm run test:printcompact
+      - run: npm run test:storingtaal
       - run: npm run test:dubbeltik
       - run: npm run test:kaartroutes
       - run: npm run test:landingprint
