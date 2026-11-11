@@ -9,7 +9,7 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | Gebied | Laatst gecontroleerd |
 |---|---|
 | (a) privacyverklaring (art. 13/14 AVG) | 2026-11-10 21u (Anthropic-rij beloofde "geen vrije tekst van de therapeut" en "bibliotheekteksten", maar namen van eigen oefeningen gaan mee naar vertaling en vraaghulp: opgelost; bron van teamledengegevens (art. 14 lid 2 f): opgelost; proefvelden, externe hosts in code, Cloudflare Stream (alleen bibliotheekvideo's van beheer), rechten en klachtrecht: klopt; Resend-rij wacht nog op #167) |
-| (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-09 13u (art. 28 lid 3 a/g/h en lid 4 langs de tekst; einde proef: kaarten bleven onbeperkt; subverwerkers tegen alle externe hosts in code: geen gat) |
+| (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-11 05u (art. 5 beloofde "vrije tekst van de therapeut gaat niet naar AI-diensten", maar namen van eigen oefeningen gaan mee: opgelost; art. 2 miste kaartnaam, doelactiviteit, weekdoel, werknotitie, behandelaar en contactlogboek: opgelost, fail-closed test; /privacy logboekregel zei 500, code houdt 300 + 50 per praktijk: opgelost; externe hosts in code tegen subverwerkerslijst (Railway, Anthropic, Cloudflare, YouTube, Resend, Mollie apart): geen gat; art. 28 lid 3 a-h verder ongewijzigd) · 2026-11-09 13u |
 | (c) algemene voorwaarden | 2026-11-10 05u (art. 4 beschrijft de maandincasso: afschrijven via machtiging, mail 5 dagen vooraf als afgesproken kortere termijn, mislukt = contact, factuur per maand; `AV_VERSIE` 2026-11-10) |
 | (d) code tegen tekst | 2026-11-10 17u (patiëntroute `PATIENT_VELDEN` tegen /privacy#patient: doelactiviteit, bericht van de praktijk, weekdoel en eigen video/foto ontbraken, afspraak stond onder "zelf aantikt"; opgelost. Mails via Resend gaan ook over betaling en wachtwoord: open tot #167 gemerged is. Logs, auditlog 500, cookies, reservekopie 7 dagen, uitnodiging 7 dagen: klopt) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-10 01u (vertaalcache hield namen van eigen oefeningen na "Alles wissen" en na verwijderen tot de volgende herstart; /privacy noemde de beheerderslogin op /v2/gegevens niet; download bevat geen geheimen, wel alle kaartvelden) |
@@ -18,10 +18,24 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (h) WGBO en KNGF-beroepsregels | 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
 | (i) begrijpelijkheid (B1) | 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (i) B1, dan (b) verwerkersovereenkomst, dan (e) rechten. Het Resend-punt hieronder pakken zodra PR #167 gemerged of gesloten is. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (i) B1, dan (e) rechten, dan (h) WGBO. Het Resend-punt hieronder pakken zodra PR #167 gemerged of gesloten is. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **MIDDEL — verwerkersovereenkomst (b) 2026-11-11 05u: art. 5 en art. 2 klopten niet met de code.**
+  Art. 5 (beveiliging) beloofde de praktijk "vrije tekst van de therapeut gaat niet naar AI-diensten". Sinds de
+  privacyverklaring is rechtgezet (#173) weten we dat `/api/kaart/vertaal` en `/api/kaart/vraag` de namen van eigen
+  oefeningen meesturen. Een contractuele belofte die niet klopt, is erger dan een onvolledige privacytekst.
+  Art. 2 (soort gegevens, art. 28 lid 3 AVG) noemde alleen "roepnaam", terwijl de server het interne kaartlabel
+  ("Jan K."), doelactiviteit, weekdoel, werknotitie, behandelaar en het contactlogboek bewaart.
+  Daarnaast (LAAG, code tegen tekst): /privacy#praktijk zei bij het logboek "de laatste 500 gebeurtenissen", maar
+  sinds #175 houdt de server per praktijk 300 gewone regels en 50 mislukte pogingen.
+  OPGELOST 2026-11-11 (deze PR): art. 2 en 5 bijgewerkt, `VWO_VERSIE` 2026-11-11 met een regel in
+  `AKKOORD_WIJZIGINGEN` (beheerders gaan één keer opnieuw akkoord); /privacy noemt de plafonds uit de code
+  (`__AUDIT_PER__`/`__AUDIT_RUIS__`). Test in `scripts/test-privacy.mjs`: elk kaartveld uit `PATIENT_VELDEN` én
+  elke `kaart.<veld> =` in server.js moet in art. 2 staan (fail-closed; faalt zonder fix op `pskDoel`).
+  Bron: AVG art. 28 lid 3 (onderwerp, soort persoonsgegevens), art. 32; art. 13 lid 2 a (bewaartermijn).
 
 - **OPGELOST 2026-11-10 22u (gebruikers-sweep, test:zwaaroffline) — MIDDEL lokale opslag (f): "Wis deze kaart van mijn
   telefoon" liet het kaart-id terugkomen.** Na wissen schreef `pagehide` → `bewaarBeeldenLijst()` opnieuw
