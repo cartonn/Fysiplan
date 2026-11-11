@@ -69,7 +69,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-11-2";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-11";
+const AV_VERSIE = "2026-11-11-2";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-11";
@@ -91,6 +91,7 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-10", tekst: "Betalen na de eerste maand: we schrijven elke maand automatisch af via je machtiging, met minstens " + INCASSO_VOORAF_DAGEN + " dagen vooraf een mail. Lukt het niet, dan nemen we contact op." },
   { stuk: "av", versie: "2026-11-11", tekst: "Ingevuld: een nieuwe prijs melden we minstens 30 dagen vooraf per e-mail, en er is geen opzegtermijn (opzeggen kan elke dag, het abonnement stopt aan het einde van de betaalde maand)." },
   { stuk: "vwo", versie: "2026-11-11", tekst: "Gegevens: de lijst noemt nu ook de kaartnaam, doelactiviteit, weekdoel, werknotitie, behandelaar en het contactlogboek. AI: namen van eigen oefeningen gaan mee naar de vertaal- en vraaghulp; roepnaam, scores en notities niet." },
+  { stuk: "av", versie: "2026-11-11-2", tekst: "Prijsbelofte: je prijs per therapeut staat minstens 24 maanden vast vanaf de start van je abonnement, zoals op fysiplan.nl staat. Pas daarna kan een nieuwe prijs ingaan, met 30 dagen vooraf een mail." },
   { stuk: "vwo", versie: "2026-11-11-2", tekst: "Bewaartermijn: een verwijderde kaart staat eerst hooguit 7 dagen in de prullenbak, waar de maker of een beheerder hem kan herstellen of meteen definitief kan verwijderen (bijvoorbeeld als een patiënt om wissen vraagt)." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
