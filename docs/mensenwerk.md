@@ -16,7 +16,9 @@ security-routine het.
 **Wat de code nu doet:** de dagelijkse reservekopie stond alleen op hetzelfde Railway-volume als de gegevens zelf. Nu
 stuurt de server dezelfde bestanden elke dag (en bij elke start) **versleuteld** naar een opslagbak buiten Railway, in
 één bestand per weekdag (`fysiplan-ma.fpb` … `fysiplan-zo.fpb`), dus elders staat nooit meer dan 7 dagen. De opslagdienst
-kan de inhoud niet lezen. Video's, foto's en logo's gaan niet mee. Zonder de variabelen hieronder gebeurt er niets.
+kan de inhoud niet lezen. Sinds #183 gaan ook video's, foto's en logo's mee (ook eigen opnames waar een patiënt op
+kan staan); /privacy zegt dat sinds de legal-run van 11-11. Is de kopie groter dan 200 MiB, dan mislukt hij helemaal
+(geen halve kopie) en krijg je een mail. Zonder de variabelen hieronder gebeurt er niets.
 `/health` toont `backupElders`: `uit`, `ok` of `fout`; bij een fout krijg je hooguit één mail per dag.
 **Wat jij moet doen:**
 1. Maak bij een Europese opslagdienst een privé-bak (bucket) aan, bijvoorbeeld Scaleway Object Storage (Amsterdam) of
@@ -26,7 +28,7 @@ kan de inhoud niet lezen. Video's, foto's en logo's gaan niet mee. Zonder de var
    een zelfgekozen lange wachtzin (minstens 24 tekens). **Bewaar die wachtzin ook buiten Railway** (wachtwoordkluis):
    zonder de wachtzin is de reservekopie niet terug te lezen.
 3. Zet `BACKUP_LEVERANCIER` op de naam en plaats van de dienst (bv. `Scaleway (Amsterdam, Nederland)`). Dan staat
-   de partij vanzelf in de lijst op /privacy. Het is een nieuwe subverwerker: meld hem vooraf aan praktijken die al
+   de partij vanzelf in de lijst op /privacy (vergeet je hem, dan noemt /privacy het adres van de opslag). Het is een nieuwe subverwerker: meld hem vooraf aan praktijken die al
    akkoord gaven (verwerkersovereenkomst) en sluit met de dienst een verwerkersovereenkomst.
 4. Controleer daarna https://fysiplan.nl/health: `backupElders` moet `ok` zijn.
 5. Terugzetten (één keer oefenen): `BACKUP_SLEUTEL=… node scripts/backup-terugzetten.mjs <bestand.fpb> <lege map>`.

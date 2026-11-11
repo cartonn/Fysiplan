@@ -114,6 +114,10 @@ try {
   // de privacyverklaring noemt de opslagpartij
   const privacy = await (await fetch(app.origin + "/privacy")).text();
   assert.ok(privacy.includes('id="reservekopie"') && privacy.includes("Scaleway (Amsterdam, Nederland)"));
+  // legal: de kopie bevat ook uploads (eigen video's/foto's, waar een patiënt op kan staan); de tekst mag niet anders zeggen
+  const rij = privacy.match(/<tr id="reservekopie">[\s\S]*?<\/tr>/)[0];
+  assert.doesNotMatch(rij, /behalve video/i, "reservekopie-rij belooft niet dat video's ontbreken");
+  assert.match(rij, /video&rsquo;s, foto&rsquo;s en logo&rsquo;s/, "reservekopie-rij noemt video's, foto's en logo's");
   await app.stop();
 
   // terugzetten met het script
@@ -132,9 +136,12 @@ try {
 
   // opslag weigert: /health zegt "fout", de beheerder krijgt één mail, de server draait door
   ontvangen.length = 0;
-  app = await start(aan);
+  app = await start({ ...aan, BACKUP_LEVERANCIER: "" });
   await wacht(async () => (await health(app.origin)).backupElders === 'ok');
   assert.equal(ontvangen.length, 0, 'herstart uploadt niet nogmaals binnen 24 uur');
+  // legal (fail-closed): kopie aan zonder BACKUP_LEVERANCIER: de opslagpartij staat toch in de privacyverklaring
+  const zonderNaam = await (await fetch(app.origin + "/privacy")).text();
+  assert.ok(zonderNaam.includes('id="reservekopie"') && zonderNaam.includes("127.0.0.1"), "opslag zonder leveranciersnaam blijft genoemd");
   await app.stop();
   await rm(join(dataDir, 'backup-elders-status.json'));
   antwoord = 403;

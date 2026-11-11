@@ -6426,8 +6426,9 @@ async function afhandelen(request, response) {
           + "en de kenmerken van klant, betaling en machtiging bij Mollie. Geen rekeningnummer of kaartgegevens; die vul je alleen bij Mollie in.</td>"
           + "<td>Het abonnement afrekenen en vastleggen dat je klant bent</td><td>Zolang je klant bent; facturen en betaalgegevens daarna 7 jaar, omdat de wet dat vraagt (fiscale bewaarplicht)</td></tr>" : "",
         // de opslag van de versleutelde reservekopie staat er alleen als die aan staat én benoemd is
-        BACKUP_RIJ_HTML: backupElders && backupElders.leverancier ? "<tr id=\"reservekopie\"><td>" + htmlEsc(backupElders.leverancier) + "</td><td>Reservekopie buiten Railway, elke dag, 7 dagen bewaard</td>"
-          + "<td>Een versleutelde kopie van alles wat op deze pagina staat, behalve video&rsquo;s, foto&rsquo;s en logo&rsquo;s. De partij kan de inhoud niet lezen; alleen Fysiplan heeft de sleutel.</td></tr>" : "",
+        // fail-closed: staat de kopie aan zonder BACKUP_LEVERANCIER, dan noemt de rij de host van de opslag
+        BACKUP_RIJ_HTML: backupElders ? "<tr id=\"reservekopie\"><td>" + htmlEsc(backupElders.leverancier || new URL(backupElders.url).hostname) + "</td><td>Reservekopie buiten Railway, elke dag, 7 dagen bewaard</td>"
+          + "<td>Een versleutelde kopie van alles wat op deze pagina staat, ook video&rsquo;s, foto&rsquo;s en logo&rsquo;s van de praktijk. Daar kan een pati&euml;nt op staan, bijvoorbeeld in een opname van een oefening. De partij kan de inhoud niet lezen; alleen Fysiplan heeft de sleutel.</td></tr>" : "",
         BETAAL_PARTIJ_HTML: mollieAan() ? "<p><b>Betalen.</b> Reken je online af, dan stuurt Fysiplan de naam van je praktijk (of je eigen naam), je e-mailadres en het bedrag "
           + "naar Mollie B.V. (Amsterdam, Nederland). Mollie handelt de betaling af en is daarvoor zelf verantwoordelijk; zie de privacyverklaring van Mollie. "
           + "Mollie krijgt geen pati&euml;ntgegevens.</p>" : ""
