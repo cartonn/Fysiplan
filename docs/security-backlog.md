@@ -264,6 +264,13 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL (doorgezet door de gebruikers-sweep 2026-11-11 02u, Mark) — collega met rol therapeut wijzigt het praktijkprofiel.**
+  `POST /api/praktijken` (server.js r. ~3655) heeft alleen `eisBeveiligdePraktijk`, geen beheercheck. Repro lokaal: therapeut
+  stuurt `{tel:"0900-OPLICHTER", website:"https://example.org/phish"}` → 200, en /k van elke patiënt toont dat nummer en die
+  link bij de praktijknaam; geen logboekregel. Verwacht 403 zoals bij team/akkoord, of beheer + logboek. Raakt server.js (open PR #167).
+- **LAAG (sweep 2026-11-11 02u, Mark) — gelijktijdige schrijfacties op notitie/afspraak/behandelaar zonder versiecheck** (laatste
+  wint stil). Integriteit, geen toegang; staat ook in routine-backlog.
+
 - **OPGELOST 2026-11-10 20u (zie boven, deze PR).** NAKIJKEN (doorgezet door de gebruikers-sweep 2026-11-10 14u) — `/api/praktijk/wachtwoord`: een fout eigen
   wachtwoord van een lid telt via `loginMisTel(pk)` mee op de sleutel van de hele praktijk.** Na genoeg pogingen kan `loginOpSlot(pk)`
   mogelijk de hele praktijk (ook de beheerder) op 429 zetten. Nagaan of de gewone login dezelfde sleutel gebruikt (Mark, code gelezen).

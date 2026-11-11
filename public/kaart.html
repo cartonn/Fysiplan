@@ -342,6 +342,15 @@
     .sstatus{flex:1 1 14em;margin:0}
     .srij{flex:1 1 18em;margin:0}
   }
+  /* Zelfde bij grote letters via de telefooninstelling: een media-query in em rekent met 16 px en springt dan
+     niet aan. zetKrap() zet body.krap als het scherm minder dan 26 regelhoogtes (rem) hoog is. De naam groeit dan
+     niet verder dan de breedte toelaat, zodat naam en begin van de uitleg in het eerste scherm passen. */
+  body.krap .oef.actief .fotoknop img{max-height:34vh}
+  body.krap .oef.actief>.vhouder.open>video.avatar{max-height:40vh}
+  body.krap .sbalk{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+  body.krap .sstatus{flex:1 1 14em;margin:0}
+  body.krap .srij{flex:1 1 18em;margin:0}
+  body.krap .oef.actief .naam{font-size:min(1.5rem,7.5vw);margin-top:10px}
   .svink{flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:var(--groen-vul)}
   .svink::after{content:"";display:block;width:5px;height:10px;margin:3px 0 0 7px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
   .songedaan{margin-inline-start:auto;min-height:44px;padding:0 2px;border:0;background:none;
@@ -669,7 +678,9 @@
     es:'Cargando tu tarjeta…',pl:'Wczytywanie karty…',tr:'Kartın yükleniyor…',ar:'جارٍ تحميل بطاقتك…',uk:'Завантаження картки…'};
   (function(){
     var h=Object.prototype.hasOwnProperty,t=null,k=function(x){return typeof x==='string'&&h.call(LADEN,x);};
-    try{var q=new URLSearchParams(location.search).get('taal');if(k(q))t=q;}catch(e){}
+    try{var q=new URLSearchParams(location.search).get('taal');if(k(q))t=q;
+      var m=location.pathname.match(/^\/k\/([a-z0-9]+)$/),z=m&&JSON.parse(localStorage.getItem('fp_taalkeus_'+m[1])||'null');
+      if(t&&z&&z.link===t&&k(z.keus))t=z.keus;}catch(e){}
     if(!t)try{var o=localStorage.getItem('fp_taal');if(k(o))t=o;}catch(e){}
     if(!t)try{var v=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||''];
       for(var i=0;i<v.length&&!t;i++){var c=String(v[i]||'').slice(0,2).toLowerCase();if(k(c))t=c;}}catch(e){}
@@ -926,12 +937,20 @@
   // Alleen echte taalcodes uit T: "__proto__", "constructor" of "toString" (geërfd van
   // Object.prototype) maakten de kaart leeg, en via fp_taal ook elke latere QR-scan.
   function isTaal(x){return typeof x==='string'&&Object.prototype.hasOwnProperty.call(T,x);}
+  // grote letters (telefooninstelling) op een laag scherm: zie body.krap in de stijl
+  function zetKrap(){try{var r=parseFloat(getComputedStyle(document.documentElement).fontSize)||16;
+    document.body.classList.toggle('krap',window.innerHeight/r<26);}catch(e){}}
+  zetKrap();window.addEventListener('resize',zetKrap);
+  // eigen taalkeuze van de patiënt bij deze kaart: {link: taal in de link, keus: gekozen taal}
+  function taalKeus(){try{var v=JSON.parse(localStorage.getItem('fp_taalkeus_'+id)||'null');return v&&typeof v==='object'?v:null;}catch(e){return null;}}
   var TAAL=(function(){
     // 1) expliciete taal in de link (?taal=xx): de therapeut heeft die bewust
     //    gekozen voor deze patiënt, dus die opent de kaart meteen in de juiste taal —
     //    ook als de telefoon van de patiënt op een andere taal staat. De patiënt kan
     //    daarna altijd zelf wisselen met de taalkiezer.
-    try{var q=new URLSearchParams(location.search).get('taal');if(isTaal(q))return q;}catch(e){}
+    //    Heeft de patiënt bij precies deze link zelf een andere taal gekozen, dan wint die keuze
+    //    (anders sprong de kaart bij elke QR-scan terug naar de taal van de link).
+    try{var q=new URLSearchParams(location.search).get('taal');if(isTaal(q)){var kz=taalKeus();return kz&&kz.link===q&&isTaal(kz.keus)?kz.keus:q;}}catch(e){}
     try{var t=localStorage.getItem('fp_taal');if(isTaal(t))return t;if(t!=null)localStorage.removeItem('fp_taal');}catch(e){}
     try{
       var voork=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||''];
@@ -1294,6 +1313,23 @@
   // ook mee, zodat telefoon en tablet hetzelfde laten zien en een tik op het ene
   // apparaat het vinkje van het andere niet stil weghaalt.
   function oefTrouwSleutel(x){return String((x&&x.n)||'').slice(0,80);}
+  // Vinkjes en "te zwaar" staan op de telefoon per positie. Haalt de praktijk na het delen een oefening weg
+  // of zet ze in een andere volgorde, dan wees die positie naar een andere oefening (Sanne, sweep 2026-11-11).
+  // Daarom bewaren we de namen erbij en zoeken bij het lezen de positie van dezelfde oefening op.
+  function oefNamen(idx){var c=(K&&K.kaart&&K.kaart.chosen)||[];return idx.map(function(i){return oefTrouwSleutel(c[i]);});}
+  function naarHuidig(idx,namen){
+    if(!Array.isArray(namen)||namen.length!==idx.length)return idx.slice();
+    var c=(K&&K.kaart&&K.kaart.chosen)||[],bezet={},uit=[];
+    namen.forEach(function(n,k){
+      if(!n)return;
+      var j=-1;
+      // dezelfde positie als die nog dezelfde oefening is (ook bij twee keer dezelfde naam), anders de eerste vrije
+      if(oefTrouwSleutel(c[idx[k]])===n&&!bezet[idx[k]])j=idx[k];
+      else for(var i=0;i<c.length;i++)if(!bezet[i]&&oefTrouwSleutel(c[i])===n){j=i;break;}
+      if(j>-1){bezet[j]=1;uit.push(j);}
+    });
+    return uit;
+  }
   function serverOefDaan(vandaag){
     var uit=[];
     if(!K||!K.kaart||!K.dag||K.dag!==vandaag)return uit;
@@ -1310,7 +1346,7 @@
     var done=[];
     try{
       var s=JSON.parse(localStorage.getItem(oefDaanSleutel())||'{}');
-      if(s&&s.d===vandaag&&Array.isArray(s.done))done=s.done.slice();
+      if(s&&s.d===vandaag&&Array.isArray(s.done))done=naarHuidig(s.done,s.n);
     }catch(e){}
     serverOefDaan(vandaag).forEach(function(i){if(done.indexOf(i)===-1)done.push(i);});
     return {d:vandaag,done:done};
@@ -1322,7 +1358,7 @@
     var x=(K.kaart.chosen||[])[idx];var naam=oefTrouwSleutel(x);if(!naam)return;
     K.kaart.oefTrouw=mgTrouwTik(K.kaart.oefTrouw,naam,K.dag,aan);
   }
-  function bewaarOefDaan(st){try{localStorage.setItem(oefDaanSleutel(),JSON.stringify(st));}catch(e){}}
+  function bewaarOefDaan(st){try{localStorage.setItem(oefDaanSleutel(),JSON.stringify({d:st.d,done:st.done,n:oefNamen(st.done)}));}catch(e){}}
   function tekenOefDaan(){
     var st=leesOefDaan();
     var knoppen=document.querySelectorAll('#oefs .oefdone');
@@ -1353,7 +1389,7 @@
   // dagstatus); de server bewaart de laatste melding per oefening voor de praktijk
   function leesZwaar(){
     var vandaag=dagStr(Date.now());
-    try{var s=JSON.parse(localStorage.getItem('fp_zwaar_'+id)||'{}');if(s&&s.d===vandaag&&Array.isArray(s.idx))return {d:vandaag,idx:s.idx};}catch(e){}
+    try{var s=JSON.parse(localStorage.getItem('fp_zwaar_'+id)||'{}');if(s&&s.d===vandaag&&Array.isArray(s.idx))return {d:vandaag,idx:naarHuidig(s.idx,s.n)};}catch(e){}
     return {d:vandaag,idx:[]};
   }
   function tekenZwaar(){
@@ -1788,7 +1824,8 @@
     var laatste=e.length?e[e.length-1]:null;
     var vandaag=laatste&&new Date(laatste.t).toDateString()===new Date().toDateString();
     document.querySelectorAll('#hsknoppen .sbtn').forEach(function(b){
-      b.classList.toggle('aan',!!(vandaag&&Number(b.dataset.hs)===laatste.s));
+      var aan=!!(vandaag&&Number(b.dataset.hs)===laatste.s);
+      b.classList.toggle('aan',aan);b.setAttribute('aria-pressed',aan?'true':'false');
     });
   }
 
@@ -2184,7 +2221,11 @@
     }catch(e){}
     klaar();
   }
-  function alles(){tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenPsk();tekenAfspraak();tekenOfflijn();tekenAfgerond();tekenPrivacy();tekenSpoed();tekenMijnGegevens();tekenWacht();clearTimeout(alles.bl);alles.bl=setTimeout(bewaarBeeldenLijst,2500);}
+  // nieuwe dag terwijl de kaart open blijft (telefoon op tafel, tabblad op de achtergrond): opnieuw tekenen,
+  // anders bleef "Ik heb vandaag geoefend" aan van gisteren en zette de eerste tik van vandaag hem juist uit.
+  var getekendDag=null;
+  function dagWissel(){try{if(K&&getekendDag&&dagStr(Date.now())!==getekendDag)alles();}catch(e){}}
+  function alles(){getekendDag=dagStr(Date.now());tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenPsk();tekenAfspraak();tekenOfflijn();tekenAfgerond();tekenPrivacy();tekenSpoed();tekenMijnGegevens();tekenWacht();clearTimeout(alles.bl);alles.bl=setTimeout(bewaarBeeldenLijst,2500);}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   // klaar: pas na het tekenen in de nieuwe taal (bij het openen blijft tot dan het
@@ -3057,7 +3098,7 @@
         var zetZwaar=function(){
           var zst=leesZwaar();
           if(zst.idx.indexOf(zidx)===-1)zst.idx.push(zidx);
-          try{localStorage.setItem('fp_zwaar_'+id,JSON.stringify(zst));}catch(e2){}
+          try{localStorage.setItem('fp_zwaar_'+id,JSON.stringify({d:zst.d,idx:zst.idx,n:oefNamen(zst.idx)}));}catch(e2){}
           tekenZwaar();
         };
         if(!id||id==='demo'){zetZwaar();return;}
@@ -3205,6 +3246,7 @@
           }});
     });
     document.getElementById('gdaan').addEventListener('click',function(){
+      dagWissel();
       var knop=this;if(knop.dataset.bezig)return;knop.dataset.bezig='1';
       // expliciet aan of uit (wat de patiënt nu ziet), geen blinde aan/uit-tik op de server;
       // ook een tik uit de wachtrij (offline) zet zo de juiste stand
@@ -3379,10 +3421,15 @@
     if(document.readyState==='complete')setTimeout(bewaarBeeldenLijst,0);else window.addEventListener('load',function(){setTimeout(bewaarBeeldenLijst,0);});
     // ook de demonstratie stoppen: anders blijft de klok tikken en praat de
     // toestelstem door terwijl de telefoon in de zak zit
-    document.addEventListener('visibilitychange',function(){if(document.hidden){stopLezen();stopVideos();demoStop();}});
+    document.addEventListener('visibilitychange',function(){if(document.hidden){stopLezen();stopVideos();demoStop();}else dagWissel();});
+    window.addEventListener('pageshow',dagWissel);window.addEventListener('focus',dagWissel);setInterval(dagWissel,60000);
     var sel=document.getElementById('taalsel');
     sel.value=TAAL;
-    sel.addEventListener('change',function(){wisselTaal(sel.value);});
+    sel.addEventListener('change',function(){
+      var q=null;try{q=new URLSearchParams(location.search).get('taal');}catch(e){}
+      if(isTaal(q)&&id)try{if(sel.value===q)localStorage.removeItem('fp_taalkeus_'+id);else localStorage.setItem('fp_taalkeus_'+id,JSON.stringify({link:q,keus:sel.value}));}catch(e){}
+      wisselTaal(sel.value);
+    });
     // grotere letters: toggle op de hele kaart, keuze blijft bewaard op dit toestel
     var gb=document.getElementById('grootBtn');
     var zetGroot=function(aan){

@@ -113,4 +113,5 @@ jobs:
       - run: npm run test:wachtwoordrem
       - run: npm run test:auditspoor
       - run: npm run test:zwaaroffline
+      - run: npm run test:dagwisseltaal
       - run: npm run test:annulerenhernoem

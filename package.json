@@ -118,6 +118,7 @@
     "test:inlogrem": "node scripts/test-inlogrem-ip.mjs",
     "test:annulerenhernoem": "node scripts/test-kaart-annuleren-hernoem.mjs",
     "test:zwaaroffline": "node scripts/test-kaart-zwaar-offline.mjs",
+    "test:dagwisseltaal": "node scripts/test-kaart-dagwissel-taal.mjs",
     "test:auditspoor": "node scripts/test-audit-spoor.mjs",
     "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs"
   },
