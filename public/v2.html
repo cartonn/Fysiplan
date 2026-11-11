@@ -570,7 +570,37 @@ nav .probeer{border-radius:8px;white-space:nowrap}
 .hero .hero-copy .sub{margin:0 0 24px}.hero>.kolom{padding-top:40px;padding-bottom:40px}
 @media(max-width:700px){.hero .hero-copy{display:block}.hero .hero-copy h1{margin-bottom:18px}.hero .hero-copy .cta{flex-direction:row;flex-wrap:wrap}.hero>.kolom{padding-top:28px;padding-bottom:28px}}
 </style>
-</head>
+<style>
+/* Full petrol surfaces, as requested; lime is reserved for actions and emphasis. */
+@media screen{
+:root{--bg:#18343b;--papier:#20464f;--inkt:#fff;--tekst:#e0eae7;--demp:#bdcfca;--zacht:#abc2bc;--blauw:#b9e34b;--blauw-d:#c9ed75;--blauw-05:#2b5054;--blauw-10:#3b6264;--oranje:#b9e34b;--lijn:#416068;--lijn-z:#34545c}
+body{background:#18343b;color:#e0eae7}
+nav{background:#18343b}
+h1,h2,h3,h4{color:#fff}
+.etiket,.folio .etiket,.feiten .cel .etiket,.stat .cijfer{color:#b9e34b}
+.blad,.overzicht li{background:#20464f;border-color:#416068;color:#e0eae7}
+.veld input,.veld textarea{background:#112c32;border-color:#658087;color:#fff}
+input::placeholder,textarea::placeholder{color:#b2c5c0;opacity:1}
+.veld input:focus,.veld textarea:focus{border-color:#b9e34b;box-shadow:0 0 0 3px #b9e34b33}
+a:focus-visible,button:focus-visible,input:focus-visible{outline-color:#b9e34b}
+.knop.oranje{background:#b9e34b;color:#18343b}
+}
+</style>
+<style>@media screen{
+.feiten,.product-showcase,#keuze,#hulp,#prijs,.sectie,.slot{background:#18343b;color:#e0eae7}
+.feiten,.sectie{border-color:#416068}.folio .nr{background:#2b5054;color:#b9e34b}
+.plan,.plan.acc,.reken{background:#20464f;color:#e0eae7}
+.reken input[type=number]{background:#112c32;color:#fff;border-color:#658087}
+.tel .scherm,.tel .oefkaartje{background:#20464f;color:#fff}.tel .oefkaartje b{color:#fff}
+.tel .pijn i{background:#18343b;color:#fff}.tel .pijn i.aan{background:#b9e34b;color:#18343b}
+.duim{background:#18343bf5}.duim .knop.omlijnd{background:#20464f;color:white}
+.tel .gedaan{color:#18343b}.product-tags span{border-color:#658087}
+}</style><style>
+/* The phone is a light patient card inside the petrol website. */
+.tel .scherm{--bg:#f2f5f3;--inkt:#18343b;--tekst:#314d53;--demp:#526b70;--zacht:#61777b;--blauw:#20464f;--blauw-05:#edf4e5;--lijn:#d9e3df;--lijn-z:#e7eeea;background:#f2f5f3;color:#314d53}
+.tel .oefkaartje{background:#fff;color:#18343b}.tel .oefkaartje b,.tel h4{color:#18343b}
+.tel .pijn i{background:#fff;color:#526b70}.tel .pijn i.aan{background:#20464f;color:white}
+</style></head>
 <body>
 
 <nav aria-label="Hoofdnavigatie">

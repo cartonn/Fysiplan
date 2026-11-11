@@ -789,3 +789,29 @@ html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
  html.v2 .fp-balk i{background:#668c15}
  html.v2 .card .hd,html.v2 .row:hover{background:#edf2ef}
 }
+
+@media screen{
+ html.v2{--bg:#18343b;--tray:#18343b;--panel:#20464f;--ink:#fff;--text:#e0eae7;--muted:#bdcfca;--soft:#abc2bc;--brand:#b9e34b;--brand-700:#d1ef88;--brand-50:#2b5054;--brand-100:#496766;--line:#416068;--line2:#34545c;--ring:0 0 0 3px #b9e34b44}
+ html.v2 body,html.v2 .wrap,html.v2 #a4wrap,html.v2 .fp-kop{background:#18343b;color:#e0eae7}
+ html.v2 .card,html.v2 .card .hd,html.v2 .modal,html.v2 .row:hover,html.v2 .sjb-kop,html.v2 .sjb-zoek,html.v2 .sjb-cats,html.v2 .sjb-lijst,html.v2 .sjb-rij,html.v2 .sjb-voorbeeld,html.v2 .sjb-vb-acties,html.v2 .sjb-voet,html.v2 .fp-hulpmenu{background:#20464f;color:#e0eae7}
+ html.v2 .fp-kop h2,html.v2 .row .title{color:#fff}
+ html.v2 input[type=text],html.v2 input.fld,html.v2 input[type=password],html.v2 input[type=email],html.v2 select,html.v2 textarea{background:#112c32;color:#fff;border-color:#658087}
+ html.v2 input::placeholder,html.v2 textarea::placeholder{color:#abc2bc}
+ html.v2 .btn,html.v2 .fp-kop .tb-acties .btn,html.v2 .zb-praktijk,html.v2 .chip{background:#2b5054;color:#fff;border-color:#658087}
+ html.v2 .btn:hover,html.v2 .fp-kop .tb-acties .btn:hover{background:#365e64;color:#fff}
+ html.v2 .btn.primary,html.v2 #printBtn,html.v2 .chip.on,html.v2 .row .add.on{background:#b9e34b;color:#18343b;border-color:#b9e34b}
+ html.v2 .fp-hulpmenu>button,html.v2 .fp-hulpvoet a{color:#fff}
+ html.v2 .fp-hulpmenu>button:hover{background:#365e64}
+ html.v2 .topbar #beeldKeuze .beeldsegment{background:#2b5054;border-color:#658087}
+ html.v2 .topbar #beeldKeuze .beeldsegment button{color:#dbe7e3}
+ html.v2 .topbar #beeldKeuze .beeldsegment button.aan{background:#b9e34b;color:#18343b}
+ /* The A4 is a paper document, not a page surface. Preserve its print appearance. */
+ html.v2 #a4{--ink:#18343b;--text:#314d53;--muted:#526b70;--soft:#61777b;--brand:#20464f;--brand-700:#18343b;--brand-50:#edf4e5;--line:#d9e3df;--line2:#e7eeea;background:#fff;color:#18343b}
+ html.v2 #a4 input,html.v2 #a4 textarea,html.v2 #a4 select{background:#fff;color:#18343b}
+ html.v2 #a4 input::placeholder,html.v2 #a4 textarea::placeholder{color:#61777b}
+}
+@media screen{
+ html.v2 #search,html.v2 #search:focus,html.v2 input[type=search]{background-color:#112c32;color:#fff;border-color:#658087}
+ html.v2 .smart-filters button,html.v2 .row .add{background:#2b5054;color:#fff;border-color:#658087}
+ html.v2 .smart-filters button.on,html.v2 .row .add:hover,html.v2 .row .add.on{background:#b9e34b;color:#18343b;border-color:#b9e34b}
+}
