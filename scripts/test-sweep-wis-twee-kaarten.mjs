@@ -14,7 +14,7 @@ import { createRequire } from "node:module";
 
 const root = process.cwd();
 const html = await readFile(join(root, "public/kaart.html"), "utf8");
-const wis = html.slice(html.indexOf("function wisOfflineKopie(){"), html.indexOf("function wisVanTelefoon(){"));
+const wis = html.slice(html.indexOf("function wisOfflineKopie("), html.indexOf("function wisVanTelefoon(){"));
 assert.match(wis, /beeldenVanAndereKaarten\(/, "wissen kijkt naar de beelden van andere kaarten");
 assert.match(wis, /!ander\.nodig\[u\.pathname\]/, "beeld van een andere kaart blijft staan");
 assert.match(html, /function bewaarBeeldenLijst\(\)/, "kaart onthoudt haar beelden");

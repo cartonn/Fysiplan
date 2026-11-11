@@ -13,12 +13,12 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (c) algemene voorwaarden | 2026-11-10 05u (art. 4 beschrijft de maandincasso: afschrijven via machtiging, mail 5 dagen vooraf als afgesproken kortere termijn, mislukt = contact, factuur per maand; `AV_VERSIE` 2026-11-10) |
 | (d) code tegen tekst | 2026-11-10 17u (patiëntroute `PATIENT_VELDEN` tegen /privacy#patient: doelactiviteit, bericht van de praktijk, weekdoel en eigen video/foto ontbraken, afspraak stond onder "zelf aantikt"; opgelost. Mails via Resend gaan ook over betaling en wachtwoord: open tot #167 gemerged is. Logs, auditlog 500, cookies, reservekopie 7 dagen, uitnodiging 7 dagen: klopt) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-10 01u (vertaalcache hield namen van eigen oefeningen na "Alles wissen" en na verwijderen tot de volgende herstart; /privacy noemde de beheerderslogin op /v2/gegevens niet; download bevat geen geheimen, wel alle kaartvelden) |
-| (f) cookies en lokale opslag | 2026-11-09 21u (Cache Storage van /k: "Wis deze kaart" liet oefenbeelden en bibliotheek staan, opgelost; cookies en localStorage ongewijzigd sinds 8-11) |
+| (f) cookies en lokale opslag | 2026-11-11 01u (alle localStorage-, sessionStorage-, Cache- en IndexedDB-sleutels van /k en /v2/app tegen /privacy#opslag; kaart weg bij de praktijk (404): `fp_beelden_<id>` (kaart-id + oefenbeelden) en de beelden zelf bleven op de telefoon, opgelost; privacylink op een anderstalige kaart zegt nu dat de pagina Nederlands is; cookies `fpproef`/`fp1` en "Wis Fysiplan van dit apparaat" (alle `fp_`/`fysiplan`-sleutels, IndexedDB, caches): klopt) · 2026-11-09 21u |
 | (g) MDR en AI-verordening | 2026-11-10 13u (nieuwe patiëntkaart #162: de AI-stem bij oefeningen zonder AI-video en via de knop bovenaan/vergroting had geen AI-melding: opgelost; landing, app en kaart zonder diagnose-, doserings- of sorteerbelofte; vraaghulp-grens ongewijzigd) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
 | (i) begrijpelijkheid (B1) | 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (f) cookies, dan (i) B1, dan (b) verwerkersovereenkomst. Het Resend-punt hieronder pakken zodra PR #167 gemerged of gesloten is. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (i) B1, dan (b) verwerkersovereenkomst, dan (e) rechten. Het Resend-punt hieronder pakken zodra PR #167 gemerged of gesloten is. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
@@ -26,9 +26,20 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 - **OPGELOST 2026-11-10 22u (gebruikers-sweep, test:zwaaroffline) — MIDDEL lokale opslag (f): "Wis deze kaart van mijn
   telefoon" liet het kaart-id terugkomen.** Na wissen schreef `pagehide` → `bewaarBeeldenLijst()` opnieuw
   `fp_beelden_<id>` in localStorage (Truus, iPhone SE); dat id is de toegang tot de kaart. Nu schrijft de kaart na wissen niets meer.
-- **LAAG (gebruikers-sweep 2026-11-10 22u, Jayden) — Privacy-link op een Engelse kaart opent een alleen-Nederlandse pagina
+- **MIDDEL — cookies en lokale opslag (f) 2026-11-11 01u: een gewiste of verlopen kaart liet sporen op de telefoon.**
+  Opent de patiënt een kaart die de praktijk gewist heeft (of die verlopen is), dan haalde `vergeetKaartHier` (kaart.html)
+  de vinkjes weg en de service worker de kaart uit de cache. Maar `fp_beelden_<id>` bleef staan: het kaart-id plus de lijst
+  van oefenbeelden van die patiënt. Ook de oefenbeelden zelf bleven in de offline-cache. /privacy#opslag belooft dat de
+  offline kopie dan weggaat; op een gedeelde telefoon verraden de beelden welke oefeningen iemand deed.
+  OPGELOST 2026-11-11 (deze PR): bij "niet gevonden" gaan `fp_beelden_<id>` en de beelden van die kaart weg, behalve wat
+  een andere kaart op de telefoon nog gebruikt (zelfde regel als "Wis deze kaart"); daarna schrijft de pagina de lijst
+  niet opnieuw. /privacy#opslag noemt de plaatjes erbij. Test in `scripts/test-kaart-weg.mjs` (faalt zonder fix).
+  Bron: AVG art. 5 lid 1 c en e (minimale gegevens, opslagbeperking); Telecommunicatiewet art. 11.7a (functionele opslag).
+- **OPGELOST 2026-11-11 (deze PR) — LAAG (gebruikers-sweep 2026-11-10 22u, Jayden) — Privacy-link op een Engelse kaart opent een alleen-Nederlandse pagina
   zonder melding** (/privacy en /privacy?taal=en geven lang="nl"). Hoort bij het bekende punt "patiëntdeel /privacy in de
-  kaarttalen"; tot die tijd minstens "(in Dutch)" bij de link (kaart.html r. ~708 en ~847).
+  kaarttalen"; tot die tijd minstens "(in Dutch)" bij de link (kaart.html r. ~708 en ~847). Nu: de link zegt in alle
+  8 kaarttalen dat de pagina Nederlands is ("Privacy (in Dutch)"); test in `scripts/test-privacy.mjs`. Een vertaald
+  patiëntdeel van /privacy blijft open.
 
 - **LAAG — privacyverklaring (a) 2026-11-10 21u: Anthropic-rij klopte niet met wat er naar de AI-dienst gaat.**
   /privacy#subverwerkers zei bij Anthropic "het vertalen van bibliotheekteksten" en "geen namen, scores of vrije tekst
