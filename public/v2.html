@@ -547,6 +547,19 @@ nav .probeer{border-radius:8px;white-space:nowrap}
 @media(max-width:840px){nav .rij{height:auto;padding-top:14px;padding-bottom:12px;gap:12px}nav .links{order:3;flex-basis:100%;margin-left:0}nav .links a{font-size:12px;padding:8px 15px 0 0}.hero .twee{grid-template-columns:1fr 1fr;gap:25px}.hero-brand{font-size:32px;letter-spacing:-1.5px}.hero-brand svg{width:43px;height:43px}.brand-line{font-size:8px;letter-spacing:.12em}.hero h1{font-size:35px}.hero .sub{font-size:14px}.hero .cta{flex-direction:column;align-items:flex-start}.active-visual{height:550px}.mini-card{width:230px;left:-12px}.product-showcase>.kolom{grid-template-columns:1fr}.product-showcase .toon{max-width:680px;width:100%;margin:20px auto 0;min-height:0}.product-showcase .tel{top:0;width:178px;margin-top:-80px}.product-showcase .bijschrift{top:0;max-width:100%;margin-top:0}.product-copy h2{font-size:36px}.product-copy p{max-width:55ch}}
 @media(max-width:560px){.kolom,nav .rij{padding-left:22px;padding-right:22px}.brand span{font-size:21px}.brand svg{width:29px}nav .in{padding:9px 12px;font-size:12px}nav .probeer{padding:9px 10px;font-size:12px}.hero .kolom{padding-top:30px;padding-bottom:35px}.hero .twee{grid-template-columns:1fr;gap:35px}.hero-brand{font-size:47px;letter-spacing:-2.3px}.hero-brand svg{width:54px;height:54px}.hero .kicker{margin-bottom:25px}.hero .kicker .etiket{font-size:8px;letter-spacing:.1em}.brand-line{font-size:8px;letter-spacing:.17em;margin-bottom:28px}.hero h1{font-size:39px}.hero .sub{font-size:15px}.hero .cta{align-items:stretch;gap:20px}.hero .cta .tl{font-size:13px}.active-visual{height:425px;margin-left:20px;margin-right:0}.active-photo{border-radius:70px 12px 70px 12px}.mini-card{width:232px;bottom:12px;left:-20px}.visual-label{top:18px;right:12px;font-size:9px}.feiten .cel{padding:18px 14px}.feiten .cel p{font-size:12px}.feiten .cel .etiket{font-size:8px}.product-showcase>.kolom{padding-top:55px;padding-bottom:50px}.product-copy h2{font-size:32px}.product-showcase .tel{width:178px}.product-showcase .bijschrift{margin-top:10px}.sectie>.kolom{padding-top:55px;padding-bottom:55px}.slot .kolom{padding:65px 22px}.slot h2{font-size:32px}}
 
+
+/* Use the supplied pixels unchanged; CSS viewports select the two original people. */
+.active-visual{height:550px}
+.reference-person{position:absolute;overflow:hidden;isolation:isolate}
+.reference-person img{position:absolute;max-width:none;height:auto;top:0}
+.reference-woman{width:61%;aspect-ratio:271/332;left:-3%;top:3%;clip-path:polygon(33% 0,100% 0,100% 100%,0 100%,3% 83%,25% 65%,34% 43%)}
+.reference-woman img{width:566.790%;left:-182.657%}
+.reference-man{width:60%;aspect-ratio:256/332;right:-3%;top:25%;clip-path:polygon(34% 0,100% 0,100% 100%,0 100%,0 74%,20% 56%,25% 34%)}
+.reference-man img{width:600%;left:-500%}
+.people-caption{position:absolute;bottom:0;left:0;display:flex;align-items:center;gap:10px;background:#18343b;padding:12px 18px;border:1px solid #ffffff44;border-radius:30px;font-size:12px;color:#fff}
+@media(max-width:840px) and (min-width:561px){.active-visual{height:430px}.reference-woman{top:5%}.reference-man{top:35%}}
+@media(max-width:560px){.active-visual{height:370px;margin:0}.reference-woman{top:0}.reference-man{top:24%}.people-caption{bottom:0;font-size:10px}}
+
 </style>
 </head>
 <body>
@@ -579,10 +592,9 @@ nav .probeer{border-radius:8px;white-space:nowrap}
       <p class="noot">Geen betaalgegevens nodig · Direct in je browser</p>
     </div>
     <div class="active-visual">
-      <img class="active-photo" src="/images/landing/thuis-1200.jpg" width="1200" height="1600" alt="Een vrouw doet thuis een balansoefening" fetchpriority="high"/>
-      <div class="visual-label"><span class="status-dot"></span>Van jouw praktijk. Naar thuis.</div>
-      <div class="mini-card"><div class="mini-heading"><span>JOUW TRAININGSKAART</span><span aria-hidden="true">↗</span></div><h3>Elke stap telt.</h3><div class="mini-exercise"><img src="/images/onderste-extremiteit/chair-squat-avatar-v7.jpg" width="72" height="72" alt="Voorbeeldoefening stoel-squat"/><div><b>Stoel-squat</b><span>Een duidelijke uitleg.<br/>Op je eigen tempo.</span></div></div><div class="mini-bottom"><span aria-hidden="true">✓</span> Papier + telefoon. Eén kaart.</div></div>
-      <span class="photo-credit">Foto: Karola G / Pexels</span>
+      <div class="reference-person reference-woman"><img src="/images/landing/fysiplan-stijlvoorbeeld.png" width="1536" height="1024" alt="De vrouw in squathouding uit het aangeleverde Fysiplan-voorbeeld" fetchpriority="high"/></div>
+      <div class="reference-person reference-man"><img src="/images/landing/fysiplan-stijlvoorbeeld.png" width="1536" height="1024" alt="De man met weerstandsband uit het aangeleverde Fysiplan-voorbeeld"/></div>
+      <div class="people-caption"><span class="status-dot"></span>In beweging. Op jouw manier.</div>
     </div>
   </div></div>
 </header>
