@@ -118,6 +118,8 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   `@media (max-height:26em)` springt niet aan bij grote letters; nu `body.krap` via `zetKrap()` en een naam die niet breder groeit dan het scherm.
 - **OPGELOST 2026-11-11 02u — LAAG (Truus) — herstelknoppen zonder `aria-pressed`.**
 - **MIDDEL → security-backlog (Mark)** — collega met rol therapeut wijzigt het praktijkprofiel (tel, website) dat op elke /k staat.
+  OPGELOST serverkant 2026-11-11 (security, test:profielbeheer): therapeut krijgt nu 403. Open voor de sweep (LAAG, UI): de
+  praktijkvelden en de logoknop staan voor een therapeut nog open; een wijziging blijft stil alleen lokaal. Alleen-lezen maken met uitleg.
 - **MIDDEL (Mark, desktop/iPad) — twee collega's tegelijk op één kaart: notitie, afspraak, behandelaar en bericht overschrijven
   elkaar stil** (beide 200 "Bewaard ✓"; `/api/kaarten` heeft wel 409). server.js r. ~4806/4834/4913, index.html r. ~4882. Wacht op #167.
 - **MIDDEL (Sanne, desktop toetsenbord) — focus valt op `body`** na Beveiligen (herstelcode één keer getoond: "Kopieer" niet

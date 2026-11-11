@@ -15,11 +15,24 @@ daaruit tot en met 2026-11-06.
 | (e) uploads (video, logo, opname /o) | 2026-11-10 08u (statisch + runtime: /uploads met ../, %2e%2e, %2f, %5c, %00, dubbele codering → 403/404; opname-upload chunked 70 MB zonder content-length → 413 vóór bufferen, geen bestand; type/magische bytes; token blijft na fout bruikbaar; eigenVideoPad alleen eigen opnames; wissen ruimt foto's, logo en video's op. Geen gat) · 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
 | (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-10 20u (runtime met Chromium, CSP uit zodat ook inline handlers zouden afgaan, op de nieuwe /k van #162 en #171: payloads in praktijknaam, adres, plaats, telefoon, e-mail, website (javascript:), kaartnaam, roepnaam, doel, let op, oefennaam, schemacellen, antwoord, behandelaar, PSK, notitie, afspraak, seintje; overzicht, oefenstand, Gedaan, foto, video, pijnscore in nl en ar: niets uitgevoerd of geïnjecteerd. Statisch: alle 27 `innerHTML` in kaart.html gaan door `esc()`, `vids`/`yt` alleen via de serverwhitelist. Geen gat) · 2026-11-09 08u (runtime met Chromium: payloads in teamnaam, uitnodiging, eigen oefening, teamsjabloon, alle kaartvelden, bericht, notitie, behandelaar, doel; app-start, Kaarten-paneel, inbox, Team, Activiteit, Rapport, Sjablonen, /k in nl/en/ar: niets geïnjecteerd, geen CSP-melding. CSV-exports met formule-escape, afspraak-ICS zonder regelinjectie. Geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-11-10 04u (runtime: CSP/frame-ancestors/nosniff/referrer/no-store op 13 V2-routes ook /v2/gegevens, /v2/uitnodiging, /aanmeldingen, factuur; cookies fp1/fpproef HttpOnly+SameSite=Lax(+Secure achter https); cross-site POST op alle /v2/proef/*-acties, /v2/gegevens en /api/praktijk* → 403; geen CORS-headers, ook niet op OPTIONS. Geen gat) · 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat); 2026-11-09 08u: `kruisSite` liet same-site door, opgelost) |
-| (h) foutmeldingen die stacktraces of paden lekken | 2026-11-09 16u (statisch: alle `sendJson`/`send` met `err.message`/`e.stack` in server.js, routes/ en lib/ sinds 8-11, ook opzeggen, factuur, wissen na proef: interne fouten gaan alleen naar het serverlog. Geen gat) · 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
-| (i) denial of service: grote bodies, opslaggroei | 2026-11-09 20u (remmen: schrijf-/leesrem per IP zette een hele praktijk achter één wifi plus de patiënten daar op 429: opgelost met een rem per praktijk; plafonds per praktijk ongewijzigd) · 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
+| (h) foutmeldingen die stacktraces of paden lekken | 2026-11-11 08u (runtime-fuzz 123 routes + /k, /o, /api/kaart/<id>, team, drafts, uploads × GET/POST/PUT/DELETE × 9 kapotte bodies × 3 content-types, zonder én met praktijksessie + beheersleutel = 21.648 verzoeken: geen 500, geen stacktrace, geen intern pad, niets in het serverlog. Alleen beheer ziet bij de Cloudflare-koppeling de JSON-parsefout, geen pad. Geen gat) · 2026-11-09 16u (statisch: alle `sendJson`/`send` met `err.message`/`e.stack` in server.js, routes/ en lib/ sinds 8-11, ook opzeggen, factuur, wissen na proef: interne fouten gaan alleen naar het serverlog. Geen gat) · 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
+| (i) denial of service: grote bodies, opslaggroei | 2026-11-11 08u (statisch: 67 `readBody`-aanroepen met grens, patiëntroutes /api/kaart/* met plafonds (metingen 366, ervaring 120, gedaan 366, oefTrouw 60, oefZwaar 24, contactlog 50), tik terug in de tijd begrensd, Mollie-webhook alleen eigen betaal-id's. Geen gat) · 2026-11-09 20u (remmen: schrijf-/leesrem per IP zette een hele praktijk achter één wifi plus de patiënten daar op 429: opgelost met een rem per praktijk; plafonds per praktijk ongewijzigd) · 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
 | (j) npm audit | 2026-11-10 08u (0 meldingen) · 2026-11-09 20u (0 meldingen, ook dev) |
 
-Volgende run: (h) foutmeldingen, daarna (i) denial of service.
+Volgende run: (d) gedeelde kaarten, daarna (a) beheer.
+
+Sanity 2026-11-11 08u op #179–#181 (eigen fix proefwissen, verwerkersovereenkomst, afspraakreeks/titel op /k): #180 raakt
+alleen `VWO_VERSIE`, een akkoordregel en twee getallen voor /privacy; #181 alleen `public/kaart.html` zonder nieuwe `innerHTML`
+met invoer. Geen gat.
+
+- **OPGELOST 2026-11-11 (deze PR) — MIDDEL — collega met rol therapeut wijzigt het praktijkprofiel** (doorgezet door de
+  gebruikers-sweep 02u, Mark; nu bevestigd). `POST /api/praktijken` had alleen `eisBeveiligdePraktijk`. Repro lokaal: therapeut
+  stuurt `{tel:"0900-OPLICHTER", website:"https://example.org/phish"}` of een logo → 200, en /api/kaart van elke patiënt toont
+  dat nummer en die link; geen logboekregel. Nu: met een praktijksessie mag alleen een beheerder (of het gedeelde
+  praktijkwachtwoord) iets wijzigen, een therapeut krijgt 403; een ongewijzigd profiel blijft 200 (de app stuurt het bij elk
+  verlaten van een veld), en elke wijziging staat als "praktijkgegevens of logo gewijzigd" met wie in Activiteit.
+  Test: `npm run test:profielbeheer`. Gevolg voor UI (gebruikers-sweep): een therapeut die de praktijkvelden op de kaart
+  aanpast, ziet dat alleen lokaal; overweeg die velden voor een therapeut alleen-lezen te maken met een korte uitleg.
 
 Sanity 2026-11-11 04u op #176–#178 (wissen op de telefoon, vinkjes/taal op /k, factuurgegevens): nieuwe POST
 `/v2/proef/factuurgegevens` heeft `kruisSite`, body ≤ 4 KB, alleen de eigen proefcookie met een actief/opgezegd
@@ -289,7 +302,7 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   Wie de mail later leest (gedeelde mailbox), krijgt zo het abonnementsbeheer. Voorstel: een apart maillink-token dat na
   gebruik of 7 dagen vervalt, los van de cookie.
 
-- **MIDDEL (doorgezet door de gebruikers-sweep 2026-11-11 02u, Mark) — collega met rol therapeut wijzigt het praktijkprofiel.**
+- **OPGELOST 2026-11-11 08u (zie boven, deze PR).** MIDDEL (doorgezet door de gebruikers-sweep 2026-11-11 02u, Mark) — collega met rol therapeut wijzigt het praktijkprofiel.**
   `POST /api/praktijken` (server.js r. ~3655) heeft alleen `eisBeveiligdePraktijk`, geen beheercheck. Repro lokaal: therapeut
   stuurt `{tel:"0900-OPLICHTER", website:"https://example.org/phish"}` → 200, en /k van elke patiënt toont dat nummer en die
   link bij de praktijknaam; geen logboekregel. Verwacht 403 zoals bij team/akkoord, of beheer + logboek. Raakt server.js (open PR #167).

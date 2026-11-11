@@ -116,6 +116,7 @@ jobs:
       - run: npm run test:inlogrem
       - run: npm run test:wachtwoordrem
       - run: npm run test:auditspoor
+      - run: npm run test:profielbeheer
       - run: npm run test:zwaaroffline
       - run: npm run test:dagwisseltaal
       - run: npm run test:reekstitel
