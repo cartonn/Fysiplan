@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="color-scheme" content="light"/>
-<meta name="theme-color" content="#f6f2e9"/>
+<meta name="theme-color" content="#18343b"/>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232456a6'/%3E%3Cpath d='M5 16h5l2.5 6 5-12 2.5 7h7' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
 <title>__TITEL__ · Fysiplan</title>
 <link rel="preload" href="/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin/>
@@ -60,6 +60,45 @@
   .concept{background:#fff4e5;border:1px solid #f3c58f;border-radius:4px;padding:12px 16px;margin:16px 0;font:500 14.5px/1.5 var(--disp);color:#6b3a12}
   .invul{background:#fff4e5;border:1px dashed #d98a3a;border-radius:3px;padding:0 4px;font:500 .92em/1.5 var(--disp);color:#6b3a12}
   footer{max-width:860px;margin:0 auto;padding:0 24px 40px;font:400 13px/1.5 var(--disp);color:var(--zacht)}
+</style>
+<style>
+/* Shared Active Tech identity for the public account and legal pages. */
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-wght-normal.woff2') format('woff2')}
+:root{--bg:#f2f5f3;--papier:#fff;--inkt:#18343b;--tekst:#314d53;--demp:#526b70;--zacht:#61777b;--blauw:#20464f;--blauw-05:#e8f0ea;--oranje:#b9e34b;--oranje-d:#a9d33b;--lijn:#d9e3df;--lijn-z:#e7eeea;--serif:Inter,system-ui,sans-serif;--disp:Inter,system-ui,sans-serif}
+body{font-family:var(--disp);background:var(--bg)}
+nav{background:#18343b;border-bottom:1px solid #ffffff24}
+nav .rij{height:76px}
+nav .naam{font-size:20px;font-weight:850;font-style:italic;text-transform:uppercase;letter-spacing:-.7px;color:#b9e34b}
+nav .mark{width:32px;height:32px;border-radius:0;background:transparent url('/images/fysiplan-active-mark.svg') center/contain no-repeat}
+nav .mark svg{visibility:hidden}
+nav .terug,nav .terug:hover{color:#fff}
+main{padding-top:54px}
+h1{font-weight:800;letter-spacing:-.04em}
+.knop{border-radius:9px;font-weight:750}
+.knop.oranje{background:#b9e34b;color:#18343b;box-shadow:none}
+.knop.oranje:hover{background:#a9d33b}
+.etiket{color:#20464f}
+.blad{border-radius:16px;border-top:5px solid #b9e34b;box-shadow:0 16px 40px -28px #18343b66}
+.veld input,.veld textarea{border-color:#a9bcb6;border-radius:9px}
+.veld input:focus,.veld textarea:focus{border-color:#20464f;box-shadow:0 0 0 3px #20464f22}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #668c15;outline-offset:3px}
+@media(max-width:560px){nav .rij{height:66px;padding-inline:18px}nav .naam{font-size:18px}nav .terug{font-size:12px}main{padding-top:30px}.blad{padding:22px}}
+</style>
+<style>
+/* Full petrol surfaces, as requested; lime is reserved for actions and emphasis. */
+@media screen{
+:root{--bg:#18343b;--papier:#20464f;--inkt:#fff;--tekst:#e0eae7;--demp:#bdcfca;--zacht:#abc2bc;--blauw:#b9e34b;--blauw-d:#c9ed75;--blauw-05:#2b5054;--blauw-10:#3b6264;--oranje:#b9e34b;--lijn:#416068;--lijn-z:#34545c}
+body{background:#18343b;color:#e0eae7}
+nav{background:#18343b}
+h1,h2,h3,h4{color:#fff}
+.etiket,.folio .etiket,.feiten .cel .etiket,.stat .cijfer{color:#b9e34b}
+.blad,.overzicht li{background:#20464f;border-color:#416068;color:#e0eae7}
+.veld input,.veld textarea{background:#112c32;border-color:#658087;color:#fff}
+input::placeholder,textarea::placeholder{color:#b2c5c0;opacity:1}
+.veld input:focus,.veld textarea:focus{border-color:#b9e34b;box-shadow:0 0 0 3px #b9e34b33}
+a:focus-visible,button:focus-visible,input:focus-visible{outline-color:#b9e34b}
+.knop.oranje{background:#b9e34b;color:#18343b}
+}
 </style>
 </head>
 <body>
