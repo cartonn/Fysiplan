@@ -6,6 +6,10 @@
 // - de privacy-samenvatting had niets voor de therapeut;
 // - de opslag op de patiënttelefoon stond in één zin van 61 woorden, het datalekartikel in 41;
 // - de abonnementstermijn stond als vaste "30" in de tekst in plaats van uit de code.
+// Legal 2026-11-11 17u, /v2/gegevens (de pagina voor inzage, meenemen en wissen):
+// - "Een losse kaart wis je in de app met Verwijderen" klopte sinds de prullenbak (#191) niet meer:
+//   de kaart blijft dan nog dagen herstelbaar; meteen wissen kan alleen met Definitief verwijderen;
+// - de waarschuwing bij Alles wissen stond in één zin van 35 woorden.
 // Zonder browser. `npm run test:privacy`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -17,6 +21,7 @@ import { NA_EINDE_WISSEN_DAGEN } from "../lib/mollie.js";
 
 const serverBron = await readFile("server.js", "utf8");
 const proefBewaar = Number(serverBron.match(/const PROEF_BEWAAR_DAGEN = (\d+)/)[1]);
+const herstelDagen = Number(serverBron.match(/const KAART_HERSTEL_MS = (\d+) \* 86400000/)[1]);
 const bron = await readFile("public/juridisch.html", "utf8");
 // termijnen van het einde staan niet als vast getal in de tekst, maar komen uit de code
 assert.doesNotMatch(bron, /binnen \d+ dagen na het einde|\d+ dagen na het einde wissen|wissen we alles binnen \d+ dagen/,
@@ -62,6 +67,15 @@ try {
   // patiëntdeel: korte zinnen (hooguit 30 woorden)
   const patient = pag.privacy.split('id="patient"')[1].split("<h2")[0];
   for (const z of zinnen(patient)) assert.ok(woorden(z) <= 30, "patiëntdeel: zin van " + woorden(z) + " woorden: " + z.slice(0, 120));
+
+  // /v2/gegevens: korte zinnen, en de uitleg over een losse kaart klopt met de prullenbak
+  const gegevens = await (await fetch(origin + "/v2/gegevens")).text();
+  assert.doesNotMatch(gegevens, /__[A-Z_]+__/, "gegevens: geen open plekhouders");
+  for (const z of zinnen(gegevens)) assert.ok(woorden(z) <= 30, "gegevens: zin van " + woorden(z) + " woorden: " + z.slice(0, 120));
+  assert.doesNotMatch(gegevens, /Een losse kaart wis je in de app met/, "gegevens: Verwijderen wist niet meteen (prullenbak)");
+  assert.match(gegevens, new RegExp("hooguit " + herstelDagen + " dagen in de prullenbak"), "gegevens: hersteltermijn uit KAART_HERSTEL_MS");
+  assert.match(gegevens, /&ldquo;Definitief verwijderen&rdquo;/, "gegevens: noemt Definitief verwijderen");
+  assert.match(gegevens, /alle kaarten, ook die in de prullenbak/, "gegevens: Alles wissen neemt de prullenbak mee");
 
   // voorwaarden: samenvatting volgt art. 3 en 5
   const avKort = kort(pag.voorwaarden);
