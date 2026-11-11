@@ -50,6 +50,7 @@ await symlink('/etc/passwd', join(dataDir, 'uploads', 'link'));
 await assert.rejects(verzamelBackup(dataDir, []), /symbolische link/);
 await rm(join(dataDir, 'uploads', 'link'));
 const ontvangen = [];
+const objects = new Map();
 let antwoord = 200;
 const nep = createServer((req, res) => {
   const stukken = [];
@@ -57,7 +58,10 @@ const nep = createServer((req, res) => {
   req.on("end", () => {
     if (req.url === "/emails") { ontvangen.push({ mail: JSON.parse(Buffer.concat(stukken).toString()) }); res.writeHead(200, { "content-type": "application/json" }); return res.end('{"id":"m"}'); }
     ontvangen.push({ methode: req.method, url: req.url, headers: req.headers, body: Buffer.concat(stukken) });
-    res.writeHead(antwoord); res.end();
+    if(antwoord!==200){res.writeHead(antwoord);return res.end();}
+    if(req.method==='PUT') {objects.set(req.url,Buffer.concat(stukken));res.writeHead(200);return res.end();}
+    const obj=objects.get(req.url);if(!obj){res.writeHead(404);return res.end();}
+    res.writeHead(200,{'content-length':obj.length});res.end(req.method==='HEAD'?undefined:obj);
   });
 });
 await new Promise((r) => nep.listen(0, "127.0.0.1", r));
@@ -100,13 +104,15 @@ try {
   assert.equal(h.backupElders, "ok", app.uitvoer());
   assert.ok(h.backupEldersOp);
   assert.ok(!JSON.stringify(h).includes("geheim") && !JSON.stringify(h).includes(wachtzin), "/health lekt geen sleutels");
-  const put = ontvangen.find((o) => o.methode === "PUT");
+  const put = ontvangen.find((o) => o.methode === "PUT" && o.url === "/bak/" + objectNaam());
   assert.equal(put.url, "/bak/" + objectNaam());
   assert.match(put.headers.authorization, /^AWS4-HMAC-SHA256 Credential=sleutelid\//);
   assert.ok(!put.body.includes("Geheimenaam"), "patiëntgegevens gaan niet leesbaar de deur uit");
   const terug = ontsleutel(put.body, wachtzin).bestanden;
   assert.equal(JSON.parse(terug["kaarten.json"])["Test Fysio"][0].naam, "Geheimenaam");
-  assert.deepEqual(terug["uploads/videos/test.mp4"], video);
+  const manifest=JSON.parse(terug["__fysiplan_manifest__.json"]);
+  assert.equal(manifest.complete,true);
+  assert.deepEqual(ontsleutel(objects.get("/bak/"+manifest.uploads["uploads/videos/test.mp4"].object),wachtzin).bestanden.data,video);
   assert.ok(terug["praktijk-oefeningen.json"], "eigen oefeningen van praktijken zitten in de reservekopie");
   // ook de kopie op het volume zelf heeft de eigen oefeningen nu
   const dagmap = (await readdir(join(dataDir, "backups")))[0];
@@ -114,13 +120,14 @@ try {
   // de privacyverklaring noemt de opslagpartij
   const privacy = await (await fetch(app.origin + "/privacy")).text();
   assert.ok(privacy.includes('id="reservekopie"') && privacy.includes("Scaleway (Amsterdam, Nederland)"));
+  assert.ok(!privacy.includes("behalve video"));
   await app.stop();
 
   // terugzetten met het script
   const pakketPad = join(dataDir, "terug.fpb"), doel = join(dataDir, "teruggezet");
   await writeFile(pakketPad, put.body);
   const code = await new Promise((r) => spawn(process.execPath, ["scripts/backup-terugzetten.mjs", pakketPad, doel],
-    { env: { ...process.env, BACKUP_SLEUTEL: wachtzin }, stdio: "ignore" }).on("exit", r));
+    { env: { ...process.env, ...aan }, stdio: "ignore" }).on("exit", r));
   assert.equal(code, 0);
   assert.equal(JSON.parse(await readFile(join(doel, "kaarten.json"), "utf8"))["Test Fysio"][0].naam, "Geheimenaam");
 

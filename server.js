@@ -12,7 +12,8 @@ import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } fr
 import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
 import { volgendFactuurNr, factuurHtml, isFactuur, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
-import { backupInstellingen, stuurNaarElders, verzamelBackup } from "./lib/backup-elders.js";
+import { backupInstellingen } from "./lib/backup-elders.js";
+import { maakSnapshot } from "./lib/backup-snapshots.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -1931,31 +1932,43 @@ const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPat
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
 const backupElders = backupInstellingen();
-const backupEldersStatus = { ok: null, fout: null, foutMail: 0 };
+const backupEldersStatus = { ok: null, fout: null, foutMail: 0, deels: false, resultaat: null };
 let backupEldersBezig = false;
+async function schrijfBackupStatus(marker, inhoud) {
+  const tmp=marker+'.tmp';
+  await writeFile(tmp,JSON.stringify(inhoud),{mode:0o600});
+  await rename(tmp,marker);
+}
 async function maakBackupElders() {
   if (!backupElders || backupEldersBezig) return;
   backupEldersBezig = true;
   try {
     const marker = join(dataDir, "backup-elders-status.json");
     let vorige;
-    try { vorige = JSON.parse(await readFile(marker, "utf8")); } catch (e) { if (e.code !== 'ENOENT' && !(e instanceof SyntaxError)) throw e; }
+    try { vorige = JSON.parse(await readFile(marker, "utf8")); } catch (e) { if (e.code !== 'ENOENT') throw e; }
     // Deploys mogen geen extra dagelijkse uploads en kosten veroorzaken.
-    if (vorige?.versie === 2 && vorige.url === backupElders.url && vorige.op <= Date.now() && Date.now() - vorige.op < 24 * 60 * 60 * 1000) {
+    if (vorige?.versie === 3 && vorige.url === backupElders.url && vorige.op <= Date.now() && Date.now() - vorige.op < 24 * 60 * 60 * 1000) {
       backupEldersStatus.ok = vorige.op;
+      backupEldersStatus.deels = !!vorige.deels;
+      backupEldersStatus.resultaat = vorige.resultaat || null;
       return;
     }
     if (vorige?.url === backupElders.url && vorige.poging <= Date.now() && Date.now() - vorige.poging < 24 * 60 * 60 * 1000) {
       throw new Error('vorige uploadpoging niet afgerond; volgende poging na 24 uur');
     }
-    const bestanden = await verzamelBackup(dataDir, backupBestanden);
-    await writeFile(marker, JSON.stringify({ versie: 2, poging: Date.now(), url: backupElders.url }), { mode: 0o600 });
-    const resultaat = await stuurNaarElders(backupElders, bestanden);
+    // Poging vóór netwerkverkeer opslaan; een herstart mag geen extra transfer starten.
+    await schrijfBackupStatus(marker, { versie: 3, poging: Date.now(), url: backupElders.url, object: vorige?.object });
+    const resultaat = await maakSnapshot(backupElders, dataDir, backupBestanden, {vorigeObject:vorige?.object});
     backupEldersStatus.ok = Date.now();
-    await writeFile(marker, JSON.stringify({ versie: 2, op: backupEldersStatus.ok, url: backupElders.url, bytes: resultaat.bytes }), { mode: 0o600 });
+    backupEldersStatus.deels = resultaat.deels;
+    backupEldersStatus.resultaat = resultaat;
+    await schrijfBackupStatus(marker, { versie: 3, op: backupEldersStatus.ok, url: backupElders.url, object:resultaat.object, deels:resultaat.deels, resultaat });
     backupEldersStatus.fout = null;
+    if(resultaat.deels) throw Object.assign(new Error('onvolledige reservekopie: gegevens bewaard, ' + resultaat.ontbrekend + ' uploads ontbreken; inventarisfouten: ' + resultaat.errors), {deels:true});
+
   } catch (err) {
     backupEldersStatus.fout = Date.now();
+    backupEldersStatus.deels = !!err.deels;
     console.error("reservekopie elders mislukt:", err.message);
     if (mailIngesteld() && proefMeldingAan.length && Date.now() - backupEldersStatus.foutMail > 23 * 60 * 60 * 1000) {
       backupEldersStatus.foutMail = Date.now();
@@ -2481,8 +2494,9 @@ async function afhandelen(request, response) {
       // geheimen): zo is "overleeft een herstart" in één blik te controleren
       volumeActief: dataDir === "/data" || !!process.env.DATA_DIR,
       // reservekopie buiten Railway: "uit" (niet ingesteld), "ok", "fout" of "wacht" (nog niet gedraaid)
-      backupElders: !backupElders ? "uit" : backupEldersStatus.fout ? "fout" : backupEldersStatus.ok ? "ok" : "wacht",
-      backupEldersOp: backupEldersStatus.ok ? new Date(backupEldersStatus.ok).toISOString() : null
+      backupElders: !backupElders ? "uit" : backupEldersStatus.deels ? "deels" : backupEldersStatus.fout ? "fout" : backupEldersStatus.ok ? "ok" : "wacht",
+      backupEldersOp: backupEldersStatus.ok ? new Date(backupEldersStatus.ok).toISOString() : null,
+      backupEldersDetails: backupEldersStatus.resultaat
     });
     return;
   }
@@ -6427,7 +6441,7 @@ async function afhandelen(request, response) {
           + "<td>Het abonnement afrekenen en vastleggen dat je klant bent</td><td>Zolang je klant bent; facturen en betaalgegevens daarna 7 jaar, omdat de wet dat vraagt (fiscale bewaarplicht)</td></tr>" : "",
         // de opslag van de versleutelde reservekopie staat er alleen als die aan staat én benoemd is
         BACKUP_RIJ_HTML: backupElders && backupElders.leverancier ? "<tr id=\"reservekopie\"><td>" + htmlEsc(backupElders.leverancier) + "</td><td>Reservekopie buiten Railway, elke dag, 7 dagen bewaard</td>"
-          + "<td>Een versleutelde kopie van alles wat op deze pagina staat, behalve video&rsquo;s, foto&rsquo;s en logo&rsquo;s. De partij kan de inhoud niet lezen; alleen Fysiplan heeft de sleutel.</td></tr>" : "",
+          + "<td>Een versleutelde kopie van de opgeslagen applicatiegegevens, inclusief video&rsquo;s, foto&rsquo;s en logo&rsquo;s. De partij kan de inhoud niet lezen; alleen Fysiplan heeft de sleutel.</td></tr>" : "",
         BETAAL_PARTIJ_HTML: mollieAan() ? "<p><b>Betalen.</b> Reken je online af, dan stuurt Fysiplan de naam van je praktijk (of je eigen naam), je e-mailadres en het bedrag "
           + "naar Mollie B.V. (Amsterdam, Nederland). Mollie handelt de betaling af en is daarvoor zelf verantwoordelijk; zie de privacyverklaring van Mollie. "
           + "Mollie krijgt geen pati&euml;ntgegevens.</p>" : ""
