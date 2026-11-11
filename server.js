@@ -11,7 +11,7 @@ import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
 import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
-import { volgendFactuurNr, factuurHtml, isFactuur } from "./lib/factuur.js";
+import { volgendFactuurNr, factuurHtml, isFactuur, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -778,18 +778,26 @@ function abonnementBlok(a) {
   const later = (Array.isArray(a.betalingen) ? a.betalingen : []).filter((b) => b && b.factuurNr)
     .map((b) => '<a href="/v2/proef/factuur?nr=' + encodeURIComponent(b.factuurNr) + '">' + htmlEsc(b.factuurNr) + "</a>");
   const factuur = '<a href="/v2/proef/factuur">' + soort + " bekijken en printen</a>" + (later.length ? " (eerste maand). Latere maanden: " + later.join(", ") : "");
+  // factuurgegevens van de praktijk (naam zoals bij de KvK, adres): optioneel, komen op elke nieuwe factuur
+  const af = a.afnemer || {};
+  const gegevens = '<form method="post" action="/v2/proef/factuurgegevens" id="factuurgegevens" style="margin-top:18px">' +
+    '<h3 style="font-size:16px;margin:0 0 4px">Factuurgegevens</h3>' +
+    '<p class="klein" style="font-size:14px;margin:0 0 8px">Optioneel. Komen op elke nieuwe factuur; vanaf 100 euro per maand hoort het adres erop.</p>' +
+    '<div class="veld"><label for="f_naam">Naam van de praktijk</label><input id="f_naam" name="naam" maxlength="' + AFNEMER_NAAM_MAX + '" autocomplete="organization" value="' + htmlEsc(af.naam || "") + '"/></div>' +
+    '<div class="veld"><label for="f_adres">Adres</label><textarea id="f_adres" name="adres" rows="3" maxlength="' + AFNEMER_ADRES_MAX + '" autocomplete="street-address">' + htmlEsc(af.adres || "") + "</textarea></div>" +
+    '<div class="knoppen"><button class="knop omlijnd" type="submit">Factuurgegevens bewaren</button></div></form>';
   const incasso = incassoAan() ? " Elke maand schrijven we automatisch af via Mollie; je krijgt " + INCASSO_VOORAF_DAGEN + " dagen vooraf een mail." : "";
   if (a.status === "opgezegd") return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement is opgezegd</h2>' +
     '<p class="klein" style="font-size:14.5px">Je kunt Fysiplan nog gebruiken tot en met <b>' + tot + "</b> (" + therapeuten + "). " +
     "Daarna schrijven we niets meer af en maak je geen nieuwe kaarten meer. Na nog " + NA_EINDE_WISSEN_DAGEN + " dagen wissen we alles van je praktijk, ook de gedeelde kaarten. " +
     "Download v\u00f3\u00f3r die tijd wat je wilt bewaren op <a href=\"/v2/gegevens\">Mijn gegevens</a>. " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="intrekken"/>' +
-    '<div class="knoppen"><button class="knop oranje" type="submit">Toch doorgaan</button></div></form></div>';
+    '<div class="knoppen"><button class="knop oranje" type="submit">Toch doorgaan</button></div></form>' + gegevens + "</div>";
   return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement</h2>' +
     '<p class="klein" style="font-size:14.5px">Actief voor ' + therapeuten + ", betaald tot en met " + tot + "." + incasso + " " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="opzeggen"/>' +
     '<label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, zeg mijn abonnement op per ' + tot + ".</span></label>" +
-    '<div class="knoppen"><button class="knop omlijnd" type="submit">Abonnement opzeggen</button></div></form></div>';
+    '<div class="knoppen"><button class="knop omlijnd" type="submit">Abonnement opzeggen</button></div></form>' + gegevens + "</div>";
 }
 // haal de betaling zelf op bij Mollie (de webhook is niet ondertekend) en verwerk hem
 async function mollieVerwerk(id) {
@@ -876,9 +884,11 @@ function geefFactuurNr(p) {
   if (!a || !a.eersteBetaling) return false;
   const jaarVan = (ms) => new Date(ms || Date.now()).toLocaleDateString("nl-NL", { year: "numeric", timeZone: "Europe/Amsterdam" });
   let nieuw = false;
-  if (!a.factuurNr) { a.factuurNr = volgendFactuurNr(Object.values(proeven), jaarVan(a.sinds)); nieuw = true; }
+  // een uitgegeven factuur verandert niet meer: de factuurgegevens van dat moment gaan mee
+  const vast = a.afnemer && a.afnemer.naam ? { naam: a.afnemer.naam, adres: a.afnemer.adres || "" } : null;
+  if (!a.factuurNr) { a.factuurNr = volgendFactuurNr(Object.values(proeven), jaarVan(a.sinds)); if (vast) a.factuurAfnemer = vast; nieuw = true; }
   for (const b of Array.isArray(a.betalingen) ? a.betalingen : []) {
-    if (b && !b.factuurNr) { b.factuurNr = volgendFactuurNr(Object.values(proeven), jaarVan(b.betaald || b.sinds)); nieuw = true; }
+    if (b && !b.factuurNr) { b.factuurNr = volgendFactuurNr(Object.values(proeven), jaarVan(b.betaald || b.sinds)); if (vast) b.afnemer = vast; nieuw = true; }
   }
   return nieuw;
 }
@@ -5789,6 +5799,29 @@ async function afhandelen(request, response) {
       KNOP_HTML: '<a class="knop oranje" href="/v2/app">Naar mijn kaarten</a> ' + terug });
     return;
   }
+  // factuurgegevens (naam + adres van de praktijk) voor nieuwe facturen, met de eigen proefcookie
+  if (urlPath === "/v2/proef/factuurgegevens" && request.method === "POST") {
+    response.setHeader("cache-control", "no-store");
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    let b = {};
+    try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
+    const p = proefVan(request);
+    const a = p && p.abonnement;
+    if (!a || !(a.status === "actief" || a.status === "opgezegd")) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
+    const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#factuurgegevens">Terug naar mijn abonnement</a>';
+    const g = afnemerGegevens(b.naam, b.adres);
+    if (g.fout) {
+      await serveerProef(request, response, "bericht", { TITEL: "Factuurgegevens", ETIKET: "Factuurgegevens", KOP: g.fout,
+        TEKST: "Er is niets veranderd.", KNOP_HTML: terug }, 422);
+      return;
+    }
+    if (g.naam) a.afnemer = { naam: g.naam, adres: g.adres, gewijzigd: Date.now() }; else delete a.afnemer;
+    await bewaarProeven();
+    await serveerProef(request, response, "bericht", { TITEL: "Factuurgegevens", ETIKET: "Factuurgegevens",
+      KOP: g.naam ? "Je factuurgegevens zijn bewaard." : "Je factuurgegevens zijn leeggemaakt.",
+      TEKST: "Ze komen op elke nieuwe factuur, en op eerdere facturen die nog zonder factuurgegevens waren. Een factuur met factuurgegevens blijft zoals hij was.", KNOP_HTML: terug });
+    return;
+  }
   if (urlPath === "/v2/proef/doorgaan" && request.method === "POST") {
     response.setHeader("cache-control", "no-store");
     if (kruisSite(request)) { await weigerKruis(response); return; }
@@ -5880,14 +5913,16 @@ async function afhandelen(request, response) {
     response.setHeader("content-security-policy", "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
     // ?nr=FP-…: een latere maand (maandincasso); zonder nr de eerste betaling
     const nr = String(new URL(request.url, "http://x").searchParams.get("nr") || "");
-    let stuk = p.abonnement;
+    let stuk = p.abonnement, vast = p.abonnement.factuurAfnemer;
     if (nr && nr !== p.abonnement.factuurNr) {
       const b = (Array.isArray(p.abonnement.betalingen) ? p.abonnement.betalingen : []).find((x) => x && x.factuurNr === nr);
       if (!b) { await send(response, 404, "text/plain; charset=utf-8", "Not found"); return; }
-      stuk = { ...b, betaalId: b.id };
+      stuk = { ...b, betaalId: b.id }; vast = b.afnemer;
     }
+    // vastgelegd bij het uitgeven van het nummer; anders (oudere factuur) de huidige gegevens
+    const af = vast || p.abonnement.afnemer || {};
     await send(response, 200, "text/html; charset=utf-8", factuurHtml({ leverancier: FYSIPLAN_ID,
-      afnemer: { naam: p.praktijk || p.naam, email: p.email }, abonnement: stuk }));
+      afnemer: { naam: af.naam || p.praktijk || p.naam, adres: af.adres || "", email: p.email }, abonnement: stuk }));
     return;
   }
   // Mollie meldt een statuswijziging met alleen het id; onbekende id's krijgen ook 200

@@ -123,9 +123,13 @@ een **factuur** met 21% btw uitgesplitst.
    1,73 btw). Wil je de btw er bovenop (12,09 incl.), zeg het; dan past deze routine het afrekenbedrag aan.
    Zit je in de kleineondernemersregeling (KOR), laat `FYSIPLAN_BTW_NUMMER` dan leeg en meld het, dan komt er
    een KOR-factuur zonder btw.
-3. Boven 100 euro incl. btw (vanaf 9 therapeuten bij 9,99 euro) vraagt de wet ook het adres van de praktijk op
-   de factuur. Fysiplan vraagt dat nu niet; laat het je boekhouder bevestigen, dan bouwt een volgende run
-   een veld "factuuradres".
+3. ~~Factuuradres~~ GEBOUWD 2026-11-11 (praktijk-routine): op Mijn abonnement staat nu het blok
+   "Factuurgegevens" (naam van de praktijk + adres, optioneel). Ze komen op elke nieuwe factuur en worden bij
+   het uitgeven van het factuurnummer vastgelegd, zodat een uitgegeven factuur niet meer verandert. Boven 100
+   euro (vanaf 11 therapeuten bij 9,99 incl. btw) zonder adres ziet de praktijk op de factuur een oproep om het
+   in te vullen. Geen env-variabele nodig; het werkt zodra er online betaald is (`MOLLIE_API_KEY`).
+   **Nog voor jou:** laat je boekhouder bevestigen dat dit (plus naam en btw-id van Fysiplan) genoeg is voor
+   een volledige factuur; wil je het adres verplicht maken vóór het betalen, zeg het.
 
 
 ### Engelse oefennamen in de Nederlandse bibliotheek (gebruikers-sweep, 2026-11-07)
