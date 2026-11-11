@@ -9,32 +9,34 @@ werk voor Ahmed in `docs/mensenwerk.md`.
 
 | Flow | Desktop 1280 | iPad | iPhone SE | iPhone 14 | Pixel 7 |
 |---|---|---|---|---|---|
-| Proef aanmelden + formulierfouten | 2026-11-10 22u (ok; 0612345678 geweigerd met misleidende melding) · 18u (ok; foutmeldingen niet aan velden gekoppeld; praktijknaam later komt niet in aanmelding) | 2026-11-08 10u staand | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Proef aanmelden + formulierfouten | 2026-11-11 02u (toetsenbord ok; focus na welkom op body) · 2026-11-10 22u (ok; 0612345678 geweigerd met misleidende melding) · 18u (ok; foutmeldingen niet aan velden gekoppeld; praktijknaam later komt niet in aanmelding) | 2026-11-08 10u staand | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Welkom, praktijknaam (ook leeg), 12 oefeningen | 2026-11-09 18u (ok; lange naam 66 tekens; "Nieuw in Fysiplan" direct na welkom) | 2026-11-07 10u | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Printversie (lijn, kleur, compact) | 2026-11-10 22u (8 PDF's elk 1 A4; lang Doel stil afgekapt) · 18u (6 varianten 1 A4; compact nog zwak: HOOG open) | 2026-11-10 14u liggend (printvenster + PDF ok) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
+| Printversie (lijn, kleur, compact) | 2026-11-11 02u (8 PDF's 1 A4, alle namen volledig) · 2026-11-10 22u (8 PDF's elk 1 A4; lang Doel stil afgekapt) · 18u (6 varianten 1 A4; compact nog zwak: HOOG open) | 2026-11-10 14u liggend (printvenster + PDF ok) | 2026-11-07 14u | 2026-11-06 22u (venster) | 2026-11-07 10u |
 | Beveiligen, herstelcode, inloggen 2e apparaat | 2026-11-09 18u (ok; herstelcode kleine letters ok) | 2026-11-09 18u staand (typfout collega: losse praktijk → fix via klaargezette naam) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
-| Delen, QR, kaartenoverzicht, CSV | 2026-11-10 18u (CSV ok; 0 oefeningen via API = lege kaart) | 2026-11-10 06u staand (tikdoelen overzicht nog < 44) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
+| Delen, QR, kaartenoverzicht, CSV | 2026-11-11 02u (CSV formulebescherming ok; focus na QR-venster op body) · 2026-11-10 18u (CSV ok; 0 oefeningen via API = lege kaart) | 2026-11-10 06u staand (tikdoelen overzicht nog < 44) | 2026-11-07 14u | 2026-11-06 22u | 2026-11-07 10u |
 | Naam wijzigen in overzicht + daarna verder bewerken | 2026-11-09 18u (nieuwe kaart: naamveld volgt → OPGELOST, test:nieuwekaartnaam) | 2026-11-07 10u | 2026-11-07 14u | – | 2026-11-07 10u |
 | Teamsjabloon, eigen oefening (foto), eigen video | 2026-11-10 22u (ok; dubbeltik Delen → Verwijderen op iPad) · 10u (ok; nep-JPEG/.exe nette melding, 6 MB verkleind) | 2026-11-10 18u staand (collega ziet "Verwijderen" bij andermans sjabloon, 15 px) | – | – | – |
-| Opname via telefoon /o | 2026-11-09 14u (ok; vals "verouderd" na opname OPGELOST) | 2026-11-10 18u staand+liggend nep-camera (ok; modal-knoppen 36 px) | – | 2026-11-07 10u | 2026-11-10 18u (ok, opname vanaf iPad) |
+| Opname via telefoon /o | 2026-11-09 14u (ok; vals "verouderd" na opname OPGELOST) | 2026-11-11 02u staand+liggend (ok, knoppen ≥ 48 px) · 2026-11-10 18u staand+liggend nep-camera (ok; modal-knoppen 36 px) | – | 2026-11-07 10u | 2026-11-10 18u (ok, opname vanaf iPad) |
 | Afspraak, seintje, signalen | 2026-11-10 10u (seintje → inbox, ook bij collega) | 2026-11-08 18u staand (afspraak na verlopen proef stil) | 2026-11-08 18u (seintje → inbox ok) | 2026-11-10 10u #162 (.ics 1 download, nog 3 verzoeken) | 2026-11-10 14u (Engels ok; .ics dubbeltik → OPGELOST, test:agendadubbel; tijd "02:25 PM" → 24 uur) |
-| Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-10 22u (collega ziet 'laatste dag' niet; eigenaar minder dan collega; afspraak weghalen 403) · 10u ("t/m <dag>" + "loopt nog vandaag nog" open) | 2026-11-10 18u (alle schrijfroutes 403, ook 2e iPad; sjabloon weg + afgehandeld 200: bewust) | – | 2026-11-07 02u (breedte) | – |
-| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-10 18u #162 staand+liggend (liggend: uitleg onder de Gedaan-balk) | 2026-11-10 18u (dubbel seintje → OPGELOST, test:agendadubbel; offline wachtrij ok) | 2026-11-10 10u #162 (Engelse oefenstand ok) | 2026-11-10 10u #162 (ok) |
-| /k: gedaan-vinkjes op een tweede apparaat | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u |
-| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-10 22u (te zwaar offline 'Doorgegeven' → OPGELOST, test:zwaaroffline) · 18u (herstelknoppen buiten vak → OPGELOST, test:grotelettersk; oefenstand bij 200 % alleen beeld) | 2026-11-10 10u #162 (liggend ±49 % over voor de oefening) | 2026-11-10 18u (trage lijn: NL laadtekst → OPGELOST, test:kaartladen; draaien/terug ok) |
+| Proef bijna verlopen / verlopen (echte verlopen-pagina) | 2026-11-11 02u (bijna verlopen nergens zichtbaar, nog open) · 2026-11-10 22u (collega ziet 'laatste dag' niet; eigenaar minder dan collega; afspraak weghalen 403) · 10u ("t/m <dag>" + "loopt nog vandaag nog" open) | 2026-11-10 18u (alle schrijfroutes 403, ook 2e iPad; sjabloon weg + afgehandeld 200: bewust) | – | 2026-11-07 02u (breedte) | – |
+| /k: lezen, voorlezen, pijnscore, herstel, gedaan, te zwaar | – | 2026-11-10 18u #162 staand+liggend (liggend: uitleg onder de Gedaan-balk) | 2026-11-11 02u (seintje "goed" niet in inbox; aria-pressed herstel → OPGELOST) · 2026-11-10 18u (dubbel seintje → OPGELOST, test:agendadubbel; offline wachtrij ok) | 2026-11-10 10u #162 (Engelse oefenstand ok) | 2026-11-10 10u #162 (ok) |
+| /k: gedaan-vinkjes op een tweede apparaat | – | 2026-11-07 10u | 2026-11-07 10u | 2026-11-07 10u | 2026-11-11 02u (ok, heen en weer) · 2026-11-07 10u |
+| /k: 200% tekst, offline, Engels, landscape, trage lijn | – | – | 2026-11-11 02u (oefenstand alleen beeld → OPGELOST, body.krap) · 2026-11-10 22u (te zwaar offline 'Doorgegeven' → OPGELOST, test:zwaaroffline) · 18u (herstelknoppen buiten vak → OPGELOST, test:grotelettersk; oefenstand bij 200 % alleen beeld) | 2026-11-10 10u #162 (liggend ±49 % over voor de oefening) | 2026-11-11 02u (dagwissel open kaart → OPGELOST, test:dagwisseltaal; liggend onderbalk niet gecentreerd) · 2026-11-10 18u (trage lijn: NL laadtekst → OPGELOST, test:kaartladen; draaien/terug ok) |
 | /k: video afspelen (eigen opname, YouTube) | – | 2026-11-08 22u (webm + mp4, staand/liggend) | 2026-11-07 22u (ook offline, 200%) | 2026-11-07 10u | 2026-11-09 22u (eigen webm, ook liggend ok) |
-| /k: andere talen | – | – | de/tr 2026-11-09 22u (mislukte vertaling → echte uitleg in NL met melding OPGELOST, test:nietvertaald; demostem las NL met Duitse stem: mee opgelost) | pl/ar 2026-11-08 22u (RTL-naam: fix) | ar + uk 2026-11-08 10u (te zwaar: fix) |
+| /k: andere talen | – | – | de/tr 2026-11-09 22u (mislukte vertaling → echte uitleg in NL met melding OPGELOST, test:nietvertaald; demostem las NL met Duitse stem: mee opgelost) | en↔nl 2026-11-11 02u iPhone 14 (keuze blijft niet → OPGELOST) · pl/ar 2026-11-08 22u (RTL-naam: fix) | ar + uk 2026-11-08 10u (te zwaar: fix) |
 | Landing /v2 (desktop: ook printen) | 2026-11-08 14u (print: fix) | 2026-11-10 18u staand+liggend (nav 22/30 px, kopknoppen 34, "vergroot" 15 px) | 2026-11-09 18u (200 %: 513 px breed door <code> in FAQ; nav 22 px) | 2026-11-10 14u staand+liggend (taalregel contrast 2,45:1; taallinks 17 px; "Vragen" onzichtbaar buiten nav) | 2026-11-10 18u (Engels: alleen /k/demo, taallinks 17 px) |
 | Therapeut-app op telefoon | – | – | 2026-11-07 06u | 2026-11-06 22u | 2026-11-07 10u |
 | Therapeut-app op iPad liggend | – | 2026-11-10 14u (chips 24 px, ster/+ 24–28 px) | – | – | – |
 | Hernoemvraag in Kaarten (andere patiënt) | 2026-11-10 22u (Annuleren hernoemde stil → OPGELOST, test:annulerenhernoem) | 2026-11-10 22u liggend | – | – | – |
 | Twee werkplekken op één kaart (oud apparaat/tabblad) | 2026-11-09 22u (409 + keuze ok; melding ±7 px) | 2026-11-09 22u liggend (idem) | – | – | – |
-| Team: uitnodigen, rollen, verwijderen, inbox, dossier | 2026-11-10 10u (oude link na weigering → OPGELOST, test:vuleersterij) | 2026-11-10 10u staand (uitnodiging aangenomen op iPad ok) | – | – | – |
-| /privacy (100 % en 200 %) | – | – | 2026-11-09 18u (ok; kopregellinks 14–17 px) | – | – |
+| Team: uitnodigen, rollen, verwijderen, inbox, dossier | 2026-11-11 02u (rollen via API ok; therapeut wijzigt praktijkprofiel → security) · 2026-11-10 10u (oude link na weigering → OPGELOST, test:vuleersterij) | 2026-11-10 10u staand (uitnodiging aangenomen op iPad ok) | – | – | – |
+| /privacy (100 % en 200 %) | – | 2026-11-11 02u iPad staand+liggend (afbreekstreepje inhoud, links 17 px) | 2026-11-09 18u (ok; kopregellinks 14–17 px) | – | – |
 | Mijn gegevens /k, Wis van dit apparaat, /v2/gegevens | 2026-11-09 18u (/v2/gegevens: naam niet ingevuld, melding bovenaan) | – | 2026-11-09 18u (wis laat avatars in de cache) | 2026-11-08 02u | 2026-11-09 18u (download Engels ok) |
 | Vensters met alleen toetsenbord | 2026-11-10 22u (Kaarten opent onderaan; radio/vinkje zonder focus; 1676× Tab; Escape 'Nieuw' → OPGELOST) · 18u (ok; 480 schemavakken zonder label; "Nieuw in Fysiplan" na Escape terug) | 2026-11-09 02u staand (fix, in test:vensterterug) | – | – | – |
 
-Volgende run (na 2026-11-10 22u): na merge van #167 de server/index-punten (praktijknaam in proefaanmelding, aria-invalid,
+Volgende run (na 2026-11-11 02u): /k afspraaktijd in andere tijdzone en "nog N keer", tabtitel/zachte 404 op /k,
+zoeken lege staat; na merge van #167 focus na Beveiligen/QR, gelijktijdig bewerken notitie/afspraak, ×-knop eigen oefening collega.
+Oudere lijst (na 2026-11-10 22u): na merge van #167 de server/index-punten (praktijknaam in proefaanmelding, aria-invalid,
 sjabloonknoppen collega, kaart verwijderen door elke collega (security), proefstatus voor collega's, afspraak weghalen na verloop);
 /k afspraakreeks "nog 4 keer" (kaart.html), taalkeuze patiënt blijft niet (kaart.html `?taal=` wint van `fp_taal`), afspraaktijd
 in download in andere tijdzone; therapeut-app focusvolgorde Kaarten en skip-link; iPad staand /o en /privacy.
@@ -66,6 +68,39 @@ Testtip: alle agents delen localhost en dus één IP-bucket van de lees- en schr
 browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
+
+### Sweep 2026-11-11 02u (vier persona's lokaal; geen 500's of pageerrors)
+- **OPGELOST 2026-11-11 02u (test:dagwisseltaal) — HOOG (Sanne → /k) — vinkjes van vandaag schoven naar een andere oefening**
+  als de praktijk na het delen een oefening weghaalde of de volgorde wijzigde (telefoon bewaarde posities; Brug + Plank
+  afgevinkt i.p.v. alleen Brug, "Alle oefeningen gedaan"). Nu met de oefeningnaam erbij (`naarHuidig`), ook voor "Te zwaar?".
+- **OPGELOST 2026-11-11 02u (test:dagwisseltaal) — MIDDEL (Jayden, Pixel 7/iPhone 14) — kaart die over middernacht open bleef,
+  tekende niet opnieuw**: "Ik heb vandaag geoefend" bleef aan van gisteren en de eerste tik stuurde `aan:false`, de oefendag
+  ging verloren. Nu `dagWissel()` bij focus/zichtbaar/pageshow, elke minuut en vóór de tik.
+- **OPGELOST 2026-11-11 02u (test:dagwisseltaal) — MIDDEL (Jayden) — taalkeuze van de patiënt bleef niet** bij dezelfde link
+  (`fp_taalkeus_<id>`); een link met een andere taal wint nog steeds.
+- **OPGELOST 2026-11-11 02u (test:dagwisseltaal) — MIDDEL (Truus, iPhone SE 200 %) — oefenstand toonde alleen het beeld**:
+  `@media (max-height:26em)` springt niet aan bij grote letters; nu `body.krap` via `zetKrap()` en een naam die niet breder groeit dan het scherm.
+- **OPGELOST 2026-11-11 02u — LAAG (Truus) — herstelknoppen zonder `aria-pressed`.**
+- **MIDDEL → security-backlog (Mark)** — collega met rol therapeut wijzigt het praktijkprofiel (tel, website) dat op elke /k staat.
+- **MIDDEL (Mark, desktop/iPad) — twee collega's tegelijk op één kaart: notitie, afspraak, behandelaar en bericht overschrijven
+  elkaar stil** (beide 200 "Bewaard ✓"; `/api/kaarten` heeft wel 409). server.js r. ~4806/4834/4913, index.html r. ~4882. Wacht op #167.
+- **MIDDEL (Sanne, desktop toetsenbord) — focus valt op `body`** na Beveiligen (herstelcode één keer getoond: "Kopieer" niet
+  bereikbaar zonder van boven te tabben) en na Escape in het QR-venster. `ps_do`/`pb_qr` disabled vóór de fetch → `terug=null`
+  (index.html r. ~5404, ~3505, ~2808). Wacht op #167.
+- **LAAG/MIDDEL (Sanne) — welkomstvenster proef komt maar één keer** (`fysiplan_proef_start` bij tonen gezet); Enter in
+  praktijknaam doet niets (index.html r. ~529, ~2793).
+- **LAAG/MIDDEL (Mark, iPad) — therapeut ziet "×" bij eigen oefeningen van een collega** (403 na bevestiging; aria-label zonder naam). index.html r. ~5226.
+- **LAAG (Truus) — seintje "Het gaat goed" komt niet in inbox/chip als er al een vraag/pijn openstaat** (server.js `zetSeintje` r. ~1156); patiënt ziet wel "je fysiotherapeut ziet je seintje".
+- **LAAG (Truus) — "Begin met oefenen" op iPhone SE op y 846 (100 %) / 1316 (200 %)** met bericht van de praktijk (open punt privacyblok).
+- **LAAG (Sanne) — bibliotheek zoeken: geen lege staat bij 0 treffers; alleen leestekens/emoji geeft stil alle 817; "squats" vindt "Squat" niet** (index.html `renderList`/`searchScore` r. ~1481).
+- LAAG: tabtitel /k "Trainingskaart — Fysiplan" Nederlands tijdens laden en in foutstaten; /k/<onbekend> geeft HTTP 200 (zachte 404);
+  download herstelwoorden ("+1 (better)") wijken af van de knoppen; agenda zonder dag gebruikt `alert()` (kaart.html r. ~3313);
+  Pixel 7 liggend: onderbalk oefenstand niet gecentreerd (`.sbalk .srij`); notitie afgekapt op 500 laat half emoji (server.js
+  r. ~4818 `.slice`); /privacy inhoud "partij-/en" afgebroken (`hyphens:auto`, juridisch.html r. 30/92); `/api/kaart/gedaan` met `aan:"ja"` valt terug op aan/uit-tik.
+- Nog open en bevestigd: afspraaktijd kaart vs download in andere tijdzone; "nog N keer" één te veel; inbox-tijd van samengevoegd seintje.
+- Bevestigd ok: /o iPad staand+liggend (één upload bij dubbeltik, token eenmalig); rollen 403 voor therapeut; kaart 409 bij
+  gelijktijdig opslaan; offline wachtrij; tweede telefoon ziet vinkjes; "Wis deze kaart" leeg; CSV-formules; alle printvarianten
+  1 A4; Annuleren in hernoemvraag; stemkiezer en laadtekst Engels; XSS nergens; gegokte id's 404 zonder orakel.
 
 ### Sweep 2026-11-10 22u (vier persona's lokaal; geen 500's of serverfouten)
 - **OPGELOST 2026-11-10 22u (test:annulerenhernoem) — HOOG (Mark, desktop/iPad) — "Annuleren" of Esc in de vraag "andere
