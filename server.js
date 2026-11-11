@@ -1843,6 +1843,13 @@ const AI_WORKSPACE_ID = process.env.ANTHROPIC_WORKSPACE_ID || "";
 const AI_BASIS = process.env.ANTHROPIC_BASE_URL || "https://api.anthropic.com";
 const AI_MODEL = process.env.AI_MODEL || "claude-sonnet-5";
 const AI_MODEL_VERTAAL = process.env.AI_MODEL_VERTAAL || "claude-haiku-4-5-20251001";
+// De vraaghulp op de patiëntkaart heeft een eigen schakelaar en staat standaard UIT, ook met
+// een AI-sleutel (die drijft ook de zoekhulp en het vertalen aan, en die blijven werken).
+// Reden: het woordfilter in lib/vraaghulp-grens.js herkent een klacht alleen aan een vaste
+// woordenlijst. Een zin als "ik heb last van mijn rug" staat er niet in en ging dus naar de
+// AI-dienst buiten de EU, terwijl /privacy belooft dat vragen over klachten niet worden
+// doorgestuurd. Aanzetten kan alleen bewust met VRAAGHULP=aan (naast de sleutel).
+const VRAAGHULP_AAN = !!AI_KEY && /^(aan|ja|1|true)$/i.test(String(process.env.VRAAGHULP || "").trim());
 const normEx = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
 async function vraagClaude(model, maxTokens, system, user, opties = {}) {
   const headers = { "content-type": "application/json", "x-api-key": AI_KEY, "anthropic-version": "2023-06-01" };
@@ -2532,6 +2539,8 @@ async function afhandelen(request, response) {
       core1000: core1000Summary.total || 0,
       core1000Gepubliceerd: (core1000.exercises || []).filter((entry) => entry.publication?.status === "published").length,
       videoOpslag: STREAM_ENABLED ? "cloudflare-stream" : "railway-volume",
+      // de vraaghulp op de patiëntkaart heeft een eigen schakelaar (VRAAGHULP=aan); standaard uit
+      vraaghulp: VRAAGHULP_AAN ? "aan" : "uit",
       // zichtbaar maken of de data op een blijvend volume staat (waar zonder
       // geheimen): zo is "overleeft een herstart" in één blik te controleren
       volumeActief: dataDir === "/data" || !!process.env.DATA_DIR,
@@ -4732,7 +4741,8 @@ async function afhandelen(request, response) {
     // de patiënt ziet tot wanneer de kaart minstens bestaat (bewaartermijn): bij een
     // afgeronde kaart en in "Mijn gegevens"
     if (!found.demo) patientKaart.verloopt = verdwijntOp(fpk, found);
-    // ai-vlag: de kaartpagina toont de vraaghulp alleen als de server een AI-sleutel heeft
+    // ai-vlag: de kaartpagina toont de vraaghulp alleen als die op de server aan staat
+    // (VRAAGHULP=aan en een AI-sleutel); standaard uit
     // eigen oefeningen van de praktijk staan niet in de openbare bibliotheek: naam,
     // foto en uitleg reizen met de kaart mee (alleen die op déze kaart)
     const eigenOef = (found.chosen || []).filter((x) => PRAKTIJK_OEF_ID.test(String(x.id || "")))
@@ -4740,7 +4750,7 @@ async function afhandelen(request, response) {
     if (eigenOef.length) patientKaart.eigenOef = eigenOef;
     // dag (Amsterdam-tijd) waarop oefTrouw.d "vandaag" betekent: de kaart toont zo ook
     // de vinkjes die vandaag op een ander apparaat zijn gezet
-    await sendJson(response, 200, { ok: true, kaart: patientKaart, praktijk: prof, ai: !!AI_KEY, dag: nlDag(Date.now()) });
+    await sendJson(response, 200, { ok: true, kaart: patientKaart, praktijk: prof, ai: VRAAGHULP_AAN, dag: nlDag(Date.now()) });
     return;
   }
 
@@ -5605,7 +5615,7 @@ async function afhandelen(request, response) {
       if (vraag.length < 3) { await sendJson(response, 400, { ok: false, fout: "Typ eerst een korte vraag." }); return; }
       const VTALEN = { nl: "Nederlands", en: "Engels", de: "Duits", fr: "Frans", es: "Spaans", pl: "Pools", tr: "Turks", ar: "Arabisch", uk: "Oekraïens" };
       const taal = Object.hasOwn(VTALEN, String(b.taal || "")) ? String(b.taal) : "nl";
-      if (!AI_KEY) { await sendJson(response, 503, { ok: false, fout: "De vraaghulp staat nog uit op deze server." }); return; }
+      if (!VRAAGHULP_AAN) { await sendJson(response, 503, { ok: false, fout: "De vraaghulp staat uit. Bel met je vraag je eigen praktijk." }); return; }
       // pijn, klachten, medicijnen, operatie of herstel: niet naar de AI-dienst, maar een
       // vaste verwijzing naar de eigen praktijk (MDR: geen reactie op klachten van één
       // patiënt; AVG art. 9: gezondheidsgegevens blijven binnen de EU). lib/vraaghulp-grens.js
@@ -5811,6 +5821,11 @@ async function afhandelen(request, response) {
       let sjabTelling = 12;
       try { const sj = JSON.parse(await readFile(join(publicDir, "sjablonen.json"), "utf8")); if (Array.isArray(sj) && sj.length) sjabTelling = sj.length; } catch {}
       html = html.replace(/__SJABLONEN_AANTAL__/g, String(sjabTelling));
+      // de vraaghulp staat alleen op de landing als hij op deze server ook echt aan staat
+      // (VRAAGHULP=aan); het aantal functies telt mee met wat er dan nog staat
+      if (!VRAAGHULP_AAN) html = html.replace(/[ \t]*<!--vraaghulp-->[\s\S]*?<!--\/vraaghulp-->\n?/g, "");
+      else html = html.replace(/<!--\/?vraaghulp-->/g, "");
+      html = html.replace(/__FUNCTIES_AANTAL__/g, String((html.match(/class="fx"/g) || []).length));
       // bewaartermijnen zoals de server ze hanteert (pakket B); de tekst klopt zo altijd
       html = html.replace(/__BEWAAR_STIL__/g, String(BEWAAR_STIL_DAGEN)).replace(/__BEWAAR_AFGEROND__/g, String(BEWAAR_AFGEROND_DAGEN));
       // QR naar de voorbeeldkaart: een desktop-bezoeker scant hem en ervaart de

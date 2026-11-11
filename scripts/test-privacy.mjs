@@ -67,6 +67,9 @@ const app = spawn(process.execPath, ["server.js"], {
   cwd: root,
   env: { ...process.env, HOST: "127.0.0.1", PORT: String(appPort), DATA_DIR: dataDir, ADMIN_KEY: "",
     ANTHROPIC_API_KEY: "test", ANTHROPIC_BASE_URL: `http://127.0.0.1:${aiPort}`,
+    // de vraaghulp staat standaard uit (eigen schakelaar); deze test meet wat er naar de
+    // AI-dienst gaat als hij bewust aan staat
+    VRAAGHULP: "aan",
     FYSIPLAN_BEDRIJF: "Fysiplan B.V.", FYSIPLAN_KVK: "12345678", FYSIPLAN_HOSTING_REGIO: "EU West (Amsterdam)",
     MAIL_AFZENDER: "Fysiplan <privacy@fysiplan.nl>" },
   stdio: ["ignore", "pipe", "pipe"]

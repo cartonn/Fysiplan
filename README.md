@@ -271,7 +271,8 @@ de verwerkersovereenkomst; de versie en het tijdstip staan bij het praktijkaccou
   `BEWAAR_AANLOOP_DAGEN` (standaard 30) dagen (`bewaartermijn.json`), zodat niemand onverwacht
   kaarten kwijtraakt. De dagelijkse reservekopie bewaart hooguit 7 dagen.
 - **AI** (alleen met `ANTHROPIC_API_KEY`): de zoekhulp stuurt alleen lichaamsdeel, trainingsdoel
-  en een paar zoekwoorden; de vraaghulp op de patiëntkaart stuurt de vraag plus de namen en
+  en een paar zoekwoorden; de vraaghulp op de patiëntkaart (standaard uit, alleen aan met
+  `VRAAGHULP=aan`) stuurt de vraag plus de namen en
   bibliotheekuitleg van de oefeningen; vertalen gaat alleen over bibliotheekteksten en namen van
   eigen oefeningen. Geen naam, doel, opmerking of score gaat naar de AI-dienst. De weekbrief is
   een vaste feitenlijst zonder AI. De patiëntkaart zegt in negen talen dat antwoorden van een

@@ -88,11 +88,19 @@ beheerders van de praktijk één mail (wanneer, wat er weggaat, doorgaan, kopië
 ook na een proef zonder abonnement. Alleen als de mail is ingesteld (`MAIL_API_SLEUTEL` + `MAIL_AFZENDER`). (2) Teruggave van geld bij opzeggen halverwege de maand: de code boekt niets terug;
 zet je keuze in de voorwaarden (art. 5) of laat de jurist het zeggen. (3) De opzegtermijn in art. 5 is nog een invulplek.
 
-### Vraaghulp op de kaart (legal, 2026-11-07)
-**Wat de code nu doet:** met `ANTHROPIC_API_KEY` ziet elke patiënt "Vraag over je oefeningen (AI)".
-Vragen over pijn, klachten, medicijnen of herstel gaan sinds 7 november niet meer naar de AI-dienst;
-de patiënt krijgt een vaste verwijzing naar de eigen praktijk. Andere vragen (hoe diep zakken?) gaan
-wel naar Anthropic in de VS.
+### Vraaghulp op de kaart (legal, 2026-11-07; eigen schakelaar 2026-11-12)
+**Wat de code nu doet:** de vraaghulp staat standaard UIT, ook als `ANTHROPIC_API_KEY` is ingesteld
+(de zoekhulp en het vertalen hangen aan dezelfde sleutel en blijven werken). De patiëntkaart toont
+het vraagveld dan niet, `/api/kaart/vraag` weigert, de landing noemt de vraaghulp niet en `/health`
+zegt `"vraaghulp":"uit"`. Aanzetten kan alleen bewust met `VRAAGHULP=aan` in Railway.
+**Waarom uit:** het filter herkent een klacht aan een vaste woordenlijst. Gemeten op 11 november:
+15 van 18 gewone klachtzinnen ("ik heb last van mijn rug", "mijn knie is dik en warm") gingen
+erdoorheen en dus naar Anthropic in de VS, terwijl /privacy belooft dat zulke vragen niet worden
+doorgestuurd. Zet de vraaghulp pas weer aan als die belofte klopt, bijvoorbeeld met vaste vragen
+waaruit de patiënt kiest in plaats van een vrij tekstveld.
+**Als hij aan staat:** vragen over pijn, klachten, medicijnen of herstel die het filter herkent gaan
+niet naar de AI-dienst; de patiënt krijgt een vaste verwijzing naar de eigen praktijk. Andere vragen
+(hoe diep zakken?) gaan wel naar Anthropic in de VS.
 **Wat jij moet kiezen:** wil je dat een praktijk de vraaghulp voor haar patiënten zelf kan uitzetten?
 Advies: ja, als een praktijk of jurist erom vraagt (een praktijk is verantwoordelijk voor doorgifte
 buiten de EU). Zeg het, dan bouwt de legal-routine een schakelaar in de praktijkinstellingen.

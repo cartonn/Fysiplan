@@ -49,6 +49,7 @@ jobs:
       - run: npm run test:opname-eigen
       - run: npm run test:videoquotum
       - run: node scripts/test-vraaghulp-grens.mjs
+      - run: npm run test:vraaghulpschakelaar
       - run: node scripts/test-praktijkgegevens.mjs
       - run: node scripts/test-gegevens-proef.mjs
       - run: node scripts/test-kaart-weg.mjs
