@@ -183,7 +183,7 @@ const auditPath = join(dataDir, "praktijk-audit.json");
 let praktijkAccounts = {}; // { praktijkKey: { hash, gemaakt } }  hash = "scrypt$saltHex$hashHex"
 try { praktijkAccounts = JSON.parse(await readFile(accountsPath, "utf8")); } catch {}
 let praktijkAudit = []; // laatste gebeurtenissen: { t, praktijk, actie, ip }
-const AUDIT_RUIS = new Set(["toegang-geweigerd", "login-mislukt", "herstel-mislukt"]);
+const AUDIT_RUIS = new Set(["toegang-geweigerd", "login-mislukt", "herstel-mislukt", "opzeggen-mislukt"]);
 const AUDIT_PER_PRAKTIJK = 300, AUDIT_RUIS_PER_PRAKTIJK = 50, AUDIT_TOTAAL = 5000;
 try { praktijkAudit = JSON.parse(await readFile(auditPath, "utf8")); } catch {}
 // sessies bewust in het geheugen: bij een herstart logt de praktijk opnieuw in
@@ -777,7 +777,7 @@ const INCASSO_WEBHOOK = String(process.env.FYSIPLAN_BASIS_URL || "https://fysipl
 function betaalBlok(p) {
   if (!p) return "";
   const a = p.abonnement;
-  if (a && (a.status === "actief" || a.status === "opgezegd")) return abonnementBlok(a);
+  if (a && (a.status === "actief" || a.status === "opgezegd")) return abonnementBlok(a, !!proefPraktijkSleutel(p));
   if (!mollieAan() || p.klant) return "";
   return '<form method="post" action="/v2/proef/betalen" class="blad" style="margin-top:18px">' +
     '<h2>Direct online afrekenen</h2><p class="klein" style="font-size:14.5px">&euro; 9,99 per therapeut per maand, exclusief btw, maandelijks opzegbaar. ' +
@@ -788,9 +788,23 @@ function betaalBlok(p) {
     '<input id="b_aantal" name="aantal" type="number" inputmode="numeric" min="1" max="' + MAX_THERAPEUTEN + '" value="1" required/></div>' +
     '<div class="knoppen"><button class="knop oranje" type="submit">Eerste maand betalen</button></div></form>';
 }
+// de beveiligde praktijk die aan deze proefaanmelding hangt (of null)
+function proefPraktijkSleutel(p) {
+  if (!p) return null;
+  return Object.keys(praktijkAccounts).find((k) => praktijkGeclaimd(k) && String(praktijkAccounts[k]?.proef?.id || "") === String(p.id)) || null;
+}
+// wie mag het abonnement van deze praktijk opzeggen: een actieve beheerder met eigen login
+// (geeft de naam terug) of het gedeelde praktijkwachtwoord zolang dat aan staat (""). Fout: null.
+function abonnementBeheerder(pk, ww) {
+  const acc = Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
+  if (!acc || !ww || ww.length > 200) return null;
+  if (!acc.gedeeldUit && checkHash(ww, acc.hash)) return "";
+  const l = ledenVan(pk).find((x) => x && x.rol === "beheerder" && lidActief(x) && checkHash(ww, x.hash));
+  return l ? String(l.naam || l.email || "") : null;
+}
 // Mijn abonnement: status, factuur, en zelf opzeggen (of de opzegging intrekken) in de app.
 // Opzeggen gaat in per het einde van de al betaalde maand; er wordt niets teruggeboekt.
-function abonnementBlok(a) {
+function abonnementBlok(a, metWachtwoord) {
   const therapeuten = a.aantal + (a.aantal === 1 ? " therapeut" : " therapeuten");
   const tot = htmlEsc(datumNl(a.betaaldTot));
   const soort = isFactuur(FYSIPLAN_ID) ? "Factuur" : "Betaalbewijs";
@@ -817,6 +831,9 @@ function abonnementBlok(a) {
     '<p class="klein" style="font-size:14.5px">Actief voor ' + therapeuten + ", betaald tot en met " + tot + "." + incasso + " " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="opzeggen"/>' +
     '<label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, zeg mijn abonnement op per ' + tot + ".</span></label>" +
+    // alleen een beheerder zegt op: wachtwoord van een beheerder of van de praktijk
+    (metWachtwoord ? '<div class="veld"><label for="o_ww">Wachtwoord van een beheerder</label>' +
+      '<input id="o_ww" name="wachtwoord" type="password" autocomplete="current-password" maxlength="200" required/></div>' : "") +
     '<div class="knoppen"><button class="knop omlijnd" type="submit">Abonnement opzeggen</button></div></form>' + gegevens + "</div>";
 }
 // haal de betaling zelf op bij Mollie (de webhook is niet ondertekend) en verwerk hem
@@ -3049,7 +3066,8 @@ async function afhandelen(request, response) {
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
       "claim-gereset-door-beheer", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
-      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "profiel-gewijzigd"]);
+      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "profiel-gewijzigd",
+      "abonnement-opgezegd", "opzeggen-mislukt"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
       .slice(0, 15)
@@ -5914,7 +5932,32 @@ async function afhandelen(request, response) {
         TEKST: "Er is niets veranderd aan je abonnement.", KNOP_HTML: terug }, 422);
       return;
     }
+    // Security (2026-11-11): opzeggen hing alleen aan de proefcookie van het apparaat. Op een
+    // gedeelde praktijkcomputer kon zo elke collega (ook met rol therapeut) het abonnement
+    // opzeggen, waarna de server 30 dagen na de betaalde maand alle patiëntkaarten wist.
+    // Hoort de aanmelding bij een beveiligde praktijk, dan nu ook het wachtwoord van een
+    // beheerder (of het gedeelde praktijkwachtwoord). Intrekken blijft vrij: dat beschermt.
+    const opzegPk = a.status === "actief" ? proefPraktijkSleutel(p) : null;
+    let opzegDoor = "";
+    if (opzegPk) {
+      if (beheerOpRem(request)) {
+        await serveerProef(request, response, "bericht", { TITEL: "Abonnement", ETIKET: "Abonnement", KOP: "Te veel foute pogingen.",
+          TEKST: "Probeer het over een paar minuten opnieuw. Er is niets veranderd aan je abonnement.", KNOP_HTML: terug }, 429);
+        return;
+      }
+      const wie = abonnementBeheerder(opzegPk, String(b.wachtwoord || ""));
+      if (wie === null) {
+        telInlogMisIp(request, "opzeggen-mislukt");
+        auditLog(opzegPk, "opzeggen-mislukt", request);
+        await serveerProef(request, response, "bericht", { TITEL: "Abonnement", ETIKET: "Abonnement",
+          KOP: "Alleen een beheerder van de praktijk kan opzeggen.",
+          TEKST: "Vul het wachtwoord van een beheerder in (of het wachtwoord van de praktijk). Er is niets veranderd aan je abonnement.", KNOP_HTML: terug }, 403);
+        return;
+      }
+      opzegDoor = wie;
+    }
     if (markeerOpgezegd(p)) {
+      if (opzegPk) auditLog(opzegPk, "abonnement-opgezegd", request, opzegDoor);
       await bewaarProeven();
       proefMeldAhmed("Opgezegd: " + naam, p, "Deze praktijk heeft het abonnement zelf opgezegd in de app, per " + tot +
         ". Zet een eventuele maandincasso bij Mollie stop als die al loopt.");
