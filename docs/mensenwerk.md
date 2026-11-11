@@ -4,6 +4,17 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Prijsbelofte van 24 maanden staat nu ook in de voorwaarden (legal, 2026-11-11 21u)
+**Wat er was:** de landing belooft iedereen "je prijs staat minstens 24 maanden vast" (en de oprichters "24 maanden
+prijsgarantie"), maar de voorwaarden zeiden alleen dat een nieuwe prijs 30 dagen vooraf gemeld wordt. Twee verschillende
+afspraken; de landing staat publiek, dus daar ben je waarschijnlijk al aan gebonden.
+**Wat de legal-routine deed:** art. 4 noemt nu de prijsbelofte van 24 maanden vanaf de start van het abonnement; daarna
+geldt de melding 30 dagen vooraf. Beheerders gaan één keer opnieuw akkoord (versie 2026-11-11-2).
+**Wat jij moet kiezen:** (1) zo laten (advies), of (2) de belofte alleen voor oprichters, of (3) helemaal weg. Bij (2) of
+(3) moeten landing (`public/v2.html`, regels "Geen modules … 24 maanden vast", de oprichterskaart en "De prijsbelofte")
+en art. 4 samen worden aangepast; wie al met de 24 maanden heeft afgesloten, houdt die. Laat ook een jurist naar deze
+zin kijken. Ook nog niet in de voorwaarden: "60 dagen begeleide start, gratis import" voor oprichters.
+
 ### Praktijk met één beheerder die het wachtwoord kwijt is (gebruikers-sweep, 2026-11-11 14u)
 **Wat de code nu doet:** na de overstap naar eigen logins ("praktijkwachtwoord uit") werkt de herstelcode niet meer. Een lid dat zijn
 wachtwoord kwijt is, moet de beheerder om een nieuwe uitnodiging vragen. Is die lid zelf de enige beheerder, dan is er geen weg terug

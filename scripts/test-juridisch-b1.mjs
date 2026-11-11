@@ -10,6 +10,10 @@
 // - "Een losse kaart wis je in de app met Verwijderen" klopte sinds de prullenbak (#191) niet meer:
 //   de kaart blijft dan nog dagen herstelbaar; meteen wissen kan alleen met Definitief verwijderen;
 // - de waarschuwing bij Alles wissen stond in één zin van 35 woorden.
+// Legal 2026-11-11 21u, voorwaarden (c): de landing belooft "je prijs staat minstens 24 maanden vast"
+// (ook als "prijsgarantie" bij de oprichters), maar art. 4 zei alleen "een nieuwe prijs melden we
+// 30 dagen vooraf" en "de artikelen hieronder gelden". Elke prijsbelofte op /v2 moet nu ook in de
+// voorwaarden staan, in het artikel én in de samenvatting.
 // Zonder browser. `npm run test:privacy`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -83,6 +87,15 @@ try {
   assert.match(avKort, new RegExp(NA_EINDE_WISSEN_DAGEN + " dagen later wissen we alles"), "voorwaarden kort: wissen na het einde");
   assert.match(avKort, new RegExp("geen klant, dan wissen we alles van je praktijk " + proefBewaar + " dagen na de proef"), "voorwaarden kort: einde proef");
   assert.doesNotMatch(avKort, /Daarna wissen we je kaarten binnen/, "oude, onjuiste samenvatting is weg");
+  // prijsbelofte van de landing staat ook in de voorwaarden (art. 4 en In het kort)
+  const landing = await (await fetch(origin + "/v2")).text();
+  const beloftes = [...landing.matchAll(/minstens (\d+) maanden vast|(\d+) maanden prijsgarantie/g)].map((m) => m[1] || m[2]);
+  for (const n of new Set(beloftes)) {
+    const art4 = pag.voorwaarden.split('id="abonnement"')[1].split("<h2")[0];
+    assert.match(art4, new RegExp("staat minstens " + n + " maanden vast, gerekend vanaf de start van je abonnement"), "voorwaarden art. 4: prijsbelofte van " + n + " maanden van /v2");
+    assert.match(art4, new RegExp("Prijswijziging na die " + n + " maanden"), "voorwaarden art. 4: prijswijziging pas na de belofte");
+    assert.match(avKort, new RegExp("Je prijs staat minstens " + n + " maanden vast"), "voorwaarden kort: prijsbelofte");
+  }
   // privacy: samenvatting ook voor de therapeut
   assert.match(kort(pag.privacy), /Therapeut\?[\s\S]*href="#einde"/, "privacy kort: regel voor de therapeut");
   assert.match(kort(pag.privacy), new RegExp(NA_EINDE_WISSEN_DAGEN + " dagen na het einde van je abonnement, of " + proefBewaar + " dagen na de proef"));
