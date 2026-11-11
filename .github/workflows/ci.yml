@@ -41,6 +41,7 @@ jobs:
       - run: npm run test:agendadubbel
       - run: npm run test:offline
       - run: npm run test:tablet
+      - run: npm run test:beveiligingfeedback
       - run: npm run test:praktijkslot
       - run: npm run test:tezwaar
       - run: npm run test:opname-eigen
