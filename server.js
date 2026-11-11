@@ -12,7 +12,7 @@ import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } fr
 import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
 import { volgendFactuurNr, factuurHtml, isFactuur, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
-import { backupInstellingen, stuurNaarElders } from "./lib/backup-elders.js";
+import { backupInstellingen, stuurNaarElders, verzamelBackupMetTerugval } from "./lib/backup-elders.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -1931,17 +1931,43 @@ const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPat
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
 const backupElders = backupInstellingen();
-const backupEldersStatus = { ok: null, fout: null, foutMail: 0 };
+const backupEldersStatus = { ok: null, fout: null, foutMail: 0, deels: false };
+let backupEldersBezig = false;
 async function maakBackupElders() {
-  if (!backupElders) return;
+  if (!backupElders || backupEldersBezig) return;
+  backupEldersBezig = true;
   try {
-    const bestanden = {};
-    for (const pad of backupBestanden) {
-      try { bestanden[pad.split(sep).pop()] = await readFile(pad); } catch {}
+    const marker = join(dataDir, "backup-elders-status.json");
+    let vorige;
+    try { vorige = JSON.parse(await readFile(marker, "utf8")); } catch (e) { if (e.code !== 'ENOENT' && !(e instanceof SyntaxError)) throw e; }
+    // Deploys mogen geen extra dagelijkse uploads en kosten veroorzaken.
+    if (vorige?.versie === 2 && vorige.url === backupElders.url && vorige.op <= Date.now() && Date.now() - vorige.op < 24 * 60 * 60 * 1000) {
+      backupEldersStatus.ok = vorige.op;
+      backupEldersStatus.deels = !!vorige.deels;
+      return;
     }
-    await stuurNaarElders(backupElders, bestanden);
+    if (vorige?.url === backupElders.url && vorige.poging <= Date.now() && Date.now() - vorige.poging < 24 * 60 * 60 * 1000) {
+      throw new Error('vorige uploadpoging niet afgerond; volgende poging na 24 uur');
+    }
+    // uploads te groot voor de grens: dan alleen de gegevensbestanden, met een melding (nooit stil)
+    const { bestanden, deels } = await verzamelBackupMetTerugval(dataDir, backupBestanden);
+    await writeFile(marker, JSON.stringify({ versie: 2, poging: Date.now(), url: backupElders.url }), { mode: 0o600 });
+    const resultaat = await stuurNaarElders(backupElders, bestanden);
     backupEldersStatus.ok = Date.now();
+    backupEldersStatus.deels = deels;
+    await writeFile(marker, JSON.stringify({ versie: 2, op: backupEldersStatus.ok, url: backupElders.url, bytes: resultaat.bytes, ...(deels ? { deels: true } : {}) }), { mode: 0o600 });
     backupEldersStatus.fout = null;
+    if (deels) {
+      console.error("reservekopie elders: uploads passen niet binnen de grens, alleen de gegevensbestanden zijn verstuurd");
+      if (mailIngesteld() && proefMeldingAan.length && Date.now() - backupEldersStatus.foutMail > 23 * 60 * 60 * 1000) {
+        backupEldersStatus.foutMail = Date.now();
+        for (const aan of proefMeldingAan) stuurMail(aan, "Fysiplan: reservekopie buiten Railway is onvolledig",
+          "De video's, foto's en logo's passen samen niet meer binnen de grens van 200 MB voor de dagelijkse reservekopie buiten Railway.\n"
+          + "De gegevensbestanden (kaarten, accounts, aanmeldingen) zijn wel verstuurd, de uploads niet.\n"
+          + "Laat de reservekopie van de uploads aanpassen (grotere grens of een aparte kopie).")
+          .catch(() => {});
+      }
+    }
   } catch (err) {
     backupEldersStatus.fout = Date.now();
     console.error("reservekopie elders mislukt:", err.message);
@@ -1952,6 +1978,8 @@ async function maakBackupElders() {
         + "De kopie op Railway zelf is wel gemaakt. Controleer de BACKUP_-variabelen en de opslagbak. Morgen volgt een nieuwe poging.")
         .catch(() => {});
     }
+  } finally {
+    backupEldersBezig = false;
   }
 }
 async function maakBackup() {
@@ -1979,6 +2007,7 @@ async function maakBackup() {
 // lezen state die verderop in dit bestand pas wordt aangemaakt
 const eersteBackup = maakBackup();
 setInterval(maakBackup, 24 * 60 * 60 * 1000).unref();
+setInterval(maakBackupElders, 60 * 60 * 1000).unref();
 // bewaartermijn: elke zes uur verlopen kaarten met hun video's opruimen (vindKaart
 // en het overzicht negeren ze al zodra ze verlopen zijn)
 setInterval(() => bewaartermijnOpruimen().then(() => weesOpnamesOpruimen()).catch(() => {}), 6 * 60 * 60 * 1000).unref();
@@ -2465,8 +2494,9 @@ async function afhandelen(request, response) {
       // zichtbaar maken of de data op een blijvend volume staat (waar zonder
       // geheimen): zo is "overleeft een herstart" in één blik te controleren
       volumeActief: dataDir === "/data" || !!process.env.DATA_DIR,
-      // reservekopie buiten Railway: "uit" (niet ingesteld), "ok", "fout" of "wacht" (nog niet gedraaid)
-      backupElders: !backupElders ? "uit" : backupEldersStatus.fout ? "fout" : backupEldersStatus.ok ? "ok" : "wacht",
+      // reservekopie buiten Railway: "uit" (niet ingesteld), "ok", "deels" (zonder uploads: te groot),
+      // "fout" of "wacht" (nog niet gedraaid)
+      backupElders: !backupElders ? "uit" : backupEldersStatus.fout ? "fout" : backupEldersStatus.ok ? (backupEldersStatus.deels ? "deels" : "ok") : "wacht",
       backupEldersOp: backupEldersStatus.ok ? new Date(backupEldersStatus.ok).toISOString() : null
     });
     return;
@@ -3032,7 +3062,7 @@ async function afhandelen(request, response) {
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
       "claim-gereset-door-beheer", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
-      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd"]);
+      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "profiel-gewijzigd"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
       .slice(0, 15)
@@ -3774,6 +3804,22 @@ async function afhandelen(request, response) {
       // wachtwoord alleen v1 (eigen login) en een eigen beheersleutel (security 2026-11-09).
       if (await eisBeveiligdePraktijk(request, response, key,
         "Zet eerst een wachtwoord op je praktijk; daarna bewaren we het praktijkprofiel en logo.")) return;
+      // telefoon, e-mail, website en logo staan bij de praktijknaam op elke patiëntkaart.
+      // Een collega met rol therapeut kon ze stil vervangen (eigen nummer of phishinglink
+      // namens de praktijk, zonder logboekregel). Nu alleen een beheerder, net als team en
+      // akkoord; een ongewijzigd profiel (de app stuurt het bij elk verlaten van een veld)
+      // blijft gewoon 200, zodat een therapeut geen foutmelding krijgt (security 2026-11-11)
+      const sessie = sessieVan(request);
+      const eigenSessie = !!sessie && sessie.pk === key;
+      const oudProfiel = praktijken[key];
+      const gewijzigd = !oudProfiel || !!b.logo ||
+        ["praktijk", "adres", "plaats", "tel", "email"].some((v) => (oudProfiel[v] || "") !== p[v]) ||
+        (Object.hasOwn(b, "website") && (oudProfiel.website || "") !== p.website);
+      if (eigenSessie && !gewijzigd) { await sendJson(response, 200, { ok: true, logo: oudProfiel.logo || "" }); return; }
+      if (eigenSessie && !isBeheer(sessie)) {
+        await sendJson(response, 403, { ok: false, beheer: true, fout: "Alleen een beheerder van de praktijk kan het praktijkprofiel en het logo aanpassen." });
+        return;
+      }
       // hetzelfde dagplafond op níeuwe praktijken als op de kaarten- en claim-route:
       // zonder dit is dit profiel-endpoint de onbewaakte route waarlangs één IP de
       // 200-praktijken-namespace kan volzetten (elk met een 400 kB-logo) en zo echte
@@ -3836,6 +3882,7 @@ async function afhandelen(request, response) {
           } catch {}
         }
       });
+      if (praktijkGeclaimd(key)) auditLog(key, "profiel-gewijzigd", request);
       await sendJson(response, 200, { ok: true, logo: p.logo || "" });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of logo te groot)." });
@@ -6395,7 +6442,7 @@ async function afhandelen(request, response) {
           + "<td>Het abonnement afrekenen en vastleggen dat je klant bent</td><td>Zolang je klant bent; facturen en betaalgegevens daarna 7 jaar, omdat de wet dat vraagt (fiscale bewaarplicht)</td></tr>" : "",
         // de opslag van de versleutelde reservekopie staat er alleen als die aan staat én benoemd is
         BACKUP_RIJ_HTML: backupElders && backupElders.leverancier ? "<tr id=\"reservekopie\"><td>" + htmlEsc(backupElders.leverancier) + "</td><td>Reservekopie buiten Railway, elke dag, 7 dagen bewaard</td>"
-          + "<td>Een versleutelde kopie van alles wat op deze pagina staat, behalve video&rsquo;s, foto&rsquo;s en logo&rsquo;s. De partij kan de inhoud niet lezen; alleen Fysiplan heeft de sleutel.</td></tr>" : "",
+          + "<td>Een versleutelde kopie van alles wat op deze pagina staat, ook video&rsquo;s, foto&rsquo;s en logo&rsquo;s. De partij kan de inhoud niet lezen; alleen Fysiplan heeft de sleutel.</td></tr>" : "",
         BETAAL_PARTIJ_HTML: mollieAan() ? "<p><b>Betalen.</b> Reken je online af, dan stuurt Fysiplan de naam van je praktijk (of je eigen naam), je e-mailadres en het bedrag "
           + "naar Mollie B.V. (Amsterdam, Nederland). Mollie handelt de betaling af en is daarvoor zelf verantwoordelijk; zie de privacyverklaring van Mollie. "
           + "Mollie krijgt geen pati&euml;ntgegevens.</p>" : ""

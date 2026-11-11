@@ -12,24 +12,19 @@ oefeningen mag alleen de maker of een beheerder verwijderen; kaarten onthouden (
 verwijderen, de rest kan archiveren. Advies: (2), omdat het een medisch dossier raakt; laat het weten, dan bouwt de
 security-routine het.
 
-### Reservekopie buiten Railway (livegang, 2026-11-10)
-**Wat de code nu doet:** de dagelijkse reservekopie stond alleen op hetzelfde Railway-volume als de gegevens zelf. Nu
-stuurt de server dezelfde bestanden elke dag (en bij elke start) **versleuteld** naar een opslagbak buiten Railway, in
-één bestand per weekdag (`fysiplan-ma.fpb` … `fysiplan-zo.fpb`), dus elders staat nooit meer dan 7 dagen. De opslagdienst
-kan de inhoud niet lezen. Video's, foto's en logo's gaan niet mee. Zonder de variabelen hieronder gebeurt er niets.
-`/health` toont `backupElders`: `uit`, `ok` of `fout`; bij een fout krijg je hooguit één mail per dag.
-**Wat jij moet doen:**
-1. Maak bij een Europese opslagdienst een privé-bak (bucket) aan, bijvoorbeeld Scaleway Object Storage (Amsterdam) of
-   Cloudflare R2 met regio EU, en maak een toegangssleutel die alleen in die bak mag schrijven en lezen.
-2. Zet op Railway: `BACKUP_S3_URL` (adres met de bak erin, bv. `https://s3.nl-ams.scw.cloud/fysiplan-reserve`),
-   `BACKUP_S3_REGIO` (bv. `nl-ams`; bij R2 `auto`), `BACKUP_S3_SLEUTEL_ID`, `BACKUP_S3_GEHEIM`, en `BACKUP_SLEUTEL`:
-   een zelfgekozen lange wachtzin (minstens 24 tekens). **Bewaar die wachtzin ook buiten Railway** (wachtwoordkluis):
-   zonder de wachtzin is de reservekopie niet terug te lezen.
-3. Zet `BACKUP_LEVERANCIER` op de naam en plaats van de dienst (bv. `Scaleway (Amsterdam, Nederland)`). Dan staat
-   de partij vanzelf in de lijst op /privacy. Het is een nieuwe subverwerker: meld hem vooraf aan praktijken die al
-   akkoord gaven (verwerkersovereenkomst) en sluit met de dienst een verwerkersovereenkomst.
-4. Controleer daarna https://fysiplan.nl/health: `backupElders` moet `ok` zijn.
-5. Terugzetten (één keer oefenen): `BACKUP_SLEUTEL=… node scripts/backup-terugzetten.mjs <bestand.fpb> <lege map>`.
+### Reservekopie buiten Railway (livegang, 2026-11-10; AAN sinds 2026-11-11)
+**Wat de code nu doet:** GEDAAN 2026-11-11: de server stuurt elke dag een **versleutelde** kopie van alle databestanden
+én de uploads (video's, foto's, logo's) naar een privé-bak bij Scaleway in Amsterdam, in één bestand per weekdag
+(`fysiplan-ma.fpb` … `fysiplan-zo.fpb`), dus elders staat nooit meer dan 7 dagen. Scaleway kan de inhoud niet lezen en
+staat als partij op /privacy. `/health` toont `backupElders`: `ok`, `deels` of `fout`. Wordt de kopie groter dan 200 MB,
+dan gaan alleen de gegevensbestanden mee (`deels`) en krijg je een mail; bij een fout krijg je hooguit één mail per dag.
+De wachtzin en de sleutel staan op Railway en in de sleutelhanger van je Mac; de handleiding staat in
+`/Users/builder/Fysiplan-reserve/DAGELIJKSE-BACKUPS.txt`.
+**Wat jij nog moet doen:**
+1. Scaleway is een nieuwe subverwerker: meld hem aan praktijken die al akkoord gaven (verwerkersovereenkomst).
+2. Het Scaleway-account staat op je eigen naam. Zet het om naar een bedrijfsaccount zodra het bedrijf is ingeschreven.
+3. Bewaar de wachtzin ook buiten je Mac (wachtwoordkluis): zonder de wachtzin is de reservekopie niet terug te lezen.
+4. Terugzetten: `BACKUP_SLEUTEL=… node scripts/backup-terugzetten.mjs <bestand.fpb> <lege map>`.
 
 ### Fysiplan gebruiken zonder proef of abonnement (security 2026-11-09, gebouwd 2026-11-10)
 **Wat de code nu doet:** GEDAAN 2026-11-10 (livegang, Ahmed: "verbeter alle punten die je zelf kan"): een **nieuwe**
