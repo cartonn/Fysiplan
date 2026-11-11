@@ -259,7 +259,7 @@ try {
   assert.equal((await weg.json()).afspraak, null, "0 haalt de afspraak weg");
   // de proef bewaart welke versie van de verwerkersovereenkomst is geaccepteerd
   const proefOpSchijf = JSON.parse(await readFile(join(dataDir, "proef-aanmeldingen.json"), "utf8"));
-  assert.match(Object.values(proefOpSchijf).find((p) => p.email === "sanne@gmail.com").vwo.versie, /^\d{4}-\d{2}-\d{2}$/);
+  assert.match(Object.values(proefOpSchijf).find((p) => p.email === "sanne@gmail.com").vwo.versie, /^\d{4}-\d{2}-\d{2}(-\d+)?$/);
 
   // persoonlijke maillink op een tweede apparaat
   // security (login-CSRF): een andere website die naar de link navigeert, zet geen proefcookie

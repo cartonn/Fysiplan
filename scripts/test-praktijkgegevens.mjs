@@ -129,7 +129,7 @@ try {
   assert.equal(pakket.eigenOefeningen[0].naam, "Eigen brug");
   assert.equal(pakket.sjablonen[0].naam, "Knie week 1");
   assert.equal(pakket.profiel[0].plaats, "Utrecht");
-  assert.match(pakket.account.verwerkersovereenkomst.versie, /^\d{4}-\d{2}-\d{2}$/);
+  assert.match(pakket.account.verwerkersovereenkomst.versie, /^\d{4}-\d{2}-\d{2}(-\d+)?$/);
   assert.ok(pakket.logboek.some((a) => a.actie === "alles-gedownload"));
   assert.doesNotMatch(tekst, /Cor|Eigen plank|Zeist|scrypt\$/, "geen andere praktijk en geen wachtwoordhash");
 
