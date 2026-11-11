@@ -16,14 +16,20 @@ security-routine het.
 **Wat de code nu doet:** GEDAAN 2026-11-11: de server stuurt elke dag een **versleutelde** kopie van alle databestanden
 én de uploads (video's, foto's, logo's) naar een privé-bak bij Scaleway in Amsterdam, in één bestand per weekdag
 (`fysiplan-ma.fpb` … `fysiplan-zo.fpb`), dus elders staat nooit meer dan 7 dagen. Scaleway kan de inhoud niet lezen en
-staat als partij op /privacy. `/health` toont `backupElders`: `ok`, `deels` of `fout`. Wordt de kopie groter dan 200 MB,
-dan gaan alleen de gegevensbestanden mee (`deels`) en krijg je een mail; bij een fout krijg je hooguit één mail per dag.
+staat als partij op /privacy. `/health` toont `backupElders`: `ok`, `deels` of `fout`. Wordt de kopie groter dan 200 MB
+(aan de bron, of pas na verpakken en versleutelen; in de praktijk vanaf ongeveer 150 MB aan uploads), dan gaan alleen de
+gegevensbestanden mee (`deels`). `/health` toont dan `backupEldersUploadsOntbreken` en je krijgt een mail met hoeveel
+uploads ontbreken. Let op: bij `deels` worden de oudere kopieën mét uploads binnen 7 dagen overschreven; regel dus binnen
+een week een grotere of aparte kopie voor de uploads. Bij een fout krijg je hooguit één mail per dag. De grens kan met
+`BACKUP_MAX_MB` alleen lager (1 t/m 200), niet hoger.
 De wachtzin en de sleutel staan op Railway en in de sleutelhanger van je Mac; de handleiding staat in
 `/Users/builder/Fysiplan-reserve/DAGELIJKSE-BACKUPS.txt`.
 **Wat jij nog moet doen:**
 1. Scaleway is een nieuwe subverwerker: meld hem aan praktijken die al akkoord gaven (verwerkersovereenkomst).
 2. Het Scaleway-account staat op je eigen naam. Zet het om naar een bedrijfsaccount zodra het bedrijf is ingeschreven.
 3. Bewaar de wachtzin ook buiten je Mac (wachtwoordkluis): zonder de wachtzin is de reservekopie niet terug te lezen.
+   De kopieën in `/Users/builder/Fysiplan-reserve` op je Mac bevatten patiëntgegevens en vallen ook onder de bewaartermijn
+   van 7 dagen: wis ze of ververs ze binnen een week.
 4. Terugzetten: `BACKUP_SLEUTEL=… node scripts/backup-terugzetten.mjs <bestand.fpb> <lege map>`.
 
 ### Fysiplan gebruiken zonder proef of abonnement (security 2026-11-09, gebouwd 2026-11-10)

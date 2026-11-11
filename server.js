@@ -12,7 +12,7 @@ import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } fr
 import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
 import { volgendFactuurNr, factuurHtml, isFactuur, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
-import { backupInstellingen, stuurNaarElders, verzamelBackupMetTerugval } from "./lib/backup-elders.js";
+import { backupInstellingen, stuurPakket, maakPakketMetTerugval } from "./lib/backup-elders.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -1931,7 +1931,7 @@ const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPat
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
 const backupElders = backupInstellingen();
-const backupEldersStatus = { ok: null, fout: null, foutMail: 0, deels: false };
+const backupEldersStatus = { ok: null, fout: null, foutMail: 0, deels: false, ontbreekt: 0 };
 let backupEldersBezig = false;
 async function maakBackupElders() {
   if (!backupElders || backupEldersBezig) return;
@@ -1944,27 +1944,36 @@ async function maakBackupElders() {
     if (vorige?.versie === 2 && vorige.url === backupElders.url && vorige.op <= Date.now() && Date.now() - vorige.op < 24 * 60 * 60 * 1000) {
       backupEldersStatus.ok = vorige.op;
       backupEldersStatus.deels = !!vorige.deels;
+      backupEldersStatus.ontbreekt = Number(vorige.ontbreekt) || 0;
       return;
     }
     if (vorige?.url === backupElders.url && vorige.poging <= Date.now() && Date.now() - vorige.poging < 24 * 60 * 60 * 1000) {
       throw new Error('vorige uploadpoging niet afgerond; volgende poging na 24 uur');
     }
-    // uploads te groot voor de grens: dan alleen de gegevensbestanden, met een melding (nooit stil)
-    const { bestanden, deels } = await verzamelBackupMetTerugval(dataDir, backupBestanden);
+    // te groot (aan de bron of pas na verpakken en versleutelen): dan alleen de gegevensbestanden,
+    // met een melding (nooit stil); zie maakPakketMetTerugval
+    const nu = new Date();
+    const { body, deels, ontbreekt } = await maakPakketMetTerugval(dataDir, backupBestanden, backupElders.sleutel, nu.getTime(), backupElders.maxBytes);
     await writeFile(marker, JSON.stringify({ versie: 2, poging: Date.now(), url: backupElders.url }), { mode: 0o600 });
-    const resultaat = await stuurNaarElders(backupElders, bestanden);
+    const resultaat = await stuurPakket(backupElders, body, nu);
     backupEldersStatus.ok = Date.now();
     backupEldersStatus.deels = deels;
-    await writeFile(marker, JSON.stringify({ versie: 2, op: backupEldersStatus.ok, url: backupElders.url, bytes: resultaat.bytes, ...(deels ? { deels: true } : {}) }), { mode: 0o600 });
+    backupEldersStatus.ontbreekt = ontbreekt.aantal;
+    await writeFile(marker, JSON.stringify({ versie: 2, op: backupEldersStatus.ok, url: backupElders.url, bytes: resultaat.bytes,
+      ...(deels ? { deels: true, ontbreekt: ontbreekt.aantal } : {}) }), { mode: 0o600 });
     backupEldersStatus.fout = null;
     if (deels) {
-      console.error("reservekopie elders: uploads passen niet binnen de grens, alleen de gegevensbestanden zijn verstuurd");
+      const mb = Math.ceil(ontbreekt.bytes / (1024 * 1024));
+      console.error("reservekopie elders: " + ontbreekt.aantal + " uploads (" + mb + " MB) passen niet binnen de grens, alleen de gegevensbestanden zijn verstuurd");
       if (mailIngesteld() && proefMeldingAan.length && Date.now() - backupEldersStatus.foutMail > 23 * 60 * 60 * 1000) {
         backupEldersStatus.foutMail = Date.now();
-        for (const aan of proefMeldingAan) stuurMail(aan, "Fysiplan: reservekopie buiten Railway is onvolledig",
-          "De video's, foto's en logo's passen samen niet meer binnen de grens van 200 MB voor de dagelijkse reservekopie buiten Railway.\n"
-          + "De gegevensbestanden (kaarten, accounts, aanmeldingen) zijn wel verstuurd, de uploads niet.\n"
-          + "Laat de reservekopie van de uploads aanpassen (grotere grens of een aparte kopie).")
+        for (const aan of proefMeldingAan) stuurMail(aan, "Fysiplan: reservekopie buiten Railway is onvolledig (uploads ontbreken)",
+          "De dagelijkse reservekopie buiten Railway past niet meer binnen de grens van " + Math.round(backupElders.maxBytes / (1024 * 1024)) + " MB.\n\n"
+          + "Wel verstuurd: de gegevensbestanden (kaarten, accounts, aanmeldingen).\n"
+          + "Niet verstuurd: alle " + ontbreekt.aantal + " uploads (video's, foto's en logo's), samen " + mb + " MB.\n\n"
+          + "Let op: de kopieën van eerdere dagen, waar de uploads nog in zitten, worden de komende 7 dagen een voor een overschreven. "
+          + "Daarna staat er buiten Railway geen kopie van de uploads meer.\n"
+          + "Laat de reservekopie van de uploads binnen een week aanpassen (grotere grens of een aparte kopie voor uploads).")
           .catch(() => {});
       }
     }
@@ -2497,7 +2506,9 @@ async function afhandelen(request, response) {
       // reservekopie buiten Railway: "uit" (niet ingesteld), "ok", "deels" (zonder uploads: te groot),
       // "fout" of "wacht" (nog niet gedraaid)
       backupElders: !backupElders ? "uit" : backupEldersStatus.fout ? "fout" : backupEldersStatus.ok ? (backupEldersStatus.deels ? "deels" : "ok") : "wacht",
-      backupEldersOp: backupEldersStatus.ok ? new Date(backupEldersStatus.ok).toISOString() : null
+      backupEldersOp: backupEldersStatus.ok ? new Date(backupEldersStatus.ok).toISOString() : null,
+      // bij "deels": zoveel uploads zaten niet in de laatste kopie
+      backupEldersUploadsOntbreken: backupElders && backupEldersStatus.deels ? backupEldersStatus.ontbreekt : 0
     });
     return;
   }
