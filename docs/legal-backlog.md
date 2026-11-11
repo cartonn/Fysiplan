@@ -11,17 +11,26 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (a) privacyverklaring (art. 13/14 AVG) | 2026-11-10 21u (Anthropic-rij beloofde "geen vrije tekst van de therapeut" en "bibliotheekteksten", maar namen van eigen oefeningen gaan mee naar vertaling en vraaghulp: opgelost; bron van teamledengegevens (art. 14 lid 2 f): opgelost; proefvelden, externe hosts in code, Cloudflare Stream (alleen bibliotheekvideo's van beheer), rechten en klachtrecht: klopt; Resend-rij wacht nog op #167) |
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-11 05u (art. 5 beloofde "vrije tekst van de therapeut gaat niet naar AI-diensten", maar namen van eigen oefeningen gaan mee: opgelost; art. 2 miste kaartnaam, doelactiviteit, weekdoel, werknotitie, behandelaar en contactlogboek: opgelost, fail-closed test; /privacy logboekregel zei 500, code houdt 300 + 50 per praktijk: opgelost; externe hosts in code tegen subverwerkerslijst (Railway, Anthropic, Cloudflare, YouTube, Resend, Mollie apart): geen gat; art. 28 lid 3 a-h verder ongewijzigd) · 2026-11-09 13u |
 | (c) algemene voorwaarden | 2026-11-10 05u (art. 4 beschrijft de maandincasso: afschrijven via machtiging, mail 5 dagen vooraf als afgesproken kortere termijn, mislukt = contact, factuur per maand; `AV_VERSIE` 2026-11-10) |
-| (d) code tegen tekst | 2026-11-10 17u (patiëntroute `PATIENT_VELDEN` tegen /privacy#patient: doelactiviteit, bericht van de praktijk, weekdoel en eigen video/foto ontbraken, afspraak stond onder "zelf aantikt"; opgelost. Mails via Resend gaan ook over betaling en wachtwoord: open tot #167 gemerged is. Logs, auditlog 500, cookies, reservekopie 7 dagen, uitnodiging 7 dagen: klopt) |
+| (d) code tegen tekst | 2026-11-11 09u (na #167 en #183: reservekopie buiten Railway bevat nu ook uploads, /privacy zei "behalve video's": wacht op open PR #184; Resend-rij te smal: opgelost; inleiding subverwerkers zei "het zijn Amerikaanse bedrijven", terwijl de reservekopie-partij Europees kan zijn: opgelost) · 2026-11-10 17u (patiëntroute `PATIENT_VELDEN` tegen /privacy#patient: doelactiviteit, bericht van de praktijk, weekdoel en eigen video/foto ontbraken, afspraak stond onder "zelf aantikt"; opgelost. Mails via Resend gaan ook over betaling en wachtwoord: open tot #167 gemerged is. Logs, auditlog 500, cookies, reservekopie 7 dagen, uitnodiging 7 dagen: klopt) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-10 01u (vertaalcache hield namen van eigen oefeningen na "Alles wissen" en na verwijderen tot de volgende herstart; /privacy noemde de beheerderslogin op /v2/gegevens niet; download bevat geen geheimen, wel alle kaartvelden) |
 | (f) cookies en lokale opslag | 2026-11-11 01u (alle localStorage-, sessionStorage-, Cache- en IndexedDB-sleutels van /k en /v2/app tegen /privacy#opslag; kaart weg bij de praktijk (404): `fp_beelden_<id>` (kaart-id + oefenbeelden) en de beelden zelf bleven op de telefoon, opgelost; privacylink op een anderstalige kaart zegt nu dat de pagina Nederlands is; cookies `fpproef`/`fp1` en "Wis Fysiplan van dit apparaat" (alle `fp_`/`fysiplan`-sleutels, IndexedDB, caches): klopt) · 2026-11-09 21u |
 | (g) MDR en AI-verordening | 2026-11-10 13u (nieuwe patiëntkaart #162: de AI-stem bij oefeningen zonder AI-video en via de knop bovenaan/vergroting had geen AI-melding: opgelost; landing, app en kaart zonder diagnose-, doserings- of sorteerbelofte; vraaghulp-grens ongewijzigd) |
 | (h) WGBO en KNGF-beroepsregels | 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
 | (i) begrijpelijkheid (B1) | 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (i) B1, dan (e) rechten, dan (h) WGBO. Het Resend-punt hieronder pakken zodra PR #167 gemerged of gesloten is. Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (i) B1, dan (e) rechten, dan (h) WGBO. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **LAAG — code tegen tekst (d) 2026-11-11 09u: reservekopie buiten Railway nam sinds #183 ook video's en foto's mee.**
+  /privacy#reservekopie zei "behalve video's, foto's en logo's". Wordt opgelost in open PR #184 (andere thread, zelfde
+  bestanden; niet aangeraakt). Na #184 nog na te lopen: (1) de rij verdwijnt helemaal als de kopie aan staat zonder
+  `BACKUP_LEVERANCIER` (nu gezet op Scaleway, dus geen gat zolang dat zo blijft; fail-closed maken: dan de host van de
+  opslag noemen); (2) een zin dat er een patiënt op een eigen video of opname kan staan. Bron: AVG art. 13 lid 1 e, art. 28 lid 2.
+- **LAAG — Resend-rij (d) uit 2026-11-10 17u: OPGELOST 2026-11-11 (deze PR).** Rij noemt nu proef, inloggen/wachtwoord,
+  uitnodigingen, opzeggen, wismelding en maandbetaling, met praktijknaam en bedrag. Test in `scripts/test-privacy.mjs`
+  leidt de mailsoorten af uit de onderwerpen van `stuurMail`/`proefMail` in server.js (fail-closed).
 
 - **MIDDEL — verwerkersovereenkomst (b) 2026-11-11 05u: art. 5 en art. 2 klopten niet met de code.**
   Art. 5 (beveiliging) beloofde de praktijk "vrije tekst van de therapeut gaat niet naar AI-diensten". Sinds de
