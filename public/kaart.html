@@ -664,6 +664,14 @@
   /* de uitleg in het vergrote beeld is een eigen wit vlak op de donkere achtergrond */
   .lightbox .lbuitleg{padding:16px 18px 18px}
   .lightbox .lbuitleg .vtekst-label{font-size:1rem}
+/* Active Tech accents retain the practice logo, readability and print colours. */
+@media screen{
+ :root{--blauw:#20464f;--blauw-d:#18343b;--blauw-05:#edf4e5;--blauw-10:#dbeab7;--kn:#20464f;--kn-d:#18343b;--band:#edf2ef;--chip:#f2f5f3}
+ .kn1{background:#b9e34b;color:#18343b;border-color:#b9e34b;font-weight:750}
+ .kn1:hover{background:#a9d33b;color:#18343b}
+ .kop{border-top:5px solid #b9e34b}
+}
+@media screen and (prefers-color-scheme:dark){:root{--blauw:#b9e34b;--blauw-d:#cce98b;--blauw-05:#203c35;--blauw-10:#35513d;--band:#102b30;--chip:#20343a}}
 </style>
 </head>
 <body>
