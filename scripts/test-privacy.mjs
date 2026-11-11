@@ -346,6 +346,7 @@ try {
     const uitleg = {
       id: null, demo: null, praktijk: null, ts: null, chosen: null, rows: null, cells: null,
       gearchiveerd: null, gearchiveerdOp: null, inboxGezien: null, notitieT: null, dossier: null,
+      maker: /account-id van de maker/, verwijderdOp: /verwijdermoment/, herstelTot: /hersteldatum/,
       naam: /naam die de praktijk de kaart geeft/, vids: /eigen video of foto/, doel: /weekdoel/,
       afspraak: /afspraakmomenten/, antwoord: /berichten van de praktijk/, pskDoel: /doelactiviteit/,
       psk: /PSK-score/, metingen: /pijnscore/, ervaring: /ervaren herstel/, gedaan: /oefenvinkjes/,

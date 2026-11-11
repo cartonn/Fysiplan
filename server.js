@@ -343,6 +343,21 @@ const sjablonenVoorApp = (request, pk) => {
   const sessie = sessieVan(request);
   return (praktijkSjablonen[pk] || []).map((sj) => ({ ...sj, magWeg: magGedeeldAanpassen(sessie, sj, pk) }));
 };
+// Kaartmaker is een onveranderlijke account-id, nooit een opgegeven behandelaarnaam.
+const kaartMaker = (req, pk) => {
+  const s = sessieVan(req);
+  if (s && s.pk === pk) return s.lid ? "lid:" + s.lid : null;
+  const v1 = v1SessieVan(req);
+  return v1 ? "v1:" + v1 : null;
+};
+const magKaartVerwijderen = (req, pk, kaart) => {
+  const s = sessieVan(req);
+  return !!((ADMIN_KEY_EIGEN && isAdmin(req)) ||
+    (s && s.pk === pk && isBeheer(s)) ||
+    (kaart.maker && kaart.maker === kaartMaker(req, pk)));
+};
+const KAART_HERSTEL_MS = 7 * 86400000;
+
 // sessies van één lid (of alle sessies met het gedeelde praktijkwachtwoord) intrekken
 function trekSessiesIn(pk, lidId) {
   for (const [token, s] of praktijkSessies) if (s.pk === pk && (lidId ? s.lid === lidId : !s.lid)) praktijkSessies.delete(token);
@@ -1315,6 +1330,7 @@ function eersteNaamWoord(n) {
 }
 
 function verlooptOp(k) {
+  if (k.verwijderdOp) return 0;
   const dag = 86400000;
   const basis = k.gearchiveerd
     ? (Number(k.gearchiveerdOp) || laatsteActiviteitKaart(k)) + BEWAAR_AFGEROND_DAGEN * dag
@@ -1349,7 +1365,7 @@ async function bewaartermijnOpruimen() {
   for (const pk of Object.keys(kaarten)) {
     for (const kk of Object.keys(kaarten[pk])) {
       const k = kaarten[pk][kk];
-      if (!k || k.demo || verlooptOp(k) > nu) continue;
+      if (!k || (k.verwijderdOp ? Number(k.herstelTot) > nu : (k.demo || verlooptOp(k) > nu))) continue;
       wegVideos.push(...Object.values(k.vids || {}));
       delete kaarten[pk][kk];
       gewist++;
@@ -1575,7 +1591,7 @@ function vindKaart(id) {
       const k = kaarten[pk][kk];
       // een kaart voorbij de bewaartermijn bestaat niet meer, ook als de opruimronde
       // hem nog niet van schijf haalde
-      if (k.id === id) return (k.demo || verlooptOp(k) > Date.now()) ? k : null;
+      if (k.id === id) return !k.verwijderdOp && (k.demo || verlooptOp(k) > Date.now()) ? k : null;
     }
   }
   return null;
@@ -3066,7 +3082,7 @@ async function afhandelen(request, response) {
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
       "claim-gereset-door-beheer", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
-      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "profiel-gewijzigd",
+      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "kaart-hersteld", "profiel-gewijzigd",
       "abonnement-opgezegd", "opzeggen-mislukt"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
@@ -4269,7 +4285,7 @@ async function afhandelen(request, response) {
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
     const nu = Date.now();
     const kaartenMetNieuws = Object.values(kaarten[pk] || {})
-      .filter((k) => !k.demo && !k.gearchiveerd && verlooptOp(k) > nu)
+      .filter((k) => !k.verwijderdOp && !k.demo && !k.gearchiveerd && verlooptOp(k) > nu)
       .map((k) => ({ k, items: inboxItems(k) }))
       .filter((x) => x.items.length)
       .map(({ k, items }) => {
@@ -4291,7 +4307,7 @@ async function afhandelen(request, response) {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
-      const kaart = Object.values(kaarten[pk] || {}).find((k) => k.id === idTekst(b.id));
+      const kaart = Object.values(kaarten[pk] || {}).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const l = sessieLid(sessieVan(request));
       kaart.seintje = null;
@@ -4313,7 +4329,7 @@ async function afhandelen(request, response) {
       const b = JSON.parse(await readBody(request));
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
-      const kaart = Object.values(kaarten[pk] || {}).find((k) => k.id === idTekst(b.id));
+      const kaart = Object.values(kaarten[pk] || {}).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const l = sessieLid(sessieVan(request));
       kaart.dossier = b.aan === false ? null : { t: Date.now(), ...(l ? { wie: l.naam || l.email } : {}) };
@@ -4332,8 +4348,8 @@ async function afhandelen(request, response) {
     const map = kaarten[pk] || {};
     const nuLijst = Date.now();
     const list = Object.values(map)
-      .filter((k) => k.demo || verlooptOp(k) > nuLijst)
-      .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, aantal: (k.chosen || []).length,
+      .filter((k) => !k.verwijderdOp && (k.demo || verlooptOp(k) > nuLijst))
+      .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, magWeg: magKaartVerwijderen(request, pk, k), aantal: (k.chosen || []).length,
         // wanneer de kaart door de bewaartermijn verdwijnt: het overzicht waarschuwt
         // ruim van tevoren, zodat de praktijk eerst naar het dossier kan kopiëren
         verloopt: verdwijntOp(pk, k),
@@ -4389,6 +4405,11 @@ async function afhandelen(request, response) {
       if (!kaarten[pk] && Object.keys(kaarten).length >= 300) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal praktijken met gedeelde kaarten bereikt." }); return; }
       if (!kaarten[pk] && nieuwePraktijkLimiet(request, response)) return;
       const map = (kaarten[pk] = kaarten[pk] || {});
+      // Een oude editor mag een verwijderde kaart niet opnieuw publiceren of vervangen.
+      if (Object.values(map).some((k) => k.verwijderdOp && (k.id === b.kaartId || k.naam.toLowerCase() === kk))) {
+        await sendJson(response, 409, { ok: false, fout: "Deze kaart staat in de prullenbak. Herstel hem daar of kies een andere kaartnaam." }); return;
+      }
+
       // botsingscheck: v2 stuurt mee welke kaart deze editor bewerkt (kaartId, leeg =
       // nieuwe kaart). Met alleen een roepnaam als kaartnaam staat "Jan" al snel twee
       // keer in één praktijk; zonder deze check overschreef de tweede Jan de kaart van
@@ -4519,6 +4540,7 @@ async function afhandelen(request, response) {
       // bekeken, en een openstaand seintje. Zonder dit wist elke kleine kaartwijziging
       // de voortgang van de patiënt.
       map[kk] = { id: map[kk] ? map[kk].id : randomBytes(6).toString("hex"),
+        maker: map[kk] ? map[kk].maker || null : kaartMaker(request, pk),
         praktijk, naam, ts: Date.now(), client, chosen, rows, cells, vids,
         metingen: map[kk] ? map[kk].metingen || [] : [],
         gedaan: map[kk] ? map[kk].gedaan || [] : [],
@@ -4576,18 +4598,56 @@ async function afhandelen(request, response) {
         await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." });
         return;
       }
-      const wegVids = Object.values(kaarten[pk][kk].vids || {});
-      delete kaarten[pk][kk];
-      if (!Object.keys(kaarten[pk]).length) delete kaarten[pk];
-      await saveJson(kaartenPath, kaarten);
-      // definitief weg (met video's): het logboek houdt bij wie het deed, zonder de
-      // kaartnaam (roepnaam/cliëntcode) en zonder kaart-id (dat is de toegang tot /k)
-      auditLog(pk, "kaart-verwijderd", request);
-      await ruimKaartVideosOp(wegVids);
-      await sendJson(response, 200, { ok: true });
+      const kaart = kaarten[pk][kk];
+      if (!magKaartVerwijderen(request, pk, kaart)) {
+        await sendJson(response, 403, { ok: false, fout: "Alleen de maker of een beheerder kan deze kaart verwijderen." }); return;
+      }
+      if (b.id && b.id !== kaart.id) {
+        await sendJson(response, 409, { ok: false, fout: "De kaart is intussen vervangen. Vernieuw het overzicht." }); return;
+      }
+      if (!kaart.verwijderdOp) {
+        kaart.herstelTot = Math.min(Date.now() + KAART_HERSTEL_MS, verdwijntOp(pk, kaart));
+        kaart.verwijderdOp = Date.now();
+        await saveJson(kaartenPath, kaarten);
+        auditLog(pk, "kaart-verwijderd", request);
+      }
+      await sendJson(response, 200, { ok: true, herstelTot: kaart.herstelTot });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
+    return;
+  }
+
+  // Prullenbak: alleen eigen verwijderde kaarten of alle kaarten voor praktijkbeheer.
+  if (urlPath === "/api/kaarten/prullenbak" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const pk = praktijkVan(request, q.get("praktijk"));
+    if (await eisBeveiligdePraktijk(request, response, pk)) return;
+    const lijst = Object.values(kaarten[pk] || {}).filter((k) => k.verwijderdOp &&
+      Math.min(k.herstelTot, praktijkWisOp(pk)) > Date.now() && magKaartVerwijderen(request, pk, k))
+      .map((k) => ({ id: k.id, naam: k.naam, herstelTot: Math.min(k.herstelTot, praktijkWisOp(pk)) }));
+    await sendJson(response, 200, { ok: true, kaarten: lijst }); return;
+  }
+  if (urlPath === "/api/kaarten/herstel" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try {
+      const b = JSON.parse(await readBody(request));
+      const pk = praktijkVan(request, b.praktijk);
+      if (await eisBeveiligdePraktijk(request, response, pk)) return;
+      const kaart = Object.values(kaarten[pk] || {}).find((k) => k.id === idTekst(b.id));
+      if (!kaart || !kaart.verwijderdOp || Math.min(kaart.herstelTot, praktijkWisOp(pk)) <= Date.now()) {
+        await sendJson(response, 404, { ok: false, fout: "Geen herstelbare kaart gevonden." }); return;
+      }
+      if (!magKaartVerwijderen(request, pk, kaart)) {
+        await sendJson(response, 403, { ok: false, fout: "Alleen de maker of een beheerder kan deze kaart herstellen." }); return;
+      }
+      delete kaart.verwijderdOp; delete kaart.herstelTot;
+      await saveJson(kaartenPath, kaarten);
+      auditLog(pk, "kaart-hersteld", request);
+      await sendJson(response, 200, { ok: true });
+    } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
 
@@ -4649,7 +4709,7 @@ async function afhandelen(request, response) {
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
     const id = String(q.get("id") || "");
     const nu = Date.now();
-    const kaart = Object.values(kaarten[pk] || {}).find((k) => k.id === id && (k.demo || verlooptOp(k) > nu)) || null;
+    const kaart = Object.values(kaarten[pk] || {}).find((k) => !k.verwijderdOp && k.id === id && (k.demo || verlooptOp(k) > nu)) || null;
     if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     await sendJson(response, 200, { ok: true, kaart: { ...kaart, verloopt: verdwijntOp(pk, kaart) } });
     return;
@@ -4855,7 +4915,7 @@ async function afhandelen(request, response) {
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
+      const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       // dezelfde enumeratierem als op de andere kaart-endpoints: bij een niet-geclaimde
       // praktijk (waar eisPraktijk niet blokkeert) mag ook dit endpoint geen ongebreidelde
       // hit/mis-orakel voor het raden van kaart-id's zijn
@@ -4882,7 +4942,7 @@ async function afhandelen(request, response) {
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
+      const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const oef = b.oef == null ? "" : String(b.oef).slice(0, 80);
       if (oef && kaart.oefZwaar && Object.hasOwn(kaart.oefZwaar, oef)) delete kaart.oefZwaar[oef];
@@ -4908,7 +4968,7 @@ async function afhandelen(request, response) {
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
+      const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       // besturingstekens eruit en begrensd; de kaartpagina rendert het als tekst
@@ -4957,7 +5017,7 @@ async function afhandelen(request, response) {
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
+      const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       // besturingstekens eruit en begrensd; als platte tekst getoond in de app
@@ -4985,7 +5045,7 @@ async function afhandelen(request, response) {
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
+      const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       // besturingstekens eruit en kort begrensd; als platte tekst getoond in de app
@@ -5011,7 +5071,7 @@ async function afhandelen(request, response) {
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
+      const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const tekst = cleanName(b.activiteit, 80);
       kaart.pskDoel = tekst || null;
@@ -5064,7 +5124,7 @@ async function afhandelen(request, response) {
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
+      const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       // weghalen alleen met een expliciete 0/null/leeg; elk ander type (tekst, object,
@@ -5171,7 +5231,7 @@ async function afhandelen(request, response) {
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
+      const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const bestaat = new Set();
       for (const m of Object.values(kaarten)) for (const k of Object.values(m)) bestaat.add(k.id);
@@ -5198,7 +5258,7 @@ async function afhandelen(request, response) {
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
+      const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const doel = Math.max(0, Math.min(7, Math.round(Number(b.doel) || 0)));
       if (doel) kaart.doel = doel; else delete kaart.doel;
@@ -5222,7 +5282,7 @@ async function afhandelen(request, response) {
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const kaart = Object.values(map).find((k) => k.id === idTekst(b.id));
+      const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       // Archiveren en terugzetten blijven open na een verlopen proef, maar mogen de bewaartermijn
       // dan niet meer oprekken: aan/uit/aan zette `gearchiveerdOp` steeds op nu, zodat een
@@ -5262,7 +5322,7 @@ async function afhandelen(request, response) {
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
       const map = kaarten[pk] || {};
-      const oudeSleutel = Object.keys(map).find((k) => map[k].id === idTekst(b.id));
+      const oudeSleutel = Object.keys(map).find((k) => !map[k].verwijderdOp && map[k].id === idTekst(b.id));
       if (!oudeSleutel) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const nieuw = cleanName(b.naam, 60);
       if (!nieuw) { await sendJson(response, 400, { ok: false, fout: "Geef een kaartnaam op." }); return; }
@@ -5609,6 +5669,16 @@ async function afhandelen(request, response) {
 
   // door beheer geüploade plaatjes en video's (staan in de datamap, niet in public/)
   if (urlPath.startsWith("/uploads/")) {
+    // Bewaar privéopnames voor herstel, maar serveer ze niet via een oude directe link
+    // wanneer uitsluitend verwijderde kaarten er nog naar verwijzen.
+    const uploadPad = urlPath.slice(1);
+    const verwijzingen = Object.values(kaarten).flatMap((m) => Object.values(m))
+      .filter((k) => Object.values(k.vids || {}).includes(uploadPad));
+    if (verwijzingen.length && verwijzingen.every((k) => k.verwijderdOp) &&
+        !Object.values(videolinks).some((v) => v.eigen === uploadPad)) {
+      await send(response, 404, "text/plain; charset=utf-8", "Not found"); return;
+    }
+
     // geüploade beelden en (patiënt)video's horen nooit in een zoekmachine, en
     // andere websites mogen ze niet insluiten of hotlinken
     response.setHeader("x-robots-tag", "noindex, noarchive");
@@ -6160,7 +6230,7 @@ async function afhandelen(request, response) {
     const kort = (ms) => new Date(ms).toLocaleDateString("nl-NL", { day: "numeric", month: "short", timeZone: "Europe/Amsterdam" });
     const laatste = (r) => (r && r.length) ? r[r.length - 1] : null;
     const lijst = Object.values(kaarten[pk] || {})
-      .filter((k) => !k.demo && !k.gearchiveerd && verlooptOp(k) > nu)
+      .filter((k) => !k.verwijderdOp && !k.demo && !k.gearchiveerd && verlooptOp(k) > nu)
       .map((k) => ({ k, sein: (k.seintje && SEIN[k.seintje.soort]) ? k.seintje : null }))
       .sort((a, b2) => ((b2.sein ? b2.sein.t : 0) - (a.sein ? a.sein.t : 0)) || ((b2.k.ts || 0) - (a.k.ts || 0)));
     const rijen = lijst.map(({ k, sein }) => {
