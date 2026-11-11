@@ -70,6 +70,7 @@ jobs:
       - run: npm run test:praktijkcode
       - run: npm run test:team
       - run: npm run test:teamherstel
+      - run: npm run test:teameigenbeheer
       - run: npm run test:uitnodigmail
       - run: npm run test:printknop
       - run: npm run test:logoveeg

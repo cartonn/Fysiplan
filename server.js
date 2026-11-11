@@ -3149,7 +3149,7 @@ async function afhandelen(request, response) {
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
       "claim-gereset-door-beheer", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
-      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "kaart-hersteld", "kaart-definitief-verwijderd", "profiel-gewijzigd",
+      "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "team-wijziging-geweigerd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "kaart-hersteld", "kaart-definitief-verwijderd", "profiel-gewijzigd",
       "abonnement-opgezegd", "opzeggen-mislukt"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
@@ -3234,9 +3234,18 @@ async function afhandelen(request, response) {
       return;
     }
     const doel = typeof b.id === "string" ? acc.leden.find((x) => x.id === b.id) : null;
+    // Het gedeelde praktijkwachtwoord kent vaak het hele team. Een sessie daarmee mag een
+    // beheerder met eigen login niet verwijderen of naar therapeut zetten: anders zet elke
+    // collega die het wachtwoord kent de eigenaar buitenspel (security-backlog 2026-11-11 20u).
+    const beschermdeBeheerder = !ik && doel && doel.rol === "beheerder" && lidActief(doel);
+    const weigerBeschermd = () => sendJson(response, 403, { ok: false, eigenLogin: true,
+      fout: "Een beheerder met een eigen login kan alleen worden aangepast door een beheerder die met een eigen login is ingelogd." });
+    // logboek: wie (eigen login of het praktijkwachtwoord) wat deed met welke collega
+    const wieMetDoel = (d, extra) => (ik ? (ik.naam || ik.email) : "praktijkwachtwoord") + " → " + (d.naam || d.email) + (extra ? " (" + extra + ")" : "");
     if (urlPath === "/api/praktijk/team/verwijder") {
       if (!doel) { await sendJson(response, 404, { ok: false, fout: "Deze collega staat niet in je team." }); return; }
       if (ik && doel.id === ik.id) { await sendJson(response, 400, { ok: false, fout: "Je kunt jezelf niet verwijderen. Vraag een andere beheerder." }); return; }
+      if (beschermdeBeheerder) { auditLog(pk, "team-wijziging-geweigerd", request, wieMetDoel(doel, "verwijderen")); await weigerBeschermd(); return; }
       if (acc.gedeeldUit && doel.rol === "beheerder" && lidActief(doel) && beheerders().length <= 1) {
         await sendJson(response, 400, { ok: false, fout: "Er moet minstens één beheerder overblijven." }); return;
       }
@@ -3259,7 +3268,7 @@ async function afhandelen(request, response) {
       await opslaan();
       trekSessiesIn(pk, doel.id);
       if (gedeeldOokUit) trekSessiesIn(pk, null);
-      auditLog(pk, "collega-verwijderd", request);
+      auditLog(pk, "collega-verwijderd", request, wieMetDoel(doel));
       if (gedeeldOokUit) auditLog(pk, "praktijkwachtwoord-uit", request);
       await sendJson(response, 200, { ok: true, ...(gedeeldOokUit ? { gedeeldUit: true } : {}) });
       return;
@@ -3267,12 +3276,13 @@ async function afhandelen(request, response) {
     if (urlPath === "/api/praktijk/team/rol") {
       if (!doel) { await sendJson(response, 404, { ok: false, fout: "Deze collega staat niet in je team." }); return; }
       if (!LID_ROLLEN.has(b.rol)) { await sendJson(response, 400, { ok: false, fout: "Kies beheerder of therapeut." }); return; }
+      if (beschermdeBeheerder && b.rol !== "beheerder") { auditLog(pk, "team-wijziging-geweigerd", request, wieMetDoel(doel, "naar " + b.rol)); await weigerBeschermd(); return; }
       if (doel.rol === "beheerder" && b.rol !== "beheerder" && lidActief(doel) && beheerders().length <= 1 && (acc.gedeeldUit || (ik && ik.id === doel.id))) {
         await sendJson(response, 400, { ok: false, fout: "Er moet minstens één beheerder overblijven." }); return;
       }
       doel.rol = b.rol;
       await opslaan();
-      auditLog(pk, "rol-gewijzigd", request);
+      auditLog(pk, "rol-gewijzigd", request, wieMetDoel(doel, b.rol));
       await sendJson(response, 200, { ok: true, lid: lidUit(doel) });
       return;
     }
