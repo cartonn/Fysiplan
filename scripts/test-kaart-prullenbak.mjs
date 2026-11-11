@@ -79,6 +79,13 @@ try {
   assert.equal((await get('/api/praktijk/kaart?praktijk='+encodeURIComponent(P)+'&id='+a.id,J)).status,404);
   assert.equal((await lijst(J)).length,0);
   assert.equal((await prul(M)).length,0);
+  const bezet=await post('/api/kaarten',{praktijk:P,naam:'Test',kaartId:''},M);
+  assert.equal(bezet.status,409,'collega kan verwijderde kaart niet vervangen');
+  const melding=(await bezet.json()).fout;
+  assert.match(melding,/maker of beheerder/);
+  assert.match(melding,/andere patiënt/);
+  assert.match(melding,/Jan K\./);
+  assert.equal((await prul(M)).length,0,'melding geeft collega geen herstelrechten');
   assert.equal((await terug(a.id,M)).status,403);
   assert.equal((await post('/api/kaarten',{praktijk:P,naam:'Test',kaartId:a.id},J)).status,409);
   assert.equal((await post('/api/kaarten',{praktijk:P,naam:'Andere naam',kaartId:a.id},J)).status,409);
