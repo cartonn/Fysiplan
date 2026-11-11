@@ -4049,7 +4049,31 @@ bridge2.jpg</div>
       })
       .catch(function(){ib.style.display='none';});
   }
+  function toonPrullenbak(blok,pr){
+    var box=document.createElement('div');box.id='k_prullenbak';
+    box.innerHTML="<button class='btn' type='button'>Prullenbak</button><div class='hint' hidden></div>";
+    blok.appendChild(box);
+    var knop=box.querySelector('button'),uit=box.querySelector('div');
+    knop.onclick=function(){
+      uit.hidden=false;uit.textContent='Laden…';knop.disabled=true;
+      fetch('api/kaarten/prullenbak?praktijk='+encodeURIComponent(pr),PGET())
+        .then(function(r){return r.json();}).then(function(d){
+          if(!d.ok){uit.textContent=d.fout||'Prullenbak ophalen is niet gelukt.';return;}
+          uit.innerHTML='<p>Alleen de maker en beheerder kunnen herstellen. De patiëntlink werkt tot die tijd niet. Herstellen kan maximaal zeven dagen, nooit langer dan de bestaande bewaartermijn.</p>'+
+            (d.kaarten.length?d.kaarten.map(function(k){return "<p><b>"+esc(k.naam)+"</b> — herstellen tot "+esc(new Date(k.herstelTot).toLocaleString('nl-NL'))+" <button class='btn' data-prulherstel='"+esc(k.id)+"'>Herstellen</button></p>";}).join(''):'<p>Geen kaarten die je kunt herstellen.</p>');
+        }).catch(function(){uit.textContent='Geen verbinding. Probeer opnieuw.';}).then(function(){knop.disabled=false;});
+    };
+    uit.onclick=function(e){
+      var b=e.target.closest('[data-prulherstel]');if(!b)return;
+      if(!confirm('Deze kaart herstellen? De bestaande patiëntlink werkt daarna weer.'))return;
+      b.disabled=true;
+      fetch('api/kaarten/herstel',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:b.dataset.prulherstel})})
+        .then(function(r){return r.json();}).then(function(d){if(d.ok)toonSrvKaarten();else{b.disabled=false;alert(d.fout||'Herstellen is niet gelukt.');}})
+        .catch(function(){b.disabled=false;alert('Geen verbinding. Probeer opnieuw.');});
+    };
+  }
   function toonSrvKaarten(){
+    var oudePrul=document.getElementById('k_prullenbak');if(oudePrul)oudePrul.remove();
     var blok=document.getElementById('k_srv');
     var knop=document.getElementById('k_save_srv');
     var pr=(SET.praktijk||'').trim();
@@ -4116,6 +4140,7 @@ bridge2.jpg</div>
             :"Log hierboven in om de kaarten van deze praktijk te zien.")+"</div>";
           zetSeinBadge(0);return;
         }
+        if(Array.isArray(l))toonPrullenbak(blok,pr);
         if(!Array.isArray(l)||!l.length){if(zoekEl)zoekEl.style.display='none';el.innerHTML="<div class='hint'>Nog geen gedeelde kaarten voor deze praktijk.</div>";zetSeinBadge(0);return;}
         // archiveren: afgeronde kaarten uit het hoofdoverzicht, zonder dataverlies.
         // lArch = gearchiveerd, l = actueel (de standaardweergave).
@@ -4422,14 +4447,14 @@ bridge2.jpg</div>
               "<button class='btn' data-sdossier='"+esc(c.id)+"' title='Kopieer de eindsamenvatting (cliënt, oefeningen, pijnverloop, PSK, oefentrouw) om bij het afronden in het EPD-dossier te plakken'>Dossier</button>"+
               "<button class='btn' data-sherstel='"+esc(c.id)+"' title='Terug naar het actuele overzicht'>Terughalen</button>"+
               "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
-              "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>";
+              (c.magWeg===true?"<button class='btn' data-sdel='"+esc(c.naam)+"' data-sdelid='"+esc(c.id)+"' title='Naar prullenbak' aria-label='Naar prullenbak'>×</button>":"")+"</div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
             avRond(c.naam,'srv-av')+"<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, nog "+va.rest+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" ×"+va.rest:"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+zwChip+verloopChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
-            "<button class='btn' data-sdel='"+esc(c.naam)+"' title='verwijderen' aria-label='verwijderen'>×</button></div>"+vgBlok+deelBlok;
+            (c.magWeg===true?"<button class='btn' data-sdel='"+esc(c.naam)+"' data-sdelid='"+esc(c.id)+"' title='Naar prullenbak' aria-label='Naar prullenbak'>×</button>":"")+"</div>"+vgBlok+deelBlok;
         };
         var toonLijst=function(items){
           el.innerHTML=items.length?items.map(rendRij).join(""):"<div class='hint'>Geen kaart gevonden voor deze zoekterm.</div>";
@@ -5011,9 +5036,9 @@ bridge2.jpg</div>
       if(KAARTEN_BEZIG[delSlot])return;
       KAARTEN_BEZIG[delSlot]=1;
       var delVrij=function(){setTimeout(function(){delete KAARTEN_BEZIG[delSlot];},400);};
-      if(!confirm('Gedeelde kaart “'+nm+'” voor de hele praktijk verwijderen?')){delVrij();return;}
+      if(!confirm('Gedeelde kaart “'+nm+'” naar de prullenbak? De patiëntlink stopt direct. Maker en beheerder kunnen maximaal zeven dagen herstellen (of korter als de bewaartermijn eerder eindigt).')){delVrij();return;}
       x.disabled=true;
-      fetch('api/kaarten/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',naam:nm})})
+      fetch('api/kaarten/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',naam:nm,id:x.dataset.sdelid})})
         .then(function(r){return r.json();})
         .then(function(d){if(d.ok){toonSrvKaarten();ping('kaart-verwijderd');}else{x.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
         .catch(function(){x.disabled=false;alert('Verwijderen is niet gelukt: geen verbinding.');})
