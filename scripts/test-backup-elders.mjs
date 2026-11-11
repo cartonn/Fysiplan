@@ -7,7 +7,7 @@ import { mkdtemp, readFile, readdir, rm, writeFile, mkdir, symlink } from "node:
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { backupInstellingen, objectNaam, ontsleutel, s3Headers, versleutel, verzamelBackup, veiligBackupPad } from "../lib/backup-elders.js";
+import { backupInstellingen, objectNaam, ontsleutel, s3Headers, versleutel, verzamelBackup, verzamelBackupMetTerugval, veiligBackupPad } from "../lib/backup-elders.js";
 
 // 1. handtekening: de twee voorbeelden uit de AWS-documentatie (Signature Version 4, S3)
 const aws = { regio: "us-east-1", id: "AKIAIOSFODNN7EXAMPLE", geheim: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", nu: new Date("2013-05-24T00:00:00Z") };
@@ -46,6 +46,19 @@ await writeFile(join(dataDir, "uploads", "videos", "test.mp4"), video);
 assert.equal(veiligBackupPad('../buiten.json'), false);
 assert.equal(veiligBackupPad('/buiten.json'), false);
 await assert.rejects(verzamelBackup(dataDir, [], 2), /budgetgrens/);
+// uploads te groot voor de grens: de gegevensbestanden gaan alleen, en dat is zichtbaar (deels);
+// passen ook die niet, dan is het een fout; past alles, dan is het volledig
+{
+  const kaartenPad = join(dataDir, "kaarten.json");
+  const grootte = (await readFile(kaartenPad)).length;
+  const krap = await verzamelBackupMetTerugval(dataDir, [kaartenPad], grootte + 2);
+  assert.equal(krap.deels, true, "uploads passen niet: deelkopie");
+  assert.deepEqual(Object.keys(krap.bestanden), ["kaarten.json"], "alleen gegevensbestanden, geen uploads");
+  await assert.rejects(verzamelBackupMetTerugval(dataDir, [kaartenPad], 2), /budgetgrens/);
+  const ruim = await verzamelBackupMetTerugval(dataDir, [kaartenPad]);
+  assert.equal(ruim.deels, false);
+  assert.ok(ruim.bestanden["uploads/videos/test.mp4"], "past alles, dan gaan de uploads mee");
+}
 await symlink('/etc/passwd', join(dataDir, 'uploads', 'link'));
 await assert.rejects(verzamelBackup(dataDir, []), /symbolische link/);
 await rm(join(dataDir, 'uploads', 'link'));
@@ -114,6 +127,8 @@ try {
   // de privacyverklaring noemt de opslagpartij
   const privacy = await (await fetch(app.origin + "/privacy")).text();
   assert.ok(privacy.includes('id="reservekopie"') && privacy.includes("Scaleway (Amsterdam, Nederland)"));
+  // de tekst klopt met wat er meegaat: ook de uploads
+  assert.ok(/reservekopie[\s\S]{0,400}ook video/.test(privacy) && !/behalve video/.test(privacy));
   await app.stop();
 
   // terugzetten met het script
