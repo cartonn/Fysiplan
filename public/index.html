@@ -245,6 +245,7 @@
   .uphelp{margin-top:14px;font-size:12.5px;color:var(--muted);line-height:1.6;background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
   .uphelp b{color:var(--ink)}
   .uphelp code{background:#fff;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12px}
+  .uphelp .up-voorbeeld{background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-top:8px;font-family:monospace;font-size:12px;white-space:pre}
   .helpgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .helpsection{background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.55;color:var(--muted)}
   .helpsection b{display:block;color:var(--ink);margin-bottom:4px}
@@ -443,7 +444,7 @@
       Eén tekstbestand. Per oefening: eerst de <b>naam van de oefening</b> op een regel, daaronder de
       <b>bestandsnamen van de plaatjes</b> die erbij horen (elk op een eigen regel). Dan een
       <b>lege regel</b>, en daarna de volgende oefening. Enzovoort:
-      <div style="background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-top:8px;font-family:monospace;font-size:12px;white-space:pre">Squat (kniebuiging)
+      <div class="up-voorbeeld">Squat (kniebuiging)
 squat-start.png
 squat-uitvoering.png
 
@@ -685,7 +686,7 @@ bridge2.jpg</div>
     <div class="video-status" id="vup_status"></div>
     <div style="display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap">
       <button class="btn" type="button" id="vup_opname">Opnemen met telefoon</button>
-      <button class="btn" type="button" id="vup_wis" style="display:none;color:#b3261e">Geüploade video verwijderen</button>
+      <button class="btn" type="button" id="vup_wis" style="display:none;color:var(--fout,#b3261e)">Geüploade video verwijderen</button>
     </div>
     <div class="acts">
       <button class="btn" id="vup_cancel">Sluiten</button>
@@ -726,7 +727,7 @@ bridge2.jpg</div>
     </div>
     <label for="cat_nieuw_naam">Naam van de categorie</label>
     <input type="text" id="cat_nieuw_naam" maxlength="40" placeholder="bijv. Werp-ABC" style="width:100%"/>
-    <div id="cat_nieuw_melding" style="display:none;font-size:12.5px;color:#b3261e;margin-top:8px"></div>
+    <div id="cat_nieuw_melding" style="display:none;font-size:12.5px;color:var(--fout,#b3261e);margin-top:8px"></div>
     <div class="acts">
       <button class="btn" id="cat_nieuw_cancel">Annuleren</button>
       <button class="btn primary" id="cat_nieuw_ok">Toevoegen</button>
@@ -1186,7 +1187,7 @@ bridge2.jpg</div>
       'Op de server staan dan de roepnaam, de oefeningen met dosering en uitleg, het doel en de opmerking die je invult, en wat je pati&euml;nt zelf aanvinkt of meldt. '+
       'Leeftijd en Casus blijven op papier en in deze browser. '+
       'Een gedeelde kaart verdwijnt vanzelf van de server na een periode zonder activiteit, en kort nadat je hem afrondt (archiveert). Kopieer daarom wat je wilt bewaren naar je dossier. '+
-      'Werk je op een gedeelde computer, of stop je bij de praktijk? Kies dan bij Kaarten voor <b>Wis Fysiplan van dit apparaat</b>. '+
+      'Werk je op een gedeelde computer, of stop je bij de praktijk? Kies dan bij Kaarten voor <strong>Wis Fysiplan van dit apparaat</strong>. '+
       'Meer in de <a href="/privacy" target="_blank" rel="noopener">privacyverklaring</a>, de <a href="/verwerkersovereenkomst" target="_blank" rel="noopener">verwerkersovereenkomst</a> en de <a href="/voorwaarden" target="_blank" rel="noopener">algemene voorwaarden</a>.';
   }
   // EPD-koppeling zonder koppeling: elk EPD met een extern-link-veld (Intramed,
@@ -1562,7 +1563,7 @@ bridge2.jpg</div>
   // schema, precies op het moment van de doseringsbeslissing. De data komt uit
   // de praktijkprojectie (de kaartenlijst); de patiëntroute blijft dit veld
   // bewust kwijt. Leeg zodra een andere, lokale of lege kaart begint.
-  var SRV_SIGNALEN={},SIGNAAL_KAART=null;
+  var SRV_SIGNALEN={},SIGNAAL_KAART=null,SRV_KAART={};
   function verseZwaar(){
     if(!IS_V2||!SIGNAAL_KAART||!SIGNAAL_KAART.oefZwaar)return {};
     var uit={},nuZ=Date.now();
@@ -1832,11 +1833,11 @@ bridge2.jpg</div>
     if(!file)return;
     if(!videoMime(file)){
       pendingVideoFile=null;document.getElementById('vup_keuze').textContent='Kies een avatarvideo';
-      status.style.color='#b3261e';status.textContent='Gebruik een MP4- of WebM-bestand.';setVideoBusy(false);return;
+      status.style.color='var(--fout,#b3261e)';status.textContent='Gebruik een MP4- of WebM-bestand.';setVideoBusy(false);return;
     }
     if(file.size>200*1024*1024){
       pendingVideoFile=null;document.getElementById('vup_keuze').textContent='Kies een avatarvideo';
-      status.style.color='#b3261e';status.textContent='Deze video is groter dan 200 MB. Exporteer hem als korte web-MP4.';setVideoBusy(false);return;
+      status.style.color='var(--fout,#b3261e)';status.textContent='Deze video is groter dan 200 MB. Exporteer hem als korte web-MP4.';setVideoBusy(false);return;
     }
     pendingVideoFile=file;
     document.getElementById('vup_keuze').textContent=file.name+' · '+Math.max(1,Math.round(file.size/1024/1024))+' MB';
@@ -1866,11 +1867,11 @@ bridge2.jpg</div>
     var catalog=o.video&&o.video.catalog;o.video=d.video||{};if(catalog)o.video.catalog=catalog;
     pendingVideoFile=null;vupFile.value='';document.getElementById('vup_keuze').textContent='Kies een nieuwe avatarvideo';
     var progress=document.getElementById('vup_progress'),status=document.getElementById('vup_status');
-    progress.firstElementChild.style.width='100%';status.style.color='#287a4b';status.textContent='Klaar — de video is gekoppeld en gaat voortaan automatisch mee met deze oefening.';
+    progress.firstElementChild.style.width='100%';status.style.color='var(--goed,#287a4b)';status.textContent='Klaar — de video is gekoppeld en gaat voortaan automatisch mee met deze oefening.';
     renderVideoPreview(o);renderList();setVideoBusy(false);
   }
   function videoUploadFout(tekst){
-    var status=document.getElementById('vup_status');status.style.color='#b3261e';status.textContent=tekst||'Uploaden is niet gelukt.';setVideoBusy(false);
+    var status=document.getElementById('vup_status');status.style.color='var(--fout,#b3261e)';status.textContent=tekst||'Uploaden is niet gelukt.';setVideoBusy(false);
   }
   document.getElementById('vup_upload').addEventListener('click',function(){
     var o=OEF[pendingVideoId],file=pendingVideoFile;if(!o||!file||videoUploadBusy)return;
@@ -1915,13 +1916,13 @@ bridge2.jpg</div>
         if(!d.ok)throw new Error(d.fout||'Verwijderen is niet gelukt.');
         var catalog=o.video&&o.video.catalog;o.video=d.video||null;
         if(catalog){o.video=o.video||{};o.video.catalog=catalog;}
-        renderVideoPreview(o);renderList();document.getElementById('vup_status').style.color='#287a4b';document.getElementById('vup_status').textContent='De geüploade video is verwijderd.';setVideoBusy(false);
-      }).catch(function(err){document.getElementById('vup_status').style.color='#b3261e';document.getElementById('vup_status').textContent=err.message||'Verwijderen is niet gelukt.';setVideoBusy(false);});
+        renderVideoPreview(o);renderList();document.getElementById('vup_status').style.color='var(--goed,#287a4b)';document.getElementById('vup_status').textContent='De geüploade video is verwijderd.';setVideoBusy(false);
+      }).catch(function(err){document.getElementById('vup_status').style.color='var(--fout,#b3261e)';document.getElementById('vup_status').textContent=err.message||'Verwijderen is niet gelukt.';setVideoBusy(false);});
   });
   document.getElementById('vup_opname').addEventListener('click',function(){
     var o=OEF[pendingVideoId];if(!o||videoUploadBusy)return;
     closeOv('ovVideo');
-    startOpname('oefening',o.naam,function(pad){o.video=o.video||{};o.video.eigen=pad;delete o.video.stream;renderList();openVideoManager(o.id);document.getElementById('vup_status').style.color='#287a4b';document.getElementById('vup_status').textContent='De opname is gekoppeld aan deze oefening.';});
+    startOpname('oefening',o.naam,function(pad){o.video=o.video||{};o.video.eigen=pad;delete o.video.stream;renderList();openVideoManager(o.id);document.getElementById('vup_status').style.color='var(--goed,#287a4b)';document.getElementById('vup_status').textContent='De opname is gekoppeld aan deze oefening.';});
   });
 
   // Een lege categorie los kunnen aanmaken; de server bewaart hem totdat er
@@ -2772,7 +2773,7 @@ bridge2.jpg</div>
   function proefTeller(){
     if(!PROEF)return;
     var t=document.getElementById('pb_teller');
-    if(t){t.textContent=chosen.length+' / 12 oefeningen';t.style.color=chosen.length>=12?'#b42318':'';}
+    if(t){t.textContent=chosen.length+' / 12 oefeningen';t.style.color=chosen.length>=12?'var(--fout,#b42318)':'';}
   }
   function proefZetPraktijk(nm){
     var el=document.getElementById('praktijk');
@@ -3338,7 +3339,7 @@ bridge2.jpg</div>
       }else{
         h+="<div style='margin-top:10px'>Een beheerder van je praktijk past het team aan.</div>";
       }
-      h+="<div id='tm_msg' style='margin-top:8px;color:var(--danger,#b4372f)'></div>";
+      h+="<div id='tm_msg' style='margin-top:8px;color:var(--fout,#b4372f)'></div>";
       el.innerHTML=h;
       var msg=function(t){var m=document.getElementById('tm_msg');if(m)m.textContent=t||'';};
       var eDo=document.getElementById('tm_edo');
@@ -3613,14 +3614,14 @@ bridge2.jpg</div>
     var b=document.getElementById('ps_akdo');
     if(b)b.addEventListener('click',function(){
       var m=document.getElementById('ps_akmsg');
-      if(!document.getElementById('ps_akvink').checked){m.textContent='Vink eerst het akkoord aan.';m.style.color='#b3261e';return;}
+      if(!document.getElementById('ps_akvink').checked){m.textContent='Vink eerst het akkoord aan.';m.style.color='var(--fout,#b3261e)';return;}
       b.disabled=true;
       fetch('api/praktijk/akkoord',{method:'POST',headers:PJSON(),body:JSON.stringify({akkoord:true})})
         .then(function(r){return r.json().catch(function(){return{ok:false};});})
         .then(function(d){b.disabled=false;
           if(d&&d.ok){PRAKSLOT.akkoord=d.akkoord;tekenAkkoord();toonPsMsg('Bedankt. Het akkoord is vastgelegd met datum en jouw naam.');}
-          else{m.textContent=(d&&d.fout)||'Dat lukte niet. Probeer het opnieuw.';m.style.color='#b3261e';}})
-        .catch(function(){b.disabled=false;m.textContent='Geen verbinding. Probeer het opnieuw.';m.style.color='#b3261e';});
+          else{m.textContent=(d&&d.fout)||'Dat lukte niet. Probeer het opnieuw.';m.style.color='var(--fout,#b3261e)';}})
+        .catch(function(){b.disabled=false;m.textContent='Geen verbinding. Probeer het opnieuw.';m.style.color='var(--fout,#b3261e)';});
     });
   }
   // ---- Wis Fysiplan van dit apparaat: login, concepten, eigen oefeningen en instellingen ----
@@ -4052,7 +4053,7 @@ bridge2.jpg</div>
     v.innerHTML="<div class='hint' style='flex-basis:100%'>Vul eerst de naam van je praktijk in. Daarna beveilig je hem met een wachtwoord en deel je kaarten met je pati\u00ebnten.</div>"+
       "<input id='k_pr_in' maxlength='80' autocomplete='organization' placeholder='Naam van je praktijk' aria-label='Naam van je praktijk' style='flex:1;min-width:180px;min-height:44px'/>"+
       "<button class='btn primary' type='submit' style='min-height:44px'>Verder</button>"+
-      "<div id='k_pr_fout' role='alert' style='flex-basis:100%;color:#b42318;font-size:12.5px'></div>";
+      "<div id='k_pr_fout' role='alert' style='flex-basis:100%;color:var(--fout,#b42318);font-size:12.5px'></div>";
     blok.insertBefore(v,document.getElementById('k_srv_lijst'));
     v.addEventListener('submit',function(e){
       e.preventDefault();
@@ -4257,7 +4258,7 @@ bridge2.jpg</div>
         l=l.filter(function(c){return !c.gearchiveerd;});
         // signalen-cache voor de editor: bij "Openen" reizen de verse
         // te zwaar-meldingen mee naar het schema (zie renderA4)
-        l.concat(lArch).forEach(function(c){if(c.id)SRV_SIGNALEN[c.id]={naam:c.naam,oefZwaar:c.oefZwaar||null};});
+        l.concat(lArch).forEach(function(c){if(c.id){SRV_SIGNALEN[c.id]={naam:c.naam,oefZwaar:c.oefZwaar||null};SRV_KAART[c.id]=c;}});
         zetSeinBadge(l.filter(function(c){return c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn');}).length);
         // suggesties voor het behandelaarveld: de namen die op kaarten van deze
         // praktijk al staan, zodat het team consequent dezelfde spelling gebruikt
@@ -4370,7 +4371,7 @@ bridge2.jpg</div>
           // bewaartermijn: ruim van tevoren laten zien dat de kaart verdwijnt
           if(c.verloopt){
             var vDg=Math.max(0,Math.ceil((c.verloopt-Date.now())/864e5));
-            if(vDg<=14)bwTxt+=" · <span title='Bewaartermijn: zonder nieuwe activiteit gaat deze kaart met scores en video\u2019s van de server. Kopieer eerst de samenvatting voor het dossier.' style='color:#a23f2c;white-space:nowrap'>verdwijnt "+(vDg<=0?'vandaag':(vDg===1?'morgen':'over '+vDg+' dagen'))+"</span>";
+            if(vDg<=14)bwTxt+=" · <span title='Bewaartermijn: zonder nieuwe activiteit gaat deze kaart met scores en video\u2019s van de server. Kopieer eerst de samenvatting voor het dossier.' style='color:var(--fout,#a23f2c);white-space:nowrap'>verdwijnt "+(vDg<=0?'vandaag':(vDg===1?'morgen':'over '+vDg+' dagen'))+"</span>";
           }
           // oudere kaarten met een volledige naam: zacht wijzen op de roepnaam
           if(naamLijktVolledig(c.naam))bwTxt+=" · <span title='Op de server hoort alleen een roepnaam (Jan K.). Tik op Naam wijzigen; de pati\u00ebntlink en de voortgang blijven.' style='white-space:nowrap'>volledige naam</span>";
@@ -4380,7 +4381,7 @@ bridge2.jpg</div>
               var dS=Math.floor((nuB-c.bekeken)/dagB);
               bkTxt=" · kaart bekeken: "+(dS<=0?'vandaag':(dS===1?'gisteren':dS+' dagen geleden'));
             }else if(c.ts&&nuB-c.ts>dagB){
-              bkTxt=" · <span style='color:#a23f2c'>kaart nog niet geopend</span>";
+              bkTxt=" · <span style='color:var(--fout,#a23f2c)'>kaart nog niet geopend</span>";
             }
           }
           bkTxt+=bwTxt;
@@ -4452,7 +4453,7 @@ bridge2.jpg</div>
             if(zwN.length){
               zwN.sort(function(a,b){return (c.oefZwaar[b].t||0)-(c.oefZwaar[a].t||0);});
               var zwWan=function(t){var dg=Math.floor((zwNu-t)/864e5);return dg<=0?'vandaag':(dg===1?'gisteren':dg+' dagen geleden');};
-              zw="<div style='margin-top:8px'><small style='color:#a23f2c'>Door de pati&euml;nt als te zwaar gemeld: "+
+              zw="<div style='margin-top:8px'><small style='color:var(--fout,#a23f2c)'>Door de pati&euml;nt als te zwaar gemeld: "+
                 zwN.map(function(k2){return esc(k2)+" ("+zwWan(c.oefZwaar[k2].t)+")";}).join(", ")+".</small></div>";
             }
           }
@@ -4651,14 +4652,14 @@ bridge2.jpg</div>
             zoek.id='k_srv_zoek';zoek.type='search';zoek.className='no-print';
             zoek.setAttribute('placeholder','Zoek op roepnaam, behandelaar of werknotitie…');
             zoek.setAttribute('aria-label','Zoek een gedeelde kaart op roepnaam, behandelaar of werknotitie');
-            zoek.style.cssText='width:100%;margin:2px 0 8px;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff';
+            zoek.style.cssText='width:100%;margin:2px 0 8px;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:8px';
             el.parentNode.insertBefore(zoek,el);
           }
           zoek.style.display='';zoek.oninput=toon;
         }else if(zoek)zoek.style.display='none';
         // sorteertoggle vanaf twee kaarten: nieuwste, meldingen, langst stil of afspraak
         var sortEl=document.getElementById('k_srv_sort');
-        var markeerSort=function(){if(!sortEl)return;var m=sortEl.dataset.mode||'nieuw';sortEl.querySelectorAll('[data-sort]').forEach(function(b){var aan=b.dataset.sort===m;b.style.background=aan?'var(--brand)':'';b.style.color=aan?'#fff':'';b.style.borderColor=aan?'var(--brand)':'';b.setAttribute('aria-pressed',aan?'true':'false');});};
+        var markeerSort=function(){if(!sortEl)return;var m=sortEl.dataset.mode||'nieuw';sortEl.querySelectorAll('[data-sort]').forEach(function(b){var aan=b.dataset.sort===m;b.style.background=aan?'var(--brand)':'';b.style.color=aan?'var(--op-merk,#fff)':'';b.style.borderColor=aan?'var(--brand)':'';b.setAttribute('aria-pressed',aan?'true':'false');});};
         var markeerFilter=function(){if(!sortEl)return;var f=sortEl.dataset.filter==='aandacht';var b=sortEl.querySelector('[data-filter="aandacht"]');if(b){b.style.background=f?'#a23f2c':'';b.style.color=f?'#fff':'';b.style.borderColor=f?'#a23f2c':'';b.setAttribute('aria-pressed',f?'true':'false');}};
         if(huidig.length>=2){
           if(!sortEl){
@@ -4683,7 +4684,7 @@ bridge2.jpg</div>
               behSel=document.createElement('select');
               behSel.id='k_srv_beh';
               behSel.setAttribute('aria-label','Toon alleen de kaarten van één behandelaar');
-              behSel.style.cssText='font-size:11.5px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:#fff';
+              behSel.style.cssText='font-size:11.5px;padding:3px 6px;border:1px solid var(--line);border-radius:6px';
               behLab.appendChild(behSel);
               sortEl.appendChild(behLab);
             }
@@ -4726,7 +4727,7 @@ bridge2.jpg</div>
             el.parentNode.insertBefore(samEl,zoek||sortEl||el);
           }
           var chip=function(t,st){return "<span style='background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;"+(st||'')+"'>"+t+"</span>";};
-          var archKnop=function(txt,aan){return "<button type='button' id='k_srv_arch' class='no-print' aria-pressed='"+(aan?'true':'false')+"' style='cursor:pointer;background:"+(aan?'var(--brand)':'var(--chip,#f1f3f5)')+";color:"+(aan?'#fff':'inherit')+";border:1px solid "+(aan?'var(--brand)':'var(--line)')+";border-radius:99px;padding:3px 10px;font-size:12px'>"+txt+"</button>";};
+          var archKnop=function(txt,aan){return "<button type='button' id='k_srv_arch' class='no-print' aria-pressed='"+(aan?'true':'false')+"' style='cursor:pointer;background:"+(aan?'var(--brand)':'var(--chip,#f1f3f5)')+";color:"+(aan?'var(--op-merk,#fff)':'inherit')+";border:1px solid "+(aan?'var(--brand)':'var(--line)')+";border-radius:99px;padding:3px 10px;font-size:12px'>"+txt+"</button>";};
           var h;
           if(srvArchiefView){
             h=chip('<b>'+lArch.length+'</b> gearchiveerd')+archKnop('&larr; Terug naar actueel',true);
@@ -5248,6 +5249,30 @@ bridge2.jpg</div>
   // Seintje van een patiënt beantwoorden of bewust alleen afhandelen.
   // "Beantwoorden" kan alleen met tekst; "Alleen afhandelen" is een aparte knop,
   // en Enter in het tekstveld verstuurt nooit een leeg antwoord.
+  // Wat de patiënt op deze kaart doorgaf, voor boven het antwoordveld: wie, welk seintje en
+  // wanneer, plus de laatste pijnscore, "te zwaar" en herstel als die er zijn. Zo schrijf je een
+  // antwoord met de melding voor je (platformreview 2026-11-11). Tonen, niet duiden (MDR).
+  function seinFeitenHtml(c){
+    var sj=c&&c.seintje,wat={vraag:'Heeft een vraag',pijn:'Meldt te veel pijn',goed:'Meldt: het gaat goed'};
+    if(!sj||!sj.soort)return '';
+    var kleur={vraag:'#7fb0ff',pijn:'#ff9d8c',goed:'#8fd6a4'}[sj.soort]||'#7fb0ff';
+    var h="<div class='sn-wat'><b><span class='sn-stip' style='background:"+kleur+"'></span>"+esc(wat[sj.soort]||'Seintje')+
+      " <small>· "+esc(wanneerTekst(sj.t))+"</small></b>";
+    var ook=(sj.ook||[]).filter(function(x){return x!==sj.soort&&(x==='vraag'||x==='pijn');});
+    if(ook.length)h+="<div class='sn-ook'>Ook: "+esc(ook.map(function(x){return wat[x].toLowerCase();}).join(' en '))+"</div>";
+    var f=[];
+    var m=c.scores&&c.scores.length?c.scores[c.scores.length-1]:null;
+    if(m&&m.t)f.push("Laatste pijnscore: <b>"+esc(m.s)+"</b> <small>· "+esc(wanneerTekst(m.t))+"</small>");
+    Object.keys(c.oefZwaar||{}).forEach(function(n){var z=c.oefZwaar[n];if(z&&z.t)f.push("Te zwaar gemeld: "+esc(n)+" <small>· "+esc(wanneerTekst(z.t))+"</small>");});
+    var e=c.ervaring&&c.ervaring.length?c.ervaring[c.ervaring.length-1]:null;
+    if(e&&e.t)f.push("Herstel: "+esc({'-2':'veel slechter','-1':'iets slechter','0':'hetzelfde','1':'iets beter','2':'veel beter'}[String(e.s)]||e.s)+" <small>· "+esc(wanneerTekst(e.t))+"</small>");
+    if(c.behandelaar)f.push("Behandelaar: "+esc(c.behandelaar));
+    if(f.length)h+="<ul class='sn-feiten'>"+f.map(function(x){return "<li>"+x+"</li>";}).join('')+"</ul>";
+    h+="</div>";
+    if(c.antwoord&&c.antwoord.tekst)h+="<div class='sn-eerder'>Er staat nog een bericht van de praktijk op de kaart ("+esc(wanneerTekst(c.antwoord.t))+
+      "): \u201c"+esc(c.antwoord.tekst)+"\u201d Een nieuw antwoord vervangt dat bericht.</div>";
+    return h;
+  }
   function openSeinVenster(id,uitleg){
     var ov=document.getElementById('ovSein');
     if(!ov){
@@ -5257,7 +5282,7 @@ bridge2.jpg</div>
         "<div class='hint' id='sn_uitleg' style='margin:2px 0 10px;line-height:1.5'></div>"+
         "<label class='hint' for='sn_tekst' style='display:block;margin-bottom:4px'>Antwoord voor de pati\u00ebnt (komt op de kaart te staan, max. 300 tekens):</label>"+
         "<textarea id='sn_tekst' maxlength='300' rows='3' style='width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;resize:vertical'></textarea>"+
-        "<div id='sn_fout' role='alert' style='color:#b42318;font-size:13px;min-height:1.2em;margin-top:6px'></div>"+
+        "<div id='sn_fout' role='alert' style='color:var(--fout,#b42318);font-size:13px;min-height:1.2em;margin-top:6px'></div>"+
         "<div class='acts' style='margin-top:10px;flex-wrap:wrap;gap:8px'><button class='btn' id='sn_sluit' type='button'>Annuleren</button>"+
         "<button class='btn' id='sn_af' type='button'>Alleen afhandelen</button>"+
         "<button class='btn primary' id='sn_ok' type='button'>Beantwoorden</button></div></div>";
@@ -5286,7 +5311,10 @@ bridge2.jpg</div>
       ov.addEventListener('keydown',function(e){if(e.key==='Escape')closeOv('ovSein');});
     }
     ov.dataset.id=id;
-    document.getElementById('sn_uitleg').textContent=uitleg;
+    var sk=SRV_KAART[id],feiten=sk?seinFeitenHtml(sk):'';
+    document.getElementById('sn_titel').textContent=sk&&sk.naam?'Seintje van '+sk.naam:'Seintje van de pati\u00ebnt';
+    if(feiten)document.getElementById('sn_uitleg').innerHTML=feiten;
+    else document.getElementById('sn_uitleg').textContent=uitleg;
     document.getElementById('sn_tekst').value='';
     document.getElementById('sn_fout').textContent='';
     openOv('ovSein');
