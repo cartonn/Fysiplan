@@ -189,7 +189,29 @@ Mollie blijft het "antwoord op deze mail, dan bellen we je".
 **Wat jij moet weten:** de getallen 100 en 300 zijn mijn keuze, geen meting van wat een praktijk nodig heeft. Ze
 staan bovenaan `lib/plaatsen.js`. De voorwaarden zeggen niets over een aantal kaarten.
 
-### Online betalen via Mollie (praktijk-routine, 2026-11-07)
+### Leeslog per kaart (reviewlijst punt 8, 2026-11-12)
+**Wat de code nu doet** (`lib/leeslog.js`, test `npm run test:leeslog`):
+- **De server houdt bij wie een kaart opende of bewaarde**, en wie het overzicht van alle kaarten, de berichten
+  van patiënten of de download van alle gegevens opvroeg. Met de naam van de login en het moment. Wie een kaart open
+  heeft staan, krijgt één regel per kwartier, niet één per keer dat de app ververst.
+- **Een beheerder van de praktijk ziet het per kaart**: Kaarten, de knop "Inzage" achter de kaart. Een therapeut
+  ziet de knop niet. Het leeslog zit ook in de download van alle gegevens.
+- **Er staat geen naam van een patiënt in**, alleen het nummer van de kaart. Wordt een kaart definitief verwijderd
+  of verloopt ze, dan verdwijnen haar regels. Een regel blijft hooguit twee jaar.
+- De patiënt die haar eigen kaart opent, staat er niet in: dat is geen inzage door een ander.
+- Wat beheer van Fysiplan bij een praktijk zonder account leest, staat er als "Fysiplan-beheer" in en met naam in
+  het eigen logboek van beheer.
+
+**Wat jij moet weten:**
+- **Twee jaar en "verdwijnt met de kaart" zijn mijn keuze.** De norm voor logging in de zorg (NEN 7513) gaat uit
+  van langer bewaren, maar de kaarten zelf verdwijnen na 90 dagen stilte en Fysiplan is het dossier niet. Leg dit
+  voor aan de jurist bij het gesprek over beveiliging.
+- **De privacyverklaring en de verwerkersovereenkomst noemen het leeslog nog niet.** Het is een logboek over
+  medewerkers van de praktijk; die tekst hoort erbij. Ik heb de juridische teksten niet aangeraakt.
+- Wie met het gedeelde praktijkwachtwoord werkt, staat erin als "gedeeld wachtwoord": dan is niet te zien wie het
+  was. Sinds elke nieuwe praktijk een eigen login per persoon heeft, speelt dat alleen bij oude accounts.
+
+
 **Wat de code nu doet:** zet je `MOLLIE_API_KEY` op Railway, dan krijgen "Mijn proef" en de
 verlopen-pagina een blok "Direct online afrekenen": het blok telt zelf de logins van de praktijk (zie "Aantal
 therapeuten en kaarten" hieronder), eerste maand
