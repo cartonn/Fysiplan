@@ -4,6 +4,15 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### De bewaker van buitenaf: zorg dat het alarm je bereikt (bouw, 2026-11-12)
+**Wat er is:** om de vijf minuten kijkt een machine van GitHub of fysiplan.nl het doet. Bij een storing opent de bewaker een
+issue op jouw naam; is het voorbij, dan sluit hij het. Uitleg in gewone taal: [docs/bewaker.md](bewaker.md).
+**Wat alleen jij kunt doen:** (1) kijk bij GitHub onder Settings, Notifications of je een mail krijgt voor issues die aan jou
+zijn toegewezen; (2) wil je een bericht op je telefoon, zet dan een adres van ntfy of Slack in het geheim `BEWAKER_WEBHOOK`;
+(3) stuur één proefmelding vanuit Actions, "bewaker", "Run workflow". Komt er niets binnen, dan bereikt het alarm je niet.
+**Wat hij niet kan:** elke minuut kijken en je bellen. Daarvoor is een dienst van buiten nodig die `/health` opvraagt; die
+kies en betaal je zelf. Maak je de repository besloten, dan zet de bewaker zichzelf uit tot je de variabele `BEWAKER` kiest.
+
 ### Hoe lang bewaren we het beheerlogboek? (legal, 2026-11-12 13u)
 **Wat er is:** sinds #230 legt Fysiplan elke beheeractie vast (wie bij Fysiplan, wat, wanneer, bij welke praktijk; bij een
 herstelmail de reden en een gemaskeerd adres). Geen patiëntgegevens. Het bestand groeit zonder einde en gaat mee in de reservekopie.

@@ -162,6 +162,7 @@ jobs:
       - run: npm run test:beheeraccounts
       - run: npm run test:oefennamen
       - run: npm run test:openkaart
+      - run: npm run test:bewaker
       - run: npm run test:zwaaroffline
       - run: npm run test:dagwisseltaal
       - run: npm run test:reekstitel

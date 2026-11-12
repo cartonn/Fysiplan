@@ -25,6 +25,7 @@ import { BEHEER_SESSIE_MS, BEHEER_WW_MIN, BEHEER_EERSTE_KEER_MS, BeheerSessies, 
 import { leesNamenLaag, kiesNamen, maakZoeker, sleutelVoor, verhuisNaamgebonden } from "./lib/oefennamen.js";
 import { maakIdeeenbox } from "./lib/ideeen-routes.js";
 import { AGENT_SCHEMA as AGENT_SCHEMA_IDEEEN, AGENT_SYSTEEM as AGENT_SYSTEEM_IDEEEN } from "./lib/ideeen.js";
+import { UurTeller, telAntwoord } from "./lib/uurteller.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -155,6 +156,20 @@ const isAdminSleutel = (req) => {
 // versie-info voor /health: welke commit draait er en hoeveel oefeningen levert de server
 let buildInfo = {};
 try { buildInfo = JSON.parse(await readFile(join(process.cwd(), "dist", "build-info.json"), "utf8")); } catch {}
+// Voor de bewaker van buitenaf (scripts/bewaker.mjs, docs/bewaker.md): hoe vaak het het
+// afgelopen uur misging. /health toont alleen de aantallen.
+// - serverFouten: een antwoord 500, een verzoek dat na het antwoord nog stukliep, of een fout
+//   die niemand opving. Dat hoort nul te zijn.
+// - buitenFouten: een antwoord 502, als een dienst van buiten niet deed wat we vroegen (mail,
+//   video, betalen of de taalhulp).
+// Een 503 (iets staat uit) en een 507 (de opslag is vol) tellen niet mee: dat zegt de server
+// daar zelf tegen de gebruiker.
+// Dit is een andere telling dan die van de beheeromgeving (merkAntwoord, lib/beheer-toegang.js):
+// die bewaart per route en per klokuur wat er misging, voor wie in beheer mag kijken. Deze twee
+// getallen staan openbaar op /health, leven alleen in het geheugen en beginnen na een herstart
+// op nul.
+const serverFouten = new UurTeller();
+const buitenFouten = new UurTeller();
 // hoeveel kleine beelden de bouwstap heeft klaargezet (scripts/kleine-beelden.mjs); 0 = geen,
 // de app toont dan overal het volledige bestand
 let kleineBeelden = 0;
@@ -2315,6 +2330,8 @@ function ipSleutel(req) {
   return ip.split(":").slice(0, 4).join(":") + "::/64";
 }
 function telBezoek(req, isAdminPagina) {
+  // de bewaker van buitenaf vraagt de pagina's elke paar minuten op: dat is geen bezoek
+  if (String(req.headers["user-agent"] || "").startsWith("fysiplan-bewaker")) return;
   const d = dagStats(vandaagKey());
   if (isAdminPagina) d.admin++; else d.bezoek++;
   // unieke bezoekers: dag-gebonden hash van IP+browser — geen herleidbare gegevens opgeslagen
@@ -3339,6 +3356,8 @@ await ideeenbox.laad();
 ideeenbox.start();
 
 const server = createServer((request, response) => {
+  // de tellers voor /health: een antwoord 500 of 502 telt mee zodra het de deur uit is
+  telAntwoord(response, { server: serverFouten, buiten: buitenFouten });
   afhandelen(request, response).catch((err) => {
     console.error("verzoek mislukt:", request.method, logPad(request.url), "-", (err && err.message) || err);
     try {
@@ -3346,6 +3365,8 @@ const server = createServer((request, response) => {
         response.writeHead(500, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
         response.end(JSON.stringify({ ok: false, fout: "Onverwachte serverfout." }));
       } else {
+        // het antwoord was al vertrokken (met een andere status): deze fout telt hier
+        if (response.statusCode !== 500) serverFouten.tel();
         response.end();
       }
     } catch {}
@@ -3419,6 +3440,10 @@ async function afhandelen(request, response) {
       service: "Fysiplan",
       commit: buildInfo.commit || "onbekend",
       builtAt: buildInfo.builtAt || null,
+      // sinds wanneer dit proces draait, en hoe vaak het het afgelopen uur misging (zie
+      // serverFouten en buitenFouten bovenaan): de bewaker van buitenaf leest dit
+      gestart: new Date(startTijd).toISOString(),
+      fouten: { uur: serverFouten.som(), buiten: buitenFouten.som() },
       oefeningen: v1Count,
       v1Oefeningen: v1Count,
       v2Oefeningen: v2Count,
@@ -8669,8 +8694,8 @@ async function afhandelen(request, response) {
 
 // allerlaatste vangnet op procesniveau: loggen en doordraaien in plaats van stoppen.
 // De site blijft bereikbaar; de fout staat in de Railway-logs om op te pakken.
-process.on("uncaughtException", (err) => { console.error("uncaughtException:", err); });
-process.on("unhandledRejection", (err) => { console.error("unhandledRejection:", err); });
+process.on("uncaughtException", (err) => { serverFouten.tel(); console.error("uncaughtException:", err); });
+process.on("unhandledRejection", (err) => { serverFouten.tel(); console.error("unhandledRejection:", err); });
 
 // Nette afsluiting bij een uitrol (SIGTERM) of Ctrl-C: geen nieuwe verbindingen meer, lopende
 // verzoeken afmaken, het sessiebestand op schijf, en dan stoppen. Duurt dat langer dan vijf
