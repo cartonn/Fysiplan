@@ -148,6 +148,7 @@ jobs:
       - run: npm run test:opzeggenbeheer
       - run: npm run test:praktijknaambezet
       - run: npm run test:naamerftniets
+      - run: npm run test:kaartpraktijknaam
       - run: npm run test:wachtwoordvergeten
       - run: npm run test:zwaaroffline
       - run: npm run test:dagwisseltaal
