@@ -50,6 +50,14 @@ await writeFile(join(dataDir, "praktijken.json"), JSON.stringify({
   "fysio blijf": { praktijk: "Fysio Blijf", adres: "Straat 2", plaats: "Zeist", logo: "uploads/logo-fysio-blijf-1.png" }
 }));
 
+// ideeënbox (legal 2026-11-12 17u): een open idee van A, een idee van B waar A op stemde, en een
+// idee van A waar Fysiplan al over besliste. De download van A toont alleen wat van A is.
+await writeFile(join(dataDir, "ideeen.json"), JSON.stringify({ versie: 1, ronde: { nr: 1, start: nu, eind: nu + 864e5 }, voorstellen: [], ideeen: {
+  "i-aaaaaaaaaaa1": { id: "i-aaaaaaaaaaa1", titel: "Idee van Wis", tekst: "Graag een donkere stand.", pk: "fysio wis", lid: "", t: nu, stemmen: { "fysio wis:praktijk": 1 }, stand: "open" },
+  "i-aaaaaaaaaaa2": { id: "i-aaaaaaaaaaa2", titel: "Besloten idee van Wis", tekst: "", pk: "fysio wis", lid: "", t: nu, stemmen: { "fysio blijf:praktijk": 1 }, stand: "gepland" },
+  "i-bbbbbbbbbbb1": { id: "i-bbbbbbbbbbb1", titel: "Idee van Blijf", tekst: "Geheim van Blijf.", pk: "fysio blijf", lid: "", t: nu, stemmen: { "fysio wis:praktijk": -1, "fysio blijf:praktijk": 1 }, stand: "open" }
+} }));
+
 // vertaalcache: de namen van eigen oefeningen zijn vertaald (sleutel = hash van de Nederlandse naam)
 const vsleutel = (t) => createHash("sha256").update(t).digest("hex").slice(0, 16);
 await writeFile(join(dataDir, "vertalingen.json"), JSON.stringify({
@@ -142,6 +150,11 @@ try {
   assert.match(pakket.account.verwerkersovereenkomst.versie, /^\d{4}-\d{2}-\d{2}(-\d+)?$/);
   assert.ok(pakket.logboek.some((a) => a.actie === "alles-gedownload"));
   assert.doesNotMatch(tekst, /Cor|Eigen plank|Zeist|scrypt\$/, "geen andere praktijk en geen wachtwoordhash");
+  // ideeënbox (art. 15/20 AVG): eigen ideeën en eigen stemmen, niet de tekst of stemmen van een ander
+  assert.deepEqual(pakket.ideeenbox.ingediend.map((i) => i.titel).sort(), ["Besloten idee van Wis", "Idee van Wis"], "eigen ideeën in de download");
+  assert.equal(pakket.ideeenbox.ingediend.find((i) => i.id === "i-aaaaaaaaaaa1").tekst, "Graag een donkere stand.");
+  assert.deepEqual(pakket.ideeenbox.stemmen.map((v) => v.idee + ":" + v.stem).sort(), ["i-aaaaaaaaaaa1:omhoog", "i-bbbbbbbbbbb1:omlaag"], "eigen stemmen in de download");
+  assert.doesNotMatch(tekst, /Geheim van Blijf|fysio blijf:/, "geen toelichting of stem van een andere praktijk");
 
   // ---- wissen vraagt een getypte bevestiging ----
   const zonderZeker = await formulier("/v2/gegevens/wissen", { praktijk: "Fysio Wis", wachtwoord: "wis-wachtwoord-1", zeker: "ja" });
@@ -165,6 +178,9 @@ try {
   assert.equal((await leesJson("praktijken.json"))["fysio wis"], undefined, "profiel weg");
   assert.equal((await leesJson("praktijk-accounts.json"))["fysio wis"], undefined, "account weg");
   assert.ok(!(await leesJson("praktijk-audit.json")).some((a) => a.praktijk === "fysio wis"), "logboek noemt de praktijk niet meer");
+  const ideeenNa = JSON.stringify(await leesJson("ideeen.json"));
+  assert.doesNotMatch(ideeenNa, /fysio wis|Idee van Wis"/, "open idee van de praktijk weg, besloten idee zonder herkomst");
+  assert.match(ideeenNa, /Besloten idee van Wis/, "besloten idee blijft, zoals /privacy#ideeen zegt");
   assert.ok((await leesJson("praktijk-audit.json")).some((a) => a.actie === "praktijk-alles-gewist"), "het wissen zelf is gelogd, zonder naam");
   for (const f of ["uploads/videos/v-aa11.mp4", "uploads/oef-aaaaaaaaaaaa.jpg", "uploads/logo-fysio-wis-1.png"]) {
     assert.equal(await bestaat(f), false, f + " is van de schijf");

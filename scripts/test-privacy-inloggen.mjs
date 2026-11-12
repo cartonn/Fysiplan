@@ -78,7 +78,7 @@ const app = (opslag.match(/<tr><td>Apparaat van de therapeut \(app\)[\s\S]*?<\/t
 assert.match(app, /Drie cookies/, "therapeutrij telt drie cookies");
 assert.match(app, new RegExp("<code>fpsessie</code>: hooguit " + Math.round(SESSIE_MS / 86400000) + " dagen"), "termijn fpsessie uit de code");
 assert.doesNotMatch(app, /je inlog bij de praktijk/, "de inlog staat niet meer in de browseropslag");
-assert.match(opslag, /<tr id="opslag-beheer">[\s\S]*Hooguit 12 uur/, "beheercookie met termijn");
+assert.match(opslag, /<tr id="opslag-beheer">[\s\S]*hooguit 12 uur/i, "beheercookie met termijn");
 
 // --- beheerlogboek in /privacy en de verwerkersovereenkomst ---
 assert.match(uit, /<tr id="beheerlog">[\s\S]*?beheerlogboek[\s\S]*?Geen pati&euml;ntgegevens/, "privacy: rij beheerlogboek");
@@ -88,6 +88,28 @@ assert.match(vwo, /eigen beheerlogin met een tweede stap/, "vwo art. 4: beheer m
 assert.match(vwo, /eigen login per therapeut, met een tweede stap/, "vwo art. 5: tweede stap als maatregel");
 assert.match(vwo, /een beheerlogboek van alles wat medewerkers van Fysiplan via beheer doen/, "vwo art. 5: beheerlogboek");
 
+// --- ideeënbox (legal-routine 2026-11-12 17u, gebied a/d) ---
+// Sinds #237 bewaart Fysiplan ideeën en stemmen van therapeuten, en kan een taalmodel (IDEEEN_AI=aan)
+// er een toelichting bij schrijven. /privacy noemde de ideeënbox nergens.
+const idee = (uit.match(/<tr id="ideeen">[\s\S]*?<\/tr>/) || [""])[0];
+assert.ok(idee, "rij ideeënbox staat in de tabel voor praktijken");
+for (const [re, wat] of [
+  [/titel en toelichting/, "wat"], [/stemmen/, "stemmen"], [/zonder naam of praktijk/, "wie het ziet"],
+  [/geen pati&euml;ntgegevens/, "waarschuwing"], [/beslist Fysiplan zelf/, "rol: verwerkingsverantwoordelijke"],
+  [/gerechtvaardigd belang/, "grondslag"], [/tot de praktijk stopt/, "termijn open idee"], [/zonder koppeling aan je praktijk/, "termijn besloten idee"],
+]) assert.match(idee, re, "rij ideeënbox noemt " + wat + ": " + idee);
+assert.match(uit, /je open idee&euml;n in de idee&euml;nbox/, "Als je stopt noemt de ideeënbox");
+assert.doesNotMatch(uit, /<!--\/?ideeenai-->/, "markeringen weg");
+assert.doesNotMatch(uit, /toelichting voor Fysiplan bij de idee&euml;n/, "taalmodel ideeënbox uit: niet in de Anthropic-rij");
+const ideeAi = await privacyPagina({ ANTHROPIC_API_KEY: "test-sleutel-niet-echt", IDEEEN_AI: "aan" });
+assert.doesNotMatch(ideeAi, /<!--\/?ideeenai-->/, "markeringen weg");
+assert.match(ideeAi, /een korte toelichting voor Fysiplan bij de idee&euml;n met de meeste stemmen en het vertalen/, "taalmodel aan: Anthropic-rij noemt de ideeënbox");
+assert.match(ideeAi, /Bij de idee&euml;nbox: de titels en toelichtingen van de idee&euml;n en het aantal stemmen, zonder naam of praktijk\./, "taalmodel aan: welke gegevens");
+// beheer bewaart ook iets in de browser: de keuze demo/echt en een ingevulde beheersleutel
+const beheerRij = (opslag.match(/<tr id="opslag-beheer">[\s\S]*?<\/tr>/) || [""])[0];
+assert.match(beheerRij, /demo- of echte gegevens/, "fp-beheer-bron staat in de beheerrij");
+assert.match(beheerRij, /beheersleutel[\s\S]*tot het tabblad dicht gaat/, "beheersleutel in sessionStorage staat in de beheerrij");
+
 // --- vraaghulp aan ---
 const aan = await privacyPagina({ ANTHROPIC_API_KEY: "test-sleutel-niet-echt", VRAAGHULP: "aan" });
 assert.doesNotMatch(aan, /<!--\/?vraaghulp-->/, "markeringen weg");
@@ -95,4 +117,4 @@ assert.match(aan, /<b>Vraaghulp:<\/b>/, "vraaghulp aan: uitleg staat er voor de 
 assert.doesNotMatch(aan, /staat nu uit/, "vraaghulp aan: niet 'staat nu uit'");
 assert.match(aan, /de vraaghulp op de kaart en het vertalen/, "vraaghulp aan: subverwerkersrij zonder voorbehoud");
 
-console.log("Privacyverklaring: eigen login, vraaghulp, alle cookies uit server.js en het beheerlogboek: in orde.");
+console.log("Privacyverklaring: eigen login, vraaghulp, ideeënbox, alle cookies uit server.js en het beheerlogboek: in orde.");

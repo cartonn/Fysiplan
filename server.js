@@ -96,7 +96,7 @@ const VWO_VERSIE = "2026-11-12";
 const AV_VERSIE = "2026-11-11-2";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-12-2";
+const PRIVACY_VERSIE = "2026-11-12-3";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -8395,7 +8395,9 @@ async function afhandelen(request, response) {
         kaarten: Object.values(kaarten[pk] || {}).map((k) => { const v = k.verwijderdOp ? Math.min(Number(k.herstelTot) || 0, praktijkWisOp(pk)) : verlooptOp(k); return { ...k, ...(k.verwijderdOp ? { inPrullenbak: true } : {}), verlooptOp: Number.isFinite(v) && v > 0 ? new Date(v).toISOString() : null }; }),
         eigenOefeningen: praktijkOefeningen[pk] || [],
         sjablonen: praktijkSjablonen[pk] || [],
-        logboek: praktijkAudit.filter((a) => a.praktijk === pk)
+        logboek: praktijkAudit.filter((a) => a.praktijk === pk),
+        // ideeënbox: wat de praktijk plaatste en waarop haar logins stemden (legal 2026-11-12 17u)
+        ideeenbox: ideeenbox.vanPraktijk(pk, (lidId) => (ledenVan(pk).find((l) => l.id === lidId) || {}).email || "")
       };
       const bestand = "fysiplan-" + (slug(pk) || "praktijk") + "-" + new Date().toISOString().slice(0, 10) + ".json";
       response.writeHead(200, { "content-type": "application/json; charset=utf-8",
@@ -8574,6 +8576,9 @@ async function afhandelen(request, response) {
         : (k + "_HTML") in vars ? vars[k + "_HTML"] : "");
       if (!VRAAGHULP_AAN) html = html.replace(/[ \t]*<!--vraaghulp-->[\s\S]*?<!--\/vraaghulp-->\n?/g, "");
       else html = html.replace(/<!--\/?vraaghulp-->/g, "");
+      // het taalmodel bij de ideeënbox staat standaard uit (IDEEEN_AI=aan); de tekst volgt de server
+      if (!IDEEEN_AI) html = html.replace(/<!--ideeenai-->[\s\S]*?<!--\/ideeenai-->/g, "");
+      else html = html.replace(/<!--\/?ideeenai-->/g, "");
       response.setHeader("x-frame-options", "DENY");
       response.setHeader("content-security-policy",
         "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
