@@ -6325,6 +6325,20 @@ bridge2.jpg</div>
   // niet ingelogd: er zijn er dan geen) of 'storing' (de server gaf geen antwoord; dan blijft de
   // laatst geladen lijst staan). Zie herstelOpenKaart.
   var EIGEN_STAND='uit',EIGEN_LAATST=[];
+  // vaste vragen per oefening van de praktijk (zie verderop bij openVasteVragen)
+  var VV_EIGEN={},VV_STD=[],VV_MAX=5,VV_OEF=null;
+  function vvSleutel(n){return String(n==null?'':n).replace(/\s+/g,' ').trim().slice(0,120);}
+  function laadVasteVragen(){
+    var pr=(SET.praktijk||'').trim();
+    if(!IS_V2||!pr){VV_EIGEN={};return Promise.resolve();}
+    return fetch('api/praktijk/vragen?praktijk='+encodeURIComponent(pr),PGET())
+      .then(function(r){return r.ok?r.json():null;})
+      .then(function(d){
+        if(d&&d.ok){VV_EIGEN=d.eigen||{};VV_STD=d.standaard||[];VV_MAX=d.max||5;}else VV_EIGEN={};
+        renderA4();
+      })
+      .catch(function(){});
+  }
   function voegPraktijkOefToe(){
     var pr=(SET.praktijk||'').trim();
     OEF=OEF.filter(function(o){return o.bron!=='praktijk';});
@@ -6520,19 +6534,6 @@ bridge2.jpg</div>
   // In plaats van de vraaghulp: de patiënt ziet bij elke oefening een paar vaste vragen met
   // nagekeken antwoorden, plus de vragen die de praktijk zelf bij die oefening schrijft. Die
   // staan bij de praktijk op de server en verschijnen op elke kaart met deze oefening.
-  var VV_EIGEN={},VV_STD=[],VV_MAX=5,VV_OEF=null;
-  function vvSleutel(n){return String(n==null?'':n).replace(/\s+/g,' ').trim().slice(0,120);}
-  function laadVasteVragen(){
-    var pr=(SET.praktijk||'').trim();
-    if(!IS_V2||!pr){VV_EIGEN={};return Promise.resolve();}
-    return fetch('api/praktijk/vragen?praktijk='+encodeURIComponent(pr),PGET())
-      .then(function(r){return r.ok?r.json():null;})
-      .then(function(d){
-        if(d&&d.ok){VV_EIGEN=d.eigen||{};VV_STD=d.standaard||[];VV_MAX=d.max||5;}else VV_EIGEN={};
-        renderA4();
-      })
-      .catch(function(){});
-  }
   function vvRijHtml(x){
     return "<div class='vv-rij' style='border-top:1px solid var(--line);padding:10px 0'>"+
       "<input class='vv-v' maxlength='140' placeholder='Vraag, bijvoorbeeld: Mag ik dit ook staand doen?' value='"+esc(x.v||'')+"' style='width:100%;margin-bottom:6px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
