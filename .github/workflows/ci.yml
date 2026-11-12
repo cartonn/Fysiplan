@@ -92,6 +92,7 @@ jobs:
       - run: npm run test:weekverder
       - run: npm run test:daguitvraag
       - run: npm run test:profielcollega
+      - run: npm run test:profieltherapeut
       - run: npm run test:prullenbak
       - run: npm run test:wachtrijdagen
       - run: npm run test:agendamelding
@@ -119,6 +120,7 @@ jobs:
       - run: npm run test:nieuwekaartnaam
       - run: npm run test:proefwissen
       - run: npm run test:pijnscorebezig
+      - run: npm run test:herstellaatstetik
       - run: npm run test:opnameverouderd
       - run: npm run test:nietvertaald
       - run: npm run test:vertaallaat

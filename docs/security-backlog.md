@@ -356,6 +356,17 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL (gebruikers-sweep 2026-11-12 14u, Karin, gemeten lokaal) — pogingen van een therapeut op /v2/gegevens sluiten de beheerder buiten.**
+  Een therapeut met het juiste e-mailadres, wachtwoord en code krijgt terecht 403 ("…alleen een beheerder…"), maar elke poging telt als misser
+  op de praktijknaam (server.js r. ~8124, `loginOpSlot` r. ~238). Na tien pogingen kan ook de beheerder 15 minuten niet downloaden of wissen;
+  dat kan iedereen die de praktijknaam kent. Voorstel: een geslaagde login van een niet-beheerder niet als misser tellen, en de rem per
+  adres + persoon in plaats van alleen per praktijknaam.
+- **LAAG (gebruikers-sweep 2026-11-12 14u, Karin) — elke therapeut leest de Activiteit van de hele praktijk** (`GET /api/praktijk/activiteit`,
+  server.js r. ~4067–4089, geen `isBeheer`): logins van collega's (naam, gemaskeerd IP), mislukte pogingen, rol- en teamwijzigingen.
+  Bewuste keuze of alleen beheerder? Het logboek houdt bovendien maar 15 regels, dus beheeracties zakken snel weg.
+- **LAAG (gebruikers-sweep 2026-11-12 14u, Karin) — uitnodigen accepteert `<script>@x.nl` als e-mailadres** (`geldigEmail` server.js
+  r. ~1075 laat `<>` toe); overal ge-escaped, geen XSS, wel onzin in team en logboek.
+
 - **TER INFO voor audit (a), (b) en (g), 2026-11-12 (platformreview, test:beheeraccounts) — beheer heeft persoonlijke accounts.**
   Nieuw aanvalsvlak: `POST /api/beheer/login`, `/logout`, `/accounts`, `/accounts/uit`, `/wachtwoord`, `GET /api/beheer/ik` en
   `/overzicht`, `lib/beheer.js`, `public/beheersleutel.js`, en de bestanden `beheer-accounts.json` (scrypt-hash, TOTP-geheim
