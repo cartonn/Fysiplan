@@ -941,8 +941,22 @@ bridge2.jpg</div>
   }
   // naam -> oefening-index, voor het koppelen van geüploade plaatjes
   var byNorm={},byStable={};
-  function rebuildLookup(){byNorm={};byStable={};OEF.forEach(function(o){byNorm[normEx(o.naam)]=o.id;if(o.exerciseId)byStable[o.exerciseId]=o.id;});}
+  // Een oefening die anders is gaan heten (een Nederlandse naam, of hernoemd door beheer) neemt de
+  // naam uit het bestand mee als `eerder`. Kaarten, behandelkaarten en eigen video's die op die naam
+  // zijn bewaard, vinden haar zo terug; een oefening die nu zo heet gaat voor.
+  function eerdereNamen(o){return (o&&Array.isArray(o.eerder))?o.eerder:[];}
+  function rebuildLookup(){
+    byNorm={};byStable={};
+    OEF.forEach(function(o){byNorm[normEx(o.naam)]=o.id;if(o.exerciseId)byStable[o.exerciseId]=o.id;});
+    OEF.forEach(function(o){eerdereNamen(o).forEach(function(e){var k=normEx(e);if(k&&byNorm[k]==null)byNorm[k]=o.id;});});
+  }
   rebuildLookup();
+  // eigen notities staan op naam; onder de eerdere naam bewaarde notities horen nog bij de oefening
+  function notitieVan(o){
+    if(NOTES[o.naam])return NOTES[o.naam];
+    var n=null;eerdereNamen(o).forEach(function(e){if(!n&&NOTES[e])n=NOTES[e];});
+    return n;
+  }
   // practice settings + autosave of the current card
   // v2: geen gedeelde standaardnaam. Iedere proefgebruiker begon als "FysioTotaal"
   // en kwam zo in hetzelfde kaartenoverzicht (of, als die naam beveiligd was, kreeg
@@ -995,7 +1009,21 @@ bridge2.jpg</div>
       if(st.client)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
       if(st.grid&&typeof st.grid==='object'){GRID={rows:st.grid.rows||{},cells:st.grid.cells||{}};}
       if(st.vids&&typeof st.vids==='object')VIDS=st.vids;
+      vidsNaarNaamVanNu();
     }catch(e){}
+  }
+  // Een eigen video staat op de naam van de oefening. Heet een oefening op de open kaart intussen
+  // anders, dan verhuist de video mee naar de naam van nu: anders zag de editor hem niet meer en
+  // ruimde de server de opname bij het eerstvolgende bewaren op.
+  function vidsNaarNaamVanNu(){
+    // een naam waaronder een andere oefening op de kaart nu staat, is van die oefening
+    var opKaart={};
+    chosen.forEach(function(c){var o=OEF[c.o];if(o)opKaart[normEx(o.naam)]=1;});
+    chosen.forEach(function(c){
+      var o=OEF[c.o];if(!o)return;
+      var nu=normEx(o.naam);if(VIDS[nu])return;
+      eerdereNamen(o).some(function(e){var k=normEx(e);if(k!==nu&&!opKaart[k]&&VIDS[k]){VIDS[nu]=VIDS[k];delete VIDS[k];return true;}return false;});
+    });
   }
 
   // Opm. en Casus mogen nooit meer tekst bevatten dan fysiek in het printvak past.
@@ -1657,8 +1685,11 @@ bridge2.jpg</div>
       var zwAlle=verseZwaar(),zwNamen=Object.keys(zwAlle);
       if(zwNamen.length&&SIGNAAL_KAART){
         zwNamen.sort(function(a,b){return zwAlle[b]-zwAlle[a];});
+        // de melding staat op de naam die de oefening op de kaart van de patiënt had; de editor
+        // noemt haar zoals ze nu heet
+        var naamNu=function(n){var id=byNorm[normEx(n)];return (id!=null&&OEF[id])?OEF[id].naam:n;};
         sb.textContent='Melding van '+SIGNAAL_KAART.naam+': te zwaar gemeld bij '+
-          zwNamen.map(function(n){return n+' ('+dagenGeleden(zwAlle[n])+')';}).join(', ')+'.';
+          zwNamen.map(function(n){return naamNu(n)+' ('+dagenGeleden(zwAlle[n])+')';}).join(', ')+'.';
         sb.style.display='block';
       }else sb.style.display='none';
     }
@@ -1681,8 +1712,10 @@ bridge2.jpg</div>
               "<svg width='7' height='7' viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>VIDEO</span>";
           }
           // patiëntsignaal: deze oefening is "te zwaar" gemeld op de geopende kaart
-          if(zwSig[o.naam]!=null){
-            inner+="<span class='zwsig no-print' title='"+esc(SIGNAAL_KAART.naam)+" meldde deze oefening te zwaar ("+esc(dagenGeleden(zwSig[o.naam]))+").'>TE ZWAAR</span>";
+          var zwT=zwSig[o.naam];
+          if(zwT==null)eerdereNamen(o).forEach(function(e){if(zwT==null&&zwSig[e]!=null)zwT=zwSig[e];});
+          if(zwT!=null){
+            inner+="<span class='zwsig no-print' title='"+esc(SIGNAAL_KAART.naam)+" meldde deze oefening te zwaar ("+esc(dagenGeleden(zwT))+").'>TE ZWAAR</span>";
           }
         }
         // v2: oefeningen herordenen met pijltjes (bv. warming-up eerst). Alleen v2;
@@ -1782,7 +1815,7 @@ bridge2.jpg</div>
       .then(function(d){
         if(!d.ok){alert(d.fout||'Naam wijzigen is niet gelukt.');return;}
         if(NOTES[o.naam]){NOTES[d.naam]=NOTES[o.naam];delete NOTES[o.naam];try{localStorage.setItem('fysiplan_notes',JSON.stringify(NOTES));}catch(err){}}
-        o.naam=d.naam;rebuildLookup();render();
+        o.naam=d.naam;o.eerder=Array.isArray(d.eerder)?d.eerder:null;rebuildLookup();render();
       })
       .catch(function(){alert('Naam wijzigen is niet gelukt: geen verbinding met de server.');});
   }
@@ -2719,7 +2752,9 @@ bridge2.jpg</div>
   }
   function sjPast(it,term){
     if(!term)return true;
-    var s=it.s,tekst=(s.naam||'')+' '+(s.sub||'')+' '+(s.categorie||'')+' '+(s.oefeningen||[]).map(sjabNaam).join(' ');
+    // de namen zoals ze op de behandelkaart zijn bewaard, en zoals de oefeningen nu heten
+    var s=it.s,tekst=(s.naam||'')+' '+(s.sub||'')+' '+(s.categorie||'')+' '+(s.oefeningen||[]).map(sjabNaam).join(' ')+
+      ' '+sjOefeningen(s).map(function(x){return x.o.naam;}).join(' ');
     return tekst.toLowerCase().indexOf(term)>=0;
   }
   function renderSjabLijst(){
@@ -3209,13 +3244,21 @@ bridge2.jpg</div>
     SIGNAAL_KAART=null;
     var missing=[];
     chosen=[];
+    // eigen video's staan op de naam die de oefening op de kaart had. Heet ze nu anders, dan
+    // verhuist de video mee (op een kopie: de kaart uit de lijst blijft zoals hij was).
+    var vids={};
+    if(c.vids&&typeof c.vids==='object')Object.keys(c.vids).forEach(function(k){vids[k]=c.vids[k];});
     (c.chosen||[]).forEach(function(x){
       var id=(x.id&&byStable[x.id]!=null)?byStable[x.id]:byNorm[normEx(x.n)];
-      if(id!=null&&OEF[id]&&OEF[id].imgs[x.i||0])chosen.push({o:id,i:x.i||0});
+      if(id!=null&&OEF[id]&&OEF[id].imgs[x.i||0]){
+        chosen.push({o:id,i:x.i||0});
+        var was=normEx(x.n),nu=normEx(OEF[id].naam);
+        if(was!==nu&&vids[was]&&!vids[nu]){vids[nu]=vids[was];delete vids[was];}
+      }
       else missing.push(x.n);
     });
     GRID={rows:c.rows||{},cells:{}};
-    VIDS=(c.vids&&typeof c.vids==='object')?c.vids:{};
+    VIDS=vids;
     Object.keys(c.cells||{}).forEach(function(k){
       var stable=k.match(/^x(fp_[a-f0-9]{16})\.(\d+)\|(.+)$/);
       var m=k.match(/^n([a-z0-9]*)\.(\d+)\|(.+)$/);
@@ -6479,13 +6522,13 @@ bridge2.jpg</div>
       var lineSrc=e.img;
       var colorSrc=e.kaartImg||e.img;
       return {id:i,naam:e.naam,groep:e.groep,ook:e.ook||null,s:3,h:12,bron:'server',
-        exerciseId:e.exerciseId||'',video:e.video||null,region:e.region||'',joint:e.joint||'',goals:e.goals||[],equipment:e.equipment||[],difficulty:e.difficulty||'',searchAliases:e.searchAliases||[],starthouding:'',uitvoering:'',opmerking:'',
+        exerciseId:e.exerciseId||'',eerder:Array.isArray(e.eerder)?e.eerder:null,video:e.video||null,region:e.region||'',joint:e.joint||'',goals:e.goals||[],equipment:e.equipment||[],difficulty:e.difficulty||'',searchAliases:e.searchAliases||[],starthouding:'',uitvoering:'',opmerking:'',
         imgs:[{type:'img',src:USE_V2_LIBRARY?colorSrc:lineSrc,lineSrc:USE_V2_LIBRARY?lineSrc:null,colorSrc:USE_V2_LIBRARY?colorSrc:null,label:'Plaatje'}]};
     });
     SERVERLIB=true;CUSTOMLIB=false;curG='all';
     GROUPS=[{g:'all',label:'alle oefeningen'}].concat(cats.map(function(c){return {g:c,label:c};}));
     renderChips();rebuildLookup();
-    OEF.forEach(function(o){var n=NOTES[o.naam];if(n){o.starthouding=n.s||'';o.uitvoering=n.u||'';o.opmerking=n.o||'';}});
+    OEF.forEach(function(o){var n=notitieVan(o);if(n){o.starthouding=n.s||'';o.uitvoering=n.u||'';o.opmerking=n.o||'';}});
   }
   // laadt de standaardbibliotheek: eerst de server-bibliotheek, anders de placeholders
   function loadDefaultLibrary(){

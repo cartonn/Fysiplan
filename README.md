@@ -100,6 +100,25 @@ terug naar de gedeelde server-lijst.
   onbewerkt. De pagina haalt de hele bibliotheek en de keuringsbestanden alleen nog op als dat
   pakket ontbreekt of niet klopt, bijvoorbeeld bij een antwoord uit de offline-cache van een oudere
   versie. Test: `npm run test:kaartpakket`.
+- **Nederlandse namen in de bibliotheek:** een deel van de oefeningen heet in
+  `public/oefeningen-v2.json` nog Engels ("Glute bridges", "Step up with knee raise"). Dat bestand
+  blijft zoals het is, want de videostroom werkt erin en de keuring van beeld en uitleg, de
+  voorleesopnames en de standaardkaarten verwijzen naar die namen. De naam die de app toont komt uit
+  een laag eroverheen: `content/oefennamen-nl.json` (links de naam in het bestand, rechts de
+  Nederlandse naam). Voorrang: wat beheer zelf hernoemde, dan de Nederlandse naam, dan de naam uit
+  het bestand. Een Nederlandse naam die al in gebruik is, wordt overgeslagen; twee oefeningen
+  krijgen nooit dezelfde naam. In de laag staan nu de 135 oefeningen die op een standaardkaart
+  voorkomen. Bij elke oefening die anders heet dan in het bestand stuurt `/v2/oefeningen.json` de
+  naam uit het bestand mee als `eerder`. Alles wat op de oude naam is bewaard, vindt de oefening
+  daarmee terug: kaarten zonder vast id, standaardkaarten, de video van beheer (`videolinks.json`),
+  een eigen video op een kaart, notities, de tellingen van de patiënt, de keuring van de uitleg en
+  de voorleesopnames (die de oefening nog bij haar oude naam noemen tot ze opnieuw zijn
+  ingesproken). Een kaart die al bij een patiënt is, houdt de naam waarmee ze is bewaard, zodat
+  scherm en afdruk gelijk blijven; bij opnieuw bewaren verhuizen de eigen video en de tellingen mee
+  naar de nieuwe naam. De volgorde van de lijst verandert niet door de laag. `/health` telt ze als
+  `nederlandseNamen`. Een naam toevoegen of verbeteren is één regel in het JSON-bestand; daarna
+  `npm run test:oefennamen`, dat ook naloopt of elke standaardkaart nog dezelfde oefeningen vindt.
+  De logica staat in `lib/oefennamen.js`.
 - **Oefenvideo's (zonder app):** iedere serveroefening heeft in `/admin88` een zichtbare
   **+ Video**. Daarmee kan beheer een gerenderde avatarvideo direct kiezen of slepen,
   vooraf bekijken, vervangen en verwijderen. Met `CLOUDFLARE_ACCOUNT_ID` plus
@@ -226,7 +245,10 @@ De gewone URL is voor het maken en printen van kaarten. Bibliotheekbeheer gebeur
 - **Categorie toevoegen** via de `+ categorie`-knop naast de categoriefilters. Een lege categorie
   blijft server-side bewaard en kan daarna als eerste of extra categorie aan oefeningen worden
   gekoppeld. Bij meerdere categorieën toont de lijst ze met een `/` ertussen.
-- **Oefening hernoemen** (potloodje ✎) — `POST /api/hernoem` (`naam-wijzigingen.json`).
+- **Oefening hernoemen** (potloodje ✎) — `POST /api/hernoem` (`naam-wijzigingen.json`). In v2 gaat
+  de keuze van beheer voor de Nederlandse naam uit `content/oefennamen-nl.json`; zet beheer de naam
+  terug op die Nederlandse naam, dan vervalt de hernoeming. De naam van een andere oefening, nu of
+  eerder, wordt geweigerd.
 - **Categorie wijzigen** (pijltjes ⇄) — `POST /api/oefeningen/categorie`
   (`categorie-wijzigingen.json`): verplaats een oefening naar een andere categorie en/of toon hem
   op een 2e plek (het `ook`-veld).
@@ -238,8 +260,8 @@ De gewone URL is voor het maken en printen van kaarten. Bibliotheekbeheer gebeur
 
 Elke beheeractie is **direct server-side** en dus meteen live op beide URL's — er is geen
 synchronisatie, wachttijd of aparte deploy nodig. Het geserveerde `oefeningen.json` =
-basisbestand + hernoemingen − verwijderd + toegevoegd. `/health` toont de tellers
-(`hernoemd`, `toegevoegd`, `verwijderd`).
+basisbestand + hernoemingen − verwijderd + toegevoegd (in v2 ook met de Nederlandse namen).
+`/health` toont de tellers (`hernoemd`, `nederlandseNamen`, `toegevoegd`, `verwijderd`).
 
 ### Wie is beheer: een eigen account per beheerder
 

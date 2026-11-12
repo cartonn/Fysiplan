@@ -117,12 +117,14 @@ const img = ids.lbimg = stub('img');
 img.complete = true; img.naturalWidth = r.width; img.naturalHeight = r.height; img.src = 'https://praktijk.example/v2/' + BRON;
 const tekenaar = vm.createContext({document: {getElementById: (id) => (ids[id] = ids[id] || stub('div')), createElement: stub},
   Math, Number, URL, JSON, location: {href: 'https://praktijk.example/k/abc'},
-  window: {matchMedia: () => ({matches: true})}, matchMedia: () => ({matches: true}),
+  window: {matchMedia: () => ({matches: true}), NoorAudio: {match: () => false}}, matchMedia: () => ({matches: true}),
   TAAL: 'nl', tr: (k) => T.nl[k] ?? k, vt: (s) => s, uitlegNietVertaald: () => false, DEMO_BRON: {nl: 'herkomst'}, NoorAudio: {match: () => false},
   demoKlok() {}, demoGeluidKnop() {}, demoZeg() {},
   bronGecontroleerd: {['/v2/' + BRON + '|' + BRON_SHA]: true},
   demo: {info: {name: r.name, uitleg: 'uitleg', poseMetadata: keuring[ID + '|' + BRON] && {...keuring[ID + '|' + BRON]}}}});
-vm.runInContext(tussen('  function geldigeUitsnede(', '  async function loadMobileReview(') + tussen('  function demoHoudingen(', '  // met geluid aan wisselen we rustiger'), tekenaar);
+// de demonstratie vraagt de kaart zelf of er een opname is (onder de naam van nu of een eerdere)
+vm.runInContext(tussen('  function geldigeUitsnede(', '  async function loadMobileReview(') + tussen('  function noorClipNaam(item){', '  function noorClip(item)') +
+  tussen('  function demoHoudingen(', '  // met geluid aan wisselen we rustiger'), tekenaar);
 vm.runInContext('demoStart()', tekenaar);
 assert.equal(tekeningen.length, 2, 'twee houdingen getekend');
 assert.deepEqual(tekeningen[0].args.slice(1, 5), [ONDER.x, ONDER.y, ONDER.w, ONDER.h], 'eerste (onderste laag, Beginhouding) = gestrekte armen');

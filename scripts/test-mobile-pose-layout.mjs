@@ -122,7 +122,7 @@ img.src = 'https://praktijk.example/v2/' + entry.source;
 const demoContext = vm.createContext({
   document: demoDocument, Math, Number, URL, JSON,
   location: { href: 'https://praktijk.example/k/abc' },
-  window: { matchMedia: () => ({ matches: true }) }, matchMedia: () => ({ matches: true }),
+  window: { matchMedia: () => ({ matches: true }), NoorAudio: { match: () => true } }, matchMedia: () => ({ matches: true }),
   TAAL: 'nl', tr: (k) => k, vt: (s) => s, uitlegNietVertaald: () => false,
   DEMO_BRON: { nl: 'herkomstnotitie' },
   NoorAudio: { match: () => true },
@@ -132,7 +132,9 @@ const demoContext = vm.createContext({
     source: entry.source, assetSha256: entry.assetSha256, axis: entry.poseGeometry.axis,
     poses: entry.poses, width: entry.width, height: entry.height } } }
 });
+// de demonstratie vraagt de kaart zelf of er een opname is (onder de naam van nu of een eerdere)
 vm.runInContext(between('  function geldigeUitsnede(', '  async function loadMobileReview(') +
+  between('  function noorClipNaam(item){', '  function noorClip(item)') +
   between('  function demoHoudingen(', '  // met geluid aan wisselen we rustiger'), demoContext);
 vm.runInContext('demoStart()', demoContext);
 
