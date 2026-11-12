@@ -22,4 +22,24 @@ v.events.error();let reject;v.play=()=>new Promise((_,r)=>{reject=r;});s.childre
 v.events.error();v.play=()=>new Promise((_,r)=>{reject=r;});s.children.at(-1).events.click();v.isConnected=false;const before=s.textContent;reject({name:'NotSupportedError'});await Promise.resolve();assert.equal(s.textContent,before);
 assert.match(html,/\.vhouder video\{object-fit:contain\}/);
 assert.match(html,/bewak|bewaakVideo\(houder.querySelector\('video'\),houder\)/);
-console.log('PASS native video error/retry, autoplay restriction, playback recovery, stale rejection, contain geometry (VM; no device playback claim)');
+
+// Zonder internet: geen "neem contact op met je praktijk", maar "heeft internet nodig"; de video
+// verdwijnt (vfout) zodat de melding bij 200 % tekst er niet overheen ligt (sweep 2026-11-12 18u, Truus).
+{
+  const nav={onLine:false};
+  const ctx2=vm.createContext({TAAL:'nl',navigator:nav,document:{createElement:element}});vm.runInContext(source,ctx2);
+  const h=element(),v=element();const klassen=new Set();h.classList={toggle(n,aan){aan?klassen.add(n):klassen.delete(n);}};
+  v.isConnected=true;v.paused=true;v.load=()=>{};v.play=()=>Promise.resolve();h.contains=x=>x===v;ctx2.bewaakVideo(v,h);const st=h.children[0];
+  assert.equal(klassen.has('vfout'),false);
+  v.events.error();assert.match(st.textContent,/heeft internet nodig/);assert.doesNotMatch(st.textContent,/contact op/);
+  assert.equal(klassen.has('vfout'),true,'video verdwijnt bij een fout');
+  assert.equal(st.children.at(-1).textContent,'Opnieuw proberen');
+  st.children.at(-1).events.click();assert.equal(klassen.has('vfout'),false,'opnieuw proberen toont de video weer');
+  v.events.playing();assert.equal(klassen.has('vfout'),false);
+  nav.onLine=true;v.events.error();assert.match(st.textContent,/niet worden afgespeeld/);assert.equal(klassen.has('vfout'),true);
+  const en=vm.createContext({TAAL:'en',navigator:{onLine:false},document:{createElement:element}});vm.runInContext(source,en);
+  const h3=element(),v3=element();v3.isConnected=true;h3.contains=()=>true;en.bewaakVideo(v3,h3);v3.events.error();assert.match(h3.children[0].textContent,/needs internet/);
+}
+assert.match(html,/\.vhouder\.vfout>video\{display:none\}/,'een video die niet speelt staat niet onder de melding');
+assert.match(html,/h2,\.naam\{-webkit-hyphens:auto;hyphens:auto\}/,'koppen en oefennamen breken bij 200 % af met een streepje');
+console.log('PASS offline melding + vfout + afbreken; native video error/retry, autoplay restriction, playback recovery, stale rejection, contain geometry (VM; no device playback claim)');

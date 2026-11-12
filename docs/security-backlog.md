@@ -614,6 +614,8 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   `/api/praktijk/team/*` staat niet in `PROEF_SCHRIJFROUTES`. Geen datalek (de proef blijft voor iedereen
   dicht), wel een schrijfroute die open blijft. Fix: `uitnodigen` en `eigen-login` aan de set toevoegen.
 - **LAAG — inloggen met e-mail: tien foute pogingen zetten dat adres een kwartier op slot** (sanity PR #65).
+  Gebruikers-sweep 2026-11-12 18u (Karin): sinds #242 geldt dat ook voor /v2/gegevens; wie het adres van een beheerder kent, sluit haar daar
+  een kwartier buiten (11× fout met haar adres, ook in hoofdletters/spaties → 429). Bekende afweging, ter info.
   Wie het e-mailadres van een collega kent, kan die zo steeds buitensluiten. Zelfde afweging als de rem per
   praktijknaam; eventueel: slot alleen voor IP's zonder eerdere geslaagde login.
 - **LAAG — tweede betaalpoging maakt de eerste onvindbaar** (sanity PR #57, 2026-11-07). `/v2/proef/betalen`

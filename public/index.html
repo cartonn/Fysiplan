@@ -2466,7 +2466,7 @@ bridge2.jpg</div>
         [{act:'nieuwste',label:'Open de nieuwste versie'},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);
       return true;
     }
-    if(d.login){toonQrHint('De praktijknaam \u201c'+pr+'\u201d is beveiligd en je bent niet ingelogd. Log in via Kaarten. Heet een andere praktijk toevallig hetzelfde? Kies daar \u201cAndere praktijk met deze naam\u201d.',[{act:'beveilig',label:'Inloggen'}]);return true;}
+    if(d.login){toonQrHint('De praktijknaam \u201c'+pr+'\u201d is beveiligd en je bent niet ingelogd. Log in via Kaarten.'+andereNaamZin(),[{act:'beveilig',label:'Inloggen'}]);return true;}
     return false;
   }
   // volledige naam -> roepnaam met initiaal. Staat er op de server al een kaart met
@@ -3138,7 +3138,7 @@ bridge2.jpg</div>
         if(d.proefVerlopen){toonProefVoorbij();return;}
         if(d.beveilig){toonDeelWeigering(d,cn.value.trim());openBeveiligen(function(){knop.click();});return;}
         if(d.bestaat){toonDeelWeigering(d,cn.value.trim());return;}
-        alert(d.login?'De praktijknaam \u201c'+(SET.praktijk||'')+'\u201d is beveiligd en je bent niet ingelogd. Log in onder Kaarten. Heet een andere praktijk toevallig hetzelfde? Kies daar \u201cAndere praktijk met deze naam\u201d.':(d.fout||'De QR-code maken is niet gelukt.'));
+        alert(d.login?'De praktijknaam \u201c'+(SET.praktijk||'')+'\u201d is beveiligd en je bent niet ingelogd. Log in onder Kaarten.'+andereNaamZin():(d.fout||'De QR-code maken is niet gelukt.'));
         return;
       }
       zetKaartId(d.id,d.ts);
@@ -3476,12 +3476,18 @@ bridge2.jpg</div>
   // bewaartermijnen zoals de server ze hanteert (standaard 90 en 30 dagen)
   function bewaarAfgerond(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.afgerond)||30;}
   function bewaarStil(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.stil)||90;}
+  // Is de beveiligde naam die van jezelf (zelfde e-mail als je proef), dan wijst de app niet naar
+  // "Andere praktijk met deze naam": dat maakte een tweede praktijk en sloot je buiten.
+  function andereNaamZin(){
+    if(PRAKSLOT.vanMij)return PRAKSLOT.stapOpen?' Daar maak je met je e-mail en wachtwoord je tweede stap af.':'';
+    return ' Heet een andere praktijk toevallig hetzelfde? Kies daar \u201cAndere praktijk met deze naam\u201d.';
+  }
   function toonPrakSlot(pr){
     PRAKSLOT.pr=pr;
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){if(!r.ok)throw r.status;return r.json();}).then(function(d){
         PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;PRAKSLOT.naam=d.naam||'';PRAKSLOT.wie=d.wie||'';PRAKSLOT.perEmail=!!d.perEmail;PRAKSLOT.akkoord=d.akkoord||null;PRAKSLOT.tweedeStap=typeof d.tweedeStap==='boolean'?d.tweedeStap:null;
-        PRAKSLOT.eigenLogin=!!d.eigenLogin;PRAKSLOT.voorstel=d.voorstel||null;PRAKSLOT.proefNodig=!!d.proefNodig;PRAKSLOT.bekend=true;
+        PRAKSLOT.eigenLogin=!!d.eigenLogin;PRAKSLOT.voorstel=d.voorstel||null;PRAKSLOT.vanMij=!!d.vanMij;PRAKSLOT.stapOpen=!!d.stapOpen;PRAKSLOT.proefNodig=!!d.proefNodig;PRAKSLOT.bekend=true;
         if(pr!==PRAKSLOT.nieuwVoor)PRAKSLOT.nieuw=false;
         if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
         rendPrakSlot();
@@ -3559,12 +3565,15 @@ bridge2.jpg</div>
       document.getElementById('ps_vwolab').style.display='none';
       document.getElementById('ps_wijzig').style.display='none';
       document.getElementById('ps_hcform').style.display='none';
-      st.innerHTML="🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien.<div class='ps-acties'><a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a><a href='#' id='ps_nieuw' title='Heet jouw praktijk toevallig hetzelfde als een andere? Beveilig dan je eigen praktijk met deze naam.'>Andere praktijk met deze naam?</a><a href='#' id='ps_wis' title='Wist alles wat Fysiplan op deze computer bewaart'>Wis Fysiplan van dit apparaat</a></div>";
+      st.innerHTML=(PRAKSLOT.stapOpen?"🔒 Je praktijk is beveiligd, maar je tweede stap is nog niet af. Log in met je e-mail en wachtwoord, dan ga je verder waar je was.":"🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien.")+"<div class='ps-acties'><a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a><a href='#' id='ps_nieuw' title='Heet jouw praktijk toevallig hetzelfde als een andere? Beveilig dan je eigen praktijk met deze naam.'>Andere praktijk met deze naam?</a><a href='#' id='ps_wis' title='Wist alles wat Fysiplan op deze computer bewaart'>Wis Fysiplan van dit apparaat</a></div>";
       var wa2=document.getElementById('ps_wis');if(wa2)wa2.addEventListener('click',function(e){e.preventDefault();wisApparaat();});
       var nw=document.getElementById('ps_nieuw');
+      if(nw&&PRAKSLOT.vanMij){nw.remove();nw=null;}
       if(nw)nw.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.nieuw=true;PRAKSLOT.nieuwVoor=PRAKSLOT.pr;rendPrakSlot();});
       form.style.display='flex';ww.style.display='';ww.placeholder=PRAKSLOT.perEmail?'Je wachtwoord':'Wachtwoord (van jou of van de praktijk)';ww.autocomplete='current-password';knop.textContent='Inloggen';knop.dataset.act='login';
       var em=document.getElementById('ps_email');em.style.display='';
+      // eigen praktijk van deze proef: het adres alvast invullen (niet overschrijven wat er al staat)
+      if(PRAKSLOT.vanMij&&!em.value&&PRAKSLOT.voorstel&&PRAKSLOT.voorstel.email)em.value=PRAKSLOT.voorstel.email;
       em.placeholder=PRAKSLOT.perEmail?'Je e-mail':'Je e-mail (leeg = praktijkwachtwoord)';
       var vg=document.getElementById('ps_vergeten');
       if(vg)vg.addEventListener('click',function(e){
@@ -3930,7 +3939,7 @@ bridge2.jpg</div>
         else if(d.stapVerplicht&&l.status==='actief')st+=' · stelt de tweede stap in bij het inloggen';
         // telefoon en reservecodes kwijt: een beheerder met een eigen login wist de tweede stap van een collega
         var wis2=(d.beheer&&d.ik&&!zelf&&l.tweedeStap)?" · <a href='#' data-tm2wis='"+esc(l.id)+"' data-naam='"+esc(l.naam||l.email)+"' title='Telefoon en reservecodes kwijt? Na het wissen "+(d.stapVerplicht?"stelt je collega de tweede stap opnieuw in bij het inloggen.":"logt je collega in met alleen het wachtwoord en stelt de tweede stap opnieuw in.")+"'>wissen</a>":"";
-        var rol=d.beheer&&!zelf?"<select data-tmrol='"+esc(l.id)+"' style='width:auto'><option value='therapeut'"+(l.rol==='therapeut'?' selected':'')+">Therapeut</option><option value='beheerder'"+(l.rol==='beheerder'?' selected':'')+">Beheerder</option></select>"
+        var rol=d.beheer&&!zelf?"<select data-tmrol='"+esc(l.id)+"' aria-label='Rol van "+esc(l.naam||l.email||'collega')+"' style='width:auto'><option value='therapeut'"+(l.rol==='therapeut'?' selected':'')+">Therapeut</option><option value='beheerder'"+(l.rol==='beheerder'?' selected':'')+">Beheerder</option></select>"
           :"<span class='tm-rol'>"+(l.rol==='beheerder'?'Beheerder':'Therapeut')+"</span>";
 
         return "<div class='tm-lid"+(l.status==='actief'?'':' uitgenodigd')+"' style='display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line)'>"+

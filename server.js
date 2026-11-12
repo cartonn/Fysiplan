@@ -416,6 +416,19 @@ const EIGEN_LOGIN_VERPLICHT = /^(aan|uit)$/.test(String(process.env.EIGEN_LOGIN_
 // geldt hij voor iedereen in deze praktijk? Dat is zo met de regel hierboven, of als de praktijk
 // het zelf vraagt (acc.stapVerplicht, een beheerder zet dat aan onder Team).
 const heeftTweedeStap = (l) => !!(l && l.totp && typeof l.totp.geheim === "string" && l.totp.geheim);
+// De eigen login met dit e-mailadres onder deze praktijknaam (of null). Wie het beveiligen onderbrak
+// vóór de tweede stap (herladen, tab dicht), heeft zo'n login al: dan is "Andere praktijk met deze
+// naam" de verkeerde weg. Die maakte een tweede praktijk met dezelfde naam en hetzelfde adres, en
+// daarna kon niemand meer inloggen (409 "kies" met twee gelijke namen). Gebruikers-sweep 2026-11-12 18u.
+function eigenLidOnderNaam(naam, email) {
+  const em = normEmail(email);
+  if (!em) return null;
+  for (const pk of accountsMetNaam(naam)) {
+    const l = ledenVan(pk).find((x) => x && x.email === em);
+    if (l) return l;
+  }
+  return null;
+}
 const stapVerplicht = (pk) => praktijkGeclaimd(pk) && (EIGEN_LOGIN_VERPLICHT || !!praktijkAccounts[pk].stapVerplicht);
 const heeftBeheerLogin = (pk) => ledenVan(pk).some((l) => l && l.rol === "beheerder" && lidActief(l));
 // wie de tweede stap vraagt, voor de teksten: de praktijk zelf, of Fysiplan van iedereen
@@ -4020,6 +4033,13 @@ async function afhandelen(request, response) {
       // (de proefpagina's tonen ze hier ook al), zodat niemand ze twee keer typt
       voorstel: EIGEN_LOGIN_VERPLICHT && !ingelogd && proefVan(request)
         ? { naam: proefVan(request).naam || "", email: proefVan(request).email || "" } : undefined,
+      // de praktijk met deze naam is van de proefaanmelding op dit apparaat (zelfde e-mail): de app
+      // vult het adres in en biedt geen "andere praktijk" aan; stapOpen: de tweede stap is nog niet af
+      ...((() => {
+        const p = EIGEN_LOGIN_VERPLICHT && !ingelogd ? proefVan(request) : null;
+        const l = p ? eigenLidOnderNaam(nk, p.email) : null;
+        return l ? { vanMij: true, stapOpen: !heeftTweedeStap(l) || undefined } : {};
+      })()),
       // zonder lopende proef valt er niets te beveiligen (PROEF_VERPLICHT): de app zegt dat vóór
       // het formulier van de eigen login, niet erna
       proefNodig: (EIGEN_LOGIN_VERPLICHT && PROEF_VERPLICHT && !ingelogd && !proefVan(request) && !beheerEigen(request)) || undefined,
@@ -4090,6 +4110,11 @@ async function afhandelen(request, response) {
       // therapeut bewust "andere praktijk met dezelfde naam" (nieuw: true), dan krijgt
       // die een eigen code; niemand kan een naam meer vooraf voor een ander bezetten.
       const bezet = praktijkGeclaimd(nk) || accountsMetNaam(nk).length > 0;
+      if (bezet && b.nieuw === true && eigen && eigenLidOnderNaam(nk, eigen.email)) {
+        await sendJson(response, 409, { ok: false, login: true, vanMij: true, veld: "email",
+          fout: "Met dit e-mailadres bestaat deze praktijk al: het is die van jou. Log in met je e-mail en wachtwoord. Was je tweede stap nog niet af, dan ga je daarna verder waar je was." });
+        return;
+      }
       if (bezet && b.nieuw !== true) { await sendJson(response, 409, { ok: false, fout: "Deze praktijknaam is al beveiligd. Is het jouw praktijk? Log dan in. Is het een andere praktijk met dezelfde naam? Kies dan “Andere praktijk met deze naam”.", login: true, bezet: true }); return; }
       // ook een eigen code als er onder de kale naam al iets staat zonder account: zie naamDraagtGegevens
       const pk = (bezet || naamDraagtGegevens(nk)) ? nieuwePraktijkCode() : nk;
