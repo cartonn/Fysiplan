@@ -207,6 +207,12 @@ await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify({ [PK]: 
 ] } }));
 await writeFile(join(dataDir, "kaarten.json"), JSON.stringify({ [PK]: { "uniekepatient zandstra": { id: "abcdef012345", praktijk: "Fysio Testlaan", naam: PATIENT, ts: Date.now() - DAG, client: { naam: PATIENT }, chosen: [], rows: [], cells: {}, vids: {} } } }));
 
+// de praktijk die V1 gebruikt: twee logins met een e-mailadres
+await writeFile(join(dataDir, "v1-accounts.json"), JSON.stringify({
+  "anna@v1.example": { email: "anna@v1.example", hash: "scrypt$00$00", praktijk: "FysioTotaal", gemaakt: Date.now() - 60 * DAG },
+  "bob@v1.example": { email: "bob@v1.example", hash: "scrypt$00$00", praktijk: "FysioTotaal", gemaakt: Date.now() - 50 * DAG }
+}));
+
 const mails = [];
 const mailApi = createServer((req, res) => {
   let b = ""; req.on("data", (c) => { b += c; });
@@ -328,8 +334,12 @@ try {
   let e = await stand("echt");
   {
     assert.equal(e.bron, "echt");
-    assert.equal(e.overzicht.totalen.praktijken, 1);
-    const p = e.overzicht.rijen[0];
+    assert.equal(e.overzicht.totalen.praktijken, 2);
+    const v1 = e.overzicht.rijen.find((r) => r.status === "v1");
+    assert.deepEqual([v1.naam, v1.therapeuten, v1.signalen.length, v1.stand], ["FysioTotaal (V1)", 2, 0, "goed"], "de V1-praktijk telt mee, zonder signalen");
+    assert.deepEqual(e.ontvangers, { beheerders: 1, iedereen: 5 }, "een storingsbericht aan iedereen gaat ook naar de logins van V1");
+    assert.equal(e.overzicht.totalen.klanten, 0);
+    const p = e.overzicht.rijen.find((r) => r.pk === PK);
     assert.equal(p.naam, "Fysio Testlaan");
     assert.equal(p.therapeuten, 3);
     assert.equal(p.kaartenTotaal, 1);
