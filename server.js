@@ -2047,6 +2047,14 @@ function zetSeintje(kaart, soort, t, nu) {
   }
   if (telt(soort) && soort !== oud.soort) { ook.add(soort); oud.ook = [...ook]; }
 }
+// wat de patiënt van zijn eigen openstaande seintje ziet: alleen de soort en wat er nog bij
+// openstaat, zodat de knoppen op /k de stand van de server tonen en niet de laatste tik
+function seinVoorPatient(kaart) {
+  const s = kaart && kaart.seintje;
+  if (!s || !SEIN_GEWICHT[s.soort]) return null;
+  const ook = Array.isArray(s.ook) ? s.ook.filter((x) => (x === "vraag" || x === "pijn") && x !== s.soort) : [];
+  return { soort: s.soort, ...(ook.length ? { ook } : {}) };
+}
 // één waarde per (Nederlandse) dag, op volgorde van tijd: dezelfde dag vervangt (behalve
 // door een oudere tik uit de wachtrij), een eerdere dag schuift op zijn plaats
 function zetDagWaarde(rij, t, s, nu) {
@@ -3576,7 +3584,7 @@ ideeenbox.start();
 let patientkant = null;
 const patientkantVan = () => patientkant || (patientkant = maakPatientkant({
   sendJson, readBody, schrijfLimiet, kruisSite, weigerKruis, vindKaart, idTekst, kaartMisLimiet, verbodenSleutel,
-  zetDagWaarde, tikMoment, tikVeld, nlDag, logContact, zetSeintje, seinOpen, SEIN_GEWICHT, seinMailKan, kaartSleutel, seinMailRonde,
+  zetDagWaarde, tikMoment, tikVeld, nlDag, logContact, zetSeintje, seinVoorPatient, seinOpen, SEIN_GEWICHT, seinMailKan, kaartSleutel, seinMailRonde,
   bewaarKaarten: () => saveJson(kaartenPath, kaarten),
   telDag: (naam) => { const x = dagStats(vandaagKey()); x[naam] = (x[naam] || 0) + 1; bewaarStats(); }
 }));
@@ -6864,6 +6872,9 @@ async function afhandelen(request, response) {
     patientKaart.mijnSeintjes = (Array.isArray(found.contact) ? found.contact : [])
       .filter((c) => c && c.van === "patient" && ["vraag", "pijn", "goed"].includes(c.soort))
       .map((c) => ({ soort: c.soort, t: Number(c.t) || 0 }));
+    // het openstaande seintje (soort, en wat er nog bij openstaat): de knoppen tonen wat de
+    // praktijk ziet, ook op een tweede telefoon en na herladen
+    patientKaart.seinOpen = seinVoorPatient(found);
     // de patiënt ziet tot wanneer de kaart minstens bestaat (bewaartermijn): bij een
     // afgeronde kaart en in "Mijn gegevens"
     if (!found.demo) patientKaart.verloopt = verdwijntOp(fpk, found);

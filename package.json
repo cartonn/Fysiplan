@@ -79,6 +79,7 @@
     "test:gedaansync": "node scripts/test-kaart-gedaan-sync.mjs",
     "test:seintje": "node scripts/test-sweep-seintje-afspraak.mjs",
     "test:seintjevoorrang": "node scripts/test-seintje-voorrang.mjs",
+    "test:seintjestand": "node scripts/test-sweep-seintje-stand.mjs",
     "test:qrtaal": "node scripts/test-qr-taal.mjs",
     "test:eerstedeling": "node scripts/test-eerste-deling.mjs",
     "test:teamherstel": "node scripts/test-team-herstel.mjs",
