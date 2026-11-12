@@ -7,7 +7,7 @@ import { exerciseId } from "./lib/exercise-id.js";
 import { byteRange } from "./lib/byte-range.js";
 import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
-import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
+import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver, geldigEmail } from "./lib/proef.js";
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
 import { prijsRegels, prijsZin, metBtwBijschrift, bedragVoor, euro as euroTekst } from "./lib/prijs.js";
 import * as leeslogRegels from "./lib/leeslog.js";
@@ -1206,7 +1206,6 @@ function eigenHost(request) {
 }
 const v1Sessies = new Map(); // token -> { email, t }
 const v1LoginMis = new Map(); // emailLower -> { start, n }
-const geldigEmail = (s) => /^[^\s@]{1,64}@[^\s@]{1,255}\.[a-z]{2,}$/i.test(String(s || ""));
 function v1LoginOpSlot(em) {
   const nu = Date.now();
   if (v1LoginMis.size > 5000) for (const [k, v] of v1LoginMis) if (nu - v.start > 15 * 60000) v1LoginMis.delete(k);
@@ -1287,16 +1286,32 @@ try { proeven = JSON.parse(await readFile(proefPath, "utf8")); } catch (err) {
 if (!proeven || typeof proeven !== "object" || Array.isArray(proeven)) { proeven = {}; proevenOnleesbaar = true; }
 const PROEF_BEWAAR_DAGEN = 30; // Ahmed koos 2026-11-09: 30 dagen, gelijk aan een opgezegd abonnement
 const proefTokenIndex = new Map(); // sha256(token) -> id
-for (const p of Object.values(proeven)) for (const h of p.tokens || []) proefTokenIndex.set(h, p.id);
+// Security (2026-11-12): een apparaattoken (de proefcookie) leeft op de server even lang als de
+// cookie in de browser (PROEF_COOKIE_MS), gerekend vanaf het uitgeven. Voorheen gold een token
+// zolang de aanmelding bestond: een gekopieerde cookie gaf ook maanden later, ook bij een klant,
+// nog het abonnementsbeheer (opzeggen, factuurgegevens, facturen). `tokenT` bewaart per sha256 het
+// moment van uitgeven; een token van vóór deze regel telt vanaf de eerste start erna.
+const PROEF_COOKIE_MS = (PROEF_DAGEN + PROEF_BEWAAR_DAGEN) * 86400000;
+let proefTokensOmgezet = false;
+for (const p of Object.values(proeven)) for (const h of p.tokens || []) {
+  proefTokenIndex.set(h, p.id);
+  if (!p.tokenT || typeof p.tokenT !== "object") p.tokenT = {};
+  if (!Number.isFinite(p.tokenT[h])) { p.tokenT[h] = Date.now(); proefTokensOmgezet = true; }
+}
 // wie krijgt een seintje bij een nieuwe aanmelding: eigen lijst, anders de accountbeheerders
 const proefMeldingAan = String(process.env.PROEF_MELDING_AAN || process.env.ACCOUNT_BEHEER_EMAILS || "")
   .split(",").map((e) => e.trim()).filter((e) => geldigEmail(e));
 const bewaarProeven = () => saveJson(proefPath, proeven);
+if (proefTokensOmgezet && !proevenOnleesbaar) await bewaarProeven().catch(() => {});
 function proefVan(req) {
   const m = String(req.headers.cookie || "").match(/(?:^|;\s*)fpproef=([a-f0-9]{48})(?:;|$)/);
   if (!m) return null;
-  const id = proefTokenIndex.get(tokenHash(m[1]));
-  return (id && proeven[id]) || null;
+  const h = tokenHash(m[1]);
+  const id = proefTokenIndex.get(h);
+  const p = (id && proeven[id]) || null;
+  // verlopen token (ouder dan de cookie zelf mag worden): telt niet meer
+  if (!p || !(Date.now() - Number((p.tokenT || {})[h] || 0) < PROEF_COOKIE_MS)) return null;
+  return p;
 }
 const proefVerlopen = (p) => !!p && !p.klant && Date.now() >= p.verloopt;
 // De proef hangt niet alleen aan het apparaat (cookie) maar ook aan het praktijkaccount
@@ -1345,14 +1360,15 @@ function proefCookie(token, request) {
   const proxyProto = String(request.headers["x-forwarded-proto"] || "").split(",", 1)[0].trim().toLowerCase();
   const veilig = proxyProto === "https" || !!request.socket?.encrypted;
   return "fpproef=" + (token || "") + "; Path=/; HttpOnly; SameSite=Lax" + (veilig ? "; Secure" : "") +
-    (token ? "; Max-Age=" + ((PROEF_DAGEN + PROEF_BEWAAR_DAGEN) * 86400) : "; Max-Age=0");
+    (token ? "; Max-Age=" + PROEF_COOKIE_MS / 1000 : "; Max-Age=0");
 }
 function proefNieuwToken(p) {
   const token = randomBytes(24).toString("hex");
   const h = tokenHash(token);
   p.tokens = [...(p.tokens || []), h];
+  p.tokenT = { ...(p.tokenT || {}), [h]: Date.now() };
   // hooguit vijf apparaten per aanmelding; de oudste valt af
-  while (p.tokens.length > 5) proefTokenIndex.delete(p.tokens.shift());
+  while (p.tokens.length > 5) { const weg = p.tokens.shift(); proefTokenIndex.delete(weg); delete p.tokenT[weg]; }
   proefTokenIndex.set(h, p.id);
   return token;
 }
@@ -1434,7 +1450,7 @@ async function praktijkAllesWissen(pk) {
 function proefVoorDownload(id) {
   const p = Object.hasOwn(proeven, String(id)) ? proeven[String(id)] : null;
   if (!p) return null;
-  const { tokens, mailLink, welkomLink, ...rest } = p;
+  const { tokens, tokenT, mailLink, welkomLink, ...rest } = p;
   return rest;
 }
 const datumNl = (ms) => new Date(ms).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Amsterdam" });

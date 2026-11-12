@@ -180,3 +180,4 @@ jobs:
       - run: npm run test:reekstitel
       - run: npm run test:annulerenhernoem
       - run: npm run test:welkomlink
+      - run: npm run test:proeftokenverloop
