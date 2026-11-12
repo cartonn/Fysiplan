@@ -77,7 +77,7 @@ const VWO_VERSIE = "2026-11-11-2";
 const AV_VERSIE = "2026-11-11-2";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-11";
+const PRIVACY_VERSIE = "2026-11-12";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -7698,6 +7698,9 @@ async function afhandelen(request, response) {
         HOSTING: FYSIPLAN_ID.hosting || "nog niet vastgelegd",
         STIL: String(BEWAAR_STIL_DAGEN), AFGEROND: String(BEWAAR_AFGEROND_DAGEN),
         AUDIT_PER: String(AUDIT_PER_PRAKTIJK), AUDIT_RUIS: String(AUDIT_RUIS_PER_PRAKTIJK),
+        SESSIE_DAGEN: String(Math.round(SESSIE_MS / 86400000)),
+        // de vraaghulp staat standaard uit (VRAAGHULP=aan zet hem aan); de tekst zegt wat er echt gebeurt
+        VRAAGHULP_STAND: VRAAGHULP_AAN ? "" : " (staat nu uit)",
         PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN), PROEF_DAGEN: String(PROEF_DAGEN), NA_EINDE: String(NA_EINDE_WISSEN_DAGEN), INCASSO_VOORAF: String(INCASSO_VOORAF_DAGEN),
         // Mollie staat alleen in de privacyverklaring als online betalen echt aan staat
         BETAAL_RIJ_HTML: mollieAan() ? '<tr id="betalen"><td>Betaling: naam van de praktijk (of je eigen naam), e-mail, aantal therapeuten, bedrag, '
@@ -7714,6 +7717,8 @@ async function afhandelen(request, response) {
       // moeten allebei worden ingevuld
       html = html.replace(/__([A-Z][A-Z_]*?)__/g, (heel, k) => k in vars ? (k.endsWith("_HTML") ? vars[k] : htmlEsc(vars[k]))
         : (k + "_HTML") in vars ? vars[k + "_HTML"] : "");
+      if (!VRAAGHULP_AAN) html = html.replace(/[ \t]*<!--vraaghulp-->[\s\S]*?<!--\/vraaghulp-->\n?/g, "");
+      else html = html.replace(/<!--\/?vraaghulp-->/g, "");
       response.setHeader("x-frame-options", "DENY");
       response.setHeader("content-security-policy",
         "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
