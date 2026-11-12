@@ -3003,20 +3003,33 @@ bridge2.jpg</div>
       return;
     }
     if(wat==='weg'&&it.bron==='eigen'){
+      // gebruikers-sweep 2026-11-12: een dubbelklik op "Delen met de praktijk" landde met de tweede klik op
+      // "Verwijderen" ernaast; kort na Delen telt een klik op Verwijderen niet.
+      if(Date.now()<(SJ_STAAT.deelKlikTot||0))return;
       if(!confirm('Je eigen kaart "'+s.naam+'" verwijderen?'))return;
       var lst=leesEigenSjab();lst.splice(it.i,1);bewaarEigenSjab(lst);SJ_STAAT.sel=null;renderSjabLijst();return;
     }
     // eigen kaart delen met de hele praktijk (v2)
     if(wat==='deel'){
-      k.disabled=true;k.textContent='Bezig…';
-      fetch('api/praktijk/sjablonen',{method:'POST',headers:PJSON(),
-        body:JSON.stringify({praktijk:SET.praktijk||'',naam:s.naam,oefeningen:s.oefeningen||[]})})
-        .then(function(r){return r.json();})
-        .then(function(d){
-          if(d.ok){PRAKSJAB=d.sjablonen;renderSjabLijst();}
-          else{k.disabled=false;k.textContent='Delen met de praktijk';alert(d.fout||'Delen is niet gelukt.'+(d.login?' Log eerst in bij de praktijk (via Kaarten).':''));}
-        })
-        .catch(function(){k.disabled=false;k.textContent='Delen met de praktijk';alert('Delen is niet gelukt: geen verbinding.');});
+      if(k.disabled)return;
+      SJ_STAAT.deelKlikTot=Date.now()+1500;
+      k.style.minWidth=k.offsetWidth+'px';k.disabled=true;k.textContent='Bezig…';
+      var herstel=function(){k.disabled=false;k.textContent='Delen met de praktijk';};
+      var deel=function(vervang){
+        fetch('api/praktijk/sjablonen',{method:'POST',headers:PJSON(),
+          body:JSON.stringify({praktijk:SET.praktijk||'',naam:s.naam,oefeningen:s.oefeningen||[],vervang:!!vervang})})
+          .then(function(r){return r.json();})
+          .then(function(d){
+            if(d.ok){PRAKSJAB=d.sjablonen;renderSjabLijst();alert((vervang?'Het teamsjabloon "':'Gedeeld: "')+s.naam+(vervang?'" is vervangen. Je collega\'s zien nu deze versie.':'" staat nu bij de kaarten van de praktijk.'));}
+            else if(d.bestaat&&!vervang){
+              if(confirm('Er is al een teamsjabloon "'+(d.naam||s.naam)+'" in de praktijk.\n\nVervangen door deze versie? Je collega\'s zien dan alleen nog de nieuwe.'))deel(true);
+              else herstel();
+            }
+            else{herstel();alert(d.fout||'Delen is niet gelukt.'+(d.login?' Log eerst in bij de praktijk (via Kaarten).':''));}
+          })
+          .catch(function(){herstel();alert('Delen is niet gelukt: geen verbinding.');});
+      };
+      deel(false);
       return;
     }
     // gedeelde praktijkkaart (voor iedereen) verwijderen

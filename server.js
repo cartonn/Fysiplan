@@ -4172,6 +4172,12 @@ async function afhandelen(request, response) {
       if (idx > -1 && !magGedeeldAanpassen(s, lijst[idx], pk)) {
         await sendJson(response, 409, { ok: false, fout: "Er is al een teamsjabloon met deze naam van een collega. Kies een andere naam." }); return;
       }
+      // gebruikers-sweep 2026-11-12: een bestaand teamsjabloon (ook met andere hoofdletters) niet meer stil
+      // overschrijven; de app vraagt eerst "Vervangen?" en stuurt dan vervang:true mee.
+      if (idx > -1 && b.vervang !== true) {
+        await sendJson(response, 409, { ok: false, bestaat: true, naam: lijst[idx].naam,
+          fout: "Er is al een teamsjabloon \"" + lijst[idx].naam + "\". Wil je het vervangen?" }); return;
+      }
       const sjabloon = { naam, oefeningen, t: Date.now(), ...(idx > -1 && lijst[idx].door ? { door: lijst[idx].door } : s && s.pk === pk && s.lid ? { door: s.lid } : {}) };
       if (idx > -1) lijst[idx] = sjabloon; else lijst.unshift(sjabloon);
       await saveJson(praktijkSjablonenPath, praktijkSjablonen);
@@ -7049,6 +7055,14 @@ async function afhandelen(request, response) {
     // bij wissen eerst de bevestiging: een vergeten "WISSEN" kost zo geen code van de tweede stap
     if (wissen && String(b.zeker || "").trim().toUpperCase() !== "WISSEN") {
       await opnieuw("Typ WISSEN in het laatste veld om te bevestigen dat alles weg mag.", 400);
+      return;
+    }
+    // gebruikers-sweep 2026-11-12: het gedeelde praktijkwachtwoord kent vaak het hele team. Heeft de
+    // praktijk een beheerder met een eigen login, dan wist alleen zo'n beheerder (met e-mail) alles,
+    // zoals bij het team (#201). Anders kon elke collega met het gedeelde wachtwoord ook de eigenaar wissen.
+    if (wissen && !em && ledenVan(pk).some((l) => l && l.rol === "beheerder" && lidActief(l))) {
+      auditLog(pk, "alles-wissen-geweigerd", request, "praktijkwachtwoord");
+      await opnieuw("Je praktijk heeft een beheerder met een eigen login. Alles wissen kan alleen met het e-mailadres en wachtwoord van zo'n beheerder. Vul je e-mail in.", 403);
       return;
     }
     // eigen login met een tweede stap: zonder geldige code geen download en niets gewist

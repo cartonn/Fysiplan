@@ -329,6 +329,20 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **OPGELOST 2026-11-12 02u (gebruikers-sweep, deze PR, test:gedeeldwerk) — HOOG (Karin, desktop) — het gedeelde praktijkwachtwoord wiste
+  de hele praktijk, ook de beheerders met eigen login.** `/v2/gegevens/wissen` zonder e-mail viel terug op `accountVoorLogin` (gedeeld
+  wachtwoord) en wiste alles, ook het account van de eigenaar. Nu: heeft de praktijk een actieve beheerder met eigen login, dan wist
+  alleen zo'n beheerder (met e-mail), net als bij het team (#201); 403 met uitleg en "alles-wissen-geweigerd" in het logboek. Downloaden
+  met het gedeelde wachtwoord werkt nog (bewust gelaten; zie het punt hieronder).
+- **NAKIJKEN (gebruikers-sweep 2026-11-12 02u, Karin) — MIDDEL — zelfde patroon nog open:** (1) opzeggen van het abonnement met het
+  gedeelde wachtwoord terwijl er een beheerder met eigen login is (`abonnementBeheerder`, server.js r. ~996; intrekken kan wel, dus
+  herstelbaar); (2) alles downloaden (alle kaarten en het logboek) met het gedeelde wachtwoord, zelfde situatie. Kies of beide ook een
+  beheerder met eigen login vragen.
+- **NAKIJKEN (gebruikers-sweep 2026-11-12 02u, Karin) — MIDDEL — beheerder hernoemt de praktijk stil naar de naam van een andere
+  praktijk.** POST /api/praktijken met `praktijk: "<naam van praktijk B>"` geeft 200; daarna toont /k de naam van B en inloggen met naam
+  B + het wachtwoord van A komt in A uit (B zelf onaangetast). server.js r. ~4192 en ~4255 (`praktijkAccounts[key].naam = p.praktijk`)
+  zonder controle op `accountsMetNaam`. Verwacht: dezelfde waarschuwing als bij beveiligen.
+
 - **OPGELOST 2026-11-11 20u (deze PR) — NAKIJKEN (van de gebruikers-sweep 2026-11-11 18u, Karin) — LAAG→MIDDEL:** bevestigd: met een
   sessie op het gedeelde praktijkwachtwoord (dat vaak het hele team kent) kon elke collega een beheerder met eigen login naar
   therapeut zetten én met `gedeeld: "laten"` uit het team verwijderen; in Activiteit stond alleen "rol gewijzigd" zonder naam. Nu:
