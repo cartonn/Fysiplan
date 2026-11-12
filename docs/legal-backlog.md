@@ -23,6 +23,13 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **LAAG — code tegen tekst (d) en cookies (f), 2026-11-12 (platformreview, test:sessiecookie): /privacy#opslag klopt niet meer
+  met waar de inlog van de praktijk staat.** De rij "Apparaat van de therapeut (app)" zegt "Twee cookies" en noemt "je inlog bij
+  de praktijk" bij wat de browser bewaart. Sinds deze wijziging staat die inlog niet meer in de browseropslag maar in een derde
+  cookie, alleen voor de server leesbaar: `__Host-fpsessie` (lokaal `fpsessie`), 30 dagen of tot je uitlogt; "Wis Fysiplan van dit
+  apparaat" maakt hem leeg. Het is een functionele cookie (inloggen), dus geen toestemming nodig, wel de uitleg. De tekst is
+  bewust niet in deze wijziging aangepast: juridische teksten wijzigt de bouwer van de reviewlijst niet zelf.
+
 - **MIDDEL — MDR/AI-verordening (g) 2026-11-12 05u: de zoekhulp en de vertaalde uitleg zeiden niet dat ze automatisch zijn.**
   (1) De zoekhulp in /v2/app stuurt lichaamsdeel en doel naar een AI-dienst, die 4 tot 8 oefeningen kiest en per oefening
   een korte zin schrijft. Het venster zei alleen "De zoekhulp kent geen patiënt en geeft geen dosering"; nergens dat een

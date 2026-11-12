@@ -359,10 +359,61 @@ const stapVrager = (pk) => (praktijkGeclaimd(pk) && praktijkAccounts[pk].stapVer
 // de overstap nog niet maakte, houdt het praktijkwachtwoord voor precies twee dingen: de
 // overstap zelf en de formulieren zonder script (overzicht, gegevens downloaden of wissen).
 const gedeeldStaatUit = (pk) => praktijkGeclaimd(pk) && (!!praktijkAccounts[pk].gedeeldUit || (EIGEN_LOGIN_VERPLICHT && heeftBeheerLogin(pk)));
+// ---- de sessiesleutel in een cookie die scripts niet kunnen lezen (platformreview 2026-11-11) ----
+// De app bewaarde de sessiesleutel in de browseropslag en stuurde hem zelf mee. Elk script dat
+// op de pagina wist te komen, kon hem daar lezen en dertig dagen gebruiken. Nu zet de server de
+// sleutel bij het inloggen in een cookie met HttpOnly: de browser stuurt hem mee, scripts zien
+// hem niet. Wat daarbij hoort:
+// - Een verzoek uit een browser (herkenbaar aan Sec-Fetch-Site of Origin, koppen die een script
+//   niet kan weglaten) krijgt de sleutel alleen in de cookie; in het antwoord staat dan het
+//   woord "cookie". Een verzoek zonder die koppen (een eigen programma, de tests) krijgt de
+//   sleutel ook in het antwoord en mag hem blijven meesturen in x-praktijk-sessie.
+// - De cookie telt niet bij een verzoek vanaf een andere website (kruisSite): SameSite=Strict
+//   houdt hem daar al weg, dit is het tweede slot voor browsers die dat niet doen.
+// - Een sleutel die nog in de browseropslag staat (van vóór deze versie) ruilt de app één keer
+//   om via /api/praktijk/sessie-cookie en haalt hem daarna uit de opslag.
+// - Op https (achter de Railway-proxy, dus in productie altijd) heet de cookie __Host-fpsessie.
+//   Met dat voorvoegsel neemt een browser hem alleen aan met Secure, met Path=/ en zonder
+//   Domain: een ander adres onder fysiplan.nl kan er dus geen eigen sessie overheen zetten.
+//   Zonder https (localhost bij het ontwikkelen, de tests) kan dat voorvoegsel niet en heet hij
+//   fpsessie; die naam telt op https niet.
+function opHttps(request) {
+  const proxyProto = String(request?.headers?.["x-forwarded-proto"] || "").split(",", 1)[0].trim().toLowerCase();
+  return proxyProto === "https" || !!request?.socket?.encrypted;
+}
+const sessieCookieNaam = (request) => (opHttps(request) ? "__Host-fpsessie" : "fpsessie");
+function sessieCookie(token, request, seconden) {
+  return sessieCookieNaam(request) + "=" + (token || "") + "; Path=/; HttpOnly; SameSite=Strict" + (opHttps(request) ? "; Secure" : "") +
+    "; Max-Age=" + (token ? Math.max(1, Math.floor(seconden)) : 0);
+}
+// een cookie erbij zetten zonder een eerder gezette (bijvoorbeeld die van de proef) te verliezen
+function zetCookie(response, kop) {
+  const al = response.getHeader("set-cookie");
+  response.setHeader("set-cookie", al ? [].concat(al, kop) : kop);
+}
+const vanBrowser = (req) => req.headers["sec-fetch-site"] !== undefined || req.headers.origin !== undefined;
+// Voor het antwoord na inloggen: zet de cookie en geeft terug wat in het antwoord hoort.
+function sessieUit(request, response, token) {
+  zetCookie(response, sessieCookie(token, request, SESSIE_MS / 1000));
+  return vanBrowser(request) ? "cookie" : token;
+}
+const sessieKop = (req) => String(req.headers["x-praktijk-sessie"] || "").trim();
+function sessieCookieVan(req) {
+  if (kruisSite(req)) return "";
+  const naam = sessieCookieNaam(req);
+  for (const deel of String(req.headers.cookie || "").split(";")) {
+    const i = deel.indexOf("=");
+    if (i > 0 && deel.slice(0, i).trim() === naam) return deel.slice(i + 1).trim();
+  }
+  return "";
+}
 // de sessie met praktijk en (eventueel) lid; een verwijderd lid of een uitgezet
-// praktijkwachtwoord maakt de sessie meteen ongeldig
+// praktijkwachtwoord maakt de sessie meteen ongeldig. Eerst de sleutel uit de kop (wie hem
+// zelf meestuurt), anders die uit de cookie.
 function sessieVan(req) {
-  const token = String(req.headers["x-praktijk-sessie"] || "").trim();
+  return sessieBij(sessieKop(req)) || sessieBij(sessieCookieVan(req));
+}
+function sessieBij(token) {
   if (!token) return null;
   const sleutel = sessieSleutel(token);
   const s = praktijkSessies.get(sleutel);
@@ -3578,7 +3629,7 @@ async function afhandelen(request, response) {
       await saveJson(accountsPath, praktijkAccounts);
       auditLog(pk, "geclaimd", request);
       const token = nieuweSessie(pk);
-      await sendJson(response, 200, { ok: true, sessie: token, herstelcode });
+      await sendJson(response, 200, { ok: true, sessie: sessieUit(request, response, token), herstelcode });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
@@ -3673,7 +3724,7 @@ async function afhandelen(request, response) {
           const token = nieuweSessie(pk, l.id);
           auditLog(pk, "tweede-stap-aan", request, l.naam || l.email);
           auditLog(pk, "ingelogd", request, l.naam || l.email);
-          await sendJson(response, 200, { ok: true, sessie: token, praktijk: weergaveNaam(pk), reservecodes: reserve.codes });
+          await sendJson(response, 200, { ok: true, sessie: sessieUit(request, response, token), praktijk: weergaveNaam(pk), reservecodes: reserve.codes });
           return;
         }
         // tweede stap: het wachtwoord klopt, nu nog de code uit de code-app (of een reservecode).
@@ -3696,7 +3747,7 @@ async function afhandelen(request, response) {
         await saveJson(accountsPath, praktijkAccounts); // ook de gebruikte tijdstap of reservecode
         const token = nieuweSessie(pk, l.id);
         auditLog(pk, viaReserve ? "ingelogd-met-reservecode" : "ingelogd", request, l.naam || l.email);
-        await sendJson(response, 200, { ok: true, sessie: token, praktijk: weergaveNaam(pk), ...(viaReserve ? { reservecodesOver: reservecodesOver(l) } : {}) });
+        await sendJson(response, 200, { ok: true, sessie: sessieUit(request, response, token), praktijk: weergaveNaam(pk), ...(viaReserve ? { reservecodesOver: reservecodesOver(l) } : {}) });
         return;
       }
       // de rem telt per ingetikte naam: zo knijpt hij ook af als er meerdere
@@ -3775,7 +3826,7 @@ async function afhandelen(request, response) {
       }
       const token = nieuweSessie(pk);
       auditLog(pk, "ingelogd", request);
-      await sendJson(response, 200, { ok: true, sessie: token });
+      await sendJson(response, 200, { ok: true, sessie: sessieUit(request, response, token) });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
@@ -3860,7 +3911,7 @@ async function afhandelen(request, response) {
       acc.leden.push(l);
       await opslaan();
       auditLog(pk, "eigen-login-gemaakt", request, naam);
-      await sendJson(response, 200, { ok: true, sessie: nieuweSessie(pk, l.id), ik: lidUit(l) });
+      await sendJson(response, 200, { ok: true, sessie: sessieUit(request, response, nieuweSessie(pk, l.id)), ik: lidUit(l) });
       return;
     }
     // tweede stap van de eigen login: instellen, uitzetten, nieuwe reservecodes. Voor elke rol,
@@ -3918,7 +3969,7 @@ async function afhandelen(request, response) {
         trekSessiesIn(pk, ik.id);
         const sessie = nieuweSessie(pk, ik.id);
         auditLog(pk, "tweede-stap-aan", request, wie);
-        await sendJson(response, 200, { ok: true, sessie, reservecodes: reserve.codes, gedeeldAan: !gedeeldStaatUit(pk) });
+        await sendJson(response, 200, { ok: true, sessie: sessieUit(request, response, sessie), reservecodes: reserve.codes, gedeeldAan: !gedeeldStaatUit(pk) });
         return;
       }
       if (actie === "uit" || actie === "reservecodes") {
@@ -4143,12 +4194,28 @@ async function afhandelen(request, response) {
 
   if (urlPath === "/api/praktijk/logout" && request.method === "POST") {
     if (kruisSite(request)) { await weigerKruis(response); return; }
-    const token = String(request.headers["x-praktijk-sessie"] || "").trim();
-    if (token) praktijkSessies.delete(sessieSleutel(token));
+    // de sleutel die de aanvrager zelf meestuurt en die uit de cookie: beide vervallen, en de
+    // cookie gaat leeg terug, zodat deze browser daarna niet meer ingelogd is
+    for (const token of [sessieKop(request), sessieCookieVan(request)]) if (token) praktijkSessies.delete(sessieSleutel(token));
+    zetCookie(response, sessieCookie("", request, 0));
     // "Wis Fysiplan van dit apparaat": ook de proefcookie weg, anders zag de volgende
     // gebruiker van deze computer de proef (naam, e-mail) en kon hij hem stoppen. De proef
     // zelf blijft; met hetzelfde e-mailadres opnieuw aanmelden geeft hem terug.
-    if (new URL(request.url, "http://x").searchParams.get("apparaat") === "1") response.setHeader("set-cookie", proefCookie("", request));
+    if (new URL(request.url, "http://x").searchParams.get("apparaat") === "1") zetCookie(response, proefCookie("", request));
+    await sendJson(response, 200, { ok: true });
+    return;
+  }
+
+  // Een sessiesleutel die nog in de browseropslag staat (van vóór de cookie) één keer omruilen:
+  // de app stuurt hem mee in x-praktijk-sessie en krijgt dezelfde sessie terug in de cookie,
+  // voor de tijd die de sessie nog had. Daarna haalt de app hem uit de opslag. Zonder geldige
+  // sessie een 401: dan mag de oude sleutel ook weg, hij werkt toch niet meer.
+  if (urlPath === "/api/praktijk/sessie-cookie" && request.method === "POST") {
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (schrijfLimiet(request, response)) return;
+    const kop = sessieKop(request), s = sessieBij(kop);
+    if (s) zetCookie(response, sessieCookie(kop, request, (s.t + SESSIE_MS - Date.now()) / 1000));
+    else if (!sessieBij(sessieCookieVan(request))) { await sendJson(response, 401, { ok: false, fout: "Log opnieuw in." }); return; }
     await sendJson(response, 200, { ok: true });
     return;
   }
@@ -4196,7 +4263,7 @@ async function afhandelen(request, response) {
         loginMisPraktijk.delete(remSleutel);
         const tok = nieuweSessie(pk, mijnLid.id);
         auditLog(pk, "wachtwoord-gewijzigd", request, mijnLid.naam || mijnLid.email);
-        await sendJson(response, 200, { ok: true, sessie: tok });
+        await sendJson(response, 200, { ok: true, sessie: sessieUit(request, response, tok) });
         return;
       }
       if (!checkHash(String(b.huidig || ""), acc.hash)) {
@@ -4218,7 +4285,7 @@ async function afhandelen(request, response) {
       loginMisPraktijk.delete(pk);
       const token = nieuweSessie(pk);
       auditLog(pk, "wachtwoord-gewijzigd", request);
-      await sendJson(response, 200, { ok: true, sessie: token, ...(herstelcode ? { herstelcode } : {}) });
+      await sendJson(response, 200, { ok: true, sessie: sessieUit(request, response, token), ...(herstelcode ? { herstelcode } : {}) });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
@@ -4285,7 +4352,7 @@ async function afhandelen(request, response) {
       // nieuw praktijkwachtwoord koos, logt daarmee in en maakt dan de eigen login (de overstap).
       if (EIGEN_LOGIN_VERPLICHT) { await sendJson(response, 200, { ok: true, herstelcode, eigenLoginNodig: true }); return; }
       const token = nieuweSessie(pk);
-      await sendJson(response, 200, { ok: true, sessie: token, herstelcode });
+      await sendJson(response, 200, { ok: true, sessie: sessieUit(request, response, token), herstelcode });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
