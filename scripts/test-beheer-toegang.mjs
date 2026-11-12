@@ -642,7 +642,8 @@ try {
     const loket = await readFile(join(root, "lib/beheer-loket-routes.js"), "utf8");
     assert.match(loket, /const fouten = maakFouten\(eigenWoorden\);/, "in een routepatroon voor de tech-agent staan alleen woorden van de server zelf");
     assert.doesNotMatch(loket, /\.aangiftes\b|\.afgesloten\b|storingOntvangers|inst\.\w+ *=[^=]/, "het loket kan geen aangifte markeren, geen jaar afsluiten en niet naar alle praktijken mailen");
-    assert.deepEqual(Object.values(AGENT_ROLLEN).flatMap((r) => r.acties).filter((a, i, l) => l.indexOf(a) === i).sort(), ["eigen-mail", "notitie", "verslag"]);
+    // de acties van de chief of staff en de groei-agent gaan door de poort van lib/agent-geheugen.js (scripts/test-agent-geheugen.mjs)
+    assert.deepEqual(Object.values(AGENT_ROLLEN).flatMap((r) => r.acties).filter((a, i, l) => l.indexOf(a) === i).sort(), ["advies", "concept", "contact-voorstel", "eigen-mail", "notitie", "taak-voorstel", "verslag"]);
     assert.equal(MAIL_SOORTEN["eigen-bericht"].titel, "Eigen bericht van een agent");
     assert.match(server, /ideeenWacht: \(\) => ideeenbox\.wacht\(\)/);
     assert.match(await readFile(join(root, "public/beheer.html"), "utf8"), /<a href="\/dashboard88\/ideeen" data-recht="beheer">/, "de ideeënbox staat in het menu, alleen voor volledig beheer");
