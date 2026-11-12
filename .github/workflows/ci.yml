@@ -117,6 +117,7 @@ jobs:
       - run: npm run test:v2contrast
       - run: npm run test:seinvenster
       - run: npm run test:lichtladen
+      - run: npm run test:beheerherstel
       - run: npm run test:qrroepnaam
       - run: npm run test:uitnodigingpraktijk
       - run: npm run test:rempraktijk
