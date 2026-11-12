@@ -7745,6 +7745,10 @@ async function afhandelen(request, response) {
       html = html.replace(/__OPRICHTERS_OVER__/g, String(oprichtersOver));
       // grammaticaal en uitverkocht-proof: "Nog 1 plekken" en "Nog 0 plekken"
       // horen niet op een verkooppagina te staan
+      // één prijskaart; de eerste 25 praktijken krijgen er een begeleide start bij, zonder teller
+      html = html.replace(/__OPRICHTERS_ZIN__/g, oprichtersOver === 0
+        ? "De oprichtersronde is vol. Elke nieuwe praktijk krijgt dezelfde prijs en dezelfde functies."
+        : "De eerste 25 praktijken krijgen er 60 dagen begeleide start bij, met gratis import van logo en sjablonen. Daarvoor vragen we je feedback om Fysiplan beter te maken.");
       html = html.replace(/__OPRICHTERS_REGEL__/g,
         oprichtersOver === 0 ? "De oprichtersronde is vol"
           : (oprichtersOver === 1 ? "Nog 1 plek" : "Nog " + oprichtersOver + " plekken"));
