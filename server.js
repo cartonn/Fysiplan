@@ -3316,7 +3316,9 @@ const beheerOmgeving = maakBeheerOmgeving({
   // rechten per beheeraccount: wie kijkt, de accounts zelf, en of de server een eigen sleutel heeft
   beheerRechten, accounts: () => beheerAccounts, bewaarAccounts: () => saveJson(beheerAccountsPath, beheerAccounts), sleutelAan: () => ADMIN_KEY_EIGEN,
   // bestaat er een login met dit adres? Alleen daarvan telt beheer foute wachtwoorden.
-  lidBekend: (em) => Object.keys(praktijkAccounts).some((pk) => ledenVan(pk).some((l) => l.email === em))
+  lidBekend: (em) => Object.keys(praktijkAccounts).some((pk) => ledenVan(pk).some((l) => l.email === em)),
+  // hoeveel ideeën uit de ideeënbox op een besluit wachten (de ideeënbox wordt hieronder opgebouwd)
+  ideeenWacht: () => ideeenbox.wacht()
 });
 await beheerOmgeving.laad();
 

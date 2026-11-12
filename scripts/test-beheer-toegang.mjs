@@ -183,7 +183,7 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
   let praktijken = Array.from({ length: 12 }, (_, i) => ({ pk: "p-" + i, naam: "Praktijk " + i, status: "klant", plaatsen: 1, kaarten30: 3, weken: Array(12).fill(1), leden: [lid(i, { stapSlot: true })] }));
   const opgeslagen = {}, gemaild = [], gelogd = [];
   const accounts = { "een@x.example": { email: "een@x.example", naam: "Een", hash: "h", totp: { geheim: "G" } }, "twee@x.example": { email: "twee@x.example", naam: "Twee", hash: "h", totp: { geheim: "G" } } };
-  let sleutelAan = false, mailAan = true;
+  let sleutelAan = false, mailAan = true, ideeenWacht = 2;
   const om = maakBeheerOmgeving({
     dataDir: "/nergens", publicDir: "/nergens", leverancier: () => ({}),
     bronEcht: () => ({ soort: "echt", nu: Date.now(), facturen: [], kosten: [], systeem: { checks: [], versie: "abc1234" }, praktijken: JSON.parse(JSON.stringify(praktijken)) }),
@@ -193,7 +193,8 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
     saveJson: async (pad, v) => { opgeslagen[pad.split("/").pop()] = JSON.parse(JSON.stringify(v)); },
     beheerLog: { schrijf: async (r) => { gelogd.push(r); } }, mailIngesteld: () => mailAan, mailOpSlot: () => false, maskeerEmail: (e) => e,
     stuurMail: async (aan, onderwerp, tekst) => { gemaild.push({ aan, onderwerp, tekst }); },
-    accounts: () => accounts, bewaarAccounts: async () => { opgeslagen["beheer-accounts.json"] = JSON.parse(JSON.stringify(accounts)); }, sleutelAan: () => sleutelAan
+    accounts: () => accounts, bewaarAccounts: async () => { opgeslagen["beheer-accounts.json"] = JSON.parse(JSON.stringify(accounts)); }, sleutelAan: () => sleutelAan,
+    ideeenWacht: () => ideeenWacht
   });
   try {
     await om.laad();
@@ -262,6 +263,11 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
     let p = await pagina();
     assert.deepEqual([p.loket.concepten.length, p.loket.concepten[0].stand, p.loket.concepten[0].praktijk, p.loket.concepten[0].aan, "sleutel" in p.loket.concepten[0], "pk" in p.loket.concepten[0]], [1, "wacht", "Praktijk 0", 1, false, false]);
     assert.equal((await pagina({ R: ["praktijken", "support", "finance"] })).loket, undefined, "zonder het recht Agents geen concepten");
+    // de ideeënbox is een beheerpagina buiten de omgeving: het aantal dat wacht alleen voor volledig beheer, en niet in de demo
+    assert.deepEqual([(await pagina()).ideeen, (await pagina({ R: ALLE_RECHTEN.filter((r) => r !== "beheer") })).ideeen, (await roep("GET", "/api/beheer/omgeving?bron=demo")).body.ideeen], [{ wacht: 2 }, undefined, undefined]);
+    ideeenWacht = "kapot";
+    assert.deepEqual((await pagina()).ideeen, { wacht: 0 }, "een telling die niet klopt, wordt nul");
+    ideeenWacht = 2;
     // akkoord: de server zet de aanhef, de naam van de praktijk en de afsluiting erbij
     assert.equal((await beheer("loket/concept", { id: cId, besluit: "verstuur" }, { R: ["support"] })).status, 403);
     assert.equal((await beheer("loket/concept", { id: cId, besluit: "misschien" })).status, 400);
@@ -492,7 +498,9 @@ try {
     const v = await stand("vera");
     assert.deepEqual([v.rechten.length, v.toegang.accounts.map((a) => [a.email, a.rechten, a.ik]), v.overzicht.totalen.praktijken, v.zaken.length >= 2],
       [7, [["finn@beheer.example", ["finance"], false], ["vera@beheer.example", null, true]], 1, true]);
+    assert.deepEqual(v.ideeen, { wacht: 0 }, "de echte server geeft het aantal ideeën dat op een besluit wacht");
     const f = await stand("finn");
+    assert.equal("ideeen" in f, false);
     assert.deepEqual([f.rechten, f.overzicht.rijen.length, f.zaken.length, f.systeem.checks.length, "loket" in f, "toegang" in f], [["finance"], 0, 0, 0, false, false]);
     assert.doesNotMatch(JSON.stringify(f), /Testlaan|testlaan\.example|Tom Therapeut|Bea Beheer/, "wie alleen finance mag, krijgt geen praktijk en geen therapeut te zien");
     // binnen de omgeving: wat finance mag wel, de rest niet
@@ -636,6 +644,8 @@ try {
     assert.doesNotMatch(loket, /\.aangiftes\b|\.afgesloten\b|storingOntvangers|inst\.\w+ *=[^=]/, "het loket kan geen aangifte markeren, geen jaar afsluiten en niet naar alle praktijken mailen");
     assert.deepEqual(Object.values(AGENT_ROLLEN).flatMap((r) => r.acties).filter((a, i, l) => l.indexOf(a) === i).sort(), ["eigen-mail", "notitie", "verslag"]);
     assert.equal(MAIL_SOORTEN["eigen-bericht"].titel, "Eigen bericht van een agent");
+    assert.match(server, /ideeenWacht: \(\) => ideeenbox\.wacht\(\)/);
+    assert.match(await readFile(join(root, "public/beheer.html"), "utf8"), /<a href="\/dashboard88\/ideeen" data-recht="beheer">/, "de ideeënbox staat in het menu, alleen voor volledig beheer");
     const js = await readFile(join(root, "public/beheer-omgeving.js"), "utf8");
     assert.doesNotMatch(js, /\beval\(|new Function\(|document\.write/);
     const pakket = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
