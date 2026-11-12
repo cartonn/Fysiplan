@@ -912,7 +912,7 @@ function instelLink(request, token) {
 // PROEF_BEWAAR_DAGEN na afloop (tenzij beheer de aanmelding op "klant" zet), en
 // de aanmelder kan alles zelf wissen. Inzage alleen voor ACCOUNT_BEHEER_EMAILS.
 const proefPath = join(dataDir, "proef-aanmeldingen.json");
-let proeven = {}; // { id: { id, email, naam, tel, praktijk, gestart, verloopt, akkoord, tokens:[sha256], klant?, doorgaan?, herinnerd?, kaarten? } }
+let proeven = {}; // { id: { id, email, naam, tel, praktijk, gestart, verloopt, akkoord, tokens:[sha256], klant?, doorgaan?, herinnerd?, eindeGemeld?, kaarten? } }
 // Onleesbaar (kapot of half geschreven) is iets anders dan "nog geen aanmeldingen": dan
 // weet de server niet wie klant is, en mag het automatisch wissen van praktijken na een
 // proef niet draaien (anders verdween een betalende praktijk zonder kaarten). Het kapotte
@@ -1313,6 +1313,15 @@ function proefMeldAhmed(onderwerp, p, regel) {
 // aan beheer, zodat er gebeld kan worden) en het automatisch wissen na afloop
 // nooit twee rondes tegelijk: een trage ronde (Mollie, wissen) mag niet overlappen met de
 // volgende, anders kunnen twee rondes voor dezelfde maand een incasso aanmaken
+// "hoe ga je door" in de mails rond het einde van de proef: met Mollie meteen online afrekenen,
+// zonder Mollie (zoals altijd) antwoorden op de mail, dan wordt er gebeld
+const PROEF_EINDE_MAIL_MS = 86400000;
+function proefDoorgaanRegel() {
+  return mollieAan()
+    ? "Wil je doorgaan? Reken de eerste maand online af op " + APP_BASIS + "/v2/proef?mijn=1 (9,99 euro per therapeut per maand, " +
+      "exclusief btw, maandelijks opzegbaar). Liever eerst overleggen? Antwoord op deze mail, dan bellen we je."
+    : "Wil je doorgaan? Antwoord op deze mail, dan bellen we je om het abonnement af te spreken.";
+}
 const WIS_VOORAF_DAGEN = 7; // zoveel dagen voor het wissen krijgt de praktijk een mail
 let proefRondeBezig = false;
 async function proefRonde() {
@@ -1392,10 +1401,23 @@ async function proefRondeEen() {
       p.herinnerd = nu; gewijzigd = true;
       proefMail(p.email, "Je Fysiplan-proef loopt over twee dagen af",
         "Hoi " + p.naam + ",\n\nJe gratis proef van Fysiplan loopt tot en met " + datumNl(p.verloopt) + ".\n" +
-        "Wil je daarna doorgaan? Antwoord op deze mail, dan bellen we je om het abonnement af te spreken.\n\n" +
+        proefDoorgaanRegel() + "\n\n" +
         "De kaarten die je met patiënten deelde blijven werken tot hun bewaartermijn afloopt, en uiterlijk tot " + PROEF_BEWAAR_DAGEN +
         " dagen na je proef (zie fysiplan.nl/privacy).\n\nGroet,\nFysiplan");
       proefMeldAhmed("Proef loopt bijna af: " + (p.praktijk || p.naam), p, "Deze proef loopt over twee dagen af. Goed moment om even te bellen.");
+    }
+    // op de dag dat de proef afloopt: één mail aan de aanmelder (wat er nu wel en niet meer kan,
+    // hoe je doorgaat) en een seintje aan beheer. Alleen binnen een dag na het einde, zodat proeven
+    // die al langer voorbij zijn bij een uitrol niet alsnog allemaal een mail krijgen.
+    if (!p.klant && !p.doorgaan && !p.eindeGemeld && mailIngesteld() && nu >= p.verloopt && nu - p.verloopt < PROEF_EINDE_MAIL_MS) {
+      p.eindeGemeld = nu; gewijzigd = true;
+      proefMail(p.email, "Je Fysiplan-proef is afgelopen",
+        "Hoi " + p.naam + ",\n\nJe gratis proef van Fysiplan is voorbij. Nieuwe kaarten maken kan nu niet meer. " +
+        "De kaarten die je met patiënten deelde blijven werken, en op " + APP_BASIS + "/v2/proef zie je nog wat ze doorgaven.\n\n" +
+        proefDoorgaanRegel() + "\n\n" +
+        "Word je geen klant, dan wissen we op " + datumNl(p.verloopt + PROEF_BEWAAR_DAGEN * 86400000) +
+        " alles van je praktijk (zie " + APP_BASIS + "/privacy). Een week vooraf krijg je daar nog een mail over.\n\nGroet,\nFysiplan");
+      proefMeldAhmed("Proef afgelopen: " + (p.praktijk || p.naam), p, "Deze proef is vandaag afgelopen en is (nog) geen klant. Goed moment om even te bellen.");
     }
   }
   if (gewijzigd) await bewaarProeven().catch(() => {});
@@ -7272,7 +7294,7 @@ async function afhandelen(request, response) {
         if (!p) { await sendJson(response, 404, { ok: false, fout: "Aanmelding niet gevonden." }); return; }
         if (b.actie === "wis") proefWis(p.id);
         else if (b.actie === "klant") p.klant = !p.klant;
-        else if (b.actie === "verleng") { p.verloopt = Math.max(p.verloopt, Date.now()) + 7 * 86400000; p.herinnerd = 0; }
+        else if (b.actie === "verleng") { p.verloopt = Math.max(p.verloopt, Date.now()) + 7 * 86400000; p.herinnerd = 0; p.eindeGemeld = 0; }
         else { await sendJson(response, 400, { ok: false, fout: "Onbekende actie." }); return; }
         await bewaarProeven();
         await sendJson(response, 200, { ok: true, aanmeldingen: lijst() });

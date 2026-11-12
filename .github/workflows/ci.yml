@@ -34,6 +34,7 @@ jobs:
       - run: npm run test:proefpoort
       - run: npm run test:proefverplicht
       - run: npm run test:wisvooraf
+      - run: npm run test:proefeindemail
       - run: npm run test:oudeproef
       - run: npm run test:abonnement
       - run: npm run test:sweep
