@@ -95,6 +95,11 @@ terug naar de gedeelde server-lijst.
   bewaard en krijgt een QR (eigen encoder, `public/qr.js`, geen dependencies) naar
   **/k/&lt;id&gt;** (`public/kaart.html`): een mobielvriendelijke, alleen-lezen weergave die de
   cliënt zonder app of account opent. Het id is onraadbaar (12 hex-tekens).
+- **Wat de patiëntkaart ophaalt:** `GET /api/kaart?id=` stuurt met de kaart mee wat bij haar eigen
+  oefeningen hoort: de regels uit de bibliotheek (`lib`) en uit beide keuringsbestanden (`keuring`),
+  onbewerkt. De pagina haalt de hele bibliotheek en de keuringsbestanden alleen nog op als dat
+  pakket ontbreekt of niet klopt, bijvoorbeeld bij een antwoord uit de offline-cache van een oudere
+  versie. Test: `npm run test:kaartpakket`.
 - **Oefenvideo's (zonder app):** iedere serveroefening heeft in `/admin88` een zichtbare
   **+ Video**. Daarmee kan beheer een gerenderde avatarvideo direct kiezen of slepen,
   vooraf bekijken, vervangen en verwijderen. Met `CLOUDFLARE_ACCOUNT_ID` plus
