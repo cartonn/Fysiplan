@@ -167,6 +167,7 @@
     "test:beheeraccounts": "node scripts/test-beheer-accounts.mjs",
     "test:oefennamen": "node scripts/test-oefennamen.mjs",
     "test:openkaart": "node scripts/test-open-kaart.mjs",
+    "test:bewaker": "node scripts/test-bewaker.mjs",
     "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs",
     "test:prullenbak": "node scripts/test-kaart-prullenbak.mjs",
     "test:beveiligingfeedback": "node scripts/test-beveiliging-feedback.mjs",

@@ -433,6 +433,27 @@ eigenaars-dashboard, met automatische verversing per minuut en een donkere modus
 De data komt uit `GET /api/dashboard` (alleen voor beheer); tellers staan in
 `statistieken.json` in de datamap.
 
+## De bewaker van buitenaf
+
+Om de vijf minuten kijkt een machine van GitHub of fysiplan.nl het doet (`.github/workflows/bewaker.yml`,
+`scripts/bewaker.mjs`). Bij een storing komt er een issue op naam van de eigenaar van de repository, met in gewone taal
+wat er mis is; zijn twee rondes achter elkaar weer goed, dan gaat het issue dicht. Hij draait niet op Railway, dus een
+server die omvalt neemt het alarm niet mee.
+
+- **Wat hij nakijkt:** `/health`, de landingspagina, het werkscherm en de oefenbibliotheek, en wat `/health` zegt over
+  de reservekopie, het volume en het aantal serverfouten. Wat niet antwoordt, krijgt twee herkansingen met een halve
+  minuut ertussen: een uitrol is geen storing.
+- **`/health` vertelt erbij:** `gestart` (sinds wanneer dit proces draait) en `fouten` (`uur`: antwoorden 500 en fouten
+  die niemand opving in het afgelopen uur; `buiten`: antwoorden 502, als een dienst van buiten niet meewerkte). Alleen
+  aantallen (`lib/uurteller.js`); na een herstart beginnen ze op nul.
+- **Geen bezoek:** verzoeken van de bewaker tellen niet mee in het dashboard.
+- **Instellen:** de variabele `BEWAKER` (`snel`, `zuinig` of `uit`), `BEWAKER_ADRES`, en het geheim `BEWAKER_WEBHOOK`
+  voor een bericht op een telefoon (ntfy of Slack). Een proefmelding stuur je vanuit het tabblad Actions.
+- **Grenzen:** op zijn vroegst om de vijf minuten en soms later, geen telefoontje, en in een besloten repository zet
+  hij zichzelf uit tot iemand ervoor kiest.
+
+Alles staat in gewone taal in [docs/bewaker.md](docs/bewaker.md). Test: `npm run test:bewaker`.
+
 ## Nieuwe plaatjes toevoegen (in de repo)
 
 De 215 oefening-plaatjes staan in `public/images/` (per categorie in een submap) en zijn
