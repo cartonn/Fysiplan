@@ -199,11 +199,17 @@ try {
     meld("5d afdruk", "vijf afdrukken in beheer-loket.json, geen enkele sleutel zelf");
   }
 
-  // ---- niets op schijf ----
-  const bestanden = await readdir(dataDir);
-  const inhoud = (await Promise.all(bestanden.filter((n) => n.endsWith(".json")).map((n) => readFile(join(dataDir, n), "utf8").catch(() => "")))).join("\n");
-  assert.doesNotMatch(inhoud, /contact-voorstel|Oefenkaart in één minuut|"geheugen"|tegelijk-taak/, "het geheugen staat niet in de datamap");
-  meld("datamap", "geen spoor van het geheugen op schijf");
+  // ---- op schijf: demo en echt apart ----
+  // Het geheugen bestaat alleen in de demo. Sinds de demo een herstart overleeft, staat het in het
+  // eigen bestand beheer-demo.json; in de echte bestanden mag er geen spoor van zijn.
+  const GEHEUGEN = /contact-voorstel|Oefenkaart in één minuut|"geheugen"|tegelijk-taak/;
+  const bestanden = (await readdir(dataDir)).filter((n) => n.endsWith(".json"));
+  const echtInhoud = (await Promise.all(bestanden.filter((n) => !n.startsWith("beheer-demo")).map((n) => readFile(join(dataDir, n), "utf8").catch(() => "")))).join("\n");
+  assert.doesNotMatch(echtInhoud, GEHEUGEN, "het geheugen staat niet in de echte bestanden");
+  const demoInhoud = await readFile(join(dataDir, "beheer-demo.json"), "utf8");
+  assert.match(demoInhoud, /"geheugen"/, "het geheugen staat in het demobestand");
+  assert.ok(!demoInhoud.includes("pietersen") && !demoInhoud.includes("12345678"), "geen geweigerde persoonsgegevens in het demobestand");
+  meld("datamap", "geheugen alleen in beheer-demo.json; geen spoor in de echte bestanden; geen geweigerde persoonsgegevens in het demobestand");
   console.log("sweep-agent-geheugen: ok (" + resultaten.length + " scenario's)");
 } catch (e) {
   console.error(stderr.slice(-2000));

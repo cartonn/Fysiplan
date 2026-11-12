@@ -8,12 +8,17 @@
 //   niet in het antwoord, niet in het beheerlogboek, niet in de bestanden.
 // - De stand van een agent in de demo bepaalt wat hij in de demo doet; de echte stand blijft.
 // - De demo overleeft een herstart (eigen bestand beheer-demo.json), blijft gescheiden van de echte
-//   gegevens en staat niet in de reservekopie. "Demo opnieuw beginnen" wist hem wel.
+//   gegevens en staat niet in de reservekopie. "Demo opnieuw beginnen" wist hem wel. Een bestand dat
+//   niet terug kan (onleesbaar of een andere vorm) gaat opzij, en de pagina zegt waarom.
+// - Een bericht dat bij een herstart onderweg was, is daarna "onbekend": niet opnieuw te versturen;
+//   beheer legt na controle vast of het wel of niet verstuurd is.
+// - Een wijziging in de demo staat op schijf vóór het antwoord; lukt opslaan niet, dan 500.
+// - Vaste telefoonnummers tellen als persoonsgegevens, net als 06-nummers.
 // Nepmail-API op localhost; past in CI. `npm run test:loketdemo`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { randomBytes, scryptSync } from "node:crypto";
-import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
@@ -208,6 +213,90 @@ try {
     assert.equal((await werk("support")).ok, true, "een onbekende vorm: de demo begint opnieuw in plaats van te breken");
     assert.equal(JSON.parse(await bestand("beheer-demo.json")).versie, o.versie);
   }
+
+  // na een herstart opnieuw inloggen als de sessie weg is
+  async function herstart(tussendoor) {
+    await stop();
+    if (tussendoor) await tussendoor();
+    await start();
+    if ((await fetch(origin + "/api/beheer/omgeving?bron=demo", { headers: kop() })).status !== 200) { await wacht(31e3 - (Date.now() % 30e3)); cookie = await login(); }
+  }
+
+  // ---- 5. een demobestand dat niet terug kan: opzij, niet weg, en de reden op de pagina ----
+  {
+    const opzij = async (voor) => (await readdir(dataDir)).filter((n) => n.startsWith("beheer-demo." + voor + "-"));
+    const [versieBestand] = await opzij("versie-999");
+    assert.ok(versieBestand, "het bestand van de andere vorm staat apart");
+    assert.equal(JSON.parse(await bestand(versieBestand)).versie, 999, "met de oude inhoud");
+    let v = await stand("demo");
+    assert.match(v.demoReset.reden, /andere vorm \(versie 999, nu 1\)/);
+    assert.equal(v.demoReset.bestand, versieBestand);
+    assert.equal((await stand("echt")).demoReset, undefined, "de reden staat alleen bij de demo");
+    // de reden blijft na nog een herstart; "Demo opnieuw beginnen" haalt haar weg
+    await herstart();
+    assert.equal((await stand("demo")).demoReset.bestand, versieBestand);
+    // onleesbaar: ook opzij, met de inhoud zoals ze was
+    await herstart(() => writeFile(join(dataDir, "beheer-demo.json"), "{kapot"));
+    const [kapot] = await opzij("onleesbaar");
+    assert.equal(await bestand(kapot), "{kapot");
+    v = await stand("demo");
+    assert.match(v.demoReset.reden, /niet te lezen/);
+    assert.equal((await om("demo-opnieuw", {}, "demo")).status, 200);
+    assert.equal((await stand("demo")).demoReset, undefined);
+  }
+
+  // ---- 6. een bericht dat bij een herstart onderweg was: uitkomst onbekend, een mens beslist ----
+  {
+    let gekozen = null;
+    await herstart(async () => {
+      const o = JSON.parse(await bestand("beheer-demo.json"));
+      gekozen = o.loket.concepten.find((c) => c.stand === "wacht") || o.loket.concepten[0];
+      Object.assign(gekozen, { stand: "bezig" });
+      o.loket.concepten = o.loket.concepten.map((c) => (c.id === gekozen.id ? gekozen : c));
+      await writeFile(join(dataDir, "beheer-demo.json"), JSON.stringify(o));
+    });
+    let c = (await stand("demo")).loket.concepten.find((x) => x.id === gekozen.id);
+    assert.equal(c.stand, "onbekend", "bezig wordt na een herstart onbekend, niet opnieuw verstuurbaar");
+    // niet opnieuw te versturen of af te wijzen, en de praktijk krijgt intussen niets nieuws
+    assert.equal((await om("loket/concept", { id: c.id, besluit: "verstuur" }, "demo")).status, 404);
+    for (const rol of ["support", "finance"]) for (const z of (await werk(rol)).werk.zaken.filter((x) => x.praktijk === c.praktijk)) assert.equal(z.eigenBericht.kan, false, rol + " " + z.soort);
+    assert.equal((await om("loket/concept", { id: c.id, besluit: "nagekeken", uitkomst: "misschien" }, "demo")).status, 400);
+    const voor = (await stand("demo")).agent.mails.length;
+    assert.equal((await om("loket/concept", { id: c.id, besluit: "nagekeken", uitkomst: "verstuurd" }, "demo")).status, 200);
+    const na = await stand("demo");
+    c = na.loket.concepten.find((x) => x.id === gekozen.id);
+    assert.equal(c.stand, "verstuurd");
+    assert.equal(na.agent.mails.length, voor, "nakijken verstuurt zelf niets");
+    assert.equal((await om("loket/concept", { id: c.id, besluit: "nagekeken", uitkomst: "verstuurd" }, "demo")).status, 404, "maar één keer");
+  }
+
+  // ---- 7. opslaan vóór het antwoord: lukt het niet, dan geen succes ----
+  {
+    // foutinjectie: op de plek van beheer-demo.json staat een map, dus vervangen lukt niet
+    await rm(join(dataDir, "beheer-demo.json"));
+    await mkdir(join(dataDir, "beheer-demo.json", "blok"), { recursive: true });
+    let r = await om("mailstand", { soort: "eigen-bericht", stand: "uit" }, "demo");
+    let j = await r.json();
+    assert.deepEqual([r.status, j.opslagFout], [500, true], "beheer krijgt een fout, geen 200");
+    r = await agent("finance", "actie", { actie: "notitie", periode: "2026-K4", tekst: "Na de opslagfout." });
+    assert.deepEqual([r.status, (await r.json()).opslagFout], [500, true], "de agent ook");
+    // een weigering blijft een weigering (geen 500 die de echte reden verbergt)
+    assert.equal((await agent("finance", "actie", { actie: "notitie", periode: "2026", tekst: "Bel 010-1234567." })).status, 400);
+    // de echte kant merkt niets van een kapotte demo
+    assert.equal((await om("loket/agent", { rol: "tech", stand: "proef" })).status, 200);
+    await rm(join(dataDir, "beheer-demo.json"), { recursive: true });
+    r = await agent("finance", "actie", { actie: "notitie", periode: "2026-K4", tekst: "Na het herstel." });
+    assert.equal(r.status, 200);
+    const demoNu = await bestand("beheer-demo.json");
+    assert.ok(demoNu.includes("Na het herstel.") && demoNu.includes("Na de opslagfout."), "na herstel staat alles op schijf");
+  }
+
+  // ---- 8. vaste telefoonnummers blijven gevoelig, niet alleen 06 ----
+  for (const nr of ["010-1234567", "0201234567", "+31 20 123 4567", "06-12345678"]) {
+    const r = await agent("finance", "actie", { actie: "notitie", periode: "2026", tekst: "Bel " + nr + " terug." });
+    assert.equal(r.status, 400, nr);
+  }
+  assert.equal((await agent("finance", "actie", { actie: "notitie", periode: "2026", tekst: "Weekcijfers 0 14 10 13 10 10 15, factuur FP-2026-0089." })).status, 200, "cijferreeksen zonder telefoonnummer mogen");
   console.log("test-loket-demo: ok");
 } catch (err) {
   console.error(log.slice(-2000));
