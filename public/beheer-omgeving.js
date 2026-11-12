@@ -762,7 +762,7 @@ function bindAgents(el) {
     const j = await post('loket/concept', { id: b.dataset.akkoord, besluit: 'verstuur' });
     if (j) melden(bron === 'demo' ? 'Verstuurd in demo (alleen in het postvak bij de support-agent).' : 'Verstuurd.'); else b.disabled = false;
   }));
-  el.querySelectorAll('[data-afwijzen]').forEach((b) => b.addEventListener('click', () => vraagReden(b, 'Waarom niet? De support-agent leest dit bij zijn volgende ronde (mag leeg).', async (reden) => {
+  el.querySelectorAll('[data-afwijzen]').forEach((b) => b.addEventListener('click', () => vraagReden(b, 'Waarom niet? De agent die dit schreef, leest dit bij zijn volgende ronde (mag leeg).', async (reden) => {
     const j = await post('loket/concept', { id: b.dataset.afwijzen, besluit: 'afwijzen', reden });
     if (j) melden('Afgewezen.');
     return !!j;

@@ -20,6 +20,7 @@ import { spawn } from "node:child_process";
 import { randomBytes, scryptSync } from "node:crypto";
 import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
+import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -297,6 +298,83 @@ try {
     assert.equal(r.status, 400, nr);
   }
   assert.equal((await agent("finance", "actie", { actie: "notitie", periode: "2026", tekst: "Weekcijfers 0 14 10 13 10 10 15, factuur FP-2026-0089." })).status, 200, "cijferreeksen zonder telefoonnummer mogen");
+  // ---- 9. browser: afwijzen met een formulier in de kaart, met het toetsenbord ----
+  // (prompt() toonde in een ingebouwde browser niets.) Alleen als Playwright er is; de CI heeft het niet.
+  let pw = null;
+  try { pw = createRequire(import.meta.url)("playwright"); } catch { console.log("test-loket-demo: geen Playwright, browserdeel overgeslagen"); }
+  if (pw) {
+    const browser = await pw.chromium.launch();
+    try {
+      const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.88.0.9" } });
+      const [naam, waarde] = cookie.split("=");
+      await ctx.addCookies([{ name: naam, value: waarde, url: origin }]);
+      const page = await ctx.newPage();
+      const fouten = [], dialogen = [];
+      page.on("pageerror", (e) => fouten.push(e.message));
+      page.on("dialog", (dl) => { dialogen.push(dl.type()); dl.dismiss(); });
+      // een vers concept van de support-agent om af te wijzen
+      assert.equal((await om("mailstand", { soort: "eigen-bericht", stand: "handmatig" }, "demo")).status, 200);
+      const z = (await werk("support")).werk.zaken.find((x) => x.eigenBericht.kan);
+      assert.ok(z, "er is een zaak waarvoor een bericht kan");
+      assert.equal((await agent("support", "actie", { actie: "eigen-mail", zaak: z.id, ...tekst(40) })).status, 200);
+      const c = (await stand("demo")).loket.concepten.find((x) => x.stand === "wacht" && x.onderwerp.endsWith("(40)"));
+      await page.goto(origin + "/dashboard88/omgeving?bron=demo#agents");
+      const knop = page.locator('[data-afwijzen="' + c.id + '"]');
+      await knop.waitFor();
+      // met het toetsenbord openen: focus op het reden-veld
+      await knop.focus();
+      await page.keyboard.press("Enter");
+      await page.locator(".redenvorm textarea").waitFor();
+      assert.equal(await page.evaluate(() => document.activeElement.tagName), "TEXTAREA", "de focus staat in het reden-veld");
+      assert.equal(await knop.getAttribute("aria-expanded"), "true");
+      await page.keyboard.type("Nog even niet");
+      // Esc annuleert: formulier weg, focus terug op Afwijzen, het concept wacht nog
+      await page.keyboard.press("Escape");
+      assert.equal(await page.locator(".redenvorm").count(), 0);
+      assert.equal(await page.evaluate(() => document.activeElement.dataset.afwijzen), c.id, "de focus is terug op de knop");
+      assert.equal((await stand("demo")).loket.concepten.find((x) => x.id === c.id).stand, "wacht", "annuleren verandert niets");
+      // de knop Annuleren doet hetzelfde
+      await page.keyboard.press("Enter");
+      await page.locator(".redenvorm").waitFor();
+      await page.locator("[data-reden-annuleer]").click();
+      assert.equal(await page.locator(".redenvorm").count(), 0);
+      assert.equal((await stand("demo")).loket.concepten.find((x) => x.id === c.id).stand, "wacht");
+      // Shift+Enter is een nieuwe regel, Enter bevestigt
+      await knop.focus();
+      await page.keyboard.press("Enter");
+      await page.locator(".redenvorm textarea").waitFor();
+      await page.keyboard.type("Toon is te streng");
+      await page.keyboard.press("Shift+Enter");
+      assert.equal(await page.locator(".redenvorm").count(), 1, "Shift+Enter verstuurt niet");
+      await page.keyboard.type("en te lang");
+      await page.keyboard.press("Enter");
+      await page.locator("#melding:not([hidden])").waitFor();
+      for (let i = 0; i < 50 && (await stand("demo")).loket.concepten.find((x) => x.id === c.id).stand === "wacht"; i++) await wacht(100);
+      const na = (await stand("demo")).loket.concepten.find((x) => x.id === c.id);
+      assert.equal(na.stand, "afgewezen");
+      assert.match(na.reden, /^Toon is te streng\s+en te lang$/, "de hele reden komt aan (de server maakt van de nieuwe regel een spatie)");
+      assert.equal(await page.locator('[data-afwijzen="' + c.id + '"]').count(), 0, "het concept staat niet meer bij wachtend");
+      // een taak van de chief of staff afwijzen gaat net zo (gedeeld geheugen, alleen demo)
+      // een taak van de chief of staff en een concept van de groei-agent gaan net zo (alleen demo)
+      for (const [attr, lijst, veld] of [["data-taak", "taken", "status"], ["data-groei", "groei", "stand"]]) {
+        const k = page.locator("[" + attr + '][data-besluit="afwijzen"]').first();
+        assert.equal(await k.count(), 1, attr + ": de demo heeft er een om af te wijzen");
+        const id = await k.getAttribute(attr);
+        await k.click();
+        await page.keyboard.type("bewaar mij");
+        await page.keyboard.press("Escape");
+        assert.equal((await stand("demo")).loket.geheugen[lijst].find((x) => x.id === id)[veld] === "afgewezen", false, attr + ": annuleren wijst niet af");
+        await k.click();
+        await page.locator(".redenvorm textarea").fill("Geen tijd deze week");
+        await page.keyboard.press("Enter");
+        await page.locator("[" + attr + '="' + id + '"][data-besluit="afwijzen"]').waitFor({ state: "detached" });
+        assert.equal((await stand("demo")).loket.geheugen[lijst].find((x) => x.id === id)[veld], "afgewezen", attr);
+      }
+      assert.deepEqual(dialogen, [], "geen prompt() of confirm() nodig");
+      assert.deepEqual(fouten, []);
+      await ctx.close();
+    } finally { await browser.close(); }
+  }
   console.log("test-loket-demo: ok");
 } catch (err) {
   console.error(log.slice(-2000));
