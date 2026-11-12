@@ -191,6 +191,19 @@ deze weg (`npm run test:beheerherstel`). De beheersleutel alleen opent zo geen p
 bij de server of bij de mailprovider kan (die bewaart verzonden mail), blijft technisch bij
 gegevens kunnen; daarom staan de reden en het moment in het logboek van de praktijk.
 
+**Mail bij een seintje.** Tikt een patiënt “Ik heb een vraag” of “Het doet te veel pijn”, dan
+stuurt de server een korte mail naar de praktijk (als `MAIL_API_SLEUTEL` en `MAIL_AFZENDER` gezet
+zijn): dát er een seintje is, met een link naar de app. Er staat geen naam van de patiënt, geen
+soort seintje en geen inhoud in. De mail gaat naar de behandelaar van de kaart, anders naar wie de
+kaart maakte, anders naar de beheerders met een eigen login, anders naar de aanmelder van de proef;
+nooit naar het openbare contactadres uit het profiel. Alleen een nieuw open seintje of een vraag
+die oploopt naar pijn geeft een mail, “Het gaat goed” niet. Per adres hooguit één mail per
+kwartier (wat in die tijd binnenkomt, gaat samen in de volgende) en per praktijk hooguit 40 per
+24 uur. Wat nog niet gemaild is, blijft op schijf gemerkt (`seintje.meld`) en gaat alsnog: na de
+rem, na een storing bij de mailprovider of na een herstart. De patiënt wacht nooit op de mail. Een
+beheerder zet het per praktijk uit onder Kaarten → Team. Het is geen alarm: wat de patiënt te
+lezen krijgt (“ziet het pas bij het inloggen”) blijft gelden (`npm run test:seinmail`).
+
 ## V1-account en bevestigingsmail
 
 De app op `/` (V1) staat altijd achter een e-mail/wachtwoordlogin. Een medewerker kiest

@@ -548,6 +548,130 @@ function beheerHerstelOpSlot(pk) {
 const herstelMailGeldig = (acc) => !!(acc && acc.herstelMail && acc.herstelMail.hash && acc.herstelMail.verloopt > Date.now());
 // beheer hoort waar de mail heen ging, niet het hele adres: "j***@praktijk.nl"
 const maskeerEmail = (e) => { const [voor, na] = String(e || "").split("@"); return (voor || "").slice(0, 1) + "***@" + (na || ""); };
+// ---- bericht aan de praktijk bij een seintje (platformreview 2026-11-11) ----
+// "Ik heb een vraag" of "Het doet te veel pijn" bleef liggen tot iemand de app opende. Nu gaat
+// er een korte mail naar de behandelaar van de kaart: dát er iets is binnengekomen, zonder naam
+// van de patiënt, zonder soort en zonder inhoud. Er staan dus geen gezondheidsgegevens in de
+// mail, en de server duidt of rangschikt niets (dat blijft bij de therapeut). Het is geen alarm:
+// de werkregels blijven gelden (berichten lees je op werkdagen, spoed loopt via de telefoon).
+// - Wanneer: bij een nieuw open seintje, of als een vraag oploopt naar pijn. Het seintje krijgt
+//   dan het merkteken `meld`. Dat staat mee op schijf en gaat pas weg als er een mail voor is
+//   vertrokken. Een seintje valt zo niet weg door een rem, een storing bij de mailprovider of
+//   een herstart: de ronde (elke minuut, en meteen na een seintje) pakt het alsnog op.
+// - Naar wie: de behandelaar van de kaart (op naam), anders wie de kaart maakte, anders de
+//   beheerders met een eigen login, anders de aanmelder van de proef. Alleen adressen die de
+//   praktijk zelf als login of aanmelding gebruikt; het openbare contactadres uit het profiel niet.
+// - Remmen: per adres hooguit één mail per kwartier (wat in die tijd nog binnenkomt, gaat samen
+//   in de volgende mail) en per praktijk hooguit SEIN_MAILS_PER_DAG per 24 uur. Die adressen
+//   zijn niet bevestigd; zonder plafond was dit een mailpomp naar zelfgekozen adressen.
+// - Een beheerder zet het uit onder Team (acc.seinMail === false). Zonder mail op de server
+//   gebeurt er niets.
+const seinEnv = (naam, standaard) => { const v = process.env[naam]; return v !== undefined && v !== "" && Number.isFinite(Number(v)) ? Math.max(0, Number(v)) : standaard; };
+const SEIN_MAIL_TUSSEN_MS = seinEnv("SEIN_MAIL_TUSSEN_S", 900) * 1000; // de omgevingsvariabelen zijn er voor de test
+const SEIN_MAIL_RONDE_MS = Math.max(100, seinEnv("SEIN_MAIL_RONDE_S", 60) * 1000);
+const SEIN_MAILS_PER_DAG = seinEnv("SEIN_MAILS_PER_DAG", 40);
+const APP_BASIS = String(process.env.FYSIPLAN_BASIS_URL || "https://fysiplan.nl").replace(/\/+$/, "");
+const seinMailLaatst = new Map(); // adres -> moment van de laatste mail (of poging)
+const seinMailMis = new Map();    // adres -> aantal mislukte pogingen op rij
+const seinMailTeller = new Map(); // pk -> { start, n }
+const seinOpen = (x) => x === "vraag" || x === "pijn";
+const seinMailKan = (pk) => mailIngesteld() && praktijkGeclaimd(pk) && praktijkAccounts[pk].seinMail !== false;
+function seinMailOntvangers(pk, kaart) {
+  const acc = Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
+  if (!acc) return [];
+  const leden = ledenVan(pk).filter((l) => lidActief(l) && geldigEmail(l.email));
+  const uit = (l) => ({ email: l.email, naam: l.naam || "" });
+  if (kaart) {
+    // zelfde inkorting als behandelaarVanSessie: de kaart bewaart hooguit 40 tekens van de naam
+    const kort = (n) => String(n || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 40).toLowerCase();
+    const naam = kort(kaart.behandelaar);
+    const opNaam = naam ? leden.filter((l) => kort(l.naam) === naam) : [];
+    if (opNaam.length === 1) return [uit(opNaam[0])];
+    const maker = leden.find((l) => "lid:" + l.id === kaart.maker);
+    if (maker) return [uit(maker)];
+  }
+  const beheer = leden.filter((l) => l.rol === "beheerder").slice(0, 3);
+  if (beheer.length) return beheer.map(uit);
+  const proef = acc.proef && Object.hasOwn(proeven, String(acc.proef.id)) ? proeven[String(acc.proef.id)] : null;
+  return proef && geldigEmail(proef.email) ? [{ email: normEmail(proef.email), naam: proef.naam || "" }] : [];
+}
+function seinMailTekst(pk, o, aantal) {
+  const naam = weergaveNaam(pk);
+  const link = APP_BASIS + "/v2/app" + (naam ? "?praktijk=" + encodeURIComponent(naam) : "");
+  const contact = FYSIPLAN_ID.contact || (MAIL_AFZENDER.match(/[^\s<>]+@[^\s<>]+/) || [""])[0];
+  return {
+    onderwerp: (aantal === 1 ? "Nieuw seintje van een patiënt" : "Nieuwe seintjes van patiënten") + " (" + (naam || "Fysiplan") + ")",
+    tekst: "Hallo" + (o.naam ? " " + o.naam.split(" ")[0] : "") + ",\n\n" +
+      (aantal === 1 ? "Een patiënt" : aantal + " patiënten") + (naam ? " van " + naam : "") + (aantal === 1 ? " heeft" : " hebben") +
+      " via de oefenkaart een seintje gegeven. In Fysiplan zie je onder Kaarten, bij “Nieuw van patiënten”, van wie het komt en wat het is:\n" + link + "\n\n" +
+      "In deze mail staan bewust geen gegevens van de patiënt. Fysiplan is geen alarmknop: spoed loopt via de telefoon.\n\n" +
+      "Je krijgt hooguit één zo’n mail per kwartier. Liever geen mail? Een beheerder van je praktijk zet dit uit in Fysiplan onder Kaarten, Team." +
+      (contact ? "\n\nKen je Fysiplan niet? Dan is je adres ten onrechte opgegeven. Laat het ons weten via " + contact + "." : "") +
+      "\n\nFysiplan"
+  };
+}
+// nooit twee rondes tegelijk; een seintje dat tijdens een ronde binnenkomt, krijgt er meteen een na
+let seinRondeBezig = false, seinRondeNog = false;
+async function seinMailRonde() {
+  if (seinRondeBezig) { seinRondeNog = true; return; }
+  seinRondeBezig = true;
+  try { do { seinRondeNog = false; await seinMailRondeEen(); } while (seinRondeNog); }
+  catch (e) { console.error("seintjesmail:", e.message); }
+  finally { seinRondeBezig = false; }
+}
+async function seinMailRondeEen() {
+  if (!mailIngesteld()) return;
+  const nu = Date.now();
+  if (seinMailLaatst.size > 5000) for (const [k, t] of seinMailLaatst) if (nu - t > SEIN_MAIL_TUSSEN_MS) seinMailLaatst.delete(k);
+  if (seinMailTeller.size > 5000) for (const [k, v] of seinMailTeller) if (nu - v.start > 86400e3) seinMailTeller.delete(k);
+  if (seinMailMis.size > 5000) seinMailMis.clear();
+  let gewijzigd = false;
+  const wachtend = [];        // { k, sein, verstuurd }
+  const groepen = new Map();  // praktijk + adres -> { pk, o, items }
+  for (const pk of Object.keys(kaarten)) {
+    for (const k of Object.values(kaarten[pk] || {})) {
+      const sein = k && k.seintje;
+      if (!sein || !sein.meld) continue;
+      const naar = seinOpen(sein.soort) && !k.verwijderdOp && !k.demo && seinMailKan(pk) ? seinMailOntvangers(pk, k) : [];
+      // niets (meer) te melden: afgehandeld, uitgezet, of geen eigen adres van de praktijk bekend
+      if (!naar.length) { delete sein.meld; gewijzigd = true; continue; }
+      const w = { k, sein, verstuurd: false };
+      wachtend.push(w);
+      for (const o of naar) {
+        const sleutel = pk + "\n" + o.email;
+        if (!groepen.has(sleutel)) groepen.set(sleutel, { pk, o, items: [] });
+        groepen.get(sleutel).items.push(w);
+      }
+    }
+  }
+  await Promise.all([...groepen.values()].map(async (g) => {
+    // rem per adres en plafond per praktijk: het merkteken blijft staan, een volgende ronde stuurt het
+    if (seinMailLaatst.has(g.o.email) && nu - seinMailLaatst.get(g.o.email) < SEIN_MAIL_TUSSEN_MS) return;
+    let t = seinMailTeller.get(g.pk);
+    if (!t || nu - t.start > 86400e3) { t = { start: nu, n: 0 }; seinMailTeller.set(g.pk, t); }
+    if (t.n >= SEIN_MAILS_PER_DAG) return;
+    t.n++;
+    seinMailLaatst.set(g.o.email, nu);
+    const m = seinMailTekst(g.pk, g.o, g.items.length);
+    try {
+      await stuurMail(g.o.email, m.onderwerp, m.tekst);
+      seinMailMis.delete(g.o.email);
+      for (const w of g.items) w.verstuurd = true;
+    } catch {
+      // mislukt: telt niet mee voor het plafond. Opnieuw na 2, 4, 8 ... minuten, hooguit een uur,
+      // zodat een adres dat de mailprovider blijft weigeren geen stroom verzoeken oplevert
+      t.n--;
+      const mis = (seinMailMis.get(g.o.email) || 0) + 1;
+      seinMailMis.set(g.o.email, mis);
+      const wachtMs = Math.min(3600e3, Math.min(120e3, SEIN_MAIL_TUSSEN_MS) * 2 ** Math.min(mis - 1, 10));
+      seinMailLaatst.set(g.o.email, nu - SEIN_MAIL_TUSSEN_MS + wachtMs);
+    }
+  }));
+  // het merkteken gaat weg zodra er voor dit seintje een mail vertrok (naar wie dan ook van de
+  // ontvangers) en het seintje in de tussentijd niet door een nieuw is vervangen
+  for (const w of wachtend) if (w.verstuurd && w.k.seintje === w.sein && w.sein.meld) { delete w.sein.meld; gewijzigd = true; }
+  if (gewijzigd) await saveJson(kaartenPath, kaarten);
+}
 const tokenHash = (t) => createHash("sha256").update(String(t)).digest("hex");
 async function maakInstelToken(email) {
   const nu = Date.now();
@@ -3222,7 +3346,7 @@ async function afhandelen(request, response) {
     const relevant = new Set(["geclaimd", "ingelogd", "login-mislukt", "login-op-slot",
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
-      "claim-gereset-door-beheer", "herstel-door-beheer", "wachtwoord-hersteld-per-mail", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
+      "claim-gereset-door-beheer", "herstel-door-beheer", "wachtwoord-hersteld-per-mail", "sein-mail-uit", "sein-mail-aan", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
       "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "team-wijziging-geweigerd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "kaart-hersteld", "kaart-definitief-verwijderd", "profiel-gewijzigd",
       "abonnement-opgezegd", "opzeggen-mislukt"]);
     const lijst = praktijkAudit
@@ -3244,8 +3368,11 @@ async function afhandelen(request, response) {
     const beheerders = () => ledenVan(pk).filter((l) => lidActief(l) && l.rol === "beheerder");
     if (urlPath === "/api/praktijk/team" && request.method === "GET") {
       if (leesLimiet(request, response)) return;
+      // mail bij een seintje: of het aan staat, of de server kan mailen, en waar de mail heen gaat
+      // als de kaart geen behandelaar of maker met een eigen login heeft (gemaskeerd)
       await sendJson(response, 200, { ok: true, praktijk: weergaveNaam(pk), beheer: isBeheer(s),
-        ik: ik ? lidUit(ik) : null, gedeeldUit: !!acc.gedeeldUit, leden: ledenVan(pk).map(lidUit) });
+        ik: ik ? lidUit(ik) : null, gedeeldUit: !!acc.gedeeldUit, leden: ledenVan(pk).map(lidUit),
+        seinMail: { aan: acc.seinMail !== false, kan: mailIngesteld(), naar: seinMailOntvangers(pk, null).map((o) => maskeerEmail(o.email)) } });
       return;
     }
     if (request.method !== "POST") { await sendJson(response, 405, { ok: false, fout: "Niet toegestaan." }); return; }
@@ -3276,6 +3403,15 @@ async function afhandelen(request, response) {
       return;
     }
     if (!isBeheer(s)) { await sendJson(response, 403, { ok: false, fout: "Alleen een beheerder van de praktijk kan het team aanpassen." }); return; }
+
+    // mail bij een seintje van een patiënt aan of uit (standaard aan, zie seinMailRonde)
+    if (urlPath === "/api/praktijk/team/sein-mail") {
+      if (b.aan === false) acc.seinMail = false; else delete acc.seinMail;
+      await opslaan();
+      auditLog(pk, acc.seinMail === false ? "sein-mail-uit" : "sein-mail-aan", request);
+      await sendJson(response, 200, { ok: true, seinMail: { aan: acc.seinMail !== false } });
+      return;
+    }
 
     if (urlPath === "/api/praktijk/team/uitnodigen") {
       const em = normEmail(b.email), naam = cleanName(b.naam, 60);
@@ -5153,10 +5289,20 @@ async function afhandelen(request, response) {
       const nu = Date.now();
       const t = tikMoment(b, nu);
       // een ouder of lichter seintje gaat in het logboek, maar verdringt geen nieuwer of zwaarder
+      const oud = found.seintje;
+      const stondOpen = oud && seinOpen(oud.soort) ? oud.soort : null;
       zetSeintje(found, soort, t, nu);
       logContact(found, { van: "patient", soort, ...tikVeld(t, nu) });
       if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
+      // bericht aan de praktijk: bij een nieuw open seintje, of als een vraag oploopt naar pijn.
+      // Het merkteken staat op het seintje en gaat mee naar schijf; een mail die nog wachtte op
+      // de rem verhuist mee als het seintje door een nieuwer van dezelfde soort is vervangen.
+      const nieuwOpen = seinOpen(soort) && (!stondOpen || SEIN_GEWICHT[soort] > SEIN_GEWICHT[stondOpen]);
+      const melden = (nieuwOpen || !!(oud && oud.meld)) && !!found.seintje && seinOpen(found.seintje.soort) && seinMailKan(kaartSleutel(found));
+      if (melden) found.seintje.meld = 1;
       await saveJson(kaartenPath, kaarten);
+      // niet wachten op de mail: de patiënt krijgt meteen antwoord, ook als de mailprovider hapert
+      if (melden) seinMailRonde();
       await sendJson(response, 200, { ok: true });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
@@ -7051,6 +7197,10 @@ async function netjesStoppen(signaal) {
 process.on("SIGTERM", () => { netjesStoppen("SIGTERM"); });
 process.on("SIGINT", () => { netjesStoppen("SIGINT"); });
 
+// seintjesmail: de ronde start pas hier, als alle bestanden hierboven geladen zijn. Meteen na
+// een herstart komt wat nog wachtte, daarna elke minuut wat door een rem is blijven staan.
+setTimeout(() => seinMailRonde(), Math.min(5000, SEIN_MAIL_RONDE_MS)).unref();
+setInterval(() => seinMailRonde(), SEIN_MAIL_RONDE_MS).unref();
 server.listen(port, host, () => {
   console.log(`Fysiplan listening on ${host}:${port} (data: ${dataDir})`);
   // na de eerste reservekopie: verlopen kaarten weg, leeftijd/Casus uit oude kaarten,
