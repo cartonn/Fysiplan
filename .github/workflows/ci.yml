@@ -29,6 +29,7 @@ jobs:
       - run: npm run test:video-recovery
       - run: npm run test:drafts
       - run: npm run test:beheer
+      - run: npm run test:ideeenbox
       - run: npm run test:backup
       - run: npm run test:sessieherstart
       - run: npm run test:proefpoort

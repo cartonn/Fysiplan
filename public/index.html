@@ -1416,8 +1416,11 @@ bridge2.jpg</div>
     pk.innerHTML="<span class='zb-pav' id='zb_pav'>?</span><span class='zb-ptekst'><b id='zb_pnaam'>Je praktijk</b><small id='zb_pstat'>Open Kaarten om in te loggen</small></span>";
     hb.insertBefore(pk,hb.querySelector('.menu'));
     pk.addEventListener('click',klik('kaartenBtn'));
+    // ideeënbox (public/ideeenbox.js): ideeën voor Fysiplan plaatsen en erop stemmen
+    var ideeen=function(){import('/ideeenbox.js?v=1').then(function(m){m.openIdeeenbox();}).catch(function(){alert('De ideeënbox kon niet laden. Probeer het zo opnieuw.');});};
     var hulp=[
       {t:'Help',f:klik('menuHelp')},
+      {t:'Ideeënbox',f:ideeen},
       {t:'Wat is er nieuw',f:function(){var m=[].slice.call(document.querySelectorAll('.topbar .menu .mi')).filter(function(b){return /Updates/.test(b.textContent);})[0];if(m)m.click();}}
     ];
     var hw=document.createElement('div');hw.className='fp-hulp no-print';
@@ -1426,6 +1429,11 @@ bridge2.jpg</div>
       "<div class='fp-hulpmenu' id='fpHulpMenu' role='menu' hidden>"+hulp.map(function(h,i){return "<button type='button' role='menuitem' data-hulp='"+i+"'>"+h.t+"</button>";}).join('')+
       "<div class='fp-hulpvoet'><a role='menuitem' href='/privacy' target='_blank' rel='noopener'>Privacy</a><a role='menuitem' href='/voorwaarden' target='_blank' rel='noopener'>Voorwaarden</a><a role='menuitem' href='/verwerkersovereenkomst' target='_blank' rel='noopener'>Verwerkersovereenkomst</a></div></div>";
     hb.insertBefore(hw,document.getElementById('printBtn'));
+    var ik=document.createElement('button');ik.type='button';ik.className='fp-hulpknop fp-ideeknop no-print';ik.id='fpIdeeKnop';
+    ik.title='Ideeënbox: stem op wat Fysiplan als volgende bouwt';
+    ik.innerHTML=zbIcoon("<path d='M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z'/>")+"<span>Ideeën</span>";
+    ik.addEventListener('click',ideeen);
+    hw.parentNode.insertBefore(ik,hw);
     var hk=document.getElementById('fpHulpKnop'),hm=document.getElementById('fpHulpMenu');
     var zetHulp=function(open){hm.hidden=!open;hk.setAttribute('aria-expanded',open?'true':'false');};
     hk.addEventListener('click',function(e){e.stopPropagation();zetHulp(hm.hidden);});

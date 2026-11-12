@@ -23,6 +23,8 @@ import { maakBeheerOmgeving, merkGezien, merkLoginMis, merkAntwoord } from "./li
 import { rechtenVan, magBuiten } from "./lib/beheer-toegang.js";
 import { BEHEER_SESSIE_MS, BEHEER_WW_MIN, BEHEER_EERSTE_KEER_MS, BeheerSessies, BeheerLogboek, Rem, laadBeheerSessies, beheerKlaar, beheerVerlopen, beheerUit, beheerPad } from "./lib/beheer.js";
 import { leesNamenLaag, kiesNamen, maakZoeker, sleutelVoor, verhuisNaamgebonden } from "./lib/oefennamen.js";
+import { maakIdeeenbox } from "./lib/ideeen-routes.js";
+import { AGENT_SCHEMA as AGENT_SCHEMA_IDEEEN, AGENT_SYSTEEM as AGENT_SYSTEEM_IDEEEN } from "./lib/ideeen.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -1291,6 +1293,8 @@ async function praktijkAllesWissen(pk) {
   for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
   // het logboek noemde de praktijknaam; alleen het feit dat er gewist is blijft, zonder naam
   praktijkAudit = praktijkAudit.filter((a) => a.praktijk !== pk);
+  // ideeënbox: open ideeën van de praktijk weg, besloten ideeën en stemmen zonder herkomst
+  try { await ideeenbox.wisPraktijk(pk); } catch {}
   // vertaalde namen van de eigen oefeningen staan los in de vertaalcache; die gaan nu
   // ook weg, niet pas bij de volgende herstart (art. 17 AVG: echt alles van de praktijk)
   try { await vertaalCacheOpschonen(); } catch {}
@@ -2583,6 +2587,8 @@ function leesLimiet(req, res) {
 const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, praktijkOefeningenPath, accountsPath, auditPath, bewaarPath, v1AccountsPath, proefPath, beheerAccountsPath, beheerLogPath];
 // finance: btw-keuze, ingediende aangiftes, afgesloten boekjaren, kosten; en wat de support-agent mag en deed
 backupBestanden.push(join(dataDir, "finance-instellingen.json"), join(dataDir, "finance-kosten.json"), join(dataDir, "beheer-agent.json"), join(dataDir, "beheer-gebruik.json"), join(dataDir, "beheer-loket.json"));
+// de ideeënbox (lib/ideeen-routes.js): ideeën, stemmen en de besluiten van Fysiplan
+backupBestanden.push(join(dataDir, "ideeen.json"));
 // reservekopie buiten Railway (lib/backup-elders.js): dezelfde bestanden, versleuteld, naar een
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
@@ -3317,6 +3323,21 @@ await beheerOmgeving.laad();
 // Elk verzoek loopt door dit vangnet: één kapotte aanvraag (bot, rare URL, afgebroken
 // verbinding) mag nooit het hele proces neerhalen. Zonder dit stopt Node bij een
 // onafgevangen fout in de async handler en houdt Railway na drie herstarts de site uit.
+// ---- ideeënbox (Hulp → Ideeënbox in /v2/app, besluiten op /dashboard88/ideeen; lib/ideeen-routes.js) ----
+// Het taalmodel schrijft alleen mee als IDEEEN_AI=aan én er een AI-sleutel is: de privacytekst
+// moet dat eerst noemen. Zonder taalmodel kiest de agent de top 4 met de vaste rekenregel.
+const IDEEEN_AI = !!AI_KEY && /^(aan|ja|1|true)$/i.test(String(process.env.IDEEEN_AI || "").trim());
+const ideeenbox = maakIdeeenbox({
+  dataDir, publicDir, basis: APP_BASIS, sessieVan, praktijkGeclaimd, isBeheer, beheerEigen, beheerLog, beheerIp,
+  send, sendJson, readBody, saveJson, denied, kruisSite, weigerKruis, schrijfLimiet, leesLimiet,
+  stuurMail, mailIngesteld,
+  fysiplanAdressen: () => [...new Set([...beheerWerkend().map((a) => a.email), ...proefMeldingAan.map(normEmail)].filter(geldigEmail))],
+  aiAan: () => IDEEEN_AI,
+  vraagClaude: (invoer) => vraagClaude(AI_MODEL, 2500, AGENT_SYSTEEM_IDEEEN, "<ideeen>" + invoer.replace(/</g, "\\u003c") + "</ideeen>", { schema: AGENT_SCHEMA_IDEEEN, effort: "medium" })
+});
+await ideeenbox.laad();
+ideeenbox.start();
+
 const server = createServer((request, response) => {
   afhandelen(request, response).catch((err) => {
     console.error("verzoek mislukt:", request.method, logPad(request.url), "-", (err && err.message) || err);
@@ -3363,6 +3384,9 @@ async function afhandelen(request, response) {
 
   // beheer-URL zonder slash, zodat relatieve paden (images/, api/) blijven kloppen
   if (urlPath === "/admin88/") { response.writeHead(301, { location: "/admin88" }); response.end(); return; }
+
+  // de ideeënbox (lib/ideeen-routes.js)
+  if ((urlPath === "/dashboard88/ideeen" || urlPath.startsWith("/api/ideeen") || urlPath.startsWith("/api/beheer/ideeen")) && await ideeenbox.afhandelen(request, response, urlPath)) return;
 
   if (urlPath === "/api/beheer/backup-status" && request.method === "GET") {
     if (!isAdmin(request)) { await denied(request,response,urlPath); return; }
@@ -8376,7 +8400,7 @@ async function afhandelen(request, response) {
       const proefJs = proef ? ";window.FYSIPLAN_PROEF=" + JSON.stringify({ naam: (proef.naam || "").split(" ")[0], praktijk: proef.praktijk || "",
         dagenOver: proef.klant ? null : dagenOver(proef.verloopt), tot: datumNl(proef.verloopt), klant: !!proef.klant }).replace(/</g, "\\u003c") : "";
       html = html.replace("<head>", () => '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true' + proefJs + '</script>');
-      html = html.replace("</head>", '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'8\' fill=\'%232456a6\'/%3E%3Cpath d=\'M5 16h5l2.5 6 5-12 2.5 7h7\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'2.6\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E"/><link rel="stylesheet" href="/v2.css?v=active-tech-1"/><script src="/qr.js" defer></script></head>');
+      html = html.replace("</head>", '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'8\' fill=\'%232456a6\'/%3E%3Cpath d=\'M5 16h5l2.5 6 5-12 2.5 7h7\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'2.6\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E"/><link rel="stylesheet" href="/v2.css?v=active-tech-2"/><script src="/qr.js" defer></script></head>');
       // nonce op de inline scripts (na alle injecties); de externe /qr.js houdt zijn src en valt onder 'self'
       html = nonceInlineScripts(html, nonce);
       await send(response, 200, "text/html; charset=utf-8", html);
