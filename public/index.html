@@ -1431,6 +1431,11 @@ bridge2.jpg</div>
   try{RECENT=JSON.parse(localStorage.getItem('fysiplan_recent')||'[]')||[];}catch(e){RECENT=[];}
   // persoonlijke video's op deze kaart: normEx(oefeningnaam) -> uploads/videos/...-pad
   var VIDS={};
+  // eigen opnames die nog niet op de server-kaart staan. Kwam de autosave terug met
+  // 409 verouderd (kaart elders gewijzigd), dan ging zo'n video stil verloren bij "Open de
+  // nieuwste versie" (gebruikers-sweep 2026-11-12 10u, Mark, iPad + desktop). Nu gaan ze mee.
+  var OPNAME_NIEUW={},OPNAME_GEMELD=false;
+  function zetOpnameVideo(naam,pad){var k=normEx(naam);VIDS[k]=pad;OPNAME_NIEUW[k]=pad;OPNAME_GEMELD=false;render();}
   var elList=document.getElementById('list'),
       elMon=document.getElementById('mon'),elEmpty=document.getElementById('emptyA4'),elCnt=document.getElementById('cnt');
   var CHIP_LABELS={all:'alle groepen',boven:'bovenste extr.',onder:'onderste extr.',romp:'romp',divers:'divers'};
@@ -2276,6 +2281,14 @@ bridge2.jpg</div>
       return true;
     }
     if(d.verouderd){
+      if(Object.keys(OPNAME_NIEUW).length){
+        // net een eigen video opgenomen: niet alleen een klein hintje in het QR-vak
+        toonQrHint('Je nieuwe video is nog niet bewaard: deze kaart is intussen op een ander apparaat gewijzigd. Open de nieuwste versie; je video gaat mee.',
+          [{act:'nieuwste',label:'Open de nieuwste versie (video gaat mee)'},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);
+        var hb=document.getElementById('qrBlok');if(hb){hb.setAttribute('role','alert');setTimeout(function(){hb.removeAttribute('role');},4000);}
+        if(!OPNAME_GEMELD)try{OPNAME_GEMELD=true;alert('Je nieuwe video is nog niet op de kaart bewaard: deze kaart is intussen op een ander apparaat gewijzigd.\n\nKies rechtsboven op de kaart \u201cOpen de nieuwste versie\u201d. Je video gaat dan mee.');}catch(e){}
+        return true;
+      }
       toonQrHint((KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen (en eigen video\u2019s) verloren.',
         [{act:'nieuwste',label:'Open de nieuwste versie'},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);
       return true;
@@ -2435,6 +2448,7 @@ bridge2.jpg</div>
           return;
         }
         laatsteDeel=afdruk;
+        Object.keys(OPNAME_NIEUW).forEach(function(k){if(c.vids&&c.vids[k]===OPNAME_NIEUW[k])delete OPNAME_NIEUW[k];});
         zetKaartId(d.id,d.ts);OVERSCHRIJF='';
         ensureQr(function(){toonQr(d.id);});
       })
@@ -2450,8 +2464,14 @@ bridge2.jpg</div>
       .then(function(d){
         if(!d.ok){toonQrHint(d.fout||'De nieuwste versie openen is niet gelukt.');return;}
         openCard(d.kaart);
+        // nog niet bewaarde eigen opnames bij oefeningen die ook in de nieuwste versie staan
+        var mee=0,opKaart={};
+        chosen.forEach(function(c){var o=OEF[c.o];if(o)opKaart[normEx(o.naam)]=1;});
+        Object.keys(OPNAME_NIEUW).forEach(function(k){if(opKaart[k]){if(VIDS[k]!==OPNAME_NIEUW[k]){VIDS[k]=OPNAME_NIEUW[k];mee++;}}else delete OPNAME_NIEUW[k];});
+        if(mee)render();
         zetKaartId(d.kaart.id||id,d.kaart.ts);OVERSCHRIJF='';NAAM_OK=String(d.kaart.naam||'').toLowerCase();
         QR_UIT_VOOR=null;laatsteDeel='';
+        if(mee){deelNu();return;}
         ensureQr(function(){toonQr(d.kaart.id||id);});
       })
       .catch(function(){toonQrHint('Geen verbinding met de server.');});
@@ -6146,7 +6166,7 @@ bridge2.jpg</div>
           .then(function(d){
             if(!d.geclaimd||!d.ingelogd){nietKlaar();return;}
             closeOv('ovEigenVideo');
-            startOpname('kaart',naam,function(pad){VIDS[normEx(naam)]=pad;render();});
+            startOpname('kaart',naam,function(pad){zetOpnameVideo(naam,pad);});
           })
           .catch(function(){alert('Geen verbinding met de server.');});
       });

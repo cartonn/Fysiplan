@@ -15,7 +15,9 @@ const root = process.cwd();
 const k = await readFile(join(root, "public/kaart.html"), "utf8");
 assert.match(k, /\.mdank\.fout,\.sdank\.fout\{/, "foutopmaak bestaat");
 assert.match(k, /function zetDank\(el,tekst,soort\)/, "zetDank bestaat");
-assert.match(k, /var schaal=this;if\(schaal\.dataset\.bezig\)return;/, "pijnscore: bezig-slot");
+assert.match(k, /var schaal=this;if\(schaal\.dataset\.bezig\)\{/, "pijnscore: bezig-slot");
+assert.match(k, /MSCORE_NA=b;b\.classList\.add\('bezig'\);return;/, "pijnscore: laatste tik tijdens opslaan onthouden");
+assert.match(k, /\.then\(verder,verder\);/, "pijnscore: onthouden tik na het antwoord nasturen");
 assert.match(k, /var pschaal=this;if\(pschaal\.dataset\.bezig\)return;/, "PSK: bezig-slot");
 assert.doesNotMatch(k, /dank\.textContent=\(TAAL==='nl'&&d\.fout\)\?d\.fout:tr\('mfout'\)/, "pijnscorefout via zetDank");
 
@@ -67,9 +69,22 @@ try {
   const tijdens = await p.evaluate(() => ({ busy: document.getElementById("mschaal").getAttribute("aria-busy"),
     bezig: !!document.querySelector('#mschaal button[data-score="3"].bezig') }));
   assert.deepEqual(tijdens, { busy: "true", bezig: true }, "bezig-stand tijdens het opslaan");
+  // 3 → 7 → 5 tijdens het opslaan: de laatste tik wint, als één extra verzoek na het antwoord
+  // (gebruikers-sweep 2026-11-12 10u, Jayden: 2 → 7 → 3 bewaarde stil 2)
+  await p.click('#mschaal button[data-score="7"]');
   await p.click('#mschaal button[data-score="5"]');
-  await p.waitForFunction(() => !document.getElementById("mschaal").getAttribute("aria-busy"), null, { timeout: 8000 });
-  assert.equal(metingen, 1, "tweede tik tijdens het opslaan geen extra verzoek");
+  assert.equal(metingen, 1, "tikken tijdens het opslaan geven niet meteen een extra verzoek");
+  for (let i = 0; i < 160; i++) {
+    const s = await p.evaluate(() => ({ busy: document.getElementById("mschaal").getAttribute("aria-busy"),
+      aan: (document.querySelector("#mschaal button.aan") || {}).textContent || "" }));
+    if (!s.busy && s.aan === "5") break;
+    await wacht(50);
+  }
+  assert.equal(metingen, 2, "precies één nagestuurd verzoek voor de laatste tik");
+  const pat = await (await fetch(origin + "/api/kaart?id=" + id, { headers: kop() })).json();
+  const ms = (pat.kaart && pat.kaart.metingen) || pat.metingen || [];
+  assert.equal(ms.length ? ms[ms.length - 1].s : null, 5, "server bewaart de laatste tik (5): " + JSON.stringify(ms));
+  assert.equal(await p.evaluate(() => (document.querySelector("#mschaal button.aan") || {}).textContent), "5", "scherm toont 5 als gekozen");
   const ok = await p.evaluate(() => { const d = document.getElementById("mdank"); return { fout: d.classList.contains("fout"), kleur: getComputedStyle(d).color }; });
   assert.equal(ok.fout, false, "gelukt: geen foutopmaak");
 
