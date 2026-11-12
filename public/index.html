@@ -292,6 +292,43 @@
     html.safari-print #a4wrap{position:relative;width:197mm;height:276mm;overflow:visible}
     html.safari-print #a4{position:absolute;top:0;left:197mm;width:276mm;height:197mm;min-height:197mm;max-height:197mm;transform:rotate(90deg);transform-origin:top left}
   }
+  /* ---- thuiskaart (reviewlijst punt 12): zes grote plaatjes per vel, liggend zoals de trainingslog ---- */
+  #thuiskaart{display:none}
+  @media print{
+    html.print-thuis,html.print-thuis body,html.print-thuis .wrap{height:auto !important;overflow:visible !important}
+    html.print-thuis .wrap,html.print-thuis #a4wrap{display:none !important}
+    html.print-thuis #thuiskaart{display:block;color:#111;font-family:Inter,system-ui,sans-serif}
+    .tk-vel{width:287mm;height:200mm;box-sizing:border-box;padding:4mm 5mm;display:flex;flex-direction:column;gap:3mm;break-after:page;page-break-after:always;overflow:hidden}
+    .tk-vel:last-child{break-after:auto;page-break-after:auto}
+    .tk-kop{display:flex;align-items:center;gap:6mm;border-bottom:.4mm solid #18343B;padding-bottom:2mm;flex:0 0 auto}
+    .tk-kop .tk-prak{font-weight:800;font-size:15pt;color:#18343B;letter-spacing:-.01em}
+    .tk-kop .tk-wie{font-size:11pt;color:#333}
+    .tk-kop .tk-rechts{margin-left:auto;display:flex;align-items:center;gap:3mm;font-size:9pt;color:#333;text-align:right}
+    .tk-kop .tk-qr svg{width:22mm;height:22mm;display:block}
+    .tk-raster{flex:1 1 0;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:4mm}
+    .tk-oef{border:.3mm solid #c9d3d0;border-radius:3mm;padding:3mm;display:flex;flex-direction:column;gap:1.5mm;min-height:0;overflow:hidden;break-inside:avoid}
+    .tk-beeld{flex:0 0 33mm;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .tk-beeld img,.tk-beeld svg{width:auto !important;height:auto !important;max-width:100%;max-height:33mm;object-fit:contain;border:0 !important;box-shadow:none !important;background:none !important}
+    .tk-naam{font-weight:800;font-size:12.5pt;line-height:1.2;color:#18343B}
+    .tk-naam .tk-nr{display:inline-block;min-width:6mm;color:#5a6b70}
+    .tk-dos{font-weight:700;font-size:11pt}
+    .tk-uitleg{font-size:9.5pt;line-height:1.32;color:#222;flex:1 1 0;min-height:0;overflow:hidden}
+    .tk-uitleg.tk-lang{font-size:8.3pt;line-height:1.28}
+    /* veel tekst: het beeld wat kleiner, zodat de hele uitleg op papier staat */
+    .tk-oef.tk-veel .tk-beeld{flex-basis:24mm}
+    .tk-oef.tk-veel .tk-beeld img,.tk-oef.tk-veel .tk-beeld svg{max-height:24mm}
+    .tk-vink{display:grid;grid-template-columns:repeat(7,1fr);gap:1.2mm;flex:0 0 auto}
+    .tk-vink i{display:flex;align-items:center;justify-content:center;height:6.5mm;border:.3mm solid #444;border-radius:1mm;font-style:normal;font-size:7pt;color:#9aa5a8}
+    .tk-voet{flex:0 0 auto;font-size:9pt;color:#333;display:flex;justify-content:space-between;gap:6mm}
+    html.print-groot .tk-naam{font-size:15pt}
+    html.print-groot .tk-dos{font-size:13pt}
+    html.print-groot .tk-uitleg{font-size:11.5pt}
+    /* Safari print staand: hetzelfde vel staand, twee plaatjes naast elkaar, drie onder elkaar */
+    html.safari-print .tk-vel{width:197mm;height:276mm}
+    html.safari-print .tk-raster{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,1fr)}
+    html.safari-print .tk-beeld{flex-basis:34mm}
+    html.safari-print .tk-beeld img,html.safari-print .tk-beeld svg{max-height:34mm}
+  }
   /* × in het Kaarten-venster: tikdoel van 44 px (sweep 2026-11-09) */
   #k_srv_lijst [data-sdel]{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
 </style>
@@ -407,6 +444,9 @@
   </div>
 </div>
 
+<!-- thuiskaart (v2): wordt bij het printen opgebouwd uit de kaart; op het scherm nooit zichtbaar -->
+<div id="thuiskaart" aria-hidden="true"></div>
+
 <div id="printLimitStatus" class="sr-only" aria-live="polite"></div>
 
 <!-- add exercise modal -->
@@ -511,6 +551,10 @@ bridge2.jpg</div>
     <label class="keuze">
       <input type="radio" name="pr_layout" id="pr_compact"/>
       <span><b>Compacte kaart</b> — kleinere plaatjes, meer ruimte voor het schema</span>
+    </label>
+    <label class="keuze" id="pr_thuis_rij" hidden>
+      <input type="radio" name="pr_layout" id="pr_thuis"/>
+      <span><b>Thuiskaart</b> — zes grote plaatjes per vel, uitleg en dosering in woorden, vakjes om af te vinken</span>
     </label>
     <label class="keuze" style="border-top:1px solid var(--line2);margin-top:6px;padding-top:11px">
       <input type="checkbox" id="pr_groot"/>
@@ -2327,20 +2371,81 @@ bridge2.jpg</div>
   window.addEventListener('afterprint',function(){
     if(TITEL_VOOR_PRINT!==null){document.title=TITEL_VOOR_PRINT;TITEL_VOOR_PRINT=null;}
   });
+  // ---- thuiskaart (reviewlijst punt 12) ----
+  // Naast de trainingslog voor de oefenzaal een vel voor thuis: zes grote plaatjes per vel, per
+  // oefening de dosering in woorden en de uitleg, een week vakjes om per dag af te vinken,
+  // en de QR-code van de digitale kaart. Gebouwd uit dezelfde kaart als de trainingslog.
+  var TK_DAGEN=['ma','di','wo','do','vr','za','zo'];
+  function thuisDosering(c){
+    var pre='e'+c.o+'.'+(c.i||0);
+    for(var r=0;r<12;r++){
+      var s=String(GRID.cells[pre+'|r'+r+'|S']||'').trim(),h=String(GRID.cells[pre+'|r'+r+'|H']||'').trim(),w=String(GRID.cells[pre+'|r'+r+'|W']||'').trim();
+      if(!s&&!h&&!w)continue;
+      var t='';
+      if(s&&h)t=s+(s==='1'?' serie van ':' series van ')+h+(/^\d+$/.test(h)?(h==='1'?' herhaling':' herhalingen'):'');
+      else if(h)t=h+(/^\d+$/.test(h)?(h==='1'?' herhaling':' herhalingen'):'');
+      else if(s)t=s+(s==='1'?' serie':' series');
+      if(w)t+=(t?', ':'')+'weerstand: '+w;
+      return t;
+    }
+    return '';
+  }
+  function bouwThuiskaart(){
+    var el=document.getElementById('thuiskaart');if(!el)return 0;
+    var prak=(SET.praktijk||'').trim(),wie=huidigeKaartNaam();
+    var qr=document.querySelector('#qrBlok svg');
+    var datum=new Date().toLocaleDateString('nl-NL',{day:'numeric',month:'long',year:'numeric'});
+    var kop=function(eerste){
+      return "<div class='tk-kop'><div><div class='tk-prak'>"+esc(prak||'Thuiskaart')+"</div>"+
+        "<div class='tk-wie'>Thuiskaart"+(wie?' voor '+esc(wie):'')+" &middot; "+esc(datum)+"</div></div>"+
+        "<div class='tk-rechts'>"+(eerste&&qr?"<span>Scan voor je kaart<br/>op de telefoon:<br/>met video en uitleg</span><span class='tk-qr'>"+qr.outerHTML+"</span>":'')+"</div></div>";
+    };
+    var tel=(SET.tel||'').trim();
+    var voet="<div class='tk-voet'><span>Doe elke oefening rustig. Pijn die erger wordt of blijft? Stop en neem contact op met je fysiotherapeut"+(tel?' ('+esc(tel)+')':'')+".</span><span>Vink per dag af wat je hebt gedaan.</span></div>";
+    // een week vakjes, met de dag licht in het vakje: afvinken over de letters heen
+    var vakken="<div class='tk-vink'>"+TK_DAGEN.map(function(d){return '<i>'+d+'</i>';}).join('')+"</div>";
+    var tegels=chosen.map(function(c,n){
+      var o=OEF[c.o];if(!o)return '';
+      var im=o.imgs&&o.imgs[c.i];
+      var uitleg=String(o.uitleg||o.uitvoering||'').trim(),dos=thuisDosering(c);
+      var veel=uitleg.length+(o.naam.length>34?40:0)+(dos?30:0)>200;
+      return "<div class='tk-oef"+(veel?" tk-veel":"")+"'><div class='tk-beeld'>"+(im?imgRender(im,400):'')+"</div>"+
+        "<div class='tk-naam'><span class='tk-nr'>"+(n+1)+".</span>"+esc(o.naam)+"</div>"+
+        (dos?"<div class='tk-dos'>"+esc(dos)+"</div>":'')+
+        "<div class='tk-uitleg"+(uitleg.length>260?" tk-lang":"")+"'>"+esc(uitleg)+"</div>"+vakken+"</div>";
+    }).filter(Boolean);
+    var vellen=[];
+    for(var i=0;i<tegels.length;i+=6)vellen.push("<section class='tk-vel'>"+kop(i===0)+"<div class='tk-raster'>"+tegels.slice(i,i+6).join('')+"</div>"+voet+"</section>");
+    el.innerHTML=vellen.join('');
+    // beelden die nog niet geladen zijn, niet half op papier: de browser wacht op eager-beelden
+    el.querySelectorAll('img').forEach(function(img){img.removeAttribute('loading');});
+    return vellen.length;
+  }
+  window.addEventListener('afterprint',function(){document.documentElement.classList.remove('print-thuis');});
   function doePrint(){
     if(SAFARI_PRINT)document.documentElement.classList.add('safari-print');
+    var thuis=document.documentElement.classList.contains('print-thuis');
     if(normalizePrintableTextFields())saveState();
     if(document.activeElement&&document.activeElement.matches&&document.activeElement.matches('#c_opm,#c_cave'))document.activeElement.blur();
     ping('print');
     if(IS_V2){
       var nm=huidigeKaartNaam();
       TITEL_VOOR_PRINT=document.title;
-      document.title='Oefenkaart'+(nm?' '+nm:'')+' — '+new Date().toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});
+      document.title=(document.documentElement.classList.contains('print-thuis')?'Thuiskaart':'Oefenkaart')+(nm?' '+nm:'')+' — '+new Date().toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});
     }
-    window.print();
+    if(!thuis){window.print();return;}
+    // de thuiskaart is net opgebouwd: eerst de beelden laden, anders komen lege vakken op papier
+    bouwThuiskaart();
+    var beelden=[].slice.call(document.querySelectorAll('#thuiskaart img'));
+    var klaar=false,af=function(){if(klaar)return;klaar=true;window.print();};
+    setTimeout(af,4000);
+    Promise.all(beelden.map(function(img){
+      return img.complete?Promise.resolve():new Promise(function(r){img.addEventListener('load',r,{once:true});img.addEventListener('error',r,{once:true});});
+    })).then(af);
   }
   document.getElementById('printBtn').addEventListener('click',function(){
     if(IS_V2){
+      document.getElementById('pr_thuis_rij').hidden=false;
       var pq=document.getElementById('pr_qr');
       pq.checked=(QR_UIT_VOOR===null||QR_UIT_VOOR!==huidigeKaartNaam().toLowerCase());
       prMelding(null);prBezig(false);
@@ -2710,6 +2815,8 @@ bridge2.jpg</div>
   document.getElementById('pr_do').addEventListener('click',function(){
     var compact=document.getElementById('pr_compact').checked;
     var groot=document.getElementById('pr_groot').checked;
+    var thuis=IS_V2&&document.getElementById('pr_thuis').checked;
+    document.documentElement.classList.toggle('print-thuis',thuis);
     document.documentElement.classList.toggle('print-compact',compact);
     document.documentElement.classList.toggle('print-groot',groot);
     var metQr=document.getElementById('pr_qr').checked;
@@ -6725,7 +6832,7 @@ bridge2.jpg</div>
       var lineSrc=e.img;
       var colorSrc=e.kaartImg||e.img;
       return {id:i,naam:e.naam,groep:e.groep,ook:e.ook||null,s:3,h:12,bron:'server',
-        exerciseId:e.exerciseId||'',eerder:Array.isArray(e.eerder)?e.eerder:null,video:e.video||null,region:e.region||'',joint:e.joint||'',goals:e.goals||[],equipment:e.equipment||[],difficulty:e.difficulty||'',searchAliases:e.searchAliases||[],starthouding:'',uitvoering:'',opmerking:'',
+        exerciseId:e.exerciseId||'',eerder:Array.isArray(e.eerder)?e.eerder:null,video:e.video||null,uitleg:e.uitleg||'',region:e.region||'',joint:e.joint||'',goals:e.goals||[],equipment:e.equipment||[],difficulty:e.difficulty||'',searchAliases:e.searchAliases||[],starthouding:'',uitvoering:'',opmerking:'',
         imgs:[{type:'img',src:USE_V2_LIBRARY?colorSrc:lineSrc,lineSrc:USE_V2_LIBRARY?lineSrc:null,colorSrc:USE_V2_LIBRARY?colorSrc:null,label:'Plaatje'}]};
     });
     SERVERLIB=true;CUSTOMLIB=false;curG='all';
