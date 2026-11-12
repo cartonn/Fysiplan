@@ -38,7 +38,7 @@ const blok = html.slice(html.indexOf("  var ZO_DOE="), html.indexOf("  // Uitwij
 assert.ok(blok.includes("function oefUitlegBlok(o,gehouden){"), "uitlegblok gevonden");
 const ctx = vm.createContext({ TAAL: "nl", NIET_VERTAALD: { en: "nog niet vertaald" },
   esc: (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"),
-  vt: (s) => s, uitlegNietVertaald: () => false });
+  vt: (s) => s, uitlegNietVertaald: () => false, uitlegVertaald: () => false });
 vm.runInContext(blok, ctx);
 const o = { uitleg: "Sta rechtop <en> zak door je knieën. Kom rustig weer omhoog; adem door." };
 const uit = ctx.oefUitlegBlok(o, false);

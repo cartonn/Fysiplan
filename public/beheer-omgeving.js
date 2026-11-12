@@ -101,6 +101,8 @@ function teken() {
   $('#demoband').hidden = bron !== 'demo';
   document.querySelectorAll('#bronSchakel button').forEach((b) => b.classList.toggle('aan', b.dataset.bron === bron));
   $('#bronUitleg').textContent = bron === 'demo' ? 'Verzonnen gegevens om de omgeving en de agents te testen.' : 'De gegevens van fysiplan.nl.';
+  // een lezer (alleen het recht Vertalingen) heeft hier geen pagina: meteen naar de vertalingen
+  if (!p && mag('vertalen')) { location.replace('/dashboard88/vertalingen'); return; }
   if (!p) {
     $('#titel').textContent = 'Beheer'; $('#sub').textContent = '';
     $('#pagina').innerHTML = '<div class="kaart leegstaat"><h2>Je account heeft hier nog geen rechten</h2><p>Een beheerder met volledig beheer kan je rechten geven op de pagina Beheerders.</p></div>';

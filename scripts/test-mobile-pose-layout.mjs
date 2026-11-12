@@ -123,7 +123,7 @@ const demoContext = vm.createContext({
   document: demoDocument, Math, Number, URL, JSON,
   location: { href: 'https://praktijk.example/k/abc' },
   window: { matchMedia: () => ({ matches: true }), NoorAudio: { match: () => true } }, matchMedia: () => ({ matches: true }),
-  TAAL: 'nl', tr: (k) => k, vt: (s) => s, uitlegNietVertaald: () => false,
+  TAAL: 'nl', tr: (k) => k, vt: (s) => s, uitlegNietVertaald: () => false, uitlegVertaald: () => false,
   DEMO_BRON: { nl: 'herkomstnotitie' },
   NoorAudio: { match: () => true },
   demoKlok() {}, demoGeluidKnop() {}, demoZeg() {},
