@@ -9,6 +9,7 @@ import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver, geldigEmail } from "./lib/proef.js";
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
+import * as vasteVragen from "./lib/vaste-vragen.js";
 import { prijsRegels, prijsZin, metBtwBijschrift, bedragVoor, euro as euroTekst } from "./lib/prijs.js";
 import * as leeslogRegels from "./lib/leeslog.js";
 import { mediaSoort, mediaLink, leesMediaLink } from "./lib/medialink.js";
@@ -387,7 +388,7 @@ const nieuwePraktijkCode = () => "p-" + randomBytes(8).toString("hex");
 // deze naam onder een andere sleutel zonder account telt mee: bij een praktijk met de naam als
 // sleutel geldt zo'n profiel als het eigen profiel (lijst, download en alles wissen).
 const naamDraagtGegevens = (nk) => nk === V1_PRAKTIJK.toLowerCase() ||
-  [kaarten, praktijken, praktijkSjablonen, praktijkOefeningen].some((m) => Object.hasOwn(m, nk) && m[nk] && Object.keys(m[nk]).length > 0) ||
+  [kaarten, praktijken, praktijkSjablonen, praktijkOefeningen, praktijkVragen].some((m) => Object.hasOwn(m, nk) && m[nk] && Object.keys(m[nk]).length > 0) ||
   Object.entries(praktijken).some(([k, p]) => !praktijkGeclaimd(k) && String((p && p.praktijk) || "").toLowerCase() === nk);
 // de naam waaronder een account bekendstaat (kleine letters), voor inloggen op naam
 function accountNaam(pk) {
@@ -1342,7 +1343,7 @@ function praktijkProefVerlopen(pk) {
 const PROEF_SCHRIJFROUTES = new Set(["/api/kaarten", "/api/praktijk/oefeningen", "/api/praktijk/sjablonen",
   "/api/praktijken", "/api/opname/start", "/api/kaart/afspraak", "/api/kaart/naam", "/api/kaart/notitie",
   "/api/kaart/behandelaar", "/api/kaart/psk-doel", "/api/kaart/nieuwe-link", "/api/kaart/doel",
-  "/api/kaart/antwoord", "/api/assistent", "/api/praktijk/team/uitnodigen", "/api/praktijk/team/eigen-login"]);
+  "/api/kaart/antwoord", "/api/assistent", "/api/praktijk/team/uitnodigen", "/api/praktijk/team/eigen-login", "/api/praktijk/vragen"]);
 function proefSlotVoor(req, urlPath) {
   if (req.method !== "POST" || !PROEF_SCHRIJFROUTES.has(urlPath)) return false;
   if (beheerEigen(req)) return false;
@@ -1424,6 +1425,7 @@ async function praktijkAllesWissen(pk) {
   await saveJson(praktijkOefeningenPath, praktijkOefeningen);
   delete praktijkSjablonen[pk];
   await saveJson(praktijkSjablonenPath, praktijkSjablonen);
+  if (Object.hasOwn(praktijkVragen, pk)) { delete praktijkVragen[pk]; await saveJson(praktijkVragenPath, praktijkVragen); }
   await inProfielRij(pk, async () => {
     for (const [k, p] of Object.entries(praktijken).filter(eigenProfiel)) {
       if (/^uploads\/logo-[^/]+$/.test(String(p.logo || ""))) { try { await unlink(join(dataDir, p.logo)); } catch {} }
@@ -2219,6 +2221,10 @@ try { praktijkSjablonen = JSON.parse(await readFile(praktijkSjablonenPath, "utf8
 const praktijkOefeningenPath = join(dataDir, "praktijk-oefeningen.json");
 let praktijkOefeningen = {}; // { pkLower: [ { id:"po_<12 hex>", naam, img:"uploads/oef-…", uitleg, t } ] }
 try { praktijkOefeningen = JSON.parse(await readFile(praktijkOefeningenPath, "utf8")); } catch {}
+// vaste vragen per oefening, door de praktijk zelf geschreven (lib/vaste-vragen.js)
+const praktijkVragenPath = join(dataDir, "vaste-vragen.json");
+let praktijkVragen = {}; // { pk: { oefeningnaam: [ { v, a, t, door? } ] } }
+try { praktijkVragen = JSON.parse(await readFile(praktijkVragenPath, "utf8")) || {}; } catch {}
 const PRAKTIJK_OEF_ID = /^po_[a-f0-9]{12}$/;
 function praktijkOefeningVoorKaart(pk, id) {
   const o = (praktijkOefeningen[pk] || []).find((x) => x.id === id);
@@ -2802,6 +2808,8 @@ const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPat
 backupBestanden.push(join(dataDir, "finance-instellingen.json"), join(dataDir, "finance-kosten.json"), join(dataDir, "beheer-agent.json"), join(dataDir, "beheer-gebruik.json"), join(dataDir, "beheer-loket.json"));
 // de ideeënbox (lib/ideeen-routes.js): ideeën, stemmen en de besluiten van Fysiplan
 backupBestanden.push(join(dataDir, "ideeen.json"));
+// de vaste vragen die praktijken bij hun oefeningen schreven (lib/vaste-vragen.js)
+backupBestanden.push(praktijkVragenPath);
 // het leeslog (lib/leeslog.js): zonder kwam een praktijk na een restore terug zonder antwoord op "wie keek er in deze kaart"
 backupBestanden.push(leeslogPath);
 // reservekopie buiten Railway (lib/backup-elders.js): dezelfde bestanden, versleuteld, naar een
@@ -4487,7 +4495,7 @@ async function afhandelen(request, response) {
       "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "team-wijziging-geweigerd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "kaart-hersteld", "kaart-definitief-verwijderd", "profiel-gewijzigd",
       "abonnement-opgezegd", "opzeggen-mislukt", "opzeggen-geweigerd", "praktijknaam-gewijzigd",
       "tweede-stap-aan", "tweede-stap-uit", "tweede-stap-gewist", "tweede-stap-mislukt", "tweede-stap-op-slot", "ingelogd-met-reservecode", "reservecodes-vernieuwd",
-      "tweede-stap-verplicht", "tweede-stap-niet-verplicht"]);
+      "tweede-stap-verplicht", "tweede-stap-niet-verplicht", "vragen-aangepast"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
       .slice(0, 15)
@@ -5555,6 +5563,40 @@ async function afhandelen(request, response) {
       try { await vertaalCacheOpschonen(); } catch {}
       await sendJson(response, 200, { ok: true, oefeningen: oefeningenVoorApp(request, pk) });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+
+  // ---- vaste vragen per oefening (lib/vaste-vragen.js) ----
+  // De praktijk schrijft zelf vraag en antwoord; ze verschijnen op elke kaart van de praktijk
+  // met die oefening. Lezen en schrijven alleen met een eigen login van de praktijk.
+  if (urlPath === "/api/praktijk/vragen" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const pk = praktijkVan(request, q.get("praktijk"));
+    if (await eisBeveiligdePraktijk(request, response, pk)) return;
+    await sendJson(response, 200, { ok: true, standaard: vasteVragen.standaardIn("nl"), eigen: vasteVragen.voorApp(praktijkVragen, pk), max: vasteVragen.MAX_PER_OEF });
+    return;
+  }
+  if (urlPath === "/api/praktijk/vragen" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    let b;
+    try { b = JSON.parse(await readBody(request, 64 * 1024)); } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); return; }
+    if (!b || typeof b !== "object" || Array.isArray(b)) { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); return; }
+    const pk = praktijkVan(request, b.praktijk);
+    if (await eisBeveiligdePraktijk(request, response, pk)) return;
+    const oef = vasteVragen.oefSleutel(b.oef);
+    if (!oef) { await sendJson(response, 400, { ok: false, fout: "Kies eerst een oefening." }); return; }
+    const c = vasteVragen.controleer(b.vragen);
+    if (!c.ok) { await sendJson(response, 400, { ok: false, fout: c.fout }); return; }
+    const s = sessieVan(request);
+    const door = s && s.pk === pk && s.lid ? s.lid : "";
+    if (!vasteVragen.zet(praktijkVragen, pk, oef, c.vragen, door) && c.vragen.length) {
+      await sendJson(response, 400, { ok: false, fout: "Maximum aantal oefeningen met eigen vragen bereikt." }); return;
+    }
+    await saveJson(praktijkVragenPath, praktijkVragen);
+    auditLog(pk, "vragen-aangepast", request);
+    await sendJson(response, 200, { ok: true, eigen: vasteVragen.voorApp(praktijkVragen, pk) });
     return;
   }
 
@@ -6824,6 +6866,10 @@ async function afhandelen(request, response) {
       // de foto van een eigen oefening: ook een tijdelijke link die bij deze kaart hoort
       .map((e) => ({ ...e, img: mediaLink(MEDIA_SLEUTEL, e.img, found.id) }));
     if (eigenOef.length) patientKaart.eigenOef = eigenOef;
+    // vaste vragen in plaats van de vraaghulp (lib/vaste-vragen.js): de standaardvragen in de
+    // negen talen van de kaart en de eigen vragen van de praktijk bij de oefeningen op deze kaart
+    const eigenVragen = vasteVragen.voorKaart(praktijkVragen, fpk, (found.chosen || []).map((x) => x && x.n));
+    patientKaart.vasteVragen = { standaard: vasteVragen.STANDAARD, eigen: eigenVragen };
     // wat de kaartpagina uit de bibliotheek en de keuring nodig heeft, alleen voor deze kaart
     // (zie kaartPakket). Lukt dat niet, dan gaat de kaart zonder en leest de pagina de hele
     // bestanden zoals eerst: een kaart die niet laadt is erger dan een kaart die zwaarder laadt.
@@ -8652,6 +8698,7 @@ async function afhandelen(request, response) {
         kaarten: Object.values(kaarten[pk] || {}).map((k) => { const v = k.verwijderdOp ? Math.min(Number(k.herstelTot) || 0, praktijkWisOp(pk)) : verlooptOp(k); return { ...k, ...(k.verwijderdOp ? { inPrullenbak: true } : {}), verlooptOp: Number.isFinite(v) && v > 0 ? new Date(v).toISOString() : null }; }),
         eigenOefeningen: praktijkOefeningen[pk] || [],
         sjablonen: praktijkSjablonen[pk] || [],
+        vasteVragen: vasteVragen.voorApp(praktijkVragen, pk),
         logboek: praktijkAudit.filter((a) => a.praktijk === pk),
         // ideeënbox: wat de praktijk plaatste en waarop haar logins stemden (legal 2026-11-12 17u)
         ideeenbox: ideeenbox.vanPraktijk(pk, (lidId) => (ledenVan(pk).find((l) => l.id === lidId) || {}).email || ""),

@@ -180,6 +180,7 @@
     "test:thuiskaart": "node scripts/test-thuiskaart.mjs",
     "test:medialink": "node scripts/test-medialink.mjs",
     "test:vertalingen": "node scripts/test-vertalingen.mjs",
+    "test:vastevragen": "node scripts/test-vaste-vragen.mjs",
     "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs",
     "test:prullenbak": "node scripts/test-kaart-prullenbak.mjs",
     "test:beveiligingfeedback": "node scripts/test-beveiliging-feedback.mjs",

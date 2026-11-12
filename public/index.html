@@ -178,9 +178,17 @@
   /* tablet en telefoon kennen geen aanwijzen: daar staan beide knopjes altijd zichtbaar en zijn
      ze groter, met een onzichtbaar tikvlak van 44 px; met het toetsenbord verschijnen ze bij focus */
   #a4 .pic:focus-within .vid{display:flex}
+  /* v2: vaste vragen bij de oefening (lib/vaste-vragen.js); gevuld (= eigen vragen) blijft staan */
+  #a4 .pic .vv{position:absolute;top:4px;left:30px;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #98a2b3;color:#475467;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(16,24,40,.25);font:700 12px/1 inherit}
+  #a4 .pic:hover .vv,#a4 .pic:focus-within .vv{display:flex}
+  #a4 .pic .vv:hover{border-color:var(--brand);color:var(--brand);transform:scale(1.08)}
+  #a4 .pic .vv.aan{display:flex;background:var(--brand);border-color:var(--brand);color:#fff}
+  #a4 .pic .vv:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
   #a4 .pic .vid:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
   @media (hover:none){
     #a4 .pic .vid{display:flex;width:30px;height:30px}
+    #a4 .pic .vv{display:flex;width:30px;height:30px;left:40px}
+    #a4 .pic .vv::after{content:'';position:absolute;inset:-7px}
     #a4 .pic .rm{display:block;width:30px;height:30px;line-height:29px;font-size:18px}
     #a4 .pic .vid::after,#a4 .pic .rm::after{content:'';position:absolute;inset:-7px}
   }
@@ -1868,6 +1876,9 @@ bridge2.jpg</div>
           var heeftEigen=!!VIDS[normEx(o.naam)];
           inner+="<span class='vid no-print"+(heeftEigen?" aan":"")+"' role='button' tabindex='0' data-evid='"+n+"' title='"+(heeftEigen?"Eigen video bij deze oefening — wijzigen of weghalen":"Eigen instructievideo toevoegen (opnemen met je telefoon of een YouTube-link)")+"' aria-label='Eigen video'>"+
             "<svg width='10' height='10' viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg></span>";
+          // vaste vragen bij deze oefening (op elke kaart van de praktijk met deze oefening)
+          var vvN=((VV_EIGEN||{})[vvSleutel(o.naam)]||[]).length;
+          inner+="<span class='vv no-print"+(vvN?" aan":"")+"' role='button' tabindex='0' data-vvid='"+n+"' title='"+(vvN?vvN+" eigen vraag/vragen bij deze oefening \u2014 bekijken of aanpassen":"Vaste vragen bij deze oefening bekijken of eigen vragen toevoegen")+"' aria-label='Vragen bij deze oefening'>?</span>";
           if(o.video&&(o.video.eigen||o.video.stream||o.video.yt||o.video.catalog)){
             inner+="<span class='vauto no-print' title='Instructievideo wordt automatisch toegevoegd aan de digitale kaart'>"+
               "<svg width='7' height='7' viewBox='0 0 12 12' aria-hidden='true'><path d='M2 1.5l8 4.5-8 4.5z' fill='currentColor'/></svg>VIDEO</span>";
@@ -4362,7 +4373,7 @@ bridge2.jpg</div>
       'uitnodiging-aangenomen':'uitnodiging aangenomen','collega-verwijderd':'collega verwijderd','rol-gewijzigd':'rol gewijzigd','team-wijziging-geweigerd':'teamwijziging geweigerd',
       'praktijkwachtwoord-uit':'praktijkwachtwoord uitgezet','praktijkwachtwoord-aan':'praktijkwachtwoord weer aangezet','kaart-verwijderd':'patiëntkaart naar de prullenbak','kaart-hersteld':'patiëntkaart hersteld uit de prullenbak','kaart-definitief-verwijderd':'patiëntkaart definitief verwijderd','profiel-gewijzigd':'praktijkgegevens of logo gewijzigd','abonnement-opgezegd':'abonnement opgezegd','opzeggen-mislukt':'opzeggen geweigerd (fout wachtwoord)',
       'tweede-stap-aan':'tweede stap bij het inloggen aangezet','tweede-stap-uit':'tweede stap bij het inloggen uitgezet','tweede-stap-gewist':'tweede stap gewist',
-      'tweede-stap-mislukt':'foute code na een goed wachtwoord','tweede-stap-op-slot':'te veel foute codes na een goed wachtwoord; de code-app werkt 24 uur niet','ingelogd-met-reservecode':'ingelogd met een reservecode','reservecodes-vernieuwd':'nieuwe reservecodes gemaakt',
+      'tweede-stap-mislukt':'foute code na een goed wachtwoord','tweede-stap-op-slot':'te veel foute codes na een goed wachtwoord; de code-app werkt 24 uur niet','ingelogd-met-reservecode':'ingelogd met een reservecode','reservecodes-vernieuwd':'nieuwe reservecodes gemaakt','vragen-aangepast':'vaste vragen bij een oefening aangepast',
       'tweede-stap-verplicht':'tweede stap verplicht gemaakt voor iedereen','tweede-stap-niet-verplicht':'tweede stap niet meer verplicht',
       'opzeggen-geweigerd':'opzeggen met het praktijkwachtwoord geweigerd','praktijknaam-gewijzigd':'praktijknaam gewijzigd'};
     // bij een foute code is de naam die van de login waarop het gebeurde, niet van wie het deed
@@ -6292,14 +6303,17 @@ bridge2.jpg</div>
     if(mr){var j=+mr.dataset.mvr;if(j>=0&&j<chosen.length-1){var u=chosen[j];chosen[j]=chosen[j+1];chosen[j+1]=u;render();}return;}
     var ev=e.target.closest('[data-evid]');
     if(ev){var c=chosen[+ev.dataset.evid],eo=c&&OEF[c.o];if(eo)openEigenVideo(eo);return;}
+    var vq=e.target.closest('[data-vvid]');
+    if(vq){var cq=chosen[+vq.dataset.vvid],oq=cq&&OEF[cq.o];if(oq)openVasteVragen(oq);return;}
     var rm=e.target.closest('.rm');if(!rm)return;
     var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){chosen.splice(n,1);render();}
   });
   // eigen-videoknopje op het plaatje ook met Enter of spatie (het is een span met role=button)
   elMon.addEventListener('keydown',function(e){
     if(e.key!=='Enter'&&e.key!==' ')return;
-    var ev=e.target.closest&&e.target.closest('[data-evid]');if(!ev)return;
+    var ev=e.target.closest&&e.target.closest('[data-evid]'),vq=e.target.closest&&e.target.closest('[data-vvid]');if(!ev&&!vq)return;
     e.preventDefault();
+    if(vq){var cq=chosen[+vq.dataset.vvid],oq=cq&&OEF[cq.o];if(oq)openVasteVragen(oq);return;}
     var c=chosen[+ev.dataset.evid],eo=c&&OEF[c.o];if(eo)openEigenVideo(eo);
   });
   // ---- v2: eigen oefeningen van de praktijk (naam, foto, uitleg) ----
@@ -6311,6 +6325,20 @@ bridge2.jpg</div>
   // niet ingelogd: er zijn er dan geen) of 'storing' (de server gaf geen antwoord; dan blijft de
   // laatst geladen lijst staan). Zie herstelOpenKaart.
   var EIGEN_STAND='uit',EIGEN_LAATST=[];
+  // vaste vragen per oefening van de praktijk (zie verderop bij openVasteVragen)
+  var VV_EIGEN={},VV_STD=[],VV_MAX=5,VV_OEF=null;
+  function vvSleutel(n){return String(n==null?'':n).replace(/\s+/g,' ').trim().slice(0,120);}
+  function laadVasteVragen(){
+    var pr=(SET.praktijk||'').trim();
+    if(!IS_V2||!pr){VV_EIGEN={};return Promise.resolve();}
+    return fetch('api/praktijk/vragen?praktijk='+encodeURIComponent(pr),PGET())
+      .then(function(r){return r.ok?r.json():null;})
+      .then(function(d){
+        if(d&&d.ok){VV_EIGEN=d.eigen||{};VV_STD=d.standaard||[];VV_MAX=d.max||5;}else VV_EIGEN={};
+        renderA4();
+      })
+      .catch(function(){});
+  }
   function voegPraktijkOefToe(){
     var pr=(SET.praktijk||'').trim();
     OEF=OEF.filter(function(o){return o.bron!=='praktijk';});
@@ -6328,7 +6356,8 @@ bridge2.jpg</div>
       }
       rebuildLookup();
     };
-    if(!pr){EIGEN_STAND='uit';EIGEN_LAATST=[];klaar([]);return Promise.resolve();}
+    if(!pr){EIGEN_STAND='uit';EIGEN_LAATST=[];klaar([]);VV_EIGEN={};return Promise.resolve();}
+    laadVasteVragen();
     return fetch('api/praktijk/oefeningen?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){
         if(r.ok)return r.json();
@@ -6500,6 +6529,78 @@ bridge2.jpg</div>
     }).join('')+(nietWeg?"<div class='hint' id='eo_wie' style='margin-top:6px'>Een oefening van een collega kan alleen die collega of een beheerder van de praktijk verwijderen.</div>":""):'';
   }
   document.getElementById('eigenOefBtn').addEventListener('click',openEigenOef);
+
+  // ---- v2: vaste vragen per oefening (lib/vaste-vragen.js) ----
+  // In plaats van de vraaghulp: de patiënt ziet bij elke oefening een paar vaste vragen met
+  // nagekeken antwoorden, plus de vragen die de praktijk zelf bij die oefening schrijft. Die
+  // staan bij de praktijk op de server en verschijnen op elke kaart met deze oefening.
+  function vvRijHtml(x){
+    return "<div class='vv-rij' style='border-top:1px solid var(--line);padding:10px 0'>"+
+      "<input class='vv-v' maxlength='140' placeholder='Vraag, bijvoorbeeld: Mag ik dit ook staand doen?' value='"+esc(x.v||'')+"' style='width:100%;margin-bottom:6px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
+      "<textarea class='vv-a' maxlength='600' rows='3' placeholder='Antwoord voor de pati\u00ebnt' style='width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit'>"+esc(x.a||'')+"</textarea>"+
+      "<button class='btn vv-weg' type='button' style='margin-top:4px'>Vraag weghalen</button></div>";
+  }
+  function openVasteVragen(o){
+    VV_OEF=o;
+    var ov=document.getElementById('ovVasteVragen');
+    if(!ov){
+      ov=document.createElement('div');ov.className='ov';ov.id='ovVasteVragen';
+      ov.innerHTML="<div class='modal' style='max-width:620px'><h3 id='vv_titel'>Vragen bij deze oefening</h3>"+
+        "<div class='hint' style='margin:2px 0 10px;line-height:1.5'>Op de digitale kaart staan bij elke oefening een paar vaste vragen met een nagekeken antwoord. "+
+        "Je kunt er eigen vragen bij zetten; die verschijnen bij deze oefening op elke kaart van je praktijk. Schrijf ze voor iedere pati\u00ebnt, dus zonder namen of klachten van \u00e9\u00e9n pati\u00ebnt.</div>"+
+        "<details style='margin-bottom:12px'><summary style='cursor:pointer;font-weight:600'>Vaste vragen op elke kaart</summary><div id='vv_std' class='hint' style='margin-top:6px;line-height:1.5'></div></details>"+
+        "<div id='vv_status' class='hint' style='margin:0 0 8px;font-weight:600'></div>"+
+        "<div id='vv_form'><div style='font-weight:600;margin-bottom:2px'>Eigen vragen van je praktijk</div><div id='vv_rijen'></div>"+
+        "<button class='btn' id='vv_erbij' type='button' style='margin-top:8px'>+ Vraag toevoegen</button></div>"+
+        "<div class='acts' style='margin-top:14px'><button class='btn' id='vv_sluit' type='button'>Sluiten</button><button class='btn primary' id='vv_bewaar' type='button'>Bewaren</button></div></div>";
+      document.body.appendChild(ov);
+      document.getElementById('vv_sluit').addEventListener('click',function(){closeOv('ovVasteVragen');});
+      document.getElementById('vv_erbij').addEventListener('click',function(){
+        var r=document.getElementById('vv_rijen');
+        if(r.querySelectorAll('.vv-rij').length>=VV_MAX){alert('Maximaal '+VV_MAX+' eigen vragen per oefening.');return;}
+        r.insertAdjacentHTML('beforeend',vvRijHtml({}));
+        var l=r.querySelectorAll('.vv-v');l[l.length-1].focus();
+      });
+      document.getElementById('vv_rijen').addEventListener('click',function(e){
+        var w=e.target.closest('.vv-weg');if(!w)return;
+        w.closest('.vv-rij').remove();
+      });
+      document.getElementById('vv_bewaar').addEventListener('click',function(){
+        var knop=this;if(knop.disabled)return;
+        var vragen=Array.prototype.map.call(document.querySelectorAll('#vv_rijen .vv-rij'),function(r){
+          return {v:r.querySelector('.vv-v').value,a:r.querySelector('.vv-a').value};
+        });
+        knop.disabled=true;knop.textContent='Bezig\u2026';
+        fetch('api/praktijk/vragen',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',oef:VV_OEF.naam,vragen:vragen})})
+          .then(function(r){return r.json();})
+          .then(function(d){
+            knop.disabled=false;knop.textContent='Bewaren';
+            if(!d.ok){alert(d.fout||'Bewaren is niet gelukt.');return;}
+            VV_EIGEN=d.eigen||{};render();closeOv('ovVasteVragen');
+          })
+          .catch(function(){knop.disabled=false;knop.textContent='Bewaren';alert('Bewaren is niet gelukt: geen verbinding.');});
+      });
+    }
+    document.getElementById('vv_titel').textContent='Vragen bij \u201c'+o.naam+'\u201d';
+    var std=document.getElementById('vv_std'),st=document.getElementById('vv_status'),form=document.getElementById('vv_form'),bew=document.getElementById('vv_bewaar');
+    var toon=function(){
+      std.innerHTML=VV_STD.length?VV_STD.map(function(x){return "<p style='margin:0 0 8px'><b>"+esc(x.v)+"</b><br>"+esc(x.a)+"</p>";}).join(''):'';
+      var eigen=VV_EIGEN[vvSleutel(o.naam)]||[];
+      document.getElementById('vv_rijen').innerHTML=(eigen.length?eigen:[{}]).map(vvRijHtml).join('');
+    };
+    form.style.display='none';bew.style.display='none';st.textContent='Even kijken\u2026';
+    openOv('ovVasteVragen');
+    var pr=(SET.praktijk||'').trim();
+    if(!pr){st.textContent='Vul eerst de naam van je praktijk in, linksboven op de kaart.';return;}
+    fetch('api/praktijk/vragen?praktijk='+encodeURIComponent(pr),PGET())
+      .then(function(r){return r.json().then(function(d){return {r:r,d:d};});})
+      .then(function(x){
+        if(!x.r.ok||!x.d.ok){st.textContent='Eigen vragen worden bij je praktijk op de server bewaard. Log daarvoor eerst in met je eigen login (onder Kaarten).';return;}
+        VV_EIGEN=x.d.eigen||{};VV_STD=x.d.standaard||[];VV_MAX=x.d.max||5;
+        st.textContent='';form.style.display='';bew.style.display='';toon();
+      })
+      .catch(function(){st.textContent='Geen verbinding met de server.';});
+  }
 
   // ---- v2: eigen instructievideo per oefening op deze kaart ----
   // Opnemen gaat met de telefoon (QR naar de opnamepagina) en kan alleen voor een
