@@ -3444,7 +3444,17 @@ async function afhandelen(request, response) {
           for (const l of ledenVan(pk)) if (l.email === em && lidActief(l) && checkHash(ww, l.hash)) treffers.push({ pk, l });
         }
         const nkKeuze = cleanName(b.praktijk, 80).toLowerCase();
-        if (treffers.length > 1 && nkKeuze) treffers = treffers.filter((x) => x.pk === nkKeuze || accountNaam(x.pk) === nkKeuze);
+        const pastBij = (x) => x.pk === nkKeuze || accountNaam(x.pk) === nkKeuze;
+        // Eén treffer bij een andere praktijk dan die op het scherm: niet stil daar inloggen. Anders kwam een
+        // verwijderde collega met een tweede praktijk stil bij die andere praktijk binnen, en droegen kaarten die hij
+        // daarna deelde de naam van de praktijk op het scherm (gebruikers-sweep 2026-11-12, Karin). Het wachtwoord
+        // klopt al, dus de naam van de eigen praktijk noemen verraadt niets nieuws.
+        if (treffers.length === 1 && nkKeuze && !pastBij(treffers[0])) {
+          await sendJson(response, 409, { ok: false, kies: [weergaveNaam(treffers[0].pk)],
+            fout: "Je login hoort niet bij deze praktijk, maar bij " + weergaveNaam(treffers[0].pk) + ". Vul die praktijknaam in om daar in te loggen, of vraag een beheerder van deze praktijk om een uitnodiging." });
+          return;
+        }
+        if (treffers.length > 1 && nkKeuze) treffers = treffers.filter(pastBij);
         if (!treffers.length) {
           loginMisTel(remKey);
           await denied(request, response, "praktijk-login", "Praktijknaam, e-mailadres of wachtwoord klopt niet.");
