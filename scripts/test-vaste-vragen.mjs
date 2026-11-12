@@ -136,8 +136,11 @@ try {
   assert.match(act, /vragen-aangepast/, "activiteit");
 
   // ---- 3. de kaart in de browser ----
+  // CI heeft geen browser: dan alleen de regels en de server hierboven
+  browserdeel: {
   const require = createRequire(import.meta.url);
-  const { chromium } = require("playwright");
+  let chromium;
+  try { ({ chromium } = require("playwright")); } catch { console.log("test-vaste-vragen: geen Playwright, browserdeel overgeslagen"); break browserdeel; }
   browser = await chromium.launch();
   const fouten = [];
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.5.200.1" } });
@@ -206,6 +209,7 @@ try {
   const na = JSON.parse(await readFile(join(dataDir, "vaste-vragen.json"), "utf8"));
   assert.deepEqual(na, {}, "na alles wissen geen vragen meer");
 
+  } // browserdeel
   console.log("test-vaste-vragen: ok (standaardvragen in 9 talen, eigen vragen per oefening, alleen de eigen praktijk, op de kaart en in de app)");
 } catch (e) {
   console.error(uit.slice(-1500));
