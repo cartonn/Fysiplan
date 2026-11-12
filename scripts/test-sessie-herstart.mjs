@@ -8,10 +8,13 @@
 // - Verlopen, kapotte en toekomstige rijen worden bij het inlezen overgeslagen; een kapot
 //   bestand houdt de server niet tegen.
 // - SIGTERM sluit netjes af (code 0) en het bestand staat op schijf.
+// - Een sessiewijziging staat op schijf vóór het antwoord vertrekt; na het laatste antwoord schrijft
+//   de server niets meer naar het sessiebestand. (Eerst ging het schrijven vlak ná het antwoord: een
+//   test die de server stopte en meteen de datamap opruimde, zag het bestand soms nog verschijnen.)
 // Zonder browser, past in CI. `npm run test:sessieherstart`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -51,6 +54,49 @@ const accountsPad = join(dataDir, "praktijk-accounts.json");
   console.error = fout;
   assert.equal(kapot.size, 1);
   assert.match(gemeld.join("\n"), /sessies bewaren: schijf vol/);
+  assert.equal(kapot.achter, false, "na een schrijffout blijft niemand wachten");
+  await kapot.bijgewerkt();
+}
+
+// ---- achter / bijgewerkt(): wachten tot de wijziging van nu op schijf staat, en niet langer ----
+{
+  const standen = [];
+  let rondAf = null; // de lopende schrijfactie, hier met de hand af te ronden
+  const tabel = new SessieTabel((inhoud) => new Promise((klaar) => { standen.push(Object.keys(inhoud.sessies).length); rondAf = klaar; }));
+  tabel.vul([["a".repeat(64), { pk: "p", t: 1, w: "x" }]]);
+  assert.equal(tabel.achter, false, "na het inlezen is er niets te schrijven");
+  await tabel.bijgewerkt();
+  tabel.set("b".repeat(64), { pk: "p", t: 2, w: "x" });
+  assert.equal(tabel.achter, true);
+  let eerste = false, tweede = false;
+  const w1 = tabel.bijgewerkt().then(() => { eerste = true; });
+  await wacht(15);
+  assert.deepEqual(standen, [2], "de eerste schrijfactie loopt");
+  assert.equal(eerste, false, "zolang die loopt, wacht het antwoord");
+  tabel.set("c".repeat(64), { pk: "p", t: 3, w: "x" }); // wijziging tijdens het schrijven
+  const w2 = tabel.bijgewerkt().then(() => { tweede = true; });
+  rondAf();
+  await w1;
+  await wacht(15);
+  assert.equal(tweede, false, "de tweede wijziging zat niet in de eerste schrijfactie");
+  assert.equal(tabel.achter, true);
+  assert.deepEqual(standen, [2, 3]);
+  rondAf();
+  await w2;
+  assert.equal(tabel.achter, false);
+  await tabel.opSchijf();
+  assert.deepEqual(standen, [2, 3], "geen overbodige schrijfactie daarna");
+
+  // blijven er wijzigingen bijkomen, dan wacht een antwoord toch hooguit twee schrijfacties
+  let n = 0;
+  const druk = new SessieTabel(async () => { n++; if (n < 20) druk.set(String(n).padStart(64, "e"), { pk: "p", t: n, w: "x" }); await wacht(2); });
+  druk.vul([]);
+  druk.set("f".repeat(64), { pk: "p", t: 1, w: "x" });
+  await druk.bijgewerkt();
+  assert.ok(n <= 2, "wachten op de eigen wijziging, niet op alles wat erna komt: " + n);
+  await druk.opSchijf();
+  assert.equal(n, 20);
+  assert.equal(druk.achter, false);
 }
 
 // ---- inlezen: alleen rijen die nog kunnen gelden ----
@@ -109,15 +155,6 @@ const get = (pad, extra) => fetch(origin + pad, { headers: kop(extra) });
 const ses = (token) => ({ "x-praktijk-sessie": token });
 const team = async (token) => (await get("/api/praktijk/team", ses(token))).status;
 const opSchijf = async () => JSON.parse(await readFile(sessiesPad, "utf8"));
-// wacht tot het sessiebestand aan de voorwaarde voldoet (schrijven gaat vlak na het antwoord)
-async function wachtOpBestand(test, wat) {
-  let laatste = null;
-  for (let i = 0; i < 100; i++) {
-    try { laatste = await opSchijf(); if (test(laatste)) return laatste; } catch {}
-    await wacht(20);
-  }
-  assert.fail("sessiebestand: " + wat + " — " + JSON.stringify(laatste));
-}
 
 try {
   await start(); // het kapotte bestand van hierboven staat er nog: de server start gewoon
@@ -134,7 +171,8 @@ try {
   assert.equal(await team(B), 200);
 
   // op schijf: drie sessies, alleen als SHA-256, nooit het token zelf
-  const eerste = await wachtOpBestand((b) => Object.keys(b.sessies || {}).length === 3, "drie sessies");
+  const eerste = await opSchijf();
+  assert.equal(Object.keys(eerste.sessies || {}).length, 3, "drie sessies: " + JSON.stringify(eerste));
   const tekst = await readFile(sessiesPad, "utf8");
   for (const token of [G, K, B]) {
     assert.ok(!tekst.includes(token), "het token zelf staat niet in het bestand");
@@ -144,8 +182,24 @@ try {
   assert.ok(eerste.sessies[sessieSleutel(K)].lid, "eigen login: het lid staat erbij");
   assert.ok(!tekst.includes("wachtwoord") && !tekst.includes("scrypt"), "geen wachtwoord of wachtwoordhash in het sessiebestand");
 
+  // zodra het antwoord er is, staat de wijziging op schijf: inloggen én uitloggen
+  const login = await post("/api/praktijk/login", { praktijk: "Fysio Herstart", wachtwoord: "praktijk-wachtwoord" });
+  assert.equal(login.status, 200);
+  const L = (await login.json()).sessie;
+  assert.ok((await opSchijf()).sessies[sessieSleutel(L)], "inloggen staat op schijf zodra het antwoord er is");
+  assert.equal((await post("/api/praktijk/logout", {}, ses(L))).status, 200);
+  assert.ok(!(await opSchijf()).sessies[sessieSleutel(L)], "uitloggen staat op schijf zodra het antwoord er is");
+
   // ---- herstart 1: iedereen blijft ingelogd ----
+  // Vlak voor het stoppen nog een keer inloggen: na dat antwoord raakt de server het sessiebestand
+  // niet meer aan (zelfde bestand, zelfde wijzigtijd), ook niet tijdens het afsluiten.
+  const laat = await post("/api/praktijk/login", { praktijk: "Fysio Herstart", wachtwoord: "praktijk-wachtwoord" });
+  assert.equal(laat.status, 200);
+  const bijAntwoord = await stat(sessiesPad);
   let einde = await stop();
+  const naStop = await stat(sessiesPad);
+  assert.equal(naStop.ino + ":" + naStop.mtimeMs, bijAntwoord.ino + ":" + bijAntwoord.mtimeMs, "na het laatste antwoord is het sessiebestand niet meer geschreven");
+  assert.ok((await opSchijf()).sessies[sessieSleutel((await laat.json()).sessie)], "en de laatste login staat erin");
   assert.equal(einde.code, 0, "SIGTERM sluit netjes af: " + JSON.stringify(einde));
   assert.match(uit, /SIGTERM: afsluiten/);
   await start();
@@ -167,7 +221,8 @@ try {
   const G2 = (await ww.json()).sessie;
   assert.equal(await team(G), 401, "oude sessie vervalt bij een wachtwoordwijziging");
   assert.equal(await team(G2), 200);
-  await wachtOpBestand((b) => !b.sessies[sessieSleutel(K)] && !b.sessies[sessieSleutel(G)] && !!b.sessies[sessieSleutel(G2)], "uitloggen en wijziging op schijf");
+  const naWijziging = await opSchijf();
+  assert.ok(!naWijziging.sessies[sessieSleutel(K)] && !naWijziging.sessies[sessieSleutel(G)] && !!naWijziging.sessies[sessieSleutel(G2)], "uitloggen en wijziging op schijf: " + JSON.stringify(naWijziging));
 
   // ---- herstart 2: uitgelogd blijft uitgelogd, de nieuwe sessie blijft ----
   einde = await stop();
