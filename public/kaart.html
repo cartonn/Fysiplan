@@ -1511,6 +1511,11 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // oefenstand staat hij onder het beeld, per zin een eigen alinea: dat leest op een
   // telefoon rustiger dan één blok. Een verkeerde knip is alleen een regeleinde.
   var ZO_DOE={nl:'Zo doe je het',en:'How to do it',de:'So geht es',fr:'Comment faire',es:'Cómo hacerlo',pl:'Jak to zrobić',tr:'Nasıl yapılır',ar:'طريقة الأداء',uk:'Як виконувати'};
+  // Wel vertaald: de server laat de uitleg automatisch vertalen (zie /api/kaart/vertaal). Een
+  // fout in een vertaalde uitvoeringsinstructie kan de patiënt verkeerd laten oefenen; daarom
+  // staat eronder dat het een automatische vertaling is en wat te doen bij twijfel.
+  var AUTO_VERTAALD={nl:'',en:'Translated automatically from Dutch. In doubt? Ask your physiotherapist.',de:'Automatisch aus dem Niederländischen übersetzt. Unsicher? Frag deine Physiotherapeutin oder deinen Physiotherapeuten.',fr:'Traduit automatiquement du néerlandais. Un doute ? Demandez à votre kinésithérapeute.',es:'Traducido automáticamente del neerlandés. ¿Dudas? Pregunta a tu fisioterapeuta.',pl:'Przetłumaczono automatycznie z niderlandzkiego. Masz wątpliwości? Zapytaj swojego fizjoterapeutę.',tr:'Felemenkçeden otomatik olarak çevrildi. Emin değil misin? Fizyoterapistine sor.',ar:'تُرجم تلقائيًا من الهولندية. هل لديك شك؟ اسأل أخصائي العلاج الطبيعي.',uk:'Автоматично перекладено з нідерландської. Сумніваєшся? Запитай свого фізіотерапевта.'};
+  function uitlegAutoVertaald(s){return !!s&&TAAL!=='nl'&&vt(s)!==s;}
   function uitlegZinnen(t){
     return String(t||'').replace(/([.!?…])\s+(?=[A-ZÀ-ÖØ-ÞĄ-Ž\u0400-\u042F¿¡])/g,'$1\n').split('\n').map(function(z){return z.trim();}).filter(Boolean);
   }
@@ -1519,7 +1524,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var nl=uitlegNietVertaald(o.uitleg);
     return '<div class="oefuitleg"><h3>'+esc(ZO_DOE[TAAL]||ZO_DOE.nl)+'</h3>'+
       uitlegZinnen(vt(o.uitleg)).map(function(z){return '<p dir="auto"'+(nl?' lang="nl"':'')+'>'+esc(z)+'</p>';}).join('')+
-      (nl?'<div class="nietvertaald" role="note">'+esc(NIET_VERTAALD[TAAL]||NIET_VERTAALD.en)+'</div>':'')+'</div>';
+      (nl?'<div class="nietvertaald" role="note">'+esc(NIET_VERTAALD[TAAL]||NIET_VERTAALD.en)+'</div>':'')+
+      (uitlegAutoVertaald(o.uitleg)?'<div class="nietvertaald autovertaald" role="note">'+esc(AUTO_VERTAALD[TAAL]||AUTO_VERTAALD.en)+'</div>':'')+'</div>';
   }
   // Uitwijklink onder een ingesloten YouTube-video. Dit herstelt de ingesloten speler niet:
   // YouTube verwacht een Referer en de kaart stuurt bewust geen (referrer-policy same-origin;

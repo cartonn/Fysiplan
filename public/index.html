@@ -625,6 +625,8 @@ bridge2.jpg</div>
     <div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5">
       Zoek oefeningen in de bibliotheek op lichaamsdeel en trainingsdoel. De zoekhulp
       kent geen pati&euml;nt en geeft geen dosering: jij kiest de oefeningen en de dosering.
+      <span id="ai_melding" style="display:block;margin-top:4px">De zoekhulp werkt met AI: een AI-dienst kiest de oefeningen
+      en schrijft de korte zin erbij. Dat kan ernaast zitten; kijk zelf of een oefening past.</span>
     </div>
     <label for="ai_regio">Lichaamsdeel</label>
     <select id="ai_regio" style="width:100%;margin-bottom:7px">
@@ -3078,7 +3080,7 @@ bridge2.jpg</div>
         go.disabled=false;go.textContent='Zoek oefeningen';
         if(!d.ok){uit.innerHTML="<div class='hint'>"+esc(d.fout||'De zoekhulp is even niet bereikbaar.')+"</div>";return;}
         AI_VOORSTEL=d;
-        uit.innerHTML="<div class='ai-toel'>Vink aan wat je wilt gebruiken. De oefeningen komen erbij op de kaart; de dosering vul je zelf in.</div>"+
+        uit.innerHTML="<div class='ai-toel'>Gekozen met AI. Vink aan wat je wilt gebruiken. De oefeningen komen erbij op de kaart; de dosering vul je zelf in.</div>"+
           d.oefeningen.map(function(o,i){
             // laat zien welke oefeningen een instructievideo meekrijgen
             var bron=OEF[byNorm[normEx(o.naam)]];
