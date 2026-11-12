@@ -16,6 +16,8 @@ import { backupInstellingen } from "./lib/backup-elders.js";
 import { runBackup } from "./lib/backup-runner.js";
 import { gegevensRuimte } from "./lib/backup-snapshots.js";
 import { SESSIE_MS, SessieTabel, laadSessies, sessieSleutel, wachtwoordAfdruk } from "./lib/sessie-opslag.js";
+import { kiesInpak, inpakbaar, pakIn, etagKomtOvereen } from "./lib/inpakken.js";
+import { kleinPadVoor, kleinMap } from "./lib/klein-beeld.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -143,6 +145,10 @@ const isAdmin = (req) => {
 // versie-info voor /health: welke commit draait er en hoeveel oefeningen levert de server
 let buildInfo = {};
 try { buildInfo = JSON.parse(await readFile(join(process.cwd(), "dist", "build-info.json"), "utf8")); } catch {}
+// hoeveel kleine beelden de bouwstap heeft klaargezet (scripts/kleine-beelden.mjs); 0 = geen,
+// de app toont dan overal het volledige bestand
+let kleineBeelden = 0;
+try { kleineBeelden = Number(JSON.parse(await readFile(join(kleinMap(), "index.json"), "utf8")).aantal) || 0; } catch {}
 
 // Opslag voor beheer-wijzigingen. Op Railway is de containerschijf vluchtig: koppel
 // een Volume met mount path /data, dan blijven wijzigingen ook na een redeploy
@@ -2370,9 +2376,57 @@ async function send(res, status, type, body) {
     if (res.headersSent || res.destroyed || res.writableEnded) return;
   }
   // nosniff en een sobere referrer-policy op alles: puur verhardend, verandert geen gedrag
-  res.writeHead(status, { "content-type": type, "x-content-type-options": "nosniff",
-    "referrer-policy": "same-origin", ...cacheHeaders(type) });
+  const kop = { "content-type": type, "x-content-type-options": "nosniff",
+    "referrer-policy": "same-origin", ...cacheHeaders(type) };
+  // Tekst van 1 kB of meer gaat ingepakt de deur uit als de browser dat aankan (zie
+  // lib/inpakken.js). Kleine antwoorden en alles wat geen tekst is lopen de oude weg, zonder
+  // wachtmoment: daar verandert dus ook niets aan de volgorde waarin een antwoord vertrekt.
+  const enc = inpakKeuze(res, status, type, body);
+  if (enc) {
+    let ingepakt = null;
+    try { ingepakt = await pakIn(enc, body); } catch {}
+    if (res.headersSent || res.destroyed || res.writableEnded) return;
+    if (ingepakt) {
+      const vary = res.getHeader("vary");
+      kop["content-encoding"] = enc;
+      kop.vary = vary ? vary + ", accept-encoding" : "accept-encoding";
+      body = ingepakt;
+    }
+  }
+  res.writeHead(status, kop);
   res.end(body);
+}
+// "br", "gzip" of "" (niet inpakken) voor dit antwoord
+function inpakKeuze(res, status, type, body) {
+  if (!res.req || res.req.method === "HEAD" || status === 204 || status === 304 || body == null) return "";
+  if (res.getHeader("content-encoding")) return "";
+  const lengte = Buffer.isBuffer(body) ? body.length : typeof body === "string" ? Buffer.byteLength(body) : 0;
+  if (!inpakbaar(type, lengte)) return "";
+  return kiesInpak(res.req.headers["accept-encoding"]);
+}
+// Beelden en lettertypen mogen een dag in de browser blijven. Daarna haalde de browser ze opnieuw
+// volledig op; met een ETag (de hash van de inhoud, dus gelijk over uitrollen heen) is dat een
+// leeg 304-antwoord. De hash onthouden we per bestand zolang grootte en wijzigtijd gelijk blijven.
+const bestandEtags = new Map();
+async function etagVanBestand(pad, data) {
+  const s = await stat(pad);
+  const sleutel = s.size + ":" + s.mtimeMs;
+  const al = bestandEtags.get(pad);
+  if (al && al.sleutel === sleutel) return al.etag;
+  const etag = '"' + createHash("sha256").update(data || await readFile(pad)).digest("hex").slice(0, 20) + '"';
+  if (bestandEtags.size > 6000) bestandEtags.clear();
+  bestandEtags.set(pad, { sleutel, etag });
+  return etag;
+}
+// Een beeld met ETag versturen, of een leeg 304 als de browser deze versie al heeft. Het
+// versturen zelf loopt via sendMedia hieronder (zelfde koppen, lengte vooraf bekend).
+async function sendBeeld(request, res, type, data, etag, extra = {}) {
+  if (etagKomtOvereen(request.headers["if-none-match"], etag)) {
+    res.writeHead(304, { ...cacheHeaders(type), etag, ...extra });
+    res.end();
+    return;
+  }
+  await sendMedia(request, res, type, data, { etag, ...extra });
 }
 // Mediabestanden hebben byte-ranges nodig: iOS Safari opent een opname met
 // "Range: bytes=0-1" en speelt niets af als het antwoord geen 206 met Content-Length is.
@@ -2576,6 +2630,9 @@ async function afhandelen(request, response) {
       videoOpslag: STREAM_ENABLED ? "cloudflare-stream" : "railway-volume",
       // de vraaghulp op de patiëntkaart heeft een eigen schakelaar (VRAAGHULP=aan); standaard uit
       vraaghulp: VRAAGHULP_AAN ? "aan" : "uit",
+      // kleine beelden voor de oefenlijst, klaargezet door de bouwstap; 0 = de app toont overal
+      // het volledige bestand
+      kleineBeelden,
       // zichtbaar maken of de data op een blijvend volume staat (waar zonder
       // geheimen): zo is "overleeft een herstart" in één blik te controleren
       volumeActief: dataDir === "/data" || !!process.env.DATA_DIR,
@@ -6744,6 +6801,35 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // Kleine versie van een bibliotheekbeeld voor de oefenlijst en de sjabloonkiezer:
+  // /v2/klein/images/<map>/<bestand> (en /klein/… voor beheer). Zie lib/klein-beeld.js.
+  const kleinPad = /^(?:\/v2)?\/klein\/(images\/.+\.(?:png|jpe?g|webp))$/i.exec(urlPath);
+  if (kleinPad) {
+    if (request.method !== "GET" && request.method !== "HEAD") { await send(response, 405, "text/plain; charset=utf-8", "Method not allowed"); return; }
+    const bron = normalize(join(publicDir, kleinPad[1]));
+    if (kleinPad[1].split("/").includes("..") || !bron.startsWith(join(publicDir, "images") + sep)) {
+      await send(response, 403, "text/plain; charset=utf-8", "Forbidden");
+      return;
+    }
+    // een browser zonder WebP, of een beeld waar de bouwstap geen kleine versie van heeft: het
+    // origineel, zoals voorheen
+    if (/\bimage\/webp\b/i.test(String(request.headers.accept || ""))) {
+      const kleinBestand = kleinPadVoor(kleinPad[1]);
+      let klein = null;
+      try { klein = await readFile(kleinBestand); } catch {}
+      if (klein && klein.length) {
+        await sendBeeld(request, response, "image/webp", klein, await etagVanBestand(kleinBestand, klein), { vary: "accept" });
+        return;
+      }
+    }
+    let origineel;
+    try { origineel = await readFile(bron); }
+    catch { await send(response, 404, "text/plain; charset=utf-8", "Not found"); return; }
+    await sendBeeld(request, response, MIME[extname(bron).toLowerCase()] || "application/octet-stream", origineel,
+      await etagVanBestand(bron, origineel), { vary: "accept" });
+    return;
+  }
+
   // v2-assets krijgen ook werkelijk een /v2-URL. Fysiek delen we de map om de
   // 215 bestaande foto's niet te dupliceren; v1 verwijst uitsluitend naar lijntekeningen.
   if (urlPath.startsWith("/v2/images/")) {
@@ -6811,6 +6897,11 @@ async function afhandelen(request, response) {
     const data = await readFile(filePath);
     const type = MIME[extname(filePath)] || "application/octet-stream";
     if (type.startsWith("audio/")) { await sendMedia(request, response, type, data); return; }
+    if ((type.startsWith("image/") && type !== "image/svg+xml") || type.startsWith("font/")) {
+      let etag = "";
+      try { etag = await etagVanBestand(filePath, data); } catch {}
+      if (etag) { await sendBeeld(request, response, type, data, etag); return; }
+    }
     await send(response, 200, type, data);
   } catch {
     // SPA-vangnet: onbekende paden serveren de v1-app. Ook dit zit achter de

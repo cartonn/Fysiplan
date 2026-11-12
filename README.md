@@ -35,6 +35,9 @@ Live Railway URL: https://fysiplan-production.up.railway.app
   hosting, kosten en de eerste pilot.
 - `server.js` — minimale Node-server (geen dependencies): serveert `public/` en `/health`.
 - `scripts/build.js` — schrijft buildmetadata naar `dist/build-info.json`.
+- `scripts/kleine-beelden.mjs` — bouwstap: zet van elk beeld in `public/images/` een versie van
+  hooguit 160 px in `dist/klein/` voor de oefenlijst en de sjabloonkiezer. De A4, de pdf en de
+  patiëntkaart gebruiken het volledige bestand. `/health` toont het aantal als `kleineBeelden`.
 - `scripts/convert-images.mjs` — eenmalig hulpscript: zet zware BMP/PNG naar compacte JPEG's en
   (her)bouwt `public/oefeningen.json`. Zie "Nieuwe plaatjes toevoegen" hieronder.
 - `scripts/normalize-image-visibility.py` — brengt lijnzwart, randscherpte en kleur per afbeelding
@@ -44,7 +47,8 @@ Live Railway URL: https://fysiplan-production.up.railway.app
 
 ## Scripts
 
-- `npm run build` — schrijft buildmetadata naar `dist/build-info.json`.
+- `npm run build` — draait de controles, maakt de kleine beelden in `dist/klein/` en schrijft
+  buildmetadata naar `dist/build-info.json`.
 - `npm run images:normalize` — normaliseert oefentekeningen naar de biceps-referentie
   (vereist Python + Pillow).
 - `npm run videos:check` — controleert IDs, reviewstatus en veilige Stream-URL's van de videotheek.
