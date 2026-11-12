@@ -59,16 +59,23 @@ if (pw) {
     const page = await ctx.newPage();
     await page.goto(origin + "/k/abcdef123456");
     await page.waitForFunction(() => getComputedStyle(document.getElementById("wrap")).display === "block", null, { timeout: 15000 });
-    // wacht tot de werker de pagina en de kaartgegevens bewaard heeft
-    await page.waitForFunction(async () => {
-      if (!navigator.serviceWorker.controller) return false;
-      const k = await caches.keys();
-      for (const n of k) {
-        const c = await caches.open(n);
-        if ((await c.match("/k/abcdef123456")) && (await c.match("/api/kaart?id=abcdef123456"))) return true;
-      }
-      return false;
-    }, null, { timeout: 15000, polling: 200 });
+    // Wacht tot de werker de pagina en de kaartgegevens bewaard heeft. Bewust met evaluate in een
+    // lus en niet met waitForFunction: die wacht niet op een async functie (de Promise zelf telt
+    // al als waar), zodat de test offline ging terwijl de werker nog bezig was en de ene keer
+    // wel, de andere keer niet slaagde.
+    let bewaard = false;
+    for (let i = 0; i < 75 && !bewaard; i++) {
+      bewaard = await page.evaluate(async () => {
+        if (!navigator.serviceWorker.controller) return false;
+        for (const n of await caches.keys()) {
+          const c = await caches.open(n);
+          if ((await c.match("/k/abcdef123456")) && (await c.match("/api/kaart?id=abcdef123456"))) return true;
+        }
+        return false;
+      });
+      if (!bewaard) await wacht(200);
+    }
+    assert.ok(bewaard, "na het eerste bezoek bewaart de werker de kaart en de kaartgegevens");
     if (process.env.DEBUG_OFFLINE) console.log(await page.evaluate(async () => { const o = []; for (const n of await caches.keys()) { const c = await caches.open(n); o.push(n, (await c.keys()).map((r) => r.url)); } return { ctl: !!navigator.serviceWorker.controller, o }; }));
     await ctx.setOffline(true);
     await page.reload();
