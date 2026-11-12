@@ -104,6 +104,7 @@ jobs:
       - run: npm run test:seintjevoorrang
       - run: npm run test:seintjestand
       - run: npm run test:vertaaldeels
+      - run: npm run test:medialinkvers
       - run: npm run test:qrtaal
       - run: npm run test:eerstedeling
       - run: npm run test:printcompact

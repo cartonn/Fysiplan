@@ -2426,7 +2426,30 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // nieuwe dag terwijl de kaart open blijft (telefoon op tafel, tabblad op de achtergrond): opnieuw tekenen,
   // anders bleef "Ik heb vandaag geoefend" aan van gisteren en zette de eerste tik van vandaag hem juist uit.
   var getekendDag=null;
-  function dagWissel(){try{if(K&&getekendDag&&dagStr(Date.now())!==getekendDag)alles();}catch(e){}}
+  function dagWissel(){try{if(K&&Date.now()-LINKS_T>LINKS_OUD)verversLinks();if(K&&getekendDag&&dagStr(Date.now())!==getekendDag)alles();}catch(e){}}
+  // Eigen video's en foto's van de praktijk komen via een tijdelijke link die 12 tot 24 uur geldt
+  // (#249). Een kaart die langer openstaat (tabblad, beginscherm-app) hield de oude link: de video
+  // meldde "neem contact op met je praktijk" en de foto werd een kapot plaatje, en "Opnieuw proberen"
+  // probeerde dezelfde verlopen link (gebruikers-sweep 2026-11-12 22u, Truus). Nu haalt de kaart
+  // nieuwe links op bij terugkomen na tien uur en bij een fout van zo'n video of foto, en tekent
+  // alleen opnieuw als de links echt veranderden. Hooguit één keer per minuut.
+  var LINKS_T=Date.now(),LINKS_OUD=10*3600000,linksBezig=false,linksLaatst=0;
+  function verversLinks(){
+    if(!K||!K.kaart||!id||id==='demo'||linksBezig)return;
+    if(typeof navigator!=='undefined'&&navigator.onLine===false)return;
+    if(Date.now()-linksLaatst<60000)return;
+    linksBezig=true;linksLaatst=Date.now();
+    fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+      linksBezig=false;
+      if(!d||!d.ok||!d.kaart||!K||!K.kaart)return;
+      LINKS_T=Date.now();
+      var oud=JSON.stringify([K.kaart.vids||null,K.kaart.eigenOef||null]);
+      K.kaart.vids=d.kaart.vids;K.kaart.eigenOef=d.kaart.eigenOef;
+      if(JSON.stringify([K.kaart.vids||null,K.kaart.eigenOef||null])!==oud)alles();
+    }).catch(function(){linksBezig=false;});
+  }
+  // een foto van een eigen oefening die niet laadt: misschien is de link verlopen
+  document.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&/\/uploads\/oef-/.test(t.currentSrc||t.src||''))verversLinks();},true);
   function alles(){getekendDag=dagStr(Date.now());tekenStatisch();tekenKaart();tekenVasteVragen();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenSein();tekenHerstel();tekenPsk();tekenAfspraak();tekenOfflijn();tekenAfgerond();tekenPrivacy();tekenSpoed();tekenMijnGegevens();tekenWacht();clearTimeout(alles.bl);alles.bl=setTimeout(bewaarBeeldenLijst,2500);}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
@@ -3099,7 +3122,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           catch(e){meld(foutTekst(),true);}
         });status.appendChild(knop);}
     }
-    v.addEventListener('error',function(){beurt++;meld(foutTekst(),true);});
+    v.addEventListener('error',function(){beurt++;meld(foutTekst(),true);if(/\/uploads\//.test(v.currentSrc||v.src||''))verversLinks();});
     v.addEventListener('playing',function(){beurt++;meld('',false);});
     v.addEventListener('waiting',function(){meld(tekst.laden,false);});
     v.addEventListener('canplay',function(){if(v.paused)meld(tekst.pauze,false);});

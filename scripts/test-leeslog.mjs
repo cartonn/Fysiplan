@@ -169,6 +169,13 @@ try {
   assert.equal((await get("/api/praktijk/kaart?praktijk=" + Q + "&id=" + kSanne, G)).status, 200);
   assert.equal(kort(await regels(kSanne))[0], "gedeeld wachtwoord: kaart geopend");
 
+  // wijzigen via de losse kaartroutes (notitie, archief) telt ook als bewaard: een collega die vanuit
+  // Patiënten de notitie wijzigde, stond niet in het leeslog (gebruikers-sweep 2026-11-12 22u, Karin)
+  assert.equal((await post("/api/kaart/notitie", { praktijk: P, id: kSanne, tekst: "Belt maandag terug" }, J)).status, 200);
+  assert.equal(kort(await regels(kSanne))[0], "Joris: kaart bewaard", "notitie van een collega staat in het leeslog");
+  assert.equal((await post("/api/kaart/archief", { praktijk: P, id: kSanne, gearchiveerd: true }, S)).status, 200);
+  assert.equal((await post("/api/kaart/archief", { praktijk: P, id: kSanne, gearchiveerd: false }, S)).status, 200);
+  assert.match(kort(await regels(kSanne))[0], /^Sanne: kaart bewaard( x\d+)?$/, "archiveren ook");
   // het staat op schijf, zonder de naam van een patiënt, onder de sleutel van de praktijk
   const schijf = await wachtOpSchijf((l) => JSON.stringify(l).includes("gedeeld wachtwoord"));
   const pk = Object.keys(schijf)[0];

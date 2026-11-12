@@ -566,6 +566,9 @@ const isBeheer = (s) => !!s && (!s.lid || (sessieLid(s) || {}).rol === "beheerde
 // Eén regel in het leeslog. Wie: de login van de sessie, het gedeelde wachtwoord, of beheer van
 // Fysiplan (dat alleen bij een praktijk zonder account kan lezen, en daar zijn eigen logboek van
 // houdt). De v1-app (eigen accountlaag) blijft erbuiten.
+// Ook de losse kaartroutes (notitie, naam, behandelaar, afspraak, doel, PSK-doel, archief, dossier
+// en antwoord) tellen als "kaart bewaard" (prullenbak en herstel staan in het beheerlogboek): anders stond een collega die de notitie vanuit
+// Patiënten wijzigde niet in het leeslog (gebruikers-sweep 2026-11-12 22u, Karin).
 function leesMerk(req, pk, soort, kaart, wieExpliciet) {
   let wie = wieExpliciet || null;
   if (!wie) {
@@ -6462,6 +6465,7 @@ async function afhandelen(request, response) {
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const l = sessieLid(sessieVan(request));
       kaart.dossier = b.aan === false ? null : { t: Date.now(), ...(l ? { wie: l.naam || l.email } : {}) };
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       auditLog(pk, kaart.dossier ? "kaart-in-dossier" : "kaart-dossierlabel-weg", request);
       await sendJson(response, 200, { ok: true, dossier: kaart.dossier, inDossier: inDossierBij(kaart) });
@@ -7031,6 +7035,7 @@ async function afhandelen(request, response) {
       kaart.antwoord = { t: Date.now(), tekst };
       logContact(kaart, { van: "praktijk", tekst });
       kaart.seintje = null;
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       auditLog(pk, "kaart-antwoord", request);
       await sendJson(response, 200, { ok: true });
@@ -7060,6 +7065,7 @@ async function afhandelen(request, response) {
       if ((kaart.notitie || null) !== (tekst || null)) kaart.notitieT = Date.now();
       kaart.notitie = tekst || null;
       if (!kaart.notitie) delete kaart.notitieT;
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, notitie: kaart.notitie });
     } catch {
@@ -7086,6 +7092,7 @@ async function afhandelen(request, response) {
       // besturingstekens eruit en kort begrensd; als platte tekst getoond in de app
       const naam = String(b.naam || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 40);
       kaart.behandelaar = naam || null;
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, behandelaar: kaart.behandelaar });
     } catch {
@@ -7110,6 +7117,7 @@ async function afhandelen(request, response) {
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const tekst = cleanName(b.activiteit, 80);
       kaart.pskDoel = tekst || null;
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, pskDoel: kaart.pskDoel });
     } catch {
@@ -7149,6 +7157,7 @@ async function afhandelen(request, response) {
         kaart.afspraak = (Number.isInteger(herhaal) && herhaal >= 2 && herhaal <= 12)
           ? { t: Math.round(t), herhaal } : { t: Math.round(t) };
       } else kaart.afspraak = null;
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, afspraak: kaart.afspraak });
     } catch {
@@ -7263,6 +7272,7 @@ async function afhandelen(request, response) {
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const doel = Math.max(0, Math.min(7, Math.round(Number(b.doel) || 0)));
       if (doel) kaart.doel = doel; else delete kaart.doel;
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, doel });
     } catch {
@@ -7303,6 +7313,7 @@ async function afhandelen(request, response) {
           fout: "De gratis proef van je praktijk is voorbij. Deze kaart blijft tot " + datumNl(verlooptVoor) + " bewaard; langer kan niet zonder abonnement." });
         return;
       }
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, gearchiveerd: !!kaart.gearchiveerd, verloopt: verdwijntOp(pk, kaart) });
     } catch {
@@ -7339,6 +7350,7 @@ async function afhandelen(request, response) {
       if (kaart.client && typeof kaart.client === "object" && kaart.client.c_naam) kaart.client.c_naam = nieuw;
       kaart.ts = Math.max(Date.now(), (Number(kaart.ts) || 0) + 1);
       if (nk !== oudeSleutel) { delete map[oudeSleutel]; map[nk] = kaart; }
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       auditLog(pk, "kaart-hernoemd", request);
       await sendJson(response, 200, { ok: true, naam: nieuw, ts: kaart.ts });

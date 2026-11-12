@@ -81,6 +81,7 @@
     "test:seintjevoorrang": "node scripts/test-seintje-voorrang.mjs",
     "test:seintjestand": "node scripts/test-sweep-seintje-stand.mjs",
     "test:vertaaldeels": "node scripts/test-sweep-vertaal-deels.mjs",
+    "test:medialinkvers": "node scripts/test-sweep-media-link-vers.mjs",
     "test:qrtaal": "node scripts/test-qr-taal.mjs",
     "test:eerstedeling": "node scripts/test-eerste-deling.mjs",
     "test:teamherstel": "node scripts/test-team-herstel.mjs",
