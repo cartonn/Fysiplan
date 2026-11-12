@@ -5,7 +5,8 @@
 // Repro vóór de fix: cookie + actie=opzeggen&zeker=1 → 200 "Je abonnement is opgezegd".
 // Nu: hoort de aanmelding bij een beveiligde praktijk, dan ook het wachtwoord van een
 // beheerder (of het gedeelde praktijkwachtwoord zolang dat aan staat); anders 403 en een
-// regel in Activiteit. Intrekken blijft zonder wachtwoord. Zonder browser.
+// regel in Activiteit. Intrekken blijft zonder wachtwoord. Heeft de praktijk een beheerder met
+// eigen login, dan telt het gedeelde praktijkwachtwoord niet meer (security 2026-11-12). Zonder browser.
 // `npm run test:opzeggenbeheer`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -59,6 +60,12 @@ try {
   const claim = await post("/api/praktijk/claim", { praktijk: "Fysio Opzeg", wachtwoord: "praktijk-wachtwoord", akkoord: true }, { cookie });
   assert.equal(claim.status, 200);
   const G = ses(await claim.json());
+  // 0. zonder beheerder met eigen login zegt het gedeelde praktijkwachtwoord op (zoals voorheen)
+  let r0 = await opzeggen({ wachtwoord: "praktijk-wachtwoord" });
+  assert.equal(r0.status, 200, "praktijkwachtwoord zegt op zolang er geen eigen beheerder is");
+  assert.equal(await status(), "opgezegd");
+  await formulier("/v2/proef/opzeggen", { actie: "intrekken" }, { cookie });
+  assert.equal(await status(), "actief");
   const eigen = await post("/api/praktijk/team/eigen-login", { naam: "Olga Beheer", email: "olga@opzeg.nl", wachtwoord: "olga-wachtwoord", regels: true }, G);
   assert.equal(eigen.status, 200);
   const O = ses(await eigen.json());
@@ -101,12 +108,14 @@ try {
   assert.equal(r.status, 200);
   assert.equal(await status(), "actief", "opzegging ingetrokken");
 
-  // 6. gedeeld praktijkwachtwoord werkt zolang het aan staat
+  // 6. security 2026-11-12: er is een beheerder met eigen login (Olga), dan telt het gedeelde
+  // praktijkwachtwoord (dat vaak het hele team kent) niet meer, net als bij alles wissen (#216)
   r = await opzeggen({ wachtwoord: "praktijk-wachtwoord" });
-  assert.equal(r.status, 200, "praktijkwachtwoord zegt op");
-  assert.equal(await status(), "opgezegd");
-  await formulier("/v2/proef/opzeggen", { actie: "intrekken" }, { cookie });
+  assert.equal(r.status, 403, "praktijkwachtwoord zegt niet op als er een beheerder met eigen login is (was " + r.status + ")");
+  assert.match(await r.text(), /eigen login/);
   assert.equal(await status(), "actief");
+  const act6 = (await (await get("/api/praktijk/activiteit", O)).json()).activiteit;
+  assert.ok(act6.some((e) => e.actie === "opzeggen-geweigerd" && e.wie === "praktijkwachtwoord"), "geweigerd opzeggen staat in Activiteit");
 
   // 7. praktijkwachtwoord uit: dan telt het niet meer
   assert.equal((await post("/api/praktijk/team/gedeeld-uit", { uit: true }, O)).status, 200);

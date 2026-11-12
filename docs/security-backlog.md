@@ -21,6 +21,13 @@ daaruit tot en met 2026-11-06.
 
 Volgende run: (c) proef-tokens, daarna (a) beheer-endpoints.
 
+Sanity 2026-11-12 04u op #209–#218 (sessies op schijf, lichte app, beheerherstel per mail, seintjesmail, tweede stap en verplichting,
+teamsjabloon vervangen, proefmail): nieuwe routes `/api/praktijk/team/tweede-stap/{start,bevestig,uit,reservecodes}` vragen een eigen
+login plus het eigen wachtwoord (rem per lid), `bevestig` alleen binnen een lopende instelling met 10 pogingen; `tweede-stap/wis`,
+`stap-verplicht` en `sein-mail` alleen voor een beheerder, wissen en verplichten alleen met eigen login; `/api/praktijk/reset` is 410
+met de beheersleutel; `/api/beheer/praktijk-herstel` alleen met de beheersleutel, rem per praktijk en per adres, link/code alleen in de
+mail, niets verandert tot de praktijk de mail gebruikt. Geen gat.
+
 Sanity 2026-11-12 00u op #202–#208 (landing, voorwaarden, /k grote letters + /o galerij, vraaghulp-schakelaar, sessies op
 schijf, reservekopiegrens, donker thema + seintjesvenster): `VRAAGHULP_AAN` sluit `/api/kaart/vraag` (503) en de `ai`-vlag
 van /api/kaart zonder schakelaar; `backupRuimte`/`gegevens` op /health en backup-status geven alleen getallen; de waarschuwingsmail
@@ -334,11 +341,21 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   wachtwoord) en wiste alles, ook het account van de eigenaar. Nu: heeft de praktijk een actieve beheerder met eigen login, dan wist
   alleen zo'n beheerder (met e-mail), net als bij het team (#201); 403 met uitleg en "alles-wissen-geweigerd" in het logboek. Downloaden
   met het gedeelde wachtwoord werkt nog (bewust gelaten; zie het punt hieronder).
-- **NAKIJKEN (gebruikers-sweep 2026-11-12 02u, Karin) — MIDDEL — zelfde patroon nog open:** (1) opzeggen van het abonnement met het
+- **OPGELOST 2026-11-12 04u (deze PR) voor (1); (2) AFGESLOTEN als geen gat.** (1) Bevestigd: met een beheerder met eigen login
+  zegde het gedeelde praktijkwachtwoord het abonnement op (200). Nu 403 ("alleen een beheerder met een eigen login"), "opzeggen
+  geweigerd" in Activiteit; zonder beheerder met eigen login werkt het gedeelde wachtwoord zoals voorheen. Test: uitgebreid
+  `npm run test:opzeggenbeheer`. (2) Downloaden met het gedeelde wachtwoord laat ik bewust zo: een sessie met dat wachtwoord is
+  beheerder en leest in de app al elke kaart en het logboek, dus de download geeft niets extra's; de tweede stap verplicht maken
+  (#217) zet het gedeelde wachtwoord uit. Oorspronkelijke melding:
+  **NAKIJKEN (gebruikers-sweep 2026-11-12 02u, Karin) — MIDDEL — zelfde patroon nog open:** (1) opzeggen van het abonnement met het
   gedeelde wachtwoord terwijl er een beheerder met eigen login is (`abonnementBeheerder`, server.js r. ~996; intrekken kan wel, dus
   herstelbaar); (2) alles downloaden (alle kaarten en het logboek) met het gedeelde wachtwoord, zelfde situatie. Kies of beide ook een
   beheerder met eigen login vragen.
-- **NAKIJKEN (gebruikers-sweep 2026-11-12 02u, Karin) — MIDDEL — beheerder hernoemt de praktijk stil naar de naam van een andere
+- **OPGELOST 2026-11-12 04u (deze PR, test:praktijknaambezet).** Bevestigd lokaal (200, stil). Dubbele namen blijven mogelijk
+  (zoals bij beveiligen), maar POST /api/praktijken geeft nu 409 `bezet` als een andere beveiligde praktijk de nieuwe naam al heeft
+  (ook met andere hoofdletters); de app vraagt "Weet je het zeker?" en stuurt dan `zelfdeNaam: true`. Elke naamwijziging staat als
+  "praktijknaam gewijzigd" met wie en oud → nieuw in Activiteit. Oorspronkelijke melding:
+  **NAKIJKEN (gebruikers-sweep 2026-11-12 02u, Karin) — MIDDEL — beheerder hernoemt de praktijk stil naar de naam van een andere
   praktijk.** POST /api/praktijken met `praktijk: "<naam van praktijk B>"` geeft 200; daarna toont /k de naam van B en inloggen met naam
   B + het wachtwoord van A komt in A uit (B zelf onaangetast). server.js r. ~4192 en ~4255 (`praktijkAccounts[key].naam = p.praktijk`)
   zonder controle op `accountsMetNaam`. Verwacht: dezelfde waarschuwing als bij beveiligen.

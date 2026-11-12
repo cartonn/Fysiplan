@@ -1138,12 +1138,18 @@ function proefPraktijkSleutel(p) {
 }
 // wie mag het abonnement van deze praktijk opzeggen: een actieve beheerder met eigen login
 // (geeft de naam terug) of het gedeelde praktijkwachtwoord zolang dat aan staat (""). Fout: null.
+// Heeft de praktijk een actieve beheerder met eigen login, dan telt het gedeelde wachtwoord (dat vaak
+// het hele team kent) niet meer: anders kon elke collega ook de eigenaar het abonnement afnemen,
+// net als bij team (#201) en alles wissen (#216). Dan geeft de functie false terug (security 2026-11-12).
 function abonnementBeheerder(pk, ww) {
   const acc = Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
   if (!acc || !ww || ww.length > 200) return null;
-  if (!acc.gedeeldUit && checkHash(ww, acc.hash)) return "";
   const l = ledenVan(pk).find((x) => x && x.rol === "beheerder" && lidActief(x) && checkHash(ww, x.hash));
-  return l ? String(l.naam || l.email || "") : null;
+  if (l) return String(l.naam || l.email || "");
+  if (!acc.gedeeldUit && checkHash(ww, acc.hash)) {
+    return ledenVan(pk).some((x) => x && x.rol === "beheerder" && lidActief(x)) ? false : "";
+  }
+  return null;
 }
 // Mijn abonnement: status, factuur, en zelf opzeggen (of de opzegging intrekken) in de app.
 // Opzeggen gaat in per het einde van de al betaalde maand; er wordt niets teruggeboekt.
@@ -3579,7 +3585,7 @@ async function afhandelen(request, response) {
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
       "claim-gereset-door-beheer", "herstel-door-beheer", "wachtwoord-hersteld-per-mail", "sein-mail-uit", "sein-mail-aan", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
       "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "team-wijziging-geweigerd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "kaart-hersteld", "kaart-definitief-verwijderd", "profiel-gewijzigd",
-      "abonnement-opgezegd", "opzeggen-mislukt",
+      "abonnement-opgezegd", "opzeggen-mislukt", "opzeggen-geweigerd", "praktijknaam-gewijzigd",
       "tweede-stap-aan", "tweede-stap-uit", "tweede-stap-gewist", "tweede-stap-mislukt", "tweede-stap-op-slot", "ingelogd-met-reservecode", "reservecodes-vernieuwd",
       "tweede-stap-verplicht", "tweede-stap-niet-verplicht"]);
     const lijst = praktijkAudit
@@ -4604,6 +4610,18 @@ async function afhandelen(request, response) {
         await sendJson(response, 403, { ok: false, beheer: true, fout: "Alleen een beheerder van de praktijk kan het praktijkprofiel en het logo aanpassen." });
         return;
       }
+      // Een andere beveiligde praktijk heeft deze naam al. Dubbele namen mogen (zoals bij het
+      // beveiligen, met "Andere praktijk met deze naam"), maar niet stil: patiënten zien op /k de
+      // naam, en inloggen op die naam komt dan ook bij deze praktijk uit (gebruikers-sweep
+      // 2026-11-12, Karin). Zonder zelfdeNaam: true een 409 met een vraag; daarna in Activiteit.
+      const oudeNaam = praktijkGeclaimd(key) ? String(praktijkAccounts[key].naam || "") : "";
+      const naamAnders = praktijkGeclaimd(key) && oudeNaam.toLowerCase() !== p.praktijk.toLowerCase();
+      const naamVanAnder = naamAnders && accountsMetNaam(p.praktijk).some((k) => k !== key);
+      if (naamVanAnder && b.zelfdeNaam !== true) {
+        await sendJson(response, 409, { ok: false, bezet: true, naam: p.praktijk,
+          fout: "Er is al een andere praktijk met de naam “" + p.praktijk + "”. Weet je zeker dat je praktijk zo moet heten? Je patiënten zien deze naam op hun kaart." });
+        return;
+      }
       // hetzelfde dagplafond op níeuwe praktijken als op de kaarten- en claim-route:
       // zonder dit is dit profiel-endpoint de onbewaakte route waarlangs één IP de
       // 200-praktijken-namespace kan volzetten (elk met een 400 kB-logo) en zo echte
@@ -4667,6 +4685,11 @@ async function afhandelen(request, response) {
         }
       });
       if (praktijkGeclaimd(key)) auditLog(key, "profiel-gewijzigd", request);
+      if (naamAnders) {
+        const lid = sessieLid(sessie);
+        auditLog(key, "praktijknaam-gewijzigd", request, (lid ? (lid.naam || lid.email) : eigenSessie ? "praktijkwachtwoord" : "beheer") +
+          " (" + oudeNaam + " → " + p.praktijk + (naamVanAnder ? "; deze naam heeft ook een andere praktijk" : "") + ")");
+      }
       await sendJson(response, 200, { ok: true, logo: p.logo || "" });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of logo te groot)." });
@@ -6839,6 +6862,13 @@ async function afhandelen(request, response) {
         return;
       }
       const wie = abonnementBeheerder(opzegPk, String(b.wachtwoord || ""));
+      if (wie === false) {
+        auditLog(opzegPk, "opzeggen-geweigerd", request, "praktijkwachtwoord");
+        await serveerProef(request, response, "bericht", { TITEL: "Abonnement", ETIKET: "Abonnement",
+          KOP: "Opzeggen kan alleen met het wachtwoord van een beheerder met een eigen login.",
+          TEKST: "Je praktijk heeft een beheerder met een eigen login. Het wachtwoord van de praktijk is daarvoor niet genoeg. Er is niets veranderd aan je abonnement.", KNOP_HTML: terug }, 403);
+        return;
+      }
       if (wie === null) {
         telInlogMisIp(request, "opzeggen-mislukt");
         auditLog(opzegPk, "opzeggen-mislukt", request);
