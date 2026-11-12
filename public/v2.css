@@ -360,7 +360,7 @@ html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
   /* inbox: elke patiënt een kaartje; volgorde = binnenkomst, geen kleur voor ernst */
   html.v2 #k_inbox .ib-kop{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
   html.v2 #k_inbox .ib-kop>label{margin:22px 0 0!important;display:flex;align-items:center;gap:8px}
-  html.v2 #k_inbox .ib-tel{background:var(--ink);color:#fff;border-radius:99px;padding:1px 8px;font-size:11.5px;font-weight:650}
+  html.v2 #k_inbox .ib-tel,html.v2 #k_nietgeoefend .ib-tel{background:var(--ink);color:#fff;border-radius:99px;padding:1px 8px;font-size:11.5px;font-weight:650}
   html.v2 #k_inbox .ib-mijn{margin:22px 0 0!important;font-weight:500!important;font-size:12.5px!important;color:var(--muted)!important;display:flex;gap:6px;align-items:center}
   html.v2 #k_inbox .ib-lijst{display:flex;flex-direction:column;gap:8px;margin-top:10px}
   html.v2 #k_inbox .ib-item{display:flex;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--sh-sm);flex-wrap:wrap}
@@ -467,7 +467,7 @@ html.v2{
 @media screen{
   html.v2 header.topbar .mark{background:var(--brand)}
   html.v2 .chip.on,html.v2 .smart-filter.on{background:var(--brand);border-color:var(--brand)}
-  html.v2 #k_inbox .ib-tel{background:var(--brand)}
+  html.v2 #k_inbox .ib-tel,html.v2 #k_nietgeoefend .ib-tel{background:var(--brand)}
   html.v2 .row .add.on,html.v2 .row .add:hover{background:var(--brand);border-color:var(--brand)}
   html.v2 .card{box-shadow:0 1px 2px rgba(20,27,38,.04)}
   html.v2 .card .hd{font-size:13.5px}
@@ -849,7 +849,7 @@ html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
  html.v2 #prakslot .ps-acties a:hover{background:#365e64;color:#fff;border-color:#8aa3a8}
  html.v2 #prakslot .ps-acties a#ps_team{background:#b9e34b;border-color:#b9e34b;color:#18343b}
  html.v2 #prakslot .ps-acties a#ps_wis{color:#ffb4a8}
- html.v2 #k_inbox .ib-tel{background:#b9e34b;color:#18343b}
+ html.v2 #k_inbox .ib-tel,html.v2 #k_nietgeoefend .ib-tel{background:#b9e34b;color:#18343b}
  html.v2 #k_inbox .ib-av{background:#20464f;color:#fff}
  html.v2 .tm-lid.uitgenodigd .tm-av{background:#20464f;color:#e0eae7;border-color:#658087}
  html.v2 .tm-rol{background:#18343b;color:#fff}
@@ -918,3 +918,62 @@ html.v2 .spronglinks a{position:absolute;left:-10000px;top:0;padding:12px 16px;m
 html.v2 .spronglinks a:focus{position:static;outline:3px solid #B9E34B;outline-offset:2px}
 html.v2 #a4wrap:focus{outline:none}
 html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
+
+/* ---- de app in vier schermen (reviewlijst punt 14): Vandaag, Patiënten, Kaart maken, Praktijk ----
+   Vandaag, Patiënten en Praktijk tonen het Kaarten-paneel als scherm (geen zijpaneel), elk met
+   zijn eigen deel; de editor staat dan uit beeld. Alleen het scherm: de print blijft de kaart. */
+.fp-schermen{display:none}
+@media screen{
+  html.v2 .fp-schermen{order:1;display:flex;gap:2px;margin-left:14px;padding:3px;border-radius:11px;background:var(--line2);border:1px solid var(--line)}
+  html.v2 .fp-schermen button{position:relative;height:30px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:var(--muted);
+    font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+  html.v2 .fp-schermen button:hover{color:var(--ink)}
+  html.v2 .fp-schermen button[aria-pressed="true"]{background:var(--panel,#fff);color:var(--ink);box-shadow:0 1px 3px rgba(16,24,40,.12)}
+  html.v2 .fp-schermen button:focus-visible{outline:none;box-shadow:var(--ring)}
+  html.v2 .fp-schermen .fs-tel{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#c2410c;color:#fff;font-size:11px;font-weight:700;
+    display:inline-flex;align-items:center;justify-content:center}
+  html.v2 .fp-schermen .fs-tel[hidden]{display:none}
+
+  html.v2[data-scherm="vandaag"] .wrap,html.v2[data-scherm="patienten"] .wrap,html.v2[data-scherm="praktijk"] .wrap,
+  html.v2[data-scherm="vandaag"] #fpKop,html.v2[data-scherm="patienten"] #fpKop,html.v2[data-scherm="praktijk"] #fpKop{display:none!important}
+  html.v2[data-scherm="vandaag"] #ovKaarten.on,html.v2[data-scherm="patienten"] #ovKaarten.on,html.v2[data-scherm="praktijk"] #ovKaarten.on{
+    position:static;display:block;background:none;backdrop-filter:none;padding:24px 16px 48px;z-index:auto}
+  html.v2[data-scherm="vandaag"] #ovKaarten .modal,html.v2[data-scherm="patienten"] #ovKaarten .modal,html.v2[data-scherm="praktijk"] #ovKaarten .modal{
+    width:min(980px,100%);max-width:none;height:auto;max-height:none;margin:0 auto;border-radius:18px;animation:none;overflow:visible}
+  html.v2[data-scherm="vandaag"] #ovKaarten .modal>h3,html.v2[data-scherm="patienten"] #ovKaarten .modal>h3,html.v2[data-scherm="praktijk"] #ovKaarten .modal>h3{
+    position:static;font-size:22px;letter-spacing:-.02em}
+  html.v2[data-scherm="vandaag"] #ovKaarten .modal>.acts,html.v2[data-scherm="patienten"] #ovKaarten .modal>.acts,html.v2[data-scherm="praktijk"] #ovKaarten .modal>.acts{display:none}
+  /* ingelogd: het login- en accountblok hoort bij Praktijk */
+  html.v2.ps-in[data-scherm="vandaag"] #prakslot,html.v2.ps-in[data-scherm="patienten"] #prakslot{display:none}
+  /* Vandaag: seintjes, wie niet oefende en de weekbrief */
+  html.v2[data-scherm="vandaag"] #ovKaarten .k-eigen,
+  html.v2[data-scherm="vandaag"] #k_srv>label,html.v2[data-scherm="vandaag"] #k_srv>div:not([id]),
+  html.v2[data-scherm="vandaag"] #k_srv_sam,html.v2[data-scherm="vandaag"] #k_srv_zoek,html.v2[data-scherm="vandaag"] #k_srv_sort,
+  html.v2[data-scherm="vandaag"] #k_srv_lijst,html.v2[data-scherm="vandaag"] #k_prullenbak,html.v2[data-scherm="vandaag"] #k_praktijk{display:none!important}
+  /* Patiënten: de kaarten van de praktijk en op dit apparaat */
+  html.v2[data-scherm="patienten"] #k_inbox,html.v2[data-scherm="patienten"] #k_nietgeoefend,
+  html.v2[data-scherm="patienten"] #weekbrief,html.v2[data-scherm="patienten"] #k_praktijk{display:none!important}
+  /* Praktijk: login, account en team, en de tegels */
+  html.v2[data-scherm="praktijk"] #ovKaarten .k-eigen,
+  html.v2[data-scherm="praktijk"] #k_srv>*:not(#prakslot):not(#k_praktijk):not(#k_pr_vraag){display:none!important}
+  /* buiten de schermen hoort "niet geoefend" en de tegels niet in het zijpaneel */
+  html.v2[data-scherm="maken"] #k_nietgeoefend,html.v2[data-scherm="maken"] #k_praktijk{display:none}
+  html.v2 #k_nietgeoefend{margin:18px 0 6px}
+  html.v2 #k_nietgeoefend>label{font-size:15px!important;font-weight:650}
+  html.v2 #k_nietgeoefend .ib-item{background:var(--naamblok);border:1px solid var(--naamblok-rand);border-radius:12px;display:flex;align-items:center;gap:10px;padding:9px 12px;margin-top:6px}
+  html.v2 #k_nietgeoefend .ib-tekst{flex:1;min-width:0}
+  html.v2 #k_nietgeoefend .ib-wat{font-size:12.5px;color:var(--muted)}
+  html.v2 #k_nietgeoefend .ib-noot,html.v2 #k_nietgeoefend .ib-leeg{font-size:12px;color:var(--muted);margin-top:6px}
+  html.v2 .kp-tegels{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:14px}
+  html.v2 .kp-tegel{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--panel,#fff);
+    color:var(--ink);text-align:left;text-decoration:none;font:inherit;cursor:pointer}
+  html.v2 .kp-tegel:hover{border-color:var(--brand)}
+  html.v2 .kp-tegel:focus-visible{outline:none;box-shadow:var(--ring)}
+  html.v2 .kp-tegel b{font-size:14.5px;color:var(--ink)}
+  html.v2[data-scherm="vandaag"] .topbar #beeldKeuze,html.v2[data-scherm="patienten"] .topbar #beeldKeuze,html.v2[data-scherm="praktijk"] .topbar #beeldKeuze{visibility:hidden}
+  html.v2 .kp-tegel span{font-size:12.5px;color:var(--muted);line-height:1.45}
+}
+@media screen and (max-width:920px){
+  html.v2 .fp-schermen{order:8;flex-basis:100%;margin:4px 0 0;overflow-x:auto}
+  html.v2 .fp-schermen button{flex:1}
+}

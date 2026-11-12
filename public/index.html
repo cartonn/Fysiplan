@@ -1565,8 +1565,106 @@ bridge2.jpg</div>
     n.textContent=chosen.length;
     document.getElementById('fk_balk').style.width=Math.min(100,chosen.length/12*100)+'%';
   }
+  // ---- v2: de app in vier schermen (reviewlijst punt 14) ----
+  // Vandaag (wat patiënten meldden en wie deze week niet oefende), Patiënten (de kaarten van de
+  // praktijk), Kaart maken (de editor) en Praktijk (login, team, eigen oefeningen, gegevens).
+  // Vandaag, Patiënten en Praktijk tonen het Kaarten-paneel als scherm, elk met zijn eigen deel;
+  // zo blijven alle bestaande handelingen werken. Met een login opent de app op Vandaag.
+  var SCHERM='maken',SCHERM_GEKOZEN=false;
+  var SCHERMEN=[['vandaag','Vandaag'],['patienten','Pati\u00ebnten'],['maken','Kaart maken'],['praktijk','Praktijk']];
+  function bouwSchermen(){
+    if(document.getElementById('fpSchermen'))return;
+    var nav=document.createElement('nav');nav.id='fpSchermen';nav.className='fp-schermen no-print';nav.setAttribute('aria-label','Schermen');
+    nav.innerHTML=SCHERMEN.map(function(x){
+      return "<button type='button' data-scherm='"+x[0]+"' aria-pressed='"+(x[0]==='maken'?'true':'false')+"'>"+x[1]+
+        (x[0]==='vandaag'?"<span class='fs-tel' id='fs_tel' hidden></span>":"")+"</button>";
+    }).join('');
+    var hb=document.querySelector('header.topbar'),na=hb.querySelector('.brand');
+    hb.insertBefore(nav,na?na.nextSibling:hb.firstChild);
+    nav.addEventListener('click',function(e){var b=e.target.closest('[data-scherm]');if(b){SCHERM_GEKOZEN=true;zetScherm(b.getAttribute('data-scherm'));}});
+    document.documentElement.setAttribute('data-scherm','maken');
+  }
+  function zetScherm(naam){
+    if(!IS_V2)return;
+    var ov=document.getElementById('ovKaarten');
+    SCHERM=naam;
+    document.documentElement.setAttribute('data-scherm',naam);
+    [].forEach.call(document.querySelectorAll('#fpSchermen [data-scherm]'),function(b){b.setAttribute('aria-pressed',b.getAttribute('data-scherm')===naam?'true':'false');});
+    if(naam==='maken'){if(ov.classList.contains('on'))ov.classList.remove('on');window.scrollTo(0,0);return;}
+    var kop=ov.querySelector('.modal>h3');if(kop)kop.textContent=naam==='vandaag'?'Vandaag':naam==='patienten'?'Pati\u00ebnten':'Praktijk';
+    if(naam==='praktijk')bouwPraktijkTegels();
+    // het paneel vult zich zoals bij de knop Kaarten (lijst, inbox, login)
+    if(!ov.classList.contains('on'))document.getElementById('kaartenBtn').click();
+    window.scrollTo(0,0);
+  }
+  // Praktijk: wat over de praktijk gaat in plaats van over één patiënt
+  function bouwPraktijkTegels(){
+    var blok=document.getElementById('k_srv');if(!blok||document.getElementById('k_praktijk'))return;
+    var t=document.createElement('div');t.id='k_praktijk';t.className='k-praktijk';
+    var tegels=[
+      ['team','Team en logins','Collega\u2019s uitnodigen, rollen, je eigen login en de tweede stap.'],
+      ['eigen','Eigen oefeningen','Oefeningen met jullie eigen foto en uitleg, voor het hele team.'],
+      ['sjab','Sjablonen','Vaste behandelkaarten van de praktijk.'],
+      ['abon','Proef en abonnement','Hoe lang je proef nog loopt, betalen en opzeggen.','/v2/proef?mijn=1'],
+      ['gegevens','Gegevens van de praktijk','Alles downloaden, of alles wissen als je stopt.','/v2/gegevens']
+    ];
+    t.innerHTML="<div class='kp-tegels'>"+tegels.map(function(x){
+      return x[3]?"<a class='kp-tegel' href='"+x[3]+"' target='_blank' rel='noopener'><b>"+x[1]+"</b><span>"+x[2]+"</span></a>"
+        :"<button type='button' class='kp-tegel' data-kp='"+x[0]+"'><b>"+x[1]+"</b><span>"+x[2]+"</span></button>";
+    }).join('')+"</div>";
+    blok.appendChild(t);
+    t.addEventListener('click',function(e){
+      var b=e.target.closest('[data-kp]');if(!b)return;
+      var w=b.getAttribute('data-kp');
+      if(w==='team'){if(PRAKSLOT.geclaimd&&PRAKSLOT.ingelogd)openTeam();else alert('Log eerst in bij je praktijk; dat staat hierboven.');}
+      else if(w==='eigen')document.getElementById('eigenOefBtn').click();
+      else if(w==='sjab')document.getElementById('sjabBtn').click();
+    });
+  }
+  // Vandaag: wie deze week niet oefende (tonen, niet duiden). Een kaart van minder dan twee dagen
+  // oud telt nog niet mee. Zelfde keuze "alleen mijn patiënten" als bij de seintjes.
+  function tekenNietGeoefend(blok,lijst){
+    var el=document.getElementById('k_nietgeoefend');
+    if(!el){
+      el=document.createElement('div');el.id='k_nietgeoefend';el.className='k-nietgeoefend';
+      var ib=document.getElementById('k_inbox');
+      if(ib&&ib.parentNode===blok)blok.insertBefore(el,ib.nextSibling);else blok.appendChild(el);
+      el.addEventListener('click',function(e){var b=e.target.closest('[data-ngopen]');if(b)openSrvKaart(b.getAttribute('data-ngopen'));});
+    }
+    var dag=864e5,nu=Date.now(),mijn=(PRAKSLOT.wie||'').split(' ')[0].toLowerCase();
+    var rijen=(lijst||[]).filter(function(c){
+      if(!c||!c.id||c.gearchiveerd||c.demo||!c.ts||nu-c.ts<2*dag)return false;
+      var b=String(c.behandelaar||'').trim().toLowerCase();
+      if(INBOX_ALLEEN_MIJN&&mijn&&b&&b.split(/\s+/)[0]!==mijn)return false;
+      return !oefDagen(c).some(function(g){return nu-g.t<7*dag;});
+    }).map(function(c){var d=oefDagen(c);return {c:c,laatst:d.length?d[d.length-1].t:0};})
+      .sort(function(a,b){return a.laatst-b.laatst;});
+    var h="<label>Deze week niet geoefend"+(rijen.length?" <span class='ib-tel'>"+rijen.length+"</span>":"")+"</label>";
+    if(!rijen.length)h+="<div class='ib-leeg'>Iedereen met een kaart heeft deze week geoefend.</div>";
+    else{
+      h+="<div class='ib-lijst'>"+rijen.slice(0,30).map(function(x){
+        var c=x.c,wat=!(c.bekeken>0)?'Heeft de kaart nog nooit geopend':x.laatst?'Laatst geoefend '+esc(wanneerTekst(x.laatst)):'Heeft de kaart geopend, nog niet geoefend';
+        return "<div class='ib-item'>"+avRond(c.naam,'ib-av')+"<div class='ib-tekst'><b>"+esc(c.naam)+"</b>"+(c.behandelaar?" <span class='ib-wie'>\u00b7 "+esc(c.behandelaar)+"</span>":"")+
+          "<div class='ib-wat'>"+wat+"</div></div><div class='ib-knoppen'><button class='btn' type='button' data-ngopen='"+esc(c.id)+"'>Openen</button></div></div>";
+      }).join('')+"</div>"+(rijen.length>30?"<div class='ib-noot'>En nog "+(rijen.length-30)+" anderen; zie Pati\u00ebnten.</div>":"")+
+        "<div class='ib-noot'>Oefenen telt als de pati\u00ebnt een oefening of de dag afvinkte. Fysiplan geeft geen oordeel; de beoordeling is aan jou.</div>";
+    }
+    el.innerHTML=h;
+  }
+  // met een login opent de app op Vandaag, tenzij je al een scherm koos of iets anders open staat
+  function startScherm(){
+    if(!IS_V2||SCHERM_GEKOZEN||epdVoorinvulData)return;
+    var pr=(SET.praktijk||'').trim();if(!pr)return;
+    fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET()).then(function(r){return r.ok?r.json():null;}).then(function(d){
+      if(!d||!d.geclaimd||!d.ingelogd||SCHERM_GEKOZEN||SCHERM!=='maken')return;
+      if(document.querySelector('.ov.on'))return;
+      zetScherm('vandaag');
+    }).catch(function(){});
+  }
   if(window.FYSIPLAN_V2){
     bouwZijbalk();
+    bouwSchermen();
+    window.addEventListener('load',function(){setTimeout(startScherm,400);});
     var _pb=document.getElementById('printBtn');_pb.textContent='Printen';_pb.title='Print het trainingsschema of bewaar het als PDF';
     document.getElementById('eigenOefBtn').textContent='Eigen oefening';
     bouwSprongLinks();
@@ -3632,6 +3730,7 @@ bridge2.jpg</div>
     if(o)o.addEventListener('click',function(e){e.preventDefault();toonSrvKaarten();});
   }
   function rendPrakSlot(){
+    document.documentElement.classList.toggle('ps-in',!!(PRAKSLOT.geclaimd&&PRAKSLOT.ingelogd));
     var st=document.getElementById('ps_status'),form=document.getElementById('ps_form'),
         knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww');
     tekenZijbalk();
@@ -5189,6 +5288,7 @@ bridge2.jpg</div>
           }).join('')+"</div><div class='ib-noot'>Op volgorde van binnenkomst. Fysiplan geeft geen oordeel; de beoordeling is aan jou.</div>";
         }
         ib.innerHTML=h;
+        var fst=document.getElementById('fs_tel');if(fst){fst.hidden=!lijst.length;fst.textContent=lijst.length;}
         var cm=document.getElementById('ib_mijn');
         if(cm)cm.addEventListener('change',function(){INBOX_ALLEEN_MIJN=cm.checked;try{localStorage.setItem('fp_inbox_mijn',cm.checked?'1':'0');}catch(e){}laadInbox(blok,pr);});
         ib.querySelectorAll('[data-ibklaar]').forEach(function(b){
@@ -5263,6 +5363,25 @@ bridge2.jpg</div>
         .then(function(r){return r.json();}).then(function(d){if(d.ok){if(KAART_WEG===b.dataset.prulherstel){zetKaartWeg('');laatsteDeel='';deelNu();}toonSrvKaarten();}else{b.disabled=false;alert(d.fout||'Herstellen is niet gelukt.');}})
         .catch(function(){b.disabled=false;alert('Geen verbinding. Probeer opnieuw.');});
     };
+  }
+  // een gedeelde kaart van de praktijk in de editor openen (lijst, Vandaag)
+  function openSrvKaart(id){
+    if(kaartWachtNog())return;
+    fetch(praktijkKaartUrl(id),PGET())
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(!d.ok){alert('Kaart openen is niet gelukt.');return;}
+        if(chosen.length&&!confirm('Huidige kaart vervangen door “'+d.kaart.naam+'”?'))return;
+        openCard(d.kaart);
+        zetKaartId(d.kaart.id||'',d.kaart.ts);OVERSCHRIJF='';NAAM_OK=String(d.kaart.naam||'').toLowerCase();
+        // patiëntsignalen uit de praktijkprojectie meenemen naar de editor
+        if(IS_V2&&SRV_SIGNALEN[id]){SIGNAAL_KAART=SRV_SIGNALEN[id];render();}
+        // de gedeelde kaart hééft al een id: zet de QR er meteen op
+        QR_UIT_VOOR=null;laatsteDeel='';
+        if(IS_V2&&d.kaart.id)ensureQr(function(){toonQr(d.kaart.id);});else verbergQr();
+        closeOv('ovKaarten');
+      })
+      .catch(function(){alert('Kaart openen is niet gelukt: geen verbinding.');});
   }
   function toonSrvKaarten(){
     var oudePrul=document.getElementById('k_prullenbak');if(oudePrul)oudePrul.remove();
@@ -5342,6 +5461,7 @@ bridge2.jpg</div>
         // te zwaar-meldingen mee naar het schema (zie renderA4)
         l.concat(lArch).forEach(function(c){if(c.id){SRV_SIGNALEN[c.id]={naam:c.naam,oefZwaar:c.oefZwaar||null};SRV_KAART[c.id]=c;}});
         zetSeinBadge(l.filter(function(c){return c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn');}).length);
+        if(IS_V2)tekenNietGeoefend(blok,l);
         // suggesties voor het behandelaarveld: de namen die op kaarten van deze
         // praktijk al staan, zodat het team consequent dezelfde spelling gebruikt
         var behSugg=document.getElementById('behSugg');
@@ -6211,22 +6331,7 @@ bridge2.jpg</div>
     if(lg){toonLeeslog(lg);return;}
     var o=e.target.closest('[data-sopen]'),x=e.target.closest('[data-sdel]');
     if(o){
-      if(kaartWachtNog())return;
-      fetch(praktijkKaartUrl(o.dataset.sopen),PGET())
-        .then(function(r){return r.json();})
-        .then(function(d){
-          if(!d.ok){alert('Kaart openen is niet gelukt.');return;}
-          if(chosen.length&&!confirm('Huidige kaart vervangen door “'+d.kaart.naam+'”?'))return;
-          openCard(d.kaart);
-          zetKaartId(d.kaart.id||'',d.kaart.ts);OVERSCHRIJF='';NAAM_OK=String(d.kaart.naam||'').toLowerCase();
-          // patiëntsignalen uit de praktijkprojectie meenemen naar de editor
-          if(IS_V2&&SRV_SIGNALEN[o.dataset.sopen]){SIGNAAL_KAART=SRV_SIGNALEN[o.dataset.sopen];render();}
-          // de gedeelde kaart hééft al een id: zet de QR er meteen op
-          QR_UIT_VOOR=null;laatsteDeel='';
-          if(IS_V2&&d.kaart.id)ensureQr(function(){toonQr(d.kaart.id);});else verbergQr();
-          closeOv('ovKaarten');
-        })
-        .catch(function(){alert('Kaart openen is niet gelukt: geen verbinding.');});
+      openSrvKaart(o.dataset.sopen);
     }else if(x){
       var nm=x.dataset.sdel;
       // dubbelklik: één vraag en één verwijderverzoek; de tweede klik van een
@@ -6752,7 +6857,12 @@ bridge2.jpg</div>
 
   // ---- praktijkinstellingen en Help ----
   function openOv(id){document.getElementById(id).classList.add('on');}
-  function closeOv(id){document.getElementById(id).classList.remove('on');}
+  function closeOv(id){
+    document.getElementById(id).classList.remove('on');
+    // v2: Vandaag, Patiënten en Praktijk zijn het Kaarten-paneel als scherm; wie het sluit
+    // (een kaart openen, Escape) komt terug bij Kaart maken
+    if(id==='ovKaarten'&&SCHERM&&SCHERM!=='maken')zetScherm('maken');
+  }
   // Vensters met alleen het toetsenbord: elk .ov wordt een echte dialoog. Bij openen
   // gaat de focus het venster in, Tab blijft erin, Escape sluit via de eigen sluit-
   // of annuleerknop (dus met dezelfde opruimlogica) en de focus keert terug naar de
