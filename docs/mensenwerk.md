@@ -4,6 +4,14 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Ideeënbox: twee vragen voor de jurist (legal, 2026-11-12)
+**Wat er is:** /privacy noemt nu de ideeënbox (rij "Ideeënbox"). Fysiplan is daar zelf verantwoordelijk voor de gegevens,
+op grond van gerechtvaardigd belang (het product verbeteren); meedoen is vrijwillig.
+**Wat een jurist moet bevestigen:** (1) volstaat gerechtvaardigd belang, en moet de belangenafweging op papier (AVG art. 6
+lid 1 f)? (2) Ideeën waar Fysiplan over besliste en de stemmen hebben geen einddatum; ze blijven na het stoppen van een
+praktijk staan zonder koppeling aan praktijk of login. Is dat goed, of wil je een termijn (bijvoorbeeld 2 jaar na het besluit)?
+Dan bouwt de legal-routine die. Zet je `IDEEEN_AI=aan`, dan noemt /privacy vanzelf dat Anthropic de ideeën leest.
+
 ### De bewaker van buitenaf: zorg dat het alarm je bereikt (bouw, 2026-11-12)
 **Wat er is:** om de vijf minuten kijkt een machine van GitHub of fysiplan.nl het doet. Bij een storing opent de bewaker een
 issue op jouw naam; is het voorbij, dan sluit hij het. Uitleg in gewone taal: [docs/bewaker.md](bewaker.md).
