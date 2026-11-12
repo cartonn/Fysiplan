@@ -201,7 +201,7 @@ const kaartHtml = await readFile(join(root, "public/kaart.html"), "utf8");
   // de plekken waar de editor de eerdere naam gebruikt
   assert.match(index, /eerder:Array\.isArray\(e\.eerder\)\?e\.eerder:null,/, "de bibliotheek van de server neemt de eerdere naam mee");
   assert.match(index, /if\(st\.vids&&typeof st\.vids==='object'\)VIDS=st\.vids;\n      vidsNaarNaamVanNu\(\);/, "een herstelde open kaart zet eigen video's op de naam van nu");
-  assert.match(index, /var was=normEx\(x\.n\),nu=normEx\(OEF\[id\]\.naam\);\n        if\(was!==nu&&vids\[was\]&&!vids\[nu\]\)\{vids\[nu\]=vids\[was\];delete vids\[was\];\}/,
+  assert.match(index, /var was=normEx\(x\.n\),nu=normEx\(OEF\[id\]\.naam\);\n        if\(was!==nu&&uit\.vids\[was\]&&!uit\.vids\[nu\]\)\{uit\.vids\[nu\]=uit\.vids\[was\];delete uit\.vids\[was\];\}/,
     "een geopende kaart zet eigen video's op de naam van nu");
   assert.match(index, /o\.naam=d\.naam;o\.eerder=Array\.isArray\(d\.eerder\)\?d\.eerder:null;rebuildLookup\(\);/, "hernoemen in beheer neemt de eerdere naam uit het antwoord over");
 }

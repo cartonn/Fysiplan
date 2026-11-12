@@ -119,6 +119,26 @@ terug naar de gedeelde server-lijst.
   `nederlandseNamen`. Een naam toevoegen of verbeteren is één regel in het JSON-bestand; daarna
   `npm run test:oefennamen`, dat ook naloopt of elke standaardkaart nog dezelfde oefeningen vindt.
   De logica staat in `lib/oefennamen.js`.
+- **De open kaart in het werkscherm (v2):** de kaart die de therapeut open heeft staan, bewaart de
+  browser in `fysiplan_state`, en de editor deelt haar na elke wijziging stil met de praktijk. Die
+  kaart verwijst naar oefeningen uit de bibliotheek van de server en naar eigen oefeningen van de
+  praktijk, en die laatste zijn er alleen voor wie is ingelogd. Daarom twee regels. (1) De kaart
+  wordt bewaard met vaste verwijzingen (`vast`: het vaste id van de oefening, anders haar naam), en
+  niet alleen als plekken in de lijst: komt er in de bibliotheek een oefening bij, gaat er een af
+  of verandert de volgorde, dan staan er na herladen dezelfde oefeningen met dezelfde dosering. Zo
+  gaat de kaart ook naar de server (`vasteKaart` en `vanVasteKaart`). (2) De editor bewaart en
+  deelt pas als de open kaart is hersteld tegen een bibliotheek waarin alles van de kaart
+  voorkomt (`BIB_KLAAR`, `herstelOpenKaart`). Is de bibliotheek niet te halen, of staan er eigen
+  oefeningen op de kaart terwijl niemand is ingelogd, dan blijft de bewaarde kaart zoals ze is,
+  toont de editor een lege kaart met bovenaan de reden ("De oefeningen zijn niet geladen" met
+  "Opnieuw proberen", of "Log in om je kaart te zien") en gaat er niets naar de server. Zolang
+  de kaart wacht, komt er niets op en gaat er geen andere kaart open (`kaartWachtNog`): de
+  therapeut hoort meteen waarom. Na het inloggen staat de kaart er weer zoals ze bewaard is, met
+  haar eigen invulvelden. Kan de bibliotheek bij een later herladen niet worden
+  opgehaald, dan blijft de lijst staan die er stond. Aanleiding (gemeten op 2026-11-12): een
+  gedeelde kaart met een eigen oefening, de sessie verloopt, de pagina herlaadt, de therapeut logt
+  weer in, en de eigen oefening was van de kaart van de patiënt af. Test: `npm run test:openkaart`.
+  v1 (`/`) bewaart en herstelt zoals altijd.
 - **Oefenvideo's (zonder app):** iedere serveroefening heeft in `/admin88` een zichtbare
   **+ Video**. Daarmee kan beheer een gerenderde avatarvideo direct kiezen of slepen,
   vooraf bekijken, vervangen en verwijderen. Met `CLOUDFLARE_ACCOUNT_ID` plus
