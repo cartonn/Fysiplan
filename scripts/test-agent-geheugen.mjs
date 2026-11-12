@@ -149,8 +149,8 @@ const doe = (G, rol, actie, b, nu = NU) => poort(G, { rol, actie, b, nu, uitvoer
   assert.equal("contacten" in staf, false, "de chief of staff ziet geen prospects");
   assert.deepEqual([staf.zakenPerSoort.stil, staf.wachtOpEenMens.taken, staf.wachtOpEenMens.groeiConcepten], [2, 2, 1]);
   assert.deepEqual(Object.keys(staf.acties).sort(), ["advies", "taak-voorstel"]);
-  assert.equal(groei.contacten.length, 5, "een afgemelde prospect staat niet in het werk van de groei-agent");
-  assert.equal(groei.afgemeld, 1);
+  assert.equal(groei.contacten.length, 5, "een afgemelde prospect, ook onder een nieuwe code, staat niet in het werk van de groei-agent");
+  assert.equal(groei.afgemeld, 2);
   assert.ok(groei.contacten.every((c) => /^C-[a-f0-9]{6}$/.test(c.contact) && !("naam" in c)));
   assert.ok(groei.feiten.some((f) => f.includes("€ 9,99")));
 }

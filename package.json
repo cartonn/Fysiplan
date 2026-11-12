@@ -127,6 +127,7 @@
     "test:beheerherstel": "node scripts/test-beheer-herstel.mjs",
     "test:beheeromgeving": "node scripts/test-beheer-omgeving.mjs && node scripts/test-beheer-toegang.mjs && node scripts/test-agent-geheugen.mjs",
     "test:agentgeheugen": "node scripts/test-agent-geheugen.mjs",
+    "sweep:agentgeheugen": "node scripts/sweep-agent-geheugen.mjs",
     "test:seinmail": "node scripts/test-sein-mail.mjs",
     "test:tweedestap": "node scripts/test-tweede-stap.mjs",
     "test:stapverplicht": "node scripts/test-tweede-stap-verplicht.mjs",
