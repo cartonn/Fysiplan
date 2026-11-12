@@ -62,12 +62,26 @@ try {
 
   // ---- teamsjablonen ----
   const deel = (naam, n, H) => post("/api/praktijk/sjablonen", { praktijk: P, naam, oefeningen: [{ n }] }, H);
-  assert.equal((await deel("Knie", "Squat", J)).status, 200, "Joris deelt een sjabloon");
+  const werkBij = (naam, n, H) => post("/api/praktijk/sjablonen", { praktijk: P, naam, oefeningen: [{ n }], vervang: true }, H);
+  assert.equal((await werkBij("Knie", "Squat", J)).status, 200, "Joris deelt een sjabloon");
   assert.equal((await deel("Rug", "Brug", S)).status, 200, "beheerder deelt een sjabloon");
   const sjabNamen = async (H) => (await (await get("/api/praktijk/sjablonen?praktijk=" + encodeURIComponent(P), H)).json()).sjablonen.map((s) => s.naam + ":" + s.oefeningen[0].n).sort();
 
   const over = await deel("knie", "Iets anders", M);
   assert.equal(over.status, 409, "Mark overschrijft het sjabloon van Joris niet");
+  // gebruikers-sweep 2026-11-12: ook je eigen teamsjabloon wordt niet meer stil overschreven
+  const nogmaals = await deel("KNIE", "Lunge", J);
+  assert.equal(nogmaals.status, 409, "zelfde naam opnieuw delen vraagt eerst om vervangen (was 200, stil overschreven)");
+  const nj = await nogmaals.json();
+  assert.equal(nj.bestaat, true, "antwoord zegt dat het sjabloon al bestaat");
+  assert.match(nj.fout, /Knie/, "melding noemt het bestaande sjabloon");
+  assert.deepEqual(await sjabNamen(J), ["Knie:Squat", "Rug:Brug"], "zonder vervang:true blijft het oude sjabloon staan");
+  const vervangen = await post("/api/praktijk/sjablonen", { praktijk: P, naam: "Knie", oefeningen: [{ n: "Lunge" }], vervang: true }, J);
+  assert.equal(vervangen.status, 200, "met vervang:true mag de maker het vervangen");
+  assert.deepEqual(await sjabNamen(J), ["Knie:Lunge", "Rug:Brug"], "na bevestigen staat de nieuwe versie er");
+  assert.equal((await post("/api/praktijk/sjablonen", { praktijk: P, naam: "Knie", oefeningen: [{ n: "X" }], vervang: true }, M)).status, 409,
+    "vervang:true helpt een collega zonder rechten niet");
+  await post("/api/praktijk/sjablonen", { praktijk: P, naam: "Knie", oefeningen: [{ n: "Squat" }], vervang: true }, J);
   const weg1 = await post("/api/praktijk/sjablonen/verwijder", { praktijk: P, naam: "Knie" }, M);
   assert.equal(weg1.status, 403, "Mark verwijdert het sjabloon van Joris niet");
   assert.equal((await post("/api/praktijk/sjablonen/verwijder", { praktijk: P, naam: "Rug" }, M)).status, 403, "ook niet dat van de beheerder");
@@ -84,9 +98,9 @@ try {
   const html = await readFile(join(process.cwd(), "public/index.html"), "utf8");
   assert.match(html, /it\.bron==='praktijk'&&it\.s\.magWeg!==false/, "app toont de knop alleen bij magWeg");
 
-  assert.equal((await deel("Knie", "Lunge", J)).status, 200, "Joris werkt zijn eigen sjabloon bij");
-  assert.equal((await deel("Knie", "Step-up", S)).status, 200, "beheerder mag bijwerken");
-  assert.equal((await deel("Knie", "Squat", J)).status, 200, "maker blijft maker na bijwerken door beheerder");
+  assert.equal((await werkBij("Knie", "Lunge", J)).status, 200, "Joris werkt zijn eigen sjabloon bij");
+  assert.equal((await werkBij("Knie", "Step-up", S)).status, 200, "beheerder mag bijwerken");
+  assert.equal((await werkBij("Knie", "Squat", J)).status, 200, "maker blijft maker na bijwerken door beheerder");
   assert.equal((await post("/api/praktijk/sjablonen/verwijder", { praktijk: P, naam: "Knie" }, J)).status, 200, "Joris verwijdert zijn eigen sjabloon");
   assert.equal((await post("/api/praktijk/sjablonen/verwijder", { praktijk: P, naam: "Rug" }, S)).status, 200, "beheerder verwijdert");
   assert.equal((await deel("Heup", "Brug", M)).status, 200);
@@ -112,6 +126,13 @@ try {
   assert.match(html, /alleen die collega of een beheerder van de praktijk verwijderen/, "app legt uit wie het wel mag");
   assert.equal((await post("/api/praktijk/oefeningen/verwijder", { praktijk: P, id: oJ }, J)).status, 200, "Joris verwijdert zijn eigen oefening");
   assert.equal((await post("/api/praktijk/oefeningen/verwijder", { praktijk: P, id: oS }, S)).status, 200, "beheerder verwijdert");
+
+  // ---- gebruikers-sweep 2026-11-12: het gedeelde wachtwoord wist niet de hele praktijk (met de eigenaar) ----
+  const wisGedeeld = await formulier("/v2/gegevens/wissen", { praktijk: P, wachtwoord: "praktijk-wachtwoord", zeker: "WISSEN" });
+  assert.equal(wisGedeeld.status, 403, "alles wissen met alleen het gedeelde praktijkwachtwoord terwijl er een beheerder met eigen login is (was 200)");
+  assert.match(await wisGedeeld.text(), /beheerder met een eigen login/, "de pagina zegt wat wel kan");
+  assert.equal((await post("/api/praktijk/login", { email: "sanne@rollen.nl", wachtwoord: "sanne-wachtwoord" })).status, 200, "de beheerder kan nog inloggen");
+  assert.equal((await formulier("/v2/gegevens/download", { praktijk: P, wachtwoord: "praktijk-wachtwoord" })).status, 200, "downloaden met het gedeelde wachtwoord blijft werken");
 
   // ---- verlopen proef: geen nieuwe collega's of eigen logins meer ----
   app.kill(); await wacht(200);
