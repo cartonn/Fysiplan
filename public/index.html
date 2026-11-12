@@ -1121,15 +1121,28 @@ bridge2.jpg</div>
   var PROEF=(IS_V2&&window.FYSIPLAN_PROEF&&!window.FYSIPLAN_PROEF.klant)?window.FYSIPLAN_PROEF:null;
   var PROEF_VERS=false,PROEF_LEEG=false;
   if(PROEF){try{PROEF_VERS=!localStorage.getItem('fysiplan_proef_start');PROEF_LEEG=!localStorage.getItem('fysiplan_state');}catch(e){}}
-  // praktijksessie (v2-accountlaag): een token in localStorage, meegestuurd op de
-  // praktijkroutes. In v1 wordt er nooit een token opgeslagen, dus deze helpers
-  // geven daar altijd de kale headers terug — v1-gedrag verandert niet.
+  // praktijksessie (v2-accountlaag): de sessiesleutel staat in een cookie die scripts niet
+  // kunnen lezen (HttpOnly); de browser stuurt hem zelf mee, dus deze pagina kent hem niet.
+  // Tot en met 12 november 2026 stond hij in localStorage ('fp_praksessie'). Staat hij daar
+  // nog, dan gaat hij mee tot hij is omgeruild voor de cookie (ruilOudeSleutel) en verdwijnt
+  // hij daarna uit de opslag. In v1 staat er nooit een sleutel: v1-gedrag verandert niet.
   function prakSes(){try{return localStorage.getItem('fp_praksessie')||'';}catch(e){return '';}}
-  function setPrakSes(t){try{if(t)localStorage.setItem('fp_praksessie',t);else localStorage.removeItem('fp_praksessie');}catch(e){}
+  // t = wat de server na het inloggen teruggeeft (in de browser het woord "cookie"); leeg = uitgelogd
+  function setPrakSes(t){try{localStorage.removeItem('fp_praksessie');}catch(e){}
     // net ingelogd: het praktijkprofiel (adres, logo) ophalen voor dit apparaat
     if(t&&typeof window.fpLaadPraktijken==='function')window.fpLaadPraktijken();}
   function PJSON(){var h={'content-type':'application/json'};var s=prakSes();if(s)h['x-praktijk-sessie']=s;return h;}
   function PGET(){var o={cache:'no-cache'};var s=prakSes();if(s)o.headers={'x-praktijk-sessie':s};return o;}
+  // Een sleutel van vóór de cookie één keer omruilen. Lukt het (of werkt de sleutel niet meer),
+  // dan gaat hij uit de opslag; zonder verbinding blijft hij staan tot de volgende keer.
+  (function ruilOudeSleutel(){
+    var oud=prakSes();if(!oud)return;
+    fetch('api/praktijk/sessie-cookie',{method:'POST',headers:{'content-type':'application/json','x-praktijk-sessie':oud},body:'{}'})
+      .then(function(r){var klaar=r.ok||r.status===401;
+        // het antwoord uitlezen, anders blijft het verzoek voor de browser openstaan
+        return r.text().then(function(){if(klaar){try{if(localStorage.getItem('fp_praksessie')===oud)localStorage.removeItem('fp_praksessie');}catch(e){}}});})
+      .catch(function(){});
+  })();
   // V2 en beheer gebruiken de gekoppelde avatarlibrary; de V1-root gebruikt
   // uitsluitend de bevroren lijntekeningenbibliotheek.
   var USE_V2_LIBRARY=IS_V2||IS_ADMIN;
@@ -4327,13 +4340,26 @@ bridge2.jpg</div>
       try{if(window.caches&&caches.keys)stappen.push(caches.keys().then(function(n){return Promise.all(n.map(function(x){return caches.delete(x);}));}).catch(function(){}));}catch(e){}
       Promise.all(stappen).then(function(){location.href=location.pathname+'?gewist=1';});
     };
-    // eerst de sessie op de server laten vervallen, dan pas lokaal wissen
-    fetch('api/praktijk/logout?apparaat=1',{method:'POST',headers:PJSON()}).then(klaar,klaar);
+    // Eerst de sessie op de server laten vervallen, dan pas lokaal wissen. De login staat in
+    // een cookie die alleen de server kan weghalen: lukt dat niet, dan is er niets gewist en
+    // zeggen we dat, in plaats van een melding "gewist" terwijl de login er nog staat.
+    var mislukt=function(){window.alert('Wissen lukte niet: er is geen verbinding met Fysiplan, dus je login staat nog op deze computer. Er is niets gewist.\n\nProbeer het opnieuw zodra er verbinding is.');};
+    fetch('api/praktijk/logout?apparaat=1',{method:'POST',headers:PJSON()})
+      .then(function(r){return r.text().then(function(){return r.ok;});})
+      .then(function(ok){if(ok)klaar();else mislukt();},mislukt);
   }
   try{if(/[?&]gewist=1/.test(location.search)&&document.body){history.replaceState(null,'',location.pathname);var gw=document.createElement('div');gw.id='gewist_melding';gw.setAttribute('role','status');gw.textContent='Fysiplan is van dit apparaat gewist.';gw.style.cssText='position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:99999;background:#1f3b2c;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;box-shadow:0 4px 16px rgba(0,0,0,.2)';document.body.appendChild(gw);setTimeout(function(){gw.remove();},6000);}}catch(e){}
+  // De login staat in een cookie die alleen de server kan weghalen. Uitgelogd is dus pas
+  // uitgelogd als de server dat bevestigt; lukt het niet, dan blijft het scherm ingelogd en
+  // staat dat erbij, zodat niemand een gedeelde computer achterlaat met een login die er nog is.
+  var UITLOG_BEZIG=false;
   function prakLogout(){
-    fetch('api/praktijk/logout',{method:'POST',headers:PJSON()}).catch(function(){});
-    prakUitgelogd();
+    if(UITLOG_BEZIG)return;
+    UITLOG_BEZIG=true;
+    var mislukt=function(){UITLOG_BEZIG=false;toonPsMsg('Uitloggen lukte niet. Je bent op deze computer nog ingelogd. Controleer je verbinding en klik opnieuw op Uitloggen.',true);};
+    fetch('api/praktijk/logout',{method:'POST',headers:PJSON()})
+      .then(function(r){return r.text().then(function(){return r.ok;});})
+      .then(function(ok){if(!ok){mislukt();return;}UITLOG_BEZIG=false;prakUitgelogd();},mislukt);
   }
   // het scherm na het uitloggen; ook als de server de sessie zelf al heeft ingetrokken
   function prakUitgelogd(){

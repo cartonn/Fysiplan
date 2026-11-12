@@ -344,6 +344,16 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **TER INFO voor audit (b) en (g), 2026-11-12 (platformreview, test:sessiecookie) — de praktijksessie staat nu in een cookie.**
+  Tot nu toe stond de sleutel in `localStorage` en ging hij mee in `x-praktijk-sessie`; oudere notities hier en in het oude
+  logboek ("geen cookie, dus geen CSRF op de ingelogde schrijfroutes") gelden daardoor niet meer. Nu: cookie `__Host-fpsessie`
+  op https (`fpsessie` zonder https), `HttpOnly`, `SameSite=Strict`, `Secure`, 30 dagen, zonder `Domain`. Een verzoek met
+  `Sec-Fetch-Site` of `Origin` krijgt de sleutel niet meer in het antwoord. Tegen CSRF staan twee sloten: `SameSite=Strict`, en
+  `sessieCookieVan` negeert de cookie als `kruisSite` het verzoek van elders vindt (ook `same-site` met een andere Origin). Elke
+  route die een sessie uitdeelt weigert eerst een andere website (statisch vastgelegd in de test). Bewust zo gelaten: een verzoek
+  zonder browserkoppen krijgt de sleutel in het antwoord en mag de kop blijven gebruiken (tests, eigen programma's); de kop wint van
+  de cookie; bij omruilen (`/api/praktijk/sessie-cookie`) krijgt dezelfde sleutel een cookie voor de resterende tijd, er komt geen
+  nieuwe. Een script op de pagina kan nog steeds handelen zolang de pagina open is; het kan de sleutel niet meer meenemen.
 - **OPGELOST 2026-11-12 06u (gebruikers-sweep, deze PR, test:loginanderepraktijk) — HOOG (Karin, desktop) — inloggen met e-mail
   negeerde de praktijknaam als de login maar bij één praktijk hoorde.** Een collega met alleen een login bij Beta kwam op het scherm van
   Alfa stil bij Beta binnen (200, sessie van Beta); een verwijderde collega met een tweede praktijk dacht zo dat hij er nog in zat.

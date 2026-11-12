@@ -403,6 +403,18 @@ praktijk een eigen code en gaat daar niets van mee; v1 blijft bij de eigen kaart
   gaat niet mee in de reservekopie. Wil je iedereen opnieuw laten inloggen (bijvoorbeeld na het
   terugzetten van een reservekopie), verwijder dan dat bestand en herstart. Bij een uitrol
   (SIGTERM) maakt de server lopende verzoeken af voordat hij stopt.
+- **Waar de sessiesleutel in de browser staat:** in een cookie die scripts niet kunnen lezen
+  (`HttpOnly`, `SameSite=Strict`, dertig dagen, op https met `Secure`). Op https heet hij
+  `__Host-fpsessie`: met dat voorvoegsel kan een ander adres onder hetzelfde domein er geen
+  eigen sessie overheen zetten. Zonder https (lokaal) heet hij `fpsessie`. Een browser krijgt
+  de sleutel alleen in die cookie; in het antwoord op het inloggen staat dan `"sessie":"cookie"`.
+  De cookie telt niet bij een verzoek vanaf een andere website. Uitloggen haalt de sessie op de
+  server weg en maakt de cookie leeg; lukt dat niet (geen verbinding), dan zegt de app dat en
+  blijft het scherm ingelogd. Een eigen programma zonder browserkoppen (`Sec-Fetch-Site`,
+  `Origin`) krijgt de sleutel ook in het antwoord en stuurt hem mee in `x-praktijk-sessie`;
+  zo werken de tests. Tot 12 november 2026 bewaarde de app de sleutel in `localStorage`
+  (`fp_praksessie`): staat hij daar nog, dan ruilt de app hem één keer om via
+  `POST /api/praktijk/sessie-cookie` en haalt hem uit de opslag. `npm run test:sessiecookie`.
 - **Tweede stap bij het inloggen:** heeft een login een tweede stap, dan staan bij dat lid in
   `praktijk-accounts.json` het geheim van de code-app (leesbaar), de SHA-256 van de ongebruikte
   reservecodes, de laatst gebruikte tijdstap en de teller van foute codes. Ze gaan mee in de

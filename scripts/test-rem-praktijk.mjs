@@ -42,7 +42,11 @@ try {
   const WIFI = "10.90.0.1";
   const c = await post("/api/praktijk/claim", { praktijk: "Fysio Wifi", wachtwoord: "wachtwoord-wifi", akkoord: true }, WIFI);
   assert.equal(c.status, 200);
-  const S = { "x-praktijk-sessie": (await c.json()).sessie };
+  // deze test stuurt de koppen van een browser mee, en een browser krijgt de sessie alleen
+  // in de cookie (HttpOnly): die gaat terug zoals de browser dat doet
+  assert.equal((await c.json()).sessie, "cookie");
+  const S = { cookie: (c.headers.getSetCookie().find((k) => k.startsWith("fpsessie=")) || "").split(";")[0] };
+  assert.match(S.cookie, /^fpsessie=[a-f0-9]{48}$/);
 
   // 1) 80 gewone schrijfacties van het team: geen 429 meer (was 429 vanaf de 40e)
   for (let i = 0; i < 80; i++) {

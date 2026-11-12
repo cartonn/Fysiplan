@@ -153,6 +153,7 @@ jobs:
       - run: npm run test:kaartpraktijknaam
       - run: npm run test:wachtwoordvergeten
       - run: npm run test:kaartpakket
+      - run: npm run test:sessiecookie
       - run: npm run test:zwaaroffline
       - run: npm run test:dagwisseltaal
       - run: npm run test:reekstitel
