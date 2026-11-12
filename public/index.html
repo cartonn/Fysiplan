@@ -3344,9 +3344,25 @@ bridge2.jpg</div>
       }else{
         h+="<div style='margin-top:10px'>Een beheerder van je praktijk past het team aan.</div>";
       }
+      // mail bij een seintje: alleen tonen als de server kan mailen; een beheerder zet het aan of uit
+      if(d.seinMail&&d.seinMail.kan){
+        h+="<div class='tm-sein' style='margin-top:12px;border-top:1px solid var(--line);padding-top:10px'>"+
+          "<label style='display:flex;gap:6px;align-items:center;margin:0'><input type='checkbox' id='tm_seinmail' style='width:auto;height:auto;margin:0'"+(d.seinMail.aan?" checked":"")+(d.beheer?"":" disabled")+"/>"+
+          "<span>E-mail bij een seintje</span></label>"+
+          "<div style='margin:3px 0 0 20px'>Bij “Ik heb een vraag” of “Het doet te veel pijn” krijgt de behandelaar van de kaart een korte mail, zonder gegevens van de patiënt. "+
+          (d.seinMail.naar&&d.seinMail.naar.length
+            ?"Heeft de kaart geen behandelaar of maker met een eigen login, dan gaat de mail naar "+esc(d.seinMail.naar.join(', '))+"."
+            :"Dat werkt alleen voor wie een eigen login heeft.")+"</div></div>";
+      }
       h+="<div id='tm_msg' style='margin-top:8px;color:var(--fout,#b4372f)'></div>";
       el.innerHTML=h;
       var msg=function(t){var m=document.getElementById('tm_msg');if(m)m.textContent=t||'';};
+      var sm=document.getElementById('tm_seinmail');
+      if(sm)sm.addEventListener('change',function(){
+        var wil=sm.checked;sm.disabled=true;
+        teamPost('sein-mail',{aan:wil}).then(function(r){sm.disabled=false;if(!r.ok){sm.checked=!wil;msg(r.fout||'Dat lukte niet.');}else msg('');})
+          .catch(function(){sm.disabled=false;sm.checked=!wil;msg('Geen verbinding.');});
+      });
       var eDo=document.getElementById('tm_edo');
       if(eDo)eDo.addEventListener('click',function(){
         eDo.disabled=true;
@@ -3452,7 +3468,7 @@ bridge2.jpg</div>
       'wachtwoord-wijzigen-mislukt':'wachtwoordwijziging geweigerd','wachtwoord-hersteld':'wachtwoord hersteld met herstelcode',
       'herstel-mislukt':'herstelpoging geweigerd','herstelcode-vernieuwd':'nieuwe herstelcode gemaakt',
       'herstelcode-vernieuwen-mislukt':'nieuwe herstelcode geweigerd','claim-gereset-door-beheer':'beveiliging gereset door beheer',
-      'herstel-door-beheer':'herstelmail naar de praktijk gestuurd','wachtwoord-hersteld-per-mail':'nieuw wachtwoord gekozen via de herstelmail',
+      'herstel-door-beheer':'herstelmail naar de praktijk gestuurd','wachtwoord-hersteld-per-mail':'nieuw wachtwoord gekozen via de herstelmail','sein-mail-uit':'e-mail bij een seintje uitgezet','sein-mail-aan':'e-mail bij een seintje aangezet',
       'kaart-link-vernieuwd':'kaartlink vernieuwd','eigen-login-gemaakt':'eigen login gemaakt','collega-uitgenodigd':'collega uitgenodigd',
       'uitnodiging-aangenomen':'uitnodiging aangenomen','collega-verwijderd':'collega verwijderd','rol-gewijzigd':'rol gewijzigd','team-wijziging-geweigerd':'teamwijziging geweigerd',
       'praktijkwachtwoord-uit':'praktijkwachtwoord uitgezet','praktijkwachtwoord-aan':'praktijkwachtwoord weer aangezet','kaart-verwijderd':'patiëntkaart naar de prullenbak','kaart-hersteld':'patiëntkaart hersteld uit de prullenbak','kaart-definitief-verwijderd':'patiëntkaart definitief verwijderd','profiel-gewijzigd':'praktijkgegevens of logo gewijzigd','abonnement-opgezegd':'abonnement opgezegd','opzeggen-mislukt':'opzeggen geweigerd (fout wachtwoord)'};
