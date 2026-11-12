@@ -2558,9 +2558,9 @@ function leesLimiet(req, res) {
 // blijven buiten de back-up.
 // ook de eigen oefeningen van praktijken, het logboek en de start van de bewaartermijn: zonder
 // die drie kwam een praktijk na een restore terug zonder eigen oefeningen en zonder logboek
-const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, praktijkOefeningenPath, accountsPath, auditPath, bewaarPath, v1AccountsPath, proefPath, beheerAccountsPath, beheerLogPath,
-  // finance: btw-keuze, ingediende aangiftes, afgesloten boekjaren, kosten; en wat de support-agent mag en deed
-  join(dataDir, "finance-instellingen.json"), join(dataDir, "finance-kosten.json"), join(dataDir, "beheer-agent.json")];
+const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, praktijkOefeningenPath, accountsPath, auditPath, bewaarPath, v1AccountsPath, proefPath, beheerAccountsPath, beheerLogPath];
+// finance: btw-keuze, ingediende aangiftes, afgesloten boekjaren, kosten; en wat de support-agent mag en deed
+backupBestanden.push(join(dataDir, "finance-instellingen.json"), join(dataDir, "finance-kosten.json"), join(dataDir, "beheer-agent.json"));
 // reservekopie buiten Railway (lib/backup-elders.js): dezelfde bestanden, versleuteld, naar een
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.

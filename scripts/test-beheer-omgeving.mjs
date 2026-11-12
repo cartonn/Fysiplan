@@ -448,7 +448,7 @@ try {
     assert.doesNotMatch(js, /\beval\(|new Function\(|document\.write/);
     assert.match(js, /import \{ vraagBeheersleutel \} from '\/beheersleutel\.js'/, "inloggen gaat via dezelfde weg als de andere beheerpagina's");
     const server = await readFile(join(root, "server.js"), "utf8");
-    assert.match(server, /join\(dataDir, "finance-instellingen\.json"\), join\(dataDir, "finance-kosten\.json"\), join\(dataDir, "beheer-agent\.json"\)\];/, "de financebestanden gaan mee in de reservekopie");
+    assert.match(server, /^backupBestanden\.push\(join\(dataDir, "finance-instellingen\.json"\), join\(dataDir, "finance-kosten\.json"\), join\(dataDir, "beheer-agent\.json"\)\);$/m, "de financebestanden gaan mee in de reservekopie");
     const routes = await readFile(join(root, "lib/beheer-omgeving-routes.js"), "utf8");
     assert.match(routes, /if \(!d\.beheerEigen\(req\)\) \{ await d\.denied\(req, res, urlPath\); return true; \}/, "elke route vraagt een eigen login van beheer");
   }
