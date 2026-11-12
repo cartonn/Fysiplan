@@ -364,6 +364,18 @@ een **factuur** met 21% btw uitgesplitst.
    een volledige factuur; wil je het adres verplicht maken vóór het betalen, zeg het.
 
 
+### Thuiskaart als tweede afdruk (reviewlijst punt 12, 2026-11-12)
+**Wat de code nu doet** (`public/index.html`, `bouwThuiskaart`, test `npm run test:thuiskaart`): in het printvenster
+van de app staat naast "Uitgebreide kaart" en "Compacte kaart" de keuze **Thuiskaart**. Dat is een vel voor thuis:
+zes oefeningen per vel met een groot beeld, de naam, de dosering in woorden ("3 series van 12 herhalingen"), de
+uitleg uit de bibliotheek en zeven vakjes om per dag af te vinken. Op het eerste vel staat de QR-code van de
+digitale kaart als die erop moet. "Groot lettertype" werkt ook hier. De trainingslog blijft zoals hij was. V1 (de
+app op /) heeft de keuze niet.
+
+**Wat jij moet weten:** het vel is liggend, net als de trainingslog. In Safari, dat staand print, komen er twee
+oefeningen naast elkaar en drie onder elkaar. De tekst op het vel is Nederlands, ook als de patiënt de digitale kaart
+in een andere taal leest.
+
 ### Engelse oefennamen in de Nederlandse bibliotheek (gebruikers-sweep, 2026-11-07)
 **Wat er is:** op een Nederlandse patiëntkaart staan namen als "Knee elbow", "Abs stretch" en "Abroller".
 Ze komen uit `public/oefeningen-v2.json`. Routines raken dat bestand niet aan, want daar werkt jouw

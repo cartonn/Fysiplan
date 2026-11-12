@@ -177,6 +177,7 @@
     "test:plaatsen": "node scripts/test-plaatsen.mjs",
     "test:leeslog": "node scripts/test-leeslog.mjs",
     "test:database": "node scripts/test-database.mjs",
+    "test:thuiskaart": "node scripts/test-thuiskaart.mjs",
     "test:medialink": "node scripts/test-medialink.mjs",
     "test:vertalingen": "node scripts/test-vertalingen.mjs",
     "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs",
