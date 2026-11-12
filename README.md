@@ -133,8 +133,22 @@ terug naar de gedeelde server-lijst.
     collega (Team → wissen); de collega logt dan in met alleen het wachtwoord en stelt hem opnieuw
     in. Is de enige beheerder het zelf kwijt, dan stuurt Fysiplan-beheer de herstelmail met
     `"tweedeStap": true` (zie **Beheer**).
-  - *Grenzen.* De tweede stap is niet verplicht. Het gedeelde praktijkwachtwoord logt in zonder
-    tweede stap en met beheerdersrechten: zet het uit (Team) zodra iedereen een eigen login heeft.
+  - *Verplicht voor de hele praktijk.* Een beheerder met een eigen login en een eigen tweede stap
+    kan hem onder Team van iedereen vragen (met het eigen wachtwoord). Het gedeelde
+    praktijkwachtwoord gaat dan uit en kan niet weer aan. Wie nog geen tweede stap heeft, is
+    uitgelogd en stelt hem in bij het inloggen: na het goede wachtwoord toont de app de QR-code, en
+    pas met de eerste code is er een sessie. In zo'n praktijk bestaat geen sessie zonder tweede
+    stap. "Uitzetten" is daar opnieuw instellen (nieuwe telefoon), en een gewiste tweede stap
+    wordt bij het inloggen opnieuw ingesteld. Opheffen vraagt wachtwoord en code; het
+    praktijkwachtwoord blijft daarna uit. De schakelaar staat standaard uit
+    (`npm run test:stapverplicht`).
+  - *Grenzen.* Zonder die schakelaar is de tweede stap een eigen keuze per login, en logt het
+    gedeelde praktijkwachtwoord in zonder tweede stap en met beheerdersrechten: zet het uit (Team)
+    zodra iedereen een eigen login heeft. Met de schakelaar aan kan wie het wachtwoord kent van een
+    login die de tweede stap nog niet heeft ingesteld, hem als eerste instellen. De eigenaar komt
+    er dan niet in en het staat in de Activiteit; een beheerder wist hem (Team → wissen). Stil
+    meekijken kan niet: elk antwoord met een geheim maakt het vorige ongeldig, dus het geheim dat
+    in gebruik komt, heeft alleen de browser gezien die het instellen afmaakt.
     Het geheim staat leesbaar in `praktijk-accounts.json`, want de server moet de code kunnen
     narekenen; wie die schijf kan lezen, heeft ook de tweede stap. De login van V1 (`/`) en de
     beheersleutel hebben geen tweede stap. `npm run test:tweedestap` dekt de rekenkern (testvectoren
@@ -348,7 +362,9 @@ de verwerkersovereenkomst; de versie en het tijdstip staan bij het praktijkaccou
   reservecodes, de laatst gebruikte tijdstap en de teller van foute codes. Ze gaan mee in de
   reservekopie en verdwijnen bij uitzetten, bij wissen door een beheerder en met het account. De
   waarschuwingsmail na te veel foute codes gaat naar het adres van de login zelf en bevat de
-  praktijknaam en de voornaam, geen code en geen geheim.
+  praktijknaam en de voornaam, geen code en geen geheim. Vraagt een praktijk de tweede stap
+  van iedereen, dan staat dat met het moment bij de praktijk zelf (`stapVerplicht`); het staat ook
+  in de download van de praktijkgegevens.
 - **Bewaartermijn** (automatisch, elke 6 uur en bij het opstarten): een kaart verdwijnt na
   `BEWAAR_STIL_DAGEN` (standaard 90) dagen zonder activiteit, of `BEWAAR_AFGEROND_DAGEN`
   (standaard 30) dagen na afronden (archiveren). Na de invoering geldt eenmalig een aanloop van
