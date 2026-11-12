@@ -304,7 +304,11 @@ if (pw) {
       const pv = await cv.newPage();
       const vfouten = [];
       pv.on("pageerror", (e) => vfouten.push(e.message));
-      await pv.route("**/vidtest/*", (r) => r.fulfill({ status: 404, body: "" }));
+      // het videobestand ontbreekt (404), maar pas nadat de plek van de video is gemeten: een video die niet
+      // speelt verdwijnt sinds de sweep van 2026-11-12 18u (vfout), dan valt er niets meer te meten
+      const vidWacht = [];
+      await pv.route("**/vidtest/*", (r) => { vidWacht.push(r); });
+      const vid404 = async () => { while (vidWacht.length) await vidWacht.shift().fulfill({ status: 404, body: "" }).catch(() => {}); };
       // de eerste twee oefeningen van de demokaart krijgen een staande avatarvideo en een YouTube-video
       const namen = await (await fetch(origin + "/api/kaart?id=demo")).json().then((d) => d.kaart.chosen.slice(0, 2).map((x) => x.n));
       // de kaart krijgt haar oefeningen met de kaart zelf mee (lib), niet meer uit de hele bibliotheek
@@ -353,10 +357,12 @@ if (pw) {
       const gedaan = await vak("#sklaar");
       assert.ok(gedaan.y + gedaan.h <= pv.viewportSize().height, toestel + ": Gedaan blijft in beeld bij de video");
       assert.equal(await pv.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0, toestel + ": de video steekt niet opzij uit");
-      // het videobestand ontbreekt hier: de melding staat dan op de video, niet onder de vouw
+      // het videobestand ontbreekt hier: de video verdwijnt en de melding staat op zijn plek, niet onder de vouw
+      await vid404();
       await pv.waitForFunction(() => { const s = document.querySelector("#oefs .oef.actief .vstatus"); return s && !s.hidden && s.querySelector("button"); });
       const melding = await vak("#oefs .oef.actief .vstatus");
       assert.ok(melding.y >= foto.y - 2 && melding.y + melding.h <= naam.y + 2 && melding.x + melding.w <= sluit.x + 2, toestel + ": melding staat op de video, naast de sluitknop");
+      assert.equal(await vak("#oefs .oef.actief .vhouder.open video"), null, toestel + ": een video die niet speelt ligt niet onder de melding");
       // sluiten zet het beeld terug; de volgende oefening sluit een open video
       await pv.click("#oefs .oef.actief .vbtn[data-eigen]");
       await pv.waitForFunction(() => !document.querySelector("#oefs .vhouder.open"));

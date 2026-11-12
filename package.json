@@ -164,6 +164,8 @@
     "test:naamerftniets": "node scripts/test-naam-erft-niets.mjs",
     "test:kaartpraktijknaam": "node scripts/test-kaart-praktijknaam.mjs",
     "test:wachtwoordvergeten": "node scripts/test-wachtwoord-vergeten.mjs",
+    "test:tweedestaponderbroken": "node scripts/test-tweede-stap-onderbroken.mjs",
+    "test:teamtikdoelen": "node scripts/test-team-tikdoelen.mjs",
     "test:kaartpakket": "node scripts/test-kaart-eigen-pakket.mjs",
     "test:sessiecookie": "node scripts/test-sessie-cookie.mjs",
     "test:beheeraccounts": "node scripts/test-beheer-accounts.mjs",
