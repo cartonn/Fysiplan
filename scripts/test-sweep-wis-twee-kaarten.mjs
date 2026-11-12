@@ -71,8 +71,16 @@ try {
   const alleenB = beeldB.filter((p) => !beeldA.includes(p));
   assert.equal(gedeeld.length, 1, "één gedeelde oefening");
   assert.equal(alleenB.length, 1);
-  // wachten tot de service worker de beelden heeft bewaard
-  await page.waitForFunction(async (ps) => { const uit = new Set(); for (const n of await caches.keys()) { const c = await caches.open(n); for (const r of await c.keys()) uit.add(new URL(r.url).pathname); } return ps.every((p) => uit.has(p)); }, [...beeldA, ...beeldB], { timeout: 15000, polling: 250 });
+  // Wachten tot de service worker de beelden heeft bewaard. Met evaluate in een lus:
+  // waitForFunction wacht niet op een async functie (de Promise zelf telt al als waar).
+  const nodig = [...beeldA, ...beeldB];
+  let mist = nodig;
+  for (let i = 0; i < 60 && mist.length; i++) {
+    const heeft = await inCache();
+    mist = nodig.filter((p) => !heeft.includes(p));
+    if (mist.length) await wacht(250);
+  }
+  assert.deepEqual(mist, [], "de service worker bewaart de beelden van beide kaarten");
   page.once("dialog", (d) => d.accept());
   await page.click("#mgblok summary");
   await page.click("#mg_wis");
