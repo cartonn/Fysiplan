@@ -88,8 +88,6 @@ nav a:focus-visible,.schakel button:focus-visible,.oud:focus-visible{outline:2px
 .kpi .s{font-size:12px;color:var(--stil);margin-top:2px}
 .kpi.held{background:var(--petrol);border-color:var(--petrol)}
 .kpi.held .l{color:#A9C3C0}.kpi.held .w{color:#fff}.kpi.held .s{color:var(--limoen)}
-.trend{font-weight:650}.trend.op{color:var(--goed)}.trend.neer{color:var(--probleem)}
-.kpi.held .trend.op{color:var(--limoen)}
 
 .pil{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;border-radius:99px;padding:2px 9px;white-space:nowrap;line-height:1.5}
 .pil::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
@@ -232,6 +230,25 @@ details.mail pre{margin:0;padding:10px 14px 14px;white-space:pre-wrap;font:13px/
 .tijdlijn div{display:flex;gap:10px;font-size:12.5px;padding:6px 0;border-bottom:1px dashed var(--lijn)}
 .tijdlijn div:last-child{border-bottom:0}
 .tijdlijn time{color:var(--stil);min-width:96px;font-variant-numeric:tabular-nums}
+.kaartkop .knop{white-space:nowrap;flex:none}
+.vonk{display:block}
+.vonk rect.nu{fill:var(--petrol-3)}.vonk rect.toen{fill:#B7C9C6}.vonk rect.nul{fill:var(--lijn)}
+.staafjes{display:flex;gap:3px;align-items:flex-end;margin-top:6px;border-bottom:1px solid var(--lijn)}
+.staafjes i{flex:1;border-radius:3px 3px 0 0;background:#B7C9C6;min-height:2px}
+.staafjes i.nu{background:var(--petrol-3)}.staafjes i.nul{background:var(--lijn)}
+.staafjes i:hover{background:var(--serie-omzet)}
+.staafjes.dagen{gap:2px}
+.logboek{display:grid}
+.logregel{display:grid;grid-template-columns:78px 1fr;gap:10px;align-items:start;font-size:12.5px;padding:10px 0;border-bottom:1px solid var(--lijn-2)}
+.logregel:last-child{border-bottom:0}
+.logregel b{display:block;color:var(--inkt);font-size:13px}
+.logregel span{display:block;color:var(--zacht)}
+.logregel time{display:block;color:var(--stil);font-size:11.5px;margin-top:2px;font-variant-numeric:tabular-nums}
+.logregel .pil{justify-self:start;margin-top:1px}
+.kw .voet{grid-column:1/-1;font-size:12.5px;color:var(--zacht);border-top:1px solid var(--lijn-2);padding-top:10px;margin-top:-2px}
+.kw .voet.anders{color:#6B4600}
+.kw .voet.anders b{color:#6B4600}
+h2 small.hint{font-weight:500;margin-left:6px}
 .beschik{display:flex;gap:2px;align-items:flex-end;height:44px}
 .beschik i{flex:1;border-radius:3px 3px 0 0;background:#2E9E57;min-height:4px}
 .beschik i.dip{background:#D49A1C}.beschik i.uit{background:#D9473B}

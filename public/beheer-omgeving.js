@@ -21,7 +21,9 @@ const geleden = (ms, nu) => {
   return d === 1 ? 'gisteren' : d + ' dagen geleden';
 };
 const STATUS = { klant: ['Klant', 'goed'], opgezegd: ['Opgezegd', 'aandacht'], gestopt: ['Gestopt', 'neutraal'], proef: ['Proef', 'petrol'], 'zonder-abonnement': ['Proef verlopen', 'neutraal'], v1: ['V1-demo', 'neutraal'] };
-const STAND = { goed: 'Goed', aandacht: 'Aandacht', probleem: 'Probleem' };
+const STAND = { goed: 'Goed', aandacht: 'Aandacht', probleem: 'Probleem', nvt: 'Niet bewaakt' };
+const aantal = (n, een, meer) => n + ' ' + (n === 1 ? een : meer);
+const getal = (n) => Number(n).toLocaleString('nl-NL', { maximumFractionDigits: 1 });
 const pil = (tekst, soort, kaal) => '<span class="pil ' + soort + (kaal ? ' kaal' : '') + '">' + esc(tekst) + '</span>';
 
 const PAGINAS = {
@@ -41,7 +43,7 @@ let bron = 'echt';
 try { if (localStorage.getItem('fp-beheer-bron') === 'demo') bron = 'demo'; } catch {}
 // een link met ?bron=demo opent meteen de demo
 { const q = new URLSearchParams(location.search).get('bron'); if (q === 'demo' || q === 'echt') bron = q; }
-const st = { filter: '', stand: '', factuurTab: 'alle', factuurBlad: 0, kostenAlle: false, jaar: null, ladePk: null };
+const st = { filter: '', stand: '', factuurTab: 'alle', factuurBlad: 0, kostenAlle: false, jaar: null, ladePk: null, logAlles: false };
 const PER_BLAD = 15;
 const tip = $('#tip');
 
@@ -99,8 +101,30 @@ function teken() {
 
 // ---------- bouwstenen ----------
 const kpi = (l, w, s, held) => '<div class="kpi' + (held ? ' held' : '') + '"><div class="l">' + esc(l) + '</div><div class="w">' + w + '</div>' + (s ? '<div class="s">' + s + '</div>' : '') + '</div>';
-const trend = (nu, was) => { if (!was) return ''; const p = Math.round((nu / was - 1) * 1000) / 10; return '<span class="trend ' + (p >= 0 ? 'op' : 'neer') + '">' + (p >= 0 ? '▲ ' : '▼ ') + Math.abs(p).toLocaleString('nl-NL') + '%</span> t.o.v. vorige maand'; };
 const check = (ok, titel, tekst) => '<div class="check"><span class="ic ' + (ok === true ? 'goed' : ok === false ? 'fout' : 'weet') + '" aria-hidden="true">' + (ok === true ? '✓' : ok === false ? '!' : '?') + '</span><div><b>' + esc(titel) + '</b><small>' + esc(tekst) + '</small></div><span class="sr" hidden>' + (ok === true ? 'in orde' : ok === false ? 'niet in orde' : 'nakijken') + '</span></div>';
+
+// Kaarten per week, twaalf weken, als kleine staafjes in een tabelrij. De laatste vier weken
+// (de "30 dagen" ernaast) zijn donker, de acht ervoor licht: zo is een daling in één blik te zien.
+function vonk(weken) {
+  if (!weken || !weken.length) return '<span class="hint">–</span>';
+  const max = Math.max(1, ...weken), B = 4, G = 2, H = 22, W = weken.length * (B + G) - G;
+  const som = (a) => a.reduce((t, x) => t + x, 0);
+  const tipHtml = '<b>Kaarten per week</b><div class="tr"><span>Laatste 4 weken</span><span>' + som(weken.slice(-4)) + '</span></div><div class="tr"><span>De 4 ervoor</span><span>' + som(weken.slice(-8, -4)) + '</span></div><div class="tr"><span>Hoogste week</span><span>' + max + '</span></div>';
+  return '<svg class="vonk" viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" role="img" aria-label="Kaarten per week over twaalf weken: ' + weken.join(', ') + '" data-tip="' + esc(tipHtml) + '">' +
+    weken.map((n, i) => { const h = n ? Math.max(2, Math.round((H - 1) * n / max)) : 1; return '<rect x="' + i * (B + G) + '" y="' + (H - h) + '" width="' + B + '" height="' + h + '" rx="1" class="' + (i >= weken.length - 4 ? 'nu' : 'toen') + (n ? '' : ' nul') + '"/>'; }).join('') + '</svg>';
+}
+// staafjes over de volle breedte met een tip per staaf: [{ l: label in de tip, n: waarde }]
+function staafjes(punten, { eenheid, klasse = '', hoogte = 64, label } = {}) {
+  const max = Math.max(1, ...punten.map((p) => p.n));
+  return '<div class="staafjes ' + klasse + '" style="height:' + hoogte + 'px" role="img" aria-label="' + esc(label + ': ' + punten.map((p) => p.n).join(', ')) + '">' +
+    punten.map((p) => '<i class="' + (p.accent ? 'nu' : '') + (p.n ? '' : ' nul') + '" style="height:' + (p.n ? Math.max(6, 100 * p.n / max) : 3) + '%" data-tip="' + esc('<b>' + p.l + '</b><div class="tr"><span>' + eenheid + '</span><span>' + p.n + '</span></div>') + '"></i>').join('') + '</div>';
+}
+// wat de support-agent de laatste zeven dagen deed, uit zijn logboek
+function weekVanAgent() {
+  const sinds = data.nu - 7 * 86400e3, log = (data.agent.logboek || []).filter((x) => Date.parse(x.t) >= sinds);
+  const tel = (wat) => log.filter((x) => x.wat === wat);
+  return { gemaild: tel('gemaild').reduce((t, x) => t + (x.aan || 1), 0), opgelost: tel('opgelost').length, naMail: tel('opgelost').filter((x) => x.gemaild).length, nieuw: tel('nieuw').length };
+}
 
 // staafgrafiek met één of twee series; waarden in centen
 function staven(maanden, series, { hoogte = 230 } = {}) {
@@ -126,25 +150,28 @@ function staven(maanden, series, { hoogte = 230 } = {}) {
 function netteStap(x) { if (x <= 0) return 100; const p = Math.pow(10, Math.floor(Math.log10(x))); const f = x / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p; }
 
 // lijn met bandbreedte voor de prognose, met de laatste zes echte maanden ervoor
+// De lopende maand is nog niet af: die staat er als open rondje bij, en de lijn en de prognose
+// lopen van de laatste hele maand door.
 function prognoseLijn(echt, prog) {
   const W = 560, H = 230, L = 50, R = 6, T = 10, B = 26, iw = W - L - R, ih = H - T - B;
-  const punten = [...echt.map((m) => ({ maand: m.maand, w: m.omzet, echt: true })), ...prog.map((p) => ({ maand: p.maand, w: p.verwacht, laag: p.laag, hoog: p.hoog }))];
+  const punten = [...echt.map((m, i) => ({ maand: m.maand, w: m.omzet, echt: true, loopt: i === echt.length - 1 })), ...prog.map((p) => ({ maand: p.maand, w: p.verwacht, laag: p.laag, hoog: p.hoog, plaatsen: p.plaatsen }))];
   const max = Math.max(1, ...punten.map((p) => p.hoog || p.w));
   const stap = netteStap(max / 4), top = stap * Math.ceil(max / stap);
   const x = (i) => L + iw * (i + 0.5) / punten.length, y = (v) => T + ih - ih * v / top;
   let svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Omzet en prognose per maand">';
   for (let v = 0; v <= top; v += stap) svg += '<line class="' + (v ? 'rooster' : 'nul') + '" x1="' + L + '" x2="' + (W - R) + '" y1="' + y(v) + '" y2="' + y(v) + '"/><text class="as" x="' + (L - 8) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + kortEuro(v) + '</text>';
-  const e = echt.length;
-  const band = punten.map((p, i) => i >= e - 1 ? [x(i), y(p.hoog ?? p.w)] : null).filter(Boolean);
-  const bandOnder = punten.map((p, i) => i >= e - 1 ? [x(i), y(p.laag ?? p.w)] : null).filter(Boolean).reverse();
+  const e = echt.length, heel = Math.max(0, e - 2); // heel: de laatste maand die af is
+  const vooruit = punten.map((p, i) => (i === heel || i >= e ? i : -1)).filter((i) => i >= 0);
+  const band = vooruit.map((i) => [x(i), y(punten[i].hoog ?? punten[i].w)]);
+  const bandOnder = vooruit.map((i) => [x(i), y(punten[i].laag ?? punten[i].w)]).reverse();
   svg += '<path d="M' + [...band, ...bandOnder].map((q) => q.join(',')).join('L') + 'z" fill="var(--serie-omzet)" opacity=".12"/>';
   svg += '<line x1="' + (x(e - 1) + iw / punten.length / 2) + '" x2="' + (x(e - 1) + iw / punten.length / 2) + '" y1="' + T + '" y2="' + (T + ih) + '" stroke="var(--lijn)" stroke-dasharray="3 3"/>';
   svg += '<text class="as" x="' + (x(e - 1) + iw / punten.length / 2 + 6) + '" y="' + (T + 10) + '">prognose</text>';
-  svg += '<path d="M' + punten.slice(0, e).map((p, i) => x(i) + ',' + y(p.w)).join('L') + '" fill="none" stroke="var(--serie-omzet)" stroke-width="2.25" stroke-linejoin="round"/>';
-  svg += '<path d="M' + punten.slice(e - 1).map((p, i) => x(i + e - 1) + ',' + y(p.w)).join('L') + '" fill="none" stroke="var(--serie-omzet)" stroke-width="2" stroke-dasharray="5 4"/>';
+  svg += '<path d="M' + punten.slice(0, heel + 1).map((p, i) => x(i) + ',' + y(p.w)).join('L') + '" fill="none" stroke="var(--serie-omzet)" stroke-width="2.25" stroke-linejoin="round"/>';
+  svg += '<path d="M' + vooruit.map((i) => x(i) + ',' + y(punten[i].w)).join('L') + '" fill="none" stroke="var(--serie-omzet)" stroke-width="2" stroke-dasharray="5 4"/>';
   punten.forEach((p, i) => {
-    if (p.echt) svg += '<circle cx="' + x(i) + '" cy="' + y(p.w) + '" r="4" fill="var(--serie-omzet)" stroke="#fff" stroke-width="2"/>';
-    const t = '<b>' + esc(maandNaam(p.maand, true)) + '</b><div class="tr"><span>' + (p.echt ? 'Omzet' : 'Verwacht') + '</span><span>' + euro(p.w) + '</span></div>' + (p.echt ? '' : '<div class="tr"><span>Bandbreedte</span><span>' + kortEuro(p.laag) + ' – ' + kortEuro(p.hoog) + '</span></div>');
+    if (p.echt) svg += '<circle cx="' + x(i) + '" cy="' + y(p.w) + '" r="4" fill="' + (p.loopt ? '#fff' : 'var(--serie-omzet)') + '" stroke="' + (p.loopt ? 'var(--serie-omzet)' : '#fff') + '" stroke-width="2"/>';
+    const t = '<b>' + esc(maandNaam(p.maand, true)) + '</b><div class="tr"><span>' + (p.loopt ? 'Omzet tot nu toe' : p.echt ? 'Omzet' : 'Verwacht') + '</span><span>' + euro(p.w) + '</span></div>' + (p.loopt ? '<div class="tr"><span>Deze maand loopt nog</span><span></span></div>' : p.echt ? '' : '<div class="tr"><span>Plaatsen</span><span>' + getal(p.plaatsen) + '</span></div><div class="tr"><span>Bandbreedte</span><span>' + kortEuro(p.laag) + ' – ' + kortEuro(p.hoog) + '</span></div>');
     svg += '<rect class="doel" x="' + (L + iw * i / punten.length) + '" y="' + T + '" width="' + iw / punten.length + '" height="' + ih + '" data-tip="' + esc(t) + '"/>';
     if (i % 2 === 0) svg += '<text class="as" x="' + x(i) + '" y="' + (H - 7) + '" text-anchor="middle">' + esc(maandNaam(p.maand)) + '</text>';
   });
@@ -154,23 +181,23 @@ function prognoseLijn(echt, prog) {
 // ---------- pagina's ----------
 function overzicht() {
   const o = data.overzicht, t = o.totalen, f = data.finance.kpi, nu = data.nu;
-  const tot = Math.max(1, t.praktijken);
+  const bewaakt = t.goed + t.aandacht + t.probleem, tot = Math.max(1, bewaakt); // gestopt of alleen V1: geen health
   const kleur = { goed: '#2E9E57', aandacht: '#D49A1C', probleem: '#D9473B' };
+  const week = weekVanAgent();
   const balk = ['goed', 'aandacht', 'probleem'].filter((k) => t[k]).map((k) => '<i style="width:' + (100 * t[k] / tot) + '%;background:' + kleur[k] + '" data-tip="' + esc('<b>' + STAND[k] + '</b><div class="tr"><span>Praktijken</span><span>' + t[k] + '</span></div>') + '"></i>').join('');
-  const zorgen = o.rijen.filter((r) => r.stand !== 'goed').slice(0, 6);
-  const laatsteRonde = data.agent.rondes[0];
+  const zorgen = o.rijen.filter((r) => r.stand === 'probleem' || r.stand === 'aandacht').slice(0, 6);
   const sys = data.systeem || {};
   const beschik = (sys.beschikbaarheid || []);
   const gem = beschik.length ? Math.round(beschik.reduce((a, b) => a + b.pct, 0) / beschik.length * 100) / 100 : null;
   return '<div class="raster r4">' +
     kpi('Praktijken', t.praktijken, t.klanten + ' klant · ' + t.proeven + ' in proef', true) +
     kpi('Therapeuten met een login', t.therapeuten, t.actief7 + ' actief in de laatste 7 dagen') +
-    kpi('Terugkerende omzet per maand', euro(f.mrr), f.plaatsen + ' betaalde plaatsen') +
+    kpi('Terugkerende omzet per maand', euro(f.mrr), aantal(f.plaatsenDoorlopend, 'plaats', 'plaatsen') + ' die doorlopen · excl. btw') +
     kpi('Open zaken', data.zaken.length, data.zaken.filter((z) => z.ernst === 'probleem').length + ' problemen, ' + data.zaken.filter((z) => z.ernst === 'aandacht').length + ' aandachtspunten') +
     '</div>' +
     '<div class="raster r21 mt">' +
-      '<div class="kaart"><div class="kaartkop"><div><h2>Health van de praktijken</h2><p class="ks">Een probleem kost 30 punten, een aandachtspunt 10</p></div><a class="knop licht klein" href="#praktijken">Alle praktijken</a></div>' +
-        (t.praktijken ? '<div class="balkje">' + balk + '</div><div class="legenda">' + ['goed', 'aandacht', 'probleem'].map((k) => '<span><i style="background:' + kleur[k] + '"></i>' + STAND[k] + ' <b>' + t[k] + '</b></span>').join('') + '</div>' : '<p class="leeg">Nog geen praktijken met een account.</p>') +
+      '<div class="kaart"><div class="kaartkop"><div><h2>Health van de praktijken</h2><p class="ks">Een probleem kost 30 punten, een aandachtspunt 10. Wie gestopt is of alleen V1 gebruikt, telt niet mee.</p></div><a class="knop licht klein" href="#praktijken">Alle praktijken</a></div>' +
+        (bewaakt ? '<div class="balkje">' + balk + '</div><div class="legenda">' + ['goed', 'aandacht', 'probleem'].map((k) => '<span><i style="background:' + kleur[k] + '"></i>' + STAND[k] + ' <b>' + t[k] + '</b></span>').join('') + (t.nvt ? '<span><i style="background:var(--lijn)"></i>Niet bewaakt <b>' + t.nvt + '</b></span>' : '') + '</div>' : '<p class="leeg">' + (t.praktijken ? 'Nog geen praktijk om te bewaken.' : 'Nog geen praktijken met een account.') + '</p>') +
         (zorgen.length ? '<table class="tabel mt"><thead><tr><th>Praktijk</th><th>Wat er speelt</th><th class="r">Score</th></tr></thead><tbody>' + zorgen.map((r) =>
           '<tr class="klik" tabindex="0" data-pk="' + esc(r.pk) + '"><td class="naamcel"><b>' + esc(r.naam) + '</b><small>' + r.therapeuten + ' therapeuten</small></td><td>' + esc(r.signalen.map((s) => s.tekst).join(' · ')) + '</td><td class="r">' + pil(r.score, r.stand, true) + '</td></tr>').join('') + '</tbody></table>' : '') +
       '</div>' +
@@ -182,19 +209,19 @@ function overzicht() {
       '</div>' +
     '</div>' +
     '<div class="raster r2 mt">' +
-      '<div class="kaart"><div class="kaartkop"><div><h2>Support-agent</h2><p class="ks">' + data.zaken.length + ' open zaken · ' + (laatsteRonde ? 'laatste ronde ' + esc(tijd(laatsteRonde.t)) + ', ' + laatsteRonde.verstuurd + ' mail(s) verstuurd' : 'nog geen ronde gedraaid') + '</p></div><a class="knop licht klein" href="#support">Naar de agent</a></div>' +
+      '<div class="kaart"><div class="kaartkop"><div><h2>Support-agent</h2><p class="ks">' + aantal(data.zaken.length, 'open zaak', 'open zaken') + ' · deze week ' + aantal(week.gemaild, 'mail', 'mails') + ' verstuurd en ' + aantal(week.opgelost, 'zaak', 'zaken') + ' opgelost</p></div><a class="knop licht klein" href="#support">Naar de agent</a></div>' +
         (data.zaken.length ? '<div class="punten">' + data.zaken.slice(0, 5).map((z) => '<a class="punt" href="#support">' + pil(...ERNST[z.ernst]) + '<span><b>' + esc(z.praktijk) + '</b><small>' + esc(z.tekst) + '</small></span><i aria-hidden="true">›</i></a>').join('') + '</div>' + (data.zaken.length > 5 ? '<p class="uitleg">En nog ' + (data.zaken.length - 5) + ' bij de support-agent.</p>' : '') : '<p class="leeg">Geen open zaken. Alles draait.</p>') +
         '<p class="mt"><button type="button" class="knop limoen klein" id="rondeHier">Ronde nu draaien</button></p>' +
       '</div>' +
       '<div class="kaart"><div class="kaartkop"><div><h2>Finance in het kort</h2><p class="ks">' + esc(maandNaam(data.finance.maanden.at(-1)?.maand || '2026-01', true)) + '</p></div><a class="knop licht klein" href="#finance">Naar de cijfers</a></div>' +
-        '<div class="raster r2">' + kpi('Omzet deze maand', euro(f.omzetMaand), trend(f.omzetMaand, f.omzetVorigeMaand)) + kpi('Open posten', euro(f.openCent), f.open === 1 ? '1 factuur' : f.open + ' facturen') + '</div>' +
+        '<div class="raster r2">' + kpi('Omzet deze maand, tot nu toe', euro(f.omzetMaand), 'vorige maand ' + euro(f.omzetVorigeMaand) + ' · excl. btw') + kpi('Open posten', euro(f.openCent), f.open === 1 ? '1 factuur' : f.open + ' facturen') + '</div>' +
         '<h2 class="ruim">Finance-agent</h2>' + agentPunten(data.financeAgent, 4) +
       '</div>' +
     '</div>';
 }
 
 function bindOverzicht(el) {
-  $('#rondeHier', el)?.addEventListener('click', async (e) => { e.target.disabled = true; const j = await post('ronde', {}); if (j) melden('Ronde gedraaid: ' + j.zaken.length + ' zaken gevonden.'); });
+  $('#rondeHier', el)?.addEventListener('click', async (e) => { e.target.disabled = true; const j = await post('ronde', {}); if (j) melden('Ronde gedraaid: ' + aantal(j.zaken.length, 'zaak', 'zaken') + ' gevonden.'); });
 }
 
 function praktijken() {
@@ -203,16 +230,16 @@ function praktijken() {
   const rijen = o.rijen.filter((r) => (!st.stand || r.stand === st.stand) && (!q || r.naam.toLowerCase().includes(q) || r.leden.some((l) => (l.naam + ' ' + l.email).toLowerCase().includes(q))));
   const chip = (k, l, n) => '<button type="button" class="chip' + (st.stand === k ? ' aan' : '') + '" data-stand="' + k + '">' + l + '<b>' + n + '</b></button>';
   return '<div class="filter"><input type="search" id="zoek" placeholder="Zoek praktijk, therapeut of e-mail" value="' + esc(st.filter) + '" aria-label="Zoeken"/>' +
-    chip('', 'Alle', o.totalen.praktijken) + chip('probleem', 'Probleem', o.totalen.probleem) + chip('aandacht', 'Aandacht', o.totalen.aandacht) + chip('goed', 'Goed', o.totalen.goed) + '</div>' +
-    '<div class="kaart"><table class="tabel"><thead><tr><th>Praktijk</th><th>Status</th><th class="r">Therapeuten</th><th class="r">Actief 7 dagen</th><th class="r">Kaarten 30 dagen</th><th>Laatst actief</th><th>Health</th></tr></thead><tbody>' +
+    chip('', 'Alle', o.totalen.praktijken) + chip('probleem', 'Probleem', o.totalen.probleem) + chip('aandacht', 'Aandacht', o.totalen.aandacht) + chip('goed', 'Goed', o.totalen.goed) + (o.totalen.nvt ? chip('nvt', 'Niet bewaakt', o.totalen.nvt) : '') + '</div>' +
+    '<div class="kaart"><table class="tabel"><thead><tr><th>Praktijk</th><th>Status</th><th class="r">Therapeuten</th><th class="r">Actief 7 dagen</th><th class="r">Kaarten 30 dagen</th><th>Per week, 12 weken</th><th>Laatst actief</th><th>Health</th></tr></thead><tbody>' +
     (rijen.length ? rijen.map((r) => '<tr class="klik" tabindex="0" data-pk="' + esc(r.pk) + '">' +
       '<td class="naamcel"><b>' + esc(r.naam) + '</b><small>' + esc(r.signalen[0]?.tekst || (r.sinds ? 'sinds ' + datum(r.sinds) : '')) + '</small></td>' +
       '<td>' + pil(...(STATUS[r.status] || [r.status, 'neutraal'])) + '</td>' +
       '<td class="r num">' + r.therapeuten + (r.plaatsen ? ' <small class="hint">/ ' + r.plaatsen + ' betaald</small>' : '') + '</td>' +
-      '<td class="r num">' + r.actief7 + '</td><td class="r num">' + r.kaarten30 + '</td>' +
+      '<td class="r num">' + r.actief7 + '</td><td class="r num">' + r.kaarten30 + '</td><td>' + vonk(r.weken) + '</td>' +
       '<td>' + esc(geleden(r.laatst, nu)) + '</td>' +
-      '<td><div class="score"><div class="balk"><i class="' + r.stand + '" style="width:' + r.score + '%"></i></div><span>' + r.score + '</span></div></td></tr>').join('')
-      : '<tr><td colspan="7" class="leeg">' + (o.rijen.length ? 'Geen praktijk past bij dit filter.' : 'Nog geen praktijk met een account.') + '</td></tr>') +
+      '<td>' + (r.stand === 'nvt' ? '<span class="hint">niet bewaakt</span>' : '<div class="score"><div class="balk"><i class="' + r.stand + '" style="width:' + r.score + '%"></i></div><span>' + r.score + '</span></div>') + '</td></tr>').join('')
+      : '<tr><td colspan="8" class="leeg">' + (o.rijen.length ? 'Geen praktijk past bij dit filter.' : 'Nog geen praktijk met een account.') + '</td></tr>') +
     '</tbody></table></div>';
 }
 function bindPraktijken(el) {
@@ -229,16 +256,26 @@ function tekenLade() {
   const zaken = data.zaken.filter((z) => z.pk === r.pk);
   const facturen = data.finance.facturen.filter((f) => f.pk === r.pk).slice(0, 6);
   const init = (n) => String(n || '?').split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+  // de weken lopen terug vanaf nu: de laatste staaf is de week tot vandaag
+  const weekPunten = r.weken.map((n, i) => { const eind = nu - (r.weken.length - 1 - i) * 7 * 86400e3; return { n, accent: i >= r.weken.length - 4, l: datum(eind - 6 * 86400e3, { day: 'numeric', month: 'short' }) + ' t/m ' + datum(eind, { day: 'numeric', month: 'short' }) }; });
+  const dagPunten = r.actiefDagen.map((d) => ({ n: d.n, accent: true, l: datum(Date.parse(d.datum + 'T12:00:00Z'), { weekday: 'short', day: 'numeric', month: 'short' }) }));
+  const sinds = data.systeem && data.systeem.gebruikSinds;
+  const gebruik = r.status === 'v1' ? '' : '<h3>Gebruik</h3>' +
+    (r.weken.some((n) => n) ? '<p class="hint">Kaarten per week, laatste 12 weken</p>' + staafjes(weekPunten, { eenheid: 'Kaarten', label: 'Kaarten per week' }) : '<p class="hint">Geen kaart gemaakt of bijgewerkt in de laatste 12 weken.</p>') +
+    (dagPunten.length ? '<p class="hint mt">Therapeuten die de app open hadden, per dag' + (dagPunten.length < 30 ? ' (gemeten sinds ' + datum(Date.parse(r.actiefDagen[0].datum + 'T12:00:00Z'), { day: 'numeric', month: 'long' }) + ')' : '') + '</p>' + staafjes(dagPunten, { eenheid: 'Therapeuten', klasse: 'dagen', hoogte: 44, label: 'Actieve therapeuten per dag' })
+      : bron === 'echt' ? '<p class="hint mt">' + (sinds ? 'Wie de app open heeft, telt de server sinds ' + datum(sinds, { day: 'numeric', month: 'long' }) + '.' : 'Wie de app open heeft, telt de server vanaf de eerste therapeut die inlogt.') + '</p>' : '');
   $('#ladeBinnen').innerHTML = '<button type="button" class="sluit" id="ladeDicht" aria-label="Sluiten">×</button>' +
-    '<h2>' + esc(r.naam) + '</h2><p class="hint">' + pil(...(STATUS[r.status] || [r.status, 'neutraal'])) + ' ' + pil(STAND[r.stand] + ' · ' + r.score, r.stand) + (r.sinds ? ' &nbsp;sinds ' + datum(r.sinds) : '') + '</p>' +
+    '<h2>' + esc(r.naam) + '</h2><p class="hint">' + pil(...(STATUS[r.status] || [r.status, 'neutraal'])) + ' ' + (r.stand === 'nvt' ? '' : pil(STAND[r.stand] + ' · ' + r.score, r.stand)) + (r.sinds ? ' &nbsp;sinds ' + datum(r.sinds) : '') + '</p>' +
     '<div class="feiten"><div><small>Therapeuten</small><b>' + r.therapeuten + '</b></div><div><small>Kaarten 30 dagen</small><b>' + r.kaarten30 + '</b></div><div><small>Met tweede stap</small><b>' + r.tweedeStap + '/' + r.therapeuten + '</b></div></div>' +
     (r.betaaldTot ? '<p class="uitleg">Betaald tot ' + datum(r.betaaldTot) + (r.plaatsen ? ' voor ' + r.plaatsen + (r.plaatsen === 1 ? ' therapeut' : ' therapeuten') : '') + '.</p>' : r.proefTot ? '<p class="uitleg">Proef loopt tot ' + datum(r.proefTot) + '.</p>' : '') +
-    '<h3>Wat er speelt</h3>' + (zaken.length ? zaken.map((z) => '<div class="voorstel"><strong>' + esc(z.tekst) + '</strong><br/>' + (z.mails.length ? 'Agent stelt een mail voor aan ' + esc(z.mails.map((m) => m.naam || m.aan).join(', ')) + '.' : esc(z.taak || '')) + '</div>').join('<div class="mt"></div>') + '<p class="mt"><a class="knop licht klein" href="#support">Naar de support-agent</a></p>' : '<p class="hint">Niets: deze praktijk draait zonder problemen.</p>') +
-    '<h3>Logins</h3>' + (r.leden.length ? r.leden.map((l) => '<div class="lid"><span class="av' + (l.actief ? '' : ' uit') + '">' + esc(init(l.naam || l.email)) + '</span><div><b>' + esc(l.naam || l.email) + '</b><small>' + esc(l.email) + '</small></div>' +
+    '<h3>Wat er speelt</h3>' + (zaken.length ? zaken.map((z) => '<div class="voorstel"><strong>' + esc(z.tekst) + '</strong><br/>' + (z.mails.length ? 'Agent stelt een mail voor aan ' + esc(z.mails.map((m) => m.naam || m.aan).join(', ')) + '.' : esc(z.taak || '')) + '</div>').join('<div class="mt"></div>') + '<p class="mt"><a class="knop licht klein" href="#support">Naar de support-agent</a></p>' : '<p class="hint">' + (r.status === 'v1' ? 'Deze praktijk gebruikt alleen V1. Beheer telt hier de logins en bewaakt verder niets.' : r.stand === 'nvt' ? 'Deze praktijk is gestopt en wordt niet meer bewaakt.' : 'Niets: deze praktijk draait zonder problemen.') + '</p>') +
+    gebruik +
+    '<h3>Logins</h3>' + (r.leden.length ? r.leden.map((l) => '<div class="lid"><span class="av' + (l.actief ? '' : ' uit') + '">' + esc(init(l.naam || l.email)) + '</span><div><b>' + esc(l.naam || l.email) + '</b><small>' + (l.actief && l.kaarten30 != null && r.status !== 'v1' ? aantal(l.kaarten30, 'kaart', 'kaarten') + ' in 30 dagen · ' : '') + esc(l.email) + '</small></div>' +
       '<span class="hint">' + (l.rol === 'beheerder' ? pil('Beheerder', 'petrol', true) + ' ' : '') + (l.actief ? (l.tweedeStap ? '' : pil('Geen tweede stap', 'aandacht', true) + ' ') + esc(geleden(l.laatst, nu)) : pil('Uitgenodigd', 'neutraal', true)) + '</span></div>').join('') : '<p class="hint">Nog geen eigen logins.</p>') +
     (facturen.length ? '<h3>Laatste facturen</h3><table class="tabel"><tbody>' + facturen.map((f) => '<tr><td>' + esc(f.nr || '(nog geen nummer)') + '</td><td>' + datum(f.datum) + '</td><td class="r num">' + euro(f.totaalCent) + '</td><td>' + factuurPil(f.status) + '</td></tr>').join('') + '</tbody></table>' : '') +
-    '<p class="uitleg">Kaarten en patiëntgegevens staan hier bewust niet: beheer ziet alleen tellingen.</p>';
+    '<p class="uitleg">Kaarten en patiëntgegevens staan hier bewust niet: beheer ziet alleen tellingen. Een kaart telt in de week waarin hij voor het laatst is bewaard.</p>';
   lade.hidden = false;
+  bindTips(lade);
   $('#ladeDicht').addEventListener('click', sluitLade);
   $('#ladeDicht').focus();
 }
@@ -260,21 +297,41 @@ function support() {
         '<button type="button" class="knop klein' + (s === 'uit' && bron === 'echt' ? ' licht' : '') + '" data-verstuur="' + esc(z.sleutel) + '"' + ((s === 'uit' && bron === 'echt') || (z.verstuurd && z.opnieuwVanaf > data.nu) ? ' disabled' : '') + '>' + (bron === 'demo' ? 'Verstuur (demo)' : 'Verstuur') + '</button></div>' : '') +
       '</div>';
   };
+  // het logboek van de agent: wat hij zag, mailde en zag verdwijnen
+  const week = weekVanAgent();
+  const LOG = { nieuw: ['Gezien', 'neutraal'], gemaild: ['Gemaild', 'petrol'], opgelost: ['Opgelost', 'goed'], start: ['Begin', 'neutraal'] };
+  const logRegel = (x) => {
+    const wat = x.wat === 'gemaild' ? 'Mail “' + x.onderwerp + '” naar ' + aantal(x.aan || 1, 'adres', 'adressen') + (x.wie && x.wie !== 'agent' ? ', verstuurd door ' + x.wie : ', automatisch')
+      : x.wat === 'opgelost' ? x.tekst + '. Weg ' + (x.dagen ? 'na ' + aantal(x.dagen, 'dag', 'dagen') : 'op dezelfde dag') + (x.gemaild ? ', na een mail' : ', zonder mail')
+      : x.tekst;
+    return '<div class="logregel">' + pil(...(LOG[x.wat] || [x.wat, 'neutraal']), true) + '<div>' + (x.praktijk ? '<b>' + esc(x.praktijk) + '</b>' : '') + '<span>' + esc(wat) + '</span><time>' + esc(tijd(x.t)) + '</time></div></div>';
+  };
+  const log = data.agent.logboek || [], logToon = st.logAlles ? log : log.slice(0, 8);
+  const laatste = data.agent.laatsteRonde;
   const standKnop = (soort, k, l) => '<button type="button" data-soort="' + soort + '" data-stand="' + k + '" class="' + ((stand[soort] || 'uit') === k ? 'aan' : '') + '"' + (soort === 'storing' && k === 'automatisch' ? ' disabled title="Een storingsbericht verstuurt altijd een mens"' : '') + '>' + l + '</button>';
-  return '<div class="raster r21">' +
-    '<div><div class="kaart"><div class="kaartkop"><div><h2>Open zaken</h2><p class="ks">' + zaken.length + ' zaken, gesorteerd op ernst. Kaarten of patiënten komen nooit in een mail.</p></div>' +
+  return '<div class="raster r4">' +
+    kpi('Open zaken', zaken.length, aantal(zaken.filter((z) => z.ernst === 'probleem').length, 'probleem', 'problemen') + ', ' + aantal(zaken.filter((z) => z.ernst === 'aandacht').length, 'aandachtspunt', 'aandachtspunten'), true) +
+    kpi('Gemaild deze week', week.gemaild, week.nieuw ? aantal(week.nieuw, 'nieuwe zaak', 'nieuwe zaken') + ' gezien' : 'geen nieuwe zaken') +
+    kpi('Opgelost deze week', week.opgelost, week.opgelost ? week.naMail + ' daarvan na een mail' : 'nog niets verdwenen') +
+    kpi('Laatste ronde', laatste ? esc(tijd(laatste)) : '–', bron === 'demo' ? 'in demo draait de agent alleen als jij klikt' : 'de agent kijkt elke ' + data.agent.elke + ' minuten') +
+    '</div><div class="raster r21 mt">' +
+    '<div><div class="kaart"><div class="kaartkop"><div><h2>Open zaken</h2><p class="ks">' + aantal(zaken.length, 'zaak', 'zaken') + ', gesorteerd op ernst. Kaarten of patiënten komen nooit in een mail.</p></div>' +
       '<button type="button" class="knop limoen klein" id="ronde">Ronde nu draaien</button></div>' +
       (zaken.length ? zaken.map(zaakHtml).join('') : '<p class="leeg">Geen open zaken. Alles draait.</p>') + '</div></div>' +
     '<div><div class="kaart"><h2>Wat mag de agent mailen?</h2><p class="ks">Per soort bericht: <b>uit</b> (alleen voorstellen), <b>handmatig</b> (beheer klikt per zaak) of <b>automatisch</b> (één keer per zaak per week). Standaard staat alles uit.</p>' +
       Object.entries(soorten).map(([k, s]) => '<div class="soort"><div class="rij"><b>' + esc(s.titel) + '</b><span class="seg" role="group" aria-label="' + esc(s.titel) + '">' + standKnop(k, 'uit', 'Uit') + standKnop(k, 'handmatig', 'Handmatig') + standKnop(k, 'automatisch', 'Automatisch') + '</span></div><small>' + esc(s.uitleg) + '</small></div>').join('') +
-      (bron === 'echt' ? '<p class="uitleg">Elke wijziging komt met je naam in het beheerlogboek. ' + (data.mail ? '' : '<b>Mail staat op deze server uit</b>, dus er gaat nog niets weg.') + '</p>' : '<p class="uitleg">In demo gaat er nooit iets weg: verstuurde mails komen hieronder in het postvak van de demo.</p>') +
+      (bron === 'echt' ? '<p class="uitleg">Elke wijziging komt met je naam in het beheerlogboek. ' + (data.mail ? '' : '<b>Mail staat op deze server uit</b>, dus er gaat nog niets weg.') + '</p>' : '<p class="uitleg">In deze demo staan twee soorten al op automatisch en één op handmatig, zodat je ziet wat de agent dan doet. Op fysiplan.nl staat alles uit tot jij het aanzet. In demo gaat er nooit iets weg: verstuurde mails komen in het postvak hieronder.</p>') +
+    '</div>' +
+    '<div class="kaart mt"><h2>Wat de agent deed</h2><p class="ks">Wat hij zag, mailde en zag verdwijnen. Nieuwste boven.</p>' +
+      (log.length ? '<div class="logboek">' + logToon.map(logRegel).join('') + '</div>' + (log.length > 8 ? '<div class="pager"><button type="button" class="knop licht klein" id="logAlles">' + (st.logAlles ? 'Toon de laatste 8' : 'Toon alle ' + log.length) + '</button></div>' : '')
+        : '<p class="leeg">Nog niets. De agent schrijft hier op wat er nieuw is, wat hij mailde en wat is opgelost.</p>') +
     '</div>' +
     (bron === 'demo' ? '<div class="kaart mt"><h2>Postvak uit (demo)</h2><p class="ks">Wat de agent in demo zou hebben gestuurd</p>' + (data.agent.mails.length ? '<div class="uitbox">' + data.agent.mails.map((m) => '<div><b>' + esc(m.onderwerp) + '</b><small>aan ' + esc(m.aan) + (m.praktijk ? ' · ' + esc(m.praktijk) : '') + ' · ' + esc(tijd(m.t)) + '</small></div>').join('') + '</div>' : '<p class="leeg">Nog niets verstuurd. Zet een soort op automatisch en draai een ronde.</p>') + '</div>' : '') +
-    '<div class="kaart mt"><h2>Rondes</h2>' + (data.agent.rondes.length ? '<div class="tijdlijn">' + data.agent.rondes.map((r) => '<div><time>' + tijd(r.t) + '</time><span>' + r.zaken + ' zaken · ' + r.verstuurd + ' verstuurd</span></div>').join('') + '</div>' : '<p class="leeg">Nog geen ronde.</p>') + '</div>' +
     '</div></div>';
 }
 function bindSupport(el) {
-  $('#ronde', el)?.addEventListener('click', async (e) => { e.target.disabled = true; const j = await post('ronde', {}); if (j) melden('Ronde gedraaid: ' + j.zaken.length + ' zaken. ' + (j.agent.rondes[0]?.verstuurd || 0) + ' mail(s) verstuurd.'); });
+  $('#ronde', el)?.addEventListener('click', async (e) => { e.target.disabled = true; const j = await post('ronde', {}); if (j) { const r = j.agent.rondes[0] || {}; melden('Ronde gedraaid: ' + aantal(j.zaken.length, 'zaak', 'zaken') + ', ' + aantal(r.verstuurd || 0, 'mail', 'mails') + ' verstuurd' + (r.nieuw || r.opgelost ? ', ' + (r.nieuw || 0) + ' nieuw en ' + (r.opgelost || 0) + ' opgelost' : '') + '.'); } });
+  $('#logAlles', el)?.addEventListener('click', () => { st.logAlles = !st.logAlles; teken(); });
   el.querySelectorAll('[data-soort]').forEach((b) => b.addEventListener('click', async () => {
     if (b.classList.contains('aan')) return;
     if (bron === 'echt' && b.dataset.stand !== 'uit' && !confirm('Mails van de soort “' + data.agent.soorten[b.dataset.soort].titel + '” naar echte therapeuten en beheerders toestaan (' + b.dataset.stand + ')?')) return;
@@ -326,16 +383,19 @@ function finance() {
   const leeg = !f.facturen.length && !f.kosten.length;
   return '<div class="raster r5">' +
     kpi('Klanten', k.klanten, k.plaatsen + ' betaalde plaatsen', true) +
-    kpi('Terugkerend per maand', euro(k.mrr), euro(k.arr, true) + ' per jaar') +
+    kpi('Terugkerend per maand', euro(k.mrr), 'excl. btw · ' + euro(k.arr, true) + ' per jaar') +
     kpi('Omzet ' + jaarVanNu(), euro(k.omzetJaar, true), 'excl. btw') +
-    kpi('Prognose ' + jaarVanNu(), euro(k.prognoseJaar, true), 'groei ' + k.groeiPct.toLocaleString('nl-NL') + '% per maand (schatting)') +
+    kpi('Prognose ' + jaarVanNu(), euro(k.prognoseJaar, true), (k.groeiPlaatsen < 0 ? '−' : '+') + getal(Math.abs(k.groeiPlaatsen)) + ' plaatsen per maand (schatting)') +
     kpi('Open posten', euro(k.openCent), k.open + ' van ' + k.facturen + ' facturen') + '</div>' +
     '<div class="kaart mt"><h2>Finance-agent</h2><p class="ks">Wat geld kost, een termijn heeft of nog gekozen moet worden. De agent verandert zelf niets.</p>' + agentPunten(data.financeAgent) + '</div>' +
     (leeg ? '<div class="kaart mt leegstaat"><h2>Nog geen cijfers</h2><p>Er is nog niets betaald en er zijn nog geen kosten ingevoerd. Zodra de eerste praktijk via Mollie betaalt, staan hier omzet, kosten, kwartalen en de prognose.</p><button type="button" class="knop limoen" data-naar-demo>Bekijk het met demo-gegevens</button></div>' : '') +
     '<div class="raster r2 mt"' + (leeg ? ' hidden' : '') + '>' +
       '<div class="kaart"><h2>Omzet en kosten per maand</h2><p class="ks">Laatste 12 maanden, excl. btw</p>' + staven(f.maanden, [{ k: 'omzet', l: 'Omzet', c: '--serie-omzet' }, { k: 'kosten', l: 'Kosten', c: '--serie-kosten' }]) +
         '<div class="legenda"><span><i style="background:var(--serie-omzet)"></i>Omzet</span><span><i style="background:var(--serie-kosten)"></i>Kosten</span></div></div>' +
-      '<div class="kaart"><h2>Prognose</h2><p class="ks">Volgende 12 maanden: de terugkerende omzet met de groei van de laatste zes maanden. Een schatting, geen belofte.</p>' + prognoseLijn(f.maanden.slice(-6), f.prognose) + '</div>' +
+      '<div class="kaart"><h2>Prognose</h2><p class="ks">Volgende 12 maanden, excl. btw: de plaatsen die doorlopen, plus de groei in plaatsen van de laatste zes hele maanden. Een schatting, geen belofte.</p>' + prognoseLijn(f.maanden.slice(-7), f.prognose) +
+        '<p class="uitleg">Nu ' + aantal(k.plaatsenDoorlopend, 'plaats', 'plaatsen') + ' à ' + euro(k.prijsExcl) + ' excl. btw; de groei was ' + (k.groeiPlaatsen < 0 ? '−' : '+') + getal(Math.abs(k.groeiPlaatsen)) + ' per maand.' +
+          (k.plaatsen > k.plaatsenDoorlopend ? ' Wie heeft opgezegd (' + aantal(k.plaatsen - k.plaatsenDoorlopend, 'plaats', 'plaatsen') + '), telt niet mee.' : '') +
+          (k.proeven ? ' Niet meegeteld: ' + aantal(k.proeven, 'proef', 'proeven') + ' met ' + aantal(k.proefPlaatsen, 'login', 'logins') + ', goed voor ' + euro(k.proefPerMaand) + ' per maand als ze allemaal klant worden.' : '') + '</p></div>' +
     '</div>' +
     '<div class="raster ' + (leeg ? 'r12' : 'r21') + ' mt">' +
       '<div class="kaart"' + (leeg ? ' hidden' : '') + '><h2>Kwartalen en jaren</h2><p class="ks">Omzet, kosten en resultaat, excl. btw</p><table class="tabel"><thead><tr><th>Periode</th><th class="r">Omzet</th><th class="r">Kosten</th><th class="r">Resultaat</th><th class="r">Btw ontvangen</th><th class="r">Facturen</th></tr></thead><tbody>' +
@@ -421,8 +481,13 @@ function btw() {
       '<div class="v"><small>1a omzet hoog tarief</small><b>' + euro(b.r1a.omzet) + '</b></div><div class="v"><small>1a btw</small><b>' + euro(b.r1a.btw) + '</b></div>' +
       '<div class="v"><small>5b voorbelasting</small><b>' + euro(b.r5b) + '</b></div>' +
       '<div class="v"><small>' + (b.teBetalen < 0 ? 'Terug te krijgen' : 'Te betalen') + '</small><b>' + euro(Math.abs(b.teBetalen)) + '</b></div>' +
-      '<div class="acties">' + standPil(b.stand) + (b.stand === 'ingediend' ? '<button type="button" class="knop licht klein" data-heropen="' + b.kwartaal + '">Heropen</button>' : b.stand === 'te-doen' || b.stand === 'te-laat' ? '<button type="button" class="knop klein" data-indienen="' + b.kwartaal + '">Ingediend</button>' : '') + '</div></div>').join('') : '<div class="kaart leeg">Nog geen omzet, dus nog geen aangifte.</div>') + '</div>' +
-    '<p class="uitleg">Rubriek 1a is de omzet tegen het algemene tarief; 5b is de btw op kosten die bij Facturen en kosten zijn ingevoerd. Doe de aangifte zelf in Mijn Belastingdienst Zakelijk en markeer hem daarna hier, eventueel met het kenmerk. <a href="/api/beheer/omgeving/export?bron=' + bron + '&soort=btw" data-export>Btw-overzicht als CSV</a></p>';
+      '<div class="acties">' + standPil(b.stand) + (b.stand === 'ingediend' ? '<button type="button" class="knop licht klein" data-heropen="' + b.kwartaal + '">Heropen</button>' : b.stand === 'te-doen' || b.stand === 'te-laat' ? '<button type="button" class="knop klein" data-indienen="' + b.kwartaal + '">Ingediend</button>' : '') + '</div>' +
+      (b.stand === 'ingediend' ? '<div class="voet' + (b.verschil ? ' anders' : '') + '">' + (b.ingediend.bedragen
+        ? (b.verschil ? '<b>Veranderd na het indienen.</b> Ingediend: ' + euro(b.ingediend.bedragen.teBetalen) + ', nu: ' + euro(b.teBetalen) + ' (verschil ' + euro(b.verschil) + '). Kijk met de boekhouder of een suppletie nodig is.'
+          : 'Ingediend op ' + datum(Date.parse(b.ingediend.op)) + (b.ingediend.door ? ' door ' + esc(b.ingediend.door) : '') + (b.ingediend.kenmerk ? ', kenmerk ' + esc(b.ingediend.kenmerk) : '') + '. De bedragen van toen liggen vast: ' + euro(b.ingediend.bedragen.teBetalen) + '.')
+        : 'Ingediend op ' + datum(Date.parse(b.ingediend.op)) + '. Van deze aangifte zijn de bedragen niet vastgelegd.') + '</div>' : '') +
+      '</div>').join('') : '<div class="kaart leeg">Nog geen omzet, dus nog geen aangifte.</div>') + '</div>' +
+    '<p class="uitleg">Rubriek 1a is de omzet tegen het algemene tarief; 5b is de btw op kosten die bij Facturen en kosten zijn ingevoerd. Doe de aangifte zelf in Mijn Belastingdienst Zakelijk en markeer hem daarna hier, eventueel met het kenmerk. Bij het markeren legt Fysiplan de bedragen vast; verandert er daarna nog iets in dat kwartaal, dan staat het verschil erbij. <a href="/api/beheer/omgeving/export?bron=' + bron + '&soort=btw" data-export>Btw-overzicht als CSV</a></p>';
 }
 function bindBtw(el) {
   bindExport(el);
@@ -439,7 +504,11 @@ function jaar() {
   const jaren = data.jaren;
   if (!st.jaar || !jaren.some((j) => j.jaar === st.jaar)) st.jaar = (jaren.find((j) => j.jaar < String(jaarVanNu())) || jaren[0]).jaar;
   const j = jaren.find((x) => x.jaar === st.jaar);
-  const fj = data.finance.jaren.find((x) => x.periode === st.jaar) || { omzet: 0, kosten: 0, resultaat: 0, btw: 0, voorbelasting: 0, facturen: 0 };
+  // een afgesloten jaar toont de cijfers die bij het afsluiten zijn vastgelegd
+  const fj = (j.afgesloten && j.vast) || j.cijfers;
+  const VELD = { omzet: 'omzet', kosten: 'kosten', resultaat: 'resultaat', btw: 'btw ontvangen', voorbelasting: 'voorbelasting' };
+  const anders = j.gewijzigd ? Object.keys(VELD).filter((k) => j.cijfers[k] !== j.vast[k]).map((k) => VELD[k] + ' nu ' + euro(j.cijfers[k]) + ' (was ' + euro(j.vast[k]) + ')') : [];
+  if (j.gewijzigd && j.cijfers.facturen !== j.vast.facturen) anders.push('facturen nu ' + j.cijfers.facturen + ' (was ' + j.vast.facturen + ')');
   const pct = j.totaal ? j.klaar / j.totaal : 0, R = 40, O = 2 * Math.PI * R;
   const ex = (s, l) => '<a class="knop licht klein" href="/api/beheer/omgeving/export?bron=' + bron + '&soort=' + s + '&jaar=' + j.jaar + '" data-export>' + l + '</a>';
   const lopend = j.jaar >= String(jaarVanNu());
@@ -447,11 +516,13 @@ function jaar() {
     '<div class="raster r12">' +
       '<div><div class="kaart"><div class="ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="' + R + '" fill="none" stroke="var(--lijn-2)" stroke-width="10"/><circle cx="50" cy="50" r="' + R + '" fill="none" stroke="' + (pct === 1 ? '#2E9E57' : 'var(--petrol)') + '" stroke-width="10" stroke-linecap="round" stroke-dasharray="' + (O * pct) + ' ' + O + '" transform="rotate(-90 50 50)"/></svg>' +
         '<div><div class="groot">' + j.klaar + ' van ' + j.totaal + '</div><div class="hint">controles in orde voor ' + esc(j.jaar) + '</div><div class="mt">' + (j.afgesloten ? pil('Afgesloten door ' + j.afgesloten.door + ' op ' + datum(Date.parse(j.afgesloten.op)), 'goed') : lopend ? pil('Boekjaar loopt nog', 'neutraal') : j.kanAfsluiten ? pil('Klaar om af te sluiten', 'goed') : pil('Nog niet klaar', 'aandacht')) + '</div></div></div>' +
-        '<h2 class="ruim">Resultaat ' + esc(j.jaar) + '</h2><table class="tabel"><tbody>' +
+        (j.gewijzigd ? '<div class="waarschuwing mt">Na het afsluiten is er iets veranderd: ' + esc(anders.join(', ')) + '. Hieronder staan de cijfers van het afsluiten. Heropen het jaar om de nieuwe cijfers over te nemen, of zet de wijziging terug.</div>' : '') +
+        '<h2 class="ruim">Resultaat ' + esc(j.jaar) + (j.afgesloten && j.vast ? ' <small class="hint">vastgelegd bij het afsluiten</small>' : '') + '</h2><table class="tabel"><tbody>' +
           '<tr><td>Omzet excl. btw</td><td class="r num">' + euro(fj.omzet) + '</td></tr><tr><td>Kosten excl. btw</td><td class="r num">−' + euro(fj.kosten).replace('€ ', '€ ') + '</td></tr>' +
           '</tbody><tfoot><tr><td>Resultaat</td><td class="r num">' + euro(fj.resultaat) + '</td></tr></tfoot></table>' +
         '<table class="tabel mt"><tbody><tr><td>Btw ontvangen</td><td class="r num">' + euro(fj.btw) + '</td></tr><tr><td>Voorbelasting</td><td class="r num">' + euro(fj.voorbelasting) + '</td></tr><tr><td>Facturen</td><td class="r num">' + fj.facturen + '</td></tr></tbody></table>' +
         '<div class="mt geenprint">' + (j.afgesloten ? '<button type="button" class="knop licht" id="heropenJaar">Boekjaar heropenen</button>' : '<button type="button" class="knop limoen" id="sluitJaar"' + (j.kanAfsluiten ? '' : ' disabled') + '>Boekjaar ' + esc(j.jaar) + ' afsluiten</button>') + ' <button type="button" class="knop licht" id="print">Jaarrapport printen</button></div>' +
+        (j.afgesloten ? '<p class="uitleg">Een afgesloten jaar zit op slot: kosten en aangiftes in ' + esc(j.jaar) + ' kunnen pas weer veranderen na heropenen.</p>' : '') +
         (!j.kanAfsluiten && !j.afgesloten ? '<p class="uitleg">' + (lopend ? 'Afsluiten kan na 31 december.' : 'Afsluiten kan zodra er geen rode punten meer op de lijst staan.') + '</p>' : '') +
       '</div>' +
       '<div class="kaart mt geenprint"><h2>Pakket voor de accountant</h2><p class="ks">CSV-bestanden met puntkomma, te openen in Excel</p><div class="keuze">' + ex('jaaroverzicht', 'Jaaroverzicht') + ex('facturen', 'Facturen') + ex('debiteuren', 'Open posten') + ex('kosten', 'Kosten') + ex('btw', 'Btw per kwartaal') + '</div></div></div>' +
@@ -462,7 +533,7 @@ function jaar() {
 function bindJaar(el) {
   bindExport(el);
   el.querySelectorAll('[data-jaar]').forEach((b) => b.addEventListener('click', () => { st.jaar = b.dataset.jaar; teken(); }));
-  $('#sluitJaar', el)?.addEventListener('click', async () => { if (confirm('Boekjaar ' + st.jaar + ' afsluiten? Dit komt in het beheerlogboek.')) { const j = await post('afsluiten', { jaar: st.jaar }); if (j) melden('Boekjaar ' + st.jaar + ' is afgesloten.'); } });
+  $('#sluitJaar', el)?.addEventListener('click', async () => { if (confirm('Boekjaar ' + st.jaar + ' afsluiten? De cijfers van nu worden vastgelegd en het jaar gaat op slot. Dit komt in het beheerlogboek.')) { const j = await post('afsluiten', { jaar: st.jaar }); if (j) melden('Boekjaar ' + st.jaar + ' is afgesloten.'); } });
   $('#heropenJaar', el)?.addEventListener('click', async () => { if (confirm('Boekjaar ' + st.jaar + ' heropenen?')) await post('afsluiten', { jaar: st.jaar, heropen: true }); });
   $('#print', el)?.addEventListener('click', () => print());
 }

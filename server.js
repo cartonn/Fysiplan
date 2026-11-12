@@ -19,7 +19,7 @@ import { SESSIE_MS, SessieTabel, laadSessies, sessieSleutel, wachtwoordAfdruk } 
 import { kiesInpak, inpakbaar, pakIn, etagKomtOvereen } from "./lib/inpakken.js";
 import { kleinPadVoor, kleinMap } from "./lib/klein-beeld.js";
 import { nieuwGeheim, controleer, otpauth, nieuweReservecode, reservecodeNormaal } from "./lib/totp.js";
-import { maakBeheerOmgeving } from "./lib/beheer-omgeving-routes.js";
+import { maakBeheerOmgeving, merkGezien, merkLoginMis } from "./lib/beheer-omgeving-routes.js";
 import { BEHEER_SESSIE_MS, BEHEER_WW_MIN, BEHEER_EERSTE_KEER_MS, BeheerSessies, BeheerLogboek, Rem, laadBeheerSessies, beheerKlaar, beheerVerlopen, beheerUit, beheerPad } from "./lib/beheer.js";
 import { leesNamenLaag, kiesNamen, maakZoeker, sleutelVoor, verhuisNaamgebonden } from "./lib/oefennamen.js";
 
@@ -447,6 +447,8 @@ function sessieBij(token) {
   // sessiebestand stond (bijvoorbeeld na het terugzetten van een reservekopie).
   const bron = s.lid ? lidVan(s.pk, s.lid) : praktijkAccounts[s.pk];
   if (s.w !== wachtwoordAfdruk(bron.hash)) { praktijkSessies.delete(sleutel); return null; }
+  // voor beheer: deze login is nu gezien (hooguit één keer per vijf minuten geteld; niet wat hij deed)
+  if (s.lid) merkGezien(s.pk, s.lid);
   return s;
 }
 function praktijkSessieVan(req) {
@@ -2574,7 +2576,7 @@ function leesLimiet(req, res) {
 // die drie kwam een praktijk na een restore terug zonder eigen oefeningen en zonder logboek
 const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, praktijkOefeningenPath, accountsPath, auditPath, bewaarPath, v1AccountsPath, proefPath, beheerAccountsPath, beheerLogPath];
 // finance: btw-keuze, ingediende aangiftes, afgesloten boekjaren, kosten; en wat de support-agent mag en deed
-backupBestanden.push(join(dataDir, "finance-instellingen.json"), join(dataDir, "finance-kosten.json"), join(dataDir, "beheer-agent.json"));
+backupBestanden.push(join(dataDir, "finance-instellingen.json"), join(dataDir, "finance-kosten.json"), join(dataDir, "beheer-agent.json"), join(dataDir, "beheer-gebruik.json"));
 // reservekopie buiten Railway (lib/backup-elders.js): dezelfde bestanden, versleuteld, naar een
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
@@ -3223,7 +3225,10 @@ function logPad(url) {
 function beheerBronEcht() {
   const nu = Date.now();
   const proefVanAcc = (acc) => acc && acc.proef && Object.hasOwn(proeven, String(acc.proef.id)) ? proeven[String(acc.proef.id)] : null;
-  const misVan = (k) => { const t = loginMisPraktijk.get(k); return t && nu - t.start <= 15 * 60000 ? t.n : 0; };
+  // kaarten per week over twaalf weken, oud naar nieuw. Een kaart telt in de week waarin hij
+  // voor het laatst is bewaard: een kaart die later is bijgewerkt, schuift dus mee naar die week.
+  const WEEK = 7 * 86400e3;
+  const wekenVan = (kk) => { const w = Array(12).fill(0); for (const k of kk) { const i = k ? Math.floor((nu - Number(k.ts)) / WEEK) : -1; if (i >= 0 && i < 12) w[11 - i]++; } return w; };
   const pkVanProef = new Map();
   const praktijken = Object.keys(praktijkAccounts).map((pk) => {
     const acc = praktijkAccounts[pk];
@@ -3238,11 +3243,13 @@ function beheerBronEcht() {
       betaaldTot: a ? Number(a.betaaldTot) || null : null, incassoMislukt: !!(a && a.incasso && a.incasso.status === "mislukt"),
       kaartenTotaal: kk.length, kaarten30: kk.filter((k) => k && Number(k.ts) > nu - 30 * 86400e3).length,
       loginMis: praktijkAudit.filter((x) => x && x.praktijk === pk && x.actie === "login-mislukt" && nu - Date.parse(x.t) <= 86400e3).length,
+      weken: wekenVan(kk),
       leden: ledenVan(pk).map((l) => {
         const m = l.totp && l.totp.mis;
         return { id: l.id, naam: l.naam || "", email: l.email || "", rol: l.rol || "therapeut", actief: lidActief(l), laatst: l.laatst || null,
           tweedeStap: heeftTweedeStap(l), stapSlot: !!(m && nu - Number(m.start) <= 86400e3 && Number(m.n) >= TOTP_MIS_PER_DAG),
-          loginMis: misVan("mail:" + l.email), uitnodigingVerloopt: !lidActief(l) && l.uitnodiging ? Number(l.uitnodiging.verloopt) || null : null };
+          // foute wachtwoorden en laatst gezien meet lib/beheer-omgeving-routes.js zelf (merkLoginMis, merkGezien)
+          loginMis: 0, kaarten30: kk.filter((k) => k && k.maker === "lid:" + l.id && Number(k.ts) > nu - 30 * 86400e3).length, uitnodigingVerloopt: !lidActief(l) && l.uitnodiging ? Number(l.uitnodiging.verloopt) || null : null };
       })
     };
   });
@@ -3291,7 +3298,9 @@ function beheerBronEcht() {
 const beheerOmgeving = maakBeheerOmgeving({
   dataDir, publicDir, bronEcht: beheerBronEcht, leverancier: () => FYSIPLAN_ID,
   beheerEigen, denied, send, sendJson, readBody, kruisSite, weigerKruis, saveJson, beheerLog, beheerIp,
-  stuurMail, mailIngesteld, mailOpSlot, maskeerEmail
+  stuurMail, mailIngesteld, mailOpSlot, maskeerEmail,
+  // bestaat er een login met dit adres? Alleen daarvan telt beheer foute wachtwoorden.
+  lidBekend: (em) => Object.keys(praktijkAccounts).some((pk) => ledenVan(pk).some((l) => l.email === em))
 });
 await beheerOmgeving.laad();
 
@@ -3976,6 +3985,7 @@ async function afhandelen(request, response) {
         if (treffers.length > 1 && nkKeuze) treffers = treffers.filter(pastBij);
         if (!treffers.length) {
           loginMisTel(remKey);
+          merkLoginMis(em); // voor beheer: telt alleen bij een adres van een bestaande login
           await denied(request, response, "praktijk-login", "Praktijknaam, e-mailadres of wachtwoord klopt niet.");
           return;
         }
