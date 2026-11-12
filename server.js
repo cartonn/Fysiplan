@@ -566,6 +566,9 @@ const isBeheer = (s) => !!s && (!s.lid || (sessieLid(s) || {}).rol === "beheerde
 // Eén regel in het leeslog. Wie: de login van de sessie, het gedeelde wachtwoord, of beheer van
 // Fysiplan (dat alleen bij een praktijk zonder account kan lezen, en daar zijn eigen logboek van
 // houdt). De v1-app (eigen accountlaag) blijft erbuiten.
+// Ook de losse kaartroutes (notitie, naam, behandelaar, afspraak, doel, PSK-doel, archief, dossier
+// en antwoord) tellen als "kaart bewaard" (prullenbak en herstel staan in het beheerlogboek): anders stond een collega die de notitie vanuit
+// Patiënten wijzigde niet in het leeslog (gebruikers-sweep 2026-11-12 22u, Karin).
 function leesMerk(req, pk, soort, kaart, wieExpliciet) {
   let wie = wieExpliciet || null;
   if (!wie) {
@@ -2046,6 +2049,14 @@ function zetSeintje(kaart, soort, t, nu) {
     return;
   }
   if (telt(soort) && soort !== oud.soort) { ook.add(soort); oud.ook = [...ook]; }
+}
+// wat de patiënt van zijn eigen openstaande seintje ziet: alleen de soort en wat er nog bij
+// openstaat, zodat de knoppen op /k de stand van de server tonen en niet de laatste tik
+function seinVoorPatient(kaart) {
+  const s = kaart && kaart.seintje;
+  if (!s || !SEIN_GEWICHT[s.soort]) return null;
+  const ook = Array.isArray(s.ook) ? s.ook.filter((x) => (x === "vraag" || x === "pijn") && x !== s.soort) : [];
+  return { soort: s.soort, ...(ook.length ? { ook } : {}) };
 }
 // één waarde per (Nederlandse) dag, op volgorde van tijd: dezelfde dag vervangt (behalve
 // door een oudere tik uit de wachtrij), een eerdere dag schuift op zijn plaats
@@ -3576,7 +3587,7 @@ ideeenbox.start();
 let patientkant = null;
 const patientkantVan = () => patientkant || (patientkant = maakPatientkant({
   sendJson, readBody, schrijfLimiet, kruisSite, weigerKruis, vindKaart, idTekst, kaartMisLimiet, verbodenSleutel,
-  zetDagWaarde, tikMoment, tikVeld, nlDag, logContact, zetSeintje, seinOpen, SEIN_GEWICHT, seinMailKan, kaartSleutel, seinMailRonde,
+  zetDagWaarde, tikMoment, tikVeld, nlDag, logContact, zetSeintje, seinVoorPatient, seinOpen, SEIN_GEWICHT, seinMailKan, kaartSleutel, seinMailRonde,
   bewaarKaarten: () => saveJson(kaartenPath, kaarten),
   telDag: (naam) => { const x = dagStats(vandaagKey()); x[naam] = (x[naam] || 0) + 1; bewaarStats(); }
 }));
@@ -6454,6 +6465,7 @@ async function afhandelen(request, response) {
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const l = sessieLid(sessieVan(request));
       kaart.dossier = b.aan === false ? null : { t: Date.now(), ...(l ? { wie: l.naam || l.email } : {}) };
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       auditLog(pk, kaart.dossier ? "kaart-in-dossier" : "kaart-dossierlabel-weg", request);
       await sendJson(response, 200, { ok: true, dossier: kaart.dossier, inDossier: inDossierBij(kaart) });
@@ -6864,6 +6876,9 @@ async function afhandelen(request, response) {
     patientKaart.mijnSeintjes = (Array.isArray(found.contact) ? found.contact : [])
       .filter((c) => c && c.van === "patient" && ["vraag", "pijn", "goed"].includes(c.soort))
       .map((c) => ({ soort: c.soort, t: Number(c.t) || 0 }));
+    // het openstaande seintje (soort, en wat er nog bij openstaat): de knoppen tonen wat de
+    // praktijk ziet, ook op een tweede telefoon en na herladen
+    patientKaart.seinOpen = seinVoorPatient(found);
     // de patiënt ziet tot wanneer de kaart minstens bestaat (bewaartermijn): bij een
     // afgeronde kaart en in "Mijn gegevens"
     if (!found.demo) patientKaart.verloopt = verdwijntOp(fpk, found);
@@ -7020,6 +7035,7 @@ async function afhandelen(request, response) {
       kaart.antwoord = { t: Date.now(), tekst };
       logContact(kaart, { van: "praktijk", tekst });
       kaart.seintje = null;
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       auditLog(pk, "kaart-antwoord", request);
       await sendJson(response, 200, { ok: true });
@@ -7049,6 +7065,7 @@ async function afhandelen(request, response) {
       if ((kaart.notitie || null) !== (tekst || null)) kaart.notitieT = Date.now();
       kaart.notitie = tekst || null;
       if (!kaart.notitie) delete kaart.notitieT;
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, notitie: kaart.notitie });
     } catch {
@@ -7075,6 +7092,7 @@ async function afhandelen(request, response) {
       // besturingstekens eruit en kort begrensd; als platte tekst getoond in de app
       const naam = String(b.naam || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 40);
       kaart.behandelaar = naam || null;
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, behandelaar: kaart.behandelaar });
     } catch {
@@ -7099,6 +7117,7 @@ async function afhandelen(request, response) {
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const tekst = cleanName(b.activiteit, 80);
       kaart.pskDoel = tekst || null;
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, pskDoel: kaart.pskDoel });
     } catch {
@@ -7138,6 +7157,7 @@ async function afhandelen(request, response) {
         kaart.afspraak = (Number.isInteger(herhaal) && herhaal >= 2 && herhaal <= 12)
           ? { t: Math.round(t), herhaal } : { t: Math.round(t) };
       } else kaart.afspraak = null;
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, afspraak: kaart.afspraak });
     } catch {
@@ -7252,6 +7272,7 @@ async function afhandelen(request, response) {
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const doel = Math.max(0, Math.min(7, Math.round(Number(b.doel) || 0)));
       if (doel) kaart.doel = doel; else delete kaart.doel;
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, doel });
     } catch {
@@ -7292,6 +7313,7 @@ async function afhandelen(request, response) {
           fout: "De gratis proef van je praktijk is voorbij. Deze kaart blijft tot " + datumNl(verlooptVoor) + " bewaard; langer kan niet zonder abonnement." });
         return;
       }
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, gearchiveerd: !!kaart.gearchiveerd, verloopt: verdwijntOp(pk, kaart) });
     } catch {
@@ -7328,6 +7350,7 @@ async function afhandelen(request, response) {
       if (kaart.client && typeof kaart.client === "object" && kaart.client.c_naam) kaart.client.c_naam = nieuw;
       kaart.ts = Math.max(Date.now(), (Number(kaart.ts) || 0) + 1);
       if (nk !== oudeSleutel) { delete map[oudeSleutel]; map[nk] = kaart; }
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       auditLog(pk, "kaart-hernoemd", request);
       await sendJson(response, 200, { ok: true, naam: nieuw, ts: kaart.ts });
@@ -7493,11 +7516,29 @@ async function afhandelen(request, response) {
     // De bibliotheek wordt vooraf vertaald (/dashboard88/vertalingen). Wat dan nog ontbreekt
     // (een nieuwe oefening, de naam van een eigen oefening), vertaalt de kaart zoals eerst.
     const missend = teksten.filter((s) => !leesVertaling(cache, s));
+    // teksten: Nederlands -> vertaling; nagelezen: de Nederlandse teksten waarvan een lezer de
+    // vertaling heeft nagelezen (de kaart zegt bij de rest dat ze automatisch vertaald zijn)
+    const vertaaldUitCache = () => {
+      const map = {}, nagelezen = [];
+      teksten.forEach((s) => { const v = leesVertaling(cache, s); if (v) { map[s] = v.t; if (v.nagelezen) nagelezen.push(s); } });
+      return { map, nagelezen };
+    };
+    // Lukt het bijvertalen niet (geen sleutel, andere site, storing), dan krijgt de patiënt toch wat er
+    // al vooraf vertaald is; alleen de ontbrekende teksten blijven Nederlands, met de melding op de
+    // kaart. Eerder gooide één ontbrekende tekst (een nieuwe of eigen oefening) de hele vertaalde
+    // bibliotheek weg (gebruikers-sweep 2026-11-12 22u, Jayden). Staat er niets in de cache, dan de
+    // foutmelding zoals eerst: de kaart zegt dan dat vertalen even niet lukt.
+    const deelsOfFout = async (status, fout, weiger) => {
+      const { map, nagelezen } = vertaaldUitCache();
+      if (Object.keys(map).length) { await sendJson(response, 200, { ok: true, teksten: map, nagelezen, deels: true }); return; }
+      if (weiger) { await weigerKruis(response); return; }
+      await sendJson(response, status, { ok: false, fout });
+    };
     if (missend.length) {
-      if (!AI_KEY) { await sendJson(response, 503, { ok: false, fout: "Vertalen staat nog uit op deze server." }); return; }
+      if (!AI_KEY) { await deelsOfFout(503, "Vertalen staat nog uit op deze server."); return; }
       // alleen de vertaalslag kost geld; gecachte vertalingen (ook cross-site) blijven vrij,
       // maar een cross-site pagina mag geen nieuwe AI-vertalingen laten maken
-      if (kruisSite(request)) { await weigerKruis(response); return; }
+      if (kruisSite(request)) { await deelsOfFout(403, "", true); return; }
       if (schrijfLimiet(request, response)) return;
       if (aiLimiet(request, response)) return;
       try {
@@ -7509,14 +7550,11 @@ async function afhandelen(request, response) {
         begrensVertalingen(cache);
         await saveJson(vertalingenPath, vertalingen);
       } catch {
-        await sendJson(response, 502, { ok: false, fout: "Vertalen is even niet gelukt; de kaart blijft in het Nederlands." });
+        await deelsOfFout(502, "Vertalen is even niet gelukt; de kaart blijft in het Nederlands.");
         return;
       }
     }
-    // teksten: Nederlands -> vertaling; nagelezen: de Nederlandse teksten waarvan een lezer de
-    // vertaling heeft nagelezen (de kaart zegt bij de rest dat ze automatisch vertaald zijn)
-    const map = {}, nagelezen = [];
-    teksten.forEach((s) => { const v = leesVertaling(cache, s); if (v) { map[s] = v.t; if (v.nagelezen) nagelezen.push(s); } });
+    const { map, nagelezen } = vertaaldUitCache();
     await sendJson(response, 200, { ok: true, teksten: map, nagelezen });
     return;
   }
