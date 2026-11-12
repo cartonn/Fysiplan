@@ -15,13 +15,25 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-11 13u (na #191 prullenbak: een praktijk kon een kaart niet meer meteen wissen, alleen na 7 dagen of door de hele praktijk te wissen, en /privacy zei daarom "buiten gebruik stellen": opgelost met Definitief verwijderen; download gaf kaarten in de prullenbak verlooptOp 1970: opgelost; VWO art. 10 was gewijzigd zonder nieuwe versie: opgelost) · 2026-11-10 01u (vertaalcache hield namen van eigen oefeningen na "Alles wissen"; download bevat geen geheimen, wel alle kaartvelden) |
 | (f) cookies en lokale opslag | 2026-11-11 01u (alle localStorage-, sessionStorage-, Cache- en IndexedDB-sleutels van /k en /v2/app tegen /privacy#opslag; kaart weg bij de praktijk (404): `fp_beelden_<id>` (kaart-id + oefenbeelden) en de beelden zelf bleven op de telefoon, opgelost; privacylink op een anderstalige kaart zegt nu dat de pagina Nederlands is; cookies `fpproef`/`fp1` en "Wis Fysiplan van dit apparaat" (alle `fp_`/`fysiplan`-sleutels, IndexedDB, caches): klopt) · 2026-11-09 21u |
 | (g) MDR en AI-verordening | 2026-11-10 13u (nieuwe patiëntkaart #162: de AI-stem bij oefeningen zonder AI-video en via de knop bovenaan/vergroting had geen AI-melding: opgelost; landing, app en kaart zonder diagnose-, doserings- of sorteerbelofte; vraaghulp-grens ongewijzigd) |
-| (h) WGBO en KNGF-beroepsregels | 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
+| (h) WGBO en KNGF-beroepsregels | 2026-11-12 05u (na #191 prullenbak: een verwijderde kaart kon niet meer naar het dossier, ook niet binnen de 7 dagen herstel, en de vragen bij Verwijderen en Definitief verwijderen zeiden dat niet: opgelost; dossiertekst, contactlogboek, bronregel, landingtekst "je dossier blijft in je EPD": klopt) · 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
 | (i) begrijpelijkheid (B1) | 2026-11-11 17u (gemeten op /privacy, /verwerkersovereenkomst, /voorwaarden, /v2/proef, /v2/gegevens en /v2: gem. 9–12 woorden per zin, juridische pagina's geen zin > 40, patiëntdeel ≤ 30; /v2/gegevens zei "Een losse kaart wis je met Verwijderen" terwijl die sinds #191 nog 7 dagen in de prullenbak staat: opgelost; waarschuwing bij Alles wissen 35 woorden: opgelost als lijst; /v2/gegevens nu ook in `test-juridisch-b1.mjs`) · 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (h) WGBO, dan (g) MDR, dan (a) privacyverklaring (landing is door #197 in de Active Tech-stijl herschreven: nieuwe hero met een persoon in squathouding; nagaan of dat beeld een foto of AI-beeld is en of het een melding of 'Fotomontage' nodig heeft). Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (g) MDR, dan (a) privacyverklaring (landing is door #197 in de Active Tech-stijl herschreven: nieuwe hero met een persoon in squathouding; nagaan of dat beeld een foto of AI-beeld is en of het een melding of 'Fotomontage' nodig heeft). Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **MIDDEL — WGBO (h) 2026-11-12 05u: een kaart in de prullenbak kon niet meer naar het dossier.**
+  Wat de patiënt via de kaart meldt (seintjes, "te zwaar", pijnscores, PSK, berichten van de praktijk) staat alleen in
+  Fysiplan; de praktijk hoort dat in het eigen dossier te zetten (WGBO art. 7:454 BW, KNGF-richtlijn verslaglegging).
+  Sinds #191 zet Verwijderen een kaart 7 dagen in de prullenbak, maar `/api/praktijk/kaart` weigerde verwijderde
+  kaarten, dus "Kopieer samenvatting voor dossier" kon niet meer. De vraag bij Verwijderen zei niets over het dossier,
+  en die bij Definitief verwijderen ging ervan uit dat het al in het dossier stond.
+  OPGELOST 2026-11-12 (deze PR): `GET /api/praktijk/kaart?prullenbak=1` geeft een herstelbare kaart terug, alleen aan
+  maker of beheerder (zelfde regel als herstellen); knop "Kopieer voor dossier" in de prullenbak; de dossiertekst zegt
+  "Status: kaart verwijderd, de patiëntlink werkt niet meer"; beide vragen noemen het dossier. Patiëntlink en gewone
+  route blijven dicht. Test in `scripts/test-kaart-prullenbak.mjs` (faalt zonder fix: 404).
+  Bron: WGBO art. 7:454 BW (dossierplicht), AVG art. 5 lid 1 d (juistheid).
 
 - **MIDDEL — voorwaarden (c) 2026-11-11 21u: de prijsbelofte van de landing stond niet in de voorwaarden.**
   /v2 (sinds de Active Tech-landing #197) zegt "je prijs staat minstens 24 maanden vast" en "De prijsbelofte", en bij de
