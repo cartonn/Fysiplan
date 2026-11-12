@@ -31,6 +31,7 @@ const basis = lees('public/oefeningen-v2.json');
 const v1Basis = lees('public/oefeningen.json');
 const snap = lees('content/category-production-overrides.json');
 const bewijs = lees('content/category-secondary-evidence.json');
+const nlNamen = lees('content/oefennamen-nl.json').namen;
 
 // de weergaveregels en het filter van de bibliotheek zelf, niet een kopie
 const html = readFileSync('public/index.html', 'utf8');
@@ -99,7 +100,11 @@ assert.equal(perId.size, geleverd.length, 'geleverde exerciseIds uniek');
 assert.deepEqual([...perId.keys()].sort(), [...verwacht.keys()].sort(), 'geleverd = basis met beeld, zelfde exerciseIds');
 for (const [id, v] of verwacht) {
   const e = perId.get(id);
-  assert.equal(e.naam, v.naam, `${id}: naam`);
+  // de getoonde naam: de Nederlandse naam uit content/oefennamen-nl.json als die er is; de naam
+  // uit het bestand gaat dan mee als `eerder` (dit bestand en de momentopname werken met die naam)
+  const nl = Object.hasOwn(nlNamen, v.naam) ? nlNamen[v.naam] : '';
+  assert.equal(e.naam, nl || v.naam, `${id}: naam`);
+  assert.deepEqual(e.eerder || [], nl ? [v.naam] : [], `${id}: naam uit het bestand`);
   assert.equal(e.groep, v.groep, `${v.naam}: groep`);
   assert.deepEqual(e.ook || [], v.ook, `${v.naam}: ook`);
 }
@@ -146,7 +151,7 @@ for (const m of bewijs.mappings) {
   assert.ok(matchesCategory(perId.get(m.exerciseId), m.add), `${m.name}: effectief vindbaar onder ${m.add}`);
 }
 for (const m of [...bewijs.preexisting, ...bewijs.earlier]) {
-  const e = geleverd.find((x) => x.naam === m.name);
+  const e = geleverd.find((x) => x.naam === m.name || (x.eerder || []).includes(m.name));
   if (!e) continue; // geen beeld: niet geleverd, telt nergens
   assert.equal(matchesCategory(e, m.add), !wegSleutel.has(m.name + '|' + m.add), `${m.name} -> ${m.add}: effectief alleen als niet weggevallen`);
 }

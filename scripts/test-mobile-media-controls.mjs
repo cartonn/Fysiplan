@@ -98,8 +98,11 @@ context.demo.info.poseMetadata=null;
 assert.ok(html.includes('data-audio-naam="'));assert.ok(html.includes("name:foto.dataset.audioNaam||''"));
 assert.ok(html.includes("name:(demo.info||{}).name||''"));
 assert.ok(html.includes("var open=houder.classList.contains('open');\n      stopLezen();"),'video stops narration before opening');
-assert.ok(html.includes("geluid.hidden=TAAL!=='nl'||!window.NoorAudio||!NoorAudio.match(demo.info.name,demo.info.uitleg)"),'static lightbox has available narration control');
-assert.ok(html.includes("if(TAAL==='nl')geluidKnop.hidden=!window.NoorAudio||!NoorAudio.match(d.name||'',d.uitleg||'');"),'de demonstratie zet de geluidknop niet onterecht aan');
+// de knop staat er alleen als er een opname is, onder de naam van nu of onder een eerdere naam
+// (noorClipNaam geeft niets terug zonder NoorAudio)
+assert.ok(html.includes("geluid.hidden=TAAL!=='nl'||!noorClipNaam({name:demo.info.name,text:demo.info.uitleg,eerder:demo.info.eerder});"),'static lightbox has available narration control');
+assert.ok(html.includes("if(TAAL==='nl')geluidKnop.hidden=!noorClipNaam({name:d.name||'',text:d.uitleg||'',eerder:d.eerder});"),'de demonstratie zet de geluidknop niet onterecht aan');
+assert.ok(/function noorClipNaam\(item\)\{\s*if\(!window\.NoorAudio\|\|!item\)return '';/.test(html),'zonder NoorAudio is er geen opname en dus geen knop');
 assert.ok(html.includes("stopLezen();stopVideos();demoStop();"),'achtergrond: ook de demonstratie stopt');
 
 // ---- beoordelingsbestanden: blokkeren is de beginstand, vrijgeven vraagt bewijs ----

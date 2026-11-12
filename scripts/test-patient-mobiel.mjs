@@ -312,8 +312,11 @@ if (pw) {
         const r = await route.fetch(), d = await r.json();
         assert.ok(Array.isArray(d.lib), "de kaart krijgt haar eigen oefeningen mee");
         for (const o of d.lib) {
-          if (o.naam === namen[0]) o.video = { eigen: "vidtest/staand.webm", eigenMeta: { aiGenerated: true } };
-          if (o.naam === namen[1]) o.video = { yt: "aqz-KE-bpKQ" };
+          // de kaart noemt de oefening zoals ze is bewaard; de bibliotheek kan haar intussen een
+          // Nederlandse naam geven en levert de naam van toen dan mee als `eerder`
+          const heet = (n) => o.naam === n || (o.eerder || []).includes(n);
+          if (heet(namen[0])) o.video = { eigen: "vidtest/staand.webm", eigenMeta: { aiGenerated: true } };
+          if (heet(namen[1])) o.video = { yt: "aqz-KE-bpKQ" };
         }
         await route.fulfill({ response: r, json: d });
       });

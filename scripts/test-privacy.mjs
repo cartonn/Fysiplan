@@ -18,6 +18,10 @@ const dag = 86400000;
 const nu = Date.now();
 const sha16 = (t) => createHash("sha256").update(String(t).slice(0, 300)).digest("hex").slice(0, 16);
 
+// de bibliotheek toont Nederlandse namen (content/oefennamen-nl.json); de zoekhulp geeft die terug
+const NL_NAMEN = JSON.parse(await readFile(join(root, "content", "oefennamen-nl.json"), "utf8")).namen;
+const SQUAT_NU = NL_NAMEN["Squat"] || "Squat", LUNGES_NU = NL_NAMEN["Lunges"] || "Lunges";
+
 // ---- nagebootste AI-dienst: bewaart elke aanvraag ----
 const aiAanvragen = [];
 const ai = createServer(async (request, response) => {
@@ -27,8 +31,9 @@ const ai = createServer(async (request, response) => {
   aiAanvragen.push(b);
   const tekst = b.output_config && b.output_config.format
     ? JSON.stringify({ oefeningen: [
-      { naam: "Squat", traint: "Kracht van bovenbenen en billen." },
-      { naam: "squat", traint: "dubbel, valt weg" },
+      { naam: SQUAT_NU, traint: "Kracht van bovenbenen en billen." },
+      { naam: SQUAT_NU.toLowerCase(), traint: "dubbel, valt weg" },
+      { naam: "Squat", traint: "dezelfde oefening onder haar naam uit het bestand: ook dubbel, valt weg" },
       { naam: "Bestaat niet", traint: "geen bibliotheekoefening, valt weg" },
       { naam: "Lunges", traint: "Kracht en balans van de benen." }
     ] })
@@ -194,7 +199,9 @@ try {
   const zoek = await (await api("/api/assistent", { methode: "POST",
     body: { regio: "Knie", doel: "Maximale kracht", zoek: "zonder materiaal", klacht: "Jan de Vries, VKB-reconstructie" }, ip: ipZ })).json();
   assert.equal(zoek.ok, true);
-  assert.deepEqual(zoek.oefeningen.map((o) => o.naam), ["Squat", "Lunges"], "alleen echte bibliotheekoefeningen, geen dubbele");
+  // "Lunges" is de naam uit het bestand: de zoekhulp geeft de oefening terug onder de naam van nu
+  assert.deepEqual(zoek.oefeningen.map((o) => o.naam), [SQUAT_NU, LUNGES_NU], "alleen echte bibliotheekoefeningen onder hun naam van nu, geen dubbele");
+  assert.equal(zoek.oefeningen[1].traint, "Kracht en balans van de benen.");
   assert.equal(aiAanvragen.length, aiVoorZoek + 1);
   const zoekAanvraag = JSON.stringify(aiAanvragen[aiAanvragen.length - 1].messages);
   assert.match(zoekAanvraag, /<lichaamsdeel>Knie<\/lichaamsdeel>/);
