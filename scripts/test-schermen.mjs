@@ -54,8 +54,11 @@ try {
   await writeFile(kp, JSON.stringify(k));
   await start();
 
+  // CI heeft geen browser: dan alleen de regels en de server hierboven
+  browserdeel: {
   const require = createRequire(import.meta.url);
-  const { chromium } = require("playwright");
+  let chromium;
+  try { ({ chromium } = require("playwright")); } catch { console.log("test-schermen: geen Playwright, browserdeel overgeslagen"); break browserdeel; }
   browser = await chromium.launch();
   const maakCtx = async (sessie) => {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.8.1." + (ip++ & 255) } });
@@ -137,6 +140,7 @@ try {
   assert.equal(await q.isVisible("#fpSchermen"), true);
 
   assert.deepEqual(fouten, [], "geen fouten");
+  } // browserdeel
   console.log("test-schermen: ok (opent op Vandaag met seintjes en wie niet oefende, Patiënten, Praktijk, Openen naar de editor, printen geeft de kaart, zonder login Kaart maken)");
 } catch (e) {
   console.error(uit.slice(-1500));
