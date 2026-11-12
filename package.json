@@ -190,6 +190,7 @@
     "test:schermen": "node scripts/test-schermen.mjs",
     "test:schermtoetsenbord": "node scripts/test-scherm-toetsenbord.mjs",
     "test:thuiskaartuitleg": "node scripts/test-thuiskaart-uitleg.mjs",
+    "test:schermknoppen": "node scripts/test-schermknoppen-breedte.mjs",
     "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs",
     "test:prullenbak": "node scripts/test-kaart-prullenbak.mjs",
     "test:beveiligingfeedback": "node scripts/test-beveiliging-feedback.mjs",
