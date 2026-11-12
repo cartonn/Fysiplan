@@ -9,8 +9,9 @@ import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
-import { prijsRegels, prijsZin, metBtwBijschrift } from "./lib/prijs.js";
-import { aantalTherapeuten, maandBedrag, betaalBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN,
+import { prijsRegels, prijsZin, metBtwBijschrift, bedragVoor, euro as euroTekst } from "./lib/prijs.js";
+import { plaatsenVan, merkPiek, volgendAantal, nieuwePeriode, kaartVol } from "./lib/plaatsen.js";
+import { maandBedrag, betaalBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
 import { volgendFactuurNr, naarCent, factuurHtml, isFactuur, isKor, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
 import { backupInstellingen } from "./lib/backup-elders.js";
@@ -1233,6 +1234,12 @@ function proefKoppel(acc, p) {
   acc.proef = { id: p.id, verloopt: p.verloopt };
   return true;
 }
+// een praktijk met een betaald abonnement (of door beheer als klant gemerkt)
+function praktijkIsKlant(pk) {
+  const k = pk && Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk].proef : null;
+  const p = k && Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
+  return !!(p && p.klant && !p.gewist);
+}
 function praktijkProefVerlopen(pk) {
   const k = pk && Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk].proef : null;
   if (!k) return false;
@@ -1420,16 +1427,34 @@ const INCASSO_WEBHOOK = APP_BASIS + "/api/mollie/webhook";
 function betaalBlok(p) {
   if (!p) return "";
   const a = p.abonnement;
-  if (a && (a.status === "actief" || a.status === "opgezegd")) return abonnementBlok(a, !!proefPraktijkSleutel(p));
+  if (a && (a.status === "actief" || a.status === "opgezegd")) return abonnementBlok(a, !!proefPraktijkSleutel(p), loginsVanProef(p));
   if (!betalenKan() || p.klant) return "";
   return '<form method="post" action="/v2/proef/betalen" class="blad" style="margin-top:18px">' +
     '<h2>Direct online afrekenen</h2><p class="klein" style="font-size:14.5px">' + prijsZin(prijsNu(), { html: true }).replace(/^./, (c) => c.toUpperCase()) + ', maandelijks opzegbaar. ' +
     "Je betaalt nu de eerste maand met iDEAL of je bankkaart; daarna gaat Fysiplan meteen verder.</p>" +
     '<p class="klein" style="font-size:14px">De betaling loopt via Mollie; je geeft daarbij een machtiging voor de volgende maanden. ' +
     'Met betalen ga je akkoord met de <a href="/voorwaarden#abonnement">algemene voorwaarden</a>. Zie ook de <a href="/privacy#betalen">privacyverklaring</a>.</p>' +
-    '<div class="veld" style="margin-top:12px"><label for="b_aantal">Aantal therapeuten</label>' +
-    '<input id="b_aantal" name="aantal" type="number" inputmode="numeric" min="1" max="' + MAX_THERAPEUTEN + '" value="1" required/></div>' +
+    // het aantal therapeuten vult de praktijk niet zelf in: elke login in het team is er één (lib/plaatsen.js)
+    '<p class="klein" id="b_aantal" style="font-size:14.5px;margin-top:12px">' + plaatsenZin(p) + "</p>" +
     '<div class="knoppen"><button class="knop oranje" type="submit">Eerste maand betalen</button></div></form>';
+}
+// Voor hoeveel therapeuten deze aanmelding betaalt: de actieve logins van haar praktijk. Is de
+// praktijk nog niet beveiligd, dan is er één persoon.
+function plaatsenVanProef(p) {
+  return loginsVanProef(p) || 1;
+}
+// Hetzelfde, maar 0 als er geen beveiligde praktijk aan de aanmelding hangt: dan valt er niets
+// te tellen en blijft een lopend abonnement op het aantal waarvoor het is afgesloten.
+function loginsVanProef(p) {
+  const pk = proefPraktijkSleutel(p);
+  return pk ? plaatsenVan(ledenVan(pk)) : 0;
+}
+function plaatsenZin(p) {
+  const n = plaatsenVanProef(p), b = bedragVoor(n, prijsNu());
+  return (proefPraktijkSleutel(p)
+    ? "Je praktijk heeft <b>" + n + (n === 1 ? " login" : " logins") + "</b>. Elke login telt als één therapeut"
+    : "Je praktijk is nog niet beveiligd, dus je betaalt voor <b>1 therapeut</b>. Daarna telt elke login in je team als één therapeut") +
+    ": je betaalt nu <b>" + htmlEsc(euroTekst(b.totaalCent)) + "</b> voor de eerste maand. Komt er een collega bij, dan betaal je vanaf de volgende maand voor die login mee.";
 }
 // de beveiligde praktijk die aan deze proefaanmelding hangt (of null)
 function proefPraktijkSleutel(p) {
@@ -1453,7 +1478,7 @@ function abonnementBeheerder(pk, ww) {
 }
 // Mijn abonnement: status, factuur, en zelf opzeggen (of de opzegging intrekken) in de app.
 // Opzeggen gaat in per het einde van de al betaalde maand; er wordt niets teruggeboekt.
-function abonnementBlok(a, metWachtwoord) {
+function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
   const therapeuten = a.aantal + (a.aantal === 1 ? " therapeut" : " therapeuten");
   const tot = htmlEsc(datumNl(a.betaaldTot));
   const soort = isFactuur(FYSIPLAN_ID, isKor(a)) ? "Factuur" : "Betaalbewijs";
@@ -1470,6 +1495,11 @@ function abonnementBlok(a, metWachtwoord) {
     '<div class="veld"><label for="f_adres">Adres</label><textarea id="f_adres" name="adres" rows="3" maxlength="' + AFNEMER_ADRES_MAX + '" autocomplete="street-address">' + htmlEsc(af.adres || "") + "</textarea></div>" +
     '<div class="knoppen"><button class="knop omlijnd" type="submit">Factuurgegevens bewaren</button></div></form>';
   const incasso = incassoAan() ? " Elke maand schrijven we automatisch af via Mollie; je krijgt " + INCASSO_VOORAF_DAGEN + " dagen vooraf een mail." : "";
+  // Het aantal volgt de logins in het team (lib/plaatsen.js). Wijkt de volgende maand af van deze, dan staat dat erbij.
+  const straks = loginsNu ? volgendAantal(a, loginsNu) : a.aantal;
+  const logins = !loginsNu ? "" : ' <span id="abo-logins">Elke login in je team telt als \u00e9\u00e9n therapeut; je team heeft nu ' + loginsNu + (loginsNu === 1 ? " login" : " logins") + "." +
+    (straks !== a.aantal ? " De volgende maand is voor <b>" + straks + (straks === 1 ? " therapeut" : " therapeuten") + "</b>" +
+      (straks > loginsNu ? ", omdat je team er deze maand zoveel had" : "") + "." : "") + "</span>";
   if (a.status === "opgezegd") return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement is opgezegd</h2>' +
     '<p class="klein" style="font-size:14.5px">Je kunt Fysiplan nog gebruiken tot en met <b>' + tot + "</b> (" + therapeuten + "). " +
     "Daarna schrijven we niets meer af en maak je geen nieuwe kaarten meer. Na nog " + NA_EINDE_WISSEN_DAGEN + " dagen wissen we alles van je praktijk, ook de gedeelde kaarten. " +
@@ -1477,7 +1507,7 @@ function abonnementBlok(a, metWachtwoord) {
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="intrekken"/>' +
     '<div class="knoppen"><button class="knop oranje" type="submit">Toch doorgaan</button></div></form>' + gegevens + "</div>";
   return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement</h2>' +
-    '<p class="klein" style="font-size:14.5px">Actief voor ' + therapeuten + ", betaald tot en met " + tot + "." + incasso + " " + factuur + ".</p>" +
+    '<p class="klein" style="font-size:14.5px">Actief voor ' + therapeuten + ", betaald tot en met " + tot + "." + logins + incasso + " " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="opzeggen"/>' +
     '<label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, zeg mijn abonnement op per ' + tot + ".</span></label>" +
     // alleen een beheerder zegt op: wachtwoord van een beheerder of van de praktijk
@@ -1531,6 +1561,8 @@ async function incassoRondeStap(p, nu) {
   const stap = incassoStap(p, nu);
   if (stap === "melden") {
     const a = p.abonnement;
+    // de nieuwe maand is voor het aantal logins van nu, of voor de piek van de afgelopen maand als die hoger was
+    if (loginsVanProef(p)) nieuwePeriode(a, loginsVanProef(p));
     markeerGemeld(p, nu, prijsNu()); // het bedrag uit deze aankondiging is wat er straks wordt afgeschreven
     proefMail(p.email, "Fysiplan: aankondiging van je maandbetaling", "Hoi " + p.naam + ",\n\nJe betaalde maand loopt tot en met " +
       datumNl(a.betaaldTot) + ". Op of rond " + datumNl(incassoDatum(p, nu)) + " schrijven we EUR " + a.gemeldBedrag.bedrag +
@@ -1669,6 +1701,8 @@ async function proefRondeEen() {
       proefMeldAhmed("Abonnement gestopt: " + (p.praktijk || p.naam), p, "Het opgezegde abonnement is voorbij. Over " +
         NA_EINDE_WISSEN_DAGEN + " dagen wist Fysiplan de kaarten van deze praktijk.");
     }
+    // het hoogste aantal logins sinds de vorige aankondiging onthouden (lib/plaatsen.js)
+    if (p.klant && p.abonnement && p.abonnement.status === "actief" && loginsVanProef(p) && merkPiek(p.abonnement, loginsVanProef(p))) gewijzigd = true;
     if (await incassoRondeStap(p, nu)) gewijzigd = true;
     // een week voor het wissen: één mail aan de aanmelder en de beheerders van de praktijk,
     // zodat ze nog naar het dossier kunnen kopiëren, alles kunnen downloaden of doorgaan.
@@ -6345,7 +6379,18 @@ async function afhandelen(request, response) {
           fout: "Deze kaart is intussen op een ander apparaat gewijzigd. Open de nieuwste versie via Kaarten." });
         return;
       }
-      if (!map[kk] && Object.keys(map).length >= 100) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal kaarten voor deze praktijk bereikt." }); return; }
+      // Een grens op lopende kaarten (lib/plaatsen.js): 100 tijdens de proef, 300 per login voor een klant.
+      // Afgeronde kaarten en de prullenbak tellen niet mee; bijwerken van een bestaande kaart kan altijd.
+      if (!map[kk]) {
+        const vol = kaartVol(map, Date.now(), verlooptOp, { klant: praktijkIsKlant(pk), logins: plaatsenVan(ledenVan(pk)) });
+        if (vol) {
+          await sendJson(response, 400, { ok: false, kaartenVol: true, grens: vol.grens, fout: vol.soort === "lopend"
+            ? "Je praktijk heeft " + vol.lopend + " lopende kaarten; dat is het maximum" + (praktijkIsKlant(pk) ? " voor het aantal logins in je team" : " tijdens de proef") +
+              ". Rond kaarten af van patiënten die klaar zijn (Kaarten, Afronden); dan komt er ruimte vrij."
+            : "Er staan te veel afgeronde en verwijderde kaarten bij je praktijk. Leeg de prullenbak (Kaarten, Prullenbak); dan komt er ruimte vrij." });
+          return;
+        }
+      }
       const sanStr = (v, m) => String(v == null ? "" : v).slice(0, m);
       const cells = {};
       if (b.cells && typeof b.cells === "object") {
@@ -8038,11 +8083,11 @@ async function afhandelen(request, response) {
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
     const p = proefVan(request);
     if (!p || p.klant) { response.writeHead(303, { location: p ? "/v2/app" : "/v2/proef" }); response.end(); return; }
-    const aantal = aantalTherapeuten(b.aantal);
+    // het aantal komt niet uit het formulier: de server telt de logins van de praktijk
+    const aantal = plaatsenVanProef(p);
     const terugNaar = (fout) => serveerProef(request, response, "bericht", { TITEL: "Betalen", ETIKET: "Betalen", KOP: fout,
       TEKST: "Je kunt het opnieuw proberen of op 'Ja, ik wil doorgaan' drukken; dan bellen we je.",
-      KNOP_HTML: '<a class="knop oranje" href="/v2/proef">Terug</a>' }, aantal ? 502 : 422);
-    if (!aantal) { await terugNaar("Vul een aantal therapeuten in tussen 1 en " + MAX_THERAPEUTEN + "."); return; }
+      KNOP_HTML: '<a class="knop oranje" href="/v2/proef">Terug</a>' }, 502);
     if (proefLimiet(request)) { await terugNaar("Even te veel pogingen. Probeer het over een uur opnieuw."); return; }
     const host = eigenHost(request), kaal = host.split(":")[0];
     const lokaal = kaal === "localhost" || kaal === "127.0.0.1";

@@ -202,6 +202,9 @@ async function metKeuze(inst, doe, { zonderBtwId = false } = {}) {
   const token = randomBytes(24).toString("hex"), dag = 86400000;
   await writeFile(join(dataDir, "proef-aanmeldingen.json"), JSON.stringify({ oud0000000000001: { id: "oud0000000000001", email: "oud@praktijk.invalid", naam: "Piet Oud",
     tel: "+31201230000", praktijk: "Fysio Oud", gestart: Date.now() - 15 * dag, verloopt: Date.now() - dag, akkoord: "x", tokens: [sha(token)] } }));
+  // drie logins: het aantal therapeuten telt de server zelf (lib/plaatsen.js)
+  await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify({ oudpk0001: { naam: "Fysio Oud", proef: { id: "oud0000000000001" },
+    leden: [1, 2, 3].map((n) => ({ id: "l" + n, naam: "Login " + n, rol: n === 1 ? "beheerder" : "therapeut", hash: "x" })) } }));
   const zetKeuze = (i) => (i ? writeFile(join(dataDir, "finance-instellingen.json"), JSON.stringify(i)) : null);
   await zetKeuze(inst);
   const cookie = "fpproef=" + token;

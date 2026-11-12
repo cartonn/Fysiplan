@@ -165,9 +165,26 @@ Mollie blijft het "antwoord op deze mail, dan bellen we je".
 **Env:** werkt alleen met mail (`MAIL_API_SLEUTEL` + `MAIL_AFZENDER`, staan al op Railway); de betaallink alleen met `MOLLIE_API_KEY`.
 **Wat jij moet doen:** niets. Kijk bij de eerste "Proef afgelopen"-mail of de toon je bevalt.
 
+### Aantal therapeuten en kaarten (reviewlijst punt 7, 2026-11-12)
+**Wat de code nu doet** (`lib/plaatsen.js`, test `npm run test:plaatsen`):
+- **Een praktijk vult het aantal therapeuten niet meer in.** Elke login in het team telt als één therapeut. Een
+  uitnodiging die nog niet is aangenomen, telt niet. Een praktijk die nog niet beveiligd is, betaalt voor één.
+- **Een nieuwe maand is voor de logins van dat moment**, of voor het hoogste aantal van de afgelopen maand als dat
+  hoger was. De server kijkt elk uur. Wie een collega een maand laat meewerken en vlak voor de afschrijving
+  verwijdert, betaalt die maand dus nog voor die collega. Tussentijds wordt er niets bijgeschreven of teruggegeven.
+- **"Mijn abonnement" zegt hoeveel logins het team heeft** en, als dat afwijkt, voor hoeveel de volgende maand is.
+- **De grens van 100 kaarten is weg.** Tijdens de proef: 100 lopende kaarten. Voor een klant: 300 lopende kaarten
+  per login. Afgeronde kaarten en de prullenbak tellen niet mee voor die grens (samen hooguit drie keer zoveel).
+  Een bestaande kaart bijwerken kan altijd. Er blijft een grens omdat alle kaarten tot de database er is in één
+  bestand staan.
+
+**Wat jij moet weten:** de getallen 100 en 300 zijn mijn keuze, geen meting van wat een praktijk nodig heeft. Ze
+staan bovenaan `lib/plaatsen.js`. De voorwaarden zeggen niets over een aantal kaarten.
+
 ### Online betalen via Mollie (praktijk-routine, 2026-11-07)
 **Wat de code nu doet:** zet je `MOLLIE_API_KEY` op Railway, dan krijgen "Mijn proef" en de
-verlopen-pagina een blok "Direct online afrekenen": aantal therapeuten kiezen, eerste maand
+verlopen-pagina een blok "Direct online afrekenen": het blok telt zelf de logins van de praktijk (zie "Aantal
+therapeuten en kaarten" hieronder), eerste maand
 (9,99 per therapeut; de btw volgt de keuze in Finance, zie "Factuur per online betaling" hieronder, en zonder
 die keuze staat het blok er niet) betalen met iDEAL of kaart bij Mollie. Na betaling wordt de proef meteen een
 klant (slot eraf, zelfde als "klant" in /aanmeldingen) en krijg je een mail "Betaald: …". De
