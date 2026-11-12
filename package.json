@@ -120,7 +120,7 @@
     "test:seinvenster": "node scripts/test-seintje-venster.mjs",
     "test:lichtladen": "node scripts/test-licht-laden.mjs",
     "test:beheerherstel": "node scripts/test-beheer-herstel.mjs",
-    "test:beheeromgeving": "node scripts/test-beheer-omgeving.mjs",
+    "test:beheeromgeving": "node scripts/test-beheer-omgeving.mjs && node scripts/test-beheer-toegang.mjs",
     "test:seinmail": "node scripts/test-sein-mail.mjs",
     "test:tweedestap": "node scripts/test-tweede-stap.mjs",
     "test:stapverplicht": "node scripts/test-tweede-stap-verplicht.mjs",

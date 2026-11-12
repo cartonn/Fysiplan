@@ -121,7 +121,10 @@ const NU = Date.parse("2026-11-12T13:00:00Z");
   const verlopen = uit.find((z) => z.soort === "uitnodiging-verlopen");
   assert.match(verlopen.mails[0].tekst, /Kim Verhoeven/);
   assert.notEqual(verlopen.mails[0].aan, "kim@praktijk-hoogland.invalid", "de verlopen uitnodiging gaat naar de beheerder, niet naar de collega");
-  for (const soort of Object.keys(MAIL_SOORTEN).filter((s) => s !== "storing")) {
+  // een storingsbericht schrijft beheer en een eigen bericht schrijft een agent met taalmodel: die
+  // twee hebben geen vaste tekst (het eigen bericht keurt de server, zie test-beheer-toegang.mjs)
+  assert.equal(mailTekst("eigen-bericht", { praktijk: "Fysio Test", naam: "Sanne" }), null);
+  for (const soort of Object.keys(MAIL_SOORTEN).filter((s) => s !== "storing" && s !== "eigen-bericht")) {
     const m = mailTekst(soort, { praktijk: "Fysio Test", naam: "Sanne de Vries", collega: "Kim" });
     assert.ok(m && m.onderwerp.length > 8 && m.tekst.startsWith("Hallo Sanne,"), soort);
     assert.doesNotMatch(m.onderwerp + m.tekst, /pati[eë]nt|kaart van|undefined|null/i, soort + ": geen patiënt in een mail van de agent");
@@ -464,8 +467,9 @@ try {
     assert.equal(d.overzicht.totalen.praktijken, 15);
     assert.ok(d.zaken.length >= 8 && d.finance.kpi.facturen > 50 && d.jaren.length >= 2);
     assert.ok(d.zaken.every((z) => z.mails.every((m) => /\.invalid$/.test(m.aan))));
-    // de demo begint met een agent die al een week werkt: twee soorten automatisch, één handmatig
-    const beginStand = { "inloggen-mislukt": "automatisch", "tweede-stap-slot": "automatisch", "uitnodiging-verlopen": "handmatig" };
+    // de demo begint met een agent die al een week werkt: twee soorten automatisch, één handmatig;
+    // eigen berichten van de agents met taalmodel wachten er op akkoord (handmatig)
+    const beginStand = { "inloggen-mislukt": "automatisch", "tweede-stap-slot": "automatisch", "uitnodiging-verlopen": "handmatig", "eigen-bericht": "handmatig" };
     assert.deepEqual(d.agent.stand, beginStand);
     assert.ok(d.agent.logboek.length >= 10 && d.agent.mails.length >= 5 && d.agent.laatsteRonde);
     assert.equal(d.zaken.filter((z) => z.verstuurd).length, 3, "wat op automatisch staat, is al gemaild");
@@ -712,7 +716,7 @@ try {
     assert.doesNotMatch(js, /\beval\(|new Function\(|document\.write/);
     assert.match(js, /import \{ vraagBeheersleutel \} from '\/beheersleutel\.js'/, "inloggen gaat via dezelfde weg als de andere beheerpagina's");
     const server = await readFile(join(root, "server.js"), "utf8");
-    assert.match(server, /^backupBestanden\.push\(join\(dataDir, "finance-instellingen\.json"\), join\(dataDir, "finance-kosten\.json"\), join\(dataDir, "beheer-agent\.json"\), join\(dataDir, "beheer-gebruik\.json"\)\);$/m, "de financebestanden en de meting gaan mee in de reservekopie");
+    assert.match(server, /^backupBestanden\.push\(join\(dataDir, "finance-instellingen\.json"\), join\(dataDir, "finance-kosten\.json"\), join\(dataDir, "beheer-agent\.json"\), join\(dataDir, "beheer-gebruik\.json"\), join\(dataDir, "beheer-loket\.json"\)\);$/m, "de financebestanden, de meting en de instellingen van de agents gaan mee in de reservekopie");
     assert.match(server, /if \(s\.lid\) merkGezien\(s\.pk, s\.lid\);/, "elke geldige eigen sessie telt als gezien");
     const routes = await readFile(join(root, "lib/beheer-omgeving-routes.js"), "utf8");
     assert.match(routes, /if \(!d\.beheerEigen\(req\)\) \{ await d\.denied\(req, res, urlPath\); return true; \}/, "elke route vraagt een eigen login van beheer");

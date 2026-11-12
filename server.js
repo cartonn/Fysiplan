@@ -19,7 +19,8 @@ import { SESSIE_MS, SessieTabel, laadSessies, sessieSleutel, wachtwoordAfdruk } 
 import { kiesInpak, inpakbaar, pakIn, etagKomtOvereen } from "./lib/inpakken.js";
 import { kleinPadVoor, kleinMap } from "./lib/klein-beeld.js";
 import { nieuwGeheim, controleer, otpauth, nieuweReservecode, reservecodeNormaal } from "./lib/totp.js";
-import { maakBeheerOmgeving, merkGezien, merkLoginMis } from "./lib/beheer-omgeving-routes.js";
+import { maakBeheerOmgeving, merkGezien, merkLoginMis, merkAntwoord } from "./lib/beheer-omgeving-routes.js";
+import { rechtenVan, magBuiten } from "./lib/beheer-toegang.js";
 import { BEHEER_SESSIE_MS, BEHEER_WW_MIN, BEHEER_EERSTE_KEER_MS, BeheerSessies, BeheerLogboek, Rem, laadBeheerSessies, beheerKlaar, beheerVerlopen, beheerUit, beheerPad } from "./lib/beheer.js";
 import { leesNamenLaag, kiesNamen, maakZoeker, sleutelVoor, verhuisNaamgebonden } from "./lib/oefennamen.js";
 
@@ -543,9 +544,12 @@ function beheerAccountVan(req) {
 }
 // Is dit verzoek van beheer? Een ingelogd beheeraccount, of de sleutel van de server. Wie het
 // was, staat daarna in req.beheerWie (het e-mailadres, of "beheersleutel") voor het logboek.
+// Een account met een beperkte lijst rechten (lib/beheer-toegang.js) komt alleen bij de beheer-
+// en finance-omgeving; elke andere beheerroute weigert het hier, op één plek.
+const beheerBinnen = (a, req) => { if (magBuiten(a, req.url)) return true; req.beheerBeperkt = true; return false; };
 const isAdmin = (req) => {
   const a = beheerAccountVan(req);
-  if (a) { req.beheerWie = a.email; return true; }
+  if (a) { if (!beheerBinnen(a, req)) return false; req.beheerWie = a.email; return true; }
   if (isAdminSleutel(req)) { req.beheerWie = "beheersleutel"; return true; }
   return false;
 };
@@ -553,10 +557,12 @@ const isAdmin = (req) => {
 // eigen sleutel. De openbare standaardsleutel van een lokale server telt daar niet.
 const beheerEigen = (req) => {
   const a = beheerAccountVan(req);
-  if (a) { req.beheerWie = a.email; return true; }
+  if (a) { if (!beheerBinnen(a, req)) return false; req.beheerWie = a.email; return true; }
   if (ADMIN_KEY_EIGEN && isAdminSleutel(req)) { req.beheerWie = "beheersleutel"; return true; }
   return false;
 };
+// de rechten van het beheeraccount bij dit verzoek; wie met de sleutel van de server komt, mag alles
+const beheerRechten = (req) => rechtenVan(beheerAccountVan(req));
 const beheerIp = (req) => maskIp(clientIp(req));
 // de pagina's waar beheer inlogt (public/beheersleutel.js)
 const BEHEER_PAGINAS = new Set(["/admin88", "/dashboard88", "/dashboard88/", "/dashboard.html", "/content1000", "/content1000.html", "/draft-review.html"]);
@@ -2576,7 +2582,7 @@ function leesLimiet(req, res) {
 // die drie kwam een praktijk na een restore terug zonder eigen oefeningen en zonder logboek
 const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, praktijkOefeningenPath, accountsPath, auditPath, bewaarPath, v1AccountsPath, proefPath, beheerAccountsPath, beheerLogPath];
 // finance: btw-keuze, ingediende aangiftes, afgesloten boekjaren, kosten; en wat de support-agent mag en deed
-backupBestanden.push(join(dataDir, "finance-instellingen.json"), join(dataDir, "finance-kosten.json"), join(dataDir, "beheer-agent.json"), join(dataDir, "beheer-gebruik.json"));
+backupBestanden.push(join(dataDir, "finance-instellingen.json"), join(dataDir, "finance-kosten.json"), join(dataDir, "beheer-agent.json"), join(dataDir, "beheer-gebruik.json"), join(dataDir, "beheer-loket.json"));
 // reservekopie buiten Railway (lib/backup-elders.js): dezelfde bestanden, versleuteld, naar een
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
@@ -3190,6 +3196,8 @@ function telBeheerMis(req) {
   return ++t.n > 20;
 }
 const denied = (req, res, pad, melding) => {
+  // een ingelogd beheeraccount zonder het recht voor deze route: geen foute poging, wel een nee
+  if (req.beheerBeperkt) return sendJson(res, 403, { ok: false, geenRecht: "beheer", fout: "Je beheeraccount heeft hier geen toegang toe. Het werkt alleen in de beheer- en finance-omgeving." });
   // een beheerpagina die met een account werkt en geen geldige sessie (meer) heeft: zeg wat er te doen is
   if (!melding) melding = String(req.headers["x-admin-sleutel"] || "") === "account"
     ? "Je bent niet (meer) ingelogd als beheer. Herlaad de pagina en log opnieuw in."
@@ -3299,6 +3307,8 @@ const beheerOmgeving = maakBeheerOmgeving({
   dataDir, publicDir, bronEcht: beheerBronEcht, leverancier: () => FYSIPLAN_ID,
   beheerEigen, denied, send, sendJson, readBody, kruisSite, weigerKruis, saveJson, beheerLog, beheerIp,
   stuurMail, mailIngesteld, mailOpSlot, maskeerEmail,
+  // rechten per beheeraccount: wie kijkt, de accounts zelf, en of de server een eigen sleutel heeft
+  beheerRechten, accounts: () => beheerAccounts, bewaarAccounts: () => saveJson(beheerAccountsPath, beheerAccounts), sleutelAan: () => ADMIN_KEY_EIGEN,
   // bestaat er een login met dit adres? Alleen daarvan telt beheer foute wachtwoorden.
   lidBekend: (em) => Object.keys(praktijkAccounts).some((pk) => ledenVan(pk).some((l) => l.email === em))
 });
@@ -3331,6 +3341,8 @@ async function afhandelen(request, response) {
   let urlPath;
   try { urlPath = decodeURIComponent((request.url || "/").split("?")[0]); }
   catch { await send(response, 400, "text/plain; charset=utf-8", "Bad request"); return; }
+  // telling van antwoorden met een serverfout, per route, voor de tech-agent (lib/beheer-toegang.js)
+  response.once("close", () => merkAntwoord(request.method, urlPath, response.statusCode));
 
   // de beheerpagina's nooit in een kader van een andere website, en niet in een zoekmachine
   if (BEHEER_PAGINAS.has(urlPath)) {
@@ -4781,7 +4793,7 @@ async function afhandelen(request, response) {
   }
 
   // de beheer- en finance-omgeving (lib/beheer-omgeving-routes.js)
-  if ((urlPath.startsWith("/api/beheer/omgeving") || urlPath.startsWith("/dashboard88/omgeving") || urlPath === "/beheer.html") && await beheerOmgeving.afhandelen(request, response, urlPath)) return;
+  if ((urlPath.startsWith("/api/beheer/omgeving") || urlPath.startsWith("/api/agent") || urlPath.startsWith("/dashboard88/omgeving") || urlPath === "/beheer.html") && await beheerOmgeving.afhandelen(request, response, urlPath)) return;
 
   // ---- persoonlijke beheeraccounts (uitleg bij beheerAccountVan) ----
   // wie is hier ingelogd? Voor de beheerpagina's; zonder login gewoon 200 met wie: null, zodat
@@ -4942,7 +4954,8 @@ async function afhandelen(request, response) {
       return;
     }
     const start = nieuwStartwachtwoord();
-    beheerAccounts[em] = { email: em, naam, hash: maakHash(start), gemaakt: new Date().toISOString(), door: request.beheerWie };
+    // wie opnieuw begint (telefoon of wachtwoord kwijt), houdt de rechten die het account had
+    beheerAccounts[em] = { email: em, naam, hash: maakHash(start), gemaakt: new Date().toISOString(), door: request.beheerWie, ...(was && Array.isArray(was.rechten) ? { rechten: was.rechten } : {}) };
     beheerSessies.trekIn(em);
     totpWacht.delete("beheer:" + em);
     beheerRem.wis(em);

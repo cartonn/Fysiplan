@@ -34,8 +34,13 @@ const PAGINAS = {
   finance: ['Cijfers', 'Klanten, omzet, kosten en prognose'],
   facturen: ['Facturen en kosten', 'Wat er is gefactureerd, betaald en open staat'],
   btw: ['Btw-aangifte', 'Per kwartaal de rubrieken voor de aangifte omzetbelasting'],
-  jaar: ['Jaarafsluiting', 'De accountant-agent loopt het boekjaar na']
+  jaar: ['Jaarafsluiting', 'De accountant-agent loopt het boekjaar na'],
+  agents: ['Agents', 'Wat de agents met taalmodel mogen, wat ze deden en wat ze aan jou voorleggen'],
+  beheerders: ['Beheerders', 'Wie in deze omgeving wat mag zien en doen']
 };
+// welk recht een pagina vraagt; de server stuurt alleen mee wat dit account mag zien
+const PAGINA_RECHT = { overzicht: 'praktijken', praktijken: 'praktijken', support: 'support', berichten: 'berichten', finance: 'finance', facturen: 'finance', btw: 'finance', jaar: 'finance', agents: 'agents', beheerders: 'beheer' };
+const mag = (recht) => !data || !Array.isArray(data.rechten) || data.rechten.includes(recht);
 
 let HDR = {};
 let data = null;
@@ -43,7 +48,7 @@ let bron = 'echt';
 try { if (localStorage.getItem('fp-beheer-bron') === 'demo') bron = 'demo'; } catch {}
 // een link met ?bron=demo opent meteen de demo
 { const q = new URLSearchParams(location.search).get('bron'); if (q === 'demo' || q === 'echt') bron = q; }
-const st = { filter: '', stand: '', factuurTab: 'alle', factuurBlad: 0, kostenAlle: false, jaar: null, ladePk: null, logAlles: false };
+const st = { filter: '', stand: '', factuurTab: 'alle', factuurBlad: 0, kostenAlle: false, jaar: null, ladePk: null, logAlles: false, nieuweSleutel: null, verslagRol: '', verslagAlles: false };
 const PER_BLAD = 15;
 const tip = $('#tip');
 
@@ -77,25 +82,42 @@ async function post(pad, body, stil) {
   return j;
 }
 
-function pagina() { const p = location.hash.slice(1); return Object.hasOwn(PAGINAS, p) ? p : 'overzicht'; }
+// de pagina uit het adres, of de eerste die dit account mag zien; null als het niets mag
+function pagina() {
+  const p = location.hash.slice(1);
+  if (Object.hasOwn(PAGINAS, p) && mag(PAGINA_RECHT[p])) return p;
+  return Object.keys(PAGINAS).find((k) => mag(PAGINA_RECHT[k])) || null;
+}
 function teken() {
   if (!data) return;
   const p = pagina();
-  document.querySelectorAll('#nav a').forEach((a) => a.classList.toggle('aan', a.dataset.pagina === p));
-  $('#titel').textContent = PAGINAS[p][0];
-  $('#sub').textContent = PAGINAS[p][1];
-  document.title = PAGINAS[p][0] + ' · Fysiplan Beheer';
+  // wat dit account niet mag, staat niet in het menu; een groep zonder pagina's ook niet
+  document.querySelectorAll('#nav a').forEach((a) => { a.hidden = !mag(PAGINA_RECHT[a.dataset.pagina]); a.classList.toggle('aan', a.dataset.pagina === p); });
+  document.querySelectorAll('#nav .groep').forEach((g) => { let n = g.nextElementSibling, zichtbaar = false; while (n && n.tagName === 'A') { if (!n.hidden) zichtbaar = true; n = n.nextElementSibling; } g.hidden = !zichtbaar; });
+  // het oude dashboard (bezoekcijfers, security) is er alleen voor wie volledig beheer heeft
+  const oud = document.querySelector('.zij a.oud');
+  if (oud) oud.hidden = !mag('beheer');
   $('#demoband').hidden = bron !== 'demo';
   document.querySelectorAll('#bronSchakel button').forEach((b) => b.classList.toggle('aan', b.dataset.bron === bron));
   $('#bronUitleg').textContent = bron === 'demo' ? 'Verzonnen gegevens om de omgeving en de agents te testen.' : 'De gegevens van fysiplan.nl.';
+  if (!p) {
+    $('#titel').textContent = 'Beheer'; $('#sub').textContent = '';
+    $('#pagina').innerHTML = '<div class="kaart leegstaat"><h2>Je account heeft hier nog geen rechten</h2><p>Een beheerder met volledig beheer kan je rechten geven op de pagina Beheerders.</p></div>';
+    return;
+  }
+  $('#titel').textContent = PAGINAS[p][0];
+  $('#sub').textContent = PAGINAS[p][1];
+  document.title = PAGINAS[p][0] + ' · Fysiplan Beheer';
   const problemen = data.zaken.filter((z) => z.ernst === 'probleem').length;
   $('#tSupport').textContent = problemen || '';
   const btwOpen = data.finance.btw.filter((b) => b.stand === 'te-doen' || b.stand === 'te-laat').length;
   $('#tBtw').textContent = btwOpen || '';
+  $('#tAgents').textContent = (data.loket ? data.loket.concepten.filter((c) => c.stand === 'wacht').length : 0) || '';
+  if (p !== 'agents') st.nieuweSleutel = null; // de nieuwe sleutel is alleen te zien tot je de pagina verlaat
   const el = $('#pagina');
-  el.innerHTML = ({ overzicht, praktijken, support, berichten, finance, facturen, btw, jaar })[p]();
+  el.innerHTML = ({ overzicht, praktijken, support, berichten, finance, facturen, btw, jaar, agents, beheerders })[p]();
   bindTips(el);
-  ({ overzicht: bindOverzicht, praktijken: bindPraktijken, support: bindSupport, berichten: bindBerichten, finance: bindFinance, facturen: bindFacturen, btw: bindBtw, jaar: bindJaar })[p]?.(el);
+  ({ overzicht: bindOverzicht, praktijken: bindPraktijken, support: bindSupport, berichten: bindBerichten, finance: bindFinance, facturen: bindFacturen, btw: bindBtw, jaar: bindJaar, agents: bindAgents, beheerders: bindBeheerders })[p]?.(el);
   if (st.ladePk) tekenLade();
 }
 
@@ -189,12 +211,11 @@ function overzicht() {
   const sys = data.systeem || {};
   const beschik = (sys.beschikbaarheid || []);
   const gem = beschik.length ? Math.round(beschik.reduce((a, b) => a + b.pct, 0) / beschik.length * 100) / 100 : null;
-  return '<div class="raster r4">' +
-    kpi('Praktijken', t.praktijken, t.klanten + ' klant · ' + t.proeven + ' in proef', true) +
-    kpi('Therapeuten met een login', t.therapeuten, t.actief7 + ' actief in de laatste 7 dagen') +
-    kpi('Terugkerende omzet per maand', euro(f.mrr), aantal(f.plaatsenDoorlopend, 'plaats', 'plaatsen') + ' die doorlopen · excl. btw') +
-    kpi('Open zaken', data.zaken.length, data.zaken.filter((z) => z.ernst === 'probleem').length + ' problemen, ' + data.zaken.filter((z) => z.ernst === 'aandacht').length + ' aandachtspunten') +
-    '</div>' +
+  // omzet en zaken alleen voor wie finance of support mag zien
+  const kpis = [kpi('Praktijken', t.praktijken, t.klanten + ' klant · ' + t.proeven + ' in proef', true), kpi('Therapeuten met een login', t.therapeuten, t.actief7 + ' actief in de laatste 7 dagen')];
+  if (mag('finance')) kpis.push(kpi('Terugkerende omzet per maand', euro(f.mrr), aantal(f.plaatsenDoorlopend, 'plaats', 'plaatsen') + ' die doorlopen · excl. btw'));
+  if (mag('support')) kpis.push(kpi('Open zaken', data.zaken.length, aantal(data.zaken.filter((z) => z.ernst === 'probleem').length, 'probleem', 'problemen') + ', ' + aantal(data.zaken.filter((z) => z.ernst === 'aandacht').length, 'aandachtspunt', 'aandachtspunten')));
+  return '<div class="raster r' + kpis.length + '">' + kpis.join('') + '</div>' +
     '<div class="raster r21 mt">' +
       '<div class="kaart"><div class="kaartkop"><div><h2>Health van de praktijken</h2><p class="ks">Een probleem kost 30 punten, een aandachtspunt 10. Wie gestopt is of alleen V1 gebruikt, telt niet mee.</p></div><a class="knop licht klein" href="#praktijken">Alle praktijken</a></div>' +
         (bewaakt ? '<div class="balkje">' + balk + '</div><div class="legenda">' + ['goed', 'aandacht', 'probleem'].map((k) => '<span><i style="background:' + kleur[k] + '"></i>' + STAND[k] + ' <b>' + t[k] + '</b></span>').join('') + (t.nvt ? '<span><i style="background:var(--lijn)"></i>Niet bewaakt <b>' + t.nvt + '</b></span>' : '') + '</div>' : '<p class="leeg">' + (t.praktijken ? 'Nog geen praktijk om te bewaken.' : 'Nog geen praktijken met een account.') + '</p>') +
@@ -208,15 +229,15 @@ function overzicht() {
           : '<p class="ks">Nog geen meting: de server telt vanaf nu elke minuut dat hij draait. De eerste cijfers staan er over tien minuten.</p>') +
       '</div>' +
     '</div>' +
-    '<div class="raster r2 mt">' +
-      '<div class="kaart"><div class="kaartkop"><div><h2>Support-agent</h2><p class="ks">' + aantal(data.zaken.length, 'open zaak', 'open zaken') + ' · deze week ' + aantal(week.gemaild, 'mail', 'mails') + ' verstuurd en ' + aantal(week.opgelost, 'zaak', 'zaken') + ' opgelost</p></div><a class="knop licht klein" href="#support">Naar de agent</a></div>' +
+    '<div class="raster ' + (mag('support') && mag('finance') ? 'r2 ' : '') + 'mt">' +
+      (!mag('support') ? '' : '<div class="kaart"><div class="kaartkop"><div><h2>Support-agent</h2><p class="ks">' + aantal(data.zaken.length, 'open zaak', 'open zaken') + ' · deze week ' + aantal(week.gemaild, 'mail', 'mails') + ' verstuurd en ' + aantal(week.opgelost, 'zaak', 'zaken') + ' opgelost</p></div><a class="knop licht klein" href="#support">Naar de agent</a></div>' +
         (data.zaken.length ? '<div class="punten">' + data.zaken.slice(0, 5).map((z) => '<a class="punt" href="#support">' + pil(...ERNST[z.ernst]) + '<span><b>' + esc(z.praktijk) + '</b><small>' + esc(z.tekst) + '</small></span><i aria-hidden="true">›</i></a>').join('') + '</div>' + (data.zaken.length > 5 ? '<p class="uitleg">En nog ' + (data.zaken.length - 5) + ' bij de support-agent.</p>' : '') : '<p class="leeg">Geen open zaken. Alles draait.</p>') +
         '<p class="mt"><button type="button" class="knop limoen klein" id="rondeHier">Ronde nu draaien</button></p>' +
-      '</div>' +
-      '<div class="kaart"><div class="kaartkop"><div><h2>Finance in het kort</h2><p class="ks">' + esc(maandNaam(data.finance.maanden.at(-1)?.maand || '2026-01', true)) + '</p></div><a class="knop licht klein" href="#finance">Naar de cijfers</a></div>' +
+      '</div>') +
+      (!mag('finance') ? '' : '<div class="kaart"><div class="kaartkop"><div><h2>Finance in het kort</h2><p class="ks">' + esc(maandNaam(data.finance.maanden.at(-1)?.maand || '2026-01', true)) + '</p></div><a class="knop licht klein" href="#finance">Naar de cijfers</a></div>' +
         '<div class="raster r2">' + kpi('Omzet deze maand, tot nu toe', euro(f.omzetMaand), 'vorige maand ' + euro(f.omzetVorigeMaand) + ' · excl. btw') + kpi('Open posten', euro(f.openCent), f.open === 1 ? '1 factuur' : f.open + ' facturen') + '</div>' +
         '<h2 class="ruim">Finance-agent</h2>' + agentPunten(data.financeAgent, 4) +
-      '</div>' +
+      '</div>') +
     '</div>';
 }
 
@@ -268,7 +289,8 @@ function tekenLade() {
     '<h2>' + esc(r.naam) + '</h2><p class="hint">' + pil(...(STATUS[r.status] || [r.status, 'neutraal'])) + ' ' + (r.stand === 'nvt' ? '' : pil(STAND[r.stand] + ' · ' + r.score, r.stand)) + (r.sinds ? ' &nbsp;sinds ' + datum(r.sinds) : '') + '</p>' +
     '<div class="feiten"><div><small>Therapeuten</small><b>' + r.therapeuten + '</b></div><div><small>Kaarten 30 dagen</small><b>' + r.kaarten30 + '</b></div><div><small>Met tweede stap</small><b>' + r.tweedeStap + '/' + r.therapeuten + '</b></div></div>' +
     (r.betaaldTot ? '<p class="uitleg">Betaald tot ' + datum(r.betaaldTot) + (r.plaatsen ? ' voor ' + r.plaatsen + (r.plaatsen === 1 ? ' therapeut' : ' therapeuten') : '') + '.</p>' : r.proefTot ? '<p class="uitleg">Proef loopt tot ' + datum(r.proefTot) + '.</p>' : '') +
-    '<h3>Wat er speelt</h3>' + (zaken.length ? zaken.map((z) => '<div class="voorstel"><strong>' + esc(z.tekst) + '</strong><br/>' + (z.mails.length ? 'Agent stelt een mail voor aan ' + esc(z.mails.map((m) => m.naam || m.aan).join(', ')) + '.' : esc(z.taak || '')) + '</div>').join('<div class="mt"></div>') + '<p class="mt"><a class="knop licht klein" href="#support">Naar de support-agent</a></p>' : '<p class="hint">' + (r.status === 'v1' ? 'Deze praktijk gebruikt alleen V1. Beheer telt hier de logins en bewaakt verder niets.' : r.stand === 'nvt' ? 'Deze praktijk is gestopt en wordt niet meer bewaakt.' : 'Niets: deze praktijk draait zonder problemen.') + '</p>') +
+    '<h3>Wat er speelt</h3>' + (zaken.length ? zaken.map((z) => '<div class="voorstel"><strong>' + esc(z.tekst) + '</strong><br/>' + (z.mails.length ? 'Agent stelt een mail voor aan ' + esc(z.mails.map((m) => m.naam || m.aan).join(', ')) + '.' : esc(z.taak || '')) + '</div>').join('<div class="mt"></div>') + '<p class="mt"><a class="knop licht klein" href="#support">Naar de support-agent</a></p>'
+      : !mag('support') && r.signalen.length ? r.signalen.map((x) => '<div class="voorstel"><strong>' + esc(x.tekst) + '</strong></div>').join('<div class="mt"></div>') : '<p class="hint">' + (r.status === 'v1' ? 'Deze praktijk gebruikt alleen V1. Beheer telt hier de logins en bewaakt verder niets.' : r.stand === 'nvt' ? 'Deze praktijk is gestopt en wordt niet meer bewaakt.' : 'Niets: deze praktijk draait zonder problemen.') + '</p>') +
     gebruik +
     '<h3>Logins</h3>' + (r.leden.length ? r.leden.map((l) => '<div class="lid"><span class="av' + (l.actief ? '' : ' uit') + '">' + esc(init(l.naam || l.email)) + '</span><div><b>' + esc(l.naam || l.email) + '</b><small>' + (l.actief && l.kaarten30 != null && r.status !== 'v1' ? aantal(l.kaarten30, 'kaart', 'kaarten') + ' in 30 dagen · ' : '') + esc(l.email) + '</small></div>' +
       '<span class="hint">' + (l.rol === 'beheerder' ? pil('Beheerder', 'petrol', true) + ' ' : '') + (l.actief ? (l.tweedeStap ? '' : pil('Geen tweede stap', 'aandacht', true) + ' ') + esc(geleden(l.laatst, nu)) : pil('Uitgenodigd', 'neutraal', true)) + '</span></div>').join('') : '<p class="hint">Nog geen eigen logins.</p>') +
@@ -301,14 +323,16 @@ function support() {
   const week = weekVanAgent();
   const LOG = { nieuw: ['Gezien', 'neutraal'], gemaild: ['Gemaild', 'petrol'], opgelost: ['Opgelost', 'goed'], start: ['Begin', 'neutraal'] };
   const logRegel = (x) => {
-    const wat = x.wat === 'gemaild' ? 'Mail “' + x.onderwerp + '” naar ' + aantal(x.aan || 1, 'adres', 'adressen') + (x.wie && x.wie !== 'agent' ? ', verstuurd door ' + x.wie : ', automatisch')
+    // "agent" is de vaste regel van de server; support-agent en finance-agent zijn de agents met taalmodel
+    const door = !x.wie || x.wie === 'agent' ? ', automatisch' : /-agent$/.test(x.wie) ? ', geschreven door de ' + x.wie + (x.akkoord ? ', akkoord van ' + x.akkoord : ' en zelf verstuurd') : ', verstuurd door ' + x.wie;
+    const wat = x.wat === 'gemaild' ? 'Mail “' + x.onderwerp + '” naar ' + aantal(x.aan || 1, 'adres', 'adressen') + door
       : x.wat === 'opgelost' ? x.tekst + '. Weg ' + (x.dagen ? 'na ' + aantal(x.dagen, 'dag', 'dagen') : 'op dezelfde dag') + (x.gemaild ? ', na een mail' : ', zonder mail')
       : x.tekst;
     return '<div class="logregel">' + pil(...(LOG[x.wat] || [x.wat, 'neutraal']), true) + '<div>' + (x.praktijk ? '<b>' + esc(x.praktijk) + '</b>' : '') + '<span>' + esc(wat) + '</span><time>' + esc(tijd(x.t)) + '</time></div></div>';
   };
   const log = data.agent.logboek || [], logToon = st.logAlles ? log : log.slice(0, 8);
   const laatste = data.agent.laatsteRonde;
-  const standKnop = (soort, k, l) => '<button type="button" data-soort="' + soort + '" data-stand="' + k + '" class="' + ((stand[soort] || 'uit') === k ? 'aan' : '') + '"' + (soort === 'storing' && k === 'automatisch' ? ' disabled title="Een storingsbericht verstuurt altijd een mens"' : '') + '>' + l + '</button>';
+  const standKnop = (soort, k, l) => '<button type="button" data-soort="' + soort + '" data-stand="' + k + '" class="' + ((stand[soort] || 'uit') === k ? 'aan' : '') + '"' + (soort === 'storing' && k === 'automatisch' ? ' disabled title="Een storingsbericht verstuurt altijd een mens"' : !mag('agents') ? ' disabled title="Dit vraagt het recht Agents"' : '') + '>' + l + '</button>';
   return '<div class="raster r4">' +
     kpi('Open zaken', zaken.length, aantal(zaken.filter((z) => z.ernst === 'probleem').length, 'probleem', 'problemen') + ', ' + aantal(zaken.filter((z) => z.ernst === 'aandacht').length, 'aandachtspunt', 'aandachtspunten'), true) +
     kpi('Gemaild deze week', week.gemaild, week.nieuw ? aantal(week.nieuw, 'nieuwe zaak', 'nieuwe zaken') + ' gezien' : 'geen nieuwe zaken') +
@@ -334,7 +358,9 @@ function bindSupport(el) {
   $('#logAlles', el)?.addEventListener('click', () => { st.logAlles = !st.logAlles; teken(); });
   el.querySelectorAll('[data-soort]').forEach((b) => b.addEventListener('click', async () => {
     if (b.classList.contains('aan')) return;
-    if (bron === 'echt' && b.dataset.stand !== 'uit' && !confirm('Mails van de soort “' + data.agent.soorten[b.dataset.soort].titel + '” naar echte therapeuten en beheerders toestaan (' + b.dataset.stand + ')?')) return;
+    const eigenZelf = b.dataset.soort === 'eigen-bericht' && b.dataset.stand === 'automatisch';
+    if (bron === 'echt' && b.dataset.stand !== 'uit' && !confirm(eigenZelf ? 'Een agent met taalmodel schrijft en verstuurt dan zelf berichten naar echte therapeuten en beheerders, zonder dat jij ze eerst ziet (hooguit tien per dag). Toestaan?'
+      : 'Mails van de soort “' + data.agent.soorten[b.dataset.soort].titel + '” naar echte therapeuten en beheerders toestaan (' + b.dataset.stand + ')?')) return;
     const j = await post('mailstand', { soort: b.dataset.soort, stand: b.dataset.stand });
     if (j) melden('Opgeslagen.');
   }));
@@ -536,6 +562,146 @@ function bindJaar(el) {
   $('#sluitJaar', el)?.addEventListener('click', async () => { if (confirm('Boekjaar ' + st.jaar + ' afsluiten? De cijfers van nu worden vastgelegd en het jaar gaat op slot. Dit komt in het beheerlogboek.')) { const j = await post('afsluiten', { jaar: st.jaar }); if (j) melden('Boekjaar ' + st.jaar + ' is afgesloten.'); } });
   $('#heropenJaar', el)?.addEventListener('click', async () => { if (confirm('Boekjaar ' + st.jaar + ' heropenen?')) await post('afsluiten', { jaar: st.jaar, heropen: true }); });
   $('#print', el)?.addEventListener('click', () => print());
+}
+
+// ---------- agents met taalmodel ----------
+const sindsTekst = (iso) => {
+  if (!iso) return 'nog nooit';
+  const m = Math.floor((data.nu - Date.parse(iso)) / 60e3);
+  return m < 1 ? 'zojuist' : m < 60 ? m + ' min geleden' : m < 1440 ? Math.floor(m / 60) + ' uur geleden' : tijd(iso);
+};
+function agents() {
+  const L = data.loket, rollen = L.rollen, demo = bron === 'demo';
+  const wacht = L.concepten.filter((c) => c.stand === 'wacht'), eerder = L.concepten.filter((c) => c.stand !== 'wacht').slice(0, 6);
+  const standen = Object.values(L.agents).map((a) => a.stand);
+  const week = L.verslagen.filter((v) => Date.parse(v.t) >= data.nu - 7 * 86400e3).length;
+  const eigen = data.agent.stand['eigen-bericht'] || 'uit';
+  const metNaam = (c, t) => t.replaceAll('{praktijk}', c.praktijk);
+  const standPil = (k) => pil({ uit: 'Uit', proef: 'Proef', aan: 'Aan' }[k], { uit: 'neutraal', proef: 'petrol', aan: 'goed' }[k]);
+  const seg = (rol, k, l) => '<button type="button" data-agent="' + rol + '" data-stand="' + k + '" class="' + (L.agents[rol].stand === k ? 'aan' : '') + '">' + l + '</button>';
+  const agentKaart = (rol) => {
+    const a = L.agents[rol], r = rollen[rol];
+    return '<div class="kaart agentkaart"><div class="kaartkop"><h2>' + esc(r.titel) + '</h2>' + standPil(a.stand) + '</div>' +
+      '<dl><dt>Ziet</dt><dd>' + esc(r.ziet) + '</dd><dt>Doet</dt><dd>' + esc(r.doet) + '</dd></dl>' +
+      '<div class="rij"><span class="seg" role="group" aria-label="Stand van de ' + esc(r.titel) + '">' + seg(rol, 'uit', 'Uit') + seg(rol, 'proef', 'Proef') + seg(rol, 'aan', 'Aan') + '</span>' +
+        (rol === 'tech' ? '<label class="vink"><input type="checkbox" id="mergen"' + (a.mergen ? ' checked' : '') + '/>Zelf mergen</label>' : '') + '</div>' +
+      '<p class="uitleg">' + (a.stand === 'uit' ? 'Het loket geeft deze agent niets.' : a.stand === 'proef' ? (demo ? 'Op proef: werkt op deze demo-gegevens.' : 'Op proef: werkt op de demo-gegevens. Wat hij doet, zie je bij Demo.') : 'Werkt op de gegevens van ' + (demo ? 'de demo' : 'fysiplan.nl') + '.') +
+        ' Laatst bij het loket: ' + esc(sindsTekst(a.gezien)) + '.</p></div>';
+  };
+  const conceptHtml = (c) => '<div class="zaak aandacht"><div class="zaakkop">' + pil(rollen[c.rol].titel, 'neutraal', true) + '<b>' + esc(c.praktijk) + '</b><span class="hint">' + esc(c.wat) + '</span></div>' +
+    '<details class="mail" open><summary>' + esc(metNaam(c, c.onderwerp)) + '</summary><pre>' + esc('Hallo [voornaam],\n\n' + metNaam(c, c.tekst) + '\n\nGroet,\nFysiplan-support') + '</pre></details>' +
+    '<div class="zaakvoet">Geschreven ' + esc(sindsTekst(c.t)) + ' · gaat naar ' + aantal(c.aan, 'adres', 'adressen') + ' van de praktijk<span class="knoppen"><button type="button" class="knop licht klein" data-afwijzen="' + esc(c.id) + '">Afwijzen</button>' +
+      '<button type="button" class="knop klein" data-akkoord="' + esc(c.id) + '">' + (demo ? 'Verstuur (demo)' : 'Verstuur') + '</button></span></div></div>';
+  const EERDER = { verstuurd: ['Verstuurd', 'goed'], afgewezen: ['Afgewezen', 'neutraal'], vervallen: ['Vervallen', 'neutraal'] };
+  const eerderHtml = (c) => '<div class="logregel">' + pil(...(EERDER[c.stand] || [c.stand, 'neutraal']), true) + '<div><b>' + esc(c.praktijk) + '</b><span>' + esc(metNaam(c, c.onderwerp)) +
+    esc(c.stand === 'verstuurd' ? (/-agent$/.test(c.door || '') ? ' · door de agent zelf verstuurd' : ' · akkoord van ' + c.door) : c.stand === 'afgewezen' ? (c.reden ? ' · “' + c.reden + '”' : ' · zonder reden') : ' · de zaak was al opgelost') + '</span><time>' + esc(tijd(c.op || c.t)) + '</time></div></div>';
+  const PUNT = { gedaan: ['Gedaan', 'goed'], voorstel: ['Voorstel', 'petrol'], 'let-op': ['Let op', 'aandacht'] };
+  const verslagen = L.verslagen.filter((v) => !st.verslagRol || v.rol === st.verslagRol), toon = st.verslagAlles ? verslagen : verslagen.slice(0, 4);
+  const verslagHtml = (v) => '<article class="verslag"><header>' + pil(rollen[v.rol].titel, 'neutraal', true) + '<time>' + esc(tijd(v.t)) + '</time></header><p>' + esc(v.tekst) + '</p>' +
+    (v.punten.length ? '<ul>' + v.punten.map((p) => '<li>' + pil(...(PUNT[p.soort] || PUNT['let-op']), true) + '<span>' + (p.praktijk ? '<b>' + esc(p.praktijk) + '</b> ' : '') + esc(p.tekst) +
+      (p.pr ? ' <a href="https://github.com/cartonn/Fysiplan/pull/' + Number(p.pr) + '" target="_blank" rel="noopener">PR #' + Number(p.pr) + '</a>' : '') + '</span></li>').join('') + '</ul>' : '') + '</article>';
+  const chip = (k, l) => '<button type="button" class="chip' + (st.verslagRol === k ? ' aan' : '') + '" data-vrol="' + k + '">' + l + '</button>';
+  const sleutelKaart = !L.magSleutel ? '' : '<div class="kaart mt"><h2>Sleutel van de agents</h2><p class="ks">Hiermee komen de agents bij het loket. Fysiplan bewaart alleen een afdruk.</p>' +
+    (st.nieuweSleutel ? '<div class="sleutelbox"><label for="sleutelTekst">Nieuwe sleutel, alleen nu te zien</label><input id="sleutelTekst" readonly value="' + esc(st.nieuweSleutel) + '"/><button type="button" class="knop klein" id="sleutelKopie">Kopieer</button>' +
+      '<p class="uitleg">' + (demo ? 'Dit is een nepsleutel: in demo opent hij niets.' : 'Zet hem in de omgeving van de agents in Claude als netwerkgeheim voor fysiplan.nl. Plak hem nergens anders, ook niet in een chat.') + '</p></div>' : '') +
+    (L.sleutel ? '<p>Gemaakt op ' + esc(tijd(L.sleutel.gemaakt)) + (L.sleutel.door ? ' door ' + esc(L.sleutel.door) : '') + '.</p><div class="knoppen los"><button type="button" class="knop licht klein" id="sleutelNieuw">Nieuwe sleutel</button><button type="button" class="knop licht klein" id="sleutelWeg">Intrekken</button></div>'
+      : '<p>Er is geen sleutel: het loket is dicht en geen agent kan erbij.</p><button type="button" class="knop klein" id="sleutelNieuw">Sleutel maken</button>') + '</div>';
+  return (L.pauze ? '<div class="waarschuwing stil">Alle agents staan stil sinds ' + esc(tijd(L.pauze.op)) + (L.pauze.door ? ', door ' + esc(L.pauze.door) : '') + '. Het loket geeft ze niets en voert niets voor ze uit.</div><div class="mt"></div>' : '') +
+    '<div class="raster r4">' +
+      kpi('Agents aan', standen.filter((k) => k === 'aan').length + ' van ' + standen.length, standen.includes('proef') ? aantal(standen.filter((k) => k === 'proef').length, 'agent', 'agents') + ' op proef' : 'geen op proef', true) +
+      kpi('Wacht op jou', wacht.length, wacht.length === 1 ? 'eigen bericht van een agent' : 'eigen berichten van agents') +
+      kpi('Verslagen deze week', week, L.verslagen[0] ? 'laatste ' + esc(sindsTekst(L.verslagen[0].t)) : 'nog geen verslag') +
+      kpi('Eigen berichten vandaag', L.limieten.eigenVandaag + ' van ' + L.limieten.eigenPerDag, { uit: 'staan uit', handmatig: 'wachten op akkoord', automatisch: 'de agent verstuurt zelf' }[eigen]) +
+    '</div>' +
+    '<div class="raster r3 mt">' + Object.keys(rollen).map(agentKaart).join('') + '</div>' +
+    '<div class="raster r21 mt"><div>' +
+      '<div class="kaart"><h2>Wacht op jouw akkoord</h2><p class="ks">Berichten die een agent zelf schreef. De aanhef, de afsluiting en de ontvangers zet Fysiplan erbij; de agent kent geen namen en geen adressen.</p>' +
+        (wacht.length ? wacht.map(conceptHtml).join('') : '<p class="leeg">' + (eigen === 'uit' ? 'Eigen berichten van agents staan uit. Zet ze bij de support-agent op handmatig om ze hier te krijgen.' : 'Niets dat op je wacht.') + '</p>') +
+        (eerder.length ? '<h2 class="ruim">Eerder</h2><div class="logboek">' + eerder.map(eerderHtml).join('') + '</div>' : '') + '</div>' +
+      '<div class="kaart mt"><div class="kaartkop"><div><h2>Verslagen</h2><p class="ks">Na elke ronde schrijft een agent op wat hij zag, deed en voorstelt. Nieuwste boven.</p></div><div class="filter klein">' + chip('', 'Alle') + Object.keys(rollen).map((k) => chip(k, rollen[k].titel.replace('-agent', ''))).join('') + '</div></div>' +
+        (toon.length ? toon.map(verslagHtml).join('') + (verslagen.length > 4 ? '<div class="pager"><button type="button" class="knop licht klein" id="verslagAlles">' + (st.verslagAlles ? 'Toon de laatste 4' : 'Toon alle ' + verslagen.length) + '</button></div>' : '')
+          : '<p class="leeg">Nog geen verslag. Een agent die aan staat, meldt zich hier na zijn eerste ronde.</p>') + '</div>' +
+    '</div><div>' +
+      '<div class="kaart"><h2>Stilzetten</h2><p class="ks">Eén schakelaar voor alle agents tegelijk. Wat al verstuurd is, blijft verstuurd.</p>' +
+        (L.pauze ? '<button type="button" class="knop limoen" id="pauzeUit">Weer laten werken</button>' : '<button type="button" class="knop rood" id="pauzeAan">Alle agents stilzetten</button>') + '</div>' +
+      '<div class="kaart mt"><h2>Wat een agent nooit kan</h2>' +
+        check(true, 'Namen of adressen zien', 'Een agent krijgt codes en getallen. Wie een bericht krijgt en hoe die heet, vult Fysiplan in.') +
+        check(true, 'Bij patiëntgegevens', 'Kaarten en patiënten zitten niet in wat het loket geeft.') +
+        check(true, 'Iets doen dat niet terug kan', 'Een aangifte als ingediend markeren, een boekjaar afsluiten en een bericht aan alle praktijken blijven een klik van een beheerder.') +
+        check(eigen === 'automatisch' ? null : true, 'Mailen zonder jouw regel', eigen === 'uit' ? 'Eigen berichten staan uit: er gaat niets weg.' : eigen === 'handmatig' ? 'Eigen berichten wachten op akkoord. Dat stel je in bij de support-agent.' : 'Eigen berichten gaan nu zonder akkoord weg, hooguit ' + L.limieten.eigenPerDag + ' per dag. Dat stel je in bij de support-agent.') +
+      '</div>' + sleutelKaart +
+      (L.notities.length ? '<div class="kaart mt"><h2>Notities van de finance-agent</h2><p class="ks">Wat hij klaarzet bij een kwartaal of een boekjaar</p><div class="logboek">' + L.notities.slice(0, 6).map((n) => '<div class="logregel">' + pil(n.periode.replace('-K', ' K'), 'neutraal', true) + '<div><span>' + esc(n.tekst) + '</span><time>' + esc(tijd(n.t)) + '</time></div></div>').join('') + '</div></div>' : '') +
+    '</div></div>';
+}
+function bindAgents(el) {
+  const rollen = data.loket.rollen;
+  el.querySelectorAll('[data-agent]').forEach((b) => b.addEventListener('click', async () => {
+    if (b.classList.contains('aan')) return;
+    const rol = b.dataset.agent, stand = b.dataset.stand, titel = rollen[rol].titel;
+    if (bron === 'echt' && stand === 'aan' && !confirm('De ' + titel.toLowerCase() + ' laten werken op de gegevens van fysiplan.nl? Dit komt met je naam in het beheerlogboek.')) return;
+    const j = await post('loket/agent', { rol, stand });
+    if (j) melden(titel + ' staat op ' + stand + '.');
+  }));
+  $('#mergen', el)?.addEventListener('change', async (e) => {
+    const aan = e.target.checked;
+    if (bron === 'echt' && aan && !confirm('De tech-agent zet een oplossing dan zelf live zodra de controles groen zijn, zonder dat iemand de code eerst leest. Toestaan?')) { e.target.checked = false; return; }
+    const j = await post('loket/agent', { rol: 'tech', mergen: aan });
+    if (j) melden('Zelf mergen staat ' + (aan ? 'aan' : 'uit') + '.'); else e.target.checked = !aan;
+  });
+  $('#pauzeAan', el)?.addEventListener('click', async () => { if (confirm('Alle agents stilzetten?')) { const j = await post('loket/pauze', { aan: true }); if (j) melden('Alle agents staan stil.'); } });
+  $('#pauzeUit', el)?.addEventListener('click', async () => { const j = await post('loket/pauze', { aan: false }); if (j) melden('De agents mogen weer werken.'); });
+  el.querySelectorAll('[data-akkoord]').forEach((b) => b.addEventListener('click', async () => {
+    b.disabled = true;
+    const j = await post('loket/concept', { id: b.dataset.akkoord, besluit: 'verstuur' });
+    if (j) melden(bron === 'demo' ? 'Verstuurd in demo (alleen in het postvak bij de support-agent).' : 'Verstuurd.'); else b.disabled = false;
+  }));
+  el.querySelectorAll('[data-afwijzen]').forEach((b) => b.addEventListener('click', async () => {
+    const reden = prompt('Waarom niet? De agent leest dit bij zijn volgende ronde (mag leeg).', '');
+    if (reden === null) return;
+    const j = await post('loket/concept', { id: b.dataset.afwijzen, besluit: 'afwijzen', reden });
+    if (j) melden('Afgewezen.');
+  }));
+  $('#sleutelNieuw', el)?.addEventListener('click', async () => {
+    if (data.loket.sleutel && !confirm('Een nieuwe sleutel maken? De oude werkt dan niet meer: de agents komen pas weer binnen als de nieuwe in hun omgeving staat.')) return;
+    const j = await post('loket/sleutel', { actie: 'nieuw' }, true);
+    if (j) { st.nieuweSleutel = j.nieuweSleutel || null; delete data.nieuweSleutel; teken(); $('#sleutelTekst')?.select(); }
+  });
+  $('#sleutelWeg', el)?.addEventListener('click', async () => { if (confirm('De sleutel intrekken? Geen agent komt dan nog bij het loket.')) { st.nieuweSleutel = null; const j = await post('loket/sleutel', { actie: 'intrekken' }); if (j) melden('De sleutel is ingetrokken.'); } });
+  $('#sleutelKopie', el)?.addEventListener('click', async () => { try { await navigator.clipboard.writeText(st.nieuweSleutel); melden('Gekopieerd.'); } catch { $('#sleutelTekst', el).select(); melden('Kopiëren lukte niet; selecteer de sleutel en kopieer hem zelf.', true); } });
+  el.querySelectorAll('[data-vrol]').forEach((b) => b.addEventListener('click', () => { st.verslagRol = b.dataset.vrol; st.verslagAlles = false; teken(); }));
+  $('#verslagAlles', el)?.addEventListener('click', () => { st.verslagAlles = !st.verslagAlles; teken(); });
+}
+
+// ---------- rechten van beheerders ----------
+function beheerders() {
+  const T = data.toegang, R = T.rechten, los = Object.keys(R).filter((k) => k !== 'beheer');
+  const rij = (a) => {
+    const alles = a.rechten === null, naam = a.naam || a.email;
+    const vak = (k, aan, uit) => '<td class="c"><input type="checkbox" data-recht="' + k + '"' + (aan ? ' checked' : '') + (uit ? ' disabled' : '') + ' aria-label="' + esc(R[k].titel + ' voor ' + naam) + '"/></td>';
+    return '<tr data-email="' + esc(a.email) + '" data-naam="' + esc(naam) + '"><td class="naamcel"><b>' + esc(naam) + (a.ik ? ' <span class="hint">(jij)</span>' : '') + '</b><small>' + esc(a.email) + ' · ' + esc(a.status) + '</small></td>' +
+      vak('beheer', alles, a.ik) + los.map((k) => vak(k, alles || a.rechten.includes(k), alles || a.ik)).join('') + '</tr>';
+  };
+  return '<div class="kaart"><h2>Wie mag wat</h2><p class="ks">Een vinkje werkt meteen' + (bron === 'echt' ? ' en komt met je naam in het beheerlogboek' : '') + '. Je eigen rechten kun je niet wijzigen. Een account maken of uitzetten doe je linksonder, bij Accounts en logboek.</p>' +
+    '<table class="tabel matrix"><thead><tr><th>Beheerder</th><th class="c">' + esc(R.beheer.titel) + '</th>' + los.map((k) => '<th class="c">' + esc(R[k].titel) + '</th>').join('') + '</tr></thead><tbody>' +
+    (T.accounts.length ? T.accounts.map(rij).join('') : '<tr><td colspan="' + (los.length + 2) + '" class="leeg">Nog geen beheeraccounts. Maak er een linksonder, bij Accounts en logboek.</td></tr>') + '</tbody></table></div>' +
+    '<div class="raster r2 mt"><div class="kaart"><h2>Wat elk recht inhoudt</h2>' + Object.values(R).map((r) => '<div class="soort"><b>' + esc(r.titel) + '</b><small>' + esc(r.uitleg) + '</small></div>').join('') + '</div>' +
+    '<div class="kaart"><h2>Goed om te weten</h2>' +
+      check(true, 'Beperkt is ook echt beperkt', 'Een account zonder volledig beheer komt alleen in deze omgeving. De andere beheerpagina’s en de gegevens van praktijken weigeren het.') +
+      check(true, 'Wat je niet mag zien, wordt niet verstuurd', 'Fysiplan rekent voor een account alleen uit wat bij zijn rechten hoort.') +
+      check(true, 'Er blijft altijd iemand met volledig beheer', 'Het laatste account met volledig beheer kun je niet beperken.') +
+      check(true, 'Agents hebben geen account', 'Wat de agents met taalmodel mogen, stel je in op de pagina Agents.') + '</div></div>';
+}
+function bindBeheerders(el) {
+  el.querySelectorAll('tr[data-email] input[data-recht]').forEach((v) => v.addEventListener('change', async () => {
+    const tr = v.closest('tr'), naam = tr.dataset.naam;
+    let rechten;
+    if (v.dataset.recht !== 'beheer') rechten = [...tr.querySelectorAll('input[data-recht]:checked')].map((x) => x.dataset.recht).filter((k) => k !== 'beheer');
+    else if (!v.checked) rechten = Object.keys(data.toegang.rechten).filter((k) => k !== 'beheer'); // alles behalve volledig beheer; daarna vink je verder uit
+    else if (bron === 'echt' && !confirm(naam + ' volledig beheer geven? Dat is alles, ook beheeraccounts, rechten en de sleutel van de agents.')) { v.checked = false; return; }
+    else rechten = null;
+    const j = await post('rechten', { email: tr.dataset.email, rechten });
+    if (j) melden('Rechten van ' + naam + ' opgeslagen.'); else teken();
+  }));
 }
 
 // ---------- start ----------
