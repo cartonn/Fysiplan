@@ -4,6 +4,16 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Hoe lang bewaren we het beheerlogboek? (legal, 2026-11-12 13u)
+**Wat er is:** sinds #230 legt Fysiplan elke beheeractie vast (wie bij Fysiplan, wat, wanneer, bij welke praktijk; bij een
+herstelmail de reden en een gemaskeerd adres). Geen patiëntgegevens. Het bestand groeit zonder einde en gaat mee in de reservekopie.
+De legal-routine heeft het nu in /privacy en in de verwerkersovereenkomst gezet, met "nog geen vaste einddatum".
+**Waarom een keuze nodig is:** de AVG vraagt een bewaartermijn (art. 5 lid 1 e). Het logboek is bewust niet te wissen, zodat
+niemand zijn spoor kan uitvegen; een termijn moet dat principe dus bewust doorbreken.
+**Advies:** 2 jaar, daarna automatisch weg bij het starten van de server (lang genoeg om een klacht of datalek na te gaan).
+Laat een jurist bevestigen; zeg het tegen een routine, dan bouwt die het en past de tekst aan.
+
+
 ### Prijsbelofte van 24 maanden staat nu ook in de voorwaarden (legal, 2026-11-11 21u)
 **Wat er was:** de landing belooft iedereen "je prijs staat minstens 24 maanden vast" (en de oprichters "24 maanden
 prijsgarantie"), maar de voorwaarden zeiden alleen dat een nieuwe prijs 30 dagen vooraf gemeld wordt. Twee verschillende
