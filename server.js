@@ -30,6 +30,7 @@ import { BEHEER_SESSIE_MS, BEHEER_WW_MIN, BEHEER_EERSTE_KEER_MS, BeheerSessies, 
 import { leesNamenLaag, kiesNamen, maakZoeker, sleutelVoor, verhuisNaamgebonden } from "./lib/oefennamen.js";
 import { maakIdeeenbox } from "./lib/ideeen-routes.js";
 import { maakVertaalbeheer } from "./lib/vertaal-routes.js";
+import { maakPatientkant } from "./lib/patient-routes.js";
 import { TALEN as VERTAAL_TALEN, bron as vertaalBron, sleutelVan as vertaalSleutel, lees as leesVertaling, zetAuto as zetAutoVertaling, begrens as begrensVertalingen, vertaalOpdracht } from "./lib/vertaling.js";
 import { maakMeeschrijver } from "./lib/database.js";
 import { AGENT_SCHEMA as AGENT_SCHEMA_IDEEEN, AGENT_SYSTEEM as AGENT_SYSTEEM_IDEEEN } from "./lib/ideeen.js";
@@ -3570,6 +3571,14 @@ await ideeenbox.laad();
 ideeenbox.start();
 
 // ---- vertalingen van de bibliotheek: vooraf maken en per taal nalezen (lib/vertaal-routes.js) ----
+// de patiëntkant (lib/patient-routes.js); pas bij het eerste verzoek gemaakt, als alles hierboven bestaat
+let patientkant = null;
+const patientkantVan = () => patientkant || (patientkant = maakPatientkant({
+  sendJson, readBody, schrijfLimiet, kruisSite, weigerKruis, vindKaart, idTekst, kaartMisLimiet, verbodenSleutel,
+  zetDagWaarde, tikMoment, tikVeld, nlDag, logContact, zetSeintje, seinOpen, SEIN_GEWICHT, seinMailKan, kaartSleutel, seinMailRonde,
+  bewaarKaarten: () => saveJson(kaartenPath, kaarten),
+  telDag: (naam) => { const x = dagStats(vandaagKey()); x[naam] = (x[naam] || 0) + 1; bewaarStats(); }
+}));
 const vertaalbeheer = maakVertaalbeheer({
   publicDir, send, sendJson, readBody, denied, kruisSite, weigerKruis, beheerEigen,
   magVertalen: (req) => beheerRechten(req).has("vertalen"),
@@ -6934,204 +6943,8 @@ async function afhandelen(request, response) {
     return;
   }
 
-  // pijnscore van de patiënt (NPRS 0-10) bij de kaart noteren; één score per dag,
-  // een nieuwe tik op dezelfde dag vervangt de vorige. Alleen registreren en tonen:
-  // de duiding blijft bij de fysiotherapeut.
-  if (urlPath === "/api/kaart/meting" && request.method === "POST") {
-    if (schrijfLimiet(request, response)) return;
-    if (kruisSite(request)) { await weigerKruis(response); return; }
-    try {
-      const b = JSON.parse(await readBody(request));
-      const found = vindKaart(idTekst(b.id));
-      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      const score = b.score;
-      if (typeof score !== "number" || !Number.isInteger(score) || score < 0 || score > 10) {
-        await sendJson(response, 400, { ok: false, fout: "Geef een score van 0 tot en met 10." });
-        return;
-      }
-      const m = (found.metingen = found.metingen || []);
-      const nu = Date.now();
-      // zelfde dag: score vervangen, en het tijdstip mee (inbox en dossierlabel kijken ernaar);
-      // een tik uit de offline-wachtrij komt op de dag waarop hij gedaan is
-      zetDagWaarde(m, tikMoment(b, nu), score, nu);
-      found.metingen = m.slice(-366);
-      // voorbeeldkaart: laat de interactie werken maar bewaar niets en tel niet mee
-      if (found.demo) { await sendJson(response, 200, { ok: true, metingen: found.metingen }); return; }
-      await saveJson(kaartenPath, kaarten);
-      const d = dagStats(vandaagKey()); d.meting = (d.meting || 0) + 1; bewaarStats();
-      await sendJson(response, 200, { ok: true, metingen: found.metingen });
-    } catch {
-      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
-    }
-    return;
-  }
-
-  // ervaren herstel van de patiënt (GROC-achtig, -2..+2): één tik op de kaart
-  // beantwoordt "hoe gaat het vergeleken met de start?". App-vrij alternatief voor
-  // de PROM-vragenlijsten die concurrenten alleen mét patiënt-app bieden; één
-  // antwoord per dag telt (nieuwe tik vervangt die van vandaag), de duiding
-  // blijft bij de fysiotherapeut.
-  if (urlPath === "/api/kaart/ervaring" && request.method === "POST") {
-    if (schrijfLimiet(request, response)) return;
-    if (kruisSite(request)) { await weigerKruis(response); return; }
-    try {
-      const b = JSON.parse(await readBody(request));
-      const found = vindKaart(idTekst(b.id));
-      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      const score = b.score;
-      if (typeof score !== "number" || !Number.isInteger(score) || score < -2 || score > 2) {
-        await sendJson(response, 400, { ok: false, fout: "Geef een score van -2 tot en met 2." });
-        return;
-      }
-      const e = (found.ervaring = found.ervaring || []);
-      const nu = Date.now();
-      zetDagWaarde(e, tikMoment(b, nu), score, nu);
-      found.ervaring = e.slice(-120);
-      if (found.demo) { await sendJson(response, 200, { ok: true, ervaring: found.ervaring }); return; }
-      await saveJson(kaartenPath, kaarten);
-      await sendJson(response, 200, { ok: true, ervaring: found.ervaring });
-    } catch {
-      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
-    }
-    return;
-  }
-
-  // oefenvinkje: één tik "ik heb vandaag geoefend"; nogmaals tikken haalt de
-  // aantekening voor vandaag weer weg. Alleen registreren en tonen — de duiding
-  // blijft bij de fysiotherapeut. Dit is de app-vrije therapietrouw waarvoor de
-  // concurrentie een verplichte patiënt-app nodig heeft.
-  if (urlPath === "/api/kaart/gedaan" && request.method === "POST") {
-    if (schrijfLimiet(request, response)) return;
-    if (kruisSite(request)) { await weigerKruis(response); return; }
-    try {
-      const b = JSON.parse(await readBody(request));
-      const found = vindKaart(idTekst(b.id));
-      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      const g = (found.gedaan = found.gedaan || []);
-      const nu = Date.now();
-      // de dag van de tik: vandaag, of de dag uit de offline-wachtrij
-      const t = tikMoment(b, nu);
-      const pos = g.findIndex((x) => x && nlDag(x.t) === nlDag(t));
-      const alDie = pos >= 0;
-      // aan:true/false zet de dag expliciet (idempotent: een tweede apparaat met een
-      // verouderde kaart of een dubbele bevestiging haalt de dag niet weg); zonder
-      // aan blijft het de oude aan/uit-tik, voor kaartpagina's die nog in een cache staan
-      const wil = b.aan === true ? true : b.aan === false ? false : !alDie;
-      if (alDie && !wil) g.splice(pos, 1);
-      else if (!alDie && wil) { g.push(tikVeld(t, nu)); g.sort((x, y) => (Number(x.t) || 0) - (Number(y.t) || 0)); }
-      found.gedaan = g.slice(-366);
-      if (found.demo) { await sendJson(response, 200, { ok: true, gedaan: found.gedaan }); return; }
-      await saveJson(kaartenPath, kaarten);
-      const d = dagStats(vandaagKey()); d.gedaan = (d.gedaan || 0) + 1; bewaarStats();
-      await sendJson(response, 200, { ok: true, gedaan: found.gedaan });
-    } catch {
-      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
-    }
-    return;
-  }
-
-  // therapietrouw op oefenniveau, app-vrij: elk afvinkje per oefening telt mee,
-  // zodat de praktijk ziet welke oefening blijft liggen — het inzicht waarvoor de
-  // concurrentie een verplichte patiënt-app nodig heeft. Bewust alleen tellingen
-  // (afvinkdagen per oefening, gededupliceerd per dag): geen tijdstippen per
-  // vinkje, geen vrije tekst. De oefening wordt via de index op de kaart zelf
-  // opgezocht; de client kan dus nooit een verzonnen naam laten registreren.
-  if (urlPath === "/api/kaart/oefening" && request.method === "POST") {
-    if (schrijfLimiet(request, response)) return;
-    if (kruisSite(request)) { await weigerKruis(response); return; }
-    try {
-      const b = JSON.parse(await readBody(request));
-      const found = vindKaart(idTekst(b.id));
-      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      const oef = Array.isArray(found.chosen) ? found.chosen[Number(b.oef)] : null;
-      const naam = oef ? String(oef.n || "").slice(0, 80) : "";
-      // oefeningnamen komen als sleutel in oefTrouw terecht: prototype-sleutels
-      // ("constructor" zou anders op de globale Object-constructor schrijven) weigeren
-      if (!naam || verbodenSleutel.test(naam)) { await sendJson(response, 400, { ok: false, fout: "Onbekende oefening." }); return; }
-      const trouw = (found.oefTrouw = found.oefTrouw || {});
-      // plafond tegen opblazen als een kaart vaak van oefeningen wisselt
-      if (!trouw[naam] && Object.keys(trouw).length >= 60) { await sendJson(response, 200, { ok: true }); return; }
-      const rec = (trouw[naam] = trouw[naam] || { n: 0, d: "" });
-      // een vinkje uit de offline-wachtrij telt op de dag van tikken (`wanneer`);
-      // `d` blijft de laatste dag, zodat een late tik van gisteren vandaag niet wist
-      const dag = nlDag(tikMoment(b, Date.now()));
-      if (b.aan !== false) { if (rec.d !== dag) { rec.n = Math.min(9999, (rec.n || 0) + 1); if (!rec.d || dag > rec.d) rec.d = dag; } }
-      else if (rec.d === dag) { rec.n = Math.max(0, (rec.n || 0) - 1); rec.d = ""; }
-      if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
-      await saveJson(kaartenPath, kaarten);
-      await sendJson(response, 200, { ok: true });
-    } catch {
-      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
-    }
-    return;
-  }
-
-  // "te zwaar"-tik per oefening: de patiënt wijst de oefening aan die niet gaat,
-  // zonder bericht te typen. Alleen registreren en tonen (laatste melding per
-  // oefening); de duiding en de aanpassing blijven bij de therapeut. Zelfde
-  // remmen en guards als de oefentrouw-route hierboven.
-  if (urlPath === "/api/kaart/oefzwaar" && request.method === "POST") {
-    if (schrijfLimiet(request, response)) return;
-    if (kruisSite(request)) { await weigerKruis(response); return; }
-    try {
-      const b = JSON.parse(await readBody(request));
-      const found = vindKaart(idTekst(b.id));
-      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      const oef = Array.isArray(found.chosen) ? found.chosen[Number(b.oef)] : null;
-      const naam = oef ? String(oef.n || "").slice(0, 80) : "";
-      if (!naam || verbodenSleutel.test(naam)) { await sendJson(response, 400, { ok: false, fout: "Onbekende oefening." }); return; }
-      const zwaar = (found.oefZwaar = found.oefZwaar || {});
-      // plafond zoals bij oefTrouw: een kaart draagt hoogstens 12 oefeningen,
-      // maar wisselende oefeningen mogen de opslag niet laten groeien
-      if (!zwaar[naam] && Object.keys(zwaar).length >= 24) { await sendJson(response, 200, { ok: true }); return; }
-      zwaar[naam] = { t: Date.now() };
-      logContact(found, { van: "patient", soort: "zwaar", oef: naam });
-      if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
-      await saveJson(kaartenPath, kaarten);
-      await sendJson(response, 200, { ok: true });
-    } catch {
-      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
-    }
-    return;
-  }
-
-  // seintje van de patiënt naar de praktijk: één tik, geen bericht typen, geen app.
-  // Bewust GEEN vrij tekstveld (dus geen persoonsgegevens/moderatie): alleen een
-  // vaste soort uit een whitelist. Overschrijft telkens het laatste seintje van de
-  // kaart; de therapeut ziet het in het overzicht en wist het daar. App-vrije
-  // tweerichting-terugkoppeling — precies wat concurrenten alleen mét app bieden.
-  if (urlPath === "/api/kaart/seintje" && request.method === "POST") {
-    if (schrijfLimiet(request, response)) return;
-    if (kruisSite(request)) { await weigerKruis(response); return; }
-    try {
-      const b = JSON.parse(await readBody(request));
-      const soort = String(b.soort || "");
-      if (!["vraag", "pijn", "goed"].includes(soort)) { await sendJson(response, 400, { ok: false, fout: "Onbekend seintje." }); return; }
-      const found = vindKaart(idTekst(b.id));
-      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      const nu = Date.now();
-      const t = tikMoment(b, nu);
-      // een ouder of lichter seintje gaat in het logboek, maar verdringt geen nieuwer of zwaarder
-      const oud = found.seintje;
-      const stondOpen = oud && seinOpen(oud.soort) ? oud.soort : null;
-      zetSeintje(found, soort, t, nu);
-      logContact(found, { van: "patient", soort, ...tikVeld(t, nu) });
-      if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
-      // bericht aan de praktijk: bij een nieuw open seintje, of als een vraag oploopt naar pijn.
-      // Het merkteken staat op het seintje en gaat mee naar schijf; een mail die nog wachtte op
-      // de rem verhuist mee als het seintje door een nieuwer van dezelfde soort is vervangen.
-      const nieuwOpen = seinOpen(soort) && (!stondOpen || SEIN_GEWICHT[soort] > SEIN_GEWICHT[stondOpen]);
-      const melden = (nieuwOpen || !!(oud && oud.meld)) && !!found.seintje && seinOpen(found.seintje.soort) && seinMailKan(kaartSleutel(found));
-      if (melden) found.seintje.meld = 1;
-      await saveJson(kaartenPath, kaarten);
-      // niet wachten op de mail: de patiënt krijgt meteen antwoord, ook als de mailprovider hapert
-      if (melden) seinMailRonde();
-      await sendJson(response, 200, { ok: true });
-    } catch {
-      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
-    }
-    return;
-  }
+  // de patiëntkant: wat de patiënt op de kaart aantikt (lib/patient-routes.js)
+  if (urlPath.startsWith("/api/kaart/") && await patientkantVan().afhandelen(request, response, urlPath)) return;
 
   // de therapeut wist een seintje (na afhandeling). Alleen de ingelogde praktijk
   // mag dat; loopt via dezelfde accountpoort (eisPraktijk) als de andere
@@ -7215,25 +7028,6 @@ async function afhandelen(request, response) {
     return;
   }
 
-  // de patiënt haalt het gelezen antwoord van de kaart (één tik). Zelfde open
-  // toegang als het seintje zelf: wie de kaartlink heeft, ís de patiënt.
-  if (urlPath === "/api/kaart/antwoord/gezien" && request.method === "POST") {
-    if (schrijfLimiet(request, response)) return;
-    if (kruisSite(request)) { await weigerKruis(response); return; }
-    try {
-      const b = JSON.parse(await readBody(request));
-      const found = vindKaart(idTekst(b.id));
-      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      found.antwoord = null;
-      if (found.demo) { await sendJson(response, 200, { ok: true }); return; }
-      await saveJson(kaartenPath, kaarten);
-      await sendJson(response, 200, { ok: true });
-    } catch {
-      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
-    }
-    return;
-  }
-
   // privé werknotitie van de therapeut bij een kaart ("volgende keer zwaarder",
   // "linkerknie ontzien"). Alleen de ingelogde praktijk schrijft en leest hem;
   // de patiëntroute /api/kaart stript het veld, zodat de notitie nooit op /k
@@ -7306,35 +7100,6 @@ async function afhandelen(request, response) {
       kaart.pskDoel = tekst || null;
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, pskDoel: kaart.pskDoel });
-    } catch {
-      await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
-    }
-    return;
-  }
-
-  // de PSK-score van de patiënt: hoe lastig is de doelactiviteit nu (0-10)?
-  // Eén score per dag (een nieuwe tik vervangt die van vandaag); alleen
-  // registreren en tonen, de duiding blijft bij de fysiotherapeut.
-  if (urlPath === "/api/kaart/psk" && request.method === "POST") {
-    if (schrijfLimiet(request, response)) return;
-    if (kruisSite(request)) { await weigerKruis(response); return; }
-    try {
-      const b = JSON.parse(await readBody(request));
-      const found = vindKaart(idTekst(b.id));
-      if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      if (!found.pskDoel) { await sendJson(response, 400, { ok: false, fout: "Er staat geen doelactiviteit op deze kaart." }); return; }
-      const score = b.score;
-      if (typeof score !== "number" || !Number.isInteger(score) || score < 0 || score > 10) {
-        await sendJson(response, 400, { ok: false, fout: "Geef een score van 0 tot en met 10." });
-        return;
-      }
-      const e = (found.psk = found.psk || []);
-      const nu = Date.now();
-      zetDagWaarde(e, tikMoment(b, nu), score, nu);
-      found.psk = e.slice(-120);
-      if (found.demo) { await sendJson(response, 200, { ok: true, psk: found.psk }); return; }
-      await saveJson(kaartenPath, kaarten);
-      await sendJson(response, 200, { ok: true, psk: found.psk });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
