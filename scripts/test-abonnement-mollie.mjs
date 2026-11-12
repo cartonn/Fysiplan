@@ -91,6 +91,8 @@ await writeFile(join(dataDir, "proef-aanmeldingen.json"), JSON.stringify({
   oud0000000000001: { id: "oud0000000000001", email: "oud@praktijk.nl", naam: "Piet Oud", tel: "+31612340000",
     praktijk: "Fysio Oud", gestart: Date.now() - 15 * dag, verloopt: Date.now() - dag, akkoord: "x", tokens: [sha(token)] }
 }));
+// de btw-keuze is gemaakt (zie lib/prijs.js en scripts/test-prijs.mjs): 9,99 inclusief btw. Zonder keuze start afrekenen niet.
+await writeFile(join(dataDir, "finance-instellingen.json"), JSON.stringify({ kor: "nee", prijsBtw: "inclusief" }));
 const cookie = "fpproef=" + token;
 const leesProef = async () => JSON.parse(await readFile(join(dataDir, "proef-aanmeldingen.json"), "utf8")).oud0000000000001;
 
