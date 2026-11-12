@@ -2052,6 +2052,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         })
         .then(function(d){
           var v=WACHT_VELD[it.pad];
+          // een seintje uit de wachtrij hoort daarna ook in "Download mijn gegevens" (art. 15
+          // AVG); eerder pas na herladen (gebruikers-sweep 2026-11-12 06u, Truus)
+          if(d&&d.ok&&it.pad==='/api/kaart/seintje'&&it.body)mgSeintjeErbij(K&&K.kaart,it.body.soort,Number(it.body.wanneer)||it.t||Date.now());
           if(d&&d.ok&&v&&K&&K.kaart&&d[v[0]]){K.kaart[v[0]]=d[v[0]];
             try{({meting:tekenMeting,gedaan:tekenGedaan,psk:tekenPsk,herstel:tekenHerstel})[v[1]]();}catch(e){}}
           volgende(i+1);
@@ -3314,9 +3317,20 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       var b=e.target.closest('button[data-score]');if(!b)return;
       // bezig-stand: bij een trage lijn bleef de oude score seconden lang gemarkeerd en
       // werd elke volgende tik een extra verzoek (sweep 2026-11-09, Jayden)
-      var schaal=this;if(schaal.dataset.bezig)return;
+      var schaal=this;if(schaal.dataset.bezig){
+        // de laatste tik wint: een verbetering tijdens het opslaan (2 → 7 → 3) ging stil
+        // verloren en de server hield 2 (gebruikers-sweep 2026-11-12 10u, Jayden). Nu
+        // onthouden en na het antwoord als één verzoek nasturen.
+        if(MSCORE_NA)MSCORE_NA.classList.remove('bezig');
+        MSCORE_NA=b;b.classList.add('bezig');return;
+      }
+      verstuurScore(schaal,b);
+    });
+    var MSCORE_NA=null;
+    function verstuurScore(schaal,b){
       schaal.dataset.bezig='1';schaal.setAttribute('aria-busy','true');b.classList.add('bezig');
       var klaar=function(){delete schaal.dataset.bezig;schaal.removeAttribute('aria-busy');b.classList.remove('bezig');};
+      var verder=function(){var n=MSCORE_NA;MSCORE_NA=null;if(n){n.classList.remove('bezig');if(n.dataset.score!==b.dataset.score||!n.classList.contains('aan'))verstuurScore(schaal,n);}};
       var dank=document.getElementById('mdank');
       stuur('/api/kaart/meting',{id:id,score:Number(b.dataset.score)})
         .then(function(d){
@@ -3336,8 +3350,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
             var vandaag=dagStr(Date.now());
             K.kaart.metingen=(K.kaart.metingen||[]).filter(function(x){return dagStr(x.t)!==vandaag;}).concat([{t:Date.now(),s:Number(b.dataset.score)}]);
             tekenMeting();toonPijnNudge(Number(b.dataset.score));
-          }});
-    });
+          }})
+        .then(verder,verder);
+    }
     document.getElementById('gdaan').addEventListener('click',function(){
       dagWissel();
       var knop=this;if(knop.dataset.bezig)return;knop.dataset.bezig='1';

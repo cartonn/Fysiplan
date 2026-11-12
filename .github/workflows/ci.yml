@@ -118,6 +118,7 @@ jobs:
       - run: npm run test:nieuwekaartnaam
       - run: npm run test:proefwissen
       - run: npm run test:pijnscorebezig
+      - run: npm run test:opnameverouderd
       - run: npm run test:nietvertaald
       - run: npm run test:vertaallaat
       - run: npm run test:kaartweg

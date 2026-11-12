@@ -111,6 +111,7 @@
     "test:nieuwekaartnaam": "node scripts/test-sweep-nieuwe-kaart-naam.mjs",
     "test:proefwissen": "node scripts/test-sweep-proef-wissen-vinkje.mjs",
     "test:pijnscorebezig": "node scripts/test-sweep-pijnscore-bezig.mjs",
+    "test:opnameverouderd": "node scripts/test-opname-verouderd.mjs",
     "test:nietvertaald": "node scripts/test-sweep-niet-vertaald.mjs",
     "test:vertaallaat": "node scripts/test-sweep-vertaal-laat.mjs",
     "test:kaartweg": "node scripts/test-sweep-kaart-weg.mjs",
