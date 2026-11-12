@@ -418,7 +418,11 @@ html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
   html.v2 .tm-lid select{height:32px;border:1px solid var(--line);border-radius:8px;padding:0 8px;font:inherit;font-size:12.5px;background:#fff}
   html.v2 .tm-weg{width:32px;padding:0!important;color:var(--muted)}
   html.v2 .tm-weg.tm-zeker{width:auto;padding:0 10px!important;color:#b4372f;white-space:nowrap}
-  @media (pointer:coarse){html.v2 .tm-weg{min-width:44px;min-height:44px}}
+  /* aanraakscherm (iPad): alles in Team minstens 44 px hoog, ook de losse links (gebruikers-sweep 2026-11-12 18u, Karin) */
+  @media (pointer:coarse){html.v2 .tm-weg{min-width:44px;min-height:44px}
+    html.v2 #ovTeam .tm-lid select,html.v2 #ovTeam .tm-uitnodig input,html.v2 #ovTeam .tm-uitnodig select{height:44px!important}
+    html.v2 #ovTeam .modal .btn{height:44px}
+    html.v2 #tm_inhoud a[data-tm2wis],html.v2 #tm_inhoud a[data-stapact]{display:inline-flex;align-items:center;min-height:44px;padding:0 6px;white-space:nowrap}}
   html.v2 .tm-uitnodig{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#f8fafc}
   html.v2 .tm-uitnodig input,html.v2 .tm-uitnodig select{height:36px!important;border:1px solid var(--line);border-radius:8px;padding:0 10px;font:inherit;background:#fff}
 }
