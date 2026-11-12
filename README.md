@@ -133,6 +133,16 @@ terug naar de gedeelde server-lijst.
     collega (Team → wissen); de collega logt dan in met alleen het wachtwoord en stelt hem opnieuw
     in. Is de enige beheerder het zelf kwijt, dan stuurt Fysiplan-beheer de herstelmail met
     `"tweedeStap": true` (zie **Beheer**).
+  - *Wachtwoord vergeten.* Elke eigen login vraagt onder Kaarten met "Wachtwoord vergeten?" een
+    link aan op het eigen e-mailadres (`POST /api/praktijk/wachtwoord-vergeten`). Het antwoord is
+    altijd hetzelfde, of het adres nu bij een login van de praktijk hoort of niet, en ook bij een
+    mailstoring. De link is een uur geldig en werkt één keer; een nieuwe aanvraag maakt de vorige
+    ongeldig, en tot gebruik blijft het oude wachtwoord werken. De pagina achter de link vraagt
+    alleen een nieuw wachtwoord; de naam en het akkoord op de werkregels blijven zoals ze zijn.
+    De tweede stap blijft staan: met alleen de mailbox is er bij zo'n login geen sessie. Remmen:
+    drie mails per uur per adres en zes aanvragen per uur per verbinding. Een lopende herstelmail
+    van beheer wordt niet overschreven, en een uitnodiging die nog niet is aangenomen is geen
+    login. Zonder mail op de server geeft de route 503 (`npm run test:wachtwoordvergeten`).
   - *Verplicht voor de hele praktijk.* Een beheerder met een eigen login en een eigen tweede stap
     kan hem onder Team van iedereen vragen (met het eigen wachtwoord). Het gedeelde
     praktijkwachtwoord gaat dan uit en kan niet weer aan. Wie nog geen tweede stap heeft, is
@@ -168,9 +178,11 @@ terug naar de gedeelde server-lijst.
     in gebruik komt, heeft alleen de browser gezien die het instellen afmaakt.
     Met `EIGEN_LOGIN_VERPLICHT` controleert Fysiplan het e-mailadres van de eerste login niet
     met een mail: een tikfout merk je pas als een herstelmail niet aankomt. Bij de overstap wordt
-    beheerder wie het praktijkwachtwoord kent; dat was hij met dat wachtwoord al. En een enige
-    beheerder die het eigen wachtwoord vergeet, komt er alleen weer in met de herstelmail van
-    Fysiplan-beheer (zie **Beheer**).
+    beheerder wie het praktijkwachtwoord kent; dat was hij met dat wachtwoord al. Wie het eigen
+    wachtwoord vergeet, vraagt zelf een link aan (zie *Wachtwoord vergeten*); dat werkt alleen als
+    het e-mailadres van de login klopt en mail op de server aanstaat. Voor een login zonder
+    tweede stap (schakelaar uit, of nog niet ingesteld) is de mailbox van dat adres daarmee
+    genoeg om in te loggen, zoals bij elke herstelmail.
     Het geheim staat leesbaar in `praktijk-accounts.json`, want de server moet de code kunnen
     narekenen; wie die schijf kan lezen, heeft ook de tweede stap. De login van V1 (`/`) en de
     beheersleutel hebben geen tweede stap. `npm run test:tweedestap` dekt de rekenkern (testvectoren
@@ -232,8 +244,11 @@ lezen; alleen met een eigen `ADMIN_KEY` op de server werkt die beheeringang.
 
 **Een praktijk die er niet meer in komt.** Beheer kan het account van een praktijk niet wissen
 en komt met de sleutel niet bij de kaarten van een beveiligde praktijk (de oude
-`/api/praktijk/reset` wist niets meer en antwoordt 410). Is een praktijk haar wachtwoord en
-herstelcode kwijt, dan laat beheer de server een herstelmail sturen:
+`/api/praktijk/reset` wist niets meer en antwoordt 410). Wie met een eigen login alleen het
+wachtwoord kwijt is, vraagt zelf een link aan (zie *Wachtwoord vergeten*); beheer is pas nodig
+als dat niet kan, bijvoorbeeld omdat het adres niet klopt of omdat de enige beheerder ook de
+tweede stap kwijt is. Is een praktijk haar wachtwoord en herstelcode kwijt, dan laat beheer de
+server een herstelmail sturen:
 
 ```
 curl -X POST https://fysiplan.nl/api/beheer/praktijk-herstel \

@@ -344,7 +344,7 @@ html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
   html.v2 #prakslot .ps-acties a#ps_team:hover{background:var(--brand-700)}
   html.v2 #prakslot .ps-acties a#ps_wis{color:#b42318;border-color:#f4d4d0;background:#fff}
   html.v2 #prakslot .ps-acties a#ps_wis:hover{background:#fef3f2}
-  html.v2 #ps_form input,html.v2 #ps_herstel input,html.v2 #ps_wijzig input,html.v2 #ps_hcform input{height:38px}
+  html.v2 #ps_form input,html.v2 #ps_herstel input,html.v2 #ps_vergeet input,html.v2 #ps_wijzig input,html.v2 #ps_hcform input{height:38px}
   html.v2 #ps_form{margin-top:10px}
 
   /* nieuwe voorwaarden: rustige melding, wijzigingen uitklapbaar */

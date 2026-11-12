@@ -154,6 +154,7 @@
     "test:opzeggenbeheer": "node scripts/test-opzeggen-beheer.mjs",
     "test:praktijknaambezet": "node scripts/test-praktijknaam-bezet.mjs",
     "test:naamerftniets": "node scripts/test-naam-erft-niets.mjs",
+    "test:wachtwoordvergeten": "node scripts/test-wachtwoord-vergeten.mjs",
     "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs",
     "test:prullenbak": "node scripts/test-kaart-prullenbak.mjs",
     "test:beveiligingfeedback": "node scripts/test-beveiliging-feedback.mjs",

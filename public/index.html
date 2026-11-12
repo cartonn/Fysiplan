@@ -3242,6 +3242,10 @@ bridge2.jpg</div>
         "<input id='ps_hcode' type='text' autocomplete='one-time-code' placeholder='Herstelcode (FP-…)' style='flex:1;min-width:150px'/>"+
         "<input id='ps_hnieuw' type='password' autocomplete='new-password' placeholder='Nieuw wachtwoord (min. 8 tekens)' style='flex:1;min-width:150px'/>"+
         "<button class='btn' id='ps_hdo' type='button'>Herstel</button></div>"+
+      // wachtwoord vergeten met een eigen login: een link naar het adres van die login
+      "<div id='ps_vergeet' style='display:none;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px'>"+
+        "<input id='ps_vmail' type='email' autocomplete='username' placeholder='Je e-mail (eigen login)' aria-label='Het e-mailadres van je eigen login' style='flex:1;min-width:170px'/>"+
+        "<button class='btn' id='ps_vdo' type='button'>Stuur link</button></div>"+
       "<div id='ps_wijzig' style='display:none;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px'>"+
         "<input id='ps_huidig' type='password' autocomplete='current-password' placeholder='Huidig wachtwoord' style='flex:1;min-width:130px'/>"+
         "<input id='ps_nieuw' type='password' autocomplete='new-password' placeholder='Nieuw wachtwoord (min. 8 tekens)' style='flex:1;min-width:150px'/>"+
@@ -3258,6 +3262,8 @@ bridge2.jpg</div>
     s.addEventListener('input',psLive);s.addEventListener('change',psLive);
     document.getElementById('ps_wdo').addEventListener('click',prakWachtwoord);
     document.getElementById('ps_hdo').addEventListener('click',prakHerstel);
+    document.getElementById('ps_vdo').addEventListener('click',prakVergeten);
+    document.getElementById('ps_vmail').addEventListener('keydown',function(e){if(e.key==='Enter')prakVergeten();});
     document.getElementById('ps_hcdo').addEventListener('click',prakNieuweCode);
   }
   // eigenLogin: de server vraagt van iedereen een eigen login met een tweede stap (EIGEN_LOGIN_VERPLICHT);
@@ -3314,10 +3320,12 @@ bridge2.jpg</div>
       psCodeWeg();
       document.getElementById('ps_vwolab').style.display=eig?'none':'flex';
       if(eig)document.getElementById('ps_herstel').style.display='none';
+      document.getElementById('ps_vergeet').style.display='none';
       var tr=document.getElementById('ps_terug');
       if(tr)tr.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.nieuw=false;rendPrakSlot();});
     }else if(PRAKSLOT.ingelogd){
       document.getElementById('ps_vwolab').style.display='none';
+      document.getElementById('ps_vergeet').style.display='none';
       // de server handelt altijd voor de ingelogde praktijk; staat er op de kaart een
       // andere naam, dan zie je hier bij welke praktijk je werkt
       var bij=PRAKSLOT.naam&&PRAKSLOT.naam.toLowerCase()!==String(PRAKSLOT.pr||'').toLowerCase()?' bij \u201c'+esc(PRAKSLOT.naam)+'\u201d':'';
@@ -3356,16 +3364,24 @@ bridge2.jpg</div>
       var vg=document.getElementById('ps_vergeten');
       if(vg)vg.addEventListener('click',function(e){
         e.preventDefault();
-        var f=document.getElementById('ps_herstel');
+        var f=document.getElementById('ps_herstel'),v=document.getElementById('ps_vergeet');
         // Deze praktijk logt alleen per persoon in: er is geen praktijkwachtwoord om te herstellen,
-        // dus ook geen herstelcode. Het formulier ervoor liep dood op een weigering van de server.
+        // dus ook geen herstelcode. Je vraagt een link aan op het adres van je eigen login.
         if(PRAKSLOT.perEmail){
           f.style.display='none';
-          toonPsMsg('Je logt in met je eigen e-mailadres en wachtwoord. Wachtwoord kwijt? Vraag een beheerder van je praktijk om een nieuwe uitnodiging. Ben je de enige beheerder, antwoord dan op een mail van Fysiplan (zoals de welkomstmail van je proef): je krijgt een herstellink op je eigen adres.');
+          psVergeetToon(v.style.display==='none');
           return;
         }
+        v.style.display='none';
         f.style.display=f.style.display==='none'?'flex':'none';
-        if(f.style.display==='flex')toonPsMsg('Vul de herstelcode in die je bij het beveiligen hebt bewaard, en kies een nieuw wachtwoord.');
+        if(f.style.display==='flex'){
+          toonPsMsg('Vul de herstelcode in die je bij het beveiligen hebt bewaard, en kies een nieuw wachtwoord.');
+          // wie met een eigen e-mailadres inlogt, heeft geen herstelcode nodig: die krijgt een link per mail
+          var m=document.getElementById('ps_msg'),a=document.createElement('a');
+          a.href='#';a.id='ps_vlink';a.textContent='Log je in met je eigen e-mailadres? Vraag een link per mail aan.';
+          m.appendChild(document.createTextNode(' '));m.appendChild(a);
+          a.addEventListener('click',function(e2){e2.preventDefault();f.style.display='none';psVergeetToon(true);});
+        }
       });
     }
   }
@@ -4015,7 +4031,7 @@ bridge2.jpg</div>
       'wachtwoord-wijzigen-mislukt':'wachtwoordwijziging geweigerd','wachtwoord-hersteld':'wachtwoord hersteld met herstelcode',
       'herstel-mislukt':'herstelpoging geweigerd','herstelcode-vernieuwd':'nieuwe herstelcode gemaakt',
       'herstelcode-vernieuwen-mislukt':'nieuwe herstelcode geweigerd','claim-gereset-door-beheer':'beveiliging gereset door beheer',
-      'herstel-door-beheer':'herstelmail naar de praktijk gestuurd','wachtwoord-hersteld-per-mail':'nieuw wachtwoord gekozen via de herstelmail','sein-mail-uit':'e-mail bij een seintje uitgezet','sein-mail-aan':'e-mail bij een seintje aangezet',
+      'herstel-door-beheer':'herstelmail naar de praktijk gestuurd','wachtwoord-vergeten-mail':'link voor een nieuw wachtwoord gemaild','wachtwoord-hersteld-per-mail':'nieuw wachtwoord gekozen via de link in de mail','sein-mail-uit':'e-mail bij een seintje uitgezet','sein-mail-aan':'e-mail bij een seintje aangezet',
       'kaart-link-vernieuwd':'kaartlink vernieuwd','eigen-login-gemaakt':'eigen login gemaakt','collega-uitgenodigd':'collega uitgenodigd',
       'uitnodiging-aangenomen':'uitnodiging aangenomen','collega-verwijderd':'collega verwijderd','rol-gewijzigd':'rol gewijzigd','team-wijziging-geweigerd':'teamwijziging geweigerd',
       'praktijkwachtwoord-uit':'praktijkwachtwoord uitgezet','praktijkwachtwoord-aan':'praktijkwachtwoord weer aangezet','kaart-verwijderd':'patiëntkaart naar de prullenbak','kaart-hersteld':'patiëntkaart hersteld uit de prullenbak','kaart-definitief-verwijderd':'patiëntkaart definitief verwijderd','profiel-gewijzigd':'praktijkgegevens of logo gewijzigd','abonnement-opgezegd':'abonnement opgezegd','opzeggen-mislukt':'opzeggen geweigerd (fout wachtwoord)',
@@ -4024,7 +4040,7 @@ bridge2.jpg</div>
       'tweede-stap-verplicht':'tweede stap verplicht gemaakt voor iedereen','tweede-stap-niet-verplicht':'tweede stap niet meer verplicht',
       'opzeggen-geweigerd':'opzeggen met het praktijkwachtwoord geweigerd','praktijknaam-gewijzigd':'praktijknaam gewijzigd'};
     // bij een foute code is de naam die van de login waarop het gebeurde, niet van wie het deed
-    var BIJ={'tweede-stap-mislukt':1,'tweede-stap-op-slot':1};
+    var BIJ={'tweede-stap-mislukt':1,'tweede-stap-op-slot':1,'wachtwoord-vergeten-mail':1};
     // 'geclaimd' met een naam erbij: beveiligd met een eigen login, er is dan geen praktijkwachtwoord gezet
     fetch('api/praktijk/activiteit?praktijk='+encodeURIComponent((SET.praktijk||'').trim()),PGET())
       .then(function(r){return r.json();})
@@ -4111,6 +4127,32 @@ bridge2.jpg</div>
         document.getElementById('ps_herstel').style.display='none';
         PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();reloadLibraryKeepingCard();
         toonHerstelcode(d.herstelcode,'Je wachtwoord is vernieuwd. Dit is je nieuwe herstelcode (de oude werkt niet meer); bewaar hem op een veilige plek:');
+      })
+      .catch(function(){knop.disabled=false;psFout('Geen verbinding met de server. Probeer het zo opnieuw.');});
+  }
+  // "Wachtwoord vergeten?" met een eigen login: alleen het e-mailadres. De server stuurt een link
+  // naar dat adres als het bij een login van deze praktijk hoort, en zegt in beide gevallen hetzelfde.
+  function psVergeetToon(aan){
+    var v=document.getElementById('ps_vergeet'),vm=document.getElementById('ps_vmail'),em=document.getElementById('ps_email');
+    v.style.display=aan?'flex':'none';
+    if(!aan){document.getElementById('ps_msg').style.display='none';return;}
+    if(!vm.value&&em&&em.value)vm.value=em.value.trim();
+    toonPsMsg('Vul het e-mailadres van je eigen login in. Je krijgt een mail met een link om een nieuw wachtwoord te kiezen. Heb je een tweede stap (code-app), dan blijft die zoals hij is.');
+    vm.focus();
+  }
+  function prakVergeten(){
+    var vm=document.getElementById('ps_vmail'),knop=document.getElementById('ps_vdo'),adres=vm.value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(adres)){psFout('Vul het e-mailadres van je eigen login in.',vm);return;}
+    knop.disabled=true;
+    fetch('api/praktijk/wachtwoord-vergeten',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({praktijk:PRAKSLOT.pr,email:adres})})
+      .then(function(r){return r.json().catch(function(){return{ok:false};});})
+      .then(function(d){
+        knop.disabled=false;
+        if(!d.ok){psFout(d.fout||'Dat lukte niet. Probeer het zo opnieuw.',vm);return;}
+        psGeenMist();
+        document.getElementById('ps_vergeet').style.display='none';
+        toonPsMsg('Hoort '+adres+' bij een login van deze praktijk, dan staat er binnen een paar minuten een mail in je inbox met een link om een nieuw wachtwoord te kiezen. De link is een uur geldig. Geen mail? Kijk bij ongewenste mail en controleer het adres: een beheerder van je praktijk ziet onder Team met welk adres je login is gemaakt.');
       })
       .catch(function(){knop.disabled=false;psFout('Geen verbinding met de server. Probeer het zo opnieuw.');});
   }

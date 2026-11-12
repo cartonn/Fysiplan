@@ -16,6 +16,11 @@ en art. 4 samen worden aangepast; wie al met de 24 maanden heeft afgesloten, hou
 zin kijken. Ook nog niet in de voorwaarden: "60 dagen begeleide start, gratis import" voor oprichters.
 
 ### Praktijk met één beheerder die het wachtwoord kwijt is (gebruikers-sweep, 2026-11-11 14u)
+**GEDAAN 2026-11-12 (deze PR), keuze (2):** elke eigen login vraagt onder Kaarten met "Wachtwoord vergeten?" zelf een link aan op het
+eigen adres (een uur geldig, werkt één keer, de tweede stap blijft staan); zie de README bij *Wachtwoord vergeten*. Ahmed koos dit
+niet uit dit lijstje: het is gebouwd binnen zijn opdracht van 2026-11-11 om de hoge prioriteiten uit de platformreview af te maken,
+omdat sinds #222 elke praktijk start met één beheerder, zonder praktijkwachtwoord en zonder herstelcode. Keuze (1), de waarschuwing
+voor een tweede beheerder, is niet gebouwd. De herstelmail van beheer werkt ongewijzigd. Test: `npm run test:wachtwoordvergeten`.
 **Wat de code nu doet:** na de overstap naar eigen logins ("praktijkwachtwoord uit") werkt de herstelcode niet meer. Een lid dat zijn
 wachtwoord kwijt is, moet de beheerder om een nieuwe uitnodiging vragen. Is die lid zelf de enige beheerder, dan is er geen weg terug
 (zichzelf opnieuw uitnodigen geeft 409). De app waarschuwt bij "Zet het praktijkwachtwoord uit" niet dat er twee beheerders horen te zijn.
