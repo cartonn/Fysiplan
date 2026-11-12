@@ -403,9 +403,17 @@ async function beheerVenster(kop, wie) {
     try {
       const r = await fetch('/api/beheer/overzicht', { headers: KOP, cache: 'no-store' });
       j = await json(r);
-      if (!r.ok || !j.ok) j = { fout: r.status === 403 ? 'Hier kom je alleen met een beheeraccount of met de eigen sleutel van de server. De standaardsleutel van een lokale server maakt geen accounts.' : (j.fout || 'Het overzicht is niet bereikbaar.') };
+      if (r.status === 403 && j.geenRecht) j = { geenRecht: j.geenRecht };
+      else if (!r.ok || !j.ok) j = { fout: r.status === 403 ? 'Hier kom je alleen met een beheeraccount of met de eigen sleutel van de server. De standaardsleutel van een lokale server maakt geen accounts.' : (j.fout || 'Het overzicht is niet bereikbaar.') };
     } catch { j = { fout: 'Geen verbinding met Fysiplan.' }; }
     const sluitKnop = el('button', { type: 'button', text: 'Sluiten', onclick: () => d.close() });
+    // een account met beperkte rechten beheert geen accounts, maar wel het eigen wachtwoord
+    if (j.geenRecht && kop === 'account') {
+      inhoud.replaceChildren(el('h2', { id: 'fpbTitel', text: 'Je account' }),
+        el('p', { class: 'uitleg', text: 'Je account werkt in de beheer- en finance-omgeving, met de rechten die een beheerder je gaf. Accounts en het logboek zijn er voor wie volledig beheer heeft.' }),
+        el('h3', { text: 'Je eigen wachtwoord' }), wachtwoordBlok(), status, el('div', { class: 'rij' }, sluitKnop));
+      return;
+    }
     if (j.fout) { inhoud.replaceChildren(el('h2', { id: 'fpbTitel', text: 'Beheer' }), el('p', { role: 'status', text: j.fout }), el('div', { class: 'rij' }, sluitKnop)); return; }
     const naam = veld('Naam', { type: 'text', required: true, maxlength: 60, id: 'fpbNaam', autocomplete: 'off' });
     const email = veld('E-mailadres', { type: 'email', required: true, maxlength: 120, id: 'fpbNieuwEmail', autocomplete: 'off' });

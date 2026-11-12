@@ -18,7 +18,7 @@ assert.match(k, /function zetDank\(el,tekst,soort\)/, "zetDank bestaat");
 assert.match(k, /var schaal=this;if\(schaal\.dataset\.bezig\)\{/, "pijnscore: bezig-slot");
 assert.match(k, /MSCORE_NA=b;b\.classList\.add\('bezig'\);return;/, "pijnscore: laatste tik tijdens opslaan onthouden");
 assert.match(k, /\.then\(verder,verder\);/, "pijnscore: onthouden tik na het antwoord nasturen");
-assert.match(k, /var pschaal=this;if\(pschaal\.dataset\.bezig\)return;/, "PSK: bezig-slot");
+assert.match(k, /var pskStuur=laatsteTikWint\(/, "PSK: één verzoek tegelijk, laatste tik wint");
 assert.doesNotMatch(k, /dank\.textContent=\(TAAL==='nl'&&d\.fout\)\?d\.fout:tr\('mfout'\)/, "pijnscorefout via zetDank");
 
 let pw = null;

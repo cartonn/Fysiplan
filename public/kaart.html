@@ -3423,29 +3423,58 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         .catch(function(e){delete b.dataset.bezig;if(e&&e.wacht){zetDank(dank,trw('een'),'wacht');return;}delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout');b.classList.remove('aan');});
     });
     // ervaren herstel: één tik stuurt de score (-2..+2), vandaag opnieuw tikken wijzigt
+    // Eén verzoek tegelijk per schaal, en de laatste tik wint. Met elke knop een eigen "bezig" liepen
+    // herstel-verzoeken parallel en won het antwoord dat het laatst binnenkwam: "Much worse" en daarna
+    // "Much better" op een trage lijn bewaarde -2, ook in de inbox. Bij PSK werd een tweede tik stil
+    // genegeerd (gebruikers-sweep 2026-11-12 14u, Jayden). Nu zoals de pijnscore: onthouden en nasturen.
+    function laatsteTikWint(verstuur){
+      var bezig=false,na=null;
+      function ga(v){
+        bezig=true;
+        var klaar=function(){bezig=false;var n=na;na=null;if(n!==null&&n!==v)ga(n);};
+        verstuur(v).then(klaar,klaar);
+      }
+      return function(v){if(bezig){na=v;return;}ga(v);};
+    }
+    // vandaag vervangen in een lijst {t,s} (zoals de server dat doet), voor de stand zonder internet
+    function vandaagLokaal(lijst,s){var vd=dagStr(Date.now());
+      return (lijst||[]).filter(function(x){return dagStr(x.t)!==vd;}).concat([{t:Date.now(),s:s}]);}
     // PSK-score: één tik, de server telt één score per dag
-    document.getElementById('pskschaal').addEventListener('click',function(e){
-      var pb=e.target.closest('[data-psk]');if(!pb||!id)return;
-      var pschaal=this;if(pschaal.dataset.bezig)return;
-      pschaal.dataset.bezig='1';pschaal.setAttribute('aria-busy','true');pb.classList.add('bezig');
-      var pklaar=function(){delete pschaal.dataset.bezig;pschaal.removeAttribute('aria-busy');pb.classList.remove('bezig');};
-      stuur('/api/kaart/psk',{id:id,score:Number(pb.dataset.psk)})
+    var pskStuur=laatsteTikWint(function(score){
+      var pschaal=document.getElementById('pskschaal');
+      pschaal.dataset.bezig='1';pschaal.setAttribute('aria-busy','true');
+      var pklaar=function(){delete pschaal.dataset.bezig;pschaal.removeAttribute('aria-busy');
+        pschaal.querySelectorAll('.bezig').forEach(function(x){x.classList.remove('bezig');});};
+      return stuur('/api/kaart/psk',{id:id,score:score})
         .then(function(d){pklaar();var dank=document.getElementById('pskdank');
           if(d&&d.ok){K.kaart.psk=d.psk||[];tekenPsk();zetDank(dank,trpsk('dank'));}
           else zetDank(dank,(TAAL==='nl'&&d&&d.fout)?d.fout:trpsk('fout'),'fout');})
-        .catch(function(e){pklaar();zetDank(document.getElementById('pskdank'),e&&e.wacht?trw('een'):trpsk('fout'),e&&e.wacht?'wacht':'fout');});
+        .catch(function(e){pklaar();zetDank(document.getElementById('pskdank'),e&&e.wacht?trw('een'):trpsk('fout'),e&&e.wacht?'wacht':'fout');
+          if(e&&e.wacht){K.kaart.psk=vandaagLokaal(K.kaart.psk,score);tekenPsk();}});
+    });
+    document.getElementById('pskschaal').addEventListener('click',function(e){
+      var pb=e.target.closest('[data-psk]');if(!pb||!id)return;
+      this.querySelectorAll('.bezig').forEach(function(x){x.classList.remove('bezig');});
+      pb.classList.add('bezig');
+      pskStuur(Number(pb.dataset.psk));
+    });
+    var hsStuur=laatsteTikWint(function(score){
+      var dank=document.getElementById('hsdank');
+      return stuur('/api/kaart/ervaring',{id:id,score:score})
+        .then(function(d){
+          if(d&&d.ok){K.kaart.ervaring=d.ervaring||[];tekenHerstel();zetDank(dank,trh('dank'));}
+          else{tekenHerstel();zetDank(dank,trh('fout'),'fout');}
+        })
+        .catch(function(e){zetDank(dank,e&&e.wacht?trw('een'):trh('fout'),e&&e.wacht?'wacht':'fout');
+          if(!(e&&e.wacht))tekenHerstel();
+          // zonder internet: de nieuwe keuze staat in de wachtrij, toon die (niet de oude)
+          if(e&&e.wacht){K.kaart.ervaring=vandaagLokaal(K.kaart.ervaring,score);tekenHerstel();}});
     });
     document.getElementById('hsknoppen').addEventListener('click',function(e){
-      var b=e.target.closest('.sbtn');if(!b||b.dataset.bezig)return;
-      var score=Number(b.dataset.hs);b.dataset.bezig='1';
-      var dank=document.getElementById('hsdank');
-      stuur('/api/kaart/ervaring',{id:id,score:score})
-        .then(function(d){
-          delete b.dataset.bezig;
-          if(d&&d.ok){K.kaart.ervaring=d.ervaring||[];tekenHerstel();zetDank(dank,trh('dank'));}
-          else zetDank(dank,trh('fout'),'fout');
-        })
-        .catch(function(e){delete b.dataset.bezig;zetDank(dank,e&&e.wacht?trw('een'):trh('fout'),e&&e.wacht?'wacht':'fout');});
+      var b=e.target.closest('.sbtn');if(!b)return;
+      // meteen de gekozen knop tonen (trage lijn); het antwoord van de server tekent daarna de echte stand
+      this.querySelectorAll('.sbtn').forEach(function(k){k.classList.toggle('aan',k===b);k.setAttribute('aria-pressed',k===b?'true':'false');});
+      hsStuur(Number(b.dataset.hs));
     });
     // het gelezen therapeut-antwoord wegtikken
     document.getElementById('aweg').addEventListener('click',function(){

@@ -29,6 +29,7 @@ jobs:
       - run: npm run test:video-recovery
       - run: npm run test:drafts
       - run: npm run test:beheer
+      - run: npm run test:ideeenbox
       - run: npm run test:backup
       - run: npm run test:sessieherstart
       - run: npm run test:proefpoort
@@ -92,6 +93,7 @@ jobs:
       - run: npm run test:weekverder
       - run: npm run test:daguitvraag
       - run: npm run test:profielcollega
+      - run: npm run test:profieltherapeut
       - run: npm run test:prullenbak
       - run: npm run test:wachtrijdagen
       - run: npm run test:agendamelding
@@ -119,6 +121,7 @@ jobs:
       - run: npm run test:nieuwekaartnaam
       - run: npm run test:proefwissen
       - run: npm run test:pijnscorebezig
+      - run: npm run test:herstellaatstetik
       - run: npm run test:opnameverouderd
       - run: npm run test:nietvertaald
       - run: npm run test:vertaallaat
@@ -127,6 +130,7 @@ jobs:
       - run: npm run test:seinvenster
       - run: npm run test:lichtladen
       - run: npm run test:beheerherstel
+      - run: npm run test:beheeromgeving
       - run: npm run test:seinmail
       - run: npm run test:tweedestap
       - run: npm run test:stapverplicht
