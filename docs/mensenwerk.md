@@ -133,6 +133,24 @@ beheerders van de praktijk één mail (wanneer, wat er weggaat, doorgaan, kopië
 ook na een proef zonder abonnement. Alleen als de mail is ingesteld (`MAIL_API_SLEUTEL` + `MAIL_AFZENDER`). (2) Teruggave van geld bij opzeggen halverwege de maand: de code boekt niets terug;
 zet je keuze in de voorwaarden (art. 5) of laat de jurist het zeggen. (3) De opzegtermijn in art. 5 is nog een invulplek.
 
+### Vaste vragen per oefening in plaats van de vraaghulp (reviewlijst punt 13, 2026-11-12)
+**Wat de code nu doet:** op elke patiëntkaart staat onder de oefeningen "Vragen over je oefeningen":
+vijf vaste vragen met een vast antwoord, in de negen talen van de kaart (pijn, goed uitvoeren, meer
+of minder doen, een dag overgeslagen, ademhaling). Ze staan in `lib/vaste-vragen.js`. Ze noemen
+geen getallen of dosering en verwijzen voor alles wat bij één patiënt hoort naar de kaart, de knoppen
+"Het doet te veel pijn" en "Ik heb een vraag", en de eigen praktijk. Daarnaast kan een praktijk in de
+app bij elke oefening eigen vragen met antwoord zetten (het vraagtekentje op het plaatje, alleen met
+een eigen login). Die staan bij de oefening op elke kaart van die praktijk, in het Nederlands; in een
+andere taal staat erbij dat de praktijk ze in het Nederlands schreef. Er gaat geen vrije tekst van de
+patiënt naar een AI-dienst. De eigen vragen gaan mee in de download en in "Alles wissen", en een
+wijziging staat in de activiteit van de praktijk.
+**Wat jij moet doen:**
+1. Laat de vijf standaardvragen en hun antwoorden nalezen door een fysiotherapeut, samen met de
+   steekproef van de bibliotheek. Ik heb ze zelf geschreven en vertaald; ze zijn nog niet door een
+   fysiotherapeut of een moedertaalspreker gelezen. Verbeteringen zet je in `lib/vaste-vragen.js`.
+2. Laat `VRAAGHULP` uit. De vaste vragen vervangen de vraaghulp; de schakelaar en de code van de
+   oude vraaghulp kunnen weg zodra de server in losse onderdelen staat (punt 15).
+
 ### Vraaghulp op de kaart (legal, 2026-11-07; eigen schakelaar 2026-11-12)
 **Wat de code nu doet:** de vraaghulp staat standaard UIT, ook als `ANTHROPIC_API_KEY` is ingesteld
 (de zoekhulp en het vertalen hangen aan dezelfde sleutel en blijven werken). De patiëntkaart toont
