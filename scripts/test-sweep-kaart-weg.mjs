@@ -16,7 +16,12 @@ const root = process.cwd();
 const idx = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(idx, /function kaartIsWeg\(\)/, "editor onthoudt dat zijn kaart weg is");
 assert.match(idx, /if\(kaartIsWeg\(\)\)\{toonKaartWegHint\(\);return;\}/, "geen autosave van een verwijderde kaart");
-assert.match(idx, /function saveServerCard\(naam,cb,keuze\)\{\s*if\(kaartIsWeg\(\)\)\{/, "delen vraagt eerst bij een verwijderde kaart");
+// de vraag staat vóór het maken en versturen van de kaart (ervoor staat alleen nog de weigering
+// zolang de open kaart van v2 niet is hersteld, zie test-open-kaart.mjs)
+const deel = (idx.match(/\n  function saveServerCard\(naam,cb,keuze\)\{[\s\S]*?\n  \}\n/) || [""])[0];
+const vraagOp = deel.indexOf("if(kaartIsWeg()){"), kaartOp = deel.indexOf("serverKaart(naam)"), stuurOp = deel.indexOf("fetch('api/kaarten'");
+assert.ok(vraagOp > 0 && vraagOp < kaartOp && kaartOp < stuurOp, "delen vraagt eerst bij een verwijderde kaart");
+assert.ok(!/fetch\(|serverKaart\(|zetKaart/.test(deel.slice(0, vraagOp)), "en vóór die vraag wordt er niets gemaakt, verstuurd of gewijzigd");
 assert.match(idx, /markeerKaartWeg\(d0\.dataset\.pruldef\)/, "definitief verwijderen markeert de open kaart");
 assert.match(idx, /markeerKaartWeg\(x\.dataset\.sdelid\)/, "naar de prullenbak markeert de open kaart");
 
