@@ -363,6 +363,10 @@ persoonsgegevens.
 de kaart een roepnaam, dan deelt de app hem met de patiënt. Fysiplan is dan verwerker voor de
 praktijk (AVG art. 28): bij het beveiligen en bij de proefaanmelding gaat de praktijk akkoord met
 de verwerkersovereenkomst; de versie en het tijdstip staan bij het praktijkaccount (`vwo`).
+Beveiligen geeft toegang tot wat de praktijk daarna zelf deelt. Stond er onder dezelfde naam al
+iets zonder account (v1 en beheer delen kaarten onder de praktijknaam), dan krijgt de nieuwe
+praktijk een eigen code en gaat daar niets van mee; v1 blijft bij de eigen kaarten kunnen
+(`npm run test:naamerftniets`).
 
 - **Op de server per gedeelde kaart:** roepnaam (`client.c_naam`), max. HF en trainingszone,
   doel en opmerking van de therapeut, de oefeningen met dosering en schema, persoonlijke video's,

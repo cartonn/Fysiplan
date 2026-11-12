@@ -147,6 +147,7 @@ jobs:
       - run: npm run test:profielbeheer
       - run: npm run test:opzeggenbeheer
       - run: npm run test:praktijknaambezet
+      - run: npm run test:naamerftniets
       - run: npm run test:zwaaroffline
       - run: npm run test:dagwisseltaal
       - run: npm run test:reekstitel

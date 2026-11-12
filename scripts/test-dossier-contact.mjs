@@ -7,6 +7,7 @@
 // Zonder browser (draait ook in CI). Onderdeel van `npm run test:privacy`.
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
+import { randomBytes, scryptSync } from "node:crypto";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
@@ -18,6 +19,12 @@ const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-dossier-"));
 const nu = Date.now();
 const ID = "c0c0c0c0c0c1";
 await writeFile(join(dataDir, "bewaartermijn.json"), JSON.stringify({ invoering: nu }));
+// de praktijk is al beveiligd en de kaart is van haar. Wie een naam nu pas beveiligt, krijgt de
+// kaarten die er al onder stonden niet mee (test:naamerftniets), dus logt deze test in.
+const hash = (ww) => { const s = randomBytes(16); return "scrypt$" + s.toString("hex") + "$" + scryptSync(ww, s, 32).toString("hex"); };
+await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify({
+  "fysio dossier": { naam: "Fysio Dossier", hash: hash("dossier-wachtwoord-1"), gemaakt: nu }
+}));
 await writeFile(join(dataDir, "kaarten.json"), JSON.stringify({
   "fysio dossier": { truus: { id: ID, praktijk: "Fysio Dossier", naam: "Truus", ts: nu,
     chosen: [{ n: "Squat", i: 0 }], rows: {}, cells: {}, vids: {}, client: { c_naam: "Truus" } } }
@@ -41,9 +48,9 @@ const post = (pad, body, extra) => fetch(origin + pad, { method: "POST", headers
 
 try {
   for (let i = 0; i < 100; i++) { try { if ((await fetch(origin + "/health")).ok) break; } catch {} await new Promise((r) => setTimeout(r, 50)); }
-  const claim = await post("/api/praktijk/claim", { praktijk: "Fysio Dossier", wachtwoord: "dossier-wachtwoord-1", akkoord: true });
-  assert.equal(claim.status, 200);
-  const sessie = (await claim.json()).sessie;
+  const login = await post("/api/praktijk/login", { praktijk: "Fysio Dossier", wachtwoord: "dossier-wachtwoord-1" });
+  assert.equal(login.status, 200);
+  const sessie = (await login.json()).sessie;
   const S = { "x-praktijk-sessie": sessie };
 
   // patiënt: pijn-seintje en "te zwaar"; praktijk antwoordt; patiënt tikt het weg; praktijk handelt te zwaar af
