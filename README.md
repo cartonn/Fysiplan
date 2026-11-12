@@ -114,6 +114,31 @@ terug naar de gedeelde server-lijst.
   Cloudflare Stream → beoordeelde Fysiplan-video → YouTube-link uit de bibliotheek →
   conceptvideo. Zo gaat er zo min mogelijk naar YouTube. Video's worden geserveerd met
   Range-ondersteuning (vereist voor iPhone/Safari).
+- **Tweede stap bij het inloggen:** wie een eigen login heeft, zet onder Kaarten → Team een tweede
+  stap aan. Na het wachtwoord vraagt Fysiplan dan om een code uit een code-app (TOTP, RFC 6238:
+  Google Authenticator, Microsoft Authenticator, Wachtwoorden op een iPhone, 1Password). Instellen
+  gaat met een QR-code die de browser zelf tekent (`public/qr.js` in de ruime stand; het geheim
+  gaat niet door de QR-cache van de server) of door de sleutel over te typen, en staat pas aan als
+  de eerste code klopt. Een code werkt één keer. Bij het aanzetten krijgt de gebruiker acht
+  reservecodes, elk één keer bruikbaar, voor als de telefoon weg is. De tweede stap geldt bij het
+  inloggen in de app en op de formulieren die met e-mail en wachtwoord werken (overzicht na de
+  proef, praktijkgegevens downloaden of wissen). Uitzetten en nieuwe reservecodes vragen het
+  wachtwoord en een code.
+  - *Raden.* De code wordt pas bekeken als het wachtwoord klopt. Na 20 foute codes binnen 24 uur
+    werkt voor die login 24 uur lang alleen nog een reservecode; de teller staat op schijf, dus
+    een uitrol geeft geen nieuwe pogingen. Op dat moment krijgt de eigenaar van de login een mail (als mail
+    is ingesteld) en staat het in de Activiteit van de praktijk: wie zo ver komt, kent het
+    wachtwoord.
+  - *Telefoon en reservecodes kwijt.* Een beheerder met een eigen login wist de tweede stap van een
+    collega (Team → wissen); de collega logt dan in met alleen het wachtwoord en stelt hem opnieuw
+    in. Is de enige beheerder het zelf kwijt, dan stuurt Fysiplan-beheer de herstelmail met
+    `"tweedeStap": true` (zie **Beheer**).
+  - *Grenzen.* De tweede stap is niet verplicht. Het gedeelde praktijkwachtwoord logt in zonder
+    tweede stap en met beheerdersrechten: zet het uit (Team) zodra iedereen een eigen login heeft.
+    Het geheim staat leesbaar in `praktijk-accounts.json`, want de server moet de code kunnen
+    narekenen; wie die schijf kan lezen, heeft ook de tweede stap. De login van V1 (`/`) en de
+    beheersleutel hebben geen tweede stap. `npm run test:tweedestap` dekt de rekenkern (testvectoren
+    uit RFC 4226 en RFC 6238), de QR-code en de routes.
 
 ## Gratis proef van 14 dagen (/v2/proef)
 
@@ -190,6 +215,13 @@ per dag. Is er van de praktijk geen eigen adres bekend, of staat mail uit, dan k
 deze weg (`npm run test:beheerherstel`). De beheersleutel alleen opent zo geen praktijk meer. Wie
 bij de server of bij de mailprovider kan (die bewaart verzonden mail), blijft technisch bij
 gegevens kunnen; daarom staan de reden en het moment in het logboek van de praktijk.
+
+Heeft een beheerder een tweede stap bij het inloggen en is ook die kwijt (telefoon én
+reservecodes), stuur dan `"tweedeStap": true` mee in hetzelfde verzoek. De mail zegt dan dat met de
+link ook de tweede stap vervalt; dat gebeurt pas als de beheerder de link gebruikt, en het staat in
+het logboek van de praktijk. Zonder die vlag blijft de tweede stap staan en is de mailbox alleen
+niet genoeg om in te loggen. Doe dit alleen na controle dat de vraag echt van de praktijk komt
+(terugbellen op het bekende nummer): met de vlag is toegang tot de mailbox weer genoeg.
 
 **Mail bij een seintje.** Tikt een patiënt “Ik heb een vraag” of “Het doet te veel pijn”, dan
 stuurt de server een korte mail naar de praktijk (als `MAIL_API_SLEUTEL` en `MAIL_AFZENDER` gezet
@@ -311,6 +343,12 @@ de verwerkersovereenkomst; de versie en het tijdstip staan bij het praktijkaccou
   gaat niet mee in de reservekopie. Wil je iedereen opnieuw laten inloggen (bijvoorbeeld na het
   terugzetten van een reservekopie), verwijder dan dat bestand en herstart. Bij een uitrol
   (SIGTERM) maakt de server lopende verzoeken af voordat hij stopt.
+- **Tweede stap bij het inloggen:** heeft een login een tweede stap, dan staan bij dat lid in
+  `praktijk-accounts.json` het geheim van de code-app (leesbaar), de SHA-256 van de ongebruikte
+  reservecodes, de laatst gebruikte tijdstap en de teller van foute codes. Ze gaan mee in de
+  reservekopie en verdwijnen bij uitzetten, bij wissen door een beheerder en met het account. De
+  waarschuwingsmail na te veel foute codes gaat naar het adres van de login zelf en bevat de
+  praktijknaam en de voornaam, geen code en geen geheim.
 - **Bewaartermijn** (automatisch, elke 6 uur en bij het opstarten): een kaart verdwijnt na
   `BEWAAR_STIL_DAGEN` (standaard 90) dagen zonder activiteit, of `BEWAAR_AFGEROND_DAGEN`
   (standaard 30) dagen na afronden (archiveren). Na de invoering geldt eenmalig een aanloop van

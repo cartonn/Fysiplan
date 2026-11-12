@@ -1,6 +1,9 @@
 /* Kleine QR-encoder voor de kaart-QR (geen externe libraries, net als de rest van Fysiplan).
    Byte-mode, foutcorrectieniveau M, versie 1-3 (ruim voldoende voor een korte kaart-URL).
-   Gebaseerd op het QR-model-2-algoritme (ISO/IEC 18004). Gebruik: FYSIQR.svg(tekst, pixels). */
+   Gebaseerd op het QR-model-2-algoritme (ISO/IEC 18004). Gebruik: FYSIQR.svg(tekst, pixels).
+   Voor een langere tekst op een scherm (de instel-link van de tweede stap, tot 106 bytes):
+   FYSIQR.svg(tekst, pixels, true) gebruikt niveau L en versie 1-5. De kaart-QR verandert daar
+   niet door; `npm run test:tweedestap` vergelijkt beide met vaste uitkomsten. */
 (function () {
   'use strict';
 
@@ -42,14 +45,17 @@
 
   // versie 1-3, niveau M, één ECC-blok: [datacodewoorden, ecc-codewoorden]
   var CAP = { 1: [16, 10], 2: [28, 16], 3: [44, 26] };
-  var ALIGN = { 1: null, 2: 18, 3: 22 };
+  // ruim: versie 1-5 op niveau L, ook steeds één ECC-blok (vanaf versie 6 zijn het er meer)
+  var CAP_L = { 1: [19, 7], 2: [34, 10], 3: [55, 15], 4: [80, 20], 5: [108, 26] };
+  var ALIGN = { 1: null, 2: 18, 3: 22, 4: 26, 5: 30 };
 
-  function encodeData(text, version) {
+  function encodeData(text, version, cap) {
+    cap = cap || CAP;
     var bytes = [];
     // naar UTF-8-bytes (URL's zijn ASCII, maar voor de zekerheid)
     var enc = unescape(encodeURIComponent(text));
     for (var i = 0; i < enc.length; i++) bytes.push(enc.charCodeAt(i) & 0xff);
-    var nData = CAP[version][0];
+    var nData = cap[version][0];
     if (bytes.length + 2 > nData) return null;
     var bits = [], push = function (val, len) { for (var b = len - 1; b >= 0; b--) bits.push((val >> b) & 1); };
     push(4, 4);                 // byte-mode
@@ -66,11 +72,11 @@
     }
     var pad = [0xec, 0x11], pi = 0;
     while (cw.length < nData) cw.push(pad[(pi++) % 2]);
-    return cw.concat(rsRemainder(cw, CAP[version][1]));
+    return cw.concat(rsRemainder(cw, cap[version][1]));
   }
 
   // ---- matrixopbouw ----
-  function makeMatrix(version, codewords, mask) {
+  function makeMatrix(version, codewords, mask, niveauL) {
     var size = 17 + 4 * version;
     var mod = [], fun = [];
     for (var r = 0; r < size; r++) { mod.push(new Array(size).fill(false)); fun.push(new Array(size).fill(false)); }
@@ -94,7 +100,7 @@
       if (!fun[t][6]) set(t, 6, t % 2 === 0);
     }
 
-    // uitlijningspatroon (versie 2 en 3: één, in de rechteronderhoek)
+    // uitlijningspatroon (versie 2 tot en met 5: één, in de rechteronderhoek)
     var ap = ALIGN[version];
     if (ap) {
       for (var ar = -2; ar <= 2; ar++) for (var ac = -2; ac <= 2; ac++) {
@@ -147,7 +153,7 @@
     // formaatinfo: niveau M (=0) + maskernummer, BCH(15,5)-gecodeerd
     var G15 = 0x537, G15MASK = 0x5412;
     function bchLen(v) { var d = 0; while (v) { d++; v >>>= 1; } return d; }
-    var data = mask; // (M << 3) | mask, en M = 0
+    var data = (niveauL ? 8 : 0) | mask; // (niveau << 3) | mask; M = 00, L = 01
     var d15 = data << 10;
     while (bchLen(d15) - bchLen(G15) >= 0) d15 ^= G15 << (bchLen(d15) - bchLen(G15));
     var bits = ((data << 10) | d15) ^ G15MASK;
@@ -212,13 +218,13 @@
     return score;
   }
 
-  function matrix(text) {
-    var codewords = null, version = 0;
-    for (var v = 1; v <= 3; v++) { codewords = encodeData(text, v); if (codewords) { version = v; break; } }
-    if (!codewords) return null; // tekst te lang voor versie 3
+  function matrix(text, ruim) {
+    var codewords = null, version = 0, cap = ruim ? CAP_L : CAP;
+    for (var v = 1; cap[v]; v++) { codewords = encodeData(text, v, cap); if (codewords) { version = v; break; } }
+    if (!codewords) return null; // tekst te lang (versie 3 op niveau M, of versie 5 op niveau L)
     var best = null, bestScore = Infinity;
     for (var mk = 0; mk < 8; mk++) {
-      var m = makeMatrix(version, codewords, mk);
+      var m = makeMatrix(version, codewords, mk, !!ruim);
       var s = penalty(m);
       if (s < bestScore) { bestScore = s; best = m; }
     }
@@ -226,8 +232,8 @@
   }
 
   // SVG-weergave met stille zone van 4 modules; schaalt scherp mee bij printen
-  function svg(text, px) {
-    var m = matrix(text);
+  function svg(text, px, ruim) {
+    var m = matrix(text, ruim);
     if (!m) return '';
     var n = m.length, Q = 4, total = n + 2 * Q;
     var path = '';
