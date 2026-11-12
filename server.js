@@ -248,23 +248,20 @@ const AUDIT_RUIS = new Set(["toegang-geweigerd", "login-mislukt", "herstel-mislu
 const AUDIT_PER_PRAKTIJK = 300, AUDIT_RUIS_PER_PRAKTIJK = 50, AUDIT_TOTAAL = 5000;
 try { praktijkAudit = JSON.parse(await readFile(auditPath, "utf8")); } catch {}
 // Het leeslog (lib/leeslog.js): wie welke kaart zag of wijzigde. Een eigen bestand, zodat een
-// kaart lezen niet het hele kaartenbestand opnieuw wegschrijft. Wegschrijven gebeurt kort na de
-// laatste regel, in één keer, en bij het afsluiten.
+// kaart lezen niet het hele kaartenbestand opnieuw wegschrijft.
 const leeslogPath = join(dataDir, "leeslog.json");
 let leeslog = {};
 try { const l = JSON.parse(await readFile(leeslogPath, "utf8")); if (l && typeof l === "object" && !Array.isArray(l)) leeslog = l; } catch {}
-let leeslogWacht = null;
-const leeslogOpSchijf = () => { if (leeslogWacht) { clearTimeout(leeslogWacht); leeslogWacht = null; } return saveJson(leeslogPath, leeslog); };
-// Een nieuwe regel staat binnen een halve seconde op schijf. Een regel die alleen opschuift (iemand
-// heeft het overzicht open staan en de app vraagt het telkens opnieuw op) binnen een minuut.
-let leeslogWachtTot = 0;
-const leeslogBewaar = (ms = 400) => {
-  const tot = Date.now() + ms;
-  if (leeslogWacht && leeslogWachtTot <= tot) return;
-  if (leeslogWacht) clearTimeout(leeslogWacht);
-  leeslogWachtTot = tot;
-  leeslogWacht = setTimeout(() => { leeslogWacht = null; saveJson(leeslogPath, leeslog).catch(() => {}); }, ms);
-  leeslogWacht.unref();
+// Een nieuwe regel gaat meteen naar schijf, de ene schrijfbeurt na de andere. Een regel die alleen
+// opschuift (iemand heeft het overzicht open staan en de app vraagt het telkens opnieuw op) hooguit
+// eens per minuut: na een crash kan de laatste minuut aan herhalingen in zo'n regel ontbreken, de
+// regel zelf niet.
+let leeslogRij = Promise.resolve(), leeslogGeschreven = 0;
+const leeslogBewaar = (verschoven = false) => {
+  if (verschoven && Date.now() - leeslogGeschreven < 60000) return leeslogRij;
+  leeslogGeschreven = Date.now();
+  leeslogRij = leeslogRij.then(() => saveJson(leeslogPath, leeslog)).catch(() => {});
+  return leeslogRij;
 };
 // Sessies overleven een herstart: elke uitrol logde anders alle therapeuten uit. Ze staan
 // in het geheugen én in praktijk-sessies.json, met alleen de SHA-256 van het token als
@@ -532,7 +529,7 @@ function leesMerk(req, pk, soort, kaart, wieExpliciet) {
     else return;
   }
   const uitkomst = leeslogRegels.merk(leeslog, pk, { kaart: kaart || "", soort, ...wie });
-  if (uitkomst) leeslogBewaar(uitkomst === "nieuw" ? 400 : 60000);
+  if (uitkomst) leeslogBewaar(uitkomst !== "nieuw");
 }
 // gedeeld praktijkwerk (teamsjabloon, eigen oefening) weghalen of overschrijven: alleen wie
 // het maakte (lid-id in `door`) of een beheerder. Zonder sessie kwam de aanvraag langs het
@@ -1382,7 +1379,7 @@ async function praktijkAllesWissen(pk) {
   for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
   // het logboek noemde de praktijknaam; alleen het feit dat er gewist is blijft, zonder naam
   praktijkAudit = praktijkAudit.filter((a) => a.praktijk !== pk);
-  if (leeslogRegels.wisPraktijk(leeslog, pk)) await leeslogOpSchijf().catch(() => {});
+  if (leeslogRegels.wisPraktijk(leeslog, pk)) await leeslogBewaar();
   // ideeënbox: open ideeën van de praktijk weg, besloten ideeën en stemmen zonder herkomst
   try { await ideeenbox.wisPraktijk(pk); } catch {}
   // vertaalde namen van de eigen oefeningen staan los in de vertaalcache; die gaan nu
@@ -8904,7 +8901,7 @@ async function netjesStoppen(signaal) {
   clearInterval(veeg);
   try { await praktijkSessies.opSchijf(); } catch {}
   try { await beheerSessieTabel.opSchijf(); } catch {}
-  try { if (leeslogWacht) await leeslogOpSchijf(); } catch {}
+  try { await leeslogRij; } catch {}
   process.exit(0);
 }
 process.on("SIGTERM", () => { netjesStoppen("SIGTERM"); });

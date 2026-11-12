@@ -190,7 +190,7 @@ try {
   assert.equal((await get("/api/praktijk/kaart?praktijk=" + Q + "&id=" + kSanne, J)).status, 200);
   await stop("SIGTERM"); await start();
   assert.deepEqual(kort(await regels(kJoris)), ["Joris: kaart geopend", "Sanne: kaart geopend x2", "Joris: kaart bewaard"], "na een herstart staat alles er nog");
-  assert.equal(kort(await regels(kSanne))[0], "Joris: kaart geopend", "de server schrijft het leeslog weg bij het afsluiten");
+  assert.equal(kort(await regels(kSanne))[0], "Joris: kaart geopend", "een regel van vlak voor het afsluiten staat op schijf");
 
   // de download van alle gegevens: staat in het leeslog en bevat het leeslog
   const d = await formulier("/v2/gegevens/download", { praktijk: P, email: "sanne@leeslog.invalid", wachtwoord: "sanne-wachtwoord" });
