@@ -160,7 +160,7 @@ afgelopen": nieuwe kaarten kunnen niet meer, gedeelde kaarten blijven werken, ho
 gewist wordt als de praktijk geen klant wordt. Jij (`PROEF_MELDING_AAN`) krijgt "Proef afgelopen: …", een goed moment
 om te bellen. Geen mail aan klanten, aan wie al "Ja, ik wil doorgaan" koos, of aan proeven die bij de uitrol al langer
 dan een dag voorbij waren. Staat `MOLLIE_API_KEY`, dan noemen deze mail én de herinnering twee dagen vooraf de link
-om de eerste maand online af te rekenen (fysiplan.nl/v2/proef?mijn=1, 9,99 per therapeut, exclusief btw); zonder
+om de eerste maand online af te rekenen (fysiplan.nl/v2/proef?mijn=1, met de prijs en de btw volgens de keuze in Finance); zonder
 Mollie blijft het "antwoord op deze mail, dan bellen we je".
 **Env:** werkt alleen met mail (`MAIL_API_SLEUTEL` + `MAIL_AFZENDER`, staan al op Railway); de betaallink alleen met `MOLLIE_API_KEY`.
 **Wat jij moet doen:** niets. Kijk bij de eerste "Proef afgelopen"-mail of de toon je bevalt.
@@ -168,7 +168,8 @@ Mollie blijft het "antwoord op deze mail, dan bellen we je".
 ### Online betalen via Mollie (praktijk-routine, 2026-11-07)
 **Wat de code nu doet:** zet je `MOLLIE_API_KEY` op Railway, dan krijgen "Mijn proef" en de
 verlopen-pagina een blok "Direct online afrekenen": aantal therapeuten kiezen, eerste maand
-(9,99 per therapeut, exclusief btw) betalen met iDEAL of kaart bij Mollie. Na betaling wordt de proef meteen een
+(9,99 per therapeut; de btw volgt de keuze in Finance, zie "Factuur per online betaling" hieronder, en zonder
+die keuze staat het blok er niet) betalen met iDEAL of kaart bij Mollie. Na betaling wordt de proef meteen een
 klant (slot eraf, zelfde als "klant" in /aanmeldingen) en krijg je een mail "Betaald: …". De
 betaling is van het type `first`, dus Mollie bewaart een mandaat voor latere maandelijkse incasso.
 Zonder sleutel verandert er niets: alleen "Ja, ik wil doorgaan" en jij belt.
@@ -226,11 +227,24 @@ een **factuur** met 21% btw uitgesplitst.
 **Wat jij moet doen:**
 1. Zet op Railway `FYSIPLAN_BTW_NUMMER` (je btw-id, `NL…B01`), naast `FYSIPLAN_BEDRIJF`, `FYSIPLAN_KVK` en
    `FYSIPLAN_ADRES`. Pas als alle vier er staan, heet de pagina "Factuur".
-2. **Beslissen (btw):** de landing en voorwaarden zeggen "exclusief btw", maar Mollie schrijft nu precies
-   prijs × therapeuten af. De factuur rekent de btw daarom **uit** het betaalde bedrag (bij 9,99 euro: 8,26 +
-   1,73 btw). Wil je de btw er bovenop (12,09 incl.), zeg het; dan past deze routine het afrekenbedrag aan.
-   Zit je in de kleineondernemersregeling (KOR), laat `FYSIPLAN_BTW_NUMMER` dan leeg en meld het, dan komt er
-   een KOR-factuur zonder btw.
+2. **Beslissen (btw):** GEBOUWD 2026-11-12 (bouw, punt 6 van de reviewlijst): de keuze maak je zelf, in de
+   beheeromgeving onder Finance ("Btw-instellingen"). Het bedrag dat Mollie afschrijft, de factuur, het betaalblok,
+   de mails en de landing volgen die keuze vanzelf (`lib/prijs.js`):
+   - **Kleineondernemersregeling: ja.** Er wordt 9,99 per therapeut afgeschreven, de factuur noemt geen btw en zegt
+     dat ze is vrijgesteld (artikel 25 Wet OB), en de teksten zeggen "Fysiplan rekent geen btw". Een btw-id is dan
+     niet nodig voor een factuur; bedrijfsnaam, KvK en adres wel.
+   - **Nee, en 9,99 is exclusief btw.** Er wordt 12,09 per therapeut afgeschreven (9,99 plus 21%). De teksten
+     zeggen "exclusief btw" en het betaalblok noemt ook de 12,09.
+   - **Nee, en 9,99 is inclusief btw.** Er wordt 9,99 afgeschreven (8,26 plus 1,73 btw) en de teksten zeggen
+     "inclusief btw".
+   **Zolang je niet gekozen hebt, start online afrekenen niet**, ook niet met `MOLLIE_API_KEY`: het betaalblok
+   staat er dan niet en de mails zeggen "antwoord op deze mail, dan bellen we je". De teksten blijven tot die tijd
+   "exclusief btw" zeggen. Een betaling onthoudt haar eigen bedrag en btw: kies je later anders, dan verandert een
+   factuur die er al is niet, en een aangekondigde incasso wordt afgeschreven zoals ze is aangekondigd.
+   **Nog voor jou:** kiezen, en je boekhouder laten bevestigen dat de factuur zo klopt (ook de zin over de
+   vrijstelling). **Let op de voorwaarden:** artikel 4 van `/voorwaarden` zegt "exclusief btw" en volgt je keuze niet
+   vanzelf, omdat een juridische tekst niet stil mag veranderen. Kies je "inclusief" of de kleineondernemersregeling,
+   dan moet die zin mee, met een nieuwe versie van de voorwaarden.
 3. ~~Factuuradres~~ GEBOUWD 2026-11-11 (praktijk-routine): op Mijn abonnement staat nu het blok
    "Factuurgegevens" (naam van de praktijk + adres, optioneel). Ze komen op elke nieuwe factuur en worden bij
    het uitgeven van het factuurnummer vastgelegd, zodat een uitgegeven factuur niet meer verandert. Boven 100
