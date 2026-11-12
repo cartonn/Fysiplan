@@ -417,6 +417,8 @@ html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
   html.v2 .tm-rol{font-size:12px;font-weight:600;color:var(--text);background:#f1f5f9;border-radius:99px;padding:3px 9px}
   html.v2 .tm-lid select{height:32px;border:1px solid var(--line);border-radius:8px;padding:0 8px;font:inherit;font-size:12.5px;background:#fff}
   html.v2 .tm-weg{width:32px;padding:0!important;color:var(--muted)}
+  html.v2 .tm-weg.tm-zeker{width:auto;padding:0 10px!important;color:#b4372f;white-space:nowrap}
+  @media (pointer:coarse){html.v2 .tm-weg{min-width:44px;min-height:44px}}
   html.v2 .tm-uitnodig{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#f8fafc}
   html.v2 .tm-uitnodig input,html.v2 .tm-uitnodig select{height:36px!important;border:1px solid var(--line);border-radius:8px;padding:0 10px;font:inherit;background:#fff}
 }

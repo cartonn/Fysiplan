@@ -122,6 +122,8 @@
   #a4 .adres{margin-top:10px}
   #a4 .adres input{display:block;border:none;background:transparent;font:inherit;font-size:10.5px;color:#344054;width:100%;padding:1px 0}
   #a4 .adres input:focus{outline:none;background:var(--brand-50);border-radius:3px}
+  #a4 #p_msg{margin-top:6px;padding:6px 8px;border-radius:6px;background:#fff4e5;color:#7a3e00;font-size:13px;line-height:1.35}
+  @media print{#a4 #p_msg{display:none!important}}
   #a4 .client{flex:1;padding-top:2px;min-width:0}
   #a4 .client .cr{display:flex;align-items:flex-end;gap:10px;margin-bottom:10px}
   #a4 .client label{font-size:11.5px;font-weight:700;color:#101828;flex:0 0 96px}
@@ -2678,9 +2680,32 @@ bridge2.jpg</div>
     fetch('api/praktijken',{method:'POST',headers:PJSON(),body:JSON.stringify(p)})
       .then(function(r){return r.json();}).then(function(d){
         if(d.ok){loadPraktijken();return;}
+        if(d.beheer){profielTerug(d.fout);return;}
         if(d.bezet&&!p.zelfdeNaam&&window.confirm(d.fout||'Er is al een andere praktijk met deze naam. Toch zo noemen?')){p.zelfdeNaam=true;stuurPraktijk(p);}
       }).catch(function(){});
   }
+  // Alleen een beheerder mag het praktijkprofiel wijzigen (server 403 met beheer:true). Een therapeut
+  // kreeg geen melding en zijn A4 drukte het geweigerde nummer af, want het bleef in fysiplan_settings
+  // staan (gebruikers-sweep 2026-11-11 22u t/m 2026-11-12 10u, Karin en Mark). Nu: melding bij de velden
+  // en de kaart zet het profiel van de praktijk terug, zoals de patiënt het op /k ziet.
+  function profielTerug(fout){
+    fetch('api/praktijken',PGET()).then(function(r){return r.ok?r.json():[];}).then(function(l){
+      l=Array.isArray(l)?l:[];
+      var cur=(SET.praktijk||'').trim().toLowerCase();
+      var p=l.length===1?l[0]:l.filter(function(x){return String(x.praktijk||'').toLowerCase()===cur;})[0];
+      if(p){['praktijk','adres','plaats','tel','email','website','logo'].forEach(function(k){SET[k]=p[k]||'';});saveSettings();applySettings();}
+      PRAKTIJKEN=l;renderPrakSelect();
+    }).catch(function(){}).then(function(){
+      var m=document.getElementById('p_msg');
+      if(!m){
+        m=document.createElement('div');m.id='p_msg';m.className='no-print';m.setAttribute('role','status');m.setAttribute('aria-live','polite');
+        var ad=document.querySelector('#a4 .prak .adres');if(ad&&ad.parentNode)ad.parentNode.insertBefore(m,ad.nextSibling);
+      }
+      m.textContent=(fout||'Alleen een beheerder van de praktijk kan het praktijkprofiel en het logo aanpassen.')+' De kaart toont weer de gegevens van de praktijk.';
+      m.style.display='block';
+    });
+  }
+  window.fpProfielTerug=profielTerug;
   ['praktijk','p_adres','p_plaats','p_tel','p_email','p_website'].forEach(function(id){
     var el=document.getElementById(id);
     if(el)el.addEventListener('change',upsertPraktijk);
@@ -2695,7 +2720,9 @@ bridge2.jpg</div>
     var has=!!(IS_V2&&SET.logo);
     if(has){img.src=SET.logo;img.style.display='block';}
     else{img.removeAttribute('src');img.style.display='none';}
-    if(btn){btn.style.display=IS_V2?'':'none';btn.textContent=has?'logo wijzigen':'+ praktijklogo';}
+    // een therapeut kan het logo niet wijzigen (alleen een beheerder): dan geen knop
+    var geenBeheer=!!(typeof PRAKSLOT!=='undefined'&&PRAKSLOT&&PRAKSLOT.ingelogd&&PRAKSLOT.akkoord&&PRAKSLOT.akkoord.beheer===false);
+    if(btn){btn.style.display=IS_V2&&!geenBeheer?'':'none';btn.textContent=has?'logo wijzigen':'+ praktijklogo';}
   }
   document.getElementById('logoBtn').addEventListener('click',function(){document.getElementById('logoFile').click();});
   document.getElementById('logoFile').addEventListener('change',function(e){
@@ -3357,6 +3384,7 @@ bridge2.jpg</div>
         if(pr!==PRAKSLOT.nieuwVoor)PRAKSLOT.nieuw=false;
         if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
         rendPrakSlot();
+        try{applyLogo();}catch(e){}
         // verlopen proef op een apparaat zonder proefcookie (ingelogde collega): meteen de balk
         if(d.proefVerlopen&&!PROEF_VOORBIJ)toonProefVoorbij(null,true);
       }).catch(function(code){
@@ -3807,7 +3835,7 @@ bridge2.jpg</div>
         return "<div class='tm-lid"+(l.status==='actief'?'':' uitgenodigd')+"' style='display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line)'>"+
           avRond(l.naam||l.email,'tm-av')+
           "<div class='tm-naam' style='flex:1;min-width:0'><b style='color:var(--ink)'>"+esc(l.naam||l.email)+(zelf?' (jij)':'')+"</b><div style='font-size:11.5px'>"+esc(l.email)+" · "+esc(st)+wis2+"</div></div>"+rol+
-          (d.beheer&&!zelf?"<button class='btn tm-weg' type='button' data-tmweg='"+esc(l.id)+"' aria-label='verwijderen' title='Verwijderen; de kaarten blijven bij de praktijk'>&times;</button>":"")+"</div>";
+          (d.beheer&&!zelf?"<button class='btn tm-weg' type='button' data-tmweg='"+esc(l.id)+"' data-naam='"+esc(l.naam||l.email)+"' aria-label='"+esc((l.naam||l.email)+" verwijderen")+"' title='Verwijderen; de kaarten blijven bij de praktijk'>&times;</button>":"")+"</div>";
       }).join('');
       if(d.beheer){
         h+="<div class='tm-kop' style='margin-top:12px;font-weight:600;color:var(--ink)'>Collega uitnodigen</div>"+
@@ -3989,7 +4017,8 @@ bridge2.jpg</div>
       el.querySelectorAll('[data-tm2wis]').forEach(function(a){
         a.addEventListener('click',function(e){
           e.preventDefault();
-          if(a.dataset.zeker!=='1'){a.dataset.zeker='1';a.textContent='zeker wissen?';return;}
+          if(a.dataset.zeker!=='1'){a.dataset.zeker='1';a.dataset.zekerT=String(Date.now());a.textContent='zeker wissen?';return;}
+          if(Date.now()-Number(a.dataset.zekerT||0)<700)return;
           var naam=a.getAttribute('data-naam')||'je collega';
           teamPost('tweede-stap/wis',{id:a.getAttribute('data-tm2wis')}).then(function(r){
             laadTeam(function(){
@@ -4039,7 +4068,11 @@ bridge2.jpg</div>
       });
       el.querySelectorAll('[data-tmweg]').forEach(function(btn){
         btn.addEventListener('click',function(){
-          if(btn.dataset.zeker!=='1'){btn.dataset.zeker='1';btn.textContent='Zeker?';return;}
+          // Een dubbelklik telde als "Zeker?" en verwijderde de collega meteen (gebruikers-sweep 2026-11-12
+          // 14u, Karin). De bevestiging telt pas na een korte pauze, en de knop zegt wie er weg gaat.
+          if(btn.dataset.zeker!=='1'){btn.dataset.zeker='1';btn.dataset.zekerT=String(Date.now());btn.textContent='Zeker verwijderen?';
+            btn.classList.add('tm-zeker');btn.setAttribute('aria-label','Zeker: '+(btn.getAttribute('data-naam')||'collega')+' verwijderen?');return;}
+          if(Date.now()-Number(btn.dataset.zekerT||0)<700)return;
           var wegId=btn.getAttribute('data-tmweg');
           teamPost('verwijder',{id:wegId}).then(function(r){
             if(r.gedeeldAan){
