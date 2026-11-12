@@ -135,7 +135,8 @@ zet je keuze in de voorwaarden (art. 5) of laat de jurist het zeggen. (3) De opz
 
 ### De app in vier schermen (reviewlijst punt 14, 2026-11-12)
 **Wat de code nu doet:** bovenin de app staan vier knoppen: Vandaag, Patiënten, Kaart maken en
-Praktijk. Wie ingelogd is, komt bij het openen op Vandaag: de seintjes van patiënten (met
+Praktijk. De app opent op Kaart maken, zoals altijd; wie een ander scherm kiest, komt de volgende
+keer daar terug. Vandaag toont de seintjes van patiënten (met
 "Naar dossier" en "Afgehandeld") en wie deze week niet oefende (een kaart van minder dan twee dagen
 oud telt nog niet mee). Het getal bij Vandaag is het aantal openstaande seintjes. Patiënten is de
 lijst met kaarten; Praktijk heeft het login- en accountblok en tegels voor team, eigen oefeningen,
@@ -144,8 +145,8 @@ Kaarten daar opent nog het zijpaneel. Printen geeft altijd de kaart. V1 (de app 
 **Wat ik bewust niet deed:** de oude app uit de code halen. V1 draait voor de demopraktijk en blijft
 staan. De editor kreeg ook nog geen nieuwe indeling met een lijst rechts; dat is een volgende stap
 als de vier schermen bevallen.
-**Wat jij kunt doen:** kijk of Vandaag als beginscherm goed voelt. Wil je liever op Kaart maken
-beginnen, zeg het; dat is één regel.
+**Wat jij kunt doen:** kijk of Vandaag als vast beginscherm beter zou zijn. Ik koos voor Kaart maken
+plus het onthouden van je keuze, omdat therapeuten nu zo gewend zijn te werken; omzetten is één regel.
 
 ### Vaste vragen per oefening in plaats van de vraaghulp (reviewlijst punt 13, 2026-11-12)
 **Wat de code nu doet:** op elke patiëntkaart staat onder de oefeningen "Vragen over je oefeningen":

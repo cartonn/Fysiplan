@@ -1581,7 +1581,7 @@ bridge2.jpg</div>
     }).join('');
     var hb=document.querySelector('header.topbar'),na=hb.querySelector('.brand');
     hb.insertBefore(nav,na?na.nextSibling:hb.firstChild);
-    nav.addEventListener('click',function(e){var b=e.target.closest('[data-scherm]');if(b){SCHERM_GEKOZEN=true;zetScherm(b.getAttribute('data-scherm'));}});
+    nav.addEventListener('click',function(e){var b=e.target.closest('[data-scherm]');if(b){SCHERM_GEKOZEN=true;var nm=b.getAttribute('data-scherm');try{localStorage.setItem('fysiplan_scherm',nm);}catch(_){}zetScherm(nm);}});
     document.documentElement.setAttribute('data-scherm','maken');
   }
   function zetScherm(naam){
@@ -1653,12 +1653,15 @@ bridge2.jpg</div>
   }
   // met een login opent de app op Vandaag, tenzij je al een scherm koos of iets anders open staat
   function startScherm(){
+    // de app opent op Kaart maken, of op het scherm dat je de vorige keer koos
     if(!IS_V2||SCHERM_GEKOZEN||epdVoorinvulData)return;
+    var bewaard='';try{bewaard=localStorage.getItem('fysiplan_scherm')||'';}catch(_){}
+    if(['vandaag','patienten','praktijk'].indexOf(bewaard)<0)return;
     var pr=(SET.praktijk||'').trim();if(!pr)return;
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET()).then(function(r){return r.ok?r.json():null;}).then(function(d){
       if(!d||!d.geclaimd||!d.ingelogd||SCHERM_GEKOZEN||SCHERM!=='maken')return;
       if(document.querySelector('.ov.on'))return;
-      zetScherm('vandaag');
+      zetScherm(bewaard);
     }).catch(function(){});
   }
   if(window.FYSIPLAN_V2){

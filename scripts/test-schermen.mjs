@@ -1,7 +1,7 @@
 // De app in vier schermen (reviewlijst punt 14): Vandaag, Patiënten, Kaart maken en Praktijk.
 // `npm run test:schermen`
 //
-// - met een login opent de app op Vandaag: seintjes van patiënten en wie deze week niet oefende
+// - de app opent op Kaart maken; wie Vandaag kiest, opent de volgende keer daar (seintjes en wie niet oefende)
 // - Patiënten toont de kaarten van de praktijk, Praktijk het login- en accountblok en de tegels
 // - "Openen" brengt de kaart in de editor (Kaart maken); zonder login opent de app daar ook
 // - printen geeft altijd de kaart, op welk scherm je ook staat; V1 (de app op /) houdt één scherm
@@ -74,6 +74,13 @@ try {
   p.on("pageerror", (e) => fouten.push(String(e)));
   p.on("dialog", (d) => d.accept());
   await p.goto(origin + "/v2/app");
+  await p.waitForSelector("#fpSchermen [data-scherm='vandaag']", { timeout: 15000 });
+  await p.waitForTimeout(1200);
+  assert.equal(await p.evaluate(() => document.documentElement.getAttribute("data-scherm")), "maken", "eerste keer: Kaart maken");
+  await p.click("#fpSchermen [data-scherm='vandaag']");
+  await p.waitForFunction(() => document.documentElement.getAttribute("data-scherm") === "vandaag", null, { timeout: 5000 });
+  // de volgende keer opent de app op het gekozen scherm
+  await p.reload();
   await p.waitForFunction(() => document.documentElement.getAttribute("data-scherm") === "vandaag", null, { timeout: 15000 });
   await p.waitForSelector("#k_inbox .ib-item", { timeout: 8000 });
   await p.waitForSelector("#k_nietgeoefend .ib-item", { timeout: 8000 });
@@ -141,7 +148,7 @@ try {
 
   assert.deepEqual(fouten, [], "geen fouten");
   } // browserdeel
-  console.log("test-schermen: ok (opent op Vandaag met seintjes en wie niet oefende, Patiënten, Praktijk, Openen naar de editor, printen geeft de kaart, zonder login Kaart maken)");
+  console.log("test-schermen: ok (opent op Kaart maken en daarna op het gekozen scherm, Vandaag met seintjes en wie niet oefende, Patiënten, Praktijk, Openen naar de editor, printen geeft de kaart, zonder login Kaart maken)");
 } catch (e) {
   console.error(uit.slice(-1500));
   throw e;

@@ -531,7 +531,7 @@ for (const [wat, patroon] of [
   ["de voorbeeldkaart van de proef (zonder melding)", /      if\(!BIB_KLAAR\|\|chosen\.length\|\|!Array\.isArray\(l\)\|\|!l\.length\)return;\n/],
   ["het voorstel van de zoekhulp", /    if\(e\.target\.id!=='ai_apply'\|\|!AI_VOORSTEL\)return;\n    if\(kaartWachtNog\(\)\)return;\n/],
   ["een kopie van een kaart van de praktijk", /    var kp=e\.target\.closest\('\[data-skopie\]'\);\n    if\(kp\)\{\n      if\(kaartWachtNog\(\)\)return;\n/],
-  ["een kaart van de praktijk openen", /    var o=e\.target\.closest\('\[data-sopen\]'\),x=e\.target\.closest\('\[data-sdel\]'\);\n    if\(o\)\{\n      if\(kaartWachtNog\(\)\)return;\n/],
+  ["een kaart van de praktijk openen", /  function openSrvKaart\(id\)\{\n    if\(kaartWachtNog\(\)\)return;\n/],
   ["een kaart uit deze browser openen", /    if\(o\)\{\n      if\(kaartWachtNog\(\)\)return;\n      var c=lijst\[\+o\.dataset\.kopen\];/],
   ["de lege kaart in deze browser opslaan", /  document\.getElementById\('k_save'\)\.addEventListener\('click',function\(\)\{\n    if\(kaartWachtNog\(\)\)return;\n/],
   ["de nieuwste versie openen", /  function openNieuwsteVersie\(\)\{\n    if\(!KAART_ID\|\|kaartWachtNog\(\)\)return;\n/],
