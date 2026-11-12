@@ -532,9 +532,14 @@ try {
   assert.deepEqual(h.fouten, { uur: 0, buiten: 0 }, "een verse server heeft geen fouten");
   assert.ok(Date.parse(h.gestart) >= voor - 1000 && Date.parse(h.gestart) <= Date.now(), "gestart is het moment waarop dit proces begon: " + h.gestart);
 
-  // de bewaker kijkt de echte server na: goed, met één waarschuwing (lokaal is er geen reservekopie elders)
-  const u = await bewaak(origin, { pauzeMs: 0 });
-  assert.deepEqual([u.ok, u.storingen, codes(u.waarschuwingen), u.pogingen], [true, [], "kopie-uit", 1], JSON.stringify(u));
+  // de bewaker kijkt de echte server na. De server zegt zelf welke omgeving hij is: hier lokaal. Als lokale
+  // server is hij goed; op het adres van productie zou hij een storing zijn, met de waarschuwing dat de
+  // reservekopie elders uit staat.
+  assert.equal(h.omgeving, "lokaal");
+  const u = await bewaak(origin, { pauzeMs: 0, omgeving: "lokaal" });
+  assert.deepEqual([u.ok, u.storingen, codes(u.waarschuwingen), u.pogingen, u.omgeving], [true, [], "", 1, "lokaal"], JSON.stringify(u));
+  const alsProductie = await bewaak(origin, { pauzeMs: 0 });
+  assert.deepEqual([alsProductie.ok, codes(alsProductie.storingen), codes(alsProductie.waarschuwingen)], [false, "omgeving", "kopie-uit"], JSON.stringify(alsProductie));
 
   // de bewaker telt niet als bezoek; een gewone bezoeker wel
   const bezoek = async () => { const d = await (await fetch(origin + "/api/dashboard", { headers: { "x-admin-sleutel": "admin88" } })).json(); return d.dagen[d.dagen.length - 1].bezoek; };
