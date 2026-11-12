@@ -183,7 +183,8 @@
     "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs",
     "test:prullenbak": "node scripts/test-kaart-prullenbak.mjs",
     "test:beveiligingfeedback": "node scripts/test-beveiliging-feedback.mjs",
-    "test:welkomlink": "node scripts/test-welkomlink.mjs"
+    "test:welkomlink": "node scripts/test-welkomlink.mjs",
+    "test:proeftokenverloop": "node scripts/test-proef-token-verloop.mjs"
   },
   "engines": {
     "node": ">=20"
