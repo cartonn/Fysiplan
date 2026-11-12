@@ -177,6 +177,7 @@ jobs:
       - run: npm run test:medialink
       - run: npm run test:vertalingen
       - run: npm run test:vastevragen
+      - run: npm run test:schermen
       - run: npm run test:zwaaroffline
       - run: npm run test:dagwisseltaal
       - run: npm run test:reekstitel
