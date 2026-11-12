@@ -336,6 +336,18 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **OPGELOST 2026-11-12 06u (gebruikers-sweep, deze PR, test:loginanderepraktijk) — HOOG (Karin, desktop) — inloggen met e-mail
+  negeerde de praktijknaam als de login maar bij één praktijk hoorde.** Een collega met alleen een login bij Beta kwam op het scherm van
+  Alfa stil bij Beta binnen (200, sessie van Beta); een verwijderde collega met een tweede praktijk dacht zo dat hij er nog in zat.
+  Nu 409 met de naam van de eigen praktijk (`kies`), zonder sessie; zonder naam of met de goede naam/praktijkcode gewoon 200; fout
+  wachtwoord blijft 403 zonder praktijknaam (server.js `/api/praktijk/login`).
+- **MIDDEL (nieuw, gebruikers-sweep 2026-11-12 06u, Sanne + Karin) — de praktijknaam op de patiëntkaart komt van de client, niet van de
+  sessie.** `POST /api/kaarten` bewaart `praktijk = cleanName(b.praktijk, 80)` (server.js r. ~5182) terwijl `pk` uit de sessie komt.
+  Gevolg: na het hernoemen van de A4-kop tonen kaarten van één praktijk verschillende namen op /k ("Beveiligd bij 'Fysio Zonnig'" en
+  tegelijk "Kaarten van de praktijk (…De Gezonde Rug…)"), en een therapeut kan een willekeurige praktijknaam als kop op de patiëntkaart
+  zetten. /api/kaart valt terug op `found.praktijk` als het profiel ontbreekt (r. ~5475). Voorstel: bij een sessie de weergavenaam van
+  de praktijk van de sessie bewaren/tonen; hernoemen alleen via het profiel (beheerder). Raakt index.html (kop op de A4) en server.js.
+
 - **OPGELOST 2026-11-12 02u (gebruikers-sweep, deze PR, test:gedeeldwerk) — HOOG (Karin, desktop) — het gedeelde praktijkwachtwoord wiste
   de hele praktijk, ook de beheerders met eigen login.** `/v2/gegevens/wissen` zonder e-mail viel terug op `accountVoorLogin` (gedeeld
   wachtwoord) en wiste alles, ook het account van de eigenaar. Nu: heeft de praktijk een actieve beheerder met eigen login, dan wist

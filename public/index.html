@@ -1358,6 +1358,32 @@ bridge2.jpg</div>
     bouwZijbalk();
     var _pb=document.getElementById('printBtn');_pb.textContent='Printen';_pb.title='Print het trainingsschema of bewaar het als PDF';
     document.getElementById('eigenOefBtn').textContent='Eigen oefening';
+    bouwSprongLinks();
+  }
+  // V2: de oefenlijst heeft per rij een ster en een plus, samen ruim 1.600 tabstops vóór de kaart en Kaarten
+  // (gebruikers-sweep 2026-11-12, Sanne met alleen een toetsenbord). Bovenaan staan daarom sprongkoppelingen die
+  // pas zichtbaar worden bij focus; in het zoekveld zetten pijltjes + Enter een oefening op de kaart.
+  function bouwSprongLinks(){
+    if(document.getElementById('sprongLinks'))return;
+    var nav=document.createElement('nav');nav.id='sprongLinks';nav.className='spronglinks no-print';nav.setAttribute('aria-label','Snel naar');
+    [['sprong_zoek','Naar oefening zoeken'],['sprong_kaart','Naar de kaart'],['sprong_kaarten','Kaarten openen']].forEach(function(d){
+      var a=document.createElement('a');a.href='#';a.id=d[0];a.textContent=d[1];nav.appendChild(a);
+    });
+    document.body.insertBefore(nav,document.body.firstChild);
+    var zoek=document.getElementById('search');
+    if(zoek){
+      zoek.setAttribute('aria-label','Zoek oefening');
+      var hint=document.createElement('span');hint.id='zoekUitleg';hint.className='sr-only';
+      hint.textContent='Typ om te zoeken. Met pijltje omlaag en omhoog kies je een oefening, Enter zet hem op de kaart of haalt hem eraf.';
+      zoek.parentNode.insertBefore(hint,zoek.nextSibling);zoek.setAttribute('aria-describedby','zoekUitleg');
+    }
+    var a4=document.getElementById('a4wrap');if(a4&&!a4.hasAttribute('tabindex'))a4.setAttribute('tabindex','-1');
+    nav.addEventListener('click',function(e){
+      var a=e.target.closest('a');if(!a)return;e.preventDefault();
+      if(a.id==='sprong_zoek'){var z=document.getElementById('search');if(z){z.focus();z.select();}}
+      else if(a.id==='sprong_kaart'){var w=document.getElementById('a4wrap');if(w){w.focus();w.scrollIntoView({block:'start'});}}
+      else{var kb=document.getElementById('kaartenBtn');if(kb)kb.click();}
+    });
   }
   if(USE_V2_LIBRARY){
     var _beeldKeuze=document.getElementById('beeldKeuze');
@@ -1561,8 +1587,8 @@ bridge2.jpg</div>
         :"";
       return "<div class='row"+(IS_ADMIN?" beheer-row":"")+(index===keyboardIndex?" keyboard-focus":"")+"' data-id='"+o.id+"'>"+imgRender(o.imgs[0],56)+
         "<div class='nm'>"+esc(o.naam)+"<small>"+sub+"</small>"+videoBeheer+"</div>"+ren+
-        "<button class='fav"+(isFavorite(o)?" on":"")+"' data-fav='"+o.id+"' title='"+(isFavorite(o)?"uit favorieten":"toevoegen aan favorieten")+"' aria-label='favoriet'>★</button>"+
-        "<button class='add"+(has?" on":"")+"' data-add='"+o.id+"' title='"+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"' aria-label='"+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"'>"+(has?"−":"+")+"</button></div>";
+        "<button class='fav"+(isFavorite(o)?" on":"")+"' data-fav='"+o.id+"' title='"+(isFavorite(o)?"uit favorieten":"toevoegen aan favorieten")+"' aria-label='"+(IS_V2?esc(o.naam)+": favoriet":"favoriet")+"'"+(IS_V2?" aria-pressed='"+(isFavorite(o)?"true":"false")+"'":"")+">★</button>"+
+        "<button class='add"+(has?" on":"")+"' data-add='"+o.id+"' title='"+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"' aria-label='"+(IS_V2?esc(o.naam)+": ":"")+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"'>"+(has?"−":"+")+"</button></div>";
     }).join("");
   }
   // v2: patiëntsignalen in de editor — opent de therapeut een gedeelde kaart om
