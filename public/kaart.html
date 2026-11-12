@@ -223,6 +223,9 @@
   /* speelt de video met zijn eigen tekstblok, dan niet dezelfde uitleg er nog eens onder */
   .oef:has(.vhouder.open .vtekst)>.oefuitleg{display:none}
   .nietvertaald{margin-top:8px;font:italic 400 .875rem/1.45 var(--disp);color:var(--grijs)}
+  .nlorigineel{margin-top:6px;font:400 .875rem/1.45 var(--disp);color:var(--grijs)}
+  .nlorigineel summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--blauw);text-decoration:underline;text-underline-offset:3px}
+  .nlorigineel p{margin-top:4px;font-size:.9375rem;color:var(--tekst)}
   /* "te zwaar"-tik: de patiënt wijst de oefening aan die niet gaat, zonder bericht te typen */
   .oefzwaar{min-height:44px;margin-top:18px;padding:0 2px;border:0;background:none;
     font:600 .9375rem/1.2 var(--disp);color:var(--blauw);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
@@ -1001,6 +1004,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function neutraleTitel(){try{document.title=tr('eyebrow')+' — Fysiplan';document.documentElement.lang=TAAL;}catch(e){}}
   neutraleTitel();
   var VERT={};
+  // per taal de Nederlandse teksten waarvan een lezer de vertaling heeft nagelezen (/api/kaart/vertaal)
+  var NAGEL={};
   var K=null;
   var mediaReviewReady=false,blockedMedia={},explanationHolds=[],poseKeuring={},merkDek={},bronGecontroleerd={},hercontroleGedaan={};
   function mediaSource(o){return String(o&&(o.kaartImg||o.img)||'').replace(/^\/+/, '').replace(/^v2\//,'');}
@@ -1532,7 +1537,19 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // fout in een vertaalde uitvoeringsinstructie kan de patiënt verkeerd laten oefenen; daarom
   // staat eronder dat het een automatische vertaling is en wat te doen bij twijfel.
   var AUTO_VERTAALD={nl:'',en:'Translated automatically from Dutch. In doubt? Ask your physiotherapist.',de:'Automatisch aus dem Niederländischen übersetzt. Unsicher? Frag deine Physiotherapeutin oder deinen Physiotherapeuten.',fr:'Traduit automatiquement du néerlandais. Un doute ? Demandez à votre kinésithérapeute.',es:'Traducido automáticamente del neerlandés. ¿Dudas? Pregunta a tu fisioterapeuta.',pl:'Przetłumaczono automatycznie z niderlandzkiego. Masz wątpliwości? Zapytaj swojego fizjoterapeutę.',tr:'Felemenkçeden otomatik olarak çevrildi. Emin değil misin? Fizyoterapistine sor.',ar:'تُرجم تلقائيًا من الهولندية. هل لديك شك؟ اسأل أخصائي العلاج الطبيعي.',uk:'Автоматично перекладено з нідерландської. Сумніваєшся? Запитай свого фізіотерапевта.'};
-  function uitlegAutoVertaald(s){return !!s&&TAAL!=='nl'&&vt(s)!==s;}
+  function uitlegVertaald(s){return !!s&&TAAL!=='nl'&&vt(s)!==s;}
+  function nagelezen(s){var l=NAGEL[TAAL];return !!(l&&l.indexOf(s)!==-1);}
+  // nagelezen door een lezer van Fysiplan: dan geen melding "automatisch vertaald"
+  function uitlegAutoVertaald(s){return uitlegVertaald(s)&&!nagelezen(s);}
+  // Bij elke vertaalde uitleg staat de Nederlandse tekst eronder, ingeklapt: wie twijfelt, kan het
+  // origineel laten zien aan iemand die Nederlands leest, of aan de fysiotherapeut.
+  var NL_ORIGINEEL={nl:'',en:'Show the original Dutch text',de:'Den niederländischen Originaltext zeigen',fr:'Afficher le texte original en néerlandais',es:'Ver el texto original en neerlandés',pl:'Pokaż oryginalny tekst po niderlandzku',tr:'Orijinal Felemenkçe metni göster',ar:'عرض النص الأصلي باللغة الهولندية',uk:'Показати оригінальний текст нідерландською'};
+  function vertaalNootHtml(s){
+    if(!uitlegVertaald(s))return '';
+    return (uitlegAutoVertaald(s)?'<div class="nietvertaald autovertaald" role="note">'+esc(AUTO_VERTAALD[TAAL]||AUTO_VERTAALD.en)+'</div>':'')+
+      '<details class="nlorigineel"><summary>'+esc(NL_ORIGINEEL[TAAL]||NL_ORIGINEEL.en)+'</summary><p lang="nl" dir="ltr">'+esc(s)+'</p></details>';
+  }
+  function vertaalNoot(s){var d=document.createElement('div');d.className='vertaalnoot';d.innerHTML=vertaalNootHtml(s);return d;}
   function uitlegZinnen(t){
     return String(t||'').replace(/([.!?…])\s+(?=[A-ZÀ-ÖØ-ÞĄ-Ž\u0400-\u042F¿¡])/g,'$1\n').split('\n').map(function(z){return z.trim();}).filter(Boolean);
   }
@@ -1542,7 +1559,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     return '<div class="oefuitleg"><h3>'+esc(ZO_DOE[TAAL]||ZO_DOE.nl)+'</h3>'+
       uitlegZinnen(vt(o.uitleg)).map(function(z){return '<p dir="auto"'+(nl?' lang="nl"':'')+'>'+esc(z)+'</p>';}).join('')+
       (nl?'<div class="nietvertaald" role="note">'+esc(NIET_VERTAALD[TAAL]||NIET_VERTAALD.en)+'</div>':'')+
-      (uitlegAutoVertaald(o.uitleg)?'<div class="nietvertaald autovertaald" role="note">'+esc(AUTO_VERTAALD[TAAL]||AUTO_VERTAALD.en)+'</div>':'')+'</div>';
+      vertaalNootHtml(o.uitleg)+'</div>';
   }
   // Uitwijklink onder een ingesloten YouTube-video. Dit herstelt de ingesloten speler niet:
   // YouTube verwacht een Referer en de kaart stuurt bewust geen (referrer-policy same-origin;
@@ -2353,7 +2370,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       setTimeout(function(){af(null);},VERTAAL_WACHT);
       fetch('/api/kaart/vertaal?id='+id+'&taal='+TAAL,{cache:'no-cache'})
         .then(function(r){return r.json();})
-        .then(function(d){var tk=(d&&d.ok&&d.teksten)||null;if(gedaan&&tk){VERT[taal]=tk;laatVertaald(taal);}else af(tk);})
+        .then(function(d){var tk=(d&&d.ok&&d.teksten)||null;if(tk)NAGEL[taal]=Array.isArray(d.nagelezen)?d.nagelezen:[];if(gedaan&&tk){VERT[taal]=tk;laatVertaald(taal);}else af(tk);})
         .catch(function(){af(null);});
     }else af(null);
   }
@@ -2932,7 +2949,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(uitlegNl){
       var uitlegP=document.createElement('span');uitlegP.lang='nl';uitlegP.dir='ltr';uitlegP.textContent=uitlegTekst;
       uitlegEl.appendChild(uitlegP);uitlegEl.appendChild(nietVertaaldNoot());
-    }else uitlegEl.textContent=uitlegTekst;
+    }else{uitlegEl.textContent=uitlegTekst;if(uitlegVertaald(eigenUitleg))uitlegEl.appendChild(vertaalNoot(eigenUitleg));}
     // een niet-vertaalde Nederlandse uitleg niet met een stem in een andere taal voorlezen
     demo.introTekst=document.getElementById('lbnaam').textContent+'. '+(uitlegNl?(voorschrift?voorschrift+'.':''):uitlegTekst);
     // eerlijk over wat dit is: twee uitsnedes uit dezelfde foto, geen oefentempo en
@@ -3280,6 +3297,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           var luNl=uitlegNietVertaald(foto.dataset.uitleg);
           lu.innerHTML='<div class="vtekst-label">'+esc(tr('uitlegKop'))+'</div><p'+(luNl?' lang="nl" dir="ltr"':'')+'>'+esc(luTekst)+'</p>';
           if(luNl)lu.appendChild(nietVertaaldNoot());
+          else if(uitlegVertaald(foto.dataset.uitleg))lu.appendChild(vertaalNoot(foto.dataset.uitleg));
           lu.hidden=false;
           document.getElementById('lbimg').style.maxHeight='calc(58vh - 44px)';
         }else{

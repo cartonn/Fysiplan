@@ -497,7 +497,7 @@ try {
   {
     const v = await stand("vera");
     assert.deepEqual([v.rechten.length, v.toegang.accounts.map((a) => [a.email, a.rechten, a.ik]), v.overzicht.totalen.praktijken, v.zaken.length >= 2],
-      [7, [["finn@beheer.example", ["finance"], false], ["vera@beheer.example", null, true]], 1, true]);
+      [ALLE_RECHTEN.length, [["finn@beheer.example", ["finance"], false], ["vera@beheer.example", null, true]], 1, true]);
     assert.deepEqual(v.ideeen, { wacht: 0 }, "de echte server geeft het aantal ideeën dat op een besluit wacht");
     const f = await stand("finn");
     assert.equal("ideeen" in f, false);

@@ -203,6 +203,28 @@ staan bovenaan `lib/plaatsen.js`. De voorwaarden zeggen niets over een aantal ka
 **Wat jij moet weten:** een opname die een patiënt al op de telefoon had geopend, speelt na een dag pas weer als de
 kaart opnieuw verbinding heeft. Video's werden al niet offline bewaard, dus voor de patiënt verandert er niets.
 
+### Vertalingen vooraf en per taal nalezen (reviewlijst punt 10, 2026-11-12)
+**Wat de code nu doet** (`lib/vertaling.js`, `lib/vertaal-routes.js`, test `npm run test:vertalingen`):
+- **Op /dashboard88/vertalingen** staat per taal hoeveel teksten van de bibliotheek (naam en uitleg van elke
+  oefening, 1634 teksten) vertaald en nagelezen zijn. Met één knop laat je de bibliotheek vooraf vertalen, per
+  taal of alle acht. Dat gebeurt alleen voor wat nog ontbreekt, in rondes van 20 teksten, en is te stoppen.
+- **Een lezer** leest per tekst het Nederlands en de vertaling, verbetert die zo nodig en drukt op "Klopt,
+  nagelezen". Een nagelezen tekst wordt nooit meer automatisch overschreven. Verandert de Nederlandse tekst, dan
+  telt hij opnieuw als niet nagelezen. Elk nalezen staat met naam in het logboek van beheer.
+- **De patiëntkaart** zegt bij een uitleg die niet is nagelezen dat hij automatisch is vertaald. Onder elke
+  vertaalde uitleg staat, ingeklapt, de Nederlandse tekst.
+- Wat nog geen vertaling heeft (een nieuwe oefening, de naam van een eigen oefening van een praktijk), vertaalt
+  de kaart zoals eerst bij het openen. Die tekst staat dan als "automatisch vertaald" op de kaart.
+- **Bijvangst:** een uitleg langer dan 300 tekens (87 oefeningen) werd afgekapt vertaald en kwam op de kaart
+  nooit terug. Die bleef dus altijd in het Nederlands. Nu gaat de hele tekst mee.
+
+**Wat jij moet doen:**
+- **Een lezer per taal zoeken.** Maak voor die persoon een beheeraccount in de beheeromgeving (Beheerders) en geef
+  alleen het recht "Vertalingen". Daarmee komt de lezer alleen bij deze pagina, niet bij praktijken, finance of
+  andere beheerpagina's.
+- **Eén keer op "Alle talen vooraf vertalen" drukken.** Naar schatting kost dat bij de AI-dienst minder dan tien
+  euro. Ik heb het niet zelf gestart, omdat het geld kost.
+
 ### Leeslog per kaart (reviewlijst punt 8, 2026-11-12)
 **Wat de code nu doet** (`lib/leeslog.js`, test `npm run test:leeslog`):
 - **De server houdt bij wie een kaart opende of bewaarde**, en wie het overzicht van alle kaarten, de berichten
