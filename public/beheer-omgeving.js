@@ -92,7 +92,8 @@ function teken() {
   if (!data) return;
   const p = pagina();
   // wat dit account niet mag, staat niet in het menu; een groep zonder pagina's ook niet
-  document.querySelectorAll('#nav a').forEach((a) => { a.hidden = !mag(PAGINA_RECHT[a.dataset.pagina]); a.classList.toggle('aan', a.dataset.pagina === p); });
+  // een link met data-recht (de ideeënbox) gaat naar een beheerpagina buiten deze omgeving
+  document.querySelectorAll('#nav a').forEach((a) => { a.hidden = !mag(a.dataset.pagina ? PAGINA_RECHT[a.dataset.pagina] : a.dataset.recht); a.classList.toggle('aan', !!a.dataset.pagina && a.dataset.pagina === p); });
   document.querySelectorAll('#nav .groep').forEach((g) => { let n = g.nextElementSibling, zichtbaar = false; while (n && n.tagName === 'A') { if (!n.hidden) zichtbaar = true; n = n.nextElementSibling; } g.hidden = !zichtbaar; });
   // het oude dashboard (bezoekcijfers, security) is er alleen voor wie volledig beheer heeft
   const oud = document.querySelector('.zij a.oud');
@@ -113,6 +114,7 @@ function teken() {
   const btwOpen = data.finance.btw.filter((b) => b.stand === 'te-doen' || b.stand === 'te-laat').length;
   $('#tBtw').textContent = btwOpen || '';
   $('#tAgents').textContent = (data.loket ? data.loket.concepten.filter((c) => c.stand === 'wacht').length : 0) || '';
+  $('#tIdeeen').textContent = (data.ideeen && data.ideeen.wacht) || '';
   if (p !== 'agents') st.nieuweSleutel = null; // de nieuwe sleutel is alleen te zien tot je de pagina verlaat
   const el = $('#pagina');
   el.innerHTML = ({ overzicht, praktijken, support, berichten, finance, facturen, btw, jaar, agents, beheerders })[p]();
