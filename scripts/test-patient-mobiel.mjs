@@ -307,9 +307,11 @@ if (pw) {
       await pv.route("**/vidtest/*", (r) => r.fulfill({ status: 404, body: "" }));
       // de eerste twee oefeningen van de demokaart krijgen een staande avatarvideo en een YouTube-video
       const namen = await (await fetch(origin + "/api/kaart?id=demo")).json().then((d) => d.kaart.chosen.slice(0, 2).map((x) => x.n));
-      await pv.route("**/v2/oefeningen.json", async (route) => {
+      // de kaart krijgt haar oefeningen met de kaart zelf mee (lib), niet meer uit de hele bibliotheek
+      await pv.route((u) => u.pathname === "/api/kaart", async (route) => {
         const r = await route.fetch(), d = await r.json();
-        for (const o of d) {
+        assert.ok(Array.isArray(d.lib), "de kaart krijgt haar eigen oefeningen mee");
+        for (const o of d.lib) {
           if (o.naam === namen[0]) o.video = { eigen: "vidtest/staand.webm", eigenMeta: { aiGenerated: true } };
           if (o.naam === namen[1]) o.video = { yt: "aqz-KE-bpKQ" };
         }

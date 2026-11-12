@@ -2500,6 +2500,59 @@ async function manifestV2Gecacht() {
   return arr;
 }
 
+// ---- de patiëntkaart krijgt alleen wat bij haar eigen oefeningen hoort ----
+// De kaartpagina haalde bij elk bezoek de hele bibliotheek en beide keuringsbestanden op (samen
+// 1,6 MB aan tekst, ingepakt 180 kB) voor een kaart met een handvol oefeningen. De server snijdt
+// daar nu zelf uit wat bij deze kaart hoort en stuurt dat met de kaart mee.
+// Hoe de kaart een oefening opzoekt (eerst het vaste id, dan de naam, bij gelijke naam de
+// laatste) blijft op de kaart zelf staan. Hier gaat elke regel mee die op id of op naam past,
+// in de volgorde van de bibliotheek: zo kiest de kaart uit het kleine lijstje dezelfde regel
+// als uit het grote. Voor de keuring geldt hetzelfde: elke regel bij een id of naam van deze
+// kaart gaat mee, onbewerkt.
+// De bestanden zelf blijven zoals ze zijn en blijven opvraagbaar. Een kaart die dit pakket niet
+// krijgt (een antwoord uit de offline-cache van een oudere versie, of een server die de
+// bestanden niet kan lezen) leest ze zoals eerst.
+let keuringBron = { sleutel: "", media: null, uitleg: null };
+async function leesKeuring() {
+  const mediaPad = join(publicDir, "mobile-media-review.json"), uitlegPad = join(publicDir, "mobile-narration-review.json");
+  const [ms, us] = await Promise.all([stat(mediaPad), stat(uitlegPad)]);
+  const sleutel = [ms.size, ms.mtimeMs, us.size, us.mtimeMs].join(":");
+  if (keuringBron.sleutel !== sleutel) {
+    const [media, uitleg] = (await Promise.all([readFile(mediaPad, "utf8"), readFile(uitlegPad, "utf8")])).map((t) => JSON.parse(t));
+    if (!media || !Array.isArray(media.entries) || !uitleg || !Array.isArray(uitleg.holds)) throw new Error("keuring: onverwachte vorm");
+    keuringBron = { sleutel, media, uitleg };
+  }
+  return keuringBron;
+}
+const libNormen = new WeakMap();
+function normenVan(lijst) {
+  let n = libNormen.get(lijst);
+  if (!n) { n = lijst.map((o) => normEx(o.naam)); libNormen.set(lijst, n); }
+  return n;
+}
+async function kaartPakket(kaart, eigenOef) {
+  const gekozen = (Array.isArray(kaart.chosen) ? kaart.chosen : []).filter((x) => x && typeof x === "object");
+  const ids = new Set(gekozen.map((x) => String(x.id || "")).filter(Boolean));
+  const genormd = new Set(gekozen.map((x) => normEx(x.n)));
+  const alles = await manifestV2Gecacht(), norm = normenVan(alles);
+  const lib = alles.filter((o, i) => ids.has(o.exerciseId) || genormd.has(norm[i]));
+  // de keuring geldt per vast id (beeld) en per vast id of letterlijke naam (uitleg)
+  const namen = new Set(gekozen.map((x) => String(x.n || "")));
+  for (const o of lib) { ids.add(o.exerciseId); namen.add(o.naam); }
+  for (const e of eigenOef) { ids.add(e.id); namen.add(e.naam); }
+  const { media, uitleg } = await leesKeuring();
+  const vanKaart = (e) => !!e && ids.has(e.exerciseId);
+  return {
+    lib,
+    keuring: {
+      media: { reviewDate: media.reviewDate, entries: media.entries.filter(vanKaart),
+        rejectedSources: (Array.isArray(media.rejectedSources) ? media.rejectedSources : []).filter(vanKaart) },
+      narration: { reviewDate: uitleg.reviewDate, holds: uitleg.holds.filter((h) => !!h && (ids.has(h.exerciseId) || namen.has(h.name))) }
+    }
+  };
+}
+let pakketFoutGemeld = 0;
+
 const CATS = ["Bovenste extremiteit", "Onderste extremiteit", "Nek", "Rug", "Core",
   "Balans en valpreventie", "Neurologische revalidatie", "Vestibulair",
   "Werk en dagelijkse handelingen", "Bekken & postpartum", "Sportrevalidatie", "Cardio",
@@ -5755,9 +5808,17 @@ async function afhandelen(request, response) {
     const eigenOef = (found.chosen || []).filter((x) => PRAKTIJK_OEF_ID.test(String(x.id || "")))
       .map((x) => praktijkOefeningVoorKaart(fpk, x.id)).filter(Boolean);
     if (eigenOef.length) patientKaart.eigenOef = eigenOef;
+    // wat de kaartpagina uit de bibliotheek en de keuring nodig heeft, alleen voor deze kaart
+    // (zie kaartPakket). Lukt dat niet, dan gaat de kaart zonder en leest de pagina de hele
+    // bestanden zoals eerst: een kaart die niet laadt is erger dan een kaart die zwaarder laadt.
+    let pakket = null;
+    try { pakket = await kaartPakket(found, eigenOef); }
+    catch (e) {
+      if (Date.now() - pakketFoutGemeld > 10 * 60000) { pakketFoutGemeld = Date.now(); console.error("kaartpakket:", e && e.message ? e.message : e); }
+    }
     // dag (Amsterdam-tijd) waarop oefTrouw.d "vandaag" betekent: de kaart toont zo ook
     // de vinkjes die vandaag op een ander apparaat zijn gezet
-    await sendJson(response, 200, { ok: true, kaart: patientKaart, praktijk: prof, ai: VRAAGHULP_AAN, dag: nlDag(Date.now()) });
+    await sendJson(response, 200, { ok: true, kaart: patientKaart, praktijk: prof, ai: VRAAGHULP_AAN, dag: nlDag(Date.now()), ...(pakket || {}) });
     return;
   }
 

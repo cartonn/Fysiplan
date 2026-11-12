@@ -1069,10 +1069,19 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       if(img.complete&&img.naturalWidth)dekMiniatuur(img);
     });
   }
-  async function loadMobileReview(){
-    var responses=await Promise.all([fetch('/mobile-media-review.json',{cache:'no-cache'}),fetch('/mobile-narration-review.json',{cache:'no-cache'})]);
-    if(responses.some(function(r){return !r.ok;}))throw Error('Review unavailable');
-    var data=await Promise.all(responses.map(function(r){return r.json();}));
+  // De server stuurt met de kaart mee wat bij haar eigen oefeningen hoort (eigen: de regels
+  // uit beide keuringsbestanden, onbewerkt). Zonder dat pakket haalt de kaart de hele
+  // bestanden op, zoals altijd. De controles hieronder zijn voor beide wegen dezelfde.
+  async function loadMobileReview(eigen){
+    var data;
+    if(eigen){
+      if(!eigen.media||!eigen.narration)throw Error('Invalid review');
+      data=[eigen.media,eigen.narration];
+    }else{
+      var responses=await Promise.all([fetch('/mobile-media-review.json',{cache:'no-cache'}),fetch('/mobile-narration-review.json',{cache:'no-cache'})]);
+      if(responses.some(function(r){return !r.ok;}))throw Error('Review unavailable');
+      data=await Promise.all(responses.map(function(r){return r.json();}));
+    }
     if(!Array.isArray(data[0].entries)||!Array.isArray(data[1].holds))throw Error('Invalid review');
     // Twee beoordelingsbestanden uit verschillende generaties mogen nooit samen gelden:
     // offline kan de ene uit de cache komen en de andere van het netwerk, en dan belandt
@@ -3621,15 +3630,24 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   document.getElementById('storing_knop').addEventListener('click',function(){location.reload();});
   if(!id){var fo=document.getElementById('fout');if(/[?&]gewist=1/.test(location.search)){geenLaden();fo.textContent='';var pg=document.createElement('p');pg.id='mg_weg';pg.style.cssText='font:600 16px/1.5 var(--disp)';pg.textContent=trmg('gewist');fo.appendChild(pg);fo.style.display='block';}else toonNietGevonden();}
   else{
-    Promise.all([
-      fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){
-        return r.json().catch(function(){return {ok:false};}).then(function(d){if(d&&!d.ok)d.status=r.status;return d;});
-      }),
-      // De therapeut kan voor editor/PDF een lijntekening kiezen. De digitale
-      // patiëntkaart gebruikt bewust altijd het kleurenbeeld uit de v2-catalogus.
-      fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
-      ,loadMobileReview().catch(function(){mediaReviewReady=false;})
-    ]).then(function(res){
+    // Eerst de kaart zelf. De server stuurt daarbij mee wat bij haar oefeningen hoort uit de
+    // bibliotheek (lib) en uit de keuring (keuring), zodat de patiënt niet bij elk bezoek de
+    // hele bibliotheek en het hele keuringsbestand binnenhaalt. Ontbreekt dat pakket (een
+    // antwoord uit de offline-cache van een oudere versie), of klopt het niet, dan leest de
+    // kaart de hele bestanden zoals eerst. Een kaart die niet bestaat haalt verder niets op.
+    fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){
+      return r.json().catch(function(){return {ok:false};}).then(function(d){if(d&&!d.ok)d.status=r.status;return d;});
+    }).then(function(d){
+      if(!d||!d.ok)return [d,[],null];
+      var eigen=Array.isArray(d.lib)&&d.keuring&&typeof d.keuring==='object';
+      return Promise.all([
+        d,
+        // De therapeut kan voor editor/PDF een lijntekening kiezen. De digitale
+        // patiëntkaart gebruikt bewust altijd het kleurenbeeld uit de v2-catalogus.
+        eigen?d.lib:fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
+        ,(eigen?loadMobileReview(d.keuring).catch(function(){return loadMobileReview();}):loadMobileReview()).catch(function(){mediaReviewReady=false;})
+      ]);
+    }).then(function(res){
       if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404){toonNietGevonden();vergeetKaartWeg();}else toonStoring(res[0]&&res[0].status);return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai,dag:typeof res[0].dag==='string'?res[0].dag:''};
       // Komt het stemmanifest pas na het tekenen binnen, dan zetten we alleen de wachtende
