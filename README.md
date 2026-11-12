@@ -190,7 +190,8 @@ terug naar de gedeelde server-lijst.
     genoeg om in te loggen, zoals bij elke herstelmail.
     Het geheim staat leesbaar in `praktijk-accounts.json`, want de server moet de code kunnen
     narekenen; wie die schijf kan lezen, heeft ook de tweede stap. De login van V1 (`/`) en de
-    beheersleutel hebben geen tweede stap. `npm run test:tweedestap` dekt de rekenkern (testvectoren
+    beheersleutel hebben geen tweede stap; een beheeraccount heeft hem altijd (zie *Beheer via
+    /admin88*). `npm run test:tweedestap` dekt de rekenkern (testvectoren
     uit RFC 4226 en RFC 6238), de QR-code en de routes.
 
 ## Gratis proef van 14 dagen (/v2/proef)
@@ -240,12 +241,59 @@ synchronisatie, wachttijd of aparte deploy nodig. Het geserveerde `oefeningen.js
 basisbestand + hernoemingen − verwijderd + toegevoegd. `/health` toont de tellers
 (`hernoemd`, `toegevoegd`, `verwijderd`).
 
-De mutatie-API's eisen een sleutel-header (`x-admin-sleutel`). De beheerpagina's vragen de
-beheerder om die sleutel en bewaren hem alleen in het tabblad (sessionStorage); hij staat
-in geen enkel publiek bestand. Live (Railway of `NODE_ENV=production`) werkt alleen een eigen
-`ADMIN_KEY`: zonder die variabele blijft beheer dicht. Alleen lokaal is `admin88` de standaard.
-Met de standaardsleutel kan beheer **geen** kaartoverzicht of patiëntgegevens van een praktijk
-lezen; alleen met een eigen `ADMIN_KEY` op de server werkt die beheeringang.
+### Wie is beheer: een eigen account per beheerder
+
+Een beheerder logt in met een eigen account: e-mailadres, eigen wachtwoord (minstens 12 tekens)
+en een tweede stap met een code-app. De beheerpagina's (`/admin88`, `/dashboard88`,
+`/content1000`, `/draft-review.html`) vragen daar zelf om (`public/beheersleutel.js`) en tonen
+daarna linksonder wie er is ingelogd, met *Accounts en logboek* en *Uitloggen*.
+
+- **Het eerste account** maak je met de sleutel van de server: open een beheerpagina, kies
+  *Inloggen met de beheersleutel*, vul de `ADMIN_KEY` van Railway in, kies *Maak een eigen
+  account* en daarna *Dit is mijn eigen account: nu instellen*. Volgende accounts maakt een
+  beheerder onder *Accounts en logboek*. Er kunnen er hooguit twintig zijn.
+- **Een nieuw account** krijgt een startwachtwoord dat de maker één keer ziet en dat een week
+  geldig is. Bij de eerste keer inloggen kiest de eigenaar een eigen wachtwoord, scant de QR-code
+  en krijgt acht reservecodes; pas dan is er een sessie en werkt het startwachtwoord niet meer.
+- **De sessie** staat in een cookie die scripts niet kunnen lezen (`__Host-fpbeheer`, twaalf uur)
+  en telt alleen samen met de kop `x-admin-sleutel: account`. Die kop sturen alleen de
+  beheerpagina's mee: de gewone app in dezelfde browser werkt dus niet stil met beheerrechten, en
+  een andere website kan niets namens beheer doen. Inloggen blijft over een uitrol heen
+  (`beheer-sessies.json` in de datamap: alleen de SHA-256 van de sessiesleutel; het bestand gaat
+  niet mee in de reservekopie). Wil je alle beheerders opnieuw laten inloggen, verwijder dan dat
+  bestand en herstart.
+- **Kwijt** (telefoon, reservecodes of wachtwoord): een andere beheerder zet het account uit en
+  maakt het opnieuw; de eigenaar begint dan met een nieuw startwachtwoord. Is er geen andere
+  beheerder, dan gaat dat met de `ADMIN_KEY`. Uitzetten trekt alle sessies van dat account
+  meteen in. Het eigen wachtwoord wijzigen kan onder *Accounts en logboek*, met het huidige
+  wachtwoord en een code.
+- **Raden:** na tien foute wachtwoorden binnen een kwartier staat een adres op slot: het
+  antwoord zegt dan niet meer of een wachtwoord klopt. Wie het wachtwoord én een goede code
+  heeft, komt wel binnen; wie alleen het adres kent, kan de eigenaar zo niet buitensluiten.
+  Daarnaast geldt de rem per verbinding. Foute codes na een goed wachtwoord tellen op schijf:
+  na twintig op een dag werkt de code-app 24 uur niet (een reservecode wel) en krijgen de
+  beheerders een mail.
+- **Het beheerlogboek** (`beheer-log.jsonl` in de datamap, mee in de reservekopie) krijgt een
+  regel voor alles wat beheer wijzigt: wie, wat, wanneer, vanaf welk (gemaskeerd) adres en met
+  welk antwoord. Ook inloggen en uitloggen, een foute code na een goed wachtwoord, een account
+  erbij of eraf, de herstelmail aan een praktijk en het lezen van gegevens van een praktijk
+  zonder account (één regel per beheerder en praktijk per uur) staan erin. Er is geen route die
+  een regel wijzigt of weghaalt. Wie bij de schijf van de server kan, kan het bestand wel
+  aanpassen; daarom gaat bij een account erbij, opnieuw gemaakt of uitgezet ook een mail naar de
+  beheerders en naar het meldadres (`PROEF_MELDING_AAN`), als mail op de server aanstaat.
+- **De sleutel** (`ADMIN_KEY`, in de kop `x-admin-sleutel`) blijft werken zolang de variabele op
+  de server staat. Hij is van niemand persoonlijk en heet in het logboek "beheersleutel". De
+  uploadscripts gebruiken hem (`FYSIPLAN_ADMIN_KEY`). Heeft iedere beheerder een account, haal
+  `ADMIN_KEY` dan weg in Railway: beheer kan daarna alleen nog met een account, en het laatste
+  werkende account kan niet worden uitgezet. Zet de variabele tijdelijk terug voor een
+  uploadscript, of als niemand meer kan inloggen. Live (Railway of `NODE_ENV=production`) werkt
+  alleen een eigen `ADMIN_KEY`; alleen lokaal is `admin88` de standaard. Met die standaardsleutel
+  kan beheer **geen** accounts maken en **geen** kaartoverzicht of patiëntgegevens van een
+  praktijk lezen. Het woord `account` kan geen sleutel zijn.
+
+Ook met een account komt beheer niet bij de kaarten van een beveiligde praktijk.
+`npm run test:beheeraccounts` dekt de rekenkern (`lib/beheer.js`), de routes, de schermen en een
+herstart.
 
 **Een praktijk die er niet meer in komt.** Beheer kan het account van een praktijk niet wissen
 en komt met de sleutel niet bij de kaarten van een beveiligde praktijk (de oude
@@ -253,7 +301,8 @@ en komt met de sleutel niet bij de kaarten van een beveiligde praktijk (de oude
 wachtwoord kwijt is, vraagt zelf een link aan (zie *Wachtwoord vergeten*); beheer is pas nodig
 als dat niet kan, bijvoorbeeld omdat het adres niet klopt of omdat de enige beheerder ook de
 tweede stap kwijt is. Is een praktijk haar wachtwoord en herstelcode kwijt, dan laat beheer de
-server een herstelmail sturen:
+server een herstelmail sturen. Dat kan op een beheerpagina onder *Accounts en logboek*, bij
+*Een praktijk komt er niet meer in*, of met de sleutel:
 
 ```
 curl -X POST https://fysiplan.nl/api/beheer/praktijk-herstel \
@@ -270,7 +319,8 @@ verandert er niets: wachtwoorden en sessies blijven werken. Hooguit drie aanvrag
 per dag. Is er van de praktijk geen eigen adres bekend, of staat mail uit, dan kan het niet via
 deze weg (`npm run test:beheerherstel`). De beheersleutel alleen opent zo geen praktijk meer. Wie
 bij de server of bij de mailprovider kan (die bewaart verzonden mail), blijft technisch bij
-gegevens kunnen; daarom staan de reden en het moment in het logboek van de praktijk.
+gegevens kunnen; daarom staan de reden en het moment in het logboek van de praktijk, en staat in
+het beheerlogboek welke beheerder de mail liet sturen, voor welke praktijk, waarom en waarheen.
 
 Heeft een beheerder een tweede stap bij het inloggen en is ook die kwijt (telefoon én
 reservecodes), stuur dan `"tweedeStap": true` mee in hetzelfde verzoek. De mail zegt dan dat met de
@@ -335,9 +385,10 @@ eigenaars-dashboard, met automatische verversing per minuut en een donkere modus
   `POST /api/stats/event` — alleen aantallen, nooit inhoud).
 - **Bibliotheek:** oefeningen, categorieën en de beheer-tellers.
 - **Security:** geweigerde beheer-verzoeken (tijd, gemaskeerd IP, doel), of de opslag blijvend is
-  (Railway-volume) en of er een eigen `ADMIN_KEY` is ingesteld, plus versie en uptime.
+  (Railway-volume), hoeveel persoonlijke beheeraccounts er zijn en of de sleutel van de server
+  nog aanstaat, plus versie en uptime.
 
-De data komt uit `GET /api/dashboard` (beheer-sleutel vereist); tellers staan in
+De data komt uit `GET /api/dashboard` (alleen voor beheer); tellers staan in
 `statistieken.json` in de datamap.
 
 ## Nieuwe plaatjes toevoegen (in de repo)

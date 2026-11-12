@@ -344,6 +344,31 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **TER INFO voor audit (a), (b) en (g), 2026-11-12 (platformreview, test:beheeraccounts) — beheer heeft persoonlijke accounts.**
+  Nieuw aanvalsvlak: `POST /api/beheer/login`, `/logout`, `/accounts`, `/accounts/uit`, `/wachtwoord`, `GET /api/beheer/ik` en
+  `/overzicht`, `lib/beheer.js`, `public/beheersleutel.js`, en de bestanden `beheer-accounts.json` (scrypt-hash, TOTP-geheim
+  leesbaar, reservecodes als hash), `beheer-sessies.json` (alleen sha256(token) plus een afdruk van de wachtwoordhash; niet in de
+  reservekopie) en `beheer-log.jsonl` (alleen erbij schrijven). Hoe het in elkaar zit: de sessie staat in `__Host-fpbeheer`
+  (lokaal `fpbeheer`; HttpOnly, SameSite=Strict, twaalf uur) en telt alleen samen met de kop `x-admin-sleutel: account`;
+  `eigenCookie` negeert de cookie bij `kruisSite`. `isAdmin` laat een account of de sleutel toe, `beheerEigen` een account of een
+  eigen sleutel (alle plekken die vroeger `ADMIN_KEY_EIGEN && isAdmin` vroegen). Een nieuw account heeft een startwachtwoord van een
+  week; een sessie komt er pas na een eigen wachtwoord (12 tekens) en een ingestelde tweede stap. Rem: tien foute wachtwoorden per
+  kwartier per adres (`beheerRem`, alleen in het geheugen), de bestaande rem per verbinding, en de dagteller van de tweede stap op
+  schijf. Staat een adres op slot, dan krijgt elk verzoek hetzelfde 429, behalve wachtwoord plus goede code: zo sluit wie alleen
+  het adres kent de eigenaar niet buiten, en is er geen antwoord meer dat zegt of een wachtwoord klopt (het verzoek met een goed
+  wachtwoord en een foute code schrijft wel naar schijf en duurt dus iets langer). Een onbekend adres krijgt hetzelfde antwoord na
+  dezelfde rekentijd (`BEHEER_NEPHASH`).
+  Bewust zo gelaten, graag meewegen bij de volgende audit:
+  (1) de sleutel houdt alle rechten zolang `ADMIN_KEY` op de server staat, ook accounts maken en uitzetten: dat is de weg voor
+  het eerste account en de weg naar binnen als niemand meer kan inloggen. Het beheerlogboek noemt hem "beheersleutel";
+  (2) de beheerpagina's hebben alleen `frame-ancestors 'none'`, geen script-CSP: een XSS op een beheerpagina kan handelen zolang de
+  pagina open is, maar de sessie niet meenemen;
+  (3) `/aanmeldingen` en `/medewerkers` (de accountlaag van V1 met `ACCOUNT_BEHEER_EMAILS`) hebben geen tweede stap en zijn niet
+  op de beheeraccounts overgezet;
+  (4) `/api/praktijk/login` antwoordt bij een onbekend e-mailadres nog sneller dan bij een bekend adres met een fout wachtwoord
+  (niet gemeten, gelezen in de code); de beheerlogin doet dat niet;
+  (5) wie bij de schijf kan, kan het logboek aanpassen: het is een spoor voor beheerders onderling, geen bewijs tegen de hoster.
+  Daarom gaat bij een account erbij, opnieuw gemaakt of uitgezet ook een mail naar de beheerders en het meldadres.
 - **TER INFO voor audit (b) en (g), 2026-11-12 (platformreview, test:sessiecookie) — de praktijksessie staat nu in een cookie.**
   Tot nu toe stond de sleutel in `localStorage` en ging hij mee in `x-praktijk-sessie`; oudere notities hier en in het oude
   logboek ("geen cookie, dus geen CSRF op de ingelogde schrijfroutes") gelden daardoor niet meer. Nu: cookie `__Host-fpsessie`
@@ -592,9 +617,11 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   Repro: 25× fout via `x-admin-sleutel`, dan de juiste sleutel → 200.
   Fix: in de beheerroutes eerst de IP-rem controleren, dan pas de sleutel. Nu: `isAdmin()` weigert elke sleutel
   van een IP dat op de rem staat (`beheerOpRem`); andere IP's merken niets. Test: `npm run test:beheer`.
-- **LAAG — beheer is één gedeelde sleutel, geen account.** Geen audit wie wat
-  wijzigde, geen intrekken per persoon. Toegangsbeheer (`ACCOUNT_BEHEER_EMAILS`)
-  laat zien hoe het wel kan; overstappen kan later per beheerroute.
+- **OPGELOST 2026-11-12 (platformreview, test:beheeraccounts) — LAAG — beheer is één gedeelde sleutel, geen account.** Geen audit
+  wie wat wijzigde, geen intrekken per persoon. Toegangsbeheer (`ACCOUNT_BEHEER_EMAILS`)
+  laat zien hoe het wel kan; overstappen kan later per beheerroute. Nu: persoonlijke beheeraccounts met een tweede stap, uitzetten
+  per persoon en een beheerlogboek (zie de notitie bovenaan Open). De sleutel werkt nog zolang `ADMIN_KEY` op de server staat;
+  weghalen is aan de eigenaar.
 
 ## Opgelost
 

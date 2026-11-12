@@ -19,6 +19,7 @@ import { SESSIE_MS, SessieTabel, laadSessies, sessieSleutel, wachtwoordAfdruk } 
 import { kiesInpak, inpakbaar, pakIn, etagKomtOvereen } from "./lib/inpakken.js";
 import { kleinPadVoor, kleinMap } from "./lib/klein-beeld.js";
 import { nieuwGeheim, controleer, otpauth, nieuweReservecode, reservecodeNormaal } from "./lib/totp.js";
+import { BEHEER_SESSIE_MS, BEHEER_WW_MIN, BEHEER_EERSTE_KEER_MS, BeheerSessies, BeheerLogboek, Rem, laadBeheerSessies, beheerKlaar, beheerVerlopen, beheerUit, beheerPad } from "./lib/beheer.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -54,22 +55,22 @@ try {
     }]));
 } catch {}
 
-// Beheer: /admin88 toont de beheer-weergave; mutatie-API's eisen deze sleutel als header.
-// Let op: dit is afscherming-door-verhulling, geen echte authenticatie.
-// Productie (Railway, of NODE_ENV=production) zonder eigen ADMIN_KEY: beheer blijft
-// dicht. De standaardsleutel "admin88" staat in de openbare repo en werkt daarom
-// alleen nog lokaal (ontwikkelen en tests), nooit live.
+// Beheer: /admin88 toont de beheer-weergave; de beheer-API's eisen een ingelogd beheeraccount
+// (zie "persoonlijke beheeraccounts" verderop) of deze sleutel als header.
+// Productie (Railway, of NODE_ENV=production) zonder eigen ADMIN_KEY: de sleutel werkt niet en
+// beheer kan alleen met een account. De standaardsleutel "admin88" staat in de openbare repo
+// en werkt daarom alleen nog lokaal (ontwikkelen en tests), nooit live. Het woord "account"
+// kan geen sleutel zijn: dat stuurt een beheerpagina mee die met een account werkt.
 const IS_PRODUCTIE = !!(process.env.RAILWAY_ENVIRONMENT || process.env.RAILWAY_ENVIRONMENT_NAME ||
   process.env.RAILWAY_PROJECT_ID || process.env.NODE_ENV === "production");
 const ADMIN_KEY = (() => {
   const eigen = String(process.env.ADMIN_KEY || "");
-  if (eigen && eigen !== "admin88") return eigen;
+  if (eigen && eigen !== "admin88" && eigen !== "account") return eigen;
   return IS_PRODUCTIE ? "" : "admin88";
 })();
-if (IS_PRODUCTIE && !ADMIN_KEY) console.warn("Beheer staat dicht: zet een eigen ADMIN_KEY op de server.");
 // de standaardsleutel staat in de openbare README: met alleen die sleutel geeft de
 // beheerrol géén toegang tot patiëntgegevens (kaartoverzichten van praktijken)
-const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88";
+const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88" && process.env.ADMIN_KEY !== "account";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-11-2";
@@ -133,9 +134,11 @@ const STREAM_API_BASIS = String(process.env.STREAM_API_BASIS || "https://api.clo
 // hele lijst, /api/opname/start en POST /api/kaarten een ander antwoord). Zonder dit
 // waren dat orakels om de sleutel te raden zonder ooit op de rem te lopen (security
 // 2026-11-10). Eén keer per verzoek; denied() telt een al getelde poging niet opnieuw.
-const isAdmin = (req) => {
-  const a = Buffer.from(String(req.headers["x-admin-sleutel"] || ""));
-  if (!ADMIN_KEY) return false;
+// Dit is alleen de sleutel; isAdmin (verderop) kijkt eerst of er een beheeraccount is ingelogd.
+const isAdminSleutel = (req) => {
+  const kop = String(req.headers["x-admin-sleutel"] || "");
+  if (!ADMIN_KEY || kop === "account") return false;
+  const a = Buffer.from(kop);
   if (a.length && beheerOpRem(req)) return false;
   const b = Buffer.from(ADMIN_KEY);
   const goed = a.length === b.length && timingSafeEqual(a, b);
@@ -382,10 +385,12 @@ function opHttps(request) {
   return proxyProto === "https" || !!request?.socket?.encrypted;
 }
 const sessieCookieNaam = (request) => (opHttps(request) ? "__Host-fpsessie" : "fpsessie");
-function sessieCookie(token, request, seconden) {
-  return sessieCookieNaam(request) + "=" + (token || "") + "; Path=/; HttpOnly; SameSite=Strict" + (opHttps(request) ? "; Secure" : "") +
-    "; Max-Age=" + (token ? Math.max(1, Math.floor(seconden)) : 0);
+// de kop voor een eigen cookie; een lege waarde haalt de cookie weg
+function cookieKop(naam, waarde, request, seconden) {
+  return naam + "=" + (waarde || "") + "; Path=/; HttpOnly; SameSite=Strict" + (opHttps(request) ? "; Secure" : "") +
+    "; Max-Age=" + (waarde ? Math.max(1, Math.floor(seconden)) : 0);
 }
+const sessieCookie = (token, request, seconden) => cookieKop(sessieCookieNaam(request), token, request, seconden);
 // een cookie erbij zetten zonder een eerder gezette (bijvoorbeeld die van de proef) te verliezen
 function zetCookie(response, kop) {
   const al = response.getHeader("set-cookie");
@@ -398,15 +403,16 @@ function sessieUit(request, response, token) {
   return vanBrowser(request) ? "cookie" : token;
 }
 const sessieKop = (req) => String(req.headers["x-praktijk-sessie"] || "").trim();
-function sessieCookieVan(req) {
+// de waarde van een eigen cookie; hij telt niet bij een verzoek vanaf een andere website
+function eigenCookie(req, naam) {
   if (kruisSite(req)) return "";
-  const naam = sessieCookieNaam(req);
   for (const deel of String(req.headers.cookie || "").split(";")) {
     const i = deel.indexOf("=");
     if (i > 0 && deel.slice(0, i).trim() === naam) return deel.slice(i + 1).trim();
   }
   return "";
 }
+const sessieCookieVan = (req) => eigenCookie(req, sessieCookieNaam(req));
 // de sessie met praktijk en (eventueel) lid; een verwijderd lid of een uitgezet
 // praktijkwachtwoord maakt de sessie meteen ongeldig. Eerst de sleutel uit de kop (wie hem
 // zelf meestuurt), anders die uit de cookie.
@@ -463,6 +469,116 @@ const sjablonenVoorApp = (request, pk) => {
   const sessie = sessieVan(request);
   return (praktijkSjablonen[pk] || []).map((sj) => ({ ...sj, magWeg: magGedeeldAanpassen(sessie, sj, pk) }));
 };
+// ---- persoonlijke beheeraccounts (platformreview 2026-11-11) ----
+// Beheer was één gedeelde sleutel in een kop: van niemand persoonlijk, niet per persoon in te
+// trekken, en zonder spoor van wie wat deed. Nu logt een beheerder in met een eigen
+// e-mailadres, een eigen wachtwoord en een tweede stap (dezelfde code-app als bij de praktijken).
+// - De accounts staan in beheer-accounts.json: { emailKlein: { email, naam, hash, gemaakt, door,
+//   eersteKeer?, totp?, laatst?, uit?, uitDoor? } }. Een account maken kan een beheerder met een
+//   account, of wie de eigen ADMIN_KEY van de server heeft: zo komt het eerste account er. De
+//   openbare standaardsleutel van een lokale server kan dat niet.
+// - Een nieuw account krijgt een startwachtwoord dat de maker één keer ziet. Bij de eerste keer
+//   inloggen kiest de eigenaar een eigen wachtwoord en stelt de tweede stap in; pas dan is er een
+//   sessie, en de maker kent het wachtwoord niet meer. Wie dat niet binnen een week doet, vraagt
+//   een nieuw startwachtwoord.
+// - De sessie staat in een cookie die scripts niet kunnen lezen (__Host-fpbeheer op https,
+//   fpbeheer lokaal) en geldt twaalf uur. Ze overleeft een uitrol, net als de sessies van de
+//   praktijken (beheer-sessies.json: alleen de SHA-256 van de sessiesleutel; het bestand gaat
+//   niet mee in de reservekopie). De cookie alleen is niet genoeg: het verzoek moet ook de kop
+//   `x-admin-sleutel: account` dragen. Die sturen alleen de beheerpagina's mee. Een beheerder
+//   die in dezelfde browser de gewone app gebruikt, werkt daar dus niet stil met beheerrechten,
+//   en een andere website kan de kop niet meesturen.
+// - Kwijt (telefoon, reservecodes of wachtwoord): een andere beheerder zet het account uit en
+//   maakt het opnieuw; de eigenaar begint dan met een nieuw startwachtwoord. Is er geen andere
+//   beheerder, dan gaat dat met de ADMIN_KEY van de server.
+// - De sleutel blijft werken zolang ADMIN_KEY op de server staat (de uploadscripts gebruiken
+//   hem). Zonder die variabele kan beheer alleen nog met een account; hem terugzetten is de weg
+//   naar binnen als niemand meer kan inloggen.
+// - Alles wat beheer doet, staat in het beheerlogboek (beheer-log.jsonl, lib/beheer.js): wie,
+//   wat, wanneer en met welk antwoord. Er is geen route die een regel wijzigt of weghaalt, en
+//   het bestand gaat mee in de reservekopie.
+const beheerAccountsPath = join(dataDir, "beheer-accounts.json");
+const beheerLogPath = join(dataDir, "beheer-log.jsonl");
+const BEHEER_MAX = 20; // er zijn maar een handvol beheerders
+let beheerAccounts = {};
+try { beheerAccounts = JSON.parse(await readFile(beheerAccountsPath, "utf8")); }
+catch (err) {
+  // een bestand dat er wel is maar niet te lezen: bewaar het, want de eerste wijziging schrijft een nieuw
+  if (err && err.code !== "ENOENT") {
+    console.error("beheer-accounts.json is onleesbaar; beheer start zonder accounts:", err.message);
+    try { await copyFile(beheerAccountsPath, beheerAccountsPath + ".onleesbaar"); } catch {}
+  }
+}
+if (!beheerAccounts || typeof beheerAccounts !== "object" || Array.isArray(beheerAccounts)) beheerAccounts = {};
+const beheerSessiesPath = join(dataDir, "beheer-sessies.json");
+// sha256(token) -> { email, t, w }; send() wacht met het antwoord tot een wijziging op schijf staat
+const beheerSessieTabel = new SessieTabel((inhoud) => saveJson(beheerSessiesPath, inhoud)).vul(await laadBeheerSessies(beheerSessiesPath));
+const beheerSessies = new BeheerSessies(() => beheerAccounts, undefined, beheerSessieTabel);
+const beheerLog = await new BeheerLogboek(beheerLogPath).laad();
+// tien missers per kwartier per e-mailadres, los van de rem van de praktijken
+const beheerRem = new Rem(10, 15 * 60000);
+// voor wie een adres probeert dat geen account heeft: even lang rekenen als bij een echt account
+const BEHEER_NEPHASH = maakHash(randomBytes(16).toString("hex"));
+const beheerAccount = (email) => (Object.hasOwn(beheerAccounts, email) ? beheerAccounts[email] : null);
+const beheerWerkend = () => Object.values(beheerAccounts).filter((a) => beheerKlaar(a));
+if (IS_PRODUCTIE && !ADMIN_KEY && !beheerWerkend().length) console.warn("Beheer staat dicht: er is geen beheeraccount en geen eigen ADMIN_KEY op de server.");
+const beheerCookieNaam = (request) => (opHttps(request) ? "__Host-fpbeheer" : "fpbeheer");
+const beheerCookie = (token, request) => cookieKop(beheerCookieNaam(request), token, request, BEHEER_SESSIE_MS / 1000);
+// het account van de beheerder die bij dit verzoek is ingelogd, of null: de cookie én de kop
+function beheerAccountVan(req) {
+  if (String(req.headers["x-admin-sleutel"] || "") !== "account") return null;
+  return beheerSessies.van(eigenCookie(req, beheerCookieNaam(req)));
+}
+// Is dit verzoek van beheer? Een ingelogd beheeraccount, of de sleutel van de server. Wie het
+// was, staat daarna in req.beheerWie (het e-mailadres, of "beheersleutel") voor het logboek.
+const isAdmin = (req) => {
+  const a = beheerAccountVan(req);
+  if (a) { req.beheerWie = a.email; return true; }
+  if (isAdminSleutel(req)) { req.beheerWie = "beheersleutel"; return true; }
+  return false;
+};
+// Beheer dat bij gegevens van praktijken en bij de accounts mag: een persoonlijk account, of een
+// eigen sleutel. De openbare standaardsleutel van een lokale server telt daar niet.
+const beheerEigen = (req) => {
+  const a = beheerAccountVan(req);
+  if (a) { req.beheerWie = a.email; return true; }
+  if (ADMIN_KEY_EIGEN && isAdminSleutel(req)) { req.beheerWie = "beheersleutel"; return true; }
+  return false;
+};
+const beheerIp = (req) => maskIp(clientIp(req));
+// de pagina's waar beheer inlogt (public/beheersleutel.js)
+const BEHEER_PAGINAS = new Set(["/admin88", "/dashboard88", "/dashboard88/", "/dashboard.html", "/content1000", "/content1000.html", "/draft-review.html"]);
+// Beheer leest gegevens van een praktijk zonder account (kaartoverzicht, sjablonen, eigen
+// oefeningen). Een wijziging krijgt haar regel aan het eind van het verzoek (zie afhandelen),
+// met de praktijk erbij. Lezen krijgt één regel per beheerder en praktijk per uur: het overzicht
+// ververst zichzelf en zou het logboek anders vullen.
+const beheerInzageLaatst = new Map(); // wie + praktijk -> moment van de laatste regel
+function beheerInzage(req, pk) {
+  req.beheerDoel = pk;
+  if (req.method !== "GET" && req.method !== "HEAD") return;
+  const sleutel = req.beheerWie + "\n" + pk, nu = Date.now();
+  if (beheerInzageLaatst.size > 2000) for (const [k, t] of beheerInzageLaatst) if (nu - t > 3600e3) beheerInzageLaatst.delete(k);
+  if (nu - (beheerInzageLaatst.get(sleutel) || 0) < 3600e3) return;
+  beheerInzageLaatst.set(sleutel, nu);
+  beheerLog.schrijf({ wie: req.beheerWie, actie: "gegevens gelezen van een praktijk zonder account", praktijk: pk, pad: beheerPad(req.url), ip: beheerIp(req) });
+}
+// een startwachtwoord dat over te typen is: vijf blokken van vier kleine letters en cijfers (100 bits)
+const nieuwStartwachtwoord = () => nieuwGeheim().slice(0, 20).toLowerCase().replace(/(.{4})(?=.)/g, "$1-");
+// het eigen wachtwoord van een beheerder: lang genoeg, en niet het startwachtwoord of het oude
+function beheerWachtwoordFout(nieuw, oud) {
+  if (nieuw.length < BEHEER_WW_MIN) return "Kies een eigen wachtwoord van minstens " + BEHEER_WW_MIN + " tekens.";
+  if (nieuw.length > 200) return "Kies een wachtwoord van hooguit 200 tekens.";
+  if (nieuw === oud) return "Kies een ander wachtwoord dan het wachtwoord dat je nu hebt.";
+  return "";
+}
+// bericht aan de beheerders die kunnen inloggen, en aan het adres dat de server voor meldingen
+// gebruikt: een account erbij, opnieuw gemaakt of uitgezet valt zo niemand ongemerkt in handen
+function meldBeheerders(onderwerp, tekst, ookAan) {
+  if (!mailIngesteld()) return;
+  const aan = new Set([...beheerWerkend().map((a) => a.email), ...proefMeldingAan.map(normEmail), ...(ookAan ? [ookAan] : [])].filter(geldigEmail));
+  for (const adres of aan) stuurMail(adres, onderwerp, tekst + "\n\nWeet je hier niets van? Kijk dan in het beheerlogboek (Beheer, op een beheerpagina) wie dit deed en zet het account uit.\n\nFysiplan")
+    .catch((err) => console.error("mail aan beheer mislukt:", err.message));
+}
 // Kaartmaker is een onveranderlijke account-id, nooit een opgegeven behandelaarnaam.
 const kaartMaker = (req, pk) => {
   const s = sessieVan(req);
@@ -472,7 +588,7 @@ const kaartMaker = (req, pk) => {
 };
 const magKaartVerwijderen = (req, pk, kaart) => {
   const s = sessieVan(req);
-  return !!((ADMIN_KEY_EIGEN && isAdmin(req)) ||
+  return !!(beheerEigen(req) ||
     (s && s.pk === pk && isBeheer(s)) ||
     (kaart.maker && kaart.maker === kaartMaker(req, pk)));
 };
@@ -502,7 +618,8 @@ async function eisPraktijk(req, res, pk) {
 // geen patiëntgegevens op de server zonder een praktijk die er de eigenaar van is.
 async function eisBeveiligdePraktijk(req, res, pk, fout) {
   if (praktijkGeclaimd(pk)) return eisPraktijk(req, res, pk);
-  if ((ADMIN_KEY_EIGEN && isAdmin(req)) || v1SessieVan(req)) return false;
+  if (beheerEigen(req)) { beheerInzage(req, pk); return false; }
+  if (v1SessieVan(req)) return false;
   // de naam hoort bij een beveiligde praktijk met een eigen code (sessie verlopen of
   // nog niet ingelogd): vraag om inloggen, niet om opnieuw te beveiligen
   if (accountsMetNaam(pk).length) {
@@ -1064,7 +1181,7 @@ const PROEF_SCHRIJFROUTES = new Set(["/api/kaarten", "/api/praktijk/oefeningen",
   "/api/kaart/antwoord", "/api/assistent", "/api/praktijk/team/uitnodigen", "/api/praktijk/team/eigen-login"]);
 function proefSlotVoor(req, urlPath) {
   if (req.method !== "POST" || !PROEF_SCHRIJFROUTES.has(urlPath)) return false;
-  if (ADMIN_KEY_EIGEN && isAdmin(req)) return false;
+  if (beheerEigen(req)) return false;
   return proefVerlopen(proefVan(req)) || praktijkProefVerlopen(praktijkSessieVan(req));
 }
 // Een nieuwe praktijk beveiligen (en daarmee kaarten delen) kan alleen vanuit een lopende
@@ -2440,7 +2557,7 @@ function leesLimiet(req, res) {
 // blijven buiten de back-up.
 // ook de eigen oefeningen van praktijken, het logboek en de start van de bewaartermijn: zonder
 // die drie kwam een praktijk na een restore terug zonder eigen oefeningen en zonder logboek
-const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, praktijkOefeningenPath, accountsPath, auditPath, bewaarPath, v1AccountsPath, proefPath];
+const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, praktijkOefeningenPath, accountsPath, auditPath, bewaarPath, v1AccountsPath, proefPath, beheerAccountsPath, beheerLogPath];
 // reservekopie buiten Railway (lib/backup-elders.js): dezelfde bestanden, versleuteld, naar een
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
@@ -2849,8 +2966,8 @@ async function send(res, status, type, body) {
   }
   // Een sessiewijziging (inloggen, uitloggen, intrekken) staat op schijf vóór het antwoord
   // vertrekt. Meestal is er niets om op te wachten en loopt dit antwoord de oude weg.
-  if (praktijkSessies.achter) {
-    await praktijkSessies.bijgewerkt();
+  if (praktijkSessies.achter || beheerSessieTabel.achter) {
+    await Promise.all([praktijkSessies.bijgewerkt(), beheerSessieTabel.bijgewerkt()]);
     if (res.headersSent || res.destroyed || res.writableEnded) return;
   }
   // nosniff en een sobere referrer-policy op alles: puur verhardend, verandert geen gedrag
@@ -3009,7 +3126,11 @@ function telBeheerMis(req) {
   if (!t || nu - t.start > BEHEER_REM_MS) { adminMisTeller.set(ip, { start: nu, n: 1 }); return false; }
   return ++t.n > 20;
 }
-const denied = (req, res, pad, melding = "Alleen beschikbaar voor beheer.") => {
+const denied = (req, res, pad, melding) => {
+  // een beheerpagina die met een account werkt en geen geldige sessie (meer) heeft: zeg wat er te doen is
+  if (!melding) melding = String(req.headers["x-admin-sleutel"] || "") === "account"
+    ? "Je bent niet (meer) ingelogd als beheer. Herlaad de pagina en log opnieuw in."
+    : "Alleen beschikbaar voor beheer.";
   logGeweigerd(req, pad);
   const opRem = req.beheerMisGeteld ? beheerOpRem(req) : telBeheerMis(req);
   req.beheerMisGeteld = true;
@@ -3062,6 +3183,23 @@ async function afhandelen(request, response) {
   let urlPath;
   try { urlPath = decodeURIComponent((request.url || "/").split("?")[0]); }
   catch { await send(response, 400, "text/plain; charset=utf-8", "Bad request"); return; }
+
+  // de beheerpagina's nooit in een kader van een andere website, en niet in een zoekmachine
+  if (BEHEER_PAGINAS.has(urlPath)) {
+    response.setHeader("x-frame-options", "DENY");
+    response.setHeader("content-security-policy", "frame-ancestors 'none'");
+    response.setHeader("x-robots-tag", "noindex, noarchive");
+  }
+
+  // Beheerlogboek: elk verzoek dat als beheer is toegelaten en iets wijzigt, krijgt een regel
+  // met wie, wat en welk antwoord. Routes die zelf een regel schrijven (inloggen, accounts, de
+  // herstelmail) zetten request.beheerGelogd. "close" komt ook als de verbinding wegvalt voordat
+  // het antwoord er is: de wijziging kan dan al gedaan zijn.
+  response.once("close", () => {
+    if (!request.beheerWie || request.beheerGelogd || request.method === "GET" || request.method === "HEAD") return;
+    beheerLog.schrijf({ wie: request.beheerWie, actie: request.method + " " + beheerPad(request.url), status: response.statusCode,
+      doel: request.beheerDoel, ip: beheerIp(request), ...(response.writableFinished ? {} : { afgebroken: true }) });
+  });
 
   // beheer-URL zonder slash, zodat relatieve paden (images/, api/) blijven kloppen
   if (urlPath === "/admin88/") { response.writeHead(301, { location: "/admin88" }); response.end(); return; }
@@ -3403,7 +3541,8 @@ async function afhandelen(request, response) {
           verlopen: l.filter((p) => proefVerlopen(p)).length, klant: l.filter((p) => p.klant).length,
           laatste24u: l.filter((p) => p.gestart >= vandaag).length, doorgaan: l.filter((p) => p.doorgaan && !p.klant).length }; })(),
       security: { geweigerd: stats.security.geweigerd, laatste: stats.security.laatste.slice(0, 10),
-        adminSleutelAangepast: !!process.env.ADMIN_KEY, volumeActief: dataDir === "/data" || !!process.env.DATA_DIR },
+        adminSleutelAangepast: !!process.env.ADMIN_KEY, volumeActief: dataDir === "/data" || !!process.env.DATA_DIR,
+        beheerAccounts: beheerWerkend().length, beheerSleutel: ADMIN_KEY_EIGEN ? "eigen" : ADMIN_KEY ? "standaard" : "uit" },
       versie: { commit: buildInfo.commit || "onbekend", builtAt: buildInfo.builtAt || null,
         uptimeUren: Math.round((Date.now() - startTijd) / 360000) / 10 }
     });
@@ -3413,7 +3552,7 @@ async function afhandelen(request, response) {
   // Private concept review only: never merged into buildManifest or patient cards.
   // A public default admin88 key must not expose unpublished assets.
   if (urlPath === "/api/exercise-drafts" || urlPath.startsWith("/api/exercise-drafts/")) {
-    if (!ADMIN_KEY_EIGEN || !isAdmin(request)) { await denied(request, response, urlPath); return; }
+    if (!beheerEigen(request)) { await denied(request, response, urlPath); return; }
     if (request.method !== "GET") { await sendJson(response, 405, { fout: "Alleen lezen; publiceren is niet beschikbaar." }); return; }
     response.setHeader("Cache-Control", "private, no-store");
     try {
@@ -3525,7 +3664,7 @@ async function afhandelen(request, response) {
         ? { naam: proefVan(request).naam || "", email: proefVan(request).email || "" } : undefined,
       // zonder lopende proef valt er niets te beveiligen (PROEF_VERPLICHT): de app zegt dat vóór
       // het formulier van de eigen login, niet erna
-      proefNodig: (EIGEN_LOGIN_VERPLICHT && PROEF_VERPLICHT && !ingelogd && !proefVan(request) && !(ADMIN_KEY_EIGEN && isAdmin(request))) || undefined,
+      proefNodig: (EIGEN_LOGIN_VERPLICHT && PROEF_VERPLICHT && !ingelogd && !proefVan(request) && !beheerEigen(request)) || undefined,
       bewaar: { stil: BEWAAR_STIL_DAGEN, afgerond: BEWAAR_AFGEROND_DAGEN },
       // het akkoord van de praktijk; beheer: alleen een beheerder kan opnieuw akkoord gaan
       akkoord: ingelogd ? { ...akkoordStatus(praktijkAccounts[eigen]), beheer: isBeheer(sessieVan(request)) } : undefined,
@@ -3574,7 +3713,7 @@ async function afhandelen(request, response) {
       // zonder lopende proef (of klant zijn) geen nieuwe praktijk, zie PROEF_VERPLICHT: het
       // antwoord dat dan hoort, of null als de proef in orde is
       const proefFout = () => {
-        if (!PROEF_VERPLICHT || (ADMIN_KEY_EIGEN && isAdmin(request))) return null;
+        if (!PROEF_VERPLICHT || beheerEigen(request)) return null;
         const p = proefVan(request);
         if (!p) return { ok: false, proefNodig: true, fout: "Start eerst je gratis proef van " + PROEF_DAGEN + " dagen. Daarna beveilig je hier je praktijk en deel je kaarten. Werkt je praktijk al met Fysiplan? Vraag je collega dan om een uitnodiging." };
         if (proefVerlopen(p)) return { ok: false, proefVerlopen: true, fout: "Je gratis proef is voorbij. Wil je doorgaan? Kijk op fysiplan.nl/v2/proef." };
@@ -4461,6 +4600,252 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // ---- persoonlijke beheeraccounts (uitleg bij beheerAccountVan) ----
+  // wie is hier ingelogd? Voor de beheerpagina's; zonder login gewoon 200 met wie: null, zodat
+  // het openen van een beheerpagina niet meetelt als geweigerde poging
+  if (urlPath === "/api/beheer/ik" && request.method === "GET") {
+    const a = beheerAccountVan(request);
+    if (a) { await sendJson(response, 200, { ok: true, wie: beheerUit(a), eigen: true }); return; }
+    const kop = String(request.headers["x-admin-sleutel"] || "");
+    // wie met een sleutel komt terwijl de verbinding op de rem staat, hoort dat (en niet "geen toegang")
+    if (kop && kop !== "account" && beheerOpRem(request)) {
+      await send429(response, 300, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
+      return;
+    }
+    if (isAdminSleutel(request)) { await sendJson(response, 200, { ok: true, wie: "beheersleutel", eigen: ADMIN_KEY_EIGEN }); return; }
+    await sendJson(response, 200, { ok: true, wie: null });
+    return;
+  }
+  // de accounts en de laatste regels van het beheerlogboek
+  if (urlPath === "/api/beheer/overzicht" && request.method === "GET") {
+    if (!beheerEigen(request)) { await denied(request, response, urlPath); return; }
+    await sendJson(response, 200, { ok: true, wie: request.beheerWie,
+      accounts: Object.values(beheerAccounts).map((a) => beheerUit(a)).sort((x, y) => String(x.email).localeCompare(String(y.email))),
+      log: beheerLog.staart(100), sleutelAan: !!ADMIN_KEY, mail: mailIngesteld(), wwMin: BEHEER_WW_MIN, startDagen: BEHEER_EERSTE_KEER_MS / 86400e3 });
+    return;
+  }
+  if (urlPath === "/api/beheer/login" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (await inlogOpRemIp(request, response)) return;
+    let b;
+    try { b = JSON.parse(await readBody(request)); } catch { b = null; }
+    const em = normEmail(b && b.email), ww = String((b && b.wachtwoord) || "");
+    if (!b || typeof b !== "object" || !em || !ww) { await sendJson(response, 400, { ok: false, fout: "Vul je e-mailadres en je wachtwoord in." }); return; }
+    // Op slot (tien foute wachtwoorden binnen een kwartier): geen antwoord meer dat zegt of een
+    // wachtwoord klopt. Wie het wachtwoord én een goede code heeft, komt wel binnen: anders sluit
+    // iedereen die een adres kent de eigenaar buiten door fout te blijven raden. Een
+    // startwachtwoord is niet te raden (100 bits toeval) en loopt daarom gewoon door.
+    const opSlot = beheerRem.opSlot(em);
+    const slotAntwoord = () => send429(response, 900, { ok: false, adresOpSlot: true,
+      fout: "Te veel inlogpogingen met dit e-mailadres. Het komende kwartier kom je er alleen in met je wachtwoord én een code uit je code-app of een reservecode." });
+    const a = beheerAccount(em);
+    const bestaat = !!a && !a.uit && typeof a.hash === "string";
+    // altijd rekenen, ook zonder account: de duur van het antwoord verraadt niet of het adres bestaat
+    const wwGoed = checkHash(ww, bestaat ? a.hash : BEHEER_NEPHASH) && bestaat;
+    if (!wwGoed) {
+      if (opSlot) { await slotAntwoord(); return; }
+      beheerRem.tel(em);
+      // in het logboek alleen bij een bestaand account, en hooguit bij het slot: anders kan iedereen het vullen
+      if (bestaat && beheerRem.opSlot(em)) beheerLog.schrijf({ wie: a.email, actie: "inloggen op slot: tien keer een fout wachtwoord binnen een kwartier", ip: beheerIp(request) });
+      await denied(request, response, "beheer-login", "E-mailadres of wachtwoord klopt niet.");
+      return;
+    }
+    if (beheerVerlopen(a)) {
+      await sendJson(response, 403, { ok: false, verlopen: true, fout: "Dit startwachtwoord is verlopen: het was een week geldig. Vraag een andere beheerder om een nieuw." });
+      return;
+    }
+    // De eerste keer: een eigen wachtwoord kiezen en de tweede stap instellen, pas dan een sessie.
+    // Het startwachtwoord klopt; de pagina krijgt een geheim (als QR en als sleutel) en stuurt
+    // e-mailadres, startwachtwoord, dat geheim, het nieuwe wachtwoord en de eerste code opnieuw
+    // in. Elk antwoord met een geheim maakt het vorige ongeldig, en een foute code krijgt het
+    // geheim niet terug: het geheim dat op schijf komt, is alleen gezien door de browser die het
+    // instellen afmaakt.
+    if (!beheerKlaar(a)) {
+      const sleutel = "beheer:" + em;
+      const code = String(b.code == null ? "" : b.code).trim();
+      const lopend = lopendeInstelling(sleutel);
+      if (!code || !lopend || String(b.geheim || "") !== lopend.geheim) {
+        const w = nieuweInstelling(sleutel);
+        await sendJson(response, 401, { ok: false, stapInstellen: true, geheim: w.geheim, uri: otpauth(w.geheim, a.email, "Fysiplan beheer"),
+          minuten: TOTP_INSTEL_MS / 60000, wwMin: BEHEER_WW_MIN, ...(code ? { vernieuwd: true } : {}),
+          fout: code ? "De QR-code is vernieuwd. Scan hem opnieuw en vul de code in die de app dan toont."
+            : "Kies een eigen wachtwoord en stel de tweede stap in." });
+        return;
+      }
+      const nieuw = String(b.nieuw || "");
+      const wwFout = beheerWachtwoordFout(nieuw, ww);
+      if (wwFout) { await sendJson(response, 400, { ok: false, stapInstellen: true, nieuw: true, fout: wwFout }); return; }
+      const stap = controleer(lopend.geheim, code);
+      // geen teller: wie hier is, heeft het startwachtwoord en kreeg het geheim, en hoeft de code dus niet te raden
+      if (stap == null) {
+        await sendJson(response, 403, { ok: false, stapInstellen: true, code: true,
+          fout: "Die code klopt niet. Vul de zes cijfers in die de code-app nu toont. Blijft het misgaan? Kijk of je telefoon de tijd automatisch instelt." });
+        return;
+      }
+      const reserve = nieuweReservecodes();
+      a.hash = maakHash(nieuw);
+      a.totp = { geheim: lopend.geheim, sinds: Date.now(), stap, reserve: reserve.hashes };
+      a.eersteKeer = new Date().toISOString();
+      a.laatst = Date.now();
+      totpWacht.delete(sleutel);
+      beheerRem.wis(em);
+      await saveJson(beheerAccountsPath, beheerAccounts);
+      const token = beheerSessies.nieuw(a);
+      await beheerLog.schrijf({ wie: a.email, actie: "eerste keer ingelogd: eigen wachtwoord gekozen en tweede stap ingesteld", ip: beheerIp(request) });
+      zetCookie(response, beheerCookie(token, request));
+      await sendJson(response, 200, { ok: true, wie: beheerUit(a), reservecodes: reserve.codes });
+      return;
+    }
+    // het wachtwoord klopt; nu de code uit de code-app, of een reservecode
+    const u = tweedeStapCheck(a, b.code);
+    if (!u.ok) {
+      if (u.reden === "nodig" || u.reden === "slot") {
+        if (opSlot) await slotAntwoord();
+        else if (u.reden === "nodig") await sendJson(response, 401, { ok: false, tweedeStap: true, fout: TWEEDE_STAP_TEKST.nodig });
+        else await send429(response, 3600, { ok: false, tweedeStap: true, fout: TWEEDE_STAP_TEKST.slot });
+        return;
+      }
+      // een foute code na een goed wachtwoord: de teller staat op schijf voordat het antwoord vertrekt
+      beheerRem.tel(em);
+      telInlogMisIp(request, "beheer-tweede-stap");
+      await saveJson(beheerAccountsPath, beheerAccounts);
+      await beheerLog.schrijf({ wie: a.email, actie: u.vol ? "tweede stap op slot: " + TOTP_MIS_PER_DAG + " foute codes na een goed wachtwoord" : "foute code na een goed wachtwoord", ip: beheerIp(request) });
+      if (u.vol) meldBeheerders("Fysiplan beheer: te veel foute codes bij " + a.email,
+        "Bij het beheeraccount van " + (a.naam || a.email) + " is " + TOTP_MIS_PER_DAG + " keer een foute code ingevuld, steeds nadat het wachtwoord goed was. " +
+        "De code uit de code-app werkt daarom 24 uur niet; inloggen kan in die tijd alleen met een reservecode.\n\n" +
+        "Was de eigenaar dat niet zelf, dan kent iemand anders het wachtwoord. Met deze pogingen is niemand binnengekomen. Laat de eigenaar een nieuw wachtwoord kiezen, of zet het account uit en maak het opnieuw.");
+      if (opSlot) await slotAntwoord();
+      else await sendJson(response, 403, { ok: false, tweedeStap: true, fout: TWEEDE_STAP_TEKST.fout });
+      return;
+    }
+    // het slot zelf blijft staan tot het kwartier om is: de eigenaar is binnen, wie raadt krijgt geen nieuwe pogingen
+    if (!opSlot) beheerRem.wis(em);
+    a.laatst = Date.now();
+    await saveJson(beheerAccountsPath, beheerAccounts); // ook de gebruikte tijdstap of reservecode
+    const token = beheerSessies.nieuw(a);
+    await beheerLog.schrijf({ wie: a.email, actie: u.via === "reserve" ? "ingelogd met een reservecode" : "ingelogd", ip: beheerIp(request) });
+    zetCookie(response, beheerCookie(token, request));
+    await sendJson(response, 200, { ok: true, wie: beheerUit(a), ...(u.via === "reserve" ? { reservecodesOver: a.totp.reserve.length } : {}) });
+    return;
+  }
+  if (urlPath === "/api/beheer/logout" && request.method === "POST") {
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    const token = eigenCookie(request, beheerCookieNaam(request));
+    const a = beheerSessies.van(token);
+    beheerSessies.weg(token);
+    zetCookie(response, cookieKop(beheerCookieNaam(request), "", request, 0));
+    if (a) await beheerLog.schrijf({ wie: a.email, actie: "uitgelogd", ip: beheerIp(request) });
+    await sendJson(response, 200, { ok: true });
+    return;
+  }
+  // een account maken, of opnieuw maken als het uit staat of nog niet in gebruik is genomen
+  if (urlPath === "/api/beheer/accounts" && request.method === "POST") {
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (!beheerEigen(request)) { await denied(request, response, urlPath); return; }
+    let b;
+    try { b = JSON.parse(await readBody(request)); } catch { b = null; }
+    const em = normEmail(b && b.email), naam = cleanName(b && b.naam, 60);
+    request.beheerDoel = em;
+    if (!geldigEmail(em)) { await sendJson(response, 400, { ok: false, fout: "Vul een geldig e-mailadres in." }); return; }
+    if (!naam) { await sendJson(response, 400, { ok: false, fout: "Vul de naam in van wie dit account krijgt." }); return; }
+    const was = beheerAccount(em);
+    if (was && beheerKlaar(was)) {
+      await sendJson(response, 409, { ok: false, fout: "Er is al een beheeraccount met dit e-mailadres. Moet de eigenaar opnieuw beginnen (telefoon of wachtwoord kwijt)? Zet het account dan eerst uit." });
+      return;
+    }
+    if (!was && Object.keys(beheerAccounts).length >= BEHEER_MAX) {
+      await sendJson(response, 409, { ok: false, fout: "Er zijn al " + BEHEER_MAX + " beheeraccounts. Meer kan niet." });
+      return;
+    }
+    const start = nieuwStartwachtwoord();
+    beheerAccounts[em] = { email: em, naam, hash: maakHash(start), gemaakt: new Date().toISOString(), door: request.beheerWie };
+    beheerSessies.trekIn(em);
+    totpWacht.delete("beheer:" + em);
+    beheerRem.wis(em);
+    await saveJson(beheerAccountsPath, beheerAccounts);
+    request.beheerGelogd = true;
+    await beheerLog.schrijf({ wie: request.beheerWie, actie: was ? "beheeraccount opnieuw gemaakt" : "beheeraccount gemaakt", doel: em, naam, ip: beheerIp(request) });
+    meldBeheerders("Fysiplan beheer: account " + (was ? "opnieuw gemaakt" : "gemaakt") + " voor " + em,
+      (request.beheerWie === "beheersleutel" ? "Iemand met de beheersleutel van de server" : request.beheerWie) + " heeft een beheeraccount " + (was ? "opnieuw gemaakt" : "gemaakt") +
+      " voor " + naam + " (" + em + "). Het werkt pas nadat de eigenaar met het startwachtwoord inlogt, een eigen wachtwoord kiest en de tweede stap instelt.");
+    await sendJson(response, 200, { ok: true, account: beheerUit(beheerAccounts[em]), startwachtwoord: start, geldigDagen: BEHEER_EERSTE_KEER_MS / 86400e3 });
+    return;
+  }
+  // een account uitzetten: wachtwoord en tweede stap weg, sessies ingetrokken
+  if (urlPath === "/api/beheer/accounts/uit" && request.method === "POST") {
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (!beheerEigen(request)) { await denied(request, response, urlPath); return; }
+    let b;
+    try { b = JSON.parse(await readBody(request)); } catch { b = null; }
+    const em = normEmail(b && b.email);
+    request.beheerDoel = em;
+    const a = beheerAccount(em);
+    if (!a) { await sendJson(response, 404, { ok: false, fout: "Geen beheeraccount met dit e-mailadres." }); return; }
+    if (a.uit) { await sendJson(response, 200, { ok: true, al: true, account: beheerUit(a) }); return; }
+    // zonder sleutel op de server is het laatste werkende account de enige weg naar binnen
+    if (!ADMIN_KEY && beheerKlaar(a) && beheerWerkend().length === 1) {
+      await sendJson(response, 409, { ok: false, laatste: true, fout: "Dit is het laatste beheeraccount dat werkt, en op de server staat geen ADMIN_KEY. Maak eerst een ander account en laat de eigenaar inloggen." });
+      return;
+    }
+    delete a.hash; delete a.totp;
+    a.uit = new Date().toISOString();
+    a.uitDoor = request.beheerWie;
+    const sessies = beheerSessies.trekIn(em);
+    totpWacht.delete("beheer:" + em);
+    await saveJson(beheerAccountsPath, beheerAccounts);
+    request.beheerGelogd = true;
+    await beheerLog.schrijf({ wie: request.beheerWie, actie: "beheeraccount uitgezet", doel: em, sessies, ip: beheerIp(request) });
+    meldBeheerders("Fysiplan beheer: account uitgezet van " + em,
+      (request.beheerWie === "beheersleutel" ? "Iemand met de beheersleutel van de server" : request.beheerWie) + " heeft het beheeraccount van " + (a.naam || em) + " (" + em + ") uitgezet. Inloggen met dit account kan niet meer.", em);
+    await sendJson(response, 200, { ok: true, account: beheerUit(a) });
+    return;
+  }
+  // het eigen wachtwoord wijzigen: het huidige wachtwoord en een code erbij
+  if (urlPath === "/api/beheer/wachtwoord" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (await inlogOpRemIp(request, response)) return;
+    const a = beheerAccountVan(request);
+    if (!a) { await denied(request, response, urlPath, "Log eerst in met je beheeraccount."); return; }
+    request.beheerWie = a.email;
+    request.beheerGelogd = true;
+    let b;
+    try { b = JSON.parse(await readBody(request)); } catch { b = null; }
+    const em = a.email, huidig = String((b && b.huidig) || ""), nieuw = String((b && b.nieuw) || "");
+    if (beheerRem.opSlot(em)) { await send429(response, 900, { ok: false, fout: "Te veel pogingen; probeer het over een kwartier opnieuw." }); return; }
+    if (!checkHash(huidig, a.hash)) {
+      beheerRem.tel(em);
+      telInlogMisIp(request, "beheer-wachtwoord");
+      await sendJson(response, 403, { ok: false, huidig: true, fout: "Je huidige wachtwoord klopt niet." });
+      return;
+    }
+    const wwFout = beheerWachtwoordFout(nieuw, huidig);
+    if (wwFout) { await sendJson(response, 400, { ok: false, nieuw: true, fout: wwFout }); return; }
+    const u = tweedeStapCheck(a, b.code);
+    if (!u.ok) {
+      if (u.reden === "nodig") { await sendJson(response, 401, { ok: false, tweedeStap: true, fout: TWEEDE_STAP_TEKST.nodig }); return; }
+      if (u.reden === "slot") { await send429(response, 3600, { ok: false, tweedeStap: true, fout: TWEEDE_STAP_TEKST.slot }); return; }
+      beheerRem.tel(em);
+      telInlogMisIp(request, "beheer-tweede-stap");
+      await saveJson(beheerAccountsPath, beheerAccounts);
+      await beheerLog.schrijf({ wie: em, actie: "foute code bij het wijzigen van het wachtwoord", ip: beheerIp(request) });
+      await sendJson(response, 403, { ok: false, tweedeStap: true, fout: TWEEDE_STAP_TEKST.fout });
+      return;
+    }
+    a.hash = maakHash(nieuw);
+    a.gewijzigd = new Date().toISOString();
+    beheerRem.wis(em);
+    await saveJson(beheerAccountsPath, beheerAccounts);
+    // elke sessie hoort bij het oude wachtwoord en vervalt daarmee; deze browser krijgt een nieuwe
+    beheerSessies.trekIn(em);
+    const token = beheerSessies.nieuw(a);
+    await beheerLog.schrijf({ wie: em, actie: "eigen wachtwoord gewijzigd", ip: beheerIp(request) });
+    zetCookie(response, beheerCookie(token, request));
+    await sendJson(response, 200, { ok: true });
+    return;
+  }
+
   // Het oude herstelpad van beheer wiste het account van een praktijk. De praktijk gold daarna
   // als onbeveiligd, en dan mocht beheer met een eigen sleutel haar kaarten lezen: in twee
   // verzoeken van "401" naar alle patiëntgegevens, zonder bericht aan de praktijk (gemeten in
@@ -4489,6 +4874,7 @@ async function afhandelen(request, response) {
       const b = JSON.parse(await readBody(request));
       const nk = cleanName(b.praktijk, 80).toLowerCase();
       const reden = String(b.reden || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
+      request.beheerDoel = nk; // een poging die niet tot een mail leidt, staat zo ook met de praktijk in het beheerlogboek
       const kandidaten = praktijkGeclaimd(nk) ? [nk] : accountsMetNaam(nk);
       if (kandidaten.length > 1) { await sendJson(response, 409, { ok: false, fout: "Meerdere praktijken met deze naam; geef de praktijkcode (p-…).", codes: kandidaten }); return; }
       const pk = kandidaten[0];
@@ -4557,6 +4943,11 @@ async function afhandelen(request, response) {
       }
       await saveJson(accountsPath, praktijkAccounts);
       auditLog(pk, "herstel-door-beheer", request, "Fysiplan-beheer (reden: " + reden + (wisTweedeStap ? "; de tweede stap vervalt bij gebruik van de link" : "") + ")");
+      // de noodprocedure met naam en toenaam: wie van beheer, voor welke praktijk, waarom en waarheen.
+      // De regel staat op schijf voordat het antwoord vertrekt.
+      request.beheerGelogd = true;
+      await beheerLog.schrijf({ wie: request.beheerWie, actie: "herstelmail aan een praktijk", praktijk: pk, naam, reden, naar: verzonden.map(maskeerEmail).join(", "),
+        ...(wisTweedeStap ? { tweedeStap: "vervalt bij gebruik van de link" } : {}), ip: beheerIp(request) });
       await sendJson(response, 200, { ok: true, soort, verstuurd: verzonden.length, naar: verzonden.map(maskeerEmail), geldigTot: new Date(verloopt).toISOString(), ...(wisTweedeStap ? { tweedeStap: true } : {}) });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
@@ -6507,7 +6898,7 @@ async function afhandelen(request, response) {
         if (!kaart.gearchiveerd) kaart.gearchiveerdOp = Date.now();
         kaart.gearchiveerd = true;
       } else { delete kaart.gearchiveerd; delete kaart.gearchiveerdOp; }
-      const proefVoorbij = !(ADMIN_KEY_EIGEN && isAdmin(request)) &&
+      const proefVoorbij = !beheerEigen(request) &&
         (proefVerlopen(proefVan(request)) || praktijkProefVerlopen(pk));
       if (proefVoorbij && verlooptOp(kaart) > verlooptVoor) {
         for (const [veld, waarde] of Object.entries(voorArchief)) { if (waarde === undefined) delete kaart[veld]; else kaart[veld] = waarde; }
@@ -8058,6 +8449,7 @@ async function netjesStoppen(signaal) {
   await dicht;
   clearInterval(veeg);
   try { await praktijkSessies.opSchijf(); } catch {}
+  try { await beheerSessieTabel.opSchijf(); } catch {}
   process.exit(0);
 }
 process.on("SIGTERM", () => { netjesStoppen("SIGTERM"); });

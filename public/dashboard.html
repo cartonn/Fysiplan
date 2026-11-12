@@ -71,7 +71,7 @@
   <span class="tijd" id="bijgewerkt"></span>
 </header>
 
-<div id="fout"><div class="paneel"><h2 style="margin-top:0">Geen toegang</h2><div class="leeg">Het dashboard kon de gegevens niet ophalen.</div></div></div>
+<div id="fout"><div class="paneel"><h2 style="margin-top:0">Geen toegang</h2><div class="leeg">Het dashboard kon de gegevens niet ophalen. Ben je uitgelogd, of is je login verlopen? <a href="">Herlaad de pagina</a> en log opnieuw in.</div></div></div>
 
 <main id="inhoud" style="display:none">
   <h2>Gebruik</h2>
@@ -199,10 +199,12 @@
         document.getElementById('secStatus').innerHTML=
           statusItem(s.volumeActief,'Gegevensopslag '+(s.volumeActief?'blijvend (volume actief)':'tijdelijk!'),
             s.volumeActief?'Beheer-wijzigingen overleven elke redeploy.':'Koppel in Railway een Volume op /data — anders wist elke redeploy de beheer-wijzigingen.')+
-          statusItem(s.adminSleutelAangepast,'Beheer-sleutel '+(s.adminSleutelAangepast?'aangepast':'standaard'),
-            s.adminSleutelAangepast?'Eigen ADMIN_KEY ingesteld via Railway.':'De standaardsleutel is actief. Stel in Railway de variabele ADMIN_KEY in voor extra afscherming.')+
+          statusItem(s.beheerAccounts>0,'Beheer: '+(s.beheerAccounts>0?(s.beheerAccounts===1?'1 persoonlijk account':s.beheerAccounts+' persoonlijke accounts'):'nog geen persoonlijk account'),
+            s.beheerSleutel==='eigen'?'De sleutel van de server (ADMIN_KEY) werkt ook nog. Haal hem in Railway weg zodra iedereen een account heeft en de uploadscripts hem niet nodig hebben.'
+            :s.beheerSleutel==='standaard'?'De standaardsleutel van een lokale server is actief. Live werkt die niet.'
+            :'De sleutel van de server staat uit: beheer kan alleen met een account.')+
           statusItem(true,'Versie '+d.versie.commit.slice(0,7),'draait '+d.versie.uptimeUren+' uur · gebouwd '+(d.versie.builtAt?new Date(d.versie.builtAt).toLocaleString('nl-NL'):'-'))+
-          statusItem(true,'Privacy','Cliëntgegevens blijven lokaal in de browser; het dashboard telt anoniem.');
+          statusItem(true,'Privacy','Dit dashboard telt anoniem: er staan geen gegevens van patiënten of praktijken op.');
         document.getElementById('secSub').textContent=s.geweigerd+' verzoeken zonder geldige sleutel geweigerd (totaal)';
         var lijst=s.laatste||[];
         document.getElementById('secLijst').innerHTML=!lijst.length

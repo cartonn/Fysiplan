@@ -2,7 +2,7 @@
 <style>body{font:16px system-ui;margin:24px auto;padding:0 16px;max-width:800px;color:#18304a;background:#f6f8fb}button,input{font:inherit;padding:10px;margin:4px}article{background:white;padding:16px;margin:20px 0;border:1px solid #ddd;border-radius:12px}img{display:block;width:100%;height:auto;aspect-ratio:2/3;max-height:70vh;object-fit:contain;object-position:50% 50%;background:white}small{display:block}button[aria-pressed=true]{background:#164a83;color:white}</style>
 <style>video{display:block;width:100%;aspect-ratio:2/3;max-height:70vh;object-fit:contain;background:white}</style>
 <h1>Conceptcontrole</h1><p>Niet gepubliceerd. Afbeeldingen, beweging en stem zijn apart te beoordelen. Geen klinische goedkeuring.</p>
-<form id="login"><label>Beheersleutel <input id="key" type="password" autocomplete="off" required></label><button>Concepten laden</button></form><p id="status" role="status"></p><main id="cards"></main>
+<form id="login"><button>Concepten laden</button></form><p id="status" role="status"></p><main id="cards"></main>
 <script type="module">
 const cards=document.getElementById('cards'), status=document.getElementById('status');
 let urls=[];
@@ -12,12 +12,14 @@ function exclusieveMedia(media){
 const clear=()=>{cards.querySelectorAll('video,audio').forEach(v=>v.pause());urls.forEach(URL.revokeObjectURL);urls=[];cards.replaceChildren();};
 window.addEventListener('pagehide',clear);
 document.getElementById('login').addEventListener('submit',async event=>{
- event.preventDefault();clear();status.textContent='Laden…';
- const key=document.getElementById('key').value;document.getElementById('key').value='';
+ event.preventDefault();clear();status.textContent='Inloggen…';
+ const key=await (await import('/beheersleutel.js')).vraagBeheersleutel();
+ if(!key){status.textContent='Log in als beheer om de concepten te zien.';return;}
+ status.textContent='Laden…';
  const headers={'x-admin-sleutel':key};
  try{
   const response=await fetch('/api/exercise-drafts',{headers,cache:'no-store'});
-  if(!response.ok)throw Error('Conceptcontrole niet beschikbaar. Gebruik de ingestelde beheersleutel.');
+  if(!response.ok)throw Error('Conceptcontrole niet beschikbaar. Log in met een beheeraccount of met de eigen sleutel van de server.');
   const result=await response.json();
   for(const draft of result.drafts){
    if(draft.published!==false||draft.publishable!==false)throw Error('Onverwachte conceptstatus.');
@@ -44,7 +46,7 @@ document.getElementById('login').addEventListener('submit',async event=>{
      if(busy)return;busy=true;load.disabled=true;message.textContent='Video laden…';
      try{
       const res=await fetch(`/api/exercise-drafts/${encodeURIComponent(draft.coreExerciseId)}/motion`,{headers,cache:'no-store'});
-      if(!res.ok)throw Error('Video niet beschikbaar. Controleer de beheersleutel en probeer opnieuw.');
+      if(!res.ok)throw Error('Video niet beschikbaar. Log opnieuw in als beheer en probeer het nog eens.');
       const blob=await res.blob();if(!article.isConnected)return;
       video.pause();if(blobUrl){URL.revokeObjectURL(blobUrl);urls=urls.filter(u=>u!==blobUrl);}
       blobUrl=URL.createObjectURL(blob);urls.push(blobUrl);video.src=blobUrl;video.load();message.textContent='Gebruik afspelen om het bewegingsconcept te controleren.';
@@ -66,7 +68,7 @@ document.getElementById('login').addEventListener('submit',async event=>{
      if(busy)return;busy=true;load.disabled=true;message.textContent='Opname laden…';
      try{
       const res=await fetch(`/api/exercise-drafts/${encodeURIComponent(draft.coreExerciseId)}/narration`,{headers,cache:'no-store'});
-      if(!res.ok)throw Error('Opname niet beschikbaar. Controleer de beheersleutel en probeer opnieuw.');
+      if(!res.ok)throw Error('Opname niet beschikbaar. Log opnieuw in als beheer en probeer het nog eens.');
       const blob=await res.blob();if(!article.isConnected)return;
       audio.pause();if(audioUrl){URL.revokeObjectURL(audioUrl);urls=urls.filter(u=>u!==audioUrl);}
       audioUrl=URL.createObjectURL(blob);urls.push(audioUrl);audio.src=audioUrl;audio.load();message.textContent='Gebruik afspelen om de volledige uitleg te beluisteren.';
