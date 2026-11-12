@@ -173,8 +173,9 @@ const doe = (G, rol, actie, b, nu = NU) => poort(G, { rol, actie, b, nu, uitvoer
   await om.laad();
   const roep = async (method, pad, extra = {}) => { const res = { setHeader() {} }; await om.afhandelen({ method, url: pad, headers: extra.headers || {}, body: extra.body, R: extra.R, wie: extra.wie, ip: extra.ip }, res, pad.split("?")[0]); return res; };
   const beheer = (pad, body, extra) => roep("POST", "/api/beheer/omgeving/" + pad, { body: { bron: "echt", ...body }, ...extra });
-  const sleutel = (await beheer("loket/sleutel", {})).body.nieuweSleutel;
-  const agent = (method, pad, body) => roep(method, "/api/agent/" + pad, { headers: { authorization: "Bearer " + sleutel }, body });
+  // één sleutel per rol; de agent gebruikt de sleutel van de rol in het adres
+  const sleutels = { staf: (await beheer("loket/sleutel", { rol: "staf" })).body.nieuweSleutel, groei: (await beheer("loket/sleutel", { rol: "groei" })).body.nieuweSleutel };
+  const agent = (method, pad, body) => roep(method, "/api/agent/" + pad, { headers: { authorization: "Bearer " + sleutels[pad.split("/")[0]] }, body });
 
   // standaard uit, en "aan" kan niet
   assert.equal((await agent("GET", "staf/werk")).body.uit, true);
@@ -196,6 +197,11 @@ const doe = (G, rol, actie, b, nu = NU) => poort(G, { rol, actie, b, nu, uitvoer
   const metToestemming = groeiWerk.werk.contacten.find((c) => c.toestemming.mail && !c.openVoorstel && (c.dagenSindsContact == null || c.dagenSindsContact >= 30));
 
   // acties door de poort, alleen in de demo
+  // de sleutel van de groei-agent op het adres van de chief of staff (en andersom): 403, vastgelegd
+  assert.equal((await roep("POST", "/api/agent/staf/actie", { headers: { authorization: "Bearer " + sleutels.groei }, body: { actie: "taak-voorstel", sleutel: "kruis-1-xx", titel: "Taak via de verkeerde sleutel", uitleg: "Dit mag niet." } })).status, 403);
+  assert.equal((await roep("GET", "/api/agent/groei/werk", { headers: { authorization: "Bearer " + sleutels.staf } })).status, 403);
+  assert.deepEqual(gelogd.slice(-2).map((g) => [g.actie, g.wie]), [["agents: poging tot rechtenoverschrijding", "groei-agent"], ["agents: poging tot rechtenoverschrijding", "staf-agent"]]);
+  assert.equal((await roep("GET", "/api/beheer/omgeving")).body.loket.pogingen.length, 2);
   assert.equal((await agent("POST", "staf/actie", { actie: "eigen-mail", sleutel: "mail-aaaaaa" })).status, 403);
   assert.equal((await agent("POST", "staf/actie", { actie: "concept", sleutel: "concept-aa", ...GOED_CONCEPT })).status, 403);
   r = await agent("POST", "groei/actie", { actie: "concept", sleutel: "concept-loket", ...GOED_CONCEPT });

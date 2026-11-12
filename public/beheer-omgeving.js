@@ -605,11 +605,20 @@ function agents() {
     (v.punten.length ? '<ul>' + v.punten.map((p) => '<li>' + pil(...(PUNT[p.soort] || PUNT['let-op']), true) + '<span>' + (p.praktijk ? '<b>' + esc(p.praktijk) + '</b> ' : '') + esc(p.tekst) +
       (p.pr ? ' <a href="https://github.com/cartonn/Fysiplan/pull/' + Number(p.pr) + '" target="_blank" rel="noopener">PR #' + Number(p.pr) + '</a>' : '') + '</span></li>').join('') + '</ul>' : '') + '</article>';
   const chip = (k, l) => '<button type="button" class="chip' + (st.verslagRol === k ? ' aan' : '') + '" data-vrol="' + k + '">' + l + '</button>';
-  const sleutelKaart = !L.magSleutel ? '' : '<div class="kaart mt"><h2>Sleutel van de agents</h2><p class="ks">Hiermee komen de agents bij het loket. Fysiplan bewaart alleen een afdruk.</p>' +
-    (st.nieuweSleutel ? '<div class="sleutelbox"><label for="sleutelTekst">Nieuwe sleutel, alleen nu te zien</label><input id="sleutelTekst" readonly value="' + esc(st.nieuweSleutel) + '"/><button type="button" class="knop klein" id="sleutelKopie">Kopieer</button>' +
-      '<p class="uitleg">' + (demo ? 'Dit is een nepsleutel: in demo opent hij niets.' : 'Zet hem in de omgeving van de agents in Claude als netwerkgeheim voor fysiplan.nl. Plak hem nergens anders, ook niet in een chat.') + '</p></div>' : '') +
-    (L.sleutel ? '<p>Gemaakt op ' + esc(tijd(L.sleutel.gemaakt)) + (L.sleutel.door ? ' door ' + esc(L.sleutel.door) : '') + '.</p><div class="knoppen los"><button type="button" class="knop licht klein" id="sleutelNieuw">Nieuwe sleutel</button><button type="button" class="knop licht klein" id="sleutelWeg">Intrekken</button></div>'
-      : '<p>Er is geen sleutel: het loket is dicht en geen agent kan erbij.</p><button type="button" class="knop klein" id="sleutelNieuw">Sleutel maken</button>') + '</div>';
+  // één sleutel per agent; de oude gedeelde sleutel kan alleen nog worden ingetrokken
+  const sl = L.sleutels || {}, pog = L.pogingen || [];
+  const sleutelRij = (r) => '<div class="logregel">' + pil(sl[r] ? 'Sleutel' : 'Geen', sl[r] ? 'goed' : 'neutraal', true) + '<div><b>' + esc(rollen[r].titel) + '</b><span>' +
+    (sl[r] ? 'Gemaakt op ' + esc(tijd(sl[r].gemaakt)) + (sl[r].door ? ' door ' + esc(sl[r].door) : '') : 'Deze agent komt niet bij het loket.') + '</span>' +
+    '<div class="knoppen los"><button type="button" class="knop licht klein" data-sleutel-nieuw="' + r + '">' + (sl[r] ? 'Nieuwe sleutel' : 'Sleutel maken') + '</button>' +
+    (sl[r] ? '<button type="button" class="knop licht klein" data-sleutel-weg="' + r + '">Intrekken</button>' : '') + '</div></div></div>';
+  const sleutelKaart = !L.magSleutel ? '' : '<div class="kaart mt"><h2>Sleutels van de agents</h2><p class="ks">Elke agent heeft een eigen sleutel; de server leidt de rol af uit de sleutel, niet uit het adres. Fysiplan bewaart alleen een afdruk. Intrekken werkt meteen en alleen voor die agent.</p>' +
+    (st.nieuweSleutel ? '<div class="sleutelbox"><label for="sleutelTekst">Nieuwe sleutel voor de ' + esc(rollen[st.nieuweSleutelRol] ? rollen[st.nieuweSleutelRol].titel : 'agent') + ', alleen nu te zien</label><input id="sleutelTekst" readonly value="' + esc(st.nieuweSleutel) + '"/><button type="button" class="knop klein" id="sleutelKopie">Kopieer</button>' +
+      '<p class="uitleg">' + (demo ? 'Dit is een nepsleutel: in demo opent hij niets.' : 'Zet hem als netwerkgeheim voor fysiplan.nl in de eigen omgeving van déze agent in Claude, niet in een gedeelde omgeving. Plak hem nergens anders, ook niet in een chat.') + '</p></div>' : '') +
+    (L.sleutel ? '<div class="waarschuwing">Er staat nog een oude gedeelde sleutel (gemaakt op ' + esc(tijd(L.sleutel.gemaakt)) + '). Die werkt alleen nog voor support, tech en finance. Trek hem in zodra elke agent zijn eigen sleutel gebruikt. <button type="button" class="knop licht klein" id="sleutelWeg">Gedeelde sleutel intrekken</button></div>' : '') +
+    '<div class="logboek">' + Object.keys(rollen).map(sleutelRij).join('') + '</div>' +
+    '<h2 class="ruim">Pogingen tot rechtenoverschrijding</h2>' +
+    (pog.length ? '<div class="logboek">' + pog.slice(0, 8).map((x) => '<div class="logregel">' + pil('Geweigerd', 'aandacht', true) + '<div><span>Sleutel van ' + esc(rollen[x.sleutel] ? rollen[x.sleutel].titel.toLowerCase() : 'de oude gedeelde sleutel') + ' op het adres van ' + esc(rollen[x.adres] ? rollen[x.adres].titel.toLowerCase() : x.adres) + '</span><time>' + esc(tijd(x.t)) + '</time></div></div>').join('') + '</div>'
+      : '<p class="leeg">Geen. Een sleutel op het adres van een andere agent wordt geweigerd en komt hier en in het beheerlogboek.</p>') + '</div>';
   return (L.pauze ? '<div class="waarschuwing stil">Alle agents staan stil sinds ' + esc(tijd(L.pauze.op)) + (L.pauze.door ? ', door ' + esc(L.pauze.door) : '') + '. Het loket geeft ze niets en voert niets voor ze uit.</div><div class="mt"></div>' : '') +
     '<div class="raster r4">' +
       kpi('Agents aan', standen.filter((k) => k === 'aan').length + ' van ' + standen.length, standen.includes('proef') ? aantal(standen.filter((k) => k === 'proef').length, 'agent', 'agents') + ' op proef' : 'geen op proef', true) +
@@ -705,12 +714,20 @@ function bindAgents(el) {
     const j = await post('loket/concept', { id: b.dataset.afwijzen, besluit: 'afwijzen', reden });
     if (j) melden('Afgewezen.');
   }));
-  $('#sleutelNieuw', el)?.addEventListener('click', async () => {
-    if (data.loket.sleutel && !confirm('Een nieuwe sleutel maken? De oude werkt dan niet meer: de agents komen pas weer binnen als de nieuwe in hun omgeving staat.')) return;
-    const j = await post('loket/sleutel', { actie: 'nieuw' }, true);
-    if (j) { st.nieuweSleutel = j.nieuweSleutel || null; delete data.nieuweSleutel; teken(); $('#sleutelTekst')?.select(); }
-  });
-  $('#sleutelWeg', el)?.addEventListener('click', async () => { if (confirm('De sleutel intrekken? Geen agent komt dan nog bij het loket.')) { st.nieuweSleutel = null; const j = await post('loket/sleutel', { actie: 'intrekken' }); if (j) melden('De sleutel is ingetrokken.'); } });
+  el.querySelectorAll('[data-sleutel-nieuw]').forEach((b) => b.addEventListener('click', async () => {
+    const rol = b.dataset.sleutelNieuw, titel = data.loket.rollen[rol].titel;
+    if ((data.loket.sleutels || {})[rol] && !confirm('Een nieuwe sleutel voor de ' + titel + '? De oude werkt dan meteen niet meer: deze agent komt pas weer binnen als de nieuwe in zijn eigen omgeving staat.')) return;
+    const j = await post('loket/sleutel', { actie: 'nieuw', rol }, true);
+    if (j) { st.nieuweSleutel = j.nieuweSleutel || null; st.nieuweSleutelRol = rol; delete data.nieuweSleutel; teken(); $('#sleutelTekst')?.select(); }
+  }));
+  el.querySelectorAll('[data-sleutel-weg]').forEach((b) => b.addEventListener('click', async () => {
+    const rol = b.dataset.sleutelWeg;
+    if (!confirm('De sleutel van de ' + data.loket.rollen[rol].titel + ' intrekken? Deze agent komt dan meteen niet meer bij het loket; de andere werken door.')) return;
+    st.nieuweSleutel = null;
+    const j = await post('loket/sleutel', { actie: 'intrekken', rol });
+    if (j) melden('De sleutel van de ' + data.loket.rollen[rol].titel + ' is ingetrokken.');
+  }));
+  $('#sleutelWeg', el)?.addEventListener('click', async () => { if (confirm('De oude gedeelde sleutel intrekken? Een agent die nog geen eigen sleutel heeft, komt dan niet meer bij het loket.')) { st.nieuweSleutel = null; const j = await post('loket/sleutel', { actie: 'intrekken' }); if (j) melden('De gedeelde sleutel is ingetrokken.'); } });
   $('#sleutelKopie', el)?.addEventListener('click', async () => { try { await navigator.clipboard.writeText(st.nieuweSleutel); melden('Gekopieerd.'); } catch { $('#sleutelTekst', el).select(); melden('Kopiëren lukte niet; selecteer de sleutel en kopieer hem zelf.', true); } });
   el.querySelectorAll('[data-taak]').forEach((b) => b.addEventListener('click', async () => {
     let reden = '';

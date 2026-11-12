@@ -1,10 +1,12 @@
-// Sweep van buitenaf op de echte server (advies van Codex bij PR #260, 2026-11-12): vier scenario's
+// Sweep van buitenaf op de echte server (advies van Codex bij PR #260, 2026-11-12): vijf scenario's
 // die de unit-test niet over HTTP en niet gelijktijdig raakt.
 //   1. dubbele gelijktijdige acties: dezelfde sleutel twintig keer tegelijk, twintig voorstellen voor
 //      hetzelfde contact tegelijk, dertig taakvoorstellen tegelijk tegen een grens van tien
 //   2. afmelden na goedkeuring
 //   3. een terugkerend contact onder een andere code
 //   4. rechtenoverschrijding: andere rol, beheerroutes met de agentsleutel, padtrucs, rare acties
+//   5. sleutel per rol (PR #260, vervolg): kruistoets met de sleutel van support, intrekken werkt
+//      direct, de stopknop blokkeert alle vijf rollen, op schijf alleen afdrukken
 // Start een eigen server op een lege datamap. `npm run sweep:agentgeheugen`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -29,11 +31,15 @@ try {
     return { status: r.status, body: await r.json().catch(() => ({})) };
   };
   const pagina = async () => (await (await fetch(origin + "/api/beheer/omgeving?bron=demo", { headers: { "x-admin-sleutel": ADMIN } })).json()).loket;
-  const sleutel = (await beheer("loket/sleutel", { bron: "echt" })).body.nieuweSleutel;
-  assert.match(sleutel, /^fpa_/);
+  // één sleutel per rol (punt 1 van Codex); een gedeelde sleutel maken kan niet meer
+  assert.equal((await beheer("loket/sleutel", { bron: "echt" })).status, 400);
+  const sleutels = {};
+  for (const rol of ["support", "tech", "finance", "staf", "groei"]) sleutels[rol] = (await beheer("loket/sleutel", { bron: "echt", rol })).body.nieuweSleutel;
+  assert.ok(Object.values(sleutels).every((k) => /^fpa_/.test(k)) && new Set(Object.values(sleutels)).size === 5);
+  const sleutel = sleutels.groei;
   let ip = 0;
-  const agent = async (pad, body, kop = {}) => {
-    const r = await fetch(origin + "/api/agent/" + pad, { method: body ? "POST" : "GET", headers: { authorization: "Bearer " + sleutel, "content-type": "application/json", "x-forwarded-for": "10.0.0." + (++ip % 250), ...kop }, body: body ? JSON.stringify(body) : undefined });
+  const agent = async (pad, body, kop = {}, met = sleutels[pad.split("/")[0]] || sleutel) => {
+    const r = await fetch(origin + "/api/agent/" + pad, { method: body ? "POST" : "GET", headers: { authorization: "Bearer " + met, "content-type": "application/json", "x-forwarded-for": "10.0.0." + (++ip % 250), ...kop }, body: body ? JSON.stringify(body) : undefined });
     return { status: r.status, body: await r.json().catch(() => ({})) };
   };
   for (const rol of ["staf", "groei"]) assert.equal((await beheer("loket/agent", { bron: "echt", rol, stand: "proef" })).status, 200);
@@ -120,6 +126,52 @@ try {
     const alles = JSON.stringify([(await agent("staf/werk")).body, (await agent("groei/werk")).body]);
     assert.doesNotMatch(alles, /\(demo\)|\.invalid|@|Duinzicht|Molenwijk/, "geen namen of adressen");
     meld("4b geen namen naar agents", "staf- en groei-werk bevatten alleen codes");
+  }
+
+  // ---- 5. sleutel per rol: kruistoets, intrekken, stopknop ----
+  {
+    const pagEcht = async () => (await (await fetch(origin + "/api/beheer/omgeving", { headers: { "x-admin-sleutel": ADMIN } })).json()).loket;
+    const logboek = async () => (await (await fetch(origin + "/api/beheer/overzicht", { headers: { "x-admin-sleutel": ADMIN } })).json()).log || [];
+    for (const rol of ["support", "tech", "finance"]) assert.equal((await beheer("loket/agent", { bron: "echt", rol, stand: "proef" })).status, 200);
+    // de sleutel van support op elk ander adres: 403 en vastgelegd
+    const voor = (await pagEcht()).pogingen.length;
+    const pogingen = [["finance/werk"], ["finance/actie", { actie: "notitie", periode: "2026-K3", tekst: "Dit mag support niet." }], ["tech/werk"], ["tech/actie", { actie: "verslag", tekst: "Dit mag support niet schrijven." }],
+      ["staf/werk"], ["staf/actie", { actie: "advies", sleutel: "kruis-advies-1", taak: "T-00000000", tekst: "x" }], ["groei/werk"], ["groei/actie", { ...CONCEPT, sleutel: "kruis-concept-1" }]];
+    for (const [pad, body] of pogingen) { const r = await agent(pad, body, {}, sleutels.support); assert.equal(r.status, 403, "support op " + pad + " → " + r.status); }
+    const na = await pagEcht();
+    assert.equal(na.pogingen.length - voor, pogingen.length, "elke poging staat op de pagina");
+    assert.ok(na.pogingen.slice(0, pogingen.length).every((x) => x.sleutel === "support"));
+    assert.ok((await logboek()).filter((x) => x.actie === "agents: poging tot rechtenoverschrijding").length >= pogingen.length, "en in het beheerlogboek");
+    // beheer gaat niet open met de sleutel van support
+    for (const pad of ["/api/beheer/omgeving", "/api/beheer/overzicht"]) assert.notEqual((await fetch(origin + pad, { headers: { authorization: "Bearer " + sleutels.support, "x-agent-sleutel": sleutels.support } })).status, 200, pad);
+    assert.notEqual((await fetch(origin + "/api/beheer/omgeving/loket/sleutel", { method: "POST", headers: { authorization: "Bearer " + sleutels.support, "content-type": "application/json" }, body: JSON.stringify({ bron: "echt", rol: "support" }) })).status, 200);
+    assert.equal((await agent("support/werk")).status, 200, "op zijn eigen adres werkt support gewoon");
+    meld("5a kruistoets support", "finance, tech, staf, groei en beheer geweigerd (8× 403), allemaal vastgelegd op de pagina en in het beheerlogboek");
+
+    // intrekken: meteen 401, de rest werkt door
+    assert.equal((await beheer("loket/sleutel", { bron: "echt", rol: "groei", actie: "intrekken" })).status, 200);
+    assert.equal((await agent("groei/werk")).status, 401, "ingetrokken sleutel direct geweigerd");
+    assert.equal((await agent("groei/actie", { ...CONCEPT, sleutel: "na-intrekken-1" })).status, 401);
+    for (const rol of ["support", "tech", "finance", "staf"]) assert.equal((await agent(rol + "/werk")).status, 200, rol + " werkt door");
+    sleutels.groei = (await beheer("loket/sleutel", { bron: "echt", rol: "groei" })).body.nieuweSleutel;
+    meld("5b intrekken", "ingetrokken sleutel direct 401 (werk en actie), de andere vier rollen bleven 200");
+
+    // de stopknop blokkeert alle rollen
+    assert.equal((await beheer("loket/pauze", { bron: "echt", aan: true })).status, 200);
+    for (const rol of ["support", "tech", "finance", "staf", "groei"]) {
+      const w = await agent(rol + "/werk");
+      assert.deepEqual([w.status, w.body.gepauzeerd, "werk" in w.body], [200, true, false], rol);
+      assert.equal((await agent(rol + "/actie", { actie: "verslag", tekst: "Tijdens de pauze komt dit verslag er niet in." })).status, 423, rol);
+    }
+    assert.equal((await agent("groei/actie", { ...CONCEPT, sleutel: "tijdens-pauze-1" })).status, 423);
+    assert.equal((await beheer("loket/pauze", { bron: "echt", aan: false })).status, 200);
+    assert.equal((await agent("staf/werk")).body.gepauzeerd, false);
+    meld("5c stopknop", "alle vijf rollen kregen geen werk en 423 op elke actie; na opheffen weer werk");
+
+    // op schijf alleen afdrukken
+    const ruw = await readFile(join(dataDir, "beheer-loket.json"), "utf8");
+    assert.ok(Object.values(sleutels).every((k) => !ruw.includes(k)) && Object.keys(JSON.parse(ruw).sleutels).length === 5, "alleen afdrukken op schijf");
+    meld("5d afdruk", "vijf afdrukken in beheer-loket.json, geen enkele sleutel zelf");
   }
 
   // ---- niets op schijf ----
