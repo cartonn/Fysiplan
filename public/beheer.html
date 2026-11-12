@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="color-scheme" content="light"/>
+<title>Fysiplan Beheer</title>
+<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="stylesheet" href="/beheer-omgeving.css"/>
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="zij">
+    <div class="merk">
+      <span class="logo" aria-hidden="true"><svg viewBox="0 0 32 32" width="30" height="30"><rect width="32" height="32" rx="8" fill="#B9E34B"/><path d="M12.5 8h11l-1 4h-7l-.8 3.2h6l-1 4h-6L12.5 25h-4.5z" fill="#18343B"/></svg></span>
+      <span><b>FYSIPLAN</b><small>Beheer</small></span>
+    </div>
+    <nav id="nav" aria-label="Onderdelen">
+      <p class="groep">Platform</p>
+      <a href="#overzicht" data-pagina="overzicht"><svg viewBox="0 0 24 24"><path d="M4 13h6V4H4zm10 7h6v-9h-6zM4 20h6v-4H4zm10-16v4h6V4z"/></svg>Overzicht</a>
+      <a href="#praktijken" data-pagina="praktijken"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13h-6v-7H9v7z"/></svg>Praktijken</a>
+      <a href="#support" data-pagina="support"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7v4l-2 3h18l-2-3V9a7 7 0 0 0-7-7zm-2 17a2 2 0 0 0 4 0z"/></svg>Support-agent<span class="teller" id="tSupport"></span></a>
+      <a href="#berichten" data-pagina="berichten"><svg viewBox="0 0 24 24"><path d="M3 5h18v14H3zm2 2v.5l7 4.5 7-4.5V7z"/></svg>Berichten</a>
+      <p class="groep">Finance</p>
+      <a href="#finance" data-pagina="finance"><svg viewBox="0 0 24 24"><path d="M4 20V10h3v10zm6 0V4h3v16zm6 0v-7h3v7z"/></svg>Cijfers</a>
+      <a href="#facturen" data-pagina="facturen"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6zm8 1.5V8h4.5zM9 12v2h8v-2zm0 4v2h8v-2z"/></svg>Facturen en kosten</a>
+      <a href="#btw" data-pagina="btw"><svg viewBox="0 0 24 24"><path d="M5 19 19 5l1.4 1.4L6.4 20.4zM7 4a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm10 10a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>Btw-aangifte<span class="teller" id="tBtw"></span></a>
+      <a href="#jaar" data-pagina="jaar"><svg viewBox="0 0 24 24"><path d="M5 4h14v17H5zm3-3h2v4H8zm6 0h2v4h-2zM8 10v2h8v-2zm0 4v2h5v-2z"/></svg>Jaarafsluiting</a>
+      <p class="groep">Toegang</p>
+      <a href="#agents" data-pagina="agents"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M11 2h2v3h4a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3h4zM8.5 10a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm7 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9 15v1.5h6V15z"/></svg>Agents<span class="teller" id="tAgents"></span></a>
+      <a href="#beheerders" data-pagina="beheerders"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-8 9c0-3.9 3.6-7 8-7s8 3.1 8 7z"/></svg>Beheerders</a>
+    </nav>
+    <div class="bron" role="group" aria-label="Gegevens">
+      <p class="groep">Gegevens</p>
+      <div class="schakel" id="bronSchakel">
+        <button type="button" data-bron="echt">Echt</button>
+        <button type="button" data-bron="demo">Demo</button>
+      </div>
+      <p class="bronuitleg" id="bronUitleg"></p>
+    </div>
+    <a class="oud" href="/dashboard88">Bezoekcijfers en security</a>
+  </aside>
+
+  <main class="hoofd">
+    <div class="demoband" id="demoband" hidden>
+      <b>Demo</b> Verzonnen praktijken, mensen en bedragen. Er gaat niets naar echte adressen en niets komt in de echte administratie.
+      <button type="button" id="demoOpnieuw">Demo opnieuw beginnen</button>
+    </div>
+    <header class="kop">
+      <div><h1 id="titel">Overzicht</h1><p id="sub"></p></div>
+      <div class="kopr"><span id="bijgewerkt"></span><button type="button" class="knop licht" id="vernieuw">Vernieuwen</button></div>
+    </header>
+    <div id="melding" class="melding" role="status" hidden></div>
+    <section id="pagina" class="pagina" aria-live="polite"><div class="laden">Gegevens ophalen…</div></section>
+  </main>
+</div>
+<aside class="lade" id="lade" hidden aria-label="Praktijk"><div class="ladebinnen" id="ladeBinnen"></div></aside>
+<div id="tip" class="tip" role="tooltip"></div>
+<script type="module" src="/beheer-omgeving.js"></script>
+</body>
+</html>

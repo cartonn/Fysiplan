@@ -129,6 +129,7 @@ jobs:
       - run: npm run test:seinvenster
       - run: npm run test:lichtladen
       - run: npm run test:beheerherstel
+      - run: npm run test:beheeromgeving
       - run: npm run test:seinmail
       - run: npm run test:tweedestap
       - run: npm run test:stapverplicht
