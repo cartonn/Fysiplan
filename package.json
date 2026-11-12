@@ -176,6 +176,7 @@
     "test:prijs": "node scripts/test-prijs.mjs",
     "test:plaatsen": "node scripts/test-plaatsen.mjs",
     "test:leeslog": "node scripts/test-leeslog.mjs",
+    "test:medialink": "node scripts/test-medialink.mjs",
     "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs",
     "test:prullenbak": "node scripts/test-kaart-prullenbak.mjs",
     "test:beveiligingfeedback": "node scripts/test-beveiliging-feedback.mjs",

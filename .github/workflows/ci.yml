@@ -171,6 +171,7 @@ jobs:
       - run: npm run test:prijs
       - run: npm run test:plaatsen
       - run: npm run test:leeslog
+      - run: npm run test:medialink
       - run: npm run test:zwaaroffline
       - run: npm run test:dagwisseltaal
       - run: npm run test:reekstitel

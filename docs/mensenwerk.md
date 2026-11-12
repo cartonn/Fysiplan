@@ -189,6 +189,20 @@ Mollie blijft het "antwoord op deze mail, dan bellen we je".
 **Wat jij moet weten:** de getallen 100 en 300 zijn mijn keuze, geen meting van wat een praktijk nodig heeft. Ze
 staan bovenaan `lib/plaatsen.js`. De voorwaarden zeggen niets over een aantal kaarten.
 
+### Video's en foto's via een tijdelijke link (reviewlijst punt 9, 2026-11-12)
+**Wat de code nu doet** (`lib/medialink.js`, test `npm run test:medialink`):
+- **Een eigen opname van een praktijk en de foto van een eigen oefening zijn geen openbaar adres meer.** De server
+  geeft ze alleen nog via een link die bij één kaart hoort en na 12 tot 24 uur verloopt, of aan wie bij die praktijk
+  is ingelogd (het werkscherm). Een andere praktijk en een bezoeker zonder link krijgen "niet gevonden".
+- **De patiëntkaart krijgt die links vanzelf** bij het openen. Wie een link doorstuurt, geeft de video hooguit een
+  dag weg, en alleen zolang de kaart bestaat: in de prullenbak of verlopen werkt de link niet meer.
+- **De bibliotheek blijft openbaar**: de oefenbeelden, de video's die beheer bij een oefening zette en de logo's.
+- De sleutel waarmee de server de links ondertekent, staat in de datamap (`media-sleutel.json`) en gaat niet mee in
+  de reservekopie. Na een restore maakt de server een nieuwe en krijgt elke kaart bij het openen nieuwe links.
+
+**Wat jij moet weten:** een opname die een patiënt al op de telefoon had geopend, speelt na een dag pas weer als de
+kaart opnieuw verbinding heeft. Video's werden al niet offline bewaard, dus voor de patiënt verandert er niets.
+
 ### Leeslog per kaart (reviewlijst punt 8, 2026-11-12)
 **Wat de code nu doet** (`lib/leeslog.js`, test `npm run test:leeslog`):
 - **De server houdt bij wie een kaart opende of bewaarde**, en wie het overzicht van alle kaarten, de berichten
