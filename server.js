@@ -11,6 +11,7 @@ import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
 import { prijsRegels, prijsZin, metBtwBijschrift, bedragVoor, euro as euroTekst } from "./lib/prijs.js";
 import * as leeslogRegels from "./lib/leeslog.js";
+import { mediaSoort, mediaLink, leesMediaLink } from "./lib/medialink.js";
 import { plaatsenVan, merkPiek, volgendAantal, nieuwePeriode, kaartVol } from "./lib/plaatsen.js";
 import { maandBedrag, betaalBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
@@ -247,6 +248,17 @@ let praktijkAudit = []; // laatste gebeurtenissen: { t, praktijk, actie, ip }
 const AUDIT_RUIS = new Set(["toegang-geweigerd", "login-mislukt", "herstel-mislukt", "opzeggen-mislukt", "tweede-stap-mislukt", "wachtwoord-vergeten-mail"]);
 const AUDIT_PER_PRAKTIJK = 300, AUDIT_RUIS_PER_PRAKTIJK = 50, AUDIT_TOTAAL = 5000;
 try { praktijkAudit = JSON.parse(await readFile(auditPath, "utf8")); } catch {}
+// De sleutel waarmee de server tijdelijke links voor eigen video's en foto's ondertekent
+// (lib/medialink.js). Hij staat in de datamap en gaat niet mee in de reservekopie: na een restore
+// zonder dit bestand maakt de server een nieuwe, en krijgt elke kaart bij het openen nieuwe links.
+const mediaSleutelPath = join(dataDir, "media-sleutel.json");
+let MEDIA_SLEUTEL = "";
+try { const m = JSON.parse(await readFile(mediaSleutelPath, "utf8")); if (m && /^[a-f0-9]{64}$/.test(String(m.sleutel))) MEDIA_SLEUTEL = m.sleutel; } catch {}
+if (!MEDIA_SLEUTEL) {
+  MEDIA_SLEUTEL = randomBytes(32).toString("hex");
+  try { await mkdir(dataDir, { recursive: true }); await writeFile(mediaSleutelPath, JSON.stringify({ sleutel: MEDIA_SLEUTEL }), { mode: 0o600 }); }
+  catch (e) { console.error("media-sleutel niet bewaard (links gelden tot de volgende start):", e.message); }
+}
 // Het leeslog (lib/leeslog.js): wie welke kaart zag of wijzigde. Een eigen bestand, zodat een
 // kaart lezen niet het hele kaartenbestand opnieuw wegschrijft.
 const leeslogPath = join(dataDir, "leeslog.json");
@@ -2331,6 +2343,33 @@ function kaartPraktijkNaam(pk, opgeslagen) {
 function kaartSleutel(kaart) {
   for (const pk of Object.keys(kaarten)) if (Object.values(kaarten[pk]).includes(kaart)) return pk;
   return String((kaart && kaart.praktijk) || "").toLowerCase();
+}
+// Mag dit verzoek een beschermd bestand uit /uploads/ zien (lib/medialink.js)?
+// `verwijzingen`: de kaarten die deze opname dragen (leeg bij een foto).
+function magMedia(req, pad, verwijzingen) {
+  const foto = mediaSoort(pad) === "foto";
+  // 1. een tijdelijke link: de kaart bestaat nog en draagt dit bestand nog
+  const kaartId = leesMediaLink(MEDIA_SLEUTEL, pad, new URLSearchParams((req.url || "").split("?")[1] || ""));
+  if (kaartId) {
+    const kaart = vindKaart(kaartId);
+    if (kaart && !kaart.demo) {
+      if (!foto) { if (Object.values(kaart.vids || {}).includes(pad)) return true; }
+      else {
+        const pk = kaartSleutel(kaart);
+        if ((kaart.chosen || []).some((x) => x && PRAKTIJK_OEF_ID.test(String(x.id || "")) && (praktijkOefeningVoorKaart(pk, x.id) || {}).img === pad)) return true;
+      }
+    }
+  }
+  // 2. wie is ingelogd bij de praktijk van wie het bestand is
+  const eigenaars = new Set(foto
+    ? Object.keys(praktijkOefeningen).filter((pk) => (praktijkOefeningen[pk] || []).some((o) => o && o.img === pad))
+    : verwijzingen.filter((k) => !k.verwijderdOp).map((k) => kaartSleutel(k)));
+  const s = sessieVan(req);
+  if (s && eigenaars.has(s.pk)) return true;
+  // de v1-app (eigen accountlaag) bij een praktijk zonder account, en beheer met een eigen sleutel
+  if (v1SessieVan(req) && [...eigenaars].some((pk) => !praktijkGeclaimd(pk))) return true;
+  if (beheerEigen(req)) return true;
+  return false;
 }
 function vindKaart(id) {
   if (String(id) === "demo") return demoKaart();
@@ -6692,6 +6731,11 @@ async function afhandelen(request, response) {
     for (const veld of PATIENT_VELDEN) if (veld in found) patientKaart[veld] = found[veld];
     if ("praktijk" in patientKaart) patientKaart.praktijk = kaartPraktijkNaam(fpk, found.praktijk);
     patientKaart.client = patientClient(found.client);
+    // eigen opnames van de praktijk reizen mee als tijdelijke link die bij deze kaart hoort
+    // (lib/medialink.js); een YouTube-verwijzing blijft zoals ze is
+    if (found.vids && typeof found.vids === "object") {
+      patientKaart.vids = Object.fromEntries(Object.entries(found.vids).map(([k, pad]) => [k, mediaLink(MEDIA_SLEUTEL, pad, found.id)]));
+    }
     // de eigen seintjes (alleen soort en moment, ook na afhandeling) voor "Mijn gegevens":
     // de patiënt stuurde ze zelf, dus ze horen bij de inzage (art. 15 AVG). Het
     // contactlogboek zelf (berichten van de praktijk, wie wat afhandelde) blijft binnen.
@@ -6706,7 +6750,9 @@ async function afhandelen(request, response) {
     // eigen oefeningen van de praktijk staan niet in de openbare bibliotheek: naam,
     // foto en uitleg reizen met de kaart mee (alleen die op déze kaart)
     const eigenOef = (found.chosen || []).filter((x) => PRAKTIJK_OEF_ID.test(String(x.id || "")))
-      .map((x) => praktijkOefeningVoorKaart(fpk, x.id)).filter(Boolean);
+      .map((x) => praktijkOefeningVoorKaart(fpk, x.id)).filter(Boolean)
+      // de foto van een eigen oefening: ook een tijdelijke link die bij deze kaart hoort
+      .map((e) => ({ ...e, img: mediaLink(MEDIA_SLEUTEL, e.img, found.id) }));
     if (eigenOef.length) patientKaart.eigenOef = eigenOef;
     // wat de kaartpagina uit de bibliotheek en de keuring nodig heeft, alleen voor deze kaart
     // (zie kaartPakket). Lukt dat niet, dan gaat de kaart zonder en leest de pagina de hele
@@ -7737,6 +7783,14 @@ async function afhandelen(request, response) {
       await send(response, 404, "text/plain; charset=utf-8", "Not found"); return;
     }
 
+    // Een eigen opname van een praktijk of de foto van een eigen oefening: alleen met een
+    // tijdelijke link die bij een kaart hoort, of voor wie bij die praktijk is ingelogd
+    // (lib/medialink.js). Een video uit de bibliotheek heeft dezelfde soort naam en blijft openbaar.
+    const beschermd = !!mediaSoort(uploadPad) && !Object.values(videolinks).some((v) => v && v.eigen === uploadPad);
+    if (beschermd && !magMedia(request, uploadPad, verwijzingen)) {
+      await send(response, 404, "text/plain; charset=utf-8", "Not found"); return;
+    }
+
     // geüploade beelden en (patiënt)video's horen nooit in een zoekmachine, en
     // andere websites mogen ze niet insluiten of hotlinken
     response.setHeader("x-robots-tag", "noindex, noarchive");
@@ -7771,7 +7825,8 @@ async function afhandelen(request, response) {
       // media, anders is dit het enige oppervlak zonder
       response.writeHead(status, { "content-type": MIME[ext], "accept-ranges": "bytes",
         "x-content-type-options": "nosniff", "referrer-policy": "same-origin",
-        ...extraHeaders, ...cacheHeaders(MIME[ext]) });
+        // een beschermd bestand blijft in de browser van wie het mocht zien, niet in een gedeelde cache
+        ...extraHeaders, ...(beschermd ? { "cache-control": "private, max-age=3600" } : cacheHeaders(MIME[ext])) });
       s.pipe(response);
       s.on("end", resolve);
     });

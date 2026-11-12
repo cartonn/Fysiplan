@@ -162,7 +162,13 @@ try {
   assert.equal((await get('/'+keep.replace('uploads/','uploads//'))).status,404,'dubbele slash omzeilt videoblokkade niet');
   assert.equal((await readFile(join(dataDir,keep),'utf8')),'retained video');
   assert.equal((await terug(legacy.id,S2)).status,200);
-  assert.equal((await get('/'+keep)).status,200,'opname terug na herstel');
+  // na herstel is de opname er weer: via de tijdelijke link op de patiëntkaart en voor wie bij de
+  // praktijk is ingelogd; een kaal adres zonder login geeft haar niet meer (lib/medialink.js)
+  const pkaart=(await (await get('/api/kaart?id='+legacy.id)).json()).kaart;
+  assert.match(pkaart.vids.Squat,/^uploads\/videos\/v-bbbbbbbbbbbbbbbb\.mp4\?k=[a-f0-9]+&e=\d{13}&s=[A-Za-z0-9_-]{32}$/,'de patiëntkaart krijgt een tijdelijke link');
+  assert.equal((await get('/'+pkaart.vids.Squat)).status,200,'opname terug na herstel (patiëntkaart)');
+  assert.equal((await get('/'+keep,S2)).status,200,'opname terug na herstel (praktijk)');
+  assert.equal((await get('/'+keep)).status,404,'een kaal adres zonder login geeft de opname niet');
   await wacht(300);
   const na=JSON.parse(await readFile(join(dataDir,'kaarten.json'),'utf8'));assert.equal(na[pk].verlopen,undefined);
   await assert.rejects(readFile(join(dataDir,video)),'video opgeruimd na definitieve verwijdering');
