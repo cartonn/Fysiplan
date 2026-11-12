@@ -11,7 +11,7 @@ import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
 import { aantalTherapeuten, maandBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN, MAX_THERAPEUTEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
-import { volgendFactuurNr, factuurHtml, isFactuur, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
+import { volgendFactuurNr, naarCent, factuurHtml, isFactuur, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
 import { backupInstellingen } from "./lib/backup-elders.js";
 import { runBackup } from "./lib/backup-runner.js";
 import { gegevensRuimte } from "./lib/backup-snapshots.js";
@@ -19,6 +19,7 @@ import { SESSIE_MS, SessieTabel, laadSessies, sessieSleutel, wachtwoordAfdruk } 
 import { kiesInpak, inpakbaar, pakIn, etagKomtOvereen } from "./lib/inpakken.js";
 import { kleinPadVoor, kleinMap } from "./lib/klein-beeld.js";
 import { nieuwGeheim, controleer, otpauth, nieuweReservecode, reservecodeNormaal } from "./lib/totp.js";
+import { maakBeheerOmgeving } from "./lib/beheer-omgeving-routes.js";
 import { BEHEER_SESSIE_MS, BEHEER_WW_MIN, BEHEER_EERSTE_KEER_MS, BeheerSessies, BeheerLogboek, Rem, laadBeheerSessies, beheerKlaar, beheerVerlopen, beheerUit, beheerPad } from "./lib/beheer.js";
 
 const port = Number(process.env.PORT || 3000);
@@ -2557,7 +2558,9 @@ function leesLimiet(req, res) {
 // blijven buiten de back-up.
 // ook de eigen oefeningen van praktijken, het logboek en de start van de bewaartermijn: zonder
 // die drie kwam een praktijk na een restore terug zonder eigen oefeningen en zonder logboek
-const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, praktijkOefeningenPath, accountsPath, auditPath, bewaarPath, v1AccountsPath, proefPath, beheerAccountsPath, beheerLogPath];
+const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPath, extraPath, deletedPath, catsPath, customCategoriesPath, vertalingenPath, oprichtersPath, praktijkSjablonenPath, praktijkOefeningenPath, accountsPath, auditPath, bewaarPath, v1AccountsPath, proefPath, beheerAccountsPath, beheerLogPath,
+  // finance: btw-keuze, ingediende aangiftes, afgesloten boekjaren, kosten; en wat de support-agent mag en deed
+  join(dataDir, "finance-instellingen.json"), join(dataDir, "finance-kosten.json"), join(dataDir, "beheer-agent.json")];
 // reservekopie buiten Railway (lib/backup-elders.js): dezelfde bestanden, versleuteld, naar een
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
@@ -3155,6 +3158,84 @@ function telInlogMisIp(req, pad) { logGeweigerd(req, pad); telBeheerMis(req); }
 function logPad(url) {
   return String(url || "").split("?")[0].replace(/^\/(k|o|api\/kaart)\/[^/]+/, "/$1/…").slice(0, 200);
 }
+
+// ---- beheer- en finance-omgeving (/dashboard88/omgeving, lib/beheer-omgeving-routes.js) ----
+// De echte bron: per praktijk de logins (zonder wachtwoorden of geheimen), tellingen van kaarten
+// en het abonnement, plus de facturen uit de proefaanmeldingen. Nooit iets van patiënten.
+function beheerBronEcht() {
+  const nu = Date.now();
+  const proefVanAcc = (acc) => acc && acc.proef && Object.hasOwn(proeven, String(acc.proef.id)) ? proeven[String(acc.proef.id)] : null;
+  const misVan = (k) => { const t = loginMisPraktijk.get(k); return t && nu - t.start <= 15 * 60000 ? t.n : 0; };
+  const pkVanProef = new Map();
+  const praktijken = Object.keys(praktijkAccounts).map((pk) => {
+    const acc = praktijkAccounts[pk];
+    const p = proefVanAcc(acc), a = p && p.abonnement;
+    if (p) pkVanProef.set(p.id, pk);
+    const status = a ? (a.status === "actief" ? "klant" : a.status === "opgezegd" ? "opgezegd" : "gestopt")
+      : p && Number(p.verloopt) > nu ? "proef" : "zonder-abonnement";
+    const kk = Object.values(kaarten[pk] || {});
+    return {
+      pk, naam: weergaveNaam(pk) || pk, sinds: acc.gemaakt || null, status,
+      plaatsen: a ? Number(a.aantal) || 0 : 0, proefTot: p && !a ? Number(p.verloopt) || null : null,
+      betaaldTot: a ? Number(a.betaaldTot) || null : null, incassoMislukt: !!(a && a.incasso && a.incasso.status === "mislukt"),
+      kaartenTotaal: kk.length, kaarten30: kk.filter((k) => k && Number(k.ts) > nu - 30 * 86400e3).length,
+      loginMis: praktijkAudit.filter((x) => x && x.praktijk === pk && x.actie === "login-mislukt" && nu - Date.parse(x.t) <= 86400e3).length,
+      leden: ledenVan(pk).map((l) => {
+        const m = l.totp && l.totp.mis;
+        return { id: l.id, naam: l.naam || "", email: l.email || "", rol: l.rol || "therapeut", actief: lidActief(l), laatst: l.laatst || null,
+          tweedeStap: heeftTweedeStap(l), stapSlot: !!(m && nu - Number(m.start) <= 86400e3 && Number(m.n) >= TOTP_MIS_PER_DAG),
+          loginMis: misVan("mail:" + l.email), uitnodigingVerloopt: !lidActief(l) && l.uitnodiging ? Number(l.uitnodiging.verloopt) || null : null };
+      })
+    };
+  });
+  // V1 (de app op /): logins met een e-mailadres, per praktijknaam. Alleen tellen; aan V1 zelf
+  // verandert hier niets. V1 houdt geen laatste login bij en heeft geen tweede stap.
+  const v1 = new Map();
+  for (const acc of Object.values(v1Accounts)) {
+    if (!acc || !acc.email) continue;
+    const naam = String(acc.praktijk || V1_PRAKTIJK);
+    if (!v1.has(naam)) v1.set(naam, []);
+    v1.get(naam).push(acc);
+  }
+  for (const [naam, lijst] of v1) {
+    const sleutel = naam.toLowerCase();
+    const kk = praktijkGeclaimd(sleutel) ? [] : Object.values(kaarten[sleutel] || {});
+    praktijken.push({ pk: "v1:" + sleutel, naam: naam + " (V1)", sinds: Math.min(...lijst.map((x) => Number(x.gemaakt) || Date.parse(x.gemaakt) || nu)), status: "v1",
+      plaatsen: 0, proefTot: null, betaaldTot: null, incassoMislukt: false, kaartenTotaal: kk.length, kaarten30: kk.filter((k) => k && Number(k.ts) > nu - 30 * 86400e3).length, loginMis: 0,
+      leden: lijst.map((x) => ({ id: "v1:" + x.email, naam: "", email: x.email, rol: "therapeut", actief: !!x.hash, laatst: null, tweedeStap: false, stapSlot: false, loginMis: 0, uitnodigingVerloopt: null })) });
+  }
+  // facturen: de eerste betaling en elke gelukte maandincasso; een incasso die loopt of mislukte
+  // is een open post. Ook van gewiste praktijken (fiscale bewaarplicht).
+  const facturen = [];
+  for (const p of Object.values(proeven)) {
+    const a = p && p.abonnement;
+    if (!a || !a.eersteBetaling) continue;
+    const pk = pkVanProef.get(p.id) || "proef:" + p.id;
+    const naam = (a.factuurAfnemer && a.factuurAfnemer.naam) || p.praktijk || p.naam || "";
+    facturen.push({ nr: a.factuurNr || "", datum: Number(a.sinds), pk, praktijk: naam, aantal: Number(a.aantal) || 1, totaalCent: naarCent(a.bedrag), status: "betaald", betaaldOp: Number(a.sinds), adres: (a.factuurAfnemer && a.factuurAfnemer.adres) || "" });
+    for (const b of Array.isArray(a.betalingen) ? a.betalingen : []) {
+      if (!b) continue;
+      facturen.push({ nr: b.factuurNr || "", datum: Number(b.betaald || b.sinds), pk, praktijk: (b.afnemer && b.afnemer.naam) || naam, aantal: Number(b.aantal) || 1, totaalCent: naarCent(b.bedrag), status: "betaald", betaaldOp: Number(b.betaald) || null, adres: (b.afnemer && b.afnemer.adres) || "" });
+    }
+    const inc = a.incasso;
+    if (inc && inc.id && inc.status !== "paid" && Number(inc.periode)) facturen.push({ nr: "", datum: Number(inc.periode), pk, praktijk: naam, aantal: Number(inc.aantal) || 1, totaalCent: naarCent(maandBedrag(Number(inc.aantal) || 1).value), status: inc.status === "mislukt" ? "mislukt" : "open", betaaldOp: null, adres: "" });
+  }
+  const checks = [
+    { naam: "Server", ok: true, tekst: "Versie " + (buildInfo.commit ? String(buildInfo.commit).slice(0, 7) : "onbekend") + ", draait " + Math.round((nu - startTijd) / 360000) / 10 + " uur" },
+    { naam: "Opslag", ok: dataDir === "/data" || !!process.env.DATA_DIR, tekst: dataDir === "/data" || !!process.env.DATA_DIR ? "Gegevens staan op een blijvend volume" : "Geen blijvend volume: een uitrol wist de gegevens" },
+    { naam: "Reservekopie", ok: !!backupElders && !!backupEldersStatus.ok && !backupEldersStatus.fout, tekst: !backupElders ? "Reservekopie buiten Railway staat uit" : backupEldersStatus.ok ? "Laatste kopie elders: " + new Date(backupEldersStatus.ok).toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam" }) : "Nog geen gelukte kopie elders" },
+    { naam: "Mail", ok: mailIngesteld(), tekst: mailIngesteld() ? "Mail via de mailprovider ingesteld" : "Mail staat uit: geen herstelmails en geen agent-mails" },
+    { naam: "Betalingen", ok: !!MOLLIE_SLEUTEL, tekst: MOLLIE_SLEUTEL ? "Mollie ingesteld" : "Mollie staat uit (geen MOLLIE_API_KEY)" },
+    { naam: "Inloggen", ok: EIGEN_LOGIN_VERPLICHT, tekst: EIGEN_LOGIN_VERPLICHT ? "Eigen login met tweede stap verplicht" : "Eigen login met tweede stap is niet verplicht" }
+  ];
+  return { soort: "echt", nu, praktijken, facturen, kosten: [], systeem: { versie: buildInfo.commit || "", uptimeUren: Math.round((nu - startTijd) / 360000) / 10, checks, beschikbaarheid: [] } };
+}
+const beheerOmgeving = maakBeheerOmgeving({
+  dataDir, publicDir, bronEcht: beheerBronEcht, leverancier: () => FYSIPLAN_ID,
+  beheerEigen, denied, send, sendJson, readBody, kruisSite, weigerKruis, saveJson, beheerLog, beheerIp,
+  stuurMail, mailIngesteld, mailOpSlot, maskeerEmail
+});
+await beheerOmgeving.laad();
 
 // Elk verzoek loopt door dit vangnet: één kapotte aanvraag (bot, rare URL, afgebroken
 // verbinding) mag nooit het hele proces neerhalen. Zonder dit stopt Node bij een
@@ -4603,6 +4684,9 @@ async function afhandelen(request, response) {
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
+
+  // de beheer- en finance-omgeving (lib/beheer-omgeving-routes.js)
+  if ((urlPath.startsWith("/api/beheer/omgeving") || urlPath.startsWith("/dashboard88/omgeving") || urlPath === "/beheer.html") && await beheerOmgeving.afhandelen(request, response, urlPath)) return;
 
   // ---- persoonlijke beheeraccounts (uitleg bij beheerAccountVan) ----
   // wie is hier ingelogd? Voor de beheerpagina's; zonder login gewoon 200 met wie: null, zodat
