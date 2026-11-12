@@ -2363,6 +2363,12 @@ async function send(res, status, type, body) {
     res.setHeader("connection", "close");
     if (/json/.test(type)) body = JSON.stringify({ ok: false, teGroot: true, fout: "Dit is te groot om te versturen." });
   }
+  // Een sessiewijziging (inloggen, uitloggen, intrekken) staat op schijf vóór het antwoord
+  // vertrekt. Meestal is er niets om op te wachten en loopt dit antwoord de oude weg.
+  if (praktijkSessies.achter) {
+    await praktijkSessies.bijgewerkt();
+    if (res.headersSent || res.destroyed || res.writableEnded) return;
+  }
   // nosniff en een sobere referrer-policy op alles: puur verhardend, verandert geen gedrag
   res.writeHead(status, { "content-type": type, "x-content-type-options": "nosniff",
     "referrer-policy": "same-origin", ...cacheHeaders(type) });
