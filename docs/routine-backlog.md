@@ -234,8 +234,9 @@ teamsjabloon overschrijven met vraag (server `bestond`), oefendoel-select zonder
   (kaart.html r. ~350 `body.krap .srij` + `html.groot body{zoom:1.16}`). Erger dan in 06u gemeld.
 - **MIDDEL (nieuw, Mark, iPad liggend) — na "Delen met de praktijk" geen bevestiging, en nog eens delen overschrijft het teamsjabloon met
   dezelfde naam stil** (3 oefeningen → 1). index.html r. ~2972 (`wat==='deel'`).
-- **MIDDEL (Karin, productvraag → mensenwerk) — praktijk met één beheerder zit vast als die het wachtwoord kwijt is** (na "wachtwoord uit"
+- **OPGELOST 2026-11-12 (test:wachtwoordvergeten) — MIDDEL (Karin, productvraag → mensenwerk) — praktijk met één beheerder zit vast als die het wachtwoord kwijt is** (na "wachtwoord uit"
   werkt de herstelcode niet meer; geen herstelpad voor een lid). De app waarschuwt niet voor "minstens twee beheerders".
+  Nu: elke eigen login vraagt onder Kaarten met "Wachtwoord vergeten?" een link aan op het eigen adres. De waarschuwing is niet gebouwd.
 - **LAAG/MIDDEL (Jayden) — herstelknoppen reageren op een trage lijn pas na het antwoord van de server** (4 s, oude keuze blijft groen).
 - **LAAG (nieuw, Karin) — stille 409 op POST /api/kaarten voor "Voorbeeldpatiënt" bij elk laden na de overstap naar eigen login** (console).
 - **LAAG (Karin) — therapeut ziet telefoonveld en "+ praktijklogo"**; eigen telefoon blijft lokaal en komt op de print; logo-knop zegt

@@ -347,6 +347,24 @@ __INHOUD__
   </div>
 </main>
 <!--/blok-->
+<!--blok:nieuwwachtwoord-->
+<main class="smal">
+  <div>
+    <span class="etiket">Nieuw wachtwoord &middot; __PRAKTIJK__</span>
+    <h1>Kies een nieuw wachtwoord.</h1>
+    <p class="lead">__UI_LEAD__</p>
+    __MELDING__
+    <div class="blad" style="margin-top:28px">
+      <form method="post" action="/v2/uitnodiging">
+        <input type="hidden" name="t" value="__TOKEN__"/>
+        <input type="email" value="__EMAIL__" autocomplete="username" readonly hidden/>
+        <div class="veld"><label for="ui_ww">Nieuw wachtwoord (minstens 8 tekens)</label><input id="ui_ww" name="wachtwoord" type="password" minlength="8" autocomplete="new-password" required/></div>
+        <div class="knoppen"><button class="knop oranje" type="submit">Wachtwoord opslaan</button></div>
+      </form>
+    </div>
+  </div>
+</main>
+<!--/blok-->
 <!--blok:bericht-->
 <main class="smal">
   <div>

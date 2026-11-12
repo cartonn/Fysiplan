@@ -194,7 +194,7 @@ const auditPath = join(dataDir, "praktijk-audit.json");
 let praktijkAccounts = {}; // { praktijkKey: { hash, gemaakt } }  hash = "scrypt$saltHex$hashHex"
 try { praktijkAccounts = JSON.parse(await readFile(accountsPath, "utf8")); } catch {}
 let praktijkAudit = []; // laatste gebeurtenissen: { t, praktijk, actie, ip }
-const AUDIT_RUIS = new Set(["toegang-geweigerd", "login-mislukt", "herstel-mislukt", "opzeggen-mislukt", "tweede-stap-mislukt"]);
+const AUDIT_RUIS = new Set(["toegang-geweigerd", "login-mislukt", "herstel-mislukt", "opzeggen-mislukt", "tweede-stap-mislukt", "wachtwoord-vergeten-mail"]);
 const AUDIT_PER_PRAKTIJK = 300, AUDIT_RUIS_PER_PRAKTIJK = 50, AUDIT_TOTAAL = 5000;
 try { praktijkAudit = JSON.parse(await readFile(auditPath, "utf8")); } catch {}
 // Sessies overleven een herstart: elke uitrol logde anders alle therapeuten uit. Ze staan
@@ -581,6 +581,25 @@ function beheerHerstelOpSlot(pk) {
   const t = beheerHerstelTeller.get(pk);
   if (!t || nu - t.start > 86400e3) { beheerHerstelTeller.set(pk, { start: nu, n: 1 }); return false; }
   return ++t.n > BEHEER_HERSTEL_PER_DAG;
+}
+// Wachtwoord vergeten met een eigen login (zie /api/praktijk/wachtwoord-vergeten): de link in de
+// mail is een uur geldig. Hooguit zes aanvragen per uur per verbinding, naast de rem van drie
+// mails per uur per adres (mailOpSlot): een praktijk achter één aansluiting komt daar niet aan,
+// een script dat adressen afloopt wel.
+const VERGETEN_MS = 60 * 60000;
+const VERGETEN_PER_UUR = 6;
+const vergetenTeller = new Map(); // ip -> { start, n }
+function vergetenLimiet(req, res) {
+  const nu = Date.now(), ip = ipSleutel(req);
+  if (vergetenTeller.size > 5000) for (const [k, v] of vergetenTeller) if (nu - v.start > 3600e3) vergetenTeller.delete(k);
+  const t = vergetenTeller.get(ip);
+  if (!t || nu - t.start > 3600e3) { vergetenTeller.set(ip, { start: nu, n: 1 }); return false; }
+  if (++t.n > VERGETEN_PER_UUR) {
+    if (t.n === VERGETEN_PER_UUR + 1) logGeweigerd(req, "vergeten-limiet");
+    send429(res, 3600, { ok: false, fout: "Vanaf deze verbinding is het afgelopen uur al vaak een nieuw wachtwoord aangevraagd; probeer het over een uur opnieuw." });
+    return true;
+  }
+  return false;
 }
 // de herstelcode uit een herstelmail (naast de eigen code van de praktijk, die blijft werken)
 const herstelMailGeldig = (acc) => !!(acc && acc.herstelMail && acc.herstelMail.hash && acc.herstelMail.verloopt > Date.now());
@@ -3726,7 +3745,7 @@ async function afhandelen(request, response) {
     const relevant = new Set(["geclaimd", "ingelogd", "login-mislukt", "login-op-slot",
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
-      "claim-gereset-door-beheer", "herstel-door-beheer", "wachtwoord-hersteld-per-mail", "sein-mail-uit", "sein-mail-aan", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
+      "claim-gereset-door-beheer", "herstel-door-beheer", "wachtwoord-vergeten-mail", "wachtwoord-hersteld-per-mail", "sein-mail-uit", "sein-mail-aan", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
       "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "team-wijziging-geweigerd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "kaart-hersteld", "kaart-definitief-verwijderd", "profiel-gewijzigd",
       "abonnement-opgezegd", "opzeggen-mislukt", "opzeggen-geweigerd", "praktijknaam-gewijzigd",
       "tweede-stap-aan", "tweede-stap-uit", "tweede-stap-gewist", "tweede-stap-mislukt", "tweede-stap-op-slot", "ingelogd-met-reservecode", "reservecodes-vernieuwd",
@@ -4174,7 +4193,7 @@ async function afhandelen(request, response) {
         return;
       }
       if (metNaam.length && !kandidaten.length) {
-        await sendJson(response, 401, { ok: false, perEmail: true, fout: "Deze praktijk logt in met eigen logins. Wachtwoord kwijt? Vraag de beheerder om een nieuwe uitnodiging." });
+        await sendJson(response, 401, { ok: false, perEmail: true, fout: "Deze praktijk logt in met eigen logins. Wachtwoord kwijt? Kies “Wachtwoord vergeten?” en vraag een link aan op je eigen e-mailadres." });
         return;
       }
       if (!nk || !kandidaten.length) { loginMisTel(nk || "?"); await denied(request, response, "praktijk-herstel", "Praktijknaam of herstelcode klopt niet."); return; }
@@ -4218,6 +4237,72 @@ async function afhandelen(request, response) {
     return;
   }
 
+  // Wachtwoord vergeten met een eigen login: een link naar het adres van die login. Met de eigen
+  // login voor iedereen (EIGEN_LOGIN_VERPLICHT) is er geen praktijkwachtwoord en geen herstelcode
+  // op papier meer; een enige beheerder die het wachtwoord vergat, kwam er alleen nog in met een
+  // herstelmail van Fysiplan-beheer. Nu vraagt elke login de link zelf aan.
+  // - Het antwoord is altijd hetzelfde en hangt niet af van het werk erna: het verraadt niet of
+  //   het adres bij een login van deze praktijk hoort (zelfde opzet als bij v1). Een mailstoring
+  //   komt daarom ook niet terug als fout.
+  // - De link is een uur geldig, werkt één keer en gaat alleen naar het adres van de login zelf.
+  //   Tot gebruik verandert er niets: het oude wachtwoord en de sessies blijven werken. Een
+  //   nieuwe aanvraag maakt de vorige link ongeldig.
+  // - De tweede stap blijft staan. Wie alleen bij de mailbox kan, heeft bij een login met een
+  //   tweede stap dus nog geen sessie. Telefoon ook kwijt: een beheerder wist de tweede stap
+  //   (Team), en voor de enige beheerder doet Fysiplan-beheer dat (/api/beheer/praktijk-herstel).
+  // - Een lopende herstelmail van beheer (48 uur, soms met "tweede stap vervalt") blijft geldig
+  //   en wordt niet overschreven. Een uitnodiging die nog niet is aangenomen is geen login.
+  if (urlPath === "/api/praktijk/wachtwoord-vergeten" && request.method === "POST") {
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    if (schrijfLimiet(request, response)) return;
+    if (vergetenLimiet(request, response)) return;
+    try {
+      const b = JSON.parse(await readBody(request));
+      const nk = cleanName(b.praktijk, 80).toLowerCase();
+      const em = normEmail(b.email);
+      if (!mailIngesteld()) { await sendJson(response, 503, { ok: false, geenMail: true, fout: "Op deze server staat mail niet aan; een link sturen kan dan niet." }); return; }
+      if (!nk) { await sendJson(response, 400, { ok: false, veld: "praktijk", fout: "Vul eerst de naam van je praktijk in." }); return; }
+      if (!geldigEmail(em)) { await sendJson(response, 400, { ok: false, veld: "email", fout: "Vul het e-mailadres van je eigen login in." }); return; }
+      const doelen = [];
+      for (const pk of accountsMetNaam(nk)) for (const l of ledenVan(pk)) if (l.email === em && lidActief(l)) doelen.push({ pk, l });
+      // eerst het antwoord, dan het werk: het antwoord en de tijd die het kost hangen er niet van af
+      await sendJson(response, 200, { ok: true, gestuurd: true });
+      if (!doelen.length) return;
+      const basis = instelBasis(request);
+      const contact = FYSIPLAN_ID.contact || (MAIL_AFZENDER.match(/[^\s<>]+@[^\s<>]+/) || [""])[0];
+      (async () => {
+        let bewaar = false;
+        // dezelfde naam bij twee praktijken met hetzelfde adres: elk een eigen mail, hooguit drie
+        for (const { pk, l } of doelen.slice(0, 3)) {
+          const was = l.uitnodiging;
+          if (was && was.herstel && !was.zelf && was.verloopt > Date.now()) continue;
+          if (mailOpSlot(em)) break;
+          const token = randomBytes(24).toString("hex");
+          const naam = weergaveNaam(pk) || nk;
+          l.uitnodiging = { hash: tokenHash(token), verloopt: Date.now() + VERGETEN_MS, herstel: true, zelf: true };
+          try {
+            await stuurMail(em, "Nieuw wachtwoord kiezen voor Fysiplan (" + naam + ")",
+              "Hallo" + (l.naam ? " " + String(l.naam).split(" ")[0] : "") + ",\n\n" +
+              "Er is in Fysiplan een nieuw wachtwoord aangevraagd voor je login bij " + naam + ". Kies het hier (de link is een uur geldig en werkt één keer):\n" +
+              basis + "/v2/uitnodiging?t=" + token + "\n\n" +
+              (heeftTweedeStap(l) ? "Je tweede stap (de code uit je code-app) blijft zoals hij is: na je nieuwe wachtwoord vraagt Fysiplan daar nog steeds om.\n\n"
+                : stapVerplicht(pk) ? "Bij het inloggen met je nieuwe wachtwoord stel je daarna je tweede stap in (een code-app op je telefoon).\n\n" : "") +
+              "Heb je dit niet aangevraagd? Dan hoef je niets te doen: je huidige wachtwoord blijft werken en aan je login is niets veranderd." +
+              (contact ? " Krijg je deze mail vaker zonder dat je erom vroeg, laat het ons dan weten via " + contact + "." : "") + "\n\nFysiplan");
+            bewaar = true;
+            auditLog(pk, "wachtwoord-vergeten-mail", request, l.naam || maskeerEmail(em));
+          } catch {
+            // de link die niemand kreeg weer weg, tenzij een volgende aanvraag er al een nieuwe overheen zette
+            if (l.uitnodiging && l.uitnodiging.hash === tokenHash(token)) { if (was) l.uitnodiging = was; else delete l.uitnodiging; }
+            console.error("wachtwoord vergeten: de mail versturen mislukte");
+          }
+        }
+        if (bewaar) await saveJson(accountsPath, praktijkAccounts);
+      })().catch(() => { console.error("wachtwoord vergeten: de link bewaren mislukte"); });
+    } catch { if (!response.headersSent) await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
+    return;
+  }
+
   // nieuwe herstelcode voor de ingelogde praktijk: wie de bewaarde code kwijt is
   // (papier zoek) vervangt hem hier vóórdat het misgaat — anders betekent één
   // vergeten wachtwoord later een slot dat alleen beheer kan openen. Eist naast
@@ -4233,7 +4318,7 @@ async function afhandelen(request, response) {
       const acc = praktijkAccounts[pk];
       if (!pk || !acc) { await sendJson(response, 404, { ok: false, fout: "Geen account voor deze praktijk." }); return; }
       if (praktijkSessieVan(request) !== pk) { await sendJson(response, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true }); return; }
-      if (sessieLid(sessieVan(request))) { await sendJson(response, 400, { ok: false, fout: "Met je eigen login heb je geen herstelcode nodig. Wachtwoord kwijt? Vraag de beheerder om een nieuwe uitnodiging." }); return; }
+      if (sessieLid(sessieVan(request))) { await sendJson(response, 400, { ok: false, fout: "Met je eigen login heb je geen herstelcode nodig. Wachtwoord kwijt? Kies bij het inloggen “Wachtwoord vergeten?” en vraag een link aan op je eigen e-mailadres." }); return; }
       if (loginOpSlot(pk)) {
         await send429(response, 900, { ok: false, fout: "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
         return;
@@ -7281,7 +7366,8 @@ async function afhandelen(request, response) {
   // alleen als sha256 op schijf en is 7 dagen geldig; na gebruik vervalt het.
   // Dezelfde pagina dient voor de herstelmail van beheer (uitnodiging.herstel, 48 uur): een
   // beheerder met een eigen login kiest hier een nieuw wachtwoord. Tot dat moment blijft
-  // het oude werken.
+  // het oude werken. En voor de link die een login zelf aanvraagt met "Wachtwoord vergeten?"
+  // (uitnodiging.zelf, een uur): zelfde werking, de tweede stap blijft dan altijd staan.
   if (urlPath === "/v2/uitnodiging" && (request.method === "GET" || request.method === "POST")) {
     response.setHeader("cache-control", "no-store");
     response.setHeader("referrer-policy", "no-referrer");
@@ -7295,47 +7381,67 @@ async function afhandelen(request, response) {
       b.t = new URLSearchParams((request.url || "").split("?")[1] || "").get("t") || "";
     }
     const token = String(b.t || "");
-    let pk = null, lid = null;
+    let pk = null, lid = null, zelfVerlopen = false;
     if (/^[a-f0-9]{48}$/.test(token)) {
       const h = tokenHash(token);
       for (const k of Object.keys(praktijkAccounts)) {
-        const l = ledenVan(k).find((x) => x.uitnodiging && x.uitnodiging.hash === h && x.uitnodiging.verloopt > Date.now());
-        if (l) { pk = k; lid = l; break; }
+        const l = ledenVan(k).find((x) => x.uitnodiging && x.uitnodiging.hash === h);
+        if (l && l.uitnodiging.verloopt > Date.now()) { pk = k; lid = l; break; }
+        if (l && l.uitnodiging.zelf) zelfVerlopen = true;
       }
     }
     if (!lid) {
       if (kaartMisLimiet(request, response)) return;
-      await serveerProef(request, response, "bericht", { TITEL: "Uitnodiging verlopen", ETIKET: "Uitnodiging",
-        KOP: "Deze uitnodiging werkt niet meer.", TEKST: "De link is verlopen of al gebruikt. Vraag de beheerder van je praktijk om een nieuwe uitnodiging.",
+      // de eigen aanvraag van een uur geleden: zeggen waar een nieuwe link vandaan komt
+      if (zelfVerlopen) {
+        await serveerProef(request, response, "bericht", { TITEL: "Link verlopen", ETIKET: "Nieuw wachtwoord",
+          KOP: "Deze link werkt niet meer.", TEKST: "De link was een uur geldig. Aan je login is niets veranderd. Vraag in Fysiplan onder Kaarten een nieuwe link aan met \u201cWachtwoord vergeten?\u201d.",
+          KNOP_HTML: '<a class="knop omlijnd" href="/v2/app">Naar Fysiplan</a>' }, 404);
+        return;
+      }
+      await serveerProef(request, response, "bericht", { TITEL: "Link verlopen", ETIKET: "Fysiplan",
+        KOP: "Deze link werkt niet meer.", TEKST: "De link is verlopen of al gebruikt. Was het een uitnodiging? Vraag de beheerder van je praktijk om een nieuwe. Wilde je een nieuw wachtwoord kiezen? Vraag in Fysiplan onder Kaarten een nieuwe link aan met \u201cWachtwoord vergeten?\u201d.",
         KNOP_HTML: '<a class="knop omlijnd" href="/v2/app">Naar Fysiplan</a>' }, 404);
       return;
     }
     const isHerstel = !!lid.uitnodiging.herstel;
+    // zelf aangevraagd met "Wachtwoord vergeten?": geen bericht van beheer, en de tweede stap blijft.
+    // Die pagina vraagt alleen een nieuw wachtwoord: de naam en het akkoord op de werkregels van
+    // deze login blijven zoals ze zijn (wat het formulier verder nog meestuurt, telt niet).
+    const isZelf = isHerstel && !!lid.uitnodiging.zelf;
     // herstelmail van beheer met tweedeStap: true: bij gebruik vervalt ook de tweede stap
     const wisStap = isHerstel && !!lid.uitnodiging.wisTweedeStap && heeftTweedeStap(lid);
-    const toon = (fout, status) => serveerProef(request, response, "uitnodiging", { TITEL: isHerstel ? "Nieuw wachtwoord" : "Uitnodiging", PRAKTIJK: weergaveNaam(pk),
+    const toon = (fout, status) => serveerProef(request, response, isZelf ? "nieuwwachtwoord" : "uitnodiging", { TITEL: isHerstel ? "Nieuw wachtwoord" : "Uitnodiging", PRAKTIJK: weergaveNaam(pk),
       UI_SOORT: isHerstel ? "Nieuw wachtwoord" : "Uitnodiging",
       UI_KOP: isHerstel ? "Kies een nieuw wachtwoord." : "Kies je eigen wachtwoord.",
-      UI_LEAD_HTML: (isHerstel
+      UI_LEAD_HTML: (isZelf
+        ? "Voor je login bij " + htmlEsc(weergaveNaam(pk)) + " is een nieuw wachtwoord aangevraagd. Je logt in met <b>" + htmlEsc(lid.email) + "</b> en het wachtwoord dat je hier kiest. Je oude wachtwoord werkt daarna niet meer." +
+          (heeftTweedeStap(lid) ? " Je tweede stap (de code uit je code-app) blijft zoals hij is."
+            : stapVerplicht(pk) ? " Bij het inloggen stel je daarna je tweede stap in (een code-app op je telefoon)." : "")
+        : isHerstel
         ? "Fysiplan-beheer heeft je deze link gestuurd omdat je niet meer kon inloggen bij " + htmlEsc(weergaveNaam(pk)) + ". Je logt in met <b>" + htmlEsc(lid.email) + "</b> en het wachtwoord dat je hier kiest. Je oude wachtwoord werkt daarna niet meer." +
           (wisStap ? " Ook de tweede stap van je login (de code uit je code-app) vervalt; " + (stapVerplicht(pk) ? "je stelt hem bij het inloggen opnieuw in." : "stel hem daarna opnieuw in onder Kaarten, Team.") : "")
         : "Je werkt in Fysiplan voortaan met je eigen login bij " + htmlEsc(weergaveNaam(pk)) + ". Je logt in met <b>" + htmlEsc(lid.email) + "</b> en het wachtwoord dat je hier kiest."),
       EMAIL: lid.email, TOKEN: token, V_NAAM: b.naam != null ? cleanName(b.naam, 60) : (lid.naam || ""),
       MELDING_HTML: fout ? '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" : "" }, status);
     if (request.method === "GET") { await toon("", 200); return; }
-    const naam = cleanName(b.naam, 60), ww = String(b.wachtwoord || "");
+    const naam = isZelf ? (lid.naam || maskeerEmail(lid.email)) : cleanName(b.naam, 60), ww = String(b.wachtwoord || "");
     if (!naam) { await toon("Vul je naam in.", 400); return; }
     if (ww.length < 8) { await toon("Kies een wachtwoord van minstens 8 tekens.", 400); return; }
-    if (b.regels !== "1") { await toon("Vink aan dat je de werkregels hebt gelezen.", 400); return; }
-    lid.naam = naam;
+    if (!isZelf && b.regels !== "1") { await toon("Vink aan dat je de werkregels hebt gelezen.", 400); return; }
+    if (!isZelf) {
+      lid.naam = naam;
+      lid.regels = { versie: WERKREGELS_VERSIE, t: new Date().toISOString() };
+    }
     lid.hash = maakHash(ww);
-    lid.regels = { versie: WERKREGELS_VERSIE, t: new Date().toISOString() };
     delete lid.uitnodiging;
     if (isHerstel) lid.gewijzigd = Date.now();
     if (wisStap) { delete lid.totp; totpWacht.delete(pk + ":" + lid.id); }
     await saveJson(accountsPath, praktijkAccounts);
-    // na een herstel: wie nog met het oude wachtwoord was ingelogd, is dat nu niet meer
-    if (isHerstel) trekSessiesIn(pk, lid.id);
+    // na een herstel: wie nog met het oude wachtwoord was ingelogd, is dat nu niet meer. De rem
+    // na te veel foute wachtwoorden op dit adres vervalt: wie de link uit de eigen mailbox
+    // gebruikte, hoeft niet nog een kwartier te wachten met het nieuwe wachtwoord.
+    if (isHerstel) { trekSessiesIn(pk, lid.id); loginMisPraktijk.delete("mail:" + lid.email); }
     auditLog(pk, isHerstel ? "wachtwoord-hersteld-per-mail" : "uitnodiging-aangenomen", request, naam);
     if (wisStap) auditLog(pk, "tweede-stap-gewist", request, naam + " (via de herstelmail van Fysiplan-beheer)");
     // de knop zet de praktijknaam alvast klaar (/v2/app?praktijk=): de collega hoeft hem niet zelf
