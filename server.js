@@ -8306,23 +8306,35 @@ async function afhandelen(request, response) {
     const nk = cleanName(b.praktijk, 80).toLowerCase();
     const opnieuw = (fout, status) => serveerProef(request, response, "gegevens", { TITEL: "Gegevens van je praktijk",
       V_PRAKTIJK: cleanName(b.praktijk, 80), MELDING_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }, status);
-    if (nk && loginOpSlot(nk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
-    if (beheerOpRem(request)) { await opnieuw("Te veel foute pogingen vanaf deze verbinding; probeer het over een paar minuten opnieuw.", 429); return; }
     // met eigen login: e-mail + wachtwoord van een beheerder van die praktijk. Zo blijft
     // downloaden en wissen mogelijk nadat het gedeelde praktijkwachtwoord uit staat.
     const em = normEmail(b.email);
-    let pk = null, lid = null;
+    // De rem telt per e-mailadres als er een is ingevuld (dezelfde sleutel als het inloggen in de
+    // app), anders per praktijknaam. Zo kan wie alleen de praktijknaam kent, met tien foute
+    // pogingen de beheerder niet een kwartier buitensluiten (security 2026-11-12 16u).
+    const remNaam = em ? "mail:" + em : nk;
+    if (remNaam && loginOpSlot(remNaam)) { await opnieuw(em ? "Te veel pogingen met dit e-mailadres; probeer het over een kwartier opnieuw." : "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
+    if (beheerOpRem(request)) { await opnieuw("Te veel foute pogingen vanaf deze verbinding; probeer het over een paar minuten opnieuw.", 429); return; }
+    let pk = null, lid = null, geenBeheerder = false;
     if (nk && !verbodenSleutel.test(nk)) {
       if (em) {
         for (const k of accountsMetNaam(nk)) {
-          lid = ledenVan(k).find((l) => l.email === em && l.rol === "beheerder" && lidActief(l) && checkHash(String(b.wachtwoord || ""), l.hash)) || null;
-          if (lid) { pk = k; break; }
+          const l = ledenVan(k).find((x) => x.email === em && lidActief(x) && checkHash(String(b.wachtwoord || ""), x.hash)) || null;
+          if (l && l.rol === "beheerder") { lid = l; pk = k; break; }
+          if (l) geenBeheerder = true;
         }
       } else pk = accountVoorLogin(nk, String(b.wachtwoord || ""));
     }
     const acc = pk ? praktijkAccounts[pk] : null;
+    // een collega met het juiste e-mailadres en wachtwoord maar zonder beheerdersrol: nee, maar
+    // geen foute poging (het wachtwoord klopte), dus ook geen stap naar het slot
+    if (!acc && geenBeheerder) {
+      auditLog(accountsMetNaam(nk)[0] || nk, wissen ? "alles-wissen-geweigerd" : "download-geweigerd", request, "geen beheerder");
+      await opnieuw("Alleen een beheerder van de praktijk kan hier downloaden of wissen. Vraag het een beheerder van je praktijk.", 403);
+      return;
+    }
     if (!acc) {
-      loginMisTel(nk || "?");
+      loginMisTel(remNaam || "?");
       telInlogMisIp(request, wissen ? "gegevens-wissen" : "gegevens-download");
       auditLog(accountsMetNaam(nk)[0] || nk || "?", wissen ? "alles-wissen-mislukt" : "download-mislukt", request);
       await opnieuw(em ? "Dat e-mailadres en wachtwoord horen niet bij een beheerder van deze praktijk. Alleen een beheerder kan hier downloaden of wissen."
@@ -8343,8 +8355,8 @@ async function afhandelen(request, response) {
       return;
     }
     // eigen login met een tweede stap: zonder geldige code geen download en niets gewist
-    if (await weigerZonderTweedeStap(request, pk, lid, b.code, nk, wissen ? "gegevens-wissen" : "gegevens-download", opnieuw)) return;
-    loginMisPraktijk.delete(nk);
+    if (await weigerZonderTweedeStap(request, pk, lid, b.code, remNaam, wissen ? "gegevens-wissen" : "gegevens-download", opnieuw)) return;
+    loginMisPraktijk.delete(remNaam);
     // alleen het eigen profiel: op sleutel, en bij een oude sleutel (de naam) ook een
     // profiel onder die naam. Op weergavenaam matchen kon het profiel van een andere
     // praktijk met dezelfde naam meenemen of wissen.

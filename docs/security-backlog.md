@@ -19,7 +19,17 @@ daaruit tot en met 2026-11-06.
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-12 12u (statisch de nieuwe routes van #222–#229: wachtwoord-vergeten met rem per verbinding (6/uur) en per adres (3 mails/uur), antwoord vóór het werk, hooguit 3 mails per aanvraag; sessie-cookie met schrijfLimiet en zonder nieuwe sessie; tellers met opruiming. Geen gat) · 2026-11-11 08u (statisch: 67 `readBody`-aanroepen met grens, patiëntroutes /api/kaart/* met plafonds (metingen 366, ervaring 120, gedaan 366, oefTrouw 60, oefZwaar 24, contactlog 50), tik terug in de tijd begrensd, Mollie-webhook alleen eigen betaal-id's. Geen gat) · 2026-11-09 20u (remmen: schrijf-/leesrem per IP zette een hele praktijk achter één wifi plus de patiënten daar op 429: opgelost met een rem per praktijk; plafonds per praktijk ongewijzigd) · 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
 | (j) npm audit | 2026-11-12 12u (0 meldingen, ook dev) · 2026-11-11 12u (0 meldingen) · 2026-11-10 08u (0 meldingen) · 2026-11-09 20u (0 meldingen, ook dev) |
 
-Volgende run: (c) proef-tokens, daarna (a) beheer.
+Sanity 2026-11-12 16u op #232 (beheer- en finance-omgeving, rechten per beheerder, agentloket), #237 (ideeënbox), #239 (bewaker)
+en #235/#236/#240: een beperkt beheeraccount komt alleen bij `/api/beheer/omgeving*` (`magBuiten` in `isAdmin` én `beheerEigen`), daar
+controleert elke POST zijn recht (`ROUTE_RECHT`), eigen rechten wijzigen kan niet en het laatste volledige account blijft; `/api/agent`
+is dicht zonder sleutel, sleutel `fpa_` + 192 bits alleen als sha256 bewaard, vergelijking met timingSafeEqual, rem 10/kwartier per
+verbinding, vaste lijst acties per rol en daggrenzen; de foutentelling per route houdt hooguit 30 routes per uur en alleen woorden uit
+de eigen broncode (geen ingeprikte tekst van een bezoeker). Ideeënbox: alleen sessies van een beveiligde praktijk, kruisSite, body
+8 kB, 5 ideeën per login per dag, stemmen per login, weghalen alleen eigen/beheerder van die praktijk, besluiten alleen `beheerEigen`
+(beperkt account geweigerd), andere praktijken zien alleen "ander" (geen praktijknaam of login); de pagina's zetten tekst met
+`textContent`. Bewaker: `/health` toont nu alleen twee aantallen fouten per uur en de starttijd. Geen gat.
+
+Volgende run: (c) proef-tokens, daarna (a) beheer (incl. de nieuwe omgeving en het agentloket als runtime-probe).
 
 Sanity 2026-11-12 12u op #230 (persoonlijke beheeraccounts): beheer telt alleen met cookie `fpbeheer`/`__Host-fpbeheer`
 (HttpOnly, SameSite=Strict, genegeerd bij `kruisSite`) plús de kop `x-admin-sleutel: account`, die een andere website niet kan meesturen;
@@ -356,7 +366,7 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
-- **MIDDEL (gebruikers-sweep 2026-11-12 14u, Karin, gemeten lokaal) — pogingen van een therapeut op /v2/gegevens sluiten de beheerder buiten.**
+- **OPGELOST 2026-11-12 16u (deze PR, test:gegevensrem) — MIDDEL (gebruikers-sweep 2026-11-12 14u, Karin, gemeten lokaal) — pogingen van een therapeut op /v2/gegevens sluiten de beheerder buiten.** Bevestigd lokaal: na tien pogingen van de therapeut (of tien foute wachtwoorden van een buitenstaander op een willekeurig adres) gaf het goede wachtwoord van de beheerder 429. Nu: met een e-mailadres telt de rem per adres (`mail:<adres>`, dezelfde sleutel als inloggen in de app), zonder e-mail per praktijknaam; een collega met het juiste wachtwoord maar zonder beheerdersrol krijgt 403 zonder misser (logboek: download-/alles-wissen-geweigerd). De rem op het adres van de beheerder zelf werkt nog (429 na tien missers).
   Een therapeut met het juiste e-mailadres, wachtwoord en code krijgt terecht 403 ("…alleen een beheerder…"), maar elke poging telt als misser
   op de praktijknaam (server.js r. ~8124, `loginOpSlot` r. ~238). Na tien pogingen kan ook de beheerder 15 minuten niet downloaden of wissen;
   dat kan iedereen die de praktijknaam kent. Voorstel: een geslaagde login van een niet-beheerder niet als misser tellen, en de rem per
