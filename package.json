@@ -87,6 +87,7 @@
     "test:logoveeg": "node scripts/test-logo-veeg.mjs",
     "test:sweepoverzicht": "node scripts/test-sweep-overzicht-wis.mjs",
     "test:gedeeldwerk": "node scripts/test-team-gedeeld-werk.mjs",
+    "test:gegevensrem": "node scripts/test-gegevens-rem.mjs",
     "test:sjabloondelen": "node scripts/test-sweep-sjabloon-delen.mjs",
     "test:weekverder": "node scripts/test-weekverder.mjs",
     "test:daguitvraag": "node scripts/test-kaart-dag-uit-vraag.mjs",
