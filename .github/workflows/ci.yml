@@ -175,6 +175,7 @@ jobs:
       - run: npm run test:database
       - run: npm run test:thuiskaart
       - run: npm run test:medialink
+      - run: npm run test:patientonderdeel
       - run: npm run test:vertalingen
       - run: npm run test:vastevragen
       - run: npm run test:schermen

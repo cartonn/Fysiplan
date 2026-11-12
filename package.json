@@ -179,6 +179,8 @@
     "test:database": "node scripts/test-database.mjs",
     "test:thuiskaart": "node scripts/test-thuiskaart.mjs",
     "test:medialink": "node scripts/test-medialink.mjs",
+    "test:patientonderdeel": "node scripts/test-patient-onderdeel.mjs",
+    "test:alles": "node scripts/test-alles.mjs",
     "test:vertalingen": "node scripts/test-vertalingen.mjs",
     "test:vastevragen": "node scripts/test-vaste-vragen.mjs",
     "test:schermen": "node scripts/test-schermen.mjs",
