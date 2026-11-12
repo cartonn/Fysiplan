@@ -24,6 +24,7 @@ async function draai(antwoorden) {
     serverKaart: (naam) => ({ naam, kaartId: "8b29eda692f7", basisTs: 1 }),
     PJSON: () => ({}),
     KAART_ID: "8b29eda692f7",
+    BIB_KLAAR: true, BIB_REDEN: "", // v2: de open kaart is hersteld, de editor mag delen (zie test-open-kaart.mjs)
     zetKaartId: () => {}, volgNieuweKaart: () => {}, kaartIsWeg: () => false, zetKaartWeg: () => {},
     confirm: (t) => { vragen.push(t); return antwoorden.shift() ?? false; },
     fetch: async (_url, opt) => {
