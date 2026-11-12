@@ -68,6 +68,7 @@
     "sjablonen:check": "node scripts/valideer-sjablonen.mjs",
     "test:tegroot": "node scripts/test-body-te-groot.mjs",
     "test:kruissite": "node scripts/test-kruissite-origin.mjs",
+    "test:bodygeenobject": "node scripts/test-body-geen-object.mjs",
     "test:praktijkcode": "node scripts/test-praktijkcode.mjs",
     "test:team": "node scripts/test-team.mjs",
     "test:uitnodigmail": "node scripts/test-uitnodig-mailrem.mjs",

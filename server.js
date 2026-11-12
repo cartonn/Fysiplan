@@ -3683,6 +3683,8 @@ async function afhandelen(request, response) {
     if (!isBeheer(s)) { await sendJson(response, 403, { ok: false, fout: "Alleen een beheerder kan namens de praktijk akkoord gaan." }); return; }
     let b;
     try { b = JSON.parse(await readBody(request)); } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); return; }
+    // security 2026-11-12: een body die geen object is ("null", [], "x", 5) gaf hier een 500 met een TypeError in het log
+    if (!b || typeof b !== "object" || Array.isArray(b)) { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); return; }
     if (b.akkoord !== true) { await sendJson(response, 400, { ok: false, akkoord: true, fout: "Vink aan dat je namens de praktijk akkoord gaat." }); return; }
     const acc = praktijkAccounts[s.pk], lid = sessieLid(s);
     acc.akkoord = nieuwAkkoord(lid ? (lid.naam || lid.email) : "");
@@ -4031,6 +4033,8 @@ async function afhandelen(request, response) {
     if (schrijfLimiet(request, response)) return;
     let b;
     try { b = JSON.parse(await readBody(request)); } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); return; }
+    // security 2026-11-12: een body die geen object is ("null", [], "x", 5) gaf hier een 500 met een TypeError in het log
+    if (!b || typeof b !== "object" || Array.isArray(b)) { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); return; }
     const opslaan = () => saveJson(accountsPath, praktijkAccounts);
     if (!Array.isArray(acc.leden)) acc.leden = [];
 
