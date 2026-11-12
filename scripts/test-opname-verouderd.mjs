@@ -50,7 +50,9 @@ try {
   const chosen = [{ n: "Bruggen beginner", id: "fp_688499fde71e7575", i: 0 }];
   const id = (await (await post("/api/kaarten", { praktijk: P, naam: "Dirk", client: { c_naam: "Dirk" }, chosen, kaartId: "" }, S)).json()).id;
   assert.ok(id, "kaart gedeeld");
-  const serverKaart = async () => (await (await fetch(origin + "/api/kaart?id=" + id, { headers: kop() })).json());
+  // /api/kaart geeft een eigen video als tijdelijke link (pad?k=&e=&s=); hier telt alleen het bewaarde pad
+  const zonderLink = (v) => Object.fromEntries(Object.entries(v || {}).map(([a, b]) => [a, String(b).split("?")[0]]));
+  const serverKaart = async () => { const j = await (await fetch(origin + "/api/kaart?id=" + id, { headers: kop() })).json(); if (j && j.kaart && j.kaart.vids) j.kaart.vids = zonderLink(j.kaart.vids); return j; };
 
   const ctx = await browser.newContext({ viewport: { width: 1180, height: 820 }, hasTouch: true, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.7.41.200" } });
   await ctx.addInitScript((t) => { try { localStorage.setItem("fp_praksessie", t); } catch {} }, sessie);
