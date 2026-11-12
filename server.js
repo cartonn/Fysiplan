@@ -531,6 +531,23 @@ function uitnodigMailOpSlot(pk) {
   if (!t || nu - t.start > 86400e3) { uitnodigMailTeller.set(pk, { start: nu, n: 1 }); return false; }
   return ++t.n > UITNODIG_MAILS_PER_DAG;
 }
+// Herstel door beheer (zie /api/beheer/praktijk-herstel): hooguit drie herstelmails per praktijk
+// per 24 uur, en de link of code in zo'n mail is 48 uur geldig. Wie de beheersleutel in handen
+// krijgt, kan een praktijk daarmee niet bestoken en niet buitensluiten.
+const BEHEER_HERSTEL_MS = 48 * 3600e3;
+const BEHEER_HERSTEL_PER_DAG = 3;
+const beheerHerstelTeller = new Map(); // pk -> { start, n }
+function beheerHerstelOpSlot(pk) {
+  const nu = Date.now();
+  if (beheerHerstelTeller.size > 5000) for (const [k, v] of beheerHerstelTeller) if (nu - v.start > 86400e3) beheerHerstelTeller.delete(k);
+  const t = beheerHerstelTeller.get(pk);
+  if (!t || nu - t.start > 86400e3) { beheerHerstelTeller.set(pk, { start: nu, n: 1 }); return false; }
+  return ++t.n > BEHEER_HERSTEL_PER_DAG;
+}
+// de herstelcode uit een herstelmail (naast de eigen code van de praktijk, die blijft werken)
+const herstelMailGeldig = (acc) => !!(acc && acc.herstelMail && acc.herstelMail.hash && acc.herstelMail.verloopt > Date.now());
+// beheer hoort waar de mail heen ging, niet het hele adres: "j***@praktijk.nl"
+const maskeerEmail = (e) => { const [voor, na] = String(e || "").split("@"); return (voor || "").slice(0, 1) + "***@" + (na || ""); };
 const tokenHash = (t) => createHash("sha256").update(String(t)).digest("hex");
 async function maakInstelToken(email) {
   const nu = Date.now();
@@ -3205,7 +3222,7 @@ async function afhandelen(request, response) {
     const relevant = new Set(["geclaimd", "ingelogd", "login-mislukt", "login-op-slot",
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
-      "claim-gereset-door-beheer", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
+      "claim-gereset-door-beheer", "herstel-door-beheer", "wachtwoord-hersteld-per-mail", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
       "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "team-wijziging-geweigerd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "kaart-hersteld", "kaart-definitief-verwijderd", "profiel-gewijzigd",
       "abonnement-opgezegd", "opzeggen-mislukt"]);
     const lijst = praktijkAudit
@@ -3360,6 +3377,7 @@ async function afhandelen(request, response) {
         acc.gewijzigd = Date.now();
       }
       acc.gedeeldUit = b.uit !== false;
+      delete acc.herstelMail; // hoorde bij het praktijkwachtwoord van vóór deze wijziging
       await opslaan();
       trekSessiesIn(pk, null);
       auditLog(pk, acc.gedeeldUit ? "praktijkwachtwoord-uit" : "praktijkwachtwoord-aan", request);
@@ -3438,6 +3456,7 @@ async function afhandelen(request, response) {
       if (nieuw.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een nieuw wachtwoord van minstens 8 tekens." }); return; }
       acc.hash = maakHash(nieuw);
       acc.gewijzigd = Date.now();
+      delete acc.herstelMail; // wie het wachtwoord kent en wijzigt, heeft de herstelmail niet meer nodig
       // accounts van vóór de herstelcode krijgen er hier alsnog één (eenmalig getoond)
       let herstelcode;
       if (!acc.herstel) { herstelcode = maakHerstelcode(); acc.herstel = maakHash(herstelcode); }
@@ -3478,13 +3497,17 @@ async function afhandelen(request, response) {
         return;
       }
       if (!nk || !kandidaten.length) { loginMisTel(nk || "?"); await denied(request, response, "praktijk-herstel", "Praktijknaam of herstelcode klopt niet."); return; }
-      if (!kandidaten.some((k) => praktijkAccounts[k].herstel)) {
+      if (!kandidaten.some((k) => praktijkAccounts[k].herstel || herstelMailGeldig(praktijkAccounts[k]))) {
         await sendJson(response, 404, { ok: false, fout: "Voor dit account is nog geen herstelcode ingesteld. Wijzig ingelogd het wachtwoord om er één te krijgen." });
         return;
       }
-      // bij meerdere praktijken met deze naam: de praktijk waarvan de herstelcode klopt
+      // bij meerdere praktijken met deze naam: de praktijk waarvan de herstelcode klopt. Naast de
+      // eigen code van de praktijk telt de code uit een herstelmail van beheer, zolang die geldig is
       const code = herstelcodeNormaal(b.herstelcode);
-      const pk = code ? kandidaten.find((k) => praktijkAccounts[k].herstel && checkHash(code, praktijkAccounts[k].herstel)) : null;
+      const eigenCode = (k) => !!praktijkAccounts[k].herstel && checkHash(code, praktijkAccounts[k].herstel);
+      const mailCode = (k) => herstelMailGeldig(praktijkAccounts[k]) && checkHash(code, praktijkAccounts[k].herstelMail.hash);
+      let viaMail = false;
+      const pk = code ? kandidaten.find((k) => eigenCode(k) || (mailCode(k) && (viaMail = true))) : null;
       const acc = pk ? praktijkAccounts[pk] : null;
       if (!acc) {
         loginMisTel(nk);
@@ -3497,6 +3520,7 @@ async function afhandelen(request, response) {
       const herstelcode = maakHerstelcode();
       acc.hash = maakHash(nieuw);
       acc.herstel = maakHash(herstelcode);
+      delete acc.herstelMail; // de code uit een herstelmail werkt één keer
       acc.gewijzigd = Date.now();
       await saveJson(accountsPath, praktijkAccounts);
       // alleen de sessies met het gedeelde wachtwoord: collega's met een eigen login
@@ -3504,7 +3528,7 @@ async function afhandelen(request, response) {
       trekSessiesIn(pk, null);
       loginMisPraktijk.delete(nk);
       const token = nieuweSessie(pk);
-      auditLog(pk, "wachtwoord-hersteld", request);
+      auditLog(pk, viaMail ? "wachtwoord-hersteld-per-mail" : "wachtwoord-hersteld", request);
       await sendJson(response, 200, { ok: true, sessie: token, herstelcode });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
@@ -3538,6 +3562,7 @@ async function afhandelen(request, response) {
       }
       const herstelcode = maakHerstelcode();
       acc.herstel = maakHash(herstelcode);
+      delete acc.herstelMail;
       acc.gewijzigd = Date.now();
       await saveJson(accountsPath, praktijkAccounts);
       loginMisPraktijk.delete(pk);
@@ -3547,24 +3572,96 @@ async function afhandelen(request, response) {
     return;
   }
 
-  // herstelpad (beheer): een claim verwijderen wanneer iemand een praktijknaam
-  // ten onrechte heeft geclaimd. Haalt het account weg en maakt alle sessies
-  // van die praktijk ongeldig; de praktijk werkt daarna weer als vanouds en
-  // kan opnieuw (door de juiste eigenaar) geclaimd worden.
+  // Het oude herstelpad van beheer wiste het account van een praktijk. De praktijk gold daarna
+  // als onbeveiligd, en dan mocht beheer met een eigen sleutel haar kaarten lezen: in twee
+  // verzoeken van "401" naar alle patiëntgegevens, zonder bericht aan de praktijk (gemeten in
+  // de platformreview van 2026-11-11). Ook wie daarna als eerste de naam beveiligde, kreeg de
+  // kaarten erbij. Dat wissen bestaat niet meer; de route zegt alleen nog wat ervoor in de
+  // plaats kwam. Een praktijk met gegevens wordt zo nooit meer onbeveiligd.
   if (urlPath === "/api/praktijk/reset" && request.method === "POST") {
+    if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+    await sendJson(response, 410, { ok: false, fout: "Het account van een praktijk wissen kan niet meer met de beheersleutel. Komt een praktijk er niet meer in? Laat een herstelmail sturen: POST /api/beheer/praktijk-herstel met { praktijk, reden }." });
+    return;
+  }
+
+  // Herstel door beheer: hulp aan een praktijk die er zelf niet meer in komt (wachtwoord en
+  // herstelcode kwijt). De server stuurt een herstelmail naar een adres dat de praktijk zelf
+  // heeft opgegeven: de beheerders met een eigen login, en als die er niet zijn de aanmelder
+  // van de proef. Beheer geeft een reden op; die staat in de mail en in het logboek dat de
+  // praktijk zelf ziet. De link of code staat alleen in de mail, nooit in dit antwoord, en er
+  // verandert verder niets: wachtwoorden en sessies blijven werken tot de praktijk de mail
+  // gebruikt. Is er geen eigen adres van de praktijk bekend, dan kan het niet via deze weg.
+  if (urlPath === "/api/beheer/praktijk-herstel" && request.method === "POST") {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
       const b = JSON.parse(await readBody(request));
       const nk = cleanName(b.praktijk, 80).toLowerCase();
+      const reden = String(b.reden || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 160);
       const kandidaten = praktijkGeclaimd(nk) ? [nk] : accountsMetNaam(nk);
       if (kandidaten.length > 1) { await sendJson(response, 409, { ok: false, fout: "Meerdere praktijken met deze naam; geef de praktijkcode (p-…).", codes: kandidaten }); return; }
       const pk = kandidaten[0];
       if (!pk) { await sendJson(response, 404, { ok: false, fout: "Geen account voor deze praktijk." }); return; }
-      delete praktijkAccounts[pk];
+      if (reden.length < 10) { await sendJson(response, 400, { ok: false, reden: true, fout: "Geef een reden op van minstens 10 tekens. Die staat in de mail aan de praktijk en in haar logboek." }); return; }
+      if (!mailIngesteld()) { await sendJson(response, 503, { ok: false, fout: "Op deze server staat mail niet aan; een herstelmail sturen kan dan niet." }); return; }
+      const acc = praktijkAccounts[pk];
+      const beheerders = ledenVan(pk).filter((l) => lidActief(l) && l.rol === "beheerder" && geldigEmail(l.email)).slice(0, 5);
+      const proef = acc.proef && Object.hasOwn(proeven, String(acc.proef.id)) ? proeven[String(acc.proef.id)] : null;
+      const proefAdres = proef && geldigEmail(proef.email) ? normEmail(proef.email) : "";
+      const soort = beheerders.length ? "eigen-login" : (!acc.gedeeldUit && proefAdres) ? "herstelcode" : "";
+      if (!soort) {
+        await sendJson(response, 409, { ok: false, geenAdres: true, fout: "Van deze praktijk is geen eigen e-mailadres bekend (geen beheerder met een eigen login en geen proefaanmelding). Een herstelmail sturen kan dan niet, en de beheersleutel opent een beveiligde praktijk niet." });
+        return;
+      }
+      if (beheerHerstelOpSlot(pk)) {
+        await send429(response, 3600, { ok: false, fout: "Voor deze praktijk zijn vandaag al " + BEHEER_HERSTEL_PER_DAG + " herstelmails aangevraagd; probeer het morgen opnieuw." });
+        return;
+      }
+      const naam = weergaveNaam(pk) || nk;
+      const verloopt = Date.now() + BEHEER_HERSTEL_MS;
+      const afzender = (MAIL_AFZENDER.match(/[^\s<>]+@[^\s<>]+/) || [""])[0];
+      const contact = FYSIPLAN_ID.contact || afzender;
+      const aanhef = (wie) => "Hallo" + (wie ? " " + String(wie).split(" ")[0] : "") + ",\n\n" +
+        "Fysiplan-beheer heeft voor je praktijk " + naam + " een herstelmail laten sturen. De reden die beheer opgaf: “" + reden + "”.\n\n";
+      // geen belofte over wie de mail nog meer kan inzien: de mailprovider bewaart verzonden mail
+      const slot = "\n\nHeb je hier niet om gevraagd? Dan hoef je niets te doen: je huidige wachtwoord blijft werken en aan je praktijk is niets veranderd." +
+        (contact ? " Laat het ons wel weten via " + contact + "." : "") + "\n\nFysiplan";
+      const verzonden = [];
+      let geremd = 0;
+      if (soort === "eigen-login") {
+        for (const l of beheerders) {
+          if (mailOpSlot(l.email)) { geremd++; continue; }
+          const token = randomBytes(24).toString("hex");
+          const was = l.uitnodiging;
+          l.uitnodiging = { hash: tokenHash(token), verloopt, herstel: true };
+          try {
+            await stuurMail(l.email, "Nieuw wachtwoord kiezen voor Fysiplan (" + naam + ")",
+              aanhef(l.naam) + "Kies hier een nieuw wachtwoord voor je eigen login (48 uur geldig):\n" +
+              instelBasis(request) + "/v2/uitnodiging?t=" + token + slot);
+            verzonden.push(l.email);
+          } catch { if (was) l.uitnodiging = was; else delete l.uitnodiging; }
+        }
+      } else if (mailOpSlot(proefAdres)) {
+        geremd++;
+      } else {
+        const code = maakHerstelcode();
+        const was = acc.herstelMail;
+        acc.herstelMail = { hash: maakHash(code), verloopt };
+        try {
+          await stuurMail(proefAdres, "Herstelcode voor Fysiplan (" + naam + ")",
+            aanhef(proef.naam) + "Met deze herstelcode kies je een nieuw praktijkwachtwoord (48 uur geldig):\n" + code + "\n\n" +
+            "Zo doe je dat: open " + instelBasis(request) + "/v2/app, ga naar Kaarten, vul je praktijknaam in en kies “Wachtwoord vergeten?”. " +
+            "Vul daar deze code en een nieuw wachtwoord in. Je krijgt daarna een nieuwe herstelcode om te bewaren." + slot);
+          verzonden.push(proefAdres);
+        } catch { if (was) acc.herstelMail = was; else delete acc.herstelMail; }
+      }
+      if (!verzonden.length) {
+        if (geremd) await send429(response, 3600, { ok: false, fout: "Dit adres kreeg het afgelopen uur al drie mails van Fysiplan; probeer het over een uur opnieuw." });
+        else await sendJson(response, 502, { ok: false, fout: "De herstelmail kon niet verstuurd worden. Er is niets veranderd; probeer het later opnieuw." });
+        return;
+      }
       await saveJson(accountsPath, praktijkAccounts);
-      for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
-      auditLog(pk, "claim-gereset-door-beheer", request);
-      await sendJson(response, 200, { ok: true });
+      auditLog(pk, "herstel-door-beheer", request, "Fysiplan-beheer (reden: " + reden + ")");
+      await sendJson(response, 200, { ok: true, soort, verstuurd: verzonden.length, naar: verzonden.map(maskeerEmail), geldigTot: new Date(verloopt).toISOString() });
     } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); }
     return;
   }
@@ -6430,6 +6527,9 @@ async function afhandelen(request, response) {
   // uitnodiging van een collega: scriptloze pagina (zelfde CSP als de proefpagina's)
   // waar het lid naam en wachtwoord kiest en de werkregels accepteert. Het token staat
   // alleen als sha256 op schijf en is 7 dagen geldig; na gebruik vervalt het.
+  // Dezelfde pagina dient voor de herstelmail van beheer (uitnodiging.herstel, 48 uur): een
+  // beheerder met een eigen login kiest hier een nieuw wachtwoord. Tot dat moment blijft
+  // het oude werken.
   if (urlPath === "/v2/uitnodiging" && (request.method === "GET" || request.method === "POST")) {
     response.setHeader("cache-control", "no-store");
     response.setHeader("referrer-policy", "no-referrer");
@@ -6458,7 +6558,13 @@ async function afhandelen(request, response) {
         KNOP_HTML: '<a class="knop omlijnd" href="/v2/app">Naar Fysiplan</a>' }, 404);
       return;
     }
-    const toon = (fout, status) => serveerProef(request, response, "uitnodiging", { TITEL: "Uitnodiging", PRAKTIJK: weergaveNaam(pk),
+    const isHerstel = !!lid.uitnodiging.herstel;
+    const toon = (fout, status) => serveerProef(request, response, "uitnodiging", { TITEL: isHerstel ? "Nieuw wachtwoord" : "Uitnodiging", PRAKTIJK: weergaveNaam(pk),
+      UI_SOORT: isHerstel ? "Nieuw wachtwoord" : "Uitnodiging",
+      UI_KOP: isHerstel ? "Kies een nieuw wachtwoord." : "Kies je eigen wachtwoord.",
+      UI_LEAD_HTML: (isHerstel
+        ? "Fysiplan-beheer heeft je deze link gestuurd omdat je niet meer kon inloggen bij " + htmlEsc(weergaveNaam(pk)) + ". Je logt in met <b>" + htmlEsc(lid.email) + "</b> en het wachtwoord dat je hier kiest. Je oude wachtwoord werkt daarna niet meer."
+        : "Je werkt in Fysiplan voortaan met je eigen login bij " + htmlEsc(weergaveNaam(pk)) + ". Je logt in met <b>" + htmlEsc(lid.email) + "</b> en het wachtwoord dat je hier kiest."),
       EMAIL: lid.email, TOKEN: token, V_NAAM: b.naam != null ? cleanName(b.naam, 60) : (lid.naam || ""),
       MELDING_HTML: fout ? '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" : "" }, status);
     if (request.method === "GET") { await toon("", 200); return; }
@@ -6470,14 +6576,17 @@ async function afhandelen(request, response) {
     lid.hash = maakHash(ww);
     lid.regels = { versie: WERKREGELS_VERSIE, t: new Date().toISOString() };
     delete lid.uitnodiging;
+    if (isHerstel) lid.gewijzigd = Date.now();
     await saveJson(accountsPath, praktijkAccounts);
-    auditLog(pk, "uitnodiging-aangenomen", request, naam);
+    // na een herstel: wie nog met het oude wachtwoord was ingelogd, is dat nu niet meer
+    if (isHerstel) trekSessiesIn(pk, lid.id);
+    auditLog(pk, isHerstel ? "wachtwoord-hersteld-per-mail" : "uitnodiging-aangenomen", request, naam);
     // de knop zet de praktijknaam alvast klaar (/v2/app?praktijk=): de collega hoeft hem niet zelf
     // te typen, want met een typfout ("Fysio X.") maakte Beveiligen stil een losse tweede
     // praktijk zonder proef (gebruikers-sweep 2026-11-09, Mark iPad)
     const prNaam = weergaveNaam(pk);
     const appLink = prNaam ? "/v2/app?praktijk=" + encodeURIComponent(prNaam) : "/v2/app";
-    await serveerProef(request, response, "bericht", { TITEL: "Klaar", ETIKET: prNaam, KOP: "Je eigen login staat klaar.",
+    await serveerProef(request, response, "bericht", { TITEL: "Klaar", ETIKET: prNaam, KOP: isHerstel ? "Je nieuwe wachtwoord staat klaar." : "Je eigen login staat klaar.",
       TEKST: "Open Fysiplan en log onder Kaarten in met " + lid.email + " en je nieuwe wachtwoord." +
         (prNaam ? " De praktijknaam \u201c" + prNaam + "\u201d staat dan al ingevuld." : ""),
       KNOP_HTML: '<a class="knop oranje" href="' + htmlEsc(appLink) + '">Open Fysiplan</a>' });

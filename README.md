@@ -169,6 +169,28 @@ in geen enkel publiek bestand. Live (Railway of `NODE_ENV=production`) werkt all
 Met de standaardsleutel kan beheer **geen** kaartoverzicht of patiëntgegevens van een praktijk
 lezen; alleen met een eigen `ADMIN_KEY` op de server werkt die beheeringang.
 
+**Een praktijk die er niet meer in komt.** Beheer kan het account van een praktijk niet wissen
+en komt met de sleutel niet bij de kaarten van een beveiligde praktijk (de oude
+`/api/praktijk/reset` wist niets meer en antwoordt 410). Is een praktijk haar wachtwoord en
+herstelcode kwijt, dan laat beheer de server een herstelmail sturen:
+
+```
+curl -X POST https://fysiplan.nl/api/beheer/praktijk-herstel \
+  -H "x-admin-sleutel: $ADMIN_KEY" -H "content-type: application/json" \
+  -d '{"praktijk":"Naam of p-code","reden":"Praktijk belde: wachtwoord en herstelcode kwijt"}'
+```
+
+De mail gaat naar een adres dat de praktijk zelf heeft opgegeven: de beheerders met een eigen
+login (zij kiezen via een link een nieuw wachtwoord), en als die er niet zijn de aanmelder van de
+proef (die krijgt een herstelcode voor het praktijkwachtwoord). De reden is verplicht en staat in
+de mail en in het logboek dat de praktijk zelf ziet. De link of code is 48 uur geldig en staat
+nooit in het antwoord aan beheer, alleen het gemaskeerde adres. Tot de praktijk de mail gebruikt
+verandert er niets: wachtwoorden en sessies blijven werken. Hooguit drie aanvragen per praktijk
+per dag. Is er van de praktijk geen eigen adres bekend, of staat mail uit, dan kan het niet via
+deze weg (`npm run test:beheerherstel`). De beheersleutel alleen opent zo geen praktijk meer. Wie
+bij de server of bij de mailprovider kan (die bewaart verzonden mail), blijft technisch bij
+gegevens kunnen; daarom staan de reden en het moment in het logboek van de praktijk.
+
 ## V1-account en bevestigingsmail
 
 De app op `/` (V1) staat altijd achter een e-mail/wachtwoordlogin. Een medewerker kiest
