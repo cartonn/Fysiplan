@@ -589,7 +589,7 @@ function agents() {
       '<dl><dt>Ziet</dt><dd>' + esc(r.ziet) + '</dd><dt>Doet</dt><dd>' + esc(r.doet) + '</dd></dl>' +
       '<div class="rij"><span class="seg" role="group" aria-label="Stand van de ' + esc(r.titel) + '">' + seg(rol, 'uit', 'Uit') + seg(rol, 'proef', 'Proef') + seg(rol, 'aan', 'Aan') + '</span>' +
         (rol === 'tech' ? '<label class="vink"><input type="checkbox" id="mergen"' + (a.mergen ? ' checked' : '') + '/>Zelf mergen</label>' : '') + '</div>' +
-      '<p class="uitleg">' + (r.alleenProef ? 'Voorlopig alleen op proef. ' : '') + (a.stand === 'uit' ? 'Het loket geeft deze agent niets.' : a.stand === 'proef' ? (demo ? 'Op proef: werkt op deze demo-gegevens.' : 'Op proef: werkt op de demo-gegevens. Wat hij doet, zie je bij Demo.') : 'Werkt op de gegevens van ' + (demo ? 'de demo' : 'fysiplan.nl') + '.') +
+      '<p class="uitleg">' + (r.alleenProef ? 'Voorlopig alleen op proef. ' : '') + (demo ? (a.stand === 'uit' ? 'Staat in de demo uit: ook op proef doet hij hier niets.' : 'Werkt op deze demo-gegevens, zolang de echte agent op proef staat. Deze knop verandert niets aan de echte agent.') : a.stand === 'uit' ? 'Het loket geeft deze agent niets.' : a.stand === 'proef' ? 'Op proef: werkt op de demo-gegevens. Wat hij doet, zie je bij Demo; daar kun je hem ook stilzetten.' : 'Werkt op de gegevens van fysiplan.nl.') +
         ' Laatst bij het loket: ' + esc(sindsTekst(a.gezien)) + '.</p></div>';
   };
   const conceptHtml = (c) => '<div class="zaak aandacht"><div class="zaakkop">' + pil(rollen[c.rol].titel, 'neutraal', true) + '<b>' + esc(c.praktijk) + '</b><span class="hint">' + esc(c.wat) + '</span></div>' +

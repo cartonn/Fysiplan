@@ -103,6 +103,16 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
   assert.deepEqual(keurNotitie({ periode: "2026-K3", tekst: "Eén bon kwam na het indienen." }).notitie, { periode: "2026-K3", tekst: "Eén bon kwam na het indienen." });
   for (const p of ["2026-K5", "K3", "2026-03", ""]) assert.equal(keurNotitie({ periode: p, tekst: "Eén bon kwam na het indienen." }).ok, false, p);
   assert.equal(keurNotitie({ periode: "2026", tekst: "kort" }).ok, false);
+  // persoonsgegevens: weigeren, en de foutmelding noemt alleen de soort, nooit de tekst zelf
+  for (const [tekst, soort] of [["Mail test@voorbeeld.invalid voor de bon.", /e-mailadres/], ["De patiënt die Jan Testpersoon heet kwam niet.", /patiënten/], ["BSN 000000000 hoort hier niet.", /burgerservice/],
+    ["Betaling van NL91ABNA0417164300 binnen.", /IBAN/], ["Bel haar op 06-12345678 morgen.", /telefoon/], ["Geboren op 1 mei, zegt de praktijk.", /geboorte/], ["Een <b>vet</b> woord in de notitie.", /opmaak/]]) {
+    const n = keurNotitie({ periode: "2026", tekst }), v = keurVerslag({ tekst: "Gewoon verslag van de ronde.", punten: [{ tekst }] });
+    assert.deepEqual([n.ok, v.ok], [false, false], tekst);
+    assert.match(n.fouten.join(" "), soort);
+    for (const f of [...n.fouten, ...v.fouten]) assert.ok(!f.includes(tekst.slice(0, 12)), "de fout herhaalt de tekst niet");
+  }
+  assert.equal(keurNotitie({ periode: "2026", tekst: "Jaarcontroles 2026: 4 van 9; FP-2026-0023 ontbreekt; 129,87 euro open, uiterlijk 31-01-2027, omzet 355837 cent." }).ok, true, "gewone financiële notities blijven kunnen");
+  assert.equal(keurEigenBericht({ ...GOED, tekst: GOED.tekst + " Je BSN 000000000 staat erbij." }).ok, false, "ook geen BSN in een bericht");
 
   // wat een agent ziet van de demo: geen naam, geen adres, geen praktijkcode
   const bron = demoBron(), a = demoAgent(bron), inst = demoInstellingen(bron.nu);
@@ -655,21 +665,23 @@ try {
     assert.deepEqual([regel.wie, regel.actie, regel.naam, regel.reden], ["vera@beheer.example", "eigen bericht van de support-agent verstuurd na akkoord", "Fysio Testlaan", "Je tweede stap bij {praktijk}"]);
     assert.doesNotMatch(regel.naar, /tom@testlaan\.example/, "in het logboek staat het adres gemaskeerd");
 
-    // automatisch: de agent verstuurt zelf, naar de beheerder van de praktijk
+    // automatisch, maar dezelfde praktijk kreeg deze week al een eigen bericht (via de andere zaak):
+    // één eigen bericht per praktijk per week, over alle zaken en rollen heen. Het zelf versturen
+    // zelf staat in scripts/test-loket-dubbel.mjs (demo, ook gelijktijdig).
     assert.equal((await om("vera", "mailstand", { soort: "eigen-bericht", stand: "automatisch" })).status, 200);
     r = await agent("support/actie", { actie: "eigen-mail", zaak: een.id, onderwerp: "Een tweede beheerder voor {praktijk}", tekst: "Bij {praktijk} ben jij de enige beheerder van drie therapeuten. Maak een collega ook beheerder, dan kan er altijd iemand in als jij je telefoon kwijt bent." });
-    assert.deepEqual([(await r.json()).resultaat, post().length, post()[1].to, post()[1].text.startsWith("Hallo Bea,")], ["direct-verstuurd", 2, ["bea@testlaan.example"], true]);
+    assert.deepEqual([r.status, (await r.json()).reden, post().length], [409, "praktijk-kreeg-deze-week-al-een-eigen-bericht", 1]);
+    r = await agent("support/actie", { actie: "eigen-mail", zaak: slot.id, ...GOED });
+    assert.deepEqual([r.status, (await r.json()).reden, post().length], [409, "deze-week-al-gemaild", 1]);
     regel = (await logboek()).at(-1);
-    assert.deepEqual([regel.wie, regel.actie], ["support-agent", "support-agent mailde een praktijk (eigen bericht)"]);
-    r = await agent("support/actie", { actie: "eigen-mail", zaak: een.id, ...GOED });
-    assert.deepEqual([r.status, (await r.json()).reden, post().length], [409, "deze-week-al-gemaild", 2]);
+    assert.equal(regel.actie, "support-agent: mails ‘Eigen bericht van een agent’ op automatisch", "een geweigerd bericht komt niet in het logboek");
 
     // verslag en de pagina
     const code = w.werk.praktijken[0].praktijk;
     assert.equal((await agent("support/actie", { actie: "verslag", tekst: "Twee zaken bij " + code + ": beide hebben een bericht gekregen.", punten: [{ soort: "gedaan", tekst: "Twee berichten verstuurd", praktijk: code }] })).status, 200);
     v = await stand("vera");
-    assert.deepEqual([v.loket.verslagen[0].tekst, v.loket.verslagen[0].punten[0].praktijk, v.loket.limieten.eigenVandaag, !!v.loket.agents.support.gezien], ["Twee zaken bij Fysio Testlaan: beide hebben een bericht gekregen.", "Fysio Testlaan", 2, true]);
-    assert.deepEqual(v.agent.logboek.filter((x) => x.wat === "gemaild").map((x) => [x.wie, x.akkoord || null]), [["support-agent", null], ["support-agent", "vera@beheer.example"]]);
+    assert.deepEqual([v.loket.verslagen[0].tekst, v.loket.verslagen[0].punten[0].praktijk, v.loket.limieten.eigenVandaag, !!v.loket.agents.support.gezien], ["Twee zaken bij Fysio Testlaan: beide hebben een bericht gekregen.", "Fysio Testlaan", 1, true]);
+    assert.deepEqual(v.agent.logboek.filter((x) => x.wat === "gemaild").map((x) => [x.wie, x.akkoord || null]), [["support-agent", "vera@beheer.example"]]);
 
     // de tech-agent telt echte antwoorden van deze server
     assert.equal((await om("vera", "loket/agent", { rol: "tech", stand: "aan" })).status, 200);
@@ -684,7 +696,7 @@ try {
     assert.deepEqual([fw.modus, fw.werk.kern.klanten > 5], ["proef", true]);
     assert.equal((await agent("finance/actie", { actie: "notitie", periode: "2026-K2", tekst: "Proef: één bon na het indienen." })).status, 200);
     const na = JSON.parse(await readFile(join(dataDir, "beheer-loket.json"), "utf8"));
-    assert.deepEqual([na.notities, na.verslagen.length, post().length], [[], JSON.parse(voor).verslagen.length, 2], "een agent op proef laat niets achter in de datamap en mailt niet");
+    assert.deepEqual([na.notities, na.verslagen.length, post().length], [[], JSON.parse(voor).verslagen.length, 1], "een agent op proef laat niets achter in de datamap en mailt niet");
     assert.equal((await stand("vera", "demo")).loket.notities[0].tekst, "Proef: één bon na het indienen.");
 
     // stilzetten en de sleutel intrekken
