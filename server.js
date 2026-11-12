@@ -1969,6 +1969,13 @@ function demoKaart() {
 }
 // de praktijksleutel waaronder een gevonden kaart staat (de kaart zelf noemt alleen
 // de weergavenaam, en die is niet uniek meer); de demokaart valt terug op haar naam
+// de praktijknaam die een patiënt bij een kaart ziet: bij een beveiligde praktijk altijd de
+// eigen weergavenaam (profiel, anders de naam bij het beveiligen), nooit wat een client ooit
+// als kop meestuurde; zonder account (v1, beheer) de opgeslagen naam zoals vroeger
+function kaartPraktijkNaam(pk, opgeslagen) {
+  const eigen = praktijkGeclaimd(pk) ? weergaveNaam(pk) : "";
+  return eigen || String(opgeslagen || "");
+}
 function kaartSleutel(kaart) {
   for (const pk of Object.keys(kaarten)) if (Object.values(kaarten[pk]).includes(kaart)) return pk;
   return String((kaart && kaart.praktijk) || "").toLowerCase();
@@ -5340,6 +5347,10 @@ async function afhandelen(request, response) {
       // eigenaar met wachtwoord heeft (v1-sessies en een eigen beheersleutel uitgezonderd)
       if (await eisBeveiligdePraktijk(request, response, pk,
         "Beveilig eerst je praktijk met een wachtwoord; daarna deel je kaarten met je patiënten.")) return;
+      // de naam op de patiëntkaart komt van de praktijk zelf (profiel of naam bij het beveiligen),
+      // niet uit het verzoek: anders zette elke collega met een sessie een willekeurige praktijknaam
+      // bovenaan de kaart, langs de regel dat alleen een beheerder het profiel wijzigt
+      const kaartPraktijk = kaartPraktijkNaam(pk, praktijk);
       const kk = naam.toLowerCase();
       if (!kaarten[pk] && Object.keys(kaarten).length >= 300) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal praktijken met gedeelde kaarten bereikt." }); return; }
       if (!kaarten[pk] && nieuwePraktijkLimiet(request, response)) return;
@@ -5464,7 +5475,7 @@ async function afhandelen(request, response) {
       // kaatste de 409 tussen twee werkplekken heen en weer (gebruikers-sweep 2026-11-07).
       if (bestaand && map[kk] === bestaand) {
         const zelfde = (a, c) => JSON.stringify(a || {}) === JSON.stringify(c || {});
-        if (bestaand.naam === naam && bestaand.praktijk === praktijk && zelfde(bestaand.client, client) &&
+        if (bestaand.naam === naam && bestaand.praktijk === kaartPraktijk && zelfde(bestaand.client, client) &&
           zelfde(bestaand.chosen || [], chosen) && zelfde(bestaand.rows, rows) && zelfde(bestaand.cells, cells) &&
           zelfde(bestaand.vids, vids)) {
           await sendJson(response, 200, { ok: true, id: bestaand.id, ts: bestaand.ts, ongewijzigd: true });
@@ -5480,7 +5491,7 @@ async function afhandelen(request, response) {
       // de voortgang van de patiënt.
       map[kk] = { id: map[kk] ? map[kk].id : randomBytes(6).toString("hex"),
         maker: map[kk] ? map[kk].maker || null : kaartMaker(request, pk),
-        praktijk, naam, ts: Date.now(), client, chosen, rows, cells, vids,
+        praktijk: kaartPraktijk, naam, ts: Date.now(), client, chosen, rows, cells, vids,
         metingen: map[kk] ? map[kk].metingen || [] : [],
         gedaan: map[kk] ? map[kk].gedaan || [] : [],
         bekeken: map[kk] ? map[kk].bekeken || null : null,
@@ -5625,7 +5636,7 @@ async function afhandelen(request, response) {
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const fpk = kaartSleutel(found);
-    const prof = publiekProfiel((Object.hasOwn(praktijken, fpk) && praktijken[fpk]) || { praktijk: found.praktijk });
+    const prof = publiekProfiel((Object.hasOwn(praktijken, fpk) && praktijken[fpk]) || { praktijk: kaartPraktijkNaam(fpk, found.praktijk) });
     // expliciete allowlist in plaats van "alles behalve notitie/behandelaar":
     // deze route is open voor iedereen met de kaartlink, dus een later toegevoegd
     // praktijk-intern veld mag nooit stilletjes meelekken (fail-closed). De
@@ -5641,6 +5652,7 @@ async function afhandelen(request, response) {
       "oefTrouw", "oefZwaar", "gearchiveerd"];
     const patientKaart = {};
     for (const veld of PATIENT_VELDEN) if (veld in found) patientKaart[veld] = found[veld];
+    if ("praktijk" in patientKaart) patientKaart.praktijk = kaartPraktijkNaam(fpk, found.praktijk);
     patientKaart.client = patientClient(found.client);
     // de eigen seintjes (alleen soort en moment, ook na afhandeling) voor "Mijn gegevens":
     // de patiënt stuurde ze zelf, dus ze horen bij de inzage (art. 15 AVG). Het
@@ -6193,7 +6205,7 @@ async function afhandelen(request, response) {
       ...((Number.isInteger(found.afspraak.herhaal) && found.afspraak.herhaal >= 2)
         ? ["RRULE:FREQ=WEEKLY;COUNT=" + Math.min(found.afspraak.herhaal, 12)] : []),
       "DURATION:PT30M",
-      "SUMMARY:" + icsTekst(taalT.sum + (found.praktijk ? " (" + found.praktijk + ")" : "")),
+      "SUMMARY:" + icsTekst(taalT.sum + ((pn) => pn ? " (" + pn + ")" : "")(kaartPraktijkNaam(kaartSleutel(found), found.praktijk))),
       "DESCRIPTION:" + icsTekst(taalT.desc + link),
       "URL:" + icsTekst(link),
       "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsTekst(taalT.alarm1), "TRIGGER:-P1D", "END:VALARM",
@@ -6397,7 +6409,7 @@ async function afhandelen(request, response) {
       "DTSTART:" + dtStart,
       "DURATION:PT20M",
       "RRULE:FREQ=WEEKLY;BYDAY=" + dagen.join(",") + ";COUNT=" + dagen.length * 12,
-      "SUMMARY:" + icsTekst(taalT.sum + (found.praktijk ? " (" + found.praktijk + ")" : "")),
+      "SUMMARY:" + icsTekst(taalT.sum + ((pn) => pn ? " (" + pn + ")" : "")(kaartPraktijkNaam(kaartSleutel(found), found.praktijk))),
       "DESCRIPTION:" + icsTekst(taalT.desc + link),
       "URL:" + icsTekst(link),
       "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsTekst(taalT.alarm), "TRIGGER:-PT0M", "END:VALARM",
