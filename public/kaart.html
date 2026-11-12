@@ -2148,8 +2148,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     kop(L.herst);rij(k.ervaring,function(x){var s=Number(x.s);return (s>0?'+':'')+s+' ('+(L.herstW[s+2]||'')+')';});
     if(k.pskDoel){kop(L.act+': '+k.pskDoel);r.push(L.actS+':');rij(k.psk,function(x){return String(x.s);});}
     kop(L.ged);
-    var g=(Array.isArray(k.gedaan)?k.gedaan:[]).filter(function(x){return x&&x.t;});
-    r.push(g.length?'- '+g.map(function(x){return h.datum(x.t);}).join(', '):'- '+L.geen);
+    // de dagvink én elke dag met een afgevinkte oefening (oefTrouw.d), één keer per dag; anders stond hier
+    // "niets" terwijl de kaart "2 van 10 vandaag gedaan" toonde (gebruikers-sweep 2026-11-12 14u, Truus)
+    var gdag={};
+    (Array.isArray(k.gedaan)?k.gedaan:[]).forEach(function(x){if(x&&x.t)gdag[h.datum(x.t)]=x.t;});
+    var ktr=k.oefTrouw||{};
+    Object.keys(ktr).forEach(function(n){var d=ktr[n]&&ktr[n].d;if(typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)){var t=Date.parse(d+'T12:00:00Z');if(t&&!gdag[h.datum(t)])gdag[h.datum(t)]=t;}});
+    var g=Object.keys(gdag).map(function(x){return gdag[x];}).sort(function(a,b){return a-b;});
+    r.push(g.length?'- '+g.map(function(t){return h.datum(t);}).join(', '):'- '+L.geen);
     kop(L.trouw);
     var tr=k.oefTrouw||{},tn=Object.keys(tr);
     if(!tn.length)r.push('- '+L.geen);

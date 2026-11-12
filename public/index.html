@@ -901,6 +901,18 @@ bridge2.jpg</div>
   // begint krijgt een ' ervoor, zodat Excel of LibreOffice hem nooit als formule uitvoert
   function csvCel(v){v=(v==null?'':String(v));if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"';}
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
+  // Oefendagen van een kaart: de dagvink "Ik heb vandaag geoefend" (gedaan) én elke dag waarop de patiënt
+  // een oefening afvinkte (oefTrouw[naam].d, Amsterdam-dag). Zonder dat laatste zag de therapeut
+  // "0 deze week actief" terwijl de patiënt oefeningen afvinkte (gebruikers-sweep 2026-11-12 14u, Truus;
+  // keuze Ahmed 2026-11-12: een afgevinkte oefening telt als oefendag). Eén item per dag, oplopend.
+  function oefDagen(c){
+    var per={},dagNL=function(t){try{return new Date(t).toLocaleDateString('sv-SE',{timeZone:'Europe/Amsterdam'});}catch(e){return new Date(t).toISOString().slice(0,10);}};
+    ((c&&c.gedaan)||[]).forEach(function(g){if(g&&g.t){var k=dagNL(g.t);if(!per[k]||g.t>per[k].t)per[k]={t:g.t};}});
+    var tr=(c&&c.oefTrouw)||{};
+    Object.keys(tr).forEach(function(n){var d=tr[n]&&tr[n].d;
+      if(typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&!per[d]){var t=Date.parse(d+'T12:00:00Z');if(t)per[d]={t:Math.min(t,Date.now())};}});
+    return Object.keys(per).sort().map(function(k){return per[k];});
+  }
   function normEx(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
 
   var BASE=[
@@ -4709,7 +4721,7 @@ bridge2.jpg</div>
     // het EPD. Dit inzicht bieden concurrenten alleen mét patiënt-app; hier telt de
     // patiënt zonder account. Distinct oefendagen over de laatste 4 weken, en waar
     // de therapeut een doel zette ook de gemiddelde frequentie tegenover dat doel.
-    var gd=(kaart.gedaan||[]).filter(function(x){return x&&x.t;});
+    var gd=oefDagen(kaart);
     if(gd.length){
       var ddd=function(t){return new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});};
       var dagKey=function(t){var d=new Date(t);return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();};
@@ -4800,7 +4812,7 @@ bridge2.jpg</div>
     (function(){
       var dmy=function(t){return new Date(t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'});};
       var laatst=function(c){var a=[c.ts||0];
-        [c.scores,c.gedaan,c.psk,c.ervaring].forEach(function(reeks){if(reeks&&reeks.length&&reeks[reeks.length-1])a.push(reeks[reeks.length-1].t||0);});
+        [c.scores,oefDagen(c),c.psk,c.ervaring].forEach(function(reeks){if(reeks&&reeks.length&&reeks[reeks.length-1])a.push(reeks[reeks.length-1].t||0);});
         if(c.bekeken)a.push(c.bekeken);
         return Math.max.apply(null,a);};
       var tss=alles.map(function(c){return c.ts||0;}).filter(Boolean);
@@ -4813,7 +4825,7 @@ bridge2.jpg</div>
     r.push('Uitkomsten app-vrij gemeten via de digitale trainingskaarten van Fysiplan (zonder patiënt-app of account).');
     r.push('');
     var geopend=alles.filter(function(c){return c.bekeken>0;}).length;
-    var weekActief=lijst.filter(function(c){return c.gedaan&&c.gedaan.some(function(g){return nu-g.t<7*dag;});}).length;
+    var weekActief=lijst.filter(function(c){return oefDagen(c).some(function(g){return nu-g.t<7*dag;});}).length;
     r.push('Kaarten: '+lijst.length+' actief'+(archief.length?(', '+archief.length+' afgerond (gearchiveerd)'):'')+'; '+geopend+' door de patiënt geopend; '+weekActief+' deze week geoefend.');
     // het kwaliteitsgetal voor verantwoording: pijn van de állereerste meting naar
     // de laatste, over alle kaarten met een herhaalde meting — dit is het verloop
@@ -4844,7 +4856,7 @@ bridge2.jpg</div>
     }
     var metDoel=lijst.filter(function(c){return c.doel>0;});
     if(metDoel.length){
-      var haalden=metDoel.filter(function(c){return (c.gedaan||[]).filter(function(g){return nu-g.t<7*dag;}).length>=c.doel;}).length;
+      var haalden=metDoel.filter(function(c){return oefDagen(c).filter(function(g){return nu-g.t<7*dag;}).length>=c.doel;}).length;
       r.push('Oefentrouw: '+haalden+' van de '+metDoel.length+' kaarten met een oefendoel haalde het doel deze week.');
     }
     var metHerstel=alles.filter(function(c){return c.ervaring&&c.ervaring.length;});
@@ -5263,10 +5275,11 @@ bridge2.jpg</div>
           // "ik heb geoefend" aantikte op de digitale kaart (alleen tonen; de duiding
           // blijft bij de therapeut). Dit inzicht hebben concurrenten alleen mét app.
           var trTxt='';
-          if(c.gedaan&&c.gedaan.length){
+          var odg=oefDagen(c);
+          if(odg.length){
             var nuT=Date.now(),dag=864e5;
-            var week=c.gedaan.filter(function(g){return nuT-g.t<7*dag;}).length;
-            var dSinds=Math.floor((nuT-c.gedaan[c.gedaan.length-1].t)/dag);
+            var week=odg.filter(function(g){return nuT-g.t<7*dag;}).length;
+            var dSinds=Math.floor((nuT-odg[odg.length-1].t)/dag);
             var laatstTxt=dSinds<=0?'vandaag':(dSinds===1?'gisteren':dSinds+' dagen geleden');
             if(c.doel>0){
               // meten tegen het door de therapeut gezette oefendoel (x keer per week)
@@ -5500,7 +5513,7 @@ bridge2.jpg</div>
           return t;
         };
         var heeftMelding=function(c){return meldingT(c)>0;};
-        var actiefDezeWeek=function(c){return !!(c.gedaan&&c.gedaan.some(function(g){return nu-g.t<7*dag;}));};
+        var actiefDezeWeek=function(c){return oefDagen(c).some(function(g){return nu-g.t<7*dag;});};
         // een openstaand seintje: de patiënt tikte actief "vraag" of "pijn" aan (het
         // positieve "gaat goed" vraagt geen actie). Dit is direct inkomend contact —
         // de app-vrije tegenhanger van de tweerichtingsberichten van concurrent-apps.
@@ -5628,7 +5641,7 @@ bridge2.jpg</div>
         // bewaartermijn op de server zelf op; een opruimknop is daarom niet meer nodig.
         var laatsteActiviteit=function(c){
           var acts=[c.ts||0];
-          if(c.gedaan&&c.gedaan.length)acts.push(c.gedaan[c.gedaan.length-1].t);
+          var odl=oefDagen(c);if(odl.length)acts.push(odl[odl.length-1].t);
           if(c.scores&&c.scores.length)acts.push(c.scores[c.scores.length-1].t);
           if(c.psk&&c.psk.length)acts.push(c.psk[c.psk.length-1].t);
           if(c.ervaring&&c.ervaring.length)acts.push(c.ervaring[c.ervaring.length-1].t);
