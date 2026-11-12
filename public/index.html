@@ -2563,9 +2563,16 @@ bridge2.jpg</div>
     if(!p.praktijk.trim()||!p.adres.trim())return;
     clearTimeout(prakSaveTimer);
     prakSaveTimer=setTimeout(function(){
-      fetch('api/praktijken',{method:'POST',headers:PJSON(),body:JSON.stringify(p)})
-        .then(function(r){return r.json();}).then(function(d){if(d.ok)loadPraktijken();}).catch(function(){});
+      stuurPraktijk(p);
     },600);
+  }
+  // Heeft een andere praktijk deze naam al, dan vraagt de server eerst of dat echt zo moet (409 bezet).
+  function stuurPraktijk(p){
+    fetch('api/praktijken',{method:'POST',headers:PJSON(),body:JSON.stringify(p)})
+      .then(function(r){return r.json();}).then(function(d){
+        if(d.ok){loadPraktijken();return;}
+        if(d.bezet&&!p.zelfdeNaam&&window.confirm(d.fout||'Er is al een andere praktijk met deze naam. Toch zo noemen?')){p.zelfdeNaam=true;stuurPraktijk(p);}
+      }).catch(function(){});
   }
   ['praktijk','p_adres','p_plaats','p_tel','p_email','p_website'].forEach(function(id){
     var el=document.getElementById(id);
@@ -3813,7 +3820,8 @@ bridge2.jpg</div>
       'praktijkwachtwoord-uit':'praktijkwachtwoord uitgezet','praktijkwachtwoord-aan':'praktijkwachtwoord weer aangezet','kaart-verwijderd':'patiëntkaart naar de prullenbak','kaart-hersteld':'patiëntkaart hersteld uit de prullenbak','kaart-definitief-verwijderd':'patiëntkaart definitief verwijderd','profiel-gewijzigd':'praktijkgegevens of logo gewijzigd','abonnement-opgezegd':'abonnement opgezegd','opzeggen-mislukt':'opzeggen geweigerd (fout wachtwoord)',
       'tweede-stap-aan':'tweede stap bij het inloggen aangezet','tweede-stap-uit':'tweede stap bij het inloggen uitgezet','tweede-stap-gewist':'tweede stap gewist',
       'tweede-stap-mislukt':'foute code na een goed wachtwoord','tweede-stap-op-slot':'te veel foute codes na een goed wachtwoord; de code-app werkt 24 uur niet','ingelogd-met-reservecode':'ingelogd met een reservecode','reservecodes-vernieuwd':'nieuwe reservecodes gemaakt',
-      'tweede-stap-verplicht':'tweede stap verplicht gemaakt voor iedereen','tweede-stap-niet-verplicht':'tweede stap niet meer verplicht'};
+      'tweede-stap-verplicht':'tweede stap verplicht gemaakt voor iedereen','tweede-stap-niet-verplicht':'tweede stap niet meer verplicht',
+      'opzeggen-geweigerd':'opzeggen met het praktijkwachtwoord geweigerd','praktijknaam-gewijzigd':'praktijknaam gewijzigd'};
     // bij een foute code is de naam die van de login waarop het gebeurde, niet van wie het deed
     var BIJ={'tweede-stap-mislukt':1,'tweede-stap-op-slot':1};
     fetch('api/praktijk/activiteit?praktijk='+encodeURIComponent((SET.praktijk||'').trim()),PGET())
