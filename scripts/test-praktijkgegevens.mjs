@@ -9,7 +9,7 @@ import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promise
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { createHash } from "node:crypto";
+import { createHash, randomBytes, scryptSync } from "node:crypto";
 
 const root = process.cwd();
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-gegevens-"));
@@ -17,6 +17,14 @@ const nu = Date.now();
 const bestaat = (pad) => access(join(dataDir, pad)).then(() => true, () => false);
 
 // ---- datamap: praktijk A (wordt gewist) en praktijk B (blijft) ----
+// Beide praktijken zijn al beveiligd en de gegevens hieronder zijn van hen. Wie een naam nu pas
+// beveiligt, krijgt wat er al onder stond niet mee (test:naamerftniets).
+const hash = (ww) => { const s = randomBytes(16); return "scrypt$" + s.toString("hex") + "$" + scryptSync(ww, s, 32).toString("hex"); };
+const account = (naam, ww) => ({ naam, hash: hash(ww), gemaakt: nu, vwo: { versie: "2026-11-01", t: new Date(nu).toISOString() } });
+await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify({
+  "fysio wis": account("Fysio Wis", "wis-wachtwoord-1"),
+  "fysio blijf": account("Fysio Blijf", "blijf-wachtwoord-1")
+}));
 await mkdir(join(dataDir, "uploads", "videos"), { recursive: true });
 for (const f of ["uploads/videos/v-aa11.mp4", "uploads/videos/v-bb22.mp4", "uploads/oef-aaaaaaaaaaaa.jpg",
   "uploads/oef-bbbbbbbbbbbb.jpg", "uploads/logo-fysio-wis-1.png", "uploads/logo-fysio-blijf-1.png"]) {
@@ -79,10 +87,12 @@ const leesJson = async (pad) => JSON.parse(await readFile(join(dataDir, pad), "u
 try {
   for (let i = 0; i < 100; i++) { try { if ((await fetch(origin + "/health")).ok) break; } catch {} await new Promise((r) => setTimeout(r, 50)); }
 
-  assert.equal((await claim("Fysio Wis", "wis-wachtwoord-1")).status, 200);
-  const claimB = await claim("Fysio Blijf", "blijf-wachtwoord-1");
-  assert.equal(claimB.status, 200);
-  const sessieB = (await claimB.json()).sessie;
+  const loginB = await fetch(origin + "/api/praktijk/login", {
+    method: "POST", headers: { "content-type": "application/json", "x-forwarded-for": nieuwIp() },
+    body: JSON.stringify({ praktijk: "Fysio Blijf", wachtwoord: "blijf-wachtwoord-1" })
+  });
+  assert.equal(loginB.status, 200);
+  const sessieB = (await loginB.json()).sessie;
 
   // ---- de pagina: scriptloos, formulieren naar zichzelf, gelinkt vanuit de juridische teksten ----
   const pagina = await fetch(origin + "/v2/gegevens");

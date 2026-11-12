@@ -574,6 +574,19 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Opgelost
 
+- OPGELOST 2026-11-12 (bouwthread, deze PR) — **wie een praktijknaam beveiligt, erfde wat er zonder account onder stond** (HOOG).
+  Een v1-sessie en beheer delen kaarten onder de naam in kleine letters, zonder praktijkaccount, en er zijn kaarten
+  van vóór de wachtwoordplicht. De eerste die zo'n naam in V2 beveiligde, kreeg die sleutel: alle kaarten eronder
+  (lezen en verwijderen), en de v1-praktijk kreeg daarna 401 op haar eigen overzicht en kon niets meer delen. De
+  standaardnaam van v1, "FysioTotaal", staat als voorbeeld op de landingspagina. Lokaal gemeten met een v1-sessie.
+  Nu: staat er onder de kale naam al iets zonder account (kaarten, profiel, sjablonen, eigen oefeningen, of een
+  profiel met die naam onder een andere sleutel zonder account), of is het de standaardnaam van v1, dan krijgt de
+  nieuwe praktijk een eigen code (`naamDraagtGegevens`), net als bij "Andere praktijk met deze naam". Een verse naam
+  houdt de naam als sleutel. Test: `npm run test:naamerftniets`. Drie tests die een praktijk beveiligden boven op
+  gezaaide kaarten (dossier-contact, praktijkgegevens, sweep-overzicht-wis) zaaien nu ook het account.
+  Niet meegenomen (LAAG): logboekregels onder een kale naam zonder account (soort actie, tijdstip, gemaskeerd IP;
+  geen kaartnamen) blijven bij de naam. Staat er verder niets meer onder, dan ziet wie de naam daarna beveiligt
+  die regels in Activiteit en in de download.
 - OPGELOST 2026-11-07 PR #73 — **herstelcode werkte nog na "gedeeld praktijkwachtwoord uit"** (MIDDEL).
   De code ligt op papier in de praktijkmap, dus een vertrokken collega kende hem. Met
   `/api/praktijk/herstel` kon die het gedeelde wachtwoord omzetten, kreeg elke keer een verse code (de

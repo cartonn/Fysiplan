@@ -276,12 +276,23 @@ const praktijkGeclaimd = (pk) => !!pk && Object.hasOwn(praktijkAccounts, pk);
 // en een andere naam op de kaart verplaatste de therapeut stil naar een andere
 // praktijk (security-backlog HOOG, 2026-11-06). Nu:
 // - bestaande accounts houden hun sleutel (geen omzetting van data nodig);
-// - wie een naam beveiligt die al bij een account hoort, krijgt een eigen code
-//   "p-<16 hex>" met de naam alleen als weergave (acc.naam);
+// - wie een naam beveiligt die al bij een account hoort, of waaronder al iets staat zonder
+//   account, krijgt een eigen code "p-<16 hex>" met de naam alleen als weergave (acc.naam);
 // - met een praktijksessie handelt elke route voor de praktijk van die sessie,
 //   welke naam de app ook meestuurt (praktijkVan).
 const isPraktijkCode = (k) => /^p-[a-f0-9]{16}$/.test(String(k || ""));
 const nieuwePraktijkCode = () => "p-" + randomBytes(8).toString("hex");
+// Staat er onder de kale naam al iets zonder account? Dat kan: kaarten, profiel, sjablonen en
+// eigen oefeningen van een v1-sessie, van beheer of van vóór de wachtwoordplicht staan onder de
+// naam in kleine letters. Wie zo'n naam beveiligt, krijgt een eigen code en niet die sleutel.
+// Beveiligen geeft toegang tot wat je daarna zelf maakt, niet tot wat er al onder die naam
+// stond, en het sluit de praktijk die daar zonder account werkt (v1) niet buiten. De
+// standaardnaam van v1 telt altijd mee, ook als er nog niets onder staat. Ook een profiel met
+// deze naam onder een andere sleutel zonder account telt mee: bij een praktijk met de naam als
+// sleutel geldt zo'n profiel als het eigen profiel (lijst, download en alles wissen).
+const naamDraagtGegevens = (nk) => nk === V1_PRAKTIJK.toLowerCase() ||
+  [kaarten, praktijken, praktijkSjablonen, praktijkOefeningen].some((m) => Object.hasOwn(m, nk) && m[nk] && Object.keys(m[nk]).length > 0) ||
+  Object.entries(praktijken).some(([k, p]) => !praktijkGeclaimd(k) && String((p && p.praktijk) || "").toLowerCase() === nk);
 // de naam waaronder een account bekendstaat (kleine letters), voor inloggen op naam
 function accountNaam(pk) {
   const a = Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
@@ -3451,7 +3462,8 @@ async function afhandelen(request, response) {
       // die een eigen code; niemand kan een naam meer vooraf voor een ander bezetten.
       const bezet = praktijkGeclaimd(nk) || accountsMetNaam(nk).length > 0;
       if (bezet && b.nieuw !== true) { await sendJson(response, 409, { ok: false, fout: "Deze praktijknaam is al beveiligd. Is het jouw praktijk? Log dan in. Is het een andere praktijk met dezelfde naam? Kies dan “Andere praktijk met deze naam”.", login: true, bezet: true }); return; }
-      const pk = bezet ? nieuwePraktijkCode() : nk;
+      // ook een eigen code als er onder de kale naam al iets staat zonder account: zie naamDraagtGegevens
+      const pk = (bezet || naamDraagtGegevens(nk)) ? nieuwePraktijkCode() : nk;
       // AVG art. 28: wie de praktijk beveiligt (en daarmee kaarten kan delen) gaat
       // namens de praktijk akkoord met de verwerkersovereenkomst
       if (b.akkoord !== true) { await sendJson(response, 400, { ok: false, akkoord: true, fout: "Vink aan dat je namens de praktijk akkoord gaat met de voorwaarden en de verwerkersovereenkomst." }); return; }
