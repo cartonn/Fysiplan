@@ -79,6 +79,7 @@
     "test:qrtaal": "node scripts/test-qr-taal.mjs",
     "test:eerstedeling": "node scripts/test-eerste-deling.mjs",
     "test:teamherstel": "node scripts/test-team-herstel.mjs",
+    "test:teameigenbeheer": "node scripts/test-team-eigenbeheer.mjs",
     "test:printknop": "node scripts/test-printknop.mjs",
     "test:logoveeg": "node scripts/test-logo-veeg.mjs",
     "test:sweepoverzicht": "node scripts/test-sweep-overzicht-wis.mjs",
