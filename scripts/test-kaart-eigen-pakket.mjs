@@ -129,7 +129,10 @@ try {
   assert.equal(d.lib.length, 6, "alleen de zes bibliotheekoefeningen van deze kaart: " + d.lib.map((o) => o.naam).join(", "));
   for (const o of d.lib) assert.deepEqual(o, helelib.find((h) => h.exerciseId === o.exerciseId), o.naam + ": de regel is onbewerkt die uit de bibliotheek");
   assert.deepEqual(d.lib.map((o) => o.exerciseId), helelib.filter((h) => d.lib.some((o) => o.exerciseId === h.exerciseId)).map((h) => h.exerciseId), "in de volgorde van de bibliotheek");
-  assert.ok(d.lib.some((o) => o.naam === "Squat"), "een oefening die alleen op naam op de kaart staat gaat mee");
+  // "Squat" en "Mob back cat/cow" tonen sinds de Nederlandse namen een andere naam; de naam
+  // waaronder de kaart ze kent gaat mee als `eerder`
+  const heet = (o, n) => !!o && (o.naam === n || (o.eerder || []).includes(n));
+  assert.ok(d.lib.some((o) => heet(o, "Squat")), "een oefening die alleen op naam op de kaart staat gaat mee");
   assert.ok(d.lib.some((o) => o.exerciseId === "fp_027779ceb994b08e"), "een hernoemde oefening gaat mee op haar vaste id");
   assert.ok(!d.lib.some((o) => o.naam === "Med ball swing"), "testopzet: de bibliotheekoefening die net zo heet als de eigen oefening staat niet op de kaart");
   assert.ok(!d.lib.some((o) => /^po_/.test(o.exerciseId)), "eigen oefeningen staan niet in lib maar in kaart.eigenOef");
@@ -141,7 +144,7 @@ try {
   assert.deepEqual(d.keuring.media.entries, media.entries.filter((e) => ids.has(e.exerciseId)), "beeldkeuring: precies de regels bij deze oefeningen, onbewerkt");
   assert.deepEqual(d.keuring.media.rejectedSources, media.rejectedSources.filter((e) => ids.has(e.exerciseId)), "afgekeurde vorige versies: alleen die van deze kaart");
   assert.equal(d.keuring.media.rejectedSources.length, 1, "testopzet: de afgekeurde vorige versie van de hernoemde oefening zit erbij");
-  const namen = new Set([...d.lib.map((o) => o.naam), ...gekozen.map((x) => x.n), EIGEN.naam, NAAMGENOOT.naam]);
+  const namen = new Set([...d.lib.flatMap((o) => [o.naam, ...(o.eerder || [])]), ...gekozen.map((x) => x.n), EIGEN.naam, NAAMGENOOT.naam]);
   assert.deepEqual(d.keuring.narration.holds, uitleg.holds.filter((h) => ids.has(h.exerciseId) || namen.has(h.name)), "uitlegkeuring: de regels op id of op naam");
   assert.deepEqual(d.keuring.narration.holds.map((h) => h.name).sort(), ["Med ball swing", "Mob back cat/cow", "Yoga ear pressure"], "testopzet: drie tegengehouden uitleggen op deze kaart");
   assert.ok(d.keuring.media.entries.length < 12 && d.keuring.media.entries.length < media.entries.length / 50, "een handvol van de " + media.entries.length + " regels");
@@ -162,10 +165,10 @@ try {
   assert.equal(van("Anteflexie armen").o.exerciseId, "fp_ff306042c93f0900");
   assert.equal(van("Anteflexie armen").beeldTegen, false);
   assert.ok(van("Anteflexie armen").uitsnede && van("Anteflexie armen").merk, "goedgekeurde uitsnedes en het afgedekte merk komen mee");
-  assert.equal(van("Squat").o.naam, "Squat");
+  assert.ok(heet(van("Squat").o, "Squat"));
   assert.equal(van("Step up with knee raise").beeldTegen, true, "het afgekeurde beeld blijft tegengehouden");
   assert.equal(van("Yoga ear pressure").uitlegTegen, true, "de tegengehouden uitleg blijft tegengehouden (op id)");
-  assert.equal(van("mob back cat/cow").o.naam, "Mob back cat/cow");
+  assert.ok(heet(van("mob back cat/cow").o, "Mob back cat/cow"));
   assert.equal(van("mob back cat/cow").uitlegTegen, true, "en ook als de kaart de oefening op naam vond");
   assert.equal(van("Een naam van vroeger").o.exerciseId, "fp_027779ceb994b08e");
   assert.ok(Object.keys(uitKlein.afgekeurd).some((k) => k === "fp_027779ceb994b08e|images/cardio/alternating-lunge-jumps-avatar-v8.jpg"), "de afgekeurde vorige versie blijft afgekeurd");
@@ -196,7 +199,7 @@ try {
   // -- de demokaart en een kaart die niet bestaat --
   const demo = await (await haal("/api/kaart?id=demo")).json();
   assert.ok(demo.ok && demo.lib.length > 0 && demo.lib.length <= demo.kaart.chosen.length, "de demokaart krijgt ook alleen haar eigen oefeningen");
-  for (const x of demo.kaart.chosen) assert.ok(demo.lib.some((o) => (x.id && o.exerciseId === x.id) || o.naam === x.n), "demokaart: " + x.n + " zit erbij");
+  for (const x of demo.kaart.chosen) assert.ok(demo.lib.some((o) => (x.id && o.exerciseId === x.id) || heet(o, x.n)), "demokaart: " + x.n + " zit erbij");
   const weg = await haal("/api/kaart?id=ffffffffffff");
   assert.equal(weg.status, 404);
   assert.deepEqual(Object.keys(await weg.json()).sort(), ["fout", "ok"], "een kaart die niet bestaat krijgt geen pakket");

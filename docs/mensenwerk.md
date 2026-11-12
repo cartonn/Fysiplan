@@ -4,6 +4,16 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Hoe lang bewaren we het beheerlogboek? (legal, 2026-11-12 13u)
+**Wat er is:** sinds #230 legt Fysiplan elke beheeractie vast (wie bij Fysiplan, wat, wanneer, bij welke praktijk; bij een
+herstelmail de reden en een gemaskeerd adres). Geen patiëntgegevens. Het bestand groeit zonder einde en gaat mee in de reservekopie.
+De legal-routine heeft het nu in /privacy en in de verwerkersovereenkomst gezet, met "nog geen vaste einddatum".
+**Waarom een keuze nodig is:** de AVG vraagt een bewaartermijn (art. 5 lid 1 e). Het logboek is bewust niet te wissen, zodat
+niemand zijn spoor kan uitvegen; een termijn moet dat principe dus bewust doorbreken.
+**Advies:** 2 jaar, daarna automatisch weg bij het starten van de server (lang genoeg om een klacht of datalek na te gaan).
+Laat een jurist bevestigen; zeg het tegen een routine, dan bouwt die het en past de tekst aan.
+
+
 ### Prijsbelofte van 24 maanden staat nu ook in de voorwaarden (legal, 2026-11-11 21u)
 **Wat er was:** de landing belooft iedereen "je prijs staat minstens 24 maanden vast" (en de oprichters "24 maanden
 prijsgarantie"), maar de voorwaarden zeiden alleen dat een nieuwe prijs 30 dagen vooraf gemeld wordt. Twee verschillende
@@ -212,10 +222,23 @@ een **factuur** met 21% btw uitgesplitst.
 
 
 ### Engelse oefennamen in de Nederlandse bibliotheek (gebruikers-sweep, 2026-11-07)
-**Wat er is:** op een Nederlandse patiëntkaart staan namen als "Knee elbow", "Med ball rotation passes knee",
-"Leg extension", "Seated chair squats", "Abs stretch" en "Abroller". Ze komen uit `public/oefeningen-v2.json`
-(o.a. r. 650 en 4469). Routines raken die bestanden niet aan, want daar werkt jouw videostroom aan.
-**Wat jij moet doen:** laat in de videostroom (of zelf) Nederlandse namen kiezen voor de Engelstalige oefeningen.
+**Wat er is:** op een Nederlandse patiëntkaart staan namen als "Knee elbow", "Abs stretch" en "Abroller".
+Ze komen uit `public/oefeningen-v2.json`. Routines raken dat bestand niet aan, want daar werkt jouw
+videostroom aan.
+**Wat er sinds 2026-11-12 is gedaan:** de 135 oefeningen die op een standaardkaart staan, tonen een
+Nederlandse naam ("Leg extension" heet nu "Knieën strekken – op het apparaat"). Dat gaat via een laag
+over het bestand heen: `content/oefennamen-nl.json`, zie de README. Het bestand zelf is niet gewijzigd.
+**Wat jij nog moet doen:**
+1. Laat een fysiotherapeut de 135 namen nalopen (`content/oefennamen-nl.json`, rechts staat de nieuwe
+   naam). Een naam verbeteren is één regel; `npm run test:oefennamen` loopt daarna na of elke
+   standaardkaart nog dezelfde oefeningen vindt.
+2. Kies Nederlandse namen voor de Engelse namen die buiten de standaardkaarten staan. Een telling met
+   een woordenlijst komt op ruim 110 (een schatting), vooral krachtapparaten, TRX, yoga, Bodyblade en
+   foamroller. Ze kunnen in hetzelfde bestand.
+3. De voorleesstem noemt 33 hernoemde oefeningen nog bij hun oude naam, omdat de opname met die naam
+   begint. Neem ze opnieuw op bij de volgende ronde stemmen; tot dan speelt de bestaande opname.
+4. De voorbeeldkaart (`/k/demo`) houdt haar vier namen (Squat, Dead bug, Anteflexie armen, Step up),
+   omdat de beelden op de landingspagina die kaart laten zien.
 
 ### Stoppende praktijk: wissen kan nu zelf (legal, 2026-11-06)
 Verwerkersovereenkomst art. 10 belooft dat kaarten binnen 30 dagen na het einde gewist worden.

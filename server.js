@@ -21,6 +21,7 @@ import { kleinPadVoor, kleinMap } from "./lib/klein-beeld.js";
 import { nieuwGeheim, controleer, otpauth, nieuweReservecode, reservecodeNormaal } from "./lib/totp.js";
 import { maakBeheerOmgeving } from "./lib/beheer-omgeving-routes.js";
 import { BEHEER_SESSIE_MS, BEHEER_WW_MIN, BEHEER_EERSTE_KEER_MS, BeheerSessies, BeheerLogboek, Rem, laadBeheerSessies, beheerKlaar, beheerVerlopen, beheerUit, beheerPad } from "./lib/beheer.js";
+import { leesNamenLaag, kiesNamen, maakZoeker, sleutelVoor, verhuisNaamgebonden } from "./lib/oefennamen.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
@@ -74,12 +75,12 @@ const ADMIN_KEY = (() => {
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88" && process.env.ADMIN_KEY !== "account";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-11-2";
+const VWO_VERSIE = "2026-11-12";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
 const AV_VERSIE = "2026-11-11-2";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-12";
+const PRIVACY_VERSIE = "2026-11-12-2";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -99,7 +100,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-11", tekst: "Ingevuld: een nieuwe prijs melden we minstens 30 dagen vooraf per e-mail, en er is geen opzegtermijn (opzeggen kan elke dag, het abonnement stopt aan het einde van de betaalde maand)." },
   { stuk: "vwo", versie: "2026-11-11", tekst: "Gegevens: de lijst noemt nu ook de kaartnaam, doelactiviteit, weekdoel, werknotitie, behandelaar en het contactlogboek. AI: namen van eigen oefeningen gaan mee naar de vertaal- en vraaghulp; roepnaam, scores en notities niet." },
   { stuk: "av", versie: "2026-11-11-2", tekst: "Prijsbelofte: je prijs per therapeut staat minstens 24 maanden vast vanaf de start van je abonnement, zoals op fysiplan.nl staat. Pas daarna kan een nieuwe prijs ingaan, met 30 dagen vooraf een mail." },
-  { stuk: "vwo", versie: "2026-11-11-2", tekst: "Bewaartermijn: een verwijderde kaart staat eerst hooguit 7 dagen in de prullenbak, waar de maker of een beheerder hem kan herstellen of meteen definitief kan verwijderen (bijvoorbeeld als een patiënt om wissen vraagt)." }
+  { stuk: "vwo", versie: "2026-11-11-2", tekst: "Bewaartermijn: een verwijderde kaart staat eerst hooguit 7 dagen in de prullenbak, waar de maker of een beheerder hem kan herstellen of meteen definitief kan verwijderen (bijvoorbeeld als een patiënt om wissen vraagt)." },
+  { stuk: "vwo", versie: "2026-11-12", tekst: "Beveiliging: elke login heeft een tweede stap, ook die van medewerkers van Fysiplan. Fysiplan legt vast wie wanneer gegevens van je praktijk inzag of een herstelmail stuurde, en waarom; je kunt dit opvragen." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -176,6 +178,13 @@ const customCategoriesPath = join(dataDir, "categorie-toevoegingen.json");
 // renames: sleutel = oorspronkelijke naam uit oefeningen.json, waarde = huidige naam
 let renames = {};
 try { renames = JSON.parse(await readFile(renamesPath, "utf8")); } catch {}
+// Nederlandse namen voor de oude Engelstalige reeks in v2 (content/oefennamen-nl.json). Het
+// bestand met de oefeningen zelf blijft ongewijzigd; wat beheer hernoemt (renames) gaat voor.
+// Bij elke oefening die zo een andere naam toont, gaat de naam uit het bestand mee als `eerder`.
+// Zie lib/oefennamen.js.
+let nlNamen = new Map();
+try { nlNamen = leesNamenLaag(JSON.parse(await readFile(join(process.cwd(), "content", "oefennamen-nl.json"), "utf8"))); }
+catch (err) { console.error("oefennamen-nl.json niet gelezen, de app toont de namen uit het bestand:", err && err.message ? err.message : err); }
 // praktijkprofielen (naam + adresblok), gedeeld over alle apparaten
 let praktijken = {};
 try { praktijken = JSON.parse(await readFile(praktijkenPath, "utf8")); } catch {}
@@ -1985,7 +1994,12 @@ async function vertaalCacheOpschonen() {
   if (!Array.isArray(manifest) || !manifest.length) return 0; // bibliotheek niet geladen: niets weggooien
   const sleutel = (t) => createHash("sha256").update(String(t).slice(0, 300)).digest("hex").slice(0, 16);
   const toegestaan = new Set();
-  for (const e of manifest) { if (e.naam) toegestaan.add(sleutel(e.naam)); if (e.uitleg) toegestaan.add(sleutel(e.uitleg)); }
+  for (const e of manifest) {
+    if (e.naam) toegestaan.add(sleutel(e.naam));
+    if (e.uitleg) toegestaan.add(sleutel(e.uitleg));
+    // de eerdere naam staat nog op kaarten van voor de naamswijziging
+    for (const n of e.eerder || []) toegestaan.add(sleutel(n));
+  }
   for (const lijst of Object.values(praktijkOefeningen)) for (const o of (Array.isArray(lijst) ? lijst : [])) if (o && o.naam) toegestaan.add(sleutel(o.naam));
   let weg = 0;
   for (const taal of Object.keys(vertalingen)) {
@@ -2670,6 +2684,17 @@ async function manifestV2Gecacht() {
   manifestArrV2 = { t: nu, arr };
   return arr;
 }
+// De uitleg bij elke naam die als oefennaam op een kaart kan staan: de naam van nu, en de eerdere
+// naam van een oefening die intussen anders heet. Een kaart die voor de naamswijziging is bewaard,
+// houdt zo haar uitleg in de vertaling en in de vraaghulp. Alleen letterlijke namen uit de
+// bibliotheek: vrije tekst komt hier nooit in.
+async function uitlegPerNaam() {
+  const lijst = await manifestV2Gecacht();
+  const perNaam = new Map();
+  for (const e of lijst) for (const n of e.eerder || []) perNaam.set(n, e.uitleg);
+  for (const e of lijst) perNaam.set(e.naam, e.uitleg);
+  return perNaam;
+}
 
 // ---- de patiëntkaart krijgt alleen wat bij haar eigen oefeningen hoort ----
 // De kaartpagina haalde bij elk bezoek de hele bibliotheek en beide keuringsbestanden op (samen
@@ -2695,10 +2720,11 @@ async function leesKeuring() {
   }
   return keuringBron;
 }
+// per regel van de bibliotheek: de genormaliseerde naam van nu, gevolgd door die van eerder
 const libNormen = new WeakMap();
 function normenVan(lijst) {
   let n = libNormen.get(lijst);
-  if (!n) { n = lijst.map((o) => normEx(o.naam)); libNormen.set(lijst, n); }
+  if (!n) { n = lijst.map((o) => [o.naam, ...(o.eerder || [])].map(normEx)); libNormen.set(lijst, n); }
   return n;
 }
 async function kaartPakket(kaart, eigenOef) {
@@ -2706,10 +2732,12 @@ async function kaartPakket(kaart, eigenOef) {
   const ids = new Set(gekozen.map((x) => String(x.id || "")).filter(Boolean));
   const genormd = new Set(gekozen.map((x) => normEx(x.n)));
   const alles = await manifestV2Gecacht(), norm = normenVan(alles);
-  const lib = alles.filter((o, i) => ids.has(o.exerciseId) || genormd.has(norm[i]));
-  // de keuring geldt per vast id (beeld) en per vast id of letterlijke naam (uitleg)
+  // ook op een eerdere naam: een kaart van voor de naamswijziging, zonder vast id bij de oefening
+  const lib = alles.filter((o, i) => ids.has(o.exerciseId) || norm[i].some((n) => genormd.has(n)));
+  // de keuring geldt per vast id (beeld) en per vast id of letterlijke naam (uitleg); een houd op
+  // de naam uit het bestand geldt ook voor de oefening die intussen anders heet
   const namen = new Set(gekozen.map((x) => String(x.n || "")));
-  for (const o of lib) { ids.add(o.exerciseId); namen.add(o.naam); }
+  for (const o of lib) { ids.add(o.exerciseId); namen.add(o.naam); for (const e of o.eerder || []) namen.add(e); }
   for (const e of eigenOef) { ids.add(e.id); namen.add(e.naam); }
   const { media, uitleg } = await leesKeuring();
   const vanKaart = (e) => !!e && ids.has(e.exerciseId);
@@ -2786,6 +2814,12 @@ async function buildManifest(channel = "v2") {
   const del = new Set(deleted);
   const candidates = await readBaseManifest("v2");
   const availability = await Promise.all(candidates.map(imageReady));
+  // de naam die de app toont: de keuze van beheer, anders de Nederlandse naam, anders het bestand
+  const namen = namenV2(candidates);
+  // De volgorde van de lijst blijft die van voor de Nederlandse namen. De app toont de lijst zelf
+  // op naam, maar bewaart een open kaart (nog) als posities in deze lijst: schuift de lijst bij een
+  // uitrol, dan staan er na herladen andere oefeningen op die kaart.
+  const zonderLaag = new Map();
   const base = candidates
     .filter((entry, index) => availability[index])
     .filter((e) => !del.has(e.naam))
@@ -2796,13 +2830,20 @@ async function buildManifest(channel = "v2") {
         o.groep = c.groep;
         if (c.ook && c.ook.length) o.ook = c.ook; else delete o.ook;
       }
-      if (renames[e.naam]) o.naam = renames[e.naam];
+      const gekozen = namen.get(e.naam);
+      if (gekozen && gekozen.naam !== e.naam) {
+        o.naam = gekozen.naam;
+        if (gekozen.eerder) o.eerder = gekozen.eerder;
+        if (nlNamen.get(e.naam) === gekozen.naam) zonderLaag.set(o.naam, e.naam);
+      }
       return o;
     });
+  const volgNaam = (x) => zonderLaag.get(x.naam) || x.naam;
   return base.concat(extra)
     .map((e) => {
       const id = exerciseId(e);
-      const praktijk = videolinks[e.naam];
+      // een video van beheer kan nog onder de eerdere naam van de oefening staan
+      const praktijk = videolinks[sleutelVoor(videolinks, e)];
       const catalogus = publicCatalogVideo(videoCatalogus, id);
       const searchMetadata = coreSearchMetadata.get(id) || {};
       const video = praktijk || catalogus ? { ...(praktijk || {}) } : null;
@@ -2813,12 +2854,14 @@ async function buildManifest(channel = "v2") {
         ...(e.kaartImg ? { kaartImg: v2AssetPath(e.kaartImg) } : {}),
         exerciseId: id,
         ...searchMetadata,
+        // wie op de eerdere naam zoekt, vindt de oefening nog
+        ...(e.eerder ? { searchAliases: [...new Set([...(searchMetadata.searchAliases || e.searchAliases || []), ...e.eerder])] } : {}),
         ...(video ? { video } : {})
       };
     })
     .sort((a, b) => catOrder(a.groep) - catOrder(b.groep)
       || a.groep.localeCompare(b.groep, "nl")
-      || a.naam.localeCompare(b.naam, "nl"));
+      || volgNaam(a).localeCompare(volgNaam(b), "nl"));
 }
 // alle categorieën die nu bestaan (vaste volgorde + door beheer aangemaakte)
 async function knownCategories() {
@@ -2827,7 +2870,22 @@ async function knownCategories() {
 }
 // hergebruik een bestaande categorie bij ander hoofdlettergebruik; anders is het een nieuwe
 const canonCategory = (list, g) => list.find((c) => c.toLowerCase() === g.toLowerCase()) || g;
-const currentNames = (manifest) => manifest.map((e) => e.naam.toLowerCase());
+// de namen die bezet zijn: wat een oefening nu heet, en wat ze eerder heette (kaarten, sjablonen en
+// video's kunnen nog op die eerdere naam staan; een andere oefening mag hem dus niet krijgen)
+const currentNames = (manifest) => manifest.flatMap((e) => [e.naam, ...(e.eerder || [])]).map((n) => n.toLowerCase());
+// Welke naam toont de app bij elke naam uit het v2-bestand? Verwijderde oefeningen tellen niet mee.
+const namenV2 = (basis) => kiesNamen(basis.filter((e) => !deleted.includes(e.naam)).map((e) => e.naam), renames, nlNamen, extra.map((e) => e.naam));
+// De oefening uit het v2-bestand die nu `naam` heet (of, als niemand zo heet, eerder zo heette).
+function basisOefening(basis, naam) {
+  const namen = namenV2(basis);
+  const levend = basis.filter((e) => !deleted.includes(e.naam));
+  return levend.find((e) => namen.get(e.naam).naam === naam)
+    || levend.find((e) => (namen.get(e.naam).eerder || []).includes(naam)) || null;
+}
+// Een oefening uit de opgebouwde bibliotheek op de naam die beheer meestuurt: de naam van nu, of
+// een eerdere naam. Een script dat nog de naam uit het bestand stuurt, komt zo bij dezelfde oefening uit.
+const oefeningOpNaam = (manifest, naam) => manifest.find((e) => e.naam === naam)
+  || manifest.find((e) => (e.eerder || []).includes(naam)) || null;
 
 function slug(s) {
   return String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
@@ -3297,16 +3355,18 @@ async function afhandelen(request, response) {
     // manifesten op en worden daarom een minuut onthouden
     let v1Count = null;
     let v2Count = null;
+    let nlAantal = null;
     const nuH = Date.now();
     if (healthTelling.t && nuH - healthTelling.t < 60 * 1000) {
-      v1Count = healthTelling.v1; v2Count = healthTelling.v2;
+      v1Count = healthTelling.v1; v2Count = healthTelling.v2; nlAantal = healthTelling.nl;
     } else {
       try {
-        [v1Count, v2Count] = await Promise.all([
+        [v1Count, v2Count, nlAantal] = await Promise.all([
           buildManifest("v1").then((manifest) => manifest.length),
-          buildManifest("v2").then((manifest) => manifest.length)
+          buildManifest("v2").then((manifest) => manifest.length),
+          readBaseManifest("v2").then((basis) => { let n = 0; for (const [b, v] of namenV2(basis)) if (nlNamen.get(b) === v.naam) n++; return n; })
         ]);
-        healthTelling = { t: nuH, v1: v1Count, v2: v2Count };
+        healthTelling = { t: nuH, v1: v1Count, v2: v2Count, nl: nlAantal };
       } catch {}
     }
     await sendJson(response, 200, {
@@ -3318,6 +3378,8 @@ async function afhandelen(request, response) {
       v1Oefeningen: v1Count,
       v2Oefeningen: v2Count,
       hernoemd: Object.keys(renames).length,
+      // oefeningen in v2 die nu hun Nederlandse naam uit content/oefennamen-nl.json tonen
+      nederlandseNamen: nlAantal,
       toegevoegd: extra.length,
       verwijderd: deleted.length,
       verplaatst: Object.keys(catOverrides).length,
@@ -3362,27 +3424,36 @@ async function afhandelen(request, response) {
       const oud = String(van || "").trim();
       if (!oud || !nieuw) { await sendJson(response, 400, { ok: false, fout: "Geef de huidige en de nieuwe naam op." }); return; }
       const manifest = await buildManifest();
-      if (manifest.some((e) => e.naam.toLowerCase() === nieuw.toLowerCase() && e.naam.toLowerCase() !== oud.toLowerCase())) {
+      // de oefening zelf: op de naam van nu, of op een eerdere naam
+      const huidig = oefeningOpNaam(manifest, oud);
+      const bezet = (e) => e !== huidig && [e.naam, ...(e.eerder || [])].some((n) => n.toLowerCase() === nieuw.toLowerCase());
+      if (manifest.some(bezet)) {
         await sendJson(response, 409, { ok: false, fout: "Er bestaat al een oefening met de naam “" + nieuw + "”." }); return;
       }
-      // eventuele oefenvideo verhuist mee met de nieuwe naam
+      // eventuele oefenvideo verhuist mee met de nieuwe naam (hij kan nog onder een eerdere naam staan)
+      const videoWas = huidig ? sleutelVoor(videolinks, huidig) : oud;
       const migreerVideo = async () => {
-        if (videolinks[oud] && oud !== nieuw) {
-          videolinks[nieuw] = videolinks[oud];
-          delete videolinks[oud];
+        if (videolinks[videoWas] && videoWas !== nieuw) {
+          videolinks[nieuw] = videolinks[videoWas];
+          delete videolinks[videoWas];
           await saveJson(videolinksPath, videolinks);
         }
       };
       const ex = extra.find((e) => e.naam === oud);
       if (ex) { ex.naam = nieuw; await saveJson(extraPath, extra); await migreerVideo(); await sendJson(response, 200, { ok: true, naam: nieuw }); return; }
       const base = await readBaseManifest();
-      const orig = base.find((e) => (renames[e.naam] || e.naam) === oud && !deleted.includes(e.naam));
+      const orig = basisOefening(base, oud);
       if (!orig) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden: " + oud }); return; }
-      if (nieuw === orig.naam) delete renames[orig.naam];
+      // Geen eigen keuze van beheer meer nodig als de nieuwe naam is wat de app zonder die keuze
+      // toont (de Nederlandse naam, of anders de naam uit het bestand). De naam uit het bestand
+      // terugzetten bij een oefening mét Nederlandse naam is wel een keuze, en blijft dus staan.
+      if (nieuw === (nlNamen.get(orig.naam) || orig.naam)) delete renames[orig.naam];
       else renames[orig.naam] = nieuw;
       await saveJson(renamesPath, renames);
       await migreerVideo();
-      await sendJson(response, 200, { ok: true, naam: nieuw });
+      // de eerdere naam gaat mee, zodat het scherm van beheer zonder herladen klopt
+      const na = namenV2(base).get(orig.naam);
+      await sendJson(response, 200, { ok: true, naam: nieuw, ...(na && na.eerder ? { eerder: na.eerder } : {}) });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
@@ -3494,7 +3565,7 @@ async function afhandelen(request, response) {
         await sendJson(response, 200, { ok: true }); return;
       }
       const base = await readBaseManifest();
-      const orig = base.find((e) => (renames[e.naam] || e.naam) === naam && !deleted.includes(e.naam));
+      const orig = basisOefening(base, naam);
       if (!orig) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden: " + naam }); return; }
       const origOok = (orig.ook || []).slice().sort().join("|");
       if (g === orig.groep && ookList.slice().sort().join("|") === origOok) delete catOverrides[orig.naam];
@@ -3512,11 +3583,14 @@ async function afhandelen(request, response) {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
     try {
       const naam = String(JSON.parse(await readBody(request)).naam || "").trim();
-      // bijbehorende oefenvideo (link + eigen opnamebestand) mee opruimen
-      if (videolinks[naam]) {
-        if (videolinks[naam].eigen) { try { await unlink(join(dataDir, videolinks[naam].eigen)); } catch {} }
-        if (videolinks[naam].stream && videolinks[naam].stream.uid) verwijderStream(videolinks[naam].stream.uid);
-        delete videolinks[naam];
+      // bijbehorende oefenvideo (link + eigen opnamebestand) mee opruimen; hij kan nog onder een
+      // eerdere naam van de oefening staan
+      const teWissen = oefeningOpNaam(await buildManifest(), naam);
+      const vk = teWissen ? sleutelVoor(videolinks, teWissen) : naam;
+      if (videolinks[vk]) {
+        if (videolinks[vk].eigen) { try { await unlink(join(dataDir, videolinks[vk].eigen)); } catch {} }
+        if (videolinks[vk].stream && videolinks[vk].stream.uid) verwijderStream(videolinks[vk].stream.uid);
+        delete videolinks[vk];
         await saveJson(videolinksPath, videolinks);
       }
       const i = extra.findIndex((e) => e.naam === naam);
@@ -3527,7 +3601,7 @@ async function afhandelen(request, response) {
         await sendJson(response, 200, { ok: true }); return;
       }
       const base = await readBaseManifest();
-      const orig = base.find((e) => (renames[e.naam] || e.naam) === naam && !deleted.includes(e.naam));
+      const orig = basisOefening(base, naam);
       if (!orig) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden: " + naam }); return; }
       deleted.push(orig.naam);
       delete renames[orig.naam];
@@ -3565,8 +3639,19 @@ async function afhandelen(request, response) {
   // meest gebruikte oefeningen als eerste een video krijgen
   if (urlPath === "/api/oefeningen/gebruik" && request.method === "GET") {
     if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
-    const lijst = Object.entries(stats.oefeningGebruik)
-      .map(([naam, aantal]) => ({ naam, aantal }))
+    // Wat nog onder de eerdere naam van een oefening is geteld, hoort bij haar naam van nu. Het
+    // vaste id en de eerdere naam gaan mee: de videoproductie werkt met de namen uit het bestand.
+    let zoeker = null;
+    try { zoeker = maakZoeker(await manifestV2Gecacht()); } catch {}
+    const perNaam = new Map();
+    for (const [naam, aantal] of Object.entries(stats.oefeningGebruik)) {
+      const o = zoeker && zoeker.isNaam(naam) ? zoeker.vind({ n: naam }) : null;
+      const sleutel = o ? o.naam : naam;
+      const rij = perNaam.get(sleutel) || { naam: sleutel, aantal: 0, ...(o ? { id: o.exerciseId, ...(o.eerder ? { eerder: o.eerder } : {}) } : {}) };
+      rij.aantal += Number(aantal) || 0;
+      perNaam.set(sleutel, rij);
+    }
+    const lijst = [...perNaam.values()]
       .sort((a, b) => b.aantal - a.aantal)
       .slice(0, 500);
     await sendJson(response, 200, { ok: true, totaal: lijst.reduce((s2, r) => s2 + r.aantal, 0), oefeningen: lijst });
@@ -5603,7 +5688,9 @@ async function afhandelen(request, response) {
       if (!asset || !asset.meta || String(asset.meta.exerciseId || "") !== id) {
         await sendJson(response, 409, { ok: false, fout: "Deze upload hoort niet bij de gekozen oefening." }); return;
       }
-      const vorige = videolinks[oefening.naam] || null;
+      // de video van een oefening die een andere naam kreeg, blijft onder haar eerdere naam staan
+      const vk = sleutelVoor(videolinks, oefening);
+      const vorige = videolinks[vk] || null;
       const cur = { ...(vorige || {}) };
       const oudBestand = cur.eigen || "";
       const oudeStream = cur.stream && cur.stream.uid;
@@ -5612,11 +5699,11 @@ async function afhandelen(request, response) {
       const conceptVideo = asset.meta.reviewStatus === "concept" && String(asset.meta.aiGenerated) === "true";
       cur.stream = { provider: "cloudflare-stream", uid, iframe: streamIframe(uid), aiGenerated: conceptVideo,
         reviewStatus: conceptVideo ? "concept" : "reviewed" };
-      videolinks[oefening.naam] = cur;
+      videolinks[vk] = cur;
       try {
         await saveJson(videolinksPath, videolinks);
       } catch (err) {
-        if (vorige) videolinks[oefening.naam] = vorige; else delete videolinks[oefening.naam];
+        if (vorige) videolinks[vk] = vorige; else delete videolinks[vk];
         throw err;
       }
       if (oudBestand) { try { await unlink(join(dataDir, oudBestand)); } catch {} }
@@ -5673,17 +5760,18 @@ async function afhandelen(request, response) {
       nieuwPad = `uploads/videos/avatar-${id}-${randomBytes(8).toString("hex")}${ext}`;
       await writeFile(join(dataDir, nieuwPad), buf);
       videoOpslag.bytes += buf.length;
-      const vorige = videolinks[oefening.naam] || null;
+      const vk = sleutelVoor(videolinks, oefening);
+      const vorige = videolinks[vk] || null;
       const cur = { ...(vorige || {}), eigen: nieuwPad };
       if (conceptVideo) cur.eigenMeta = { aiGenerated: true, reviewStatus: "concept" };
       else delete cur.eigenMeta;
       const oudeStream = cur.stream && cur.stream.uid;
       delete cur.stream;
-      videolinks[oefening.naam] = cur;
+      videolinks[vk] = cur;
       try {
         await saveJson(videolinksPath, videolinks);
       } catch (err) {
-        if (vorige) videolinks[oefening.naam] = vorige; else delete videolinks[oefening.naam];
+        if (vorige) videolinks[vk] = vorige; else delete videolinks[vk];
         throw err;
       }
       if (vorige && vorige.eigen && vorige.eigen !== nieuwPad) {
@@ -5708,8 +5796,10 @@ async function afhandelen(request, response) {
       const b = JSON.parse(await readBody(request));
       const naam = String(b.naam || "").trim();
       const manifest = await buildManifest();
-      if (!manifest.some((e) => e.naam === naam)) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden: " + naam }); return; }
-      const cur = { ...(videolinks[naam] || {}) };
+      const oefening = oefeningOpNaam(manifest, naam);
+      if (!oefening) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden: " + naam }); return; }
+      const vk = sleutelVoor(videolinks, oefening);
+      const cur = { ...(videolinks[vk] || {}) };
       if ((b.eigenWissen || b.uploadWissen) && cur.eigen) {
         try { await unlink(join(dataDir, cur.eigen)); } catch {}
         delete cur.eigen;
@@ -5724,9 +5814,9 @@ async function afhandelen(request, response) {
         if (b.yt.trim() && !id) { await sendJson(response, 400, { ok: false, fout: "Dat is geen geldige YouTube-link." }); return; }
         if (id) cur.yt = id; else delete cur.yt;
       }
-      if (cur.yt || cur.eigen || cur.stream) videolinks[naam] = cur; else delete videolinks[naam];
+      if (cur.yt || cur.eigen || cur.stream) videolinks[vk] = cur; else delete videolinks[vk];
       await saveJson(videolinksPath, videolinks);
-      await sendJson(response, 200, { ok: true, video: videolinks[naam] || null });
+      await sendJson(response, 200, { ok: true, video: videolinks[vk] || null });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
     }
@@ -5748,10 +5838,10 @@ async function afhandelen(request, response) {
       const b = JSON.parse(await readBody(request));
       const doel = b.doel === "oefening" && isAdmin(request) ? "oefening" : "kaart";
       if (doel === "oefening") {
-        const naam = String(b.naam || "").trim();
         const manifest = await buildManifest();
-        if (!manifest.some((e) => e.naam === naam)) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }
-        b.naam = naam;
+        const oefening = oefeningOpNaam(manifest, String(b.naam || "").trim());
+        if (!oefening) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }
+        b.naam = oefening.naam;
       }
       opnameOpschonen();
       if (opnames.size >= 200) { await sendJson(response, 429, { ok: false, fout: "Te veel gelijktijdige opnames; probeer het zo weer." }); return; }
@@ -5863,13 +5953,17 @@ async function afhandelen(request, response) {
       await writeFile(join(dataDir, pad), buf);
       videoOpslag.bytes += buf.length;
       if (o.doel === "oefening" && o.naam) {
-        const cur = { ...(videolinks[o.naam] || {}) };
+        // de oefening kan sinds het starten van de opname anders heten, en haar video kan nog
+        // onder een eerdere naam staan
+        const doelOefening = oefeningOpNaam(await buildManifest(), o.naam);
+        const vk = doelOefening ? sleutelVoor(videolinks, doelOefening) : o.naam;
+        const cur = { ...(videolinks[vk] || {}) };
         const oudeStream = cur.stream && cur.stream.uid;
         if (cur.eigen) { try { await unlink(join(dataDir, cur.eigen)); } catch {} }
         cur.eigen = pad;
         delete cur.eigenMeta;
         delete cur.stream;
-        videolinks[o.naam] = cur;
+        videolinks[vk] = cur;
         await saveJson(videolinksPath, videolinks);
         if (oudeStream) verwijderStream(oudeStream);
       }
@@ -6166,6 +6260,11 @@ async function afhandelen(request, response) {
           return;
         }
       }
+      // Een oefening die sinds de vorige versie anders heet (zelfde vaste id): haar eigen video en
+      // de tellingen van de patiënt hangen aan de naam op de kaart en verhuizen mee naar de nieuwe
+      // naam. Zonder dit stond de video "niet meer op de kaart" en ruimde de regel hieronder de
+      // opname op zodra een therapeut de kaart alleen maar opende. Zie lib/oefennamen.js.
+      if (map[kk]) verhuisNaamgebonden(map[kk].chosen, chosen, map[kk].vids, vids, [map[kk].oefTrouw, map[kk].oefZwaar]);
       const oudeVids = map[kk] ? Object.values(map[kk].vids || {}) : [];
       // alleen een teller voor het aanmeldoverzicht (wie probeert het echt?), nooit de inhoud
       if (proef && !map[kk]) { proef.kaarten = (proef.kaarten || 0) + 1; bewaarProeven().catch(() => {}); }
@@ -6201,9 +6300,13 @@ async function afhandelen(request, response) {
       await ruimKaartVideosOp(oudeVids.filter((p) => !Object.values(vids).includes(p)));
       // gebruiksranglijst: alleen namen uit de echte bibliotheek tellen mee, anders
       // kan een script het statistiekbestand onbeperkt laten groeien met nepnamen
+      // Een eerdere naam (een editor die nog de oude lijst open heeft) telt bij de naam van nu.
       try {
-        const geldig = new Set((await buildManifest()).map((e) => e.naam));
-        chosen.forEach((x) => { if (geldig.has(x.n)) stats.oefeningGebruik[x.n] = (stats.oefeningGebruik[x.n] || 0) + 1; });
+        const zoeker = maakZoeker(await manifestV2Gecacht());
+        chosen.forEach((x) => {
+          const o = zoeker.isNaam(x.n) ? zoeker.vind({ n: x.n }) : null;
+          if (o) stats.oefeningGebruik[o.naam] = (stats.oefeningGebruik[o.naam] || 0) + 1;
+        });
       } catch {}
       bewaarStats();
       await sendJson(response, 200, { ok: true, id: map[kk].id, ts: map[kk].ts });
@@ -7147,10 +7250,11 @@ async function afhandelen(request, response) {
       const uit = await vraagClaude(AI_MODEL, 900, sys,
         "<lichaamsdeel>" + regio + "</lichaamsdeel>\n<trainingsdoel>" + doel + "</trainingsdoel>\n<zoekwoorden>" + zoek + "</zoekwoorden>",
         { schema: AI_ZOEK_SCHEMA, effort: "low", cacheSystem: true });
-      const byNorm = new Map(manifest.map((e) => [normEx(e.naam), e.naam]));
+      // op de naam van nu, anders op de naam die de oefening eerder had
+      const zoeker = maakZoeker(manifest);
       const gezien = new Set();
       const oefeningen = (Array.isArray(uit && uit.oefeningen) ? uit.oefeningen : [])
-        .map((o) => ({ naam: byNorm.get(normEx(o && o.naam)) || "", traint: String((o && o.traint) || "").trim().slice(0, 120) }))
+        .map((o) => ({ naam: (zoeker.vind({ n: o && o.naam }) || {}).naam || "", traint: String((o && o.traint) || "").trim().slice(0, 120) }))
         .filter((o) => o.naam && !gezien.has(o.naam) && gezien.add(o.naam))
         .slice(0, 8);
       if (!oefeningen.length) {
@@ -7187,7 +7291,7 @@ async function afhandelen(request, response) {
     // therapeut (doel, opmerking) blijft in het Nederlands op de kaart staan: die kan
     // gezondheidsinformatie bevatten en hoort niet bij een AI-dienst buiten de EU.
     let perNaam = new Map();
-    try { perNaam = new Map((await manifestV2Gecacht()).map((e) => [e.naam, e.uitleg])); } catch {}
+    try { perNaam = await uitlegPerNaam(); } catch {}
     const oefNamen = (found.chosen || [])
       .filter((x) => perNaam.has(x.n) || PRAKTIJK_OEF_ID.test(String(x.id || ""))).map((x) => x.n);
     const uitlegTeksten = (found.chosen || []).map((x) => perNaam.get(x.n)).filter(Boolean);
@@ -7267,7 +7371,7 @@ async function afhandelen(request, response) {
       if (aiLimiet(request, response)) return;
       // context voor het antwoord: uitsluitend wat er op déze kaart staat
       let perNaam = new Map();
-      try { perNaam = new Map((await manifestV2Gecacht()).map((e) => [e.naam, e.uitleg])); } catch {}
+      try { perNaam = await uitlegPerNaam(); } catch {}
       // alleen oefeningnamen en bibliotheekuitleg: geen doel, opmerking of Casus van de
       // therapeut (vrije tekst met mogelijk gezondheidsinformatie gaat niet naar de AI)
       const oefs = (found.chosen || [])

@@ -1001,7 +1001,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function mediaSource(o){return String(o&&(o.kaartImg||o.img)||'').replace(/^\/+/, '').replace(/^v2\//,'');}
   function mediaKey(o){return String(o&&o.exerciseId||'')+'|'+mediaSource(o);}
   function mediaWithheld(o){return !mediaReviewReady||!!blockedMedia[mediaKey(o)];}
-  function explanationWithheld(o){return !mediaReviewReady||!o||explanationHolds.some(function(h){return (h.exerciseId&&h.exerciseId===o.exerciseId)||h.name===o.naam;});}
+  // een houd geldt op vast id en op naam; ook op de naam die de oefening eerder had
+  function explanationWithheld(o){return !mediaReviewReady||!o||explanationHolds.some(function(h){return (h.exerciseId&&h.exerciseId===o.exerciseId)||h.name===o.naam||(o.eerder||[]).indexOf(h.name)>-1;});}
   // Uitsnede-eisen, woordelijk gelijk aan lib/pose-frames.js. scripts/test-mobile-pose-layout.mjs
   // draait beide implementaties op dezelfde invoer en vergelijkt de uitkomst.
   function geldigeUitsnede(c,w,h){
@@ -1557,9 +1558,13 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // achteraan), bij voorlezen de eerste (de bibliotheekoefening). Een eigen oefening met
   // dezelfde naam als een bibliotheekoefening toonde dan de ene en liet de opname van de
   // andere horen. Eerst het stabiele id, daarna de naam, en bij gelijke naam de laatste.
+  // Een oefening die anders is gaan heten, neemt de naam die ze eerder had mee (`eerder`): een
+  // kaart van voor die wijziging zonder vast id bij de oefening vindt haar zo terug. Een
+  // oefening die nu zo heet gaat voor.
   function oefeningIndex(lib,kaart){
-    var byNorm={},byStable={};
-    metEigen(lib,kaart).forEach(function(o){byNorm[normEx(o.naam)]=o;if(o.exerciseId)byStable[o.exerciseId]=o;});
+    var byNorm={},byStable={},alle=metEigen(lib,kaart);
+    alle.forEach(function(o){byNorm[normEx(o.naam)]=o;if(o.exerciseId)byStable[o.exerciseId]=o;});
+    alle.forEach(function(o){(o.eerder||[]).forEach(function(e){var k=normEx(e);if(k&&!byNorm[k])byNorm[k]=o;});});
     return {byNorm:byNorm,byStable:byStable};
   }
   function zoekOefening(index,x){
@@ -2378,12 +2383,29 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // tegengehouden (afgekeurd of tijdelijke hold), dan bieden we de uitleg erbij ook niet
   // aan, net als bij de knop per oefening. De tekst en de opname blijven gewoon bestaan.
   function noorItem(o,x){
-    return {name:o?o.naam:x.n,text:o?o.uitleg||'':'',id:(o&&o.exerciseId)||x.id||'',beeldGehouden:!!(o&&mediaWithheld(o))};
+    return {name:o?o.naam:x.n,text:o?o.uitleg||'':'',id:(o&&o.exerciseId)||x.id||'',eerder:(o&&o.eerder)||[],beeldGehouden:!!(o&&mediaWithheld(o))};
   }
-  // Zelfde regel als explanationWithheld: een houd geldt op stabiel id én op naam.
-  // Alleen op naam vergelijken laat een hernoemde oefening door de controle glippen.
+  // De Noor-opnames staan op de naam die de oefening had toen ze zijn gemaakt, en beginnen met
+  // die naam. Heet de oefening intussen anders, dan hoort de opname onder de eerdere naam er nog
+  // bij (de stem noemt dan die naam). Geeft de naam waaronder de opname staat, of '' als er
+  // geen is. Werkt pas als het stemmanifest geladen is.
+  function noorClipNaam(item){
+    if(!window.NoorAudio||!item)return '';
+    var tekst=item.text||'';
+    if(NoorAudio.match(item.name,tekst))return item.name;
+    var uit='';
+    (item.eerder||[]).forEach(function(e){if(!uit&&NoorAudio.match(e,tekst))uit=e;});
+    return uit;
+  }
+  function noorClip(item){return {name:noorClipNaam(item),text:item.text||''};}
+  function eerderVan(exerciseId){
+    var o=exerciseId&&K?oefeningIndex(K.lib,K.kaart).byStable[exerciseId]:null;
+    return (o&&o.eerder)||[];
+  }
+  // Zelfde regel als explanationWithheld: een houd geldt op stabiel id én op naam, ook de naam
+  // van eerder. Alleen op naam vergelijken laat een hernoemde oefening door de controle glippen.
   function uitlegGehouden(item){
-    return explanationHolds.some(function(h){return (h.exerciseId&&item.id&&h.exerciseId===item.id)||h.name===item.name;});
+    return explanationHolds.some(function(h){return (h.exerciseId&&item.id&&h.exerciseId===item.id)||h.name===item.name||(item.eerder||[]).indexOf(h.name)>-1;});
   }
   // De AI-zin bij de stem als de knop per oefening (met zijn eigen zin) niet in beeld is.
   function toonStemNoot(aan){
@@ -2412,6 +2434,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     // horen hóé de oefening gaat, niet alleen hoe hij heet
     var uitlegVan={},uitlegStabiel={};
     metEigen(K.lib,K.kaart).forEach(function(o){if(o&&o.uitleg){uitlegVan[normEx(o.naam)]=o.uitleg;if(o.exerciseId)uitlegStabiel[o.exerciseId]=o.uitleg;}});
+    metEigen(K.lib,K.kaart).forEach(function(o){if(o&&o.uitleg)(o.eerder||[]).forEach(function(e){var k=normEx(e);if(k&&!uitlegVan[k])uitlegVan[k]=o.uitleg;});});
     var uitlegWacht=[],beeldWacht=[],voorgelezen=0;
     (K.kaart.chosen||[]).forEach(function(x,idx){
       var bron=vindOefening(x),item=noorItem(bron,x);
@@ -2470,8 +2493,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // video openen roept stopLezen() aan en stopt daarmee ook deze stem.
   function speelNoorBijVideo(item){
     if(!window.NoorAudio||!mediaReviewReady||uitlegGehouden(item)||item.beeldGehouden)return;
-    if(!NoorAudio.match(item.name,item.text))return;
-    NoorAudio.play([item],null,function(){});
+    if(!noorClipNaam(item))return;
+    NoorAudio.play([noorClip(item)],null,function(){});
   }
   async function speelNoor(items,bron){
     bron=typeof bron==='number'?bron:-1;
@@ -2509,14 +2532,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         // Zelfde regel als de knop per oefening: getoond beeld tegengehouden, dan niet voorlezen.
         // Nooit een toestelstem als vervanging: die oefening wordt gewoon overgeslagen en genoemd.
         else if(x.beeldGehouden)beeldWacht.push(x.name);
-        else if(!NoorAudio.match(x.name,x.text))missing.push(x.name);
+        else if(!noorClipNaam(x))missing.push(x.name);
         else available.push(x);
       });
       if(!available.length){stopLezen();meldOntbrekend(held,missing,0,beeldWacht,bron);return;}
       if(request!==noorRequest)return;
       // Eerst afspelen, daarna pas melden: een alert() blokkeert de pagina zo lang dat de
       // toestemming die bij de tik hoort verloopt, en dan start het geluid helemaal niet.
-      NoorAudio.play(available,stopLezen,function(message){stopLezen();noorMeld(message,bron);});
+      NoorAudio.play(available.map(noorClip),stopLezen,function(message){stopLezen();noorMeld(message,bron);});
       meldOntbrekend(held,missing,available.length,beeldWacht,bron);
     }catch(error){if(request!==noorRequest)return;stopLezen();noorMeld('De natuurlijke stem kon niet laden. Probeer opnieuw of lees de beschikbare uitleg.',bron);}
   }
@@ -2569,7 +2592,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function noorRegel(o,idx,metAiVideo){
     // tekent de kaart opnieuw terwijl Noor bij deze oefening praat, dan blijft het een stopknop
     var aan=bezigLezen&&noorBron===idx;
-    if(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg))return '<button type="button" class="vbtn" data-noor="'+idx+'"'+(aan?' aria-pressed="true"':'')+'>'+(aan?tr('stop'):NOOR_LABEL)+'</button>'+
+    if(noorClipNaam({name:o.naam,text:o.uitleg,eerder:o.eerder}))return '<button type="button" class="vbtn" data-noor="'+idx+'"'+(aan?' aria-pressed="true"':'')+'>'+(aan?tr('stop'):NOOR_LABEL)+'</button>'+
       // De opname bevat de algemene uitvoering, niet de dosering of de opmerkingen
       // van de behandelaar. Dat hoort de patiënt te weten voordat hij luistert.
       '<div class="vmeta">'+(metAiVideo?STEM_VIDEO_NOOT:STEM_NOOT)+'</div>';
@@ -2590,7 +2613,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       var idx=Number(regel.dataset.noorWacht),x=chosen[idx],o=x?zoekOefening(index,x):null;
       // zelfde voorwaarden als bij het tekenen: een tegengehouden beeld of tegengehouden
       // uitleg krijgt nooit een knop, en zonder actuele opname blijft de regel staan
-      if(!o||!o.uitleg||mediaWithheld(o)||explanationWithheld(o)||!NoorAudio.match(o.naam,o.uitleg))return;
+      if(!o||!o.uitleg||mediaWithheld(o)||explanationWithheld(o)||!noorClipNaam({name:o.naam,text:o.uitleg,eerder:o.eerder}))return;
       // stond de losse videozin er nog (de opname was er bij het tekenen nog niet), dan neemt de stemzin hem over
       var oefEl=regel.closest?regel.closest('.oef'):null,ai=oefEl?oefEl.querySelector('.vmeta[data-ai]'):null;
       regel.outerHTML=noorRegel(o,idx,!!ai);
@@ -2916,7 +2939,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     knop.textContent=tr('demoUit');knop.setAttribute('aria-pressed','true');
     // de geluidknop alleen tonen als er voor déze oefening ook echt iets te horen is
     var geluidKnop=document.getElementById('lbgeluid');
-    if(TAAL==='nl')geluidKnop.hidden=!window.NoorAudio||!NoorAudio.match(d.name||'',d.uitleg||'');
+    if(TAAL==='nl')geluidKnop.hidden=!noorClipNaam({name:d.name||'',text:d.uitleg||'',eerder:d.eerder});
     else if(window.speechSynthesis){geluidKnop.hidden=false;demoGeluidKnop();}
     else geluidKnop.hidden=true;
     // In het Nederlands begint een opname alleen na een tik: automatisch starten wordt
@@ -3223,7 +3246,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         demoStop();
         stopVideos();
         demo.info={name:foto.dataset.audioNaam||'',id:foto.dataset.oefId||'',s:foto.dataset.s||'',h:foto.dataset.h||'',
-          uitleg:foto.dataset.uitleg||'',poseMetadata:poseKeuring[foto.dataset.pose||'']||null};
+          uitleg:foto.dataset.uitleg||'',eerder:eerderVan(foto.dataset.oefId||''),poseMetadata:poseKeuring[foto.dataset.pose||'']||null};
         document.getElementById('lbimg').src=foto.src;
         merkLightbox(foto.dataset.pose);
         var oefEl=foto.closest('.oef').querySelector('.naam');
@@ -3249,7 +3272,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         // terugknop van de telefoon sluit de foto in plaats van de kaart te verlaten
         try{if(!(history.state&&history.state.fplb))history.pushState({fplb:1},'');}catch(e){}
         var geluid=document.getElementById('lbgeluid');
-        geluid.hidden=TAAL!=='nl'||!window.NoorAudio||!NoorAudio.match(demo.info.name,demo.info.uitleg);
+        geluid.hidden=TAAL!=='nl'||!noorClipNaam({name:demo.info.name,text:demo.info.uitleg,eerder:demo.info.eerder});
         geluid.textContent='Luister naar uitleg';geluid.setAttribute('aria-pressed','false');
         if(TAAL==='nl'){
           lu.innerHTML+='<p class="vmeta">Volledige oefenafbeelding. De houdingen worden niet automatisch uitgesneden of afgespeeld.</p>';
@@ -3482,7 +3505,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       if(e.target.closest('#lbgeluid')){
         if(TAAL==='nl'){
           if(bezigLezen)stopLezen();
-          else speelNoor([{name:(demo.info||{}).name||'',text:(demo.info||{}).uitleg||'',id:(demo.info||{}).id||''}]);
+          else speelNoor([{name:(demo.info||{}).name||'',text:(demo.info||{}).uitleg||'',id:(demo.info||{}).id||'',eerder:(demo.info||{}).eerder||[]}]);
           return;
         }
         demo.spraak=!demo.spraak;
