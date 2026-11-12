@@ -10,6 +10,7 @@ import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver } from "./lib/proef.js";
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
 import { prijsRegels, prijsZin, metBtwBijschrift, bedragVoor, euro as euroTekst } from "./lib/prijs.js";
+import * as leeslogRegels from "./lib/leeslog.js";
 import { plaatsenVan, merkPiek, volgendAantal, nieuwePeriode, kaartVol } from "./lib/plaatsen.js";
 import { maandBedrag, betaalBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
@@ -246,6 +247,25 @@ let praktijkAudit = []; // laatste gebeurtenissen: { t, praktijk, actie, ip }
 const AUDIT_RUIS = new Set(["toegang-geweigerd", "login-mislukt", "herstel-mislukt", "opzeggen-mislukt", "tweede-stap-mislukt", "wachtwoord-vergeten-mail"]);
 const AUDIT_PER_PRAKTIJK = 300, AUDIT_RUIS_PER_PRAKTIJK = 50, AUDIT_TOTAAL = 5000;
 try { praktijkAudit = JSON.parse(await readFile(auditPath, "utf8")); } catch {}
+// Het leeslog (lib/leeslog.js): wie welke kaart zag of wijzigde. Een eigen bestand, zodat een
+// kaart lezen niet het hele kaartenbestand opnieuw wegschrijft. Wegschrijven gebeurt kort na de
+// laatste regel, in één keer, en bij het afsluiten.
+const leeslogPath = join(dataDir, "leeslog.json");
+let leeslog = {};
+try { const l = JSON.parse(await readFile(leeslogPath, "utf8")); if (l && typeof l === "object" && !Array.isArray(l)) leeslog = l; } catch {}
+let leeslogWacht = null;
+const leeslogOpSchijf = () => { if (leeslogWacht) { clearTimeout(leeslogWacht); leeslogWacht = null; } return saveJson(leeslogPath, leeslog); };
+// Een nieuwe regel staat binnen een halve seconde op schijf. Een regel die alleen opschuift (iemand
+// heeft het overzicht open staan en de app vraagt het telkens opnieuw op) binnen een minuut.
+let leeslogWachtTot = 0;
+const leeslogBewaar = (ms = 400) => {
+  const tot = Date.now() + ms;
+  if (leeslogWacht && leeslogWachtTot <= tot) return;
+  if (leeslogWacht) clearTimeout(leeslogWacht);
+  leeslogWachtTot = tot;
+  leeslogWacht = setTimeout(() => { leeslogWacht = null; saveJson(leeslogPath, leeslog).catch(() => {}); }, ms);
+  leeslogWacht.unref();
+};
 // Sessies overleven een herstart: elke uitrol logde anders alle therapeuten uit. Ze staan
 // in het geheugen én in praktijk-sessies.json, met alleen de SHA-256 van het token als
 // sleutel (lib/sessie-opslag.js). Elke set of delete zet het bestand opnieuw op schijf.
@@ -500,6 +520,20 @@ const behandelaarVanSessie = (req, pk) => {
   return naam || null;
 };
 const isBeheer = (s) => !!s && (!s.lid || (sessieLid(s) || {}).rol === "beheerder");
+// Eén regel in het leeslog. Wie: de login van de sessie, het gedeelde wachtwoord, of beheer van
+// Fysiplan (dat alleen bij een praktijk zonder account kan lezen, en daar zijn eigen logboek van
+// houdt). De v1-app (eigen accountlaag) blijft erbuiten.
+function leesMerk(req, pk, soort, kaart, wieExpliciet) {
+  let wie = wieExpliciet || null;
+  if (!wie) {
+    const s = sessieVan(req);
+    if (s && s.pk === pk) { const l = sessieLid(s); wie = l ? { wie: l.naam || l.email, lid: l.id } : { wie: "gedeeld wachtwoord" }; }
+    else if (req.beheerWie) wie = { wie: "Fysiplan-beheer" };
+    else return;
+  }
+  const uitkomst = leeslogRegels.merk(leeslog, pk, { kaart: kaart || "", soort, ...wie });
+  if (uitkomst) leeslogBewaar(uitkomst === "nieuw" ? 400 : 60000);
+}
 // gedeeld praktijkwerk (teamsjabloon, eigen oefening) weghalen of overschrijven: alleen wie
 // het maakte (lid-id in `door`) of een beheerder. Zonder sessie kwam de aanvraag langs het
 // beheer of v1 (eisBeveiligdePraktijk) en mag het. Oud werk zonder maker: alleen beheerder.
@@ -1348,6 +1382,7 @@ async function praktijkAllesWissen(pk) {
   for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
   // het logboek noemde de praktijknaam; alleen het feit dat er gewist is blijft, zonder naam
   praktijkAudit = praktijkAudit.filter((a) => a.praktijk !== pk);
+  if (leeslogRegels.wisPraktijk(leeslog, pk)) await leeslogOpSchijf().catch(() => {});
   // ideeënbox: open ideeën van de praktijk weg, besloten ideeën en stemmen zonder herkomst
   try { await ideeenbox.wisPraktijk(pk); } catch {}
   // vertaalde namen van de eigen oefeningen staan los in de vertaalcache; die gaan nu
@@ -2063,6 +2098,8 @@ async function bewaartermijnOpruimen() {
     }
     if (!Object.keys(kaarten[pk]).length) delete kaarten[pk];
   }
+  // het leeslog: regels van kaarten die er niet meer zijn, van praktijken die weg zijn, en regels ouder dan de bewaartijd
+  if (leeslogRegels.snoei(leeslog, (pk) => (praktijkGeclaimd(pk) || kaarten[pk] ? new Set(Object.values(kaarten[pk] || {}).map((k) => k && k.id)) : null), nu)) leeslogBewaar();
   if (!gewist) return 0;
   await saveJson(kaartenPath, kaarten);
   await ruimKaartVideosOp(wegVideos);
@@ -2682,6 +2719,8 @@ const backupBestanden = [renamesPath, praktijkenPath, kaartenPath, videolinksPat
 backupBestanden.push(join(dataDir, "finance-instellingen.json"), join(dataDir, "finance-kosten.json"), join(dataDir, "beheer-agent.json"), join(dataDir, "beheer-gebruik.json"), join(dataDir, "beheer-loket.json"));
 // de ideeënbox (lib/ideeen-routes.js): ideeën, stemmen en de besluiten van Fysiplan
 backupBestanden.push(join(dataDir, "ideeen.json"));
+// het leeslog (lib/leeslog.js): zonder kwam een praktijk na een restore terug zonder antwoord op "wie keek er in deze kaart"
+backupBestanden.push(leeslogPath);
 // reservekopie buiten Railway (lib/backup-elders.js): dezelfde bestanden, versleuteld, naar een
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
@@ -6182,6 +6221,7 @@ async function afhandelen(request, response) {
     const pk = praktijkVan(request, q.get("praktijk"));
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
     const nu = Date.now();
+    leesMerk(request, pk, "berichten");
     const kaartenMetNieuws = Object.values(kaarten[pk] || {})
       .filter((k) => !k.verwijderdOp && !k.demo && !k.gearchiveerd && verlooptOp(k) > nu)
       .map((k) => ({ k, items: inboxItems(k) }))
@@ -6245,9 +6285,11 @@ async function afhandelen(request, response) {
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
     const map = kaarten[pk] || {};
     const nuLijst = Date.now();
+    leesMerk(request, pk, "overzicht");
+    const magLog = (() => { const s = sessieVan(request); return !!(s && s.pk === pk && isBeheer(s)); })();
     const list = Object.values(map)
       .filter((k) => !k.verwijderdOp && (k.demo || verlooptOp(k) > nuLijst))
-      .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, magWeg: magKaartVerwijderen(request, pk, k), aantal: (k.chosen || []).length,
+      .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, magWeg: magKaartVerwijderen(request, pk, k), ...(magLog && !k.demo ? { magLog: true } : {}), aantal: (k.chosen || []).length,
         // wanneer de kaart door de bewaartermijn verdwijnt: het overzicht waarschuwt
         // ruim van tevoren, zodat de praktijk eerst naar het dossier kan kopiëren
         verloopt: verdwijntOp(pk, k),
@@ -6494,6 +6536,7 @@ async function afhandelen(request, response) {
         });
       } catch {}
       bewaarStats();
+      leesMerk(request, pk, "bewaard", map[kk].id);
       await sendJson(response, 200, { ok: true, id: map[kk].id, ts: map[kk].ts });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of kaart te groot)." });
@@ -6590,6 +6633,7 @@ async function afhandelen(request, response) {
         await sendJson(response, 403, { ok: false, fout: "Alleen de maker of een beheerder kan deze kaart definitief verwijderen." }); return;
       }
       const wegVids = Object.values(map[kk].vids || {});
+      if (leeslogRegels.wisKaart(leeslog, pk, map[kk].id)) leeslogBewaar(); // de kaart is voorgoed weg: haar regels ook
       delete map[kk];
       if (!Object.keys(map).length) delete kaarten[pk];
       await saveJson(kaartenPath, kaarten);
@@ -6676,12 +6720,33 @@ async function afhandelen(request, response) {
       const pkaart = Object.values(kaarten[pk] || {}).find((k) => k.verwijderdOp && k.id === id &&
         Math.min(Number(k.herstelTot) || 0, praktijkWisOp(pk)) > nu && magKaartVerwijderen(request, pk, k)) || null;
       if (!pkaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Geen kaart in de prullenbak gevonden." }); return; }
+      leesMerk(request, pk, "geopend", pkaart.id);
       await sendJson(response, 200, { ok: true, kaart: { ...pkaart, inPrullenbak: true, verloopt: Math.min(Number(pkaart.herstelTot) || 0, praktijkWisOp(pk)) } });
       return;
     }
     const kaart = Object.values(kaarten[pk] || {}).find((k) => !k.verwijderdOp && k.id === id && (k.demo || verlooptOp(k) > nu)) || null;
     if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+    if (!kaart.demo) leesMerk(request, pk, "geopend", kaart.id);
     await sendJson(response, 200, { ok: true, kaart: { ...kaart, verloopt: verdwijntOp(pk, kaart) } });
+    return;
+  }
+
+  // Het leeslog van één kaart (lib/leeslog.js): wie haar opende of bewaarde, en wie het overzicht,
+  // de berichten of de download van alle kaarten opvroeg. Alleen voor een beheerder van de praktijk:
+  // het is ook een logboek over collega's.
+  if (urlPath === "/api/kaart/leeslog" && request.method === "GET") {
+    if (leesLimiet(request, response)) return;
+    const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    const pk = praktijkVan(request, q.get("praktijk"));
+    if (!pk || verbodenSleutel.test(pk)) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam op." }); return; }
+    if (await eisBeveiligdePraktijk(request, response, pk)) return;
+    const s = sessieVan(request);
+    if (!s || s.pk !== pk || !isBeheer(s)) { await sendJson(response, 403, { ok: false, fout: "Alleen een beheerder van de praktijk kan zien wie een kaart heeft bekeken." }); return; }
+    const id = String(q.get("id") || "");
+    const kaart = Object.values(kaarten[pk] || {}).find((k) => k && !k.demo && k.id === id) || null;
+    if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
+    const regels = leeslogRegels.vanKaart(leeslog, pk, id).map((r) => ({ t: r.t, tot: r.tot, n: r.n, wat: r.wat, wie: r.wie, kaart: r.kaart }));
+    await sendJson(response, 200, { ok: true, regels, bewaarDagen: leeslogRegels.BEWAAR_DAGEN });
     return;
   }
 
@@ -8422,6 +8487,7 @@ async function afhandelen(request, response) {
     const eigenProfiel = ([k, p]) => k === pk || (!isPraktijkCode(pk) && !praktijkGeclaimd(k) && String(p && p.praktijk || "").toLowerCase() === pk);
     if (!wissen) {
       auditLog(pk, "alles-gedownload", request);
+      leesMerk(request, pk, "download", "", lid ? { wie: lid.naam || lid.email, lid: lid.id } : { wie: "gedeeld wachtwoord" });
       const pakket = {
         uitleg: "Alle gegevens die Fysiplan voor deze praktijk bewaart, op het moment van downloaden. " +
           "Video's, foto's en het logo staan als pad; de bestanden zelf zitten er niet in.",
@@ -8442,7 +8508,9 @@ async function afhandelen(request, response) {
         sjablonen: praktijkSjablonen[pk] || [],
         logboek: praktijkAudit.filter((a) => a.praktijk === pk),
         // ideeënbox: wat de praktijk plaatste en waarop haar logins stemden (legal 2026-11-12 17u)
-        ideeenbox: ideeenbox.vanPraktijk(pk, (lidId) => (ledenVan(pk).find((l) => l.id === lidId) || {}).email || "")
+        ideeenbox: ideeenbox.vanPraktijk(pk, (lidId) => (ledenVan(pk).find((l) => l.id === lidId) || {}).email || ""),
+        // wie welke kaart zag of wijzigde (lib/leeslog.js); `k` is het id van de kaart, leeg = alle kaarten
+        leeslog: leeslogRegels.vanPraktijk(leeslog, pk).map((r) => ({ ...r, t: new Date(r.t).toISOString(), tot: new Date(r.tot).toISOString() }))
       };
       const bestand = "fysiplan-" + (slug(pk) || "praktijk") + "-" + new Date().toISOString().slice(0, 10) + ".json";
       response.writeHead(200, { "content-type": "application/json; charset=utf-8",
@@ -8836,6 +8904,7 @@ async function netjesStoppen(signaal) {
   clearInterval(veeg);
   try { await praktijkSessies.opSchijf(); } catch {}
   try { await beheerSessieTabel.opSchijf(); } catch {}
+  try { if (leeslogWacht) await leeslogOpSchijf(); } catch {}
   process.exit(0);
 }
 process.on("SIGTERM", () => { netjesStoppen("SIGTERM"); });
