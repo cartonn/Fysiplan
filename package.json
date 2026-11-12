@@ -92,6 +92,7 @@
     "test:daguitvraag": "node scripts/test-kaart-dag-uit-vraag.mjs",
     "test:profielcollega": "node scripts/test-profiel-collega.mjs",
     "test:profieltherapeut": "node scripts/test-profiel-therapeut.mjs",
+    "test:oefdagen": "node scripts/test-oefdagen.mjs",
     "test:wachtrijdagen": "node scripts/test-wachtrij-dagen.mjs",
     "test:agendamelding": "node scripts/test-agenda-melding.mjs",
     "test:oefvinkje": "node scripts/test-sweep-oefvinkje-wachtrij.mjs",

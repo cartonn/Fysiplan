@@ -89,7 +89,10 @@ try {
   const fn = html.match(/  function dossierTekst\(kaart\)\{[\s\S]*?\n  \}\n/);
   assert.ok(fn, "dossierTekst gevonden");
   const ctx = { location: { origin: "https://fysiplan.nl" }, normEx: (s) => String(s || "").toLowerCase().replace(/[^a-z0-9]/g, "") };
-  vm.runInNewContext(fn[0] + ";this.dossierTekst=dossierTekst;", ctx);
+  // dossierTekst telt oefendagen via oefDagen (dagvink plus afgevinkte oefeningen, 2026-11-12)
+  const od = html.match(/  function oefDagen\(c\)\{[\s\S]*?\n  \}\n/);
+  assert.ok(od, "oefDagen gevonden");
+  vm.runInNewContext(od[0] + fn[0] + ";this.dossierTekst=dossierTekst;", ctx);
   const tekst = ctx.dossierTekst(pr.kaart);
   assert.match(tekst, /Contact via de digitale kaart:/);
   assert.match(tekst, /patiënt: seintje: meldt te veel pijn/);

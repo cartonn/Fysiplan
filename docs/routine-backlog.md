@@ -87,7 +87,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   Kaarten leeg, en het QR-vak zegt "Heet een andere praktijk toevallig hetzelfde? Kies 'Andere praktijk met deze naam'" (index.html r. ~2344
   en r. ~3013), wat een nieuwe gebruiker naar een tweede praktijk stuurt. Voorstel: `/api/praktijk/status` meldt "stap nog niet ingesteld" plus
   het e-mailadres (gemaskeerd), en de app toont "Log in met <e-mail> om de tweede stap af te maken". Opnieuw inloggen werkt wel.
-- **MIDDEL (nieuw, Truus, iPhone SE + desktop) — "0 deze week actief" terwijl de patiënt vandaag 2 oefeningen afvinkte, pijn en herstel gaf.**
+- **OPGELOST 2026-11-12 15u (test:oefdagen; keuze Ahmed: een afgevinkte oefening telt als oefendag) — MIDDEL (Truus, iPhone SE + desktop) — "0 deze week actief" terwijl de patiënt vandaag 2 oefeningen afvinkte, pijn en herstel gaf.**
   `actiefDezeWeek` (index.html r. ~5373) telt alleen de dagvink `gedaan`, niet `oefTrouw`/metingen; "Download mijn gegevens" zegt idem
   "Dagen waarop ik heb geoefend: niets". Productvraag: telt een afgevinkte oefening als oefendag? (geen MDR-grens; alleen tellen).
 - **MIDDEL (nieuw, Mark, desktop) — na verloop van de proef wordt /v2/app op het apparaat met de proefcookie de verlopen-pagina** (server.js
