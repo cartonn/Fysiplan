@@ -169,6 +169,7 @@ jobs:
       - run: npm run test:bewaker
       - run: npm run test:omgeving
       - run: npm run test:prijs
+      - run: npm run test:landingscherm
       - run: npm run test:plaatsen
       - run: npm run test:leeslog
       # tegen een echte PostgreSQL: de test start er zelf een met initdb (staat op de runner)

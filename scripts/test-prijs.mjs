@@ -312,7 +312,7 @@ try {
   assert.ok(genoemd.length >= 5, "de landing noemt de prijs");
   assert.deepEqual([...new Set(genoemd)].sort(), [prijsTekst, (8 * PRIJS_CENT / 100).toFixed(2).replace(".", ",")].sort(), "alleen de prijs, en het voorbeeld voor acht therapeuten");
   assert.ok(landing.includes('data-prijs-cent="' + PRIJS_CENT + '"'));
-  assert.equal(landing.split("exclusief btw").length - 1 + (landing.split("excl. btw").length - 1), 7, "komt er een zin over de btw bij op de landing, kijk dan of metBtwBijschrift hem meeneemt");
+  assert.equal(landing.split("exclusief btw").length - 1 + (landing.split("excl. btw").length - 1), 6, "komt er een zin over de btw bij op de landing, kijk dan of metBtwBijschrift hem meeneemt");
   assert.doesNotMatch(rekenhulp.replace(/\|\| 999;/, ""), /999|excl\. btw.*\+|9[,.]99/, "de rekenhulp rekent met de prijs van de pagina");
   assert.match(rekenhulp, /getAttribute\('data-prijs-cent'\)/);
   assert.match(rekenhulp, /getAttribute\('data-btw'\)/);
