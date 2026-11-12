@@ -301,42 +301,54 @@
     html.safari-print #a4{position:absolute;top:0;left:197mm;width:276mm;height:197mm;min-height:197mm;max-height:197mm;transform:rotate(90deg);transform-origin:top left}
   }
   /* ---- thuiskaart (reviewlijst punt 12): zes grote plaatjes per vel, liggend zoals de trainingslog ---- */
+  /* De opmaak van de vellen geldt ook op het scherm, zodat de app vóór het printen kan meten
+     of elke uitleg helemaal past (#thuiskaart.tk-meet, buiten beeld); te zien is hij alleen op papier. */
   #thuiskaart{display:none}
+  @media screen{#thuiskaart.tk-meet{display:block;position:absolute;left:-10000px;top:0;visibility:hidden;color:#111;font-family:Inter,system-ui,sans-serif}}
   @media print{
     html.print-thuis,html.print-thuis body,html.print-thuis .wrap{height:auto !important;overflow:visible !important}
     html.print-thuis .wrap,html.print-thuis #a4wrap{display:none !important}
     html.print-thuis #thuiskaart{display:block;color:#111;font-family:Inter,system-ui,sans-serif}
-    .tk-vel{width:287mm;height:200mm;box-sizing:border-box;padding:4mm 5mm;display:flex;flex-direction:column;gap:3mm;break-after:page;page-break-after:always;overflow:hidden}
-    .tk-vel:last-child{break-after:auto;page-break-after:auto}
-    .tk-kop{display:flex;align-items:center;gap:6mm;border-bottom:.4mm solid #18343B;padding-bottom:2mm;flex:0 0 auto}
-    .tk-kop .tk-prak{font-weight:800;font-size:15pt;color:#18343B;letter-spacing:-.01em}
-    .tk-kop .tk-wie{font-size:11pt;color:#333}
-    .tk-kop .tk-rechts{margin-left:auto;display:flex;align-items:center;gap:3mm;font-size:9pt;color:#333;text-align:right}
-    .tk-kop .tk-qr svg{width:22mm;height:22mm;display:block}
-    .tk-raster{flex:1 1 0;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:4mm}
-    .tk-oef{border:.3mm solid #c9d3d0;border-radius:3mm;padding:3mm;display:flex;flex-direction:column;gap:1.5mm;min-height:0;overflow:hidden;break-inside:avoid}
-    .tk-beeld{flex:0 0 33mm;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .tk-beeld img,.tk-beeld svg{width:auto !important;height:auto !important;max-width:100%;max-height:33mm;object-fit:contain;border:0 !important;box-shadow:none !important;background:none !important}
-    .tk-naam{font-weight:800;font-size:12.5pt;line-height:1.2;color:#18343B}
-    .tk-naam .tk-nr{display:inline-block;min-width:6mm;color:#5a6b70}
-    .tk-dos{font-weight:700;font-size:11pt}
-    .tk-uitleg{font-size:9.5pt;line-height:1.32;color:#222;flex:1 1 0;min-height:0;overflow:hidden}
-    .tk-uitleg.tk-lang{font-size:8.3pt;line-height:1.28}
-    /* veel tekst: het beeld wat kleiner, zodat de hele uitleg op papier staat */
-    .tk-oef.tk-veel .tk-beeld{flex-basis:24mm}
-    .tk-oef.tk-veel .tk-beeld img,.tk-oef.tk-veel .tk-beeld svg{max-height:24mm}
-    .tk-vink{display:grid;grid-template-columns:repeat(7,1fr);gap:1.2mm;flex:0 0 auto}
-    .tk-vink i{display:flex;align-items:center;justify-content:center;height:6.5mm;border:.3mm solid #444;border-radius:1mm;font-style:normal;font-size:7pt;color:#9aa5a8}
-    .tk-voet{flex:0 0 auto;font-size:9pt;color:#333;display:flex;justify-content:space-between;gap:6mm}
-    html.print-groot .tk-naam{font-size:15pt}
-    html.print-groot .tk-dos{font-size:13pt}
-    html.print-groot .tk-uitleg{font-size:11.5pt}
-    /* Safari print staand: hetzelfde vel staand, twee plaatjes naast elkaar, drie onder elkaar */
-    html.safari-print .tk-vel{width:197mm;height:276mm}
-    html.safari-print .tk-raster{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,1fr)}
-    html.safari-print .tk-beeld{flex-basis:34mm}
-    html.safari-print .tk-beeld img,html.safari-print .tk-beeld svg{max-height:34mm}
   }
+  .tk-vel{width:287mm;height:200mm;box-sizing:border-box;padding:4mm 5mm;display:flex;flex-direction:column;gap:3mm;break-after:page;page-break-after:always;overflow:hidden}
+  .tk-vel:last-child{break-after:auto;page-break-after:auto}
+  .tk-kop{display:flex;align-items:center;gap:6mm;border-bottom:.4mm solid #18343B;padding-bottom:2mm;flex:0 0 auto}
+  .tk-kop .tk-prak{font-weight:800;font-size:15pt;color:#18343B;letter-spacing:-.01em}
+  .tk-kop .tk-wie{font-size:11pt;color:#333}
+  .tk-kop .tk-rechts{margin-left:auto;display:flex;align-items:center;gap:3mm;font-size:9pt;color:#333;text-align:right}
+  .tk-kop .tk-qr svg{width:22mm;height:22mm;display:block}
+  .tk-raster{flex:1 1 0;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:4mm}
+  .tk-oef{border:.3mm solid #c9d3d0;border-radius:3mm;padding:3mm;display:flex;flex-direction:column;gap:1.5mm;min-height:0;overflow:hidden;break-inside:avoid}
+  .tk-beeld{flex:0 0 33mm;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .tk-beeld img,.tk-beeld svg{width:auto !important;height:auto !important;max-width:100%;max-height:33mm;object-fit:contain;border:0 !important;box-shadow:none !important;background:none !important}
+  .tk-naam{font-weight:800;font-size:12.5pt;line-height:1.2;color:#18343B}
+  .tk-naam .tk-nr{display:inline-block;min-width:6mm;color:#5a6b70}
+  .tk-dos{font-weight:700;font-size:11pt}
+  .tk-uitleg{font-size:9.5pt;line-height:1.32;color:#222;flex:1 1 0;min-height:0;overflow:hidden}
+  .tk-uitleg.tk-lang{font-size:8.3pt;line-height:1.28}
+  /* veel tekst: het beeld wat kleiner, zodat de hele uitleg op papier staat */
+  .tk-oef.tk-veel .tk-beeld{flex-basis:24mm}
+  .tk-oef.tk-veel .tk-beeld img,.tk-oef.tk-veel .tk-beeld svg{max-height:24mm}
+  .tk-vink{display:grid;grid-template-columns:repeat(7,1fr);gap:1.2mm;flex:0 0 auto}
+  .tk-vink i{display:flex;align-items:center;justify-content:center;height:6.5mm;border:.3mm solid #444;border-radius:1mm;font-style:normal;font-size:7pt;color:#9aa5a8}
+  .tk-voet{flex:0 0 auto;font-size:9pt;color:#333;display:flex;justify-content:space-between;gap:6mm}
+  html.print-groot .tk-naam{font-size:15pt}
+  html.print-groot .tk-dos{font-size:13pt}
+  html.print-groot .tk-uitleg{font-size:11.5pt}
+  /* Safari print staand: hetzelfde vel staand, twee plaatjes naast elkaar, drie onder elkaar */
+  html.safari-print .tk-vel{width:197mm;height:276mm}
+  html.safari-print .tk-raster{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,1fr)}
+  html.safari-print .tk-beeld{flex-basis:34mm}
+  html.safari-print .tk-beeld img,html.safari-print .tk-beeld svg{max-height:34mm}
+  /* minder oefeningen per vel als de uitleg anders niet past (vooral bij Groot lettertype) */
+  .tk-raster.tk-per4{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr)}
+  .tk-raster.tk-per3{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr}
+  .tk-raster.tk-per2{grid-template-columns:repeat(2,1fr);grid-template-rows:1fr}
+  .tk-raster.tk-per1{grid-template-columns:1fr;grid-template-rows:1fr}
+  html.safari-print .tk-raster.tk-per4{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr)}
+  html.safari-print .tk-raster.tk-per3{grid-template-columns:1fr;grid-template-rows:repeat(3,1fr)}
+  html.safari-print .tk-raster.tk-per2{grid-template-columns:1fr;grid-template-rows:repeat(2,1fr)}
+
   /* × in het Kaarten-venster: tikdoel van 44 px (sweep 2026-11-09) */
   #k_srv_lijst [data-sdel]{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
 </style>
@@ -1590,12 +1602,22 @@ bridge2.jpg</div>
     SCHERM=naam;
     document.documentElement.setAttribute('data-scherm',naam);
     [].forEach.call(document.querySelectorAll('#fpSchermen [data-scherm]'),function(b){b.setAttribute('aria-pressed',b.getAttribute('data-scherm')===naam?'true':'false');});
-    if(naam==='maken'){if(ov.classList.contains('on'))ov.classList.remove('on');window.scrollTo(0,0);return;}
+    if(naam==='maken'){if(ov.classList.contains('on'))ov.classList.remove('on');paneelRol();window.scrollTo(0,0);return;}
     var kop=ov.querySelector('.modal>h3');if(kop)kop.textContent=naam==='vandaag'?'Vandaag':naam==='patienten'?'Pati\u00ebnten':'Praktijk';
+    paneelRol();
     if(naam==='praktijk')bouwPraktijkTegels();
     // het paneel vult zich zoals bij de knop Kaarten (lijst, inbox, login)
     if(!ov.classList.contains('on'))document.getElementById('kaartenBtn').click();
     window.scrollTo(0,0);
+  }
+  // Vandaag, Patiënten en Praktijk zijn een scherm, geen venster: geen dialoog voor een
+  // schermlezer en geen Tab-val, zodat de kopbalk en de schermknoppen bereikbaar blijven
+  // (gebruikers-sweep 2026-11-12, Sanne). Vanuit Kaart maken (knop Kaarten) blijft het een venster.
+  function paneelAlsScherm(){return IS_V2&&SCHERM!=='maken';}
+  function paneelRol(){
+    var m=document.querySelector('#ovKaarten .modal');if(!m||!IS_V2)return;
+    if(paneelAlsScherm()){m.setAttribute('role','region');m.removeAttribute('aria-modal');}
+    else{m.setAttribute('role','dialog');m.setAttribute('aria-modal','true');}
   }
   // Praktijk: wat over de praktijk gaat in plaats van over één patiënt
   function bouwPraktijkTegels(){
@@ -2527,11 +2549,45 @@ bridge2.jpg</div>
         "<div class='tk-uitleg"+(uitleg.length>260?" tk-lang":"")+"'>"+esc(uitleg)+"</div>"+vakken+"</div>";
     }).filter(Boolean);
     var vellen=[];
-    for(var i=0;i<tegels.length;i+=6)vellen.push("<section class='tk-vel'>"+kop(i===0)+"<div class='tk-raster'>"+tegels.slice(i,i+6).join('')+"</div>"+voet+"</section>");
-    el.innerHTML=vellen.join('');
+    var maak=function(per){
+      vellen=[];
+      for(var i=0;i<tegels.length;i+=per)vellen.push("<section class='tk-vel'>"+kop(i===0)+"<div class='tk-raster"+(per<6?' tk-per'+per:'')+"'>"+tegels.slice(i,i+per).join('')+"</div>"+voet+"</section>");
+      el.innerHTML=vellen.join('');
+    };
+    // De hele uitleg moet op het vel staan, nooit een halve regel (gebruikers-sweep 2026-11-12,
+    // Sanne: bij Groot lettertype viel bij 10 van 12 oefeningen de uitleg weg). Meet buiten
+    // beeld met de opmaak van het vel; past het niet, dan eerst het beeld kleiner, dan de
+    // letter stap voor stap kleiner (bij Groot nooit kleiner dan 10,5 pt), en anders minder
+    // oefeningen per vel.
+    var aantallen=[6,4,3,2,1];
+    for(var a=0;a<aantallen.length;a++){
+      maak(aantallen[a]);
+      if(pasThuiskaart(el))break;
+    }
     // beelden die nog niet geladen zijn, niet half op papier: de browser wacht op eager-beelden
     el.querySelectorAll('img').forEach(function(img){img.removeAttribute('loading');});
     return vellen.length;
+  }
+  function pasThuiskaart(el){
+    var groot=document.documentElement.classList.contains('print-groot');
+    var ondergrens=(groot?10.5:7.5)*4/3; // pt naar px
+    var past=function(x){return x.scrollHeight<=x.clientHeight+1;};
+    el.classList.add('tk-meet');
+    try{
+      if(!el.offsetHeight)return true; // niets te meten (geen opmaak): zoals voorheen
+      var alles=true;
+      [].forEach.call(el.querySelectorAll('.tk-oef'),function(o){
+        var u=o.querySelector('.tk-uitleg');if(!u)return;
+        var ok=function(){return past(u)&&past(o);};
+        if(ok())return;
+        o.classList.add('tk-veel');
+        var fs=parseFloat(getComputedStyle(u).fontSize)||12;
+        while(!ok()&&fs-0.5>=ondergrens){fs-=0.5;u.style.fontSize=fs+'px';u.style.lineHeight='1.25';}
+        if(!ok())alles=false;
+      });
+      [].forEach.call(el.querySelectorAll('.tk-vel'),function(v){if(!past(v))alles=false;});
+      return alles;
+    }finally{el.classList.remove('tk-meet');}
   }
   window.addEventListener('afterprint',function(){document.documentElement.classList.remove('print-thuis');});
   function doePrint(){
@@ -3632,6 +3688,8 @@ bridge2.jpg</div>
     }).join("");
   }
   document.getElementById('kaartenBtn').addEventListener('click',function(){
+    // vanuit de editor heet het venster weer Kaarten (niet de kop van het laatste scherm)
+    if(IS_V2&&SCHERM==='maken'){var kop=document.querySelector('#ovKaarten .modal>h3');if(kop)kop.textContent='Kaarten';}
     var nm=document.getElementById('c_naam');
     document.getElementById('k_naam').value=(nm&&nm.value.trim())||'';
     document.getElementById('k_result').textContent='';
@@ -6877,7 +6935,9 @@ bridge2.jpg</div>
     var nr=0,stapel=[];
     function zichtbaar(el){return !!(el.offsetWidth||el.offsetHeight||el.getClientRects().length)&&getComputedStyle(el).visibility!=='hidden';}
     function focusbare(ov){return Array.prototype.filter.call(ov.querySelectorAll(FOCUSBAAR),zichtbaar);}
-    function bovenste(){for(var i=stapel.length-1;i>=0;i--){if(stapel[i].ov.classList.contains('on'))return stapel[i].ov;}return null;}
+    // het Kaarten-paneel als scherm (Vandaag, Patiënten, Praktijk) is geen venster
+    function alsScherm(ov){return ov.id==='ovKaarten'&&paneelAlsScherm();}
+    function bovenste(){for(var i=stapel.length-1;i>=0;i--){if(stapel[i].ov.classList.contains('on')&&!alsScherm(stapel[i].ov))return stapel[i].ov;}return null;}
     function markeer(ov){
       if(ov.dataset.dlg)return;ov.dataset.dlg='1';
       var m=ov.querySelector('.modal')||ov;
@@ -6888,6 +6948,8 @@ bridge2.jpg</div>
     }
     function geopend(ov){
       markeer(ov);
+      if(ov.id==='ovKaarten')paneelRol();
+      if(alsScherm(ov)){stapel=stapel.filter(function(s){return s.ov!==ov;});return;}
       stapel=stapel.filter(function(s){return s.ov!==ov;});
       var terug=document.activeElement;
       stapel.push({ov:ov,terug:(terug&&terug!==document.body&&!ov.contains(terug))?terug:null});
@@ -6942,7 +7004,12 @@ bridge2.jpg</div>
   }
   document.getElementById('menuHelp').addEventListener('click',function(){openOv('ovHelp');});
   document.getElementById('help_close').addEventListener('click',function(){closeOv('ovHelp');});
-  document.querySelectorAll('.ov').forEach(function(ov){ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('on');});});
+  // klik naast een venster sluit het; het Kaarten-paneel als scherm is geen venster en blijft staan
+  document.querySelectorAll('.ov').forEach(function(ov){ov.addEventListener('click',function(e){
+    if(e.target!==ov)return;
+    if(ov.id==='ovKaarten'&&paneelAlsScherm())return;
+    if(ov.id==='ovKaarten')closeOv('ovKaarten');else ov.classList.remove('on');
+  });});
 
   // invulbare A4-velden: praktijk + adresblok, en het monitoring-grid
   var elPraktijk=document.getElementById('praktijk');
