@@ -3546,7 +3546,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       // één seintje tegelijk, op volgorde: dan is het laatste antwoord ook de laatste stand op de server
       seinKetting=seinKetting.then(function(){return stuur('/api/kaart/seintje',{id:id,soort:soort});});
       seinKetting.then(function(d){
-          if(d&&d.ok){if('open' in d)zetSeinOpen(d.open);zetDank(dank,seinDankTekst(soort),'');mgSeintjeErbij(K&&K.kaart,soort,Date.now());}
+          if(d&&d.ok&&'open' in d)zetSeinOpen(d.open);
+          if(d&&d.ok)mgSeintjeErbij(K&&K.kaart,soort,Date.now());
+          if(d&&d.ok)zetDank(dank,seinDankTekst(soort),'');
           else{zetSeinOpen(voor);delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout');}
           delete b.dataset.bezig;})
         .catch(function(e){delete b.dataset.bezig;if(e&&e.wacht){zetDank(dank,trw('een'),'wacht');return;}zetSeinOpen(voor);delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout');});

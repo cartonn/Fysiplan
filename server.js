@@ -7504,11 +7504,29 @@ async function afhandelen(request, response) {
     // De bibliotheek wordt vooraf vertaald (/dashboard88/vertalingen). Wat dan nog ontbreekt
     // (een nieuwe oefening, de naam van een eigen oefening), vertaalt de kaart zoals eerst.
     const missend = teksten.filter((s) => !leesVertaling(cache, s));
+    // teksten: Nederlands -> vertaling; nagelezen: de Nederlandse teksten waarvan een lezer de
+    // vertaling heeft nagelezen (de kaart zegt bij de rest dat ze automatisch vertaald zijn)
+    const vertaaldUitCache = () => {
+      const map = {}, nagelezen = [];
+      teksten.forEach((s) => { const v = leesVertaling(cache, s); if (v) { map[s] = v.t; if (v.nagelezen) nagelezen.push(s); } });
+      return { map, nagelezen };
+    };
+    // Lukt het bijvertalen niet (geen sleutel, andere site, storing), dan krijgt de patiënt toch wat er
+    // al vooraf vertaald is; alleen de ontbrekende teksten blijven Nederlands, met de melding op de
+    // kaart. Eerder gooide één ontbrekende tekst (een nieuwe of eigen oefening) de hele vertaalde
+    // bibliotheek weg (gebruikers-sweep 2026-11-12 22u, Jayden). Staat er niets in de cache, dan de
+    // foutmelding zoals eerst: de kaart zegt dan dat vertalen even niet lukt.
+    const deelsOfFout = async (status, fout, weiger) => {
+      const { map, nagelezen } = vertaaldUitCache();
+      if (Object.keys(map).length) { await sendJson(response, 200, { ok: true, teksten: map, nagelezen, deels: true }); return; }
+      if (weiger) { await weigerKruis(response); return; }
+      await sendJson(response, status, { ok: false, fout });
+    };
     if (missend.length) {
-      if (!AI_KEY) { await sendJson(response, 503, { ok: false, fout: "Vertalen staat nog uit op deze server." }); return; }
+      if (!AI_KEY) { await deelsOfFout(503, "Vertalen staat nog uit op deze server."); return; }
       // alleen de vertaalslag kost geld; gecachte vertalingen (ook cross-site) blijven vrij,
       // maar een cross-site pagina mag geen nieuwe AI-vertalingen laten maken
-      if (kruisSite(request)) { await weigerKruis(response); return; }
+      if (kruisSite(request)) { await deelsOfFout(403, "", true); return; }
       if (schrijfLimiet(request, response)) return;
       if (aiLimiet(request, response)) return;
       try {
@@ -7520,14 +7538,11 @@ async function afhandelen(request, response) {
         begrensVertalingen(cache);
         await saveJson(vertalingenPath, vertalingen);
       } catch {
-        await sendJson(response, 502, { ok: false, fout: "Vertalen is even niet gelukt; de kaart blijft in het Nederlands." });
+        await deelsOfFout(502, "Vertalen is even niet gelukt; de kaart blijft in het Nederlands.");
         return;
       }
     }
-    // teksten: Nederlands -> vertaling; nagelezen: de Nederlandse teksten waarvan een lezer de
-    // vertaling heeft nagelezen (de kaart zegt bij de rest dat ze automatisch vertaald zijn)
-    const map = {}, nagelezen = [];
-    teksten.forEach((s) => { const v = leesVertaling(cache, s); if (v) { map[s] = v.t; if (v.nagelezen) nagelezen.push(s); } });
+    const { map, nagelezen } = vertaaldUitCache();
     await sendJson(response, 200, { ok: true, teksten: map, nagelezen });
     return;
   }
