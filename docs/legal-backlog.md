@@ -23,6 +23,16 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **TER INFO — logboeken en cookies (f), 2026-11-12 (platformreview, test:beheeraccounts): beheer heeft persoonlijke accounts en een
+  beheerlogboek.** Geen tekst aangepast; graag meewegen bij de volgende controle van /privacy en de verwerkersovereenkomst.
+  Wat er nieuw wordt bewaard: per beheerder een e-mailadres, naam, wachtwoordhash en het geheim van de tweede stap
+  (`beheer-accounts.json`); per beheeractie een regel met wie, wat, wanneer, het antwoord en een gemaskeerd IP-adres
+  (`beheer-log.jsonl`, zonder einddatum, mee in de reservekopie). In het logboek staan geen patiëntnamen: bij de herstelmail de
+  praktijk, de reden die beheer opgaf en het gemaskeerde adres; bij inzage van een praktijk zonder account de praktijknaam. De
+  beheerders zijn medewerkers van Fysiplan, geen klanten. De cookie `__Host-fpbeheer` (twaalf uur, alleen voor de server leesbaar)
+  staat alleen in de browser van een beheerder die inlogt, niet bij praktijken of patiënten. Vragen voor de jurist: hoort het
+  beheerlogboek in het verwerkingsregister en in de verwerkersovereenkomst (toegang van Fysiplan tot gegevens van een praktijk
+  wordt nu met naam vastgelegd), en welke bewaartermijn past erbij? Nu heeft het geen einddatum.
 - **LAAG — code tegen tekst (d) en cookies (f), 2026-11-12 (platformreview, test:sessiecookie): /privacy#opslag klopt niet meer
   met waar de inlog van de praktijk staat.** De rij "Apparaat van de therapeut (app)" zegt "Twee cookies" en noemt "je inlog bij
   de praktijk" bij wat de browser bewaart. Sinds deze wijziging staat die inlog niet meer in de browseropslag maar in een derde
