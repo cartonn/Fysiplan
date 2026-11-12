@@ -385,8 +385,8 @@ html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
   html.v2 #weekbrief{margin:18px 0 10px;padding-top:14px;border-top:1px solid var(--line2)}
 
   /* ---- team ---- */
-  html.v2 #ovTeam .modal{width:min(600px,100%);max-width:600px!important;padding:24px 26px;max-height:calc(100vh - 32px);overflow:auto}
-  html.v2 #tm_inhoud{color:var(--text)!important;font-size:13.5px}
+  html.v2 #ovTeam .modal,html.v2 #ovStapLogin .modal{width:min(600px,100%);max-width:600px!important;padding:24px 26px;max-height:calc(100vh - 32px);overflow:auto}
+  html.v2 #tm_inhoud,html.v2 #li_inhoud{color:var(--text)!important;font-size:13.5px}
   html.v2 .tm-kop{font-size:13px;font-weight:650;color:var(--ink);margin:16px 0 6px}
   html.v2 .tm-lid{gap:12px!important;padding:10px 0!important;border-top:1px solid var(--line2)!important}
   html.v2 .tm-kop+.tm-lid{border-top:0!important}

@@ -121,6 +121,7 @@ jobs:
       - run: npm run test:beheerherstel
       - run: npm run test:seinmail
       - run: npm run test:tweedestap
+      - run: npm run test:stapverplicht
       - run: npm run test:qrroepnaam
       - run: npm run test:uitnodigingpraktijk
       - run: npm run test:rempraktijk

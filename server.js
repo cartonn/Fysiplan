@@ -326,6 +326,10 @@ const normEmail = (e) => String(e || "").trim().toLowerCase().slice(0, 120);
 const ledenVan = (pk) => (praktijkGeclaimd(pk) && Array.isArray(praktijkAccounts[pk].leden)) ? praktijkAccounts[pk].leden : [];
 const lidVan = (pk, id) => ledenVan(pk).find((l) => l && l.id === id) || null;
 const lidActief = (l) => !!(l && l.hash);
+// tweede stap bij het inloggen (uitleg verderop, bij tweedeStapCheck): heeft dit lid er een, en
+// vraagt de praktijk hem van iedereen (acc.stapVerplicht, een beheerder zet dat aan onder Team)?
+const heeftTweedeStap = (l) => !!(l && l.totp && typeof l.totp.geheim === "string" && l.totp.geheim);
+const stapVerplicht = (pk) => praktijkGeclaimd(pk) && !!praktijkAccounts[pk].stapVerplicht;
 // de sessie met praktijk en (eventueel) lid; een verwijderd lid of een uitgezet
 // praktijkwachtwoord maakt de sessie meteen ongeldig
 function sessieVan(req) {
@@ -337,6 +341,10 @@ function sessieVan(req) {
   if (Date.now() - s.t > SESSIE_MS) { praktijkSessies.delete(sleutel); return null; }
   if (!praktijkGeclaimd(s.pk)) { praktijkSessies.delete(sleutel); return null; }
   if (s.lid ? !lidActief(lidVan(s.pk, s.lid)) : praktijkAccounts[s.pk].gedeeldUit) { praktijkSessies.delete(sleutel); return null; }
+  // Vraagt de praktijk een tweede stap van iedereen, dan bestaat er geen sessie zonder: niet met
+  // het praktijkwachtwoord, en niet met een eigen login die (nog of weer) geen tweede stap heeft.
+  // Zo'n login stelt hem in bij het inloggen.
+  if (praktijkAccounts[s.pk].stapVerplicht && !heeftTweedeStap(s.lid ? lidVan(s.pk, s.lid) : null)) { praktijkSessies.delete(sleutel); return null; }
   // De sessie hoort bij het wachtwoord waarmee is ingelogd. Sessies overleven een herstart,
   // dus dit is het vangnet: na een wachtwoordwijziging, of als iemand anders dezelfde
   // praktijknaam opnieuw beveiligt, werkt een oude sessie niet meer, ook als hij nog in het
@@ -693,11 +701,29 @@ async function seinMailRondeEen() {
 // - Kwijt: een beheerder met een eigen login wist de tweede stap van een collega. Voor de enige
 //   beheerder kan Fysiplan-beheer een herstelmail sturen die ook de tweede stap laat vervallen
 //   (/api/beheer/praktijk-herstel met tweedeStap: true); dat staat in het logboek van de praktijk.
+// - Verplicht per praktijk: een beheerder met een eigen login en een eigen tweede stap kan hem
+//   van iedereen vragen (acc.stapVerplicht = { sinds }, /api/praktijk/team/stap-verplicht). Het
+//   gedeelde praktijkwachtwoord gaat dan uit, en wie nog geen tweede stap heeft, stelt hem in
+//   bij het inloggen: na het goede wachtwoord krijgt de app een geheim, en pas met de eerste
+//   code is er een sessie (sessieVan laat in zo'n praktijk geen sessie zonder tweede stap toe).
 const TOTP_INSTEL_MS = 15 * 60000; // zo lang blijft een begonnen instelling geldig
 const TOTP_MIS_PER_DAG = Math.min(20, getalEnv("TOTP_MIS_PER_DAG", 20)); // lager kan (voor de test), hoger niet
 const RESERVECODES = 8;
 const totpWacht = new Map(); // "pk:lid" -> { geheim, t, n }: begonnen met instellen, nog niet bevestigd
-const heeftTweedeStap = (l) => !!(l && l.totp && typeof l.totp.geheim === "string" && l.totp.geheim);
+// een verse instelling voor deze login, met een nieuw geheim; een eerder begonnen instelling vervalt
+function nieuweInstelling(sleutel) {
+  const nu = Date.now();
+  if (totpWacht.size > 2000) for (const [k, v] of totpWacht) if (nu - v.t > TOTP_INSTEL_MS) totpWacht.delete(k);
+  const w = { geheim: nieuwGeheim(), t: nu, n: 0 };
+  totpWacht.set(sleutel, w);
+  return w;
+}
+// de begonnen instelling van deze login, of null als er geen (geldige meer) is
+function lopendeInstelling(sleutel) {
+  const w = totpWacht.get(sleutel);
+  if (w && Date.now() - w.t > TOTP_INSTEL_MS) { totpWacht.delete(sleutel); return null; }
+  return w || null;
+}
 const reservecodesOver = (l) => (heeftTweedeStap(l) && Array.isArray(l.totp.reserve)) ? l.totp.reserve.length : 0;
 const TWEEDE_STAP_TEKST = {
   nodig: "Vul de code uit je code-app in.",
@@ -773,7 +799,14 @@ async function tweedeStap(request, pk, l, invoer) {
 // opnieuw is getoond (de aanroeper stopt dan); bij een goede code staat de gebruikte tijdstap of
 // reservecode op schijf voordat de aanroeper verdergaat.
 async function weigerZonderTweedeStap(request, pk, lid, code, remNaam, pad, opnieuw) {
-  if (!lid || !heeftTweedeStap(lid)) return false;
+  if (!lid) return false;
+  if (!heeftTweedeStap(lid)) {
+    if (!stapVerplicht(pk)) return false;
+    // de praktijk vraagt een tweede stap en deze login heeft hem nog niet ingesteld: dat gaat
+    // bij het inloggen in de app, niet op een formulier zonder script
+    await opnieuw("Je praktijk vraagt een tweede stap bij het inloggen. Log eerst in bij Fysiplan en stel hem in; daarna werkt dit formulier met je code.", 403);
+    return true;
+  }
   const u = await tweedeStap(request, pk, lid, code);
   if (u.ok) { await saveJson(accountsPath, praktijkAccounts); return false; }
   if (u.reden === "fout") {
@@ -3395,6 +3428,53 @@ async function afhandelen(request, response) {
           return;
         }
         const { pk, l } = treffers[0];
+        // De praktijk vraagt een tweede stap van iedereen en deze login heeft er nog geen:
+        // instellen hoort dan bij het inloggen. Het wachtwoord klopt; de app krijgt een geheim
+        // (als QR en als sleutel) en stuurt e-mail, wachtwoord, dat geheim en de eerste code
+        // opnieuw in. Pas dan staat de tweede stap op schijf en is er een sessie.
+        //
+        // Elk antwoord dat een geheim bevat, maakt het vorige ongeldig, en een foute code krijgt
+        // het geheim niet terug. Het geheim dat op schijf komt, is dus alleen gezien door de
+        // browser die het instellen afmaakt. Wie alleen het wachtwoord kent, kan er als eerste
+        // zijn (dat kon zonder tweede stap ook, en het staat in de Activiteit), maar kan niet
+        // stil het geheim ophalen dat de eigenaar daarna in gebruik neemt.
+        if (!heeftTweedeStap(l) && stapVerplicht(pk)) {
+          const sleutel = pk + ":" + l.id;
+          const code = String(b.code == null ? "" : b.code).trim();
+          const lopend = lopendeInstelling(sleutel);
+          // nog geen code, of een ander geheim dan het lopende (verlopen, de server is herstart,
+          // of het instellen is intussen elders opnieuw begonnen): een vers geheim
+          if (!code || !lopend || String(b.geheim || "") !== lopend.geheim) {
+            const w = nieuweInstelling(sleutel);
+            // De tekst zonder code ziet alleen wie de app al open had staan van vóór deze
+            // mogelijkheid: de app van nu toont dan het instelvenster in plaats van de tekst.
+            await sendJson(response, 401, { ok: false, stapInstellen: true, geheim: w.geheim, uri: otpauth(w.geheim, l.email), minuten: TOTP_INSTEL_MS / 60000,
+              ...(code ? { vernieuwd: true } : {}),
+              fout: code ? "De QR-code is vernieuwd. Scan hem opnieuw en vul de code in die de app dan toont."
+                : "Je praktijk vraagt een tweede stap bij het inloggen. Ververs deze pagina en log opnieuw in om hem in te stellen." });
+            return;
+          }
+          // een foute code telt als misser, net als bij een gewone tweede stap
+          const stap = controleer(lopend.geheim, code);
+          if (stap == null) {
+            loginMisTel(remKey);
+            telInlogMisIp(request, "tweede-stap");
+            await sendJson(response, 403, { ok: false, stapInstellen: true, code: true,
+              fout: "Die code klopt niet. Vul de zes cijfers in die de code-app nu toont. Blijft het misgaan? Kijk of je telefoon de tijd automatisch instelt." });
+            return;
+          }
+          const reserve = nieuweReservecodes();
+          l.totp = { geheim: lopend.geheim, sinds: Date.now(), stap, reserve: reserve.hashes };
+          totpWacht.delete(sleutel);
+          loginMisPraktijk.delete(remKey);
+          l.laatst = Date.now();
+          await saveJson(accountsPath, praktijkAccounts);
+          const token = nieuweSessie(pk, l.id);
+          auditLog(pk, "tweede-stap-aan", request, l.naam || l.email);
+          auditLog(pk, "ingelogd", request, l.naam || l.email);
+          await sendJson(response, 200, { ok: true, sessie: token, praktijk: weergaveNaam(pk), reservecodes: reserve.codes });
+          return;
+        }
         // tweede stap: het wachtwoord klopt, nu nog de code uit de code-app (of een reservecode).
         // Zonder code vraagt de app erom (401 met tweedeStap); een foute code telt als misser.
         let viaReserve = false;
@@ -3478,7 +3558,8 @@ async function afhandelen(request, response) {
       "claim-gereset-door-beheer", "herstel-door-beheer", "wachtwoord-hersteld-per-mail", "sein-mail-uit", "sein-mail-aan", "kaart-link-vernieuwd", "eigen-login-gemaakt", "collega-uitgenodigd",
       "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "team-wijziging-geweigerd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "kaart-hersteld", "kaart-definitief-verwijderd", "profiel-gewijzigd",
       "abonnement-opgezegd", "opzeggen-mislukt",
-      "tweede-stap-aan", "tweede-stap-uit", "tweede-stap-gewist", "tweede-stap-mislukt", "tweede-stap-op-slot", "ingelogd-met-reservecode", "reservecodes-vernieuwd"]);
+      "tweede-stap-aan", "tweede-stap-uit", "tweede-stap-gewist", "tweede-stap-mislukt", "tweede-stap-op-slot", "ingelogd-met-reservecode", "reservecodes-vernieuwd",
+      "tweede-stap-verplicht", "tweede-stap-niet-verplicht"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
       .slice(0, 15)
@@ -3505,6 +3586,7 @@ async function afhandelen(request, response) {
       await sendJson(response, 200, { ok: true, praktijk: weergaveNaam(pk), beheer: isBeheer(s),
         ik: ik ? { ...lidUit(ik), ...(heeftTweedeStap(ik) ? { tweedeStapSinds: ik.totp.sinds || null, reservecodesOver: reservecodesOver(ik) } : {}) } : null,
         gedeeldUit: !!acc.gedeeldUit, leden: ledenVan(pk).map(lidUit),
+        stapVerplicht: !!acc.stapVerplicht, ...(acc.stapVerplicht ? { stapVerplichtSinds: acc.stapVerplicht.sinds || null } : {}),
         seinMail: { aan: acc.seinMail !== false, kan: mailIngesteld(), naar: seinMailOntvangers(pk, null).map((o) => maskeerEmail(o.email)) } });
       return;
     }
@@ -3538,35 +3620,35 @@ async function afhandelen(request, response) {
     // tweede stap van de eigen login: instellen, uitzetten, nieuwe reservecodes. Voor elke rol,
     // want het gaat om de eigen login; de tweede stap van een collega wissen is beheerderswerk
     // (verderop). Elke stap vraagt het eigen wachtwoord opnieuw: een open laptop is geen akkoord.
+    // Bevestigen met het eigen wachtwoord (en waar het erom gaat ook met een code): voor de
+    // tweede stap van de eigen login en voor het verplicht stellen ervan. Alleen aan te roepen
+    // met een eigen login (ik).
+    const remSleutel = ik ? "lid:" + pk + ":" + ik.id : ""; // dezelfde rem als bij het wijzigen van het eigen wachtwoord
+    const wachtwoordGoed = async () => {
+      if (loginOpSlot(remSleutel)) { await send429(response, 900, { ok: false, fout: "Te veel foute pogingen; probeer het over een kwartier opnieuw." }); return false; }
+      if (!checkHash(String(b.wachtwoord || ""), ik.hash)) {
+        loginMisTel(remSleutel);
+        await denied(request, response, "tweede-stap", "Je wachtwoord klopt niet.");
+        return false;
+      }
+      return true;
+    };
+    // een geldige code uit de code-app (of een reservecode), na het wachtwoord
+    const codeGoed = async () => {
+      const u = await tweedeStap(request, pk, ik, b.code);
+      if (u.ok) return true;
+      if (u.reden === "slot") { await send429(response, 3600, { ok: false, code: true, fout: TWEEDE_STAP_TEKST.slot }); return false; }
+      await sendJson(response, u.reden === "fout" ? 403 : 400, { ok: false, code: true, fout: u.reden === "fout" ? TWEEDE_STAP_TEKST.fout : "Vul de code uit je code-app in, of een reservecode." });
+      return false;
+    };
     if (urlPath.startsWith("/api/praktijk/team/tweede-stap/") && urlPath !== "/api/praktijk/team/tweede-stap/wis") {
       if (!ik) { await sendJson(response, 400, { ok: false, eigenLogin: true, fout: "De tweede stap hoort bij een eigen login. Maak eerst je eigen login." }); return; }
       const actie = urlPath.slice("/api/praktijk/team/tweede-stap/".length);
       const sleutel = pk + ":" + ik.id, wie = ik.naam || ik.email;
-      const remSleutel = "lid:" + pk + ":" + ik.id; // dezelfde rem als bij het wijzigen van het eigen wachtwoord
-      const wachtwoordGoed = async () => {
-        if (loginOpSlot(remSleutel)) { await send429(response, 900, { ok: false, fout: "Te veel foute pogingen; probeer het over een kwartier opnieuw." }); return false; }
-        if (!checkHash(String(b.wachtwoord || ""), ik.hash)) {
-          loginMisTel(remSleutel);
-          await denied(request, response, "tweede-stap", "Je wachtwoord klopt niet.");
-          return false;
-        }
-        return true;
-      };
-      // wachtwoord én een geldige code (of reservecode): voor uitzetten en nieuwe reservecodes
-      const codeGoed = async () => {
-        const u = await tweedeStap(request, pk, ik, b.code);
-        if (u.ok) return true;
-        if (u.reden === "slot") { await send429(response, 3600, { ok: false, code: true, fout: TWEEDE_STAP_TEKST.slot }); return false; }
-        await sendJson(response, u.reden === "fout" ? 403 : 400, { ok: false, code: true, fout: u.reden === "fout" ? TWEEDE_STAP_TEKST.fout : "Vul de code uit je code-app in, of een reservecode." });
-        return false;
-      };
       if (actie === "start") {
         if (heeftTweedeStap(ik)) { await sendJson(response, 409, { ok: false, fout: "Je tweede stap staat al aan." }); return; }
         if (!(await wachtwoordGoed())) return;
-        const nu = Date.now();
-        if (totpWacht.size > 2000) for (const [k, v] of totpWacht) if (nu - v.t > TOTP_INSTEL_MS) totpWacht.delete(k);
-        const geheim = nieuwGeheim();
-        totpWacht.set(sleutel, { geheim, t: nu, n: 0 });
+        const { geheim } = nieuweInstelling(sleutel);
         // het geheim gaat één keer naar de eigen browser (als QR en als sleutel om over te typen);
         // het staat pas op schijf als de eerste code klopt
         await sendJson(response, 200, { ok: true, geheim, uri: otpauth(geheim, ik.email), minuten: TOTP_INSTEL_MS / 60000 });
@@ -3574,12 +3656,8 @@ async function afhandelen(request, response) {
       }
       if (actie === "bevestig") {
         if (heeftTweedeStap(ik)) { await sendJson(response, 409, { ok: false, fout: "Je tweede stap staat al aan." }); return; }
-        const w = totpWacht.get(sleutel);
-        if (!w || Date.now() - w.t > TOTP_INSTEL_MS) {
-          totpWacht.delete(sleutel);
-          await sendJson(response, 400, { ok: false, opnieuw: true, fout: "Het instellen is verlopen. Begin opnieuw." });
-          return;
-        }
+        const w = lopendeInstelling(sleutel);
+        if (!w) { await sendJson(response, 400, { ok: false, opnieuw: true, fout: "Het instellen is verlopen. Begin opnieuw." }); return; }
         const stap = controleer(w.geheim, b.code);
         if (stap == null) {
           if (++w.n >= 10) totpWacht.delete(sleutel);
@@ -3606,6 +3684,13 @@ async function afhandelen(request, response) {
           totpWacht.delete(sleutel);
           await opslaan();
           auditLog(pk, "tweede-stap-uit", request, wie);
+          // Vraagt de praktijk een tweede stap van iedereen, dan is uitzetten "opnieuw instellen"
+          // (nieuwe telefoon): deze login is nu overal uitgelogd en stelt hem in bij het inloggen.
+          if (stapVerplicht(pk)) {
+            trekSessiesIn(pk, ik.id);
+            await sendJson(response, 200, { ok: true, opnieuwInloggen: true });
+            return;
+          }
           await sendJson(response, 200, { ok: true });
           return;
         }
@@ -3742,6 +3827,10 @@ async function afhandelen(request, response) {
       // Het oude wachtwoord en de oude code (op papier) kende ook wie intussen uit het
       // team is; die mogen niet stil weer gaan werken (security-backlog 2026-11-07)
       let herstelcode;
+      if (b.uit === false && acc.stapVerplicht) {
+        await sendJson(response, 400, { ok: false, fout: "De tweede stap is verplicht voor iedereen in je praktijk, en het praktijkwachtwoord heeft er geen. Hef eerst de verplichting op." });
+        return;
+      }
       if (b.uit === false && acc.gedeeldUit) {
         const ww = String(b.wachtwoord || "");
         if (ww.length < 8) { await sendJson(response, 400, { ok: false, wachtwoord: true, fout: "Kies een nieuw praktijkwachtwoord van minstens 8 tekens; het oude werkt niet meer." }); return; }
@@ -3756,6 +3845,40 @@ async function afhandelen(request, response) {
       trekSessiesIn(pk, null);
       auditLog(pk, acc.gedeeldUit ? "praktijkwachtwoord-uit" : "praktijkwachtwoord-aan", request);
       await sendJson(response, 200, { ok: true, gedeeldUit: acc.gedeeldUit, ...(herstelcode ? { herstelcode } : {}) });
+      return;
+    }
+    // De tweede stap verplicht stellen voor iedereen in de praktijk, of dat weer opheffen.
+    // Aan: alleen een beheerder met een eigen login die zelf een tweede stap heeft, met het eigen
+    // wachtwoord. Het gedeelde praktijkwachtwoord gaat uit (dat heeft geen tweede stap) en wie
+    // nog geen tweede stap heeft, is uitgelogd en stelt hem in bij de volgende keer inloggen.
+    // Opheffen: wachtwoord én code. Het praktijkwachtwoord blijft dan uit; weer aanzetten is een
+    // eigen stap, met een nieuw wachtwoord.
+    if (urlPath === "/api/praktijk/team/stap-verplicht") {
+      if (!ik) { await sendJson(response, 400, { ok: false, eigenLogin: true, fout: "Dit kan alleen een beheerder die met een eigen login is ingelogd. Maak eerst je eigen login." }); return; }
+      const wil = b.aan !== false, wie = ik.naam || ik.email;
+      if (wil === !!acc.stapVerplicht) { await sendJson(response, 200, { ok: true, stapVerplicht: wil, gedeeldUit: !!acc.gedeeldUit }); return; }
+      if (wil) {
+        if (!heeftTweedeStap(ik)) { await sendJson(response, 400, { ok: false, eigenStap: true, fout: "Stel eerst je eigen tweede stap in. Daarna kun je hem van iedereen vragen." }); return; }
+        if (!(await wachtwoordGoed())) return;
+        const gedeeldWasAan = !acc.gedeeldUit;
+        acc.stapVerplicht = { sinds: Date.now() };
+        acc.gedeeldUit = true;
+        delete acc.herstelMail; // een herstelcode per mail hoorde bij het praktijkwachtwoord
+        await opslaan();
+        trekSessiesIn(pk, null);
+        const zonder = ledenVan(pk).filter((l) => lidActief(l) && !heeftTweedeStap(l));
+        for (const l of zonder) trekSessiesIn(pk, l.id);
+        auditLog(pk, "tweede-stap-verplicht", request, wie);
+        if (gedeeldWasAan) auditLog(pk, "praktijkwachtwoord-uit", request, wie);
+        await sendJson(response, 200, { ok: true, stapVerplicht: true, gedeeldUit: true, gedeeldWasAan, zonder: zonder.length });
+        return;
+      }
+      if (!(await wachtwoordGoed())) return;
+      if (!(await codeGoed())) return;
+      delete acc.stapVerplicht;
+      await opslaan();
+      auditLog(pk, "tweede-stap-niet-verplicht", request, wie);
+      await sendJson(response, 200, { ok: true, stapVerplicht: false, gedeeldUit: !!acc.gedeeldUit });
       return;
     }
     await sendJson(response, 404, { ok: false, fout: "Niet gevonden." });
@@ -4016,7 +4139,8 @@ async function afhandelen(request, response) {
             await stuurMail(l.email, "Nieuw wachtwoord kiezen voor Fysiplan (" + naam + ")",
               aanhef(l.naam) + "Kies hier een nieuw wachtwoord voor je eigen login (48 uur geldig):\n" +
               instelBasis(request) + "/v2/uitnodiging?t=" + token +
-              (ookStap ? "\n\nMet deze link vervalt ook de tweede stap van je login (de code uit je code-app). Stel hem na het inloggen opnieuw in onder Kaarten, Team." : "") + slot);
+              (ookStap ? "\n\nMet deze link vervalt ook de tweede stap van je login (de code uit je code-app). " +
+                (acc.stapVerplicht ? "Je stelt hem bij het inloggen opnieuw in." : "Stel hem na het inloggen opnieuw in onder Kaarten, Team.") : "") + slot);
             verzonden.push(l.email);
           } catch { if (was) l.uitnodiging = was; else delete l.uitnodiging; }
         }
@@ -6975,7 +7099,7 @@ async function afhandelen(request, response) {
       UI_KOP: isHerstel ? "Kies een nieuw wachtwoord." : "Kies je eigen wachtwoord.",
       UI_LEAD_HTML: (isHerstel
         ? "Fysiplan-beheer heeft je deze link gestuurd omdat je niet meer kon inloggen bij " + htmlEsc(weergaveNaam(pk)) + ". Je logt in met <b>" + htmlEsc(lid.email) + "</b> en het wachtwoord dat je hier kiest. Je oude wachtwoord werkt daarna niet meer." +
-          (wisStap ? " Ook de tweede stap van je login (de code uit je code-app) vervalt; stel hem daarna opnieuw in onder Kaarten, Team." : "")
+          (wisStap ? " Ook de tweede stap van je login (de code uit je code-app) vervalt; " + (stapVerplicht(pk) ? "je stelt hem bij het inloggen opnieuw in." : "stel hem daarna opnieuw in onder Kaarten, Team.") : "")
         : "Je werkt in Fysiplan voortaan met je eigen login bij " + htmlEsc(weergaveNaam(pk)) + ". Je logt in met <b>" + htmlEsc(lid.email) + "</b> en het wachtwoord dat je hier kiest."),
       EMAIL: lid.email, TOKEN: token, V_NAAM: b.naam != null ? cleanName(b.naam, 60) : (lid.naam || ""),
       MELDING_HTML: fout ? '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" : "" }, status);
@@ -7003,7 +7127,7 @@ async function afhandelen(request, response) {
     await serveerProef(request, response, "bericht", { TITEL: "Klaar", ETIKET: prNaam, KOP: isHerstel ? "Je nieuwe wachtwoord staat klaar." : "Je eigen login staat klaar.",
       TEKST: "Open Fysiplan en log onder Kaarten in met " + lid.email + " en je nieuwe wachtwoord." +
         (prNaam ? " De praktijknaam \u201c" + prNaam + "\u201d staat dan al ingevuld." : "") +
-        (wisStap ? " Je tweede stap is vervallen; stel hem opnieuw in onder Kaarten, Team." : ""),
+        (wisStap ? (stapVerplicht(pk) ? " Je tweede stap is vervallen; je stelt hem bij het inloggen opnieuw in." : " Je tweede stap is vervallen; stel hem opnieuw in onder Kaarten, Team.") : ""),
       KNOP_HTML: '<a class="knop oranje" href="' + htmlEsc(appLink) + '">Open Fysiplan</a>' });
     return;
   }
@@ -7079,7 +7203,8 @@ async function afhandelen(request, response) {
           "Video's, foto's en het logo staan als pad; de bestanden zelf zitten er niet in.",
         gedownload: new Date().toISOString(),
         praktijk: pk,
-        account: { gemaakt: acc.gemaakt || null, verwerkersovereenkomst: acc.vwo || null, akkoord: acc.akkoord || null, proef: acc.proef || null },
+        account: { gemaakt: acc.gemaakt || null, verwerkersovereenkomst: acc.vwo || null, akkoord: acc.akkoord || null, proef: acc.proef || null,
+          tweedeStapVerplicht: acc.stapVerplicht ? { aan: true, sinds: acc.stapVerplicht.sinds ? new Date(acc.stapVerplicht.sinds).toISOString() : null } : { aan: false } },
         // de proefaanmelding (contactpersoon, e-mail, telefoon, betaling) hoort bij de praktijk
         aanmelding: acc.proef ? proefVoorDownload(acc.proef.id) : null,
         // teamleden zonder wachtwoord of uitnodigingscode
