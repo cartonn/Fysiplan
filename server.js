@@ -203,6 +203,10 @@ async function resolveDataDir() {
   return join(process.cwd(), "data");
 }
 const dataDir = await resolveDataDir();
+// Een testomgeving start alleen op een lege map of op een map met het merk van een
+// testomgeving; productie en lokaal starten niet op een map met dat merk. Dit staat vóór het
+// eerste bestand wordt gelezen of geschreven.
+try { await keurDatamap(dataDir, OMGEVING); } catch (e) { startNiet(e.message); }
 // De database die meeschrijft (lib/database.js, reviewlijst punt 11): uit, tenzij DATABASE_URL
 // gezet is én DATABASE_MEESCHRIJVEN=aan. De bestanden blijven de enige bron; de database krijgt
 // na elke schrijfactie een kopie (saveJson) en wordt elke nacht vergeleken.
@@ -218,10 +222,6 @@ if (DATABASE_MEESCHRIJVEN) {
     console.error("database: meeschrijven start niet:", meeschrijverStartFout);
   }
 }
-// Een testomgeving start alleen op een lege map of op een map met het merk van een
-// testomgeving; productie en lokaal starten niet op een map met dat merk. Dit staat vóór het
-// eerste bestand wordt gelezen of geschreven.
-try { await keurDatamap(dataDir, OMGEVING); } catch (e) { startNiet(e.message); }
 const uploadsDir = join(dataDir, "uploads");
 const renamesPath = join(dataDir, "naam-wijzigingen.json");
 const praktijkenPath = join(dataDir, "praktijken.json");
