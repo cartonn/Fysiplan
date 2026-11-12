@@ -490,6 +490,7 @@ html.v2{
   html.v2 .zb-ptekst small{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   /* Hulp-menu: Help, Wat is er nieuw en de juridische links */
   html.v2 .fp-hulp{order:5;position:relative;display:block}
+  html.v2 .fp-ideeknop{order:5}
   html.v2 .fp-hulpknop{height:34px;display:inline-flex;align-items:center;gap:6px;padding:0 10px;border:0;border-radius:9px;background:transparent;
     color:var(--text);font:inherit;font-size:13px;font-weight:550;cursor:pointer}
   html.v2 .fp-hulpknop:hover,html.v2 .fp-hulpknop[aria-expanded="true"]{background:#ecebe4;color:var(--ink)}

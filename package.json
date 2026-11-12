@@ -71,6 +71,7 @@
     "test:bodygeenobject": "node scripts/test-body-geen-object.mjs",
     "test:praktijkcode": "node scripts/test-praktijkcode.mjs",
     "test:team": "node scripts/test-team.mjs",
+    "test:ideeenbox": "node scripts/test-ideeenbox.mjs",
     "test:uitnodigmail": "node scripts/test-uitnodig-mailrem.mjs",
     "test:inbox": "node scripts/test-inbox.mjs",
     "test:patientkant": "node scripts/test-patientkant.mjs",
