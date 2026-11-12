@@ -94,6 +94,7 @@ jobs:
       - run: npm run test:daguitvraag
       - run: npm run test:profielcollega
       - run: npm run test:profieltherapeut
+      - run: npm run test:oefdagen
       - run: npm run test:prullenbak
       - run: npm run test:wachtrijdagen
       - run: npm run test:agendamelding
