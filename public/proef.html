@@ -196,7 +196,7 @@ __INHOUD__
     <ol class="stappen">
       <li><span><b>Een voorbeeldkaart staat klaar.</b> Je begint niet met een leeg vel, maar met een kant-en-klaar rugprogramma dat je zelf aanpast.</span></li>
       <li><span><b>Zet tot 12 oefeningen op de kaart.</b> Kies uit __OEFENINGEN_AANTAL__ oefeningen of een van de sjablonen per klacht.</span></li>
-      <li><span><b>Zet een wachtwoord op je praktijk.</b> Dat kost een halve minuut; daarna komt de QR-code vanzelf op de kaart. Zonder wachtwoord deelt Fysiplan geen pati&euml;ntkaarten.</span></li>
+      <li><span>__BEVEILIG_STAP__</span></li>
       <li><span><b>Print de A4</b> of bewaar hem als PDF, met de QR-code erop.</span></li>
       <li><span><b>Scan de QR met je eigen telefoon</b> en zie precies wat je pati&euml;nt ziet: uitleg, video en voorlezen.</span></li>
     </ol>
@@ -243,6 +243,7 @@ __INHOUD__
         <div class="veld"><label for="ov_praktijk">Praktijknaam</label><input id="ov_praktijk" name="praktijk" maxlength="80" autocomplete="organization" required value="__V_PRAKTIJK__"/></div>
         <div class="veld" style="margin-top:12px"><label for="ov_email">Je e-mail <span style="font-weight:400">(alleen als je met een eigen login werkt)</span></label><input id="ov_email" name="email" type="email" maxlength="120" autocomplete="username" value="__V_OV_EMAIL__"/></div>
         <div class="veld" style="margin-top:12px"><label for="ov_ww">Wachtwoord <span style="font-weight:400">(van de praktijk, of je eigen bij een eigen login)</span></label><input id="ov_ww" name="wachtwoord" type="password" autocomplete="current-password" required/></div>
+        <div class="veld" style="margin-top:12px"><label for="ov_code">Code uit je code-app <span style="font-weight:400">(alleen als je login een tweede stap heeft; een reservecode mag ook)</span></label><input id="ov_code" name="code" maxlength="24" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false"/></div>
         <div class="knoppen"><button class="knop omlijnd" type="submit">Bekijk seintjes en scores</button></div>
       </form>
     </div>
@@ -290,6 +291,7 @@ __INHOUD__
         <div class="veld"><label for="dl_praktijk">Praktijknaam</label><input id="dl_praktijk" name="praktijk" maxlength="80" autocomplete="organization" required value="__V_PRAKTIJK__"/></div>
         <div class="veld" style="margin-top:12px"><label for="dl_email">Je e-mail <span style="font-weight:400">(alleen als je met een eigen login werkt; je moet beheerder zijn)</span></label><input id="dl_email" name="email" type="email" maxlength="120" autocomplete="username"/></div>
         <div class="veld" style="margin-top:12px"><label for="dl_ww">Wachtwoord <span style="font-weight:400">(van de praktijk, of je eigen)</span></label><input id="dl_ww" name="wachtwoord" type="password" autocomplete="current-password" required/></div>
+        <div class="veld" style="margin-top:12px"><label for="dl_code">Code uit je code-app <span style="font-weight:400">(alleen als je login een tweede stap heeft; een reservecode mag ook)</span></label><input id="dl_code" name="code" maxlength="24" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false"/></div>
         <div class="knoppen"><button class="knop omlijnd" type="submit">Download alles</button></div>
       </form>
     </div>
@@ -308,6 +310,7 @@ __INHOUD__
         <div class="veld"><label for="ws_praktijk">Praktijknaam</label><input id="ws_praktijk" name="praktijk" maxlength="80" autocomplete="organization" required value="__V_PRAKTIJK__"/></div>
         <div class="veld" style="margin-top:12px"><label for="ws_email">Je e-mail <span style="font-weight:400">(alleen als je met een eigen login werkt; je moet beheerder zijn)</span></label><input id="ws_email" name="email" type="email" maxlength="120" autocomplete="username"/></div>
         <div class="veld" style="margin-top:12px"><label for="ws_ww">Wachtwoord <span style="font-weight:400">(van de praktijk, of je eigen)</span></label><input id="ws_ww" name="wachtwoord" type="password" autocomplete="current-password" required/></div>
+        <div class="veld" style="margin-top:12px"><label for="ws_code">Code uit je code-app <span style="font-weight:400">(alleen als je login een tweede stap heeft; een reservecode mag ook)</span></label><input id="ws_code" name="code" maxlength="24" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false"/></div>
         <div class="veld" style="margin-top:12px"><label for="ws_zeker">Typ ter bevestiging: <b>WISSEN</b></label><input id="ws_zeker" name="zeker" maxlength="20" autocomplete="off" required/></div>
         <div class="knoppen"><button class="knop oranje" type="submit">Wis alles van mijn praktijk</button></div>
       </form>
@@ -320,9 +323,9 @@ __INHOUD__
 <!--blok:uitnodiging-->
 <main class="smal">
   <div>
-    <span class="etiket">Uitnodiging &middot; __PRAKTIJK__</span>
-    <h1>Kies je eigen wachtwoord.</h1>
-    <p class="lead">Je werkt in Fysiplan voortaan met je eigen login bij __PRAKTIJK__. Je logt in met <b>__EMAIL__</b> en het wachtwoord dat je hier kiest.</p>
+    <span class="etiket">__UI_SOORT__ &middot; __PRAKTIJK__</span>
+    <h1>__UI_KOP__</h1>
+    <p class="lead">__UI_LEAD__</p>
     __MELDING__
     <div class="blad" style="margin-top:28px">
       <form method="post" action="/v2/uitnodiging">
@@ -338,6 +341,24 @@ __INHOUD__
           <li>Werk op een apparaat met schermslot, en log uit op een gedeelde computer.</li>
         </ul>
         <label class="vink" style="margin-top:14px"><input type="checkbox" name="regels" value="1" required/><span>Ik heb de werkregels gelezen en houd me eraan.</span></label>
+        <div class="knoppen"><button class="knop oranje" type="submit">Wachtwoord opslaan</button></div>
+      </form>
+    </div>
+  </div>
+</main>
+<!--/blok-->
+<!--blok:nieuwwachtwoord-->
+<main class="smal">
+  <div>
+    <span class="etiket">Nieuw wachtwoord &middot; __PRAKTIJK__</span>
+    <h1>Kies een nieuw wachtwoord.</h1>
+    <p class="lead">__UI_LEAD__</p>
+    __MELDING__
+    <div class="blad" style="margin-top:28px">
+      <form method="post" action="/v2/uitnodiging">
+        <input type="hidden" name="t" value="__TOKEN__"/>
+        <input type="email" value="__EMAIL__" autocomplete="username" readonly hidden/>
+        <div class="veld"><label for="ui_ww">Nieuw wachtwoord (minstens 8 tekens)</label><input id="ui_ww" name="wachtwoord" type="password" minlength="8" autocomplete="new-password" required/></div>
         <div class="knoppen"><button class="knop oranje" type="submit">Wachtwoord opslaan</button></div>
       </form>
     </div>

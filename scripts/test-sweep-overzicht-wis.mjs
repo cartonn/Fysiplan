@@ -7,7 +7,7 @@
 // Zonder browser, past in CI. `npm run test:sweepoverzicht`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { createHash, randomBytes } from "node:crypto";
+import { createHash, randomBytes, scryptSync } from "node:crypto";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
@@ -26,6 +26,12 @@ const sha = (t) => createHash("sha256").update(t).digest("hex");
 await writeFile(join(dataDir, "proef-aanmeldingen.json"), JSON.stringify({
   oud0000000000009: { id: "oud0000000000009", email: "mark@sweep.nl", naam: "Mark Test", tel: "+31612340000",
     praktijk: "Fysio Sweep", gestart: Date.now() - 15 * dag, verloopt: Date.now() - dag, akkoord: "x", tokens: [sha(token)] }
+}));
+// de praktijk is al beveiligd en de kaart is van haar. Wie een naam nu pas beveiligt, krijgt de
+// kaarten die er al onder stonden niet mee (test:naamerftniets), dus logt deze test in.
+const hash = (ww) => { const s = randomBytes(16); return "scrypt$" + s.toString("hex") + "$" + scryptSync(ww, s, 32).toString("hex"); };
+await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify({
+  "fysio sweep": { naam: "Fysio Sweep", hash: hash("praktijk-wachtwoord"), gemaakt: Date.now() - 14 * dag }
 }));
 await writeFile(join(dataDir, "kaarten.json"), JSON.stringify({
   "fysio sweep": { "jan k.": { id: "0ad0ad0ad0b1", praktijk: "Fysio Sweep", naam: "Jan K.", ts: Date.now() - 2 * dag,
@@ -55,9 +61,9 @@ const overzicht = (velden) => fetch(origin + "/v2/proef/overzicht", { method: "P
 
 try {
   for (let i = 0; i < 100; i++) { try { if ((await fetch(origin + "/health")).ok) break; } catch {} await wacht(50); }
-  const claim = await post("/api/praktijk/claim", { praktijk: "Fysio Sweep", wachtwoord: "praktijk-wachtwoord", akkoord: true });
-  assert.equal(claim.status, 200);
-  const G = { "x-praktijk-sessie": (await claim.json()).sessie };
+  const login = await post("/api/praktijk/login", { praktijk: "Fysio Sweep", wachtwoord: "praktijk-wachtwoord" });
+  assert.equal(login.status, 200);
+  const G = { "x-praktijk-sessie": (await login.json()).sessie };
   const eigen = await post("/api/praktijk/team/eigen-login", { naam: "Mark", email: "mark@sweep.nl", wachtwoord: "mark-wachtwoord", regels: true }, G);
   assert.equal(eigen.status, 200);
   const M = { "x-praktijk-sessie": (await eigen.json()).sessie };

@@ -9,17 +9,43 @@ daaruit tot en met 2026-11-06.
 | Gebied | Laatst geaudit |
 |---|---|
 | (a) beheer-endpoints en de admin-sleutel | 2026-11-11 12u (alleen de nieuwe `/api/beheer/backup-status` uit #187: `isAdmin` met rem, geen geheimen in het antwoord; /health toont alleen uit/ok/deels/fout/wacht. Geen gat) · 2026-11-10 12u (na #159: sleutelformulier controleert via /api/dashboard, sleutel alleen in sessionStorage, geen sleutel in publieke bestanden; productie zonder eigen `ADMIN_KEY` dicht. Gevonden: foute sleutels op routes waar beheer een extra recht is, telden niet mee voor de rem, opgelost) · 2026-11-09 12u (statisch: 17 `isAdmin`-routes, /aanmeldingen en /medewerkers alleen `ACCOUNT_BEHEER_EMAILS`, geen admin88 in publieke bestanden, productie zonder eigen `ADMIN_KEY` dicht, rem vóór sleutel. Geen gat) |
-| (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-10 20u (NAKIJKEN van de sweep bevestigd: missers van een lid bij wachtwoord wijzigen telden op de praktijksleutel, opgelost) · 2026-11-10 16u (runtime: inlogrem per IP remde niet echt, goed wachtwoord na 20 missers nog binnen; /v2/gegevens en /v2/proef/overzicht telden missers niet per IP: opgelost. Sessies 30 dagen, ingetrokken bij verwijderen/wachtwoord/gedeeld uit; rol live uit het lid; uitnodigingstoken 192 bits met misrem; herstelcode 80 bits. Verder geen gat) · 2026-11-09 12u (team: eigen login, uitnodigen, verwijderen, rol, gedeeld uit; uitnodiging verzilveren; wachtwoord per lid; v1-login/registratie. Nieuw: LAAG uitnodigingsmail als spamkanaal, zie Open) · 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
+| (b) accountlaag: sessies, inlogrem, claim, wachtwoord, herstelcode | 2026-11-12 00u (na #207, sessies op schijf: alleen sha256(token) + afdruk van de wachtwoordhash in `praktijk-sessies.json`, niet in de reservekopie (`backupBestanden`) en niet onder `/uploads`; alle 7 plekken die sessies intrekken (uitloggen, wachtwoord, lid weg, gedeeld uit, reset, wissen, praktijk weg) werken op de gehashte sleutel; vangnet afdruk ≠ wachtwoord van nu → 401 ook na terugzetten; opnieuw uitgenodigd lid houdt zijn id maar krijgt een nieuwe hash, oude sessie dood. Nieuw LAAG: inlogrem leeft alleen in het geheugen, zie Open. Verder geen gat) · 2026-11-10 20u (NAKIJKEN van de sweep bevestigd: missers van een lid bij wachtwoord wijzigen telden op de praktijksleutel, opgelost) · 2026-11-10 16u (runtime: inlogrem per IP remde niet echt, goed wachtwoord na 20 missers nog binnen; /v2/gegevens en /v2/proef/overzicht telden missers niet per IP: opgelost. Sessies 30 dagen, ingetrokken bij verwijderen/wachtwoord/gedeeld uit; rol live uit het lid; uitnodigingstoken 192 bits met misrem; herstelcode 80 bits. Verder geen gat) · 2026-11-09 12u (team: eigen login, uitnodigen, verwijderen, rol, gedeeld uit; uitnodiging verzilveren; wachtwoord per lid; v1-login/registratie. Nieuw: LAAG uitnodigingsmail als spamkanaal, zie Open) · 2026-11-08 04u (claim, inloggen op naam en e-mail, rem per naam/e-mail/praktijk, wachtwoord wijzigen, herstel, uitnodiging, overzicht en /v2/gegevens met e-mail; gedeeld wachtwoord weer aan: opgelost) |
 | (c) proef-tokens en verlopen proeven | 2026-11-11 16u (welkomstlink was het blijvende cookietoken van het eerste apparaat: opgelost, eigen token 7 dagen / 3 apparaten) · 2026-11-11 04u (statisch + runtime alle /v2/proef/*-routes met de proefcookie: wissen, opzeggen, factuurgegevens, betalen, doorgaan, factuur, terug. "Gegevens wissen" met een betaald abonnement maakte de praktijk gratis en voor altijd klant: opgelost. Nieuw LAAG: abonnementsacties zonder beheerdersrol, welkomstlink = blijvend apparaattoken, zie Open) · 2026-11-09 16u (koppelen van een account aan een proef bij inloggen, nu ook gevolgd door wissen na 30 dagen: oude proefcookie hing een gewone praktijk aan een verlopen proef, opgelost; claim, slot en wissen alleen voor de eigen proef) · 2026-11-08 08u (runtime: aanmelden, opnieuw aanmelden met bekend adres, maillink, verlopen proef, overzicht na proef, wissen/doorgaan/betalen; login-CSRF via /v2/proef/terug: opgelost) |
 | (d) gedeelde kaarten /k en /api/kaart*: id's, IDOR, limieten | 2026-11-11 12u (runtime: met de sessie van praktijk A alle 15 therapeutroutes op een kaart van praktijk B, met naam, kleine letters en leeg → 404, niets van B in een antwoord; zonder sessie alleen de patiëntroute antwoord/gezien (bewust); /api/kaart geeft alleen de allowlist en roepnaam; na nieuwe link geeft het oude id 404 op /api/kaart, manifest, agenda, ICS, vertaal en alle patiënt-POST's; id-varianten (hoofdletters, spatie, %00, 8 of 13 tekens) 404; na verwijderen 404; misrem 429 na 30. Geen gat) · 2026-11-10 00u (statisch alle 30 kaartroutes: patiëntroutes met `vindKaart` + misrem + `kruisSite`, therapeutroutes met `eisBeveiligdePraktijk` en alleen de eigen map, /api/kaart met allowlist, /k zonder bestaan-orakel, demo per verzoek vers. Teamsjablonen lezen/verwijderen zonder wachtwoord: opgelost) · 2026-11-08 12u (therapeutroutes op één kaart open bij praktijk zonder wachtwoord: opgelost; id 48 bits + misrem 30/5 min per IP) |
-| (e) uploads (video, logo, opname /o) | 2026-11-10 08u (statisch + runtime: /uploads met ../, %2e%2e, %2f, %5c, %00, dubbele codering → 403/404; opname-upload chunked 70 MB zonder content-length → 413 vóór bufferen, geen bestand; type/magische bytes; token blijft na fout bruikbaar; eigenVideoPad alleen eigen opnames; wissen ruimt foto's, logo en video's op. Geen gat) · 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
-| (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-10 20u (runtime met Chromium, CSP uit zodat ook inline handlers zouden afgaan, op de nieuwe /k van #162 en #171: payloads in praktijknaam, adres, plaats, telefoon, e-mail, website (javascript:), kaartnaam, roepnaam, doel, let op, oefennaam, schemacellen, antwoord, behandelaar, PSK, notitie, afspraak, seintje; overzicht, oefenstand, Gedaan, foto, video, pijnscore in nl en ar: niets uitgevoerd of geïnjecteerd. Statisch: alle 27 `innerHTML` in kaart.html gaan door `esc()`, `vids`/`yt` alleen via de serverwhitelist. Geen gat) · 2026-11-09 08u (runtime met Chromium: payloads in teamnaam, uitnodiging, eigen oefening, teamsjabloon, alle kaartvelden, bericht, notitie, behandelaar, doel; app-start, Kaarten-paneel, inbox, Team, Activiteit, Rapport, Sjablonen, /k in nl/en/ar: niets geïnjecteerd, geen CSP-melding. CSV-exports met formule-escape, afspraak-ICS zonder regelinjectie. Geen gat) |
+| (e) uploads (video, logo, opname /o) | 2026-11-11 20u (runtime: /uploads met ../, %2e%2e, ..%2f, ..%5c, dubbele codering, %00, hoofdletters, ./ en // → 403/404 of hetzelfde eigen bestand; opname van een verwijderde kaart via // of ./ blijft 404 (test:kaartprullenbak); weesopnames worden bij start opgeruimd; nosniff/CORP/noindex op media. Geen gat) · 2026-11-10 08u (statisch + runtime: /uploads met ../, %2e%2e, %2f, %5c, %00, dubbele codering → 403/404; opname-upload chunked 70 MB zonder content-length → 413 vóór bufferen, geen bestand; type/magische bytes; token blijft na fout bruikbaar; eigenVideoPad alleen eigen opnames; wissen ruimt foto's, logo en video's op. Geen gat) · 2026-11-09 00u (praktijkprofiel + logo van een praktijk zonder wachtwoord overschrijfbaar met alleen de naam: opgelost; opname-upload, beheer-upload, /uploads-pad, type/grootte/magische bytes: geen gat) |
+| (f) injectie en XSS (kaartvelden, sjablonen, eigen oefeningen, CSV, vertaling) | 2026-11-12 12u (statisch: alle nieuwe `innerHTML` sinds 6f5fe7c in index.html/kaart.html/proef.html (eigen login, tweede stap, reservecodes, sleutel, prullenbak, seintjes): invoer door `esc()`, de QR-link via `setAttribute` met een server-`otpauth:`-uri, `vrager` uit een vaste tekst. Geen gat) · 2026-11-10 20u (runtime met Chromium, CSP uit zodat ook inline handlers zouden afgaan, op de nieuwe /k van #162 en #171: payloads in praktijknaam, adres, plaats, telefoon, e-mail, website (javascript:), kaartnaam, roepnaam, doel, let op, oefennaam, schemacellen, antwoord, behandelaar, PSK, notitie, afspraak, seintje; overzicht, oefenstand, Gedaan, foto, video, pijnscore in nl en ar: niets uitgevoerd of geïnjecteerd. Statisch: alle 27 `innerHTML` in kaart.html gaan door `esc()`, `vids`/`yt` alleen via de serverwhitelist. Geen gat) · 2026-11-09 08u (runtime met Chromium: payloads in teamnaam, uitnodiging, eigen oefening, teamsjabloon, alle kaartvelden, bericht, notitie, behandelaar, doel; app-start, Kaarten-paneel, inbox, Team, Activiteit, Rapport, Sjablonen, /k in nl/en/ar: niets geïnjecteerd, geen CSP-melding. CSV-exports met formule-escape, afspraak-ICS zonder regelinjectie. Geen gat) |
 | (g) security-headers, CSP, cookies, CSRF | 2026-11-11 16u (runtime: CSP/frame-ancestors/nosniff/referrer/no-store op /v2 (Active Tech, fonts self), /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst, /v2/gegevens, /v2/uitnodiging, API; /uploads met CORP same-origin; cookies fp1/fpproef HttpOnly+SameSite=Lax(+Secure). Statisch alle 75 schrijfroutes: zonder `kruisSite` alleen routes met de beheersleutel in een header, `/api/opname/start` (sessie in header, token niet cross-origin leesbaar) en v1-uitloggen. Praktijksessie zit in een header, niet in een cookie. Geen gat) · 2026-11-10 04u (runtime: CSP/frame-ancestors/nosniff/referrer/no-store op 13 V2-routes ook /v2/gegevens, /v2/uitnodiging, /aanmeldingen, factuur; cookies fp1/fpproef HttpOnly+SameSite=Lax(+Secure achter https); cross-site POST op alle /v2/proef/*-acties, /v2/gegevens en /api/praktijk* → 403; geen CORS-headers, ook niet op OPTIONS. Geen gat) · 2026-11-08 16u (runtime: CSP, frame-ancestors, nosniff, referrer, no-store op /v2, /v2/proef, /v2/app, /k, /o, /privacy, /verwerkersovereenkomst en API; geen inline script zonder nonce; HSTS alleen achter https. Geen gat); 2026-11-09 08u: `kruisSite` liet same-site door, opgelost) |
 | (h) foutmeldingen die stacktraces of paden lekken | 2026-11-11 08u (runtime-fuzz 123 routes + /k, /o, /api/kaart/<id>, team, drafts, uploads × GET/POST/PUT/DELETE × 9 kapotte bodies × 3 content-types, zonder én met praktijksessie + beheersleutel = 21.648 verzoeken: geen 500, geen stacktrace, geen intern pad, niets in het serverlog. Alleen beheer ziet bij de Cloudflare-koppeling de JSON-parsefout, geen pad. Geen gat) · 2026-11-09 16u (statisch: alle `sendJson`/`send` met `err.message`/`e.stack` in server.js, routes/ en lib/ sinds 8-11, ook opzeggen, factuur, wissen na proef: interne fouten gaan alleen naar het serverlog. Geen gat) · 2026-11-08 (runtime-fuzz 103 routes × GET/POST/PUT/DELETE × 7 kapotte bodies × 3 content-types = 6592 verzoeken, plus pad-traversal en kapotte %-codering: geen stacktrace, geen intern pad, geen fout in het serverlog) |
 | (i) denial of service: grote bodies, opslaggroei | 2026-11-11 08u (statisch: 67 `readBody`-aanroepen met grens, patiëntroutes /api/kaart/* met plafonds (metingen 366, ervaring 120, gedaan 366, oefTrouw 60, oefZwaar 24, contactlog 50), tik terug in de tijd begrensd, Mollie-webhook alleen eigen betaal-id's. Geen gat) · 2026-11-09 20u (remmen: schrijf-/leesrem per IP zette een hele praktijk achter één wifi plus de patiënten daar op 429: opgelost met een rem per praktijk; plafonds per praktijk ongewijzigd) · 2026-11-08 20u (opslaggroei alle schrijfroutes; één praktijk kon de videogrens voor iedereen volzetten: opgelost met quotum per praktijk) |
 | (j) npm audit | 2026-11-11 12u (0 meldingen) · 2026-11-10 08u (0 meldingen) · 2026-11-09 20u (0 meldingen, ook dev) |
 
-Volgende run: (e) uploads, daarna (b) accountlaag.
+Volgende run: (h) foutmeldingen, daarna (i) denial of service.
+
+Sanity 2026-11-12 12u op #219–#223 (opzeggen/praktijknaam bezet, AI-melding zoekhulp/vertaling, login bij andere praktijk,
+eigen login verplicht, naam erft niets): #222 laat bij de overstap alleen iemand met het juiste praktijkwachtwoord één beheerder met
+eigen login maken, en alleen zolang er geen actieve beheerder met eigen login is (anders 401 `perEmail`); daarna is het
+praktijkwachtwoord dood (`gedeeldStaatUit`), sessies ingetrokken, en komt pas met de eerste code een sessie. Een nieuwe claim maakt
+meteen een eigen login met tweede stap, het praktijkwachtwoord is een willekeurige hash. Herstelcode geeft onder de regel geen sessie.
+`team/gedeeld` aan en `stap-verplicht` uit zijn 400. #221 noemt bij een login van een andere praktijk pas na een goed wachtwoord de
+eigen praktijknaam (409). #223: claim op een naam met gegevens zonder account krijgt een eigen code. Geen gat.
+
+Sanity 2026-11-12 04u op #209–#218 (sessies op schijf, lichte app, beheerherstel per mail, seintjesmail, tweede stap en verplichting,
+teamsjabloon vervangen, proefmail): nieuwe routes `/api/praktijk/team/tweede-stap/{start,bevestig,uit,reservecodes}` vragen een eigen
+login plus het eigen wachtwoord (rem per lid), `bevestig` alleen binnen een lopende instelling met 10 pogingen; `tweede-stap/wis`,
+`stap-verplicht` en `sein-mail` alleen voor een beheerder, wissen en verplichten alleen met eigen login; `/api/praktijk/reset` is 410
+met de beheersleutel; `/api/beheer/praktijk-herstel` alleen met de beheersleutel, rem per praktijk en per adres, link/code alleen in de
+mail, niets verandert tot de praktijk de mail gebruikt. Geen gat.
+
+Sanity 2026-11-12 00u op #202–#208 (landing, voorwaarden, /k grote letters + /o galerij, vraaghulp-schakelaar, sessies op
+schijf, reservekopiegrens, donker thema + seintjesvenster): `VRAAGHULP_AAN` sluit `/api/kaart/vraag` (503) en de `ai`-vlag
+van /api/kaart zonder schakelaar; `backupRuimte`/`gegevens` op /health en backup-status geven alleen getallen; de waarschuwingsmail
+gaat alleen naar `proefMeldingAan`; nette afsluiting op SIGTERM. `seinFeitenHtml` (nieuw `innerHTML` in index.html) zet alle
+invoer door `esc()`, de kleur komt uit een vaste lijst. #205 raakt alleen `kaart.html`/`opname.html` zonder nieuwe `innerHTML` met
+invoer. Geen gat.
+
+Sanity 2026-11-11 20u op #198–#200 (eigen welkomstlink, tekst Mijn gegevens, donker thema/kaart weg/vertaling op /k): #199
+voegt alleen `HERSTEL_DAGEN` (getal, door `htmlEsc`) toe aan de proefpagina; #200 raakt `index.html`, `kaart.html`, `proef.html`
+en CSS zonder nieuwe `innerHTML` met invoer en zonder nieuwe serverroute. Geen gat.
 
 Sanity 2026-11-11 16u op #191–#197 (prullenbak, herstel, definitief verwijderen, praktijkprofiel collega, Active Tech):
 nieuwe routes `/api/kaarten/prullenbak`, `/herstel`, `/definitief` met `eisBeveiligdePraktijk`, `kruisSite` en
@@ -318,7 +344,55 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
-- **NAKIJKEN (van de gebruikers-sweep 2026-11-11 18u, Karin) — LAAG:** zolang het gedeelde praktijkwachtwoord aan staat, kan een sessie
+- **OPGELOST 2026-11-12 06u (gebruikers-sweep, deze PR, test:loginanderepraktijk) — HOOG (Karin, desktop) — inloggen met e-mail
+  negeerde de praktijknaam als de login maar bij één praktijk hoorde.** Een collega met alleen een login bij Beta kwam op het scherm van
+  Alfa stil bij Beta binnen (200, sessie van Beta); een verwijderde collega met een tweede praktijk dacht zo dat hij er nog in zat.
+  Nu 409 met de naam van de eigen praktijk (`kies`), zonder sessie; zonder naam of met de goede naam/praktijkcode gewoon 200; fout
+  wachtwoord blijft 403 zonder praktijknaam (server.js `/api/praktijk/login`).
+- **OPGELOST 2026-11-12 12u (deze PR, test:kaartpraktijknaam).** Bevestigd lokaal: met de sessie van "Fysio Zonnig" (ook rol
+  therapeut) gaf `POST /api/kaarten` met `praktijk: "Bel 0900-OPLICHTER"` 200 en toonde /api/kaart die kop aan de patiënt (zonder
+  profiel ook als praktijknaam) en in de agenda-uitnodiging. Nu bewaart de server bij een beveiligde praktijk de eigen weergavenaam
+  (`kaartPraktijkNaam`: profiel, anders de naam bij het beveiligen) en vervangt hij bij het lezen (/api/kaart, afspraak- en
+  oefenmomenten-ICS) ook een oude kop die al op de server stond. Opnieuw openen met een afwijkende A4-kop hoogt de versie niet op.
+  Zonder account (v1, beheer) blijft de opgeslagen naam. De A4-kop in de app zelf blijft vrij (alleen print). Oorspronkelijke melding:
+- **MIDDEL (nieuw, gebruikers-sweep 2026-11-12 06u, Sanne + Karin) — de praktijknaam op de patiëntkaart komt van de client, niet van de
+  sessie.** `POST /api/kaarten` bewaart `praktijk = cleanName(b.praktijk, 80)` (server.js r. ~5182) terwijl `pk` uit de sessie komt.
+  Gevolg: na het hernoemen van de A4-kop tonen kaarten van één praktijk verschillende namen op /k ("Beveiligd bij 'Fysio Zonnig'" en
+  tegelijk "Kaarten van de praktijk (…De Gezonde Rug…)"), en een therapeut kan een willekeurige praktijknaam als kop op de patiëntkaart
+  zetten. /api/kaart valt terug op `found.praktijk` als het profiel ontbreekt (r. ~5475). Voorstel: bij een sessie de weergavenaam van
+  de praktijk van de sessie bewaren/tonen; hernoemen alleen via het profiel (beheerder). Raakt index.html (kop op de A4) en server.js.
+
+- **OPGELOST 2026-11-12 02u (gebruikers-sweep, deze PR, test:gedeeldwerk) — HOOG (Karin, desktop) — het gedeelde praktijkwachtwoord wiste
+  de hele praktijk, ook de beheerders met eigen login.** `/v2/gegevens/wissen` zonder e-mail viel terug op `accountVoorLogin` (gedeeld
+  wachtwoord) en wiste alles, ook het account van de eigenaar. Nu: heeft de praktijk een actieve beheerder met eigen login, dan wist
+  alleen zo'n beheerder (met e-mail), net als bij het team (#201); 403 met uitleg en "alles-wissen-geweigerd" in het logboek. Downloaden
+  met het gedeelde wachtwoord werkt nog (bewust gelaten; zie het punt hieronder).
+- **OPGELOST 2026-11-12 04u (deze PR) voor (1); (2) AFGESLOTEN als geen gat.** (1) Bevestigd: met een beheerder met eigen login
+  zegde het gedeelde praktijkwachtwoord het abonnement op (200). Nu 403 ("alleen een beheerder met een eigen login"), "opzeggen
+  geweigerd" in Activiteit; zonder beheerder met eigen login werkt het gedeelde wachtwoord zoals voorheen. Test: uitgebreid
+  `npm run test:opzeggenbeheer`. (2) Downloaden met het gedeelde wachtwoord laat ik bewust zo: een sessie met dat wachtwoord is
+  beheerder en leest in de app al elke kaart en het logboek, dus de download geeft niets extra's; de tweede stap verplicht maken
+  (#217) zet het gedeelde wachtwoord uit. Oorspronkelijke melding:
+  **NAKIJKEN (gebruikers-sweep 2026-11-12 02u, Karin) — MIDDEL — zelfde patroon nog open:** (1) opzeggen van het abonnement met het
+  gedeelde wachtwoord terwijl er een beheerder met eigen login is (`abonnementBeheerder`, server.js r. ~996; intrekken kan wel, dus
+  herstelbaar); (2) alles downloaden (alle kaarten en het logboek) met het gedeelde wachtwoord, zelfde situatie. Kies of beide ook een
+  beheerder met eigen login vragen.
+- **OPGELOST 2026-11-12 04u (deze PR, test:praktijknaambezet).** Bevestigd lokaal (200, stil). Dubbele namen blijven mogelijk
+  (zoals bij beveiligen), maar POST /api/praktijken geeft nu 409 `bezet` als een andere beveiligde praktijk de nieuwe naam al heeft
+  (ook met andere hoofdletters); de app vraagt "Weet je het zeker?" en stuurt dan `zelfdeNaam: true`. Elke naamwijziging staat als
+  "praktijknaam gewijzigd" met wie en oud → nieuw in Activiteit. Oorspronkelijke melding:
+  **NAKIJKEN (gebruikers-sweep 2026-11-12 02u, Karin) — MIDDEL — beheerder hernoemt de praktijk stil naar de naam van een andere
+  praktijk.** POST /api/praktijken met `praktijk: "<naam van praktijk B>"` geeft 200; daarna toont /k de naam van B en inloggen met naam
+  B + het wachtwoord van A komt in A uit (B zelf onaangetast). server.js r. ~4192 en ~4255 (`praktijkAccounts[key].naam = p.praktijk`)
+  zonder controle op `accountsMetNaam`. Verwacht: dezelfde waarschuwing als bij beveiligen.
+
+- **OPGELOST 2026-11-11 20u (deze PR) — NAKIJKEN (van de gebruikers-sweep 2026-11-11 18u, Karin) — LAAG→MIDDEL:** bevestigd: met een
+  sessie op het gedeelde praktijkwachtwoord (dat vaak het hele team kent) kon elke collega een beheerder met eigen login naar
+  therapeut zetten én met `gedeeld: "laten"` uit het team verwijderen; in Activiteit stond alleen "rol gewijzigd" zonder naam. Nu:
+  een gedeelde sessie krijgt 403 bij degraderen of verwijderen van een actieve beheerder met eigen login ("team-wijziging-geweigerd"
+  met naam in Activiteit); iemand beheerder maken en therapeuten beheren blijft met de gedeelde sessie werken; een beheerder met
+  eigen login kan een andere beheerder gewoon aanpassen. "Rol gewijzigd" en "collega verwijderd" tonen nu wie welke collega
+  aanpaste. Test: `npm run test:teameigenbeheer`. Oorspronkelijke melding: zolang het gedeelde praktijkwachtwoord aan staat, kan een sessie
   met dat wachtwoord elke beheerder met eigen login naar therapeut zetten (`/api/praktijk/team/rol`, server.js r. ~3221: de check geldt
   alleen bij `acc.gedeeldUit` of voor jezelf). Gemeten: 200, daarna 0 beheerders met eigen login. Klopt met het ontwerp (gedeeld =
   beheerder), maar zonder waarschuwing en zonder logregel met naam. Overwegen: rolwijziging van een eigen-login-beheerder alleen door een
@@ -349,6 +423,19 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   twee verschillende links, maar per collega wordt maar één hash bewaard** (server.js r. ~2830 overschrijft). De eerste link is dan
   dood (404 "werkt niet meer"). In de app zelf is dubbelklik opgevangen; dit is de serverkant (Mark, API).
 
+- **LAAG (2026-11-12) — inlogrem start bij elke herstart opnieuw.** `loginMisPraktijk` (10 missers per praktijk per kwartier)
+  en de rem per IP staan alleen in het geheugen. Sinds #207 overleven sessies een uitrol, maar de rem niet: elke uitrol (±25 per
+  dag) geeft een aanvaller op één praktijkwachtwoord 10 extra pogingen, bovenop de ±960 per dag die de rem al toelaat (+25 %).
+  Scrypt en een wachtwoord van minstens 8 tekens maken dat geen praktische route. Voorstel als het goedkoop kan: de per-praktijk-
+  teller mee in het sessiebestand of een eigen klein bestand.
+- **AFGESLOTEN 2026-11-12 (geen securitygat, ontwerp) — NAKIJKEN (van de gebruikers-sweep 2026-11-11 22u, Karin) — LAAG:** een
+  beheerder van Y die zijn praktijk hernoemt naar de naam van X kan niets van X lezen of wijzigen (accounts blijven gescheiden). Een
+  nieuwe praktijk mag bij claimen al bewust dezelfde naam kiezen ("Andere praktijk met deze naam"), dus hernoemen geeft geen nieuwe
+  route om op X te lijken. De weggevallen hint bij X is UX: hoort bij de gebruikers-sweep. Oorspronkelijke melding: een beheerder van praktijk Y kan via POST /api/praktijken
+  het profiel en `account.naam` hernoemen naar de exacte naam van een andere beveiligde praktijk X (200, geen vraag; server.js r. ~3890).
+  Geen datalek (/v2/gegevens en team blijven per account gescheiden), maar patiëntkaarten en uitnodigingen van Y lijken dan van X te
+  komen, en bij X valt de hint "log in met je eigen e-mail" weg (`every(gedeeldUit)` over accounts met die naam). Bij claimen moet
+  "andere praktijk met deze naam" juist bewust gekozen worden. Overwegen: zelfde botsingscheck als bij claimen.
 - **AFGESLOTEN 2026-11-10 (geen gat) — beoordeeld door security:** de proefmails zijn platte tekst, de adressen in HTML gaan
   door `htmlEsc` en de CSV van /api/aanmeldingen zet `'` voor `= + - @` (formule-escape). Een strengere regex mag (UX), is geen securityfix.
 - **LAAG (doorgezet door de gebruikers-sweep 2026-11-09 22u, ter info) — e-mailcheck van de proef keurt `=hyperlink("http://evil")@x.nl`
@@ -501,6 +588,19 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Opgelost
 
+- OPGELOST 2026-11-12 (bouwthread, deze PR) — **wie een praktijknaam beveiligt, erfde wat er zonder account onder stond** (HOOG).
+  Een v1-sessie en beheer delen kaarten onder de naam in kleine letters, zonder praktijkaccount, en er zijn kaarten
+  van vóór de wachtwoordplicht. De eerste die zo'n naam in V2 beveiligde, kreeg die sleutel: alle kaarten eronder
+  (lezen en verwijderen), en de v1-praktijk kreeg daarna 401 op haar eigen overzicht en kon niets meer delen. De
+  standaardnaam van v1, "FysioTotaal", staat als voorbeeld op de landingspagina. Lokaal gemeten met een v1-sessie.
+  Nu: staat er onder de kale naam al iets zonder account (kaarten, profiel, sjablonen, eigen oefeningen, of een
+  profiel met die naam onder een andere sleutel zonder account), of is het de standaardnaam van v1, dan krijgt de
+  nieuwe praktijk een eigen code (`naamDraagtGegevens`), net als bij "Andere praktijk met deze naam". Een verse naam
+  houdt de naam als sleutel. Test: `npm run test:naamerftniets`. Drie tests die een praktijk beveiligden boven op
+  gezaaide kaarten (dossier-contact, praktijkgegevens, sweep-overzicht-wis) zaaien nu ook het account.
+  Niet meegenomen (LAAG): logboekregels onder een kale naam zonder account (soort actie, tijdstip, gemaskeerd IP;
+  geen kaartnamen) blijven bij de naam. Staat er verder niets meer onder, dan ziet wie de naam daarna beveiligt
+  die regels in Activiteit en in de download.
 - OPGELOST 2026-11-07 PR #73 — **herstelcode werkte nog na "gedeeld praktijkwachtwoord uit"** (MIDDEL).
   De code ligt op papier in de praktijkmap, dus een vertrokken collega kende hem. Met
   `/api/praktijk/herstel` kon die het gedeelde wachtwoord omzetten, kreeg elke keer een verse code (de

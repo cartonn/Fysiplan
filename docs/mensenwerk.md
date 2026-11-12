@@ -16,6 +16,11 @@ en art. 4 samen worden aangepast; wie al met de 24 maanden heeft afgesloten, hou
 zin kijken. Ook nog niet in de voorwaarden: "60 dagen begeleide start, gratis import" voor oprichters.
 
 ### Praktijk met één beheerder die het wachtwoord kwijt is (gebruikers-sweep, 2026-11-11 14u)
+**GEDAAN 2026-11-12 (deze PR), keuze (2):** elke eigen login vraagt onder Kaarten met "Wachtwoord vergeten?" zelf een link aan op het
+eigen adres (een uur geldig, werkt één keer, de tweede stap blijft staan); zie de README bij *Wachtwoord vergeten*. Ahmed koos dit
+niet uit dit lijstje: het is gebouwd binnen zijn opdracht van 2026-11-11 om de hoge prioriteiten uit de platformreview af te maken,
+omdat sinds #222 elke praktijk start met één beheerder, zonder praktijkwachtwoord en zonder herstelcode. Keuze (1), de waarschuwing
+voor een tweede beheerder, is niet gebouwd. De herstelmail van beheer werkt ongewijzigd. Test: `npm run test:wachtwoordvergeten`.
 **Wat de code nu doet:** na de overstap naar eigen logins ("praktijkwachtwoord uit") werkt de herstelcode niet meer. Een lid dat zijn
 wachtwoord kwijt is, moet de beheerder om een nieuwe uitnodiging vragen. Is die lid zelf de enige beheerder, dan is er geen weg terug
 (zichzelf opnieuw uitnodigen geeft 409). De app waarschuwt bij "Zet het praktijkwachtwoord uit" niet dat er twee beheerders horen te zijn.
@@ -39,7 +44,10 @@ inhoud gaat opnieuw over het Railway-netwerk. Iedere dagkopie is zelfstandig her
 De bestaande bucket-lifecycle verwijdert objecten na zeven dagen (afhandeling kan vertraagd zijn).
 
 Budgetbeveiliging: maximaal 1 GiB inhoud per dagkopie, 200 MiB nieuwe transfer per dagelijkse
-poging en 10 MiB gegevensbestanden. Dit is geen onbeperkte opslaggarantie. Bij ontbrekende
+poging en 64 MiB gegevensbestanden (was 10 MiB tot 12 november 2026; boven die grens mislukt de
+hele dagkopie). Vanaf de helft van die grens meldt /health `"backupRuimte":"krap"` en krijgt de
+beheerder een mail: op maandag, en boven de 80 procent na elke dagkopie. De getallen staan in
+`/api/beheer/backup-status` onder `gegevens`. Dit is geen onbeperkte opslaggarantie. Bij ontbrekende
 uploads worden gegevens en een expliciete lijst ontbrekende uploads bewaard; /health meldt
 `deels` en de beheerder krijgt een melding. `ok` betekent dat alle geïnventariseerde bestanden
 zijn opgeslagen en de objectgroottes zijn gecontroleerd. Herstel controleert encryptie en hashes.
@@ -88,11 +96,19 @@ beheerders van de praktijk één mail (wanneer, wat er weggaat, doorgaan, kopië
 ook na een proef zonder abonnement. Alleen als de mail is ingesteld (`MAIL_API_SLEUTEL` + `MAIL_AFZENDER`). (2) Teruggave van geld bij opzeggen halverwege de maand: de code boekt niets terug;
 zet je keuze in de voorwaarden (art. 5) of laat de jurist het zeggen. (3) De opzegtermijn in art. 5 is nog een invulplek.
 
-### Vraaghulp op de kaart (legal, 2026-11-07)
-**Wat de code nu doet:** met `ANTHROPIC_API_KEY` ziet elke patiënt "Vraag over je oefeningen (AI)".
-Vragen over pijn, klachten, medicijnen of herstel gaan sinds 7 november niet meer naar de AI-dienst;
-de patiënt krijgt een vaste verwijzing naar de eigen praktijk. Andere vragen (hoe diep zakken?) gaan
-wel naar Anthropic in de VS.
+### Vraaghulp op de kaart (legal, 2026-11-07; eigen schakelaar 2026-11-12)
+**Wat de code nu doet:** de vraaghulp staat standaard UIT, ook als `ANTHROPIC_API_KEY` is ingesteld
+(de zoekhulp en het vertalen hangen aan dezelfde sleutel en blijven werken). De patiëntkaart toont
+het vraagveld dan niet, `/api/kaart/vraag` weigert, de landing noemt de vraaghulp niet en `/health`
+zegt `"vraaghulp":"uit"`. Aanzetten kan alleen bewust met `VRAAGHULP=aan` in Railway.
+**Waarom uit:** het filter herkent een klacht aan een vaste woordenlijst. Gemeten op 11 november:
+15 van 18 gewone klachtzinnen ("ik heb last van mijn rug", "mijn knie is dik en warm") gingen
+erdoorheen en dus naar Anthropic in de VS, terwijl /privacy belooft dat zulke vragen niet worden
+doorgestuurd. Zet de vraaghulp pas weer aan als die belofte klopt, bijvoorbeeld met vaste vragen
+waaruit de patiënt kiest in plaats van een vrij tekstveld.
+**Als hij aan staat:** vragen over pijn, klachten, medicijnen of herstel die het filter herkent gaan
+niet naar de AI-dienst; de patiënt krijgt een vaste verwijzing naar de eigen praktijk. Andere vragen
+(hoe diep zakken?) gaan wel naar Anthropic in de VS.
 **Wat jij moet kiezen:** wil je dat een praktijk de vraaghulp voor haar patiënten zelf kan uitzetten?
 Advies: ja, als een praktijk of jurist erom vraagt (een praktijk is verantwoordelijk voor doorgifte
 buiten de EU). Zeg het, dan bouwt de legal-routine een schakelaar in de praktijkinstellingen.
@@ -108,6 +124,17 @@ versie, wanneer en wie (ook in de download van /v2/gegevens).
    dagen"; dat klopt voor beide. Alleen bij Enterprise (tot 90 dagen) moet de tekst mee.
 3. Laat de jurist privacyverklaring, verwerkersovereenkomst en voorwaarden samen toetsen (staat al
    hieronder bij Algemene voorwaarden, punt 7).
+
+### Mail op de dag dat de proef afloopt (praktijk-routine, 2026-11-12)
+**Wat de code nu doet:** op de dag dat een gratis proef afloopt, krijgt de aanmelder één mail "Je Fysiplan-proef is
+afgelopen": nieuwe kaarten kunnen niet meer, gedeelde kaarten blijven werken, hoe je doorgaat en op welke datum alles
+gewist wordt als de praktijk geen klant wordt. Jij (`PROEF_MELDING_AAN`) krijgt "Proef afgelopen: …", een goed moment
+om te bellen. Geen mail aan klanten, aan wie al "Ja, ik wil doorgaan" koos, of aan proeven die bij de uitrol al langer
+dan een dag voorbij waren. Staat `MOLLIE_API_KEY`, dan noemen deze mail én de herinnering twee dagen vooraf de link
+om de eerste maand online af te rekenen (fysiplan.nl/v2/proef?mijn=1, 9,99 per therapeut, exclusief btw); zonder
+Mollie blijft het "antwoord op deze mail, dan bellen we je".
+**Env:** werkt alleen met mail (`MAIL_API_SLEUTEL` + `MAIL_AFZENDER`, staan al op Railway); de betaallink alleen met `MOLLIE_API_KEY`.
+**Wat jij moet doen:** niets. Kijk bij de eerste "Proef afgelopen"-mail of de toon je bevalt.
 
 ### Online betalen via Mollie (praktijk-routine, 2026-11-07)
 **Wat de code nu doet:** zet je `MOLLIE_API_KEY` op Railway, dan krijgen "Mijn proef" en de

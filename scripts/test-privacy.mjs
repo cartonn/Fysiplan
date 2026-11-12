@@ -67,6 +67,9 @@ const app = spawn(process.execPath, ["server.js"], {
   cwd: root,
   env: { ...process.env, HOST: "127.0.0.1", PORT: String(appPort), DATA_DIR: dataDir, ADMIN_KEY: "",
     ANTHROPIC_API_KEY: "test", ANTHROPIC_BASE_URL: `http://127.0.0.1:${aiPort}`,
+    // de vraaghulp staat standaard uit (eigen schakelaar); deze test meet wat er naar de
+    // AI-dienst gaat als hij bewust aan staat
+    VRAAGHULP: "aan",
     FYSIPLAN_BEDRIJF: "Fysiplan B.V.", FYSIPLAN_KVK: "12345678", FYSIPLAN_HOSTING_REGIO: "EU West (Amsterdam)",
     MAIL_AFZENDER: "Fysiplan <privacy@fysiplan.nl>" },
   stdio: ["ignore", "pipe", "pipe"]
@@ -278,7 +281,7 @@ try {
   assert.match(privacy, /binnen een maand antwoord/);
   assert.match(privacy, /alleen door een computer/);
   assert.match(privacy, /zonder die gegevens kunnen we de proef niet starten/);
-  assert.match(privacy, /Versie 11 november 2026/);
+  assert.match(privacy, /Versie 12 november 2026/);
   assert.match(privacy, /hoe vaak, hoeveel of hoe zwaar je oefent/, "privacyverklaring noemt dat doseringsvragen niet naar de AI-dienst gaan");
   assert.match(privacy, /Foutlog/);
   // code tegen tekst (legal 2026-11-10 17u): alles wat de patiëntroute /api/kaart laat

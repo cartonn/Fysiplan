@@ -3,9 +3,9 @@
   if(!document.documentElement.classList.contains('v2'))return;
   var version='2026-11-02-kaarten',key='fysiplan_release_seen';
   var dialog=document.createElement('dialog');
-  dialog.className='no-print';
+  // huisstijl van de app (donker vlak, eigen achtergrond): de opmaak staat in v2.css onder dialog.fp-nieuw
+  dialog.className='no-print fp-nieuw';
   dialog.setAttribute('aria-label','Nieuw in Fysiplan');
-  dialog.style.cssText='max-width:480px;border:1px solid #dbe2ea;border-radius:12px;padding:24px;color:#243247';
   var title=document.createElement('h2');title.textContent='Nieuw in Fysiplan';dialog.appendChild(title);
   var text=document.createElement('p');text.textContent='Praktijkwebsite op de kaart, legenda voor series/herhalingen/weerstand, compacte beeldkeuze en sjablonen aanpassen als eigen variant. Op de mobiele kaart kun je een beschikbare voorleesstem kiezen.';dialog.appendChild(text);
   var note=document.createElement('p');note.textContent='Nieuwe tekeningen en inhoudelijk gewijzigde standaardsjablonen worden pas na beoordeling vrijgegeven. Bestaande kaarten blijven behouden.';dialog.appendChild(note);

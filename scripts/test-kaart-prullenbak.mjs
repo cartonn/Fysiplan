@@ -104,9 +104,29 @@ try {
   const w=await maak('Wissen',J);
   assert.equal((await def(w.id,J)).status,404,'alleen vanuit de prullenbak');
   assert.equal((await weg('Wissen',J,w.id)).status,200);
+  // WGBO: vanuit de prullenbak kan de praktijk de kaart nog naar het dossier kopiëren,
+  // maar alleen wie hem mag herstellen, en nooit via de gewone route of de patiëntroute.
+  const dosP=(id,H,extra='&prullenbak=1')=>get('/api/praktijk/kaart?praktijk='+encodeURIComponent(P)+'&id='+id+extra,H);
+  const viaPrul=await dosP(w.id,J);
+  assert.equal(viaPrul.status,200,'maker kan de kaart uit de prullenbak naar het dossier kopiëren');
+  const dk=(await viaPrul.json()).kaart;
+  assert.equal(dk.inPrullenbak,true);
+  assert.ok(dk.verloopt>Date.now()&&dk.verloopt<=Date.now()+7*86400000,'verdwijndatum = einde herstel');
+  assert.equal(dk.naam,'Wissen');
+  assert.equal((await dosP(w.id,S)).status,200,'beheerder ook');
+  assert.equal((await dosP(w.id,M)).status,404,'andere therapeut niet');
+  assert.equal((await dosP(w.id,{})).status,401);
+  assert.equal((await dosP(w.id,J,'')).status,404,'gewone route blijft dicht voor verwijderde kaarten');
+  assert.equal((await dosP(a.id,J)).status,404,'een actieve kaart gaat niet via de prullenbakroute');
+  assert.equal((await get('/api/kaart?id='+w.id)).status,404,'patiëntlink blijft dicht');
+  const html=await readFile('public/index.html','utf8');
+  assert.match(html,/data-pruldos=/,'knop Kopieer voor dossier in de prullenbak');
+  assert.match(html,/&prullenbak=1/);
+  assert.match(html,/kaart\.inPrullenbak\)r\.push\('Status: kaart verwijderd/,'dossiertekst zegt dat de kaart verwijderd is');
   assert.equal((await def(w.id,M)).status,403,'andere therapeut mag niet');
   assert.equal((await def(w.id,{})).status,401);
   assert.equal((await def(w.id,J)).status,200);
+  assert.equal((await dosP(w.id,J)).status,404,'na definitief verwijderen ook niet meer naar het dossier');
   assert.ok(!(await prul(J)).some((k)=>k.id===w.id),'niet meer in de prullenbak');
   assert.equal((await terug(w.id,S)).status,404,'niet meer herstelbaar');
   assert.equal((await def(w.id,J)).status,404);

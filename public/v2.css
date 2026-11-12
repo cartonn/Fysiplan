@@ -344,7 +344,7 @@ html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
   html.v2 #prakslot .ps-acties a#ps_team:hover{background:var(--brand-700)}
   html.v2 #prakslot .ps-acties a#ps_wis{color:#b42318;border-color:#f4d4d0;background:#fff}
   html.v2 #prakslot .ps-acties a#ps_wis:hover{background:#fef3f2}
-  html.v2 #ps_form input,html.v2 #ps_herstel input,html.v2 #ps_wijzig input,html.v2 #ps_hcform input{height:38px}
+  html.v2 #ps_form input,html.v2 #ps_herstel input,html.v2 #ps_vergeet input,html.v2 #ps_wijzig input,html.v2 #ps_hcform input{height:38px}
   html.v2 #ps_form{margin-top:10px}
 
   /* nieuwe voorwaarden: rustige melding, wijzigingen uitklapbaar */
@@ -385,8 +385,25 @@ html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
   html.v2 #weekbrief{margin:18px 0 10px;padding-top:14px;border-top:1px solid var(--line2)}
 
   /* ---- team ---- */
-  html.v2 #ovTeam .modal{width:min(600px,100%);max-width:600px!important;padding:24px 26px;max-height:calc(100vh - 32px);overflow:auto}
-  html.v2 #tm_inhoud{color:var(--text)!important;font-size:13.5px}
+  html.v2 #ovTeam .modal,html.v2 #ovStapLogin .modal,html.v2 #ovEigenLogin .modal{width:min(600px,100%);max-width:600px!important;padding:24px 26px;max-height:calc(100vh - 32px);overflow:auto}
+  html.v2 #tm_inhoud,html.v2 #li_inhoud,html.v2 #el_inhoud{color:var(--text)!important;font-size:13.5px}
+  /* eigen login voor iedereen: het venster "Beveilig je praktijk" (stap 1) en het stapje boven de kop */
+  html.v2 .el-stap{margin:0 0 3px;font-size:12.5px;font-weight:600;color:var(--muted)}
+  html.v2 .el-stap+h3{margin-bottom:10px}
+  html.v2 .el-twee{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 12px}
+  html.v2 .el-ww{display:flex;gap:6px}
+  html.v2 .el-ww input{flex:1;min-width:0}
+  html.v2 .el-ww .btn{flex:0 0 auto;min-width:78px;height:38px}
+  html.v2 .el-klein{margin-top:5px;font-size:12px;color:var(--muted)}
+  html.v2 #ovEigenLogin label.el-vink{align-items:flex-start;margin-top:14px;padding:0;line-height:1.45;font-size:13px;font-weight:400;color:var(--text)}
+  html.v2 #ovEigenLogin label.el-vink input{margin-top:2px}
+  html.v2 .el-regels{margin-top:14px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13px;line-height:1.5}
+  html.v2 .el-regels b{color:var(--ink)}
+  html.v2 #el_msg{margin-top:12px;font-size:13px;font-weight:600;color:var(--fout,#b42318)}
+  html.v2 #el_msg:empty{display:none}
+  html.v2 #el_msg a{font-weight:600}
+  html.v2 #ovEigenLogin input.mist{border-color:var(--fout,#d92d20);box-shadow:0 0 0 3px rgba(255,180,168,.2)}
+  html.v2 #ovEigenLogin label.mist{color:var(--fout,#b42318)!important}
   html.v2 .tm-kop{font-size:13px;font-weight:650;color:var(--ink);margin:16px 0 6px}
   html.v2 .tm-lid{gap:12px!important;padding:10px 0!important;border-top:1px solid var(--line2)!important}
   html.v2 .tm-kop+.tm-lid{border-top:0!important}
@@ -833,3 +850,64 @@ html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
  html.v2 .tm-uitnodig{background:#20464f}
  html.v2 #k_srv_rap,html.v2 #k_srv_csv{color:#fff}
 }
+/* Donker thema, elke toestand nagelopen (platformreview 2026-11-11): in rust, onder de muis en met
+   focus, in elk venster. Onderstaande vlakken bleven licht terwijl de tekst licht werd (1,0 tot
+   1,9:1): de rij onder de muis en de groepskop in de sjabloonkiezer, het hele hulpvenster, velden
+   zonder type-attribuut (praktijknaam bij welkom, eigen login, eigen oefening), de categorie en de
+   beeldkeuze onder de muis, de actieve sorteerknop. Alleen op het scherm; de A4 blijft papier. */
+@media screen{
+ /* tekst op een vlak in de merkkleur: wit op petrol (licht en op de A4), petrol op limoen (donker) */
+ html.v2{--op-merk:#18343b;--fout:#ffb4a8;--goed:#9fe3b3}
+ html.v2 #a4{--op-merk:#fff;--fout:#b42318;--goed:#287a4b}
+ html.v2 .step,html.v2 .row .video-manage:hover,html.v2 .video-drop .video-plus,html.v2 #ps_status .ps-av{color:var(--op-merk)}
+ html.v2 input:where(:not([type]),[type=search],[type=tel],[type=url],[type=number],[type=date],[type=time],[type=datetime-local],[type=month],[type=week]){background-color:#112c32;color:#fff;border-color:#658087}
+ /* datum en tijd: ook het kalenderknopje en de lege invulvorm van de browser licht op donker */
+ html.v2 input:where([type=date],[type=time],[type=datetime-local],[type=month],[type=week]){color-scheme:dark}
+ html.v2 #a4 input:where([type=date],[type=time],[type=datetime-local],[type=month],[type=week]){color-scheme:light}
+ html.v2 .sjb-groep{background:#20464f}
+ html.v2 .sjb-rij:hover{background:#28525b;border-color:#416068}
+ html.v2 .sjb-rij.aan{background:var(--brand-50);border-color:#7f9d5a}
+ html.v2 .sjb-cat:hover,html.v2 .sjb-dicht:hover{background:#2b5054;color:#fff}
+ html.v2 .sjb-cat.aan,html.v2 .sjb-cat.aan:hover{background:var(--brand-50);color:var(--brand-700)}
+ html.v2 .helpsection,html.v2 .uphelp,html.v2 .up-voorbeeld,html.v2 .video-preview .video-empty{background:#1b3a42;border-color:#34545c;color:var(--muted)}
+ html.v2 .uphelp code{background:#112c32;border-color:#416068;color:#fff}
+ html.v2 .video-drop{border-color:#658087}
+ html.v2 .video-drop:hover,html.v2 .video-drop.drag{background:#30575d;border-color:#b9e34b}
+ html.v2 #filters .chip:hover{background:#2b5054;color:#fff}
+ html.v2 #filters .chip.on,html.v2 #filters .chip.on:hover{background:var(--brand-50);color:var(--brand)}
+ html.v2 .row .fav:hover{background:#365e64;color:#ffd34d}
+ html.v2 header.topbar .menu .mi:hover{background:#ffffff20;color:#fff}
+ /* foutrood dat direct op het donkere vlak staat */
+ html.v2 #prakslot label.mist{color:var(--fout)!important}
+ html.v2 .sjb-link.rood{color:var(--fout)}
+ html.v2 .topbar #beeldKeuze .beeldsegment button:hover{background:#365e64;color:#fff}
+ html.v2 .topbar #beeldKeuze .beeldsegment button.aan,html.v2 .topbar #beeldKeuze .beeldsegment button.aan:hover{background:#b9e34b;color:#18343b}
+ /* "Nieuw in Fysiplan": was een wit venster met een bijna doorzichtige achtergrond */
+ html.v2 dialog.fp-nieuw{box-sizing:border-box;width:min(480px,calc(100vw - 32px));max-width:none;margin:auto;border:1px solid #416068;border-radius:16px;
+   padding:24px 26px;background:#20464f;color:#e0eae7;box-shadow:0 24px 60px rgba(8,22,26,.5)}
+ html.v2 dialog.fp-nieuw::backdrop{background:rgba(15,23,42,.42);backdrop-filter:blur(3px)}
+ html.v2 dialog.fp-nieuw h2{margin:0 0 10px;font-size:18px;letter-spacing:-.02em;color:#fff}
+ html.v2 dialog.fp-nieuw p{margin:0 0 10px;font-size:14px;line-height:1.55}
+ html.v2 dialog.fp-nieuw .btn{margin-top:6px;height:38px;padding:0 16px}
+}
+/* Seintjesvenster: wie wat meldde, boven het antwoordveld (platformreview 2026-11-11) */
+@media screen{
+ html.v2 #ovSein .modal{width:min(480px,94vw)}
+ html.v2 #ovSein #sn_uitleg{font-size:13px;color:var(--text);text-align:left;padding:0;margin:0 0 14px!important}
+ html.v2 #ovSein label[for=sn_tekst]{text-align:left;padding:0;margin:0 0 6px!important;color:var(--ink)}
+ html.v2 #ovSein .sn-wat{padding:12px 14px;border:1px solid var(--naamblok-rand);border-radius:12px;background:var(--naamblok)}
+ html.v2 #ovSein .sn-wat>b{display:block;font-size:15px;font-weight:650;color:var(--ink);letter-spacing:-.01em}
+ html.v2 #ovSein .sn-wat small{font-size:12.5px;font-weight:400;color:var(--muted)}
+ html.v2 #ovSein .sn-stip{display:inline-block;width:9px;height:9px;border-radius:99px;margin-right:8px;vertical-align:1px}
+ html.v2 #ovSein .sn-ook{margin-top:2px;padding-left:17px;color:var(--text)}
+ html.v2 #ovSein .sn-feiten{list-style:none;margin:10px 0 0;padding:9px 0 0;border-top:1px solid var(--naamblok-rand);line-height:1.65}
+ html.v2 #ovSein .sn-feiten b{color:var(--ink)}
+ html.v2 #ovSein .sn-eerder{margin-top:10px;font-size:12.5px;line-height:1.5;color:var(--muted)}
+}
+/* sprongkoppelingen voor wie met het toetsenbord werkt: onzichtbaar tot ze focus krijgen (gebruikers-sweep 2026-11-12, Sanne) */
+html.v2 .spronglinks{position:absolute;left:8px;top:8px;z-index:10000;display:flex;gap:8px;flex-wrap:wrap}
+html.v2 .spronglinks a{position:absolute;left:-10000px;top:0;padding:12px 16px;min-height:44px;box-sizing:border-box;border-radius:10px;
+  background:#18343B;color:#fff;font:600 15px/20px Inter,system-ui,sans-serif;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+html.v2 .spronglinks a:focus{position:static;outline:3px solid #B9E34B;outline-offset:2px}
+html.v2 #a4wrap:focus{outline:none}
+html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}

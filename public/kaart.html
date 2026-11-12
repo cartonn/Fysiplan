@@ -351,6 +351,14 @@
   body.krap .sstatus{flex:1 1 14em;margin:0}
   body.krap .srij{flex:1 1 18em;margin:0}
   body.krap .oef.actief .naam{font-size:min(1.5rem,7.5vw);margin-top:10px}
+  /* grote letters (200 % en/of "A A"): de onderbalk krimpt mee in plaats van de pijl "volgende" buiten beeld te
+     duwen (flex-items houden anders hun inhoudsbreedte), en een lang woord breekt af in plaats van de pagina te
+     verbreden (gebruikers-sweep 2026-11-11, Truus op iPhone SE) */
+  body{overflow-wrap:break-word}
+  body.krap .srij,body.krap .sstatus{min-width:0}
+  body.krap .sstatus{flex-wrap:wrap}
+  .srij .kn1{padding-inline:8px;overflow-wrap:anywhere}
+  body.krap .srij .kn1{font-size:min(1.0625rem,6vw)}
   .svink{flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:var(--groen-vul)}
   .svink::after{content:"";display:block;width:5px;height:10px;margin:3px 0 0 7px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
   .songedaan{margin-inline-start:auto;min-height:44px;padding:0 2px;border:0;background:none;
@@ -572,11 +580,14 @@
     display:none;align-items:center;gap:12px;box-shadow:0 8px 28px rgba(0,0,0,.28)}
   .appbanner.aan{display:flex}
   .appbanner img{width:34px;height:34px;border-radius:9px;flex:0 0 34px}
-  .appbanner .tekst{flex:1;font:500 .875rem/1.4 var(--disp)}
+  .appbanner .tekst{flex:1 1 8em;min-width:0;overflow-wrap:anywhere;font:500 .875rem/1.4 var(--disp)}
   .appbanner button{font:600 .875rem/1 var(--disp);border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
   .appbanner .doen{min-height:44px;background:#fff;color:#16181c}
   .appbanner .weg{min-width:44px;min-height:44px;background:transparent;color:#d9d9d6;padding:10px 6px;font-size:1.375rem}
   @media (min-width:720px){.appbanner{display:none !important}}
+  /* bij grote letters op een klein scherm (body.krap) bedekte de tip "Zet op beginscherm" een derde tot de helft van
+     het scherm, ook de knop "Ik heb een vraag", en stond × buiten beeld: dan liever geen tip (sweep 2026-11-11, Truus) */
+  body.krap .appbanner{display:none !important}
 
   /* één duidelijk zichtbare toetsenbord-focus op álle bedienbare elementen (WCAG 2.4.7):
      ook de taalkeuze en het tijdveld, die eerder op de browserstandaard terugvielen */
@@ -622,7 +633,7 @@
   .merkdek{position:absolute;background:#fff;pointer-events:none}
   /* de naam staat in de gewone volgorde boven de foto, nooit meer over de uitleg heen */
   .lightbox .lbnaam{order:-1;flex:none;max-width:min(92vw,440px);margin:0 0 10px;overflow-wrap:anywhere;
-    text-align:center;color:#fff;font:600 15px/1.4 var(--disp);padding:0 4px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+    text-align:center;color:#fff;font:600 .9375rem/1.4 var(--disp);padding:0 4px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
   .lightbox>*{flex:none}
   .lightbox .lbsluit{position:fixed;top:calc(8px + env(safe-area-inset-top));right:calc(8px + env(safe-area-inset-right));
     width:44px;height:44px;border-radius:999px;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.16);
@@ -630,7 +641,7 @@
   /* demonstratiestand: de twee houdingen uit het oefenbeeld om en om laten zien */
   .lightbox .lbknoppen{order:-2;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0 0 10px}
   .lightbox .lbknoppen:not(:has(button:not([hidden]))){display:none}
-  .lightbox .lbknop{font:600 14px/1 var(--disp);color:#fff;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);
+  .lightbox .lbknop{font:600 .875rem/1 var(--disp);color:#fff;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);
     padding:12px 20px;border-radius:999px;cursor:pointer;-webkit-tap-highlight-color:transparent}
   .lightbox .lbknop:active{background:rgba(255,255,255,.3)}
   .lightbox .stemnoot{flex-basis:100%;margin:2px 0 0;text-align:center;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.6)}
@@ -638,14 +649,18 @@
   .lightbox .demowrap{background:#fff;border-radius:18px;padding:10px;cursor:default;max-width:100%}
   .lightbox .demobeeld{position:relative;overflow:hidden;border-radius:10px;background:#fff;
     width:min(420px,calc(100vw - 60px),56vh);aspect-ratio:1;margin:0 auto}
+  /* "A A" vergroot de pagina met zoom:1.16, maar vw rekent dan ook mee: zonder deze deling stak de vergrote foto
+     en de uitleg rechts buiten beeld (gebruikers-sweep 2026-11-11, Truus) */
+  html.groot .lightbox .demobeeld{width:min(420px,calc((100vw - 60px) / 1.16),48vh)}
+  html.groot .lightbox .lbuitleg{max-width:min(calc(92vw / 1.16),440px)}
   .lightbox .demobeeld canvas{display:block;width:100%;height:100%;margin:0;border-radius:10px}
   .lightbox .demobeeld canvas.boven{position:absolute;inset:0;opacity:0;
     transition:opacity .85s cubic-bezier(.45,0,.55,1)}
   .lightbox .demowrap.tweede canvas.boven{opacity:1}
   /* ondertiteling onder de demonstratie: benoemt de houding die in beeld is */
-  .lightbox .demotekst{text-align:center;font:600 15px/1.5 var(--disp);color:var(--inkt);
+  .lightbox .demotekst{text-align:center;font:600 .9375rem/1.5 var(--disp);color:var(--inkt);
     padding:10px 8px 0;min-height:28px}
-  .lightbox .demouitleg{text-align:center;font:400 12.5px/1.5 var(--disp);color:#6b6455;
+  .lightbox .demouitleg{text-align:center;font:400 .875rem/1.5 var(--disp);color:#5c5647;
     padding:2px 10px 2px;max-width:420px;margin:0 auto}
   /* het merk staat buiten de houding-uitsnede en bij beide houdingen op dezelfde plek */
   .lightbox .demobeeld .demomerk{position:absolute;left:10px;top:8px;z-index:2}
@@ -654,7 +669,9 @@
     font:700 11px/1 var(--disp);letter-spacing:.02em;color:#1d2433;pointer-events:none}
   .fpmerk::before,.lightbox .demobeeld .demomerk::before{content:"";flex:0 0 11px;width:11px;height:11px;
     border-radius:3px;background:#2456a6 url(/images/icoon-192.png) center/cover no-repeat}
-  .lightbox .demobron{text-align:center;font:400 11px/1.45 var(--disp);color:#8a8375;
+  /* tekst in de vergrote foto in rem, zodat hij meegroeit met de tekstgrootte van de telefoon (gebruikers-sweep 2026-11-12, Truus:
+     bij 200 % bleef de uitleg 12,5 px en de bronregel 11 px, met 3,76:1 contrast) */
+  .lightbox .demobron{text-align:center;font:400 .75rem/1.45 var(--disp);color:#6b6455;
     padding:6px 10px 2px;max-width:420px;margin:0 auto}
   @media (prefers-reduced-motion:reduce){.lightbox .demobeeld canvas.boven{transition:none}}
   @media (prefers-reduced-motion:no-preference){
@@ -818,7 +835,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   </div>
   <h2 id="seinkop">Je fysiotherapeut iets laten weten</h2>
   <div class="skaart" id="sein">
-    <p class="sintro" id="sintro">Eén tik en je fysiotherapeut ziet je seintje bij deze kaart. Geen bericht typen, geen app.</p>
+    <p class="sintro" id="sintro">Eén tik en je seintje staat bij deze kaart. Je fysiotherapeut ziet het pas bij het inloggen, dus niet altijd dezelfde dag.</p>
     <div class="sknoppen" id="sknoppen" role="group" aria-labelledby="seinkop">
       <button type="button" class="sbtn" data-soort="vraag"><span id="s_vraag">Ik heb een vraag</span></button>
       <button type="button" class="sbtn" data-soort="pijn"><span id="s_pijn">Het doet te veel pijn</span></button>
@@ -1120,15 +1137,15 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function tr(k){var d=T[TAAL]||T.nl;return d[k]!=null?d[k]:T.nl[k];}
   // teksten voor het seintje naar de praktijk (apart blokje; valt terug op Nederlands)
   var TSN={
-    nl:{seinkop:'Je fysiotherapeut iets laten weten',sintro:'Eén tik en je fysiotherapeut ziet je seintje bij deze kaart. Geen bericht typen, geen app.',vraag:'Ik heb een vraag',akop:'Bericht van je fysiotherapeut',adank:'Weggehaald.',aweg:'Begrepen, haal weg',pijn:'Het doet te veel pijn',goed:'Het gaat goed',dank:'Verstuurd — je fysiotherapeut ziet je seintje bij deze kaart.',fout:'Versturen lukte even niet; probeer het zo opnieuw.'},
-    en:{seinkop:'Let your physiotherapist know',sintro:'One tap and your physiotherapist sees your signal on this card. No message to type, no app.',vraag:'I have a question',akop:'Message from your physiotherapist',adank:'Dismissed.',aweg:'Got it, dismiss',pijn:'It hurts too much',goed:'It’s going well',dank:'Sent — your physiotherapist will see your signal on this card.',fout:'Sending did not work; please try again in a moment.'},
-    de:{seinkop:'Deinem Physiotherapeuten Bescheid geben',sintro:'Ein Tipp und dein Physiotherapeut sieht dein Signal auf dieser Karte. Keine Nachricht tippen, keine App.',vraag:'Ich habe eine Frage',akop:'Nachricht von deinem Physiotherapeuten',adank:'Entfernt.',aweg:'Verstanden, entfernen',pijn:'Es tut zu weh',goed:'Es läuft gut',dank:'Gesendet — dein Physiotherapeut sieht dein Signal auf dieser Karte.',fout:'Das Senden hat nicht geklappt; versuch es gleich noch einmal.'},
-    fr:{seinkop:'Prévenir votre kinésithérapeute',sintro:'Un geste et votre kinésithérapeute voit votre signal sur cette carte. Aucun message à taper, aucune application.',vraag:'J’ai une question',akop:'Message de votre kinésithérapeute',adank:'Retiré.',aweg:'Compris, retirer',pijn:'J’ai trop mal',goed:'Ça va bien',dank:'Envoyé — votre kinésithérapeute verra votre signal sur cette carte.',fout:'L’envoi n’a pas fonctionné ; réessayez dans un instant.'},
-    es:{seinkop:'Avisar a tu fisioterapeuta',sintro:'Un toque y tu fisioterapeuta ve tu señal en esta tarjeta. Sin escribir mensajes, sin aplicación.',vraag:'Tengo una pregunta',akop:'Mensaje de tu fisioterapeuta',adank:'Quitado.',aweg:'Entendido, quitar',pijn:'Me duele demasiado',goed:'Va bien',dank:'Enviado — tu fisioterapeuta verá tu señal en esta tarjeta.',fout:'El envío no ha funcionado; inténtalo de nuevo en un momento.'},
-    pl:{seinkop:'Daj znać fizjoterapeucie',sintro:'Jedno dotknięcie i fizjoterapeuta zobaczy Twój sygnał przy tej karcie. Bez pisania wiadomości, bez aplikacji.',vraag:'Mam pytanie',akop:'Wiadomość od fizjoterapeuty',adank:'Usunięto.',aweg:'Rozumiem, usuń',pijn:'Za bardzo boli',goed:'Idzie dobrze',dank:'Wysłano — fizjoterapeuta zobaczy Twój sygnał przy tej karcie.',fout:'Wysłanie się nie powiodło; spróbuj ponownie za chwilę.'},
-    tr:{seinkop:'Fizyoterapistine haber ver',sintro:'Tek dokunuşla fizyoterapistin bu kartta işaretini görür. Mesaj yazmak yok, uygulama yok.',vraag:'Bir sorum var',akop:'Fizyoterapistinden mesaj',adank:'Kaldırıldı.',aweg:'Anladım, kaldır',pijn:'Çok acıyor',goed:'İyi gidiyor',dank:'Gönderildi — fizyoterapistin bu kartta işaretini görecek.',fout:'Gönderme çalışmadı; birazdan tekrar dene.'},
-    ar:{seinkop:'أخبر أخصائي العلاج الطبيعي',sintro:'نقرة واحدة ويرى أخصائي العلاج الطبيعي إشارتك على هذه البطاقة. دون كتابة رسالة ودون تطبيق.',vraag:'لديّ سؤال',akop:'رسالة من أخصائي العلاج الطبيعي',adank:'أُزيلت.',aweg:'فهمت، أزل الرسالة',pijn:'الألم شديد جدًا',goed:'الأمور تسير جيدًا',dank:'تم الإرسال — سيرى أخصائي العلاج الطبيعي إشارتك على هذه البطاقة.',fout:'تعذّر الإرسال؛ حاول مرة أخرى بعد قليل.'},
-    uk:{seinkop:'Повідомити фізіотерапевта',sintro:'Один дотик — і фізіотерапевт побачить твій сигнал на цій картці. Без набору повідомлення, без застосунку.',vraag:'У мене є запитання',akop:'Повідомлення від фізіотерапевта',adank:'Прибрано.',aweg:'Зрозуміло, прибрати',pijn:'Надто болить',goed:'Все йде добре',dank:'Надіслано — фізіотерапевт побачить твій сигнал на цій картці.',fout:'Не вдалося надіслати; спробуй ще раз за мить.'}
+    nl:{seinkop:'Je fysiotherapeut iets laten weten',sintro:'Eén tik en je seintje staat bij deze kaart. Je fysiotherapeut ziet het pas bij het inloggen, dus niet altijd dezelfde dag.',vraag:'Ik heb een vraag',akop:'Bericht van je fysiotherapeut',adank:'Weggehaald.',aweg:'Begrepen, haal weg',pijn:'Het doet te veel pijn',goed:'Het gaat goed',dank:'Verstuurd. Je fysiotherapeut ziet je seintje pas bij het inloggen, dus niet altijd dezelfde dag.',fout:'Versturen lukte even niet; probeer het zo opnieuw.'},
+    en:{seinkop:'Let your physiotherapist know',sintro:'One tap and your signal is on this card. Your physiotherapist only sees it when they next log in, so not always the same day.',vraag:'I have a question',akop:'Message from your physiotherapist',adank:'Dismissed.',aweg:'Got it, dismiss',pijn:'It hurts too much',goed:'It’s going well',dank:'Sent. Your physiotherapist only sees your signal when they next log in, so not always the same day.',fout:'Sending did not work; please try again in a moment.'},
+    de:{seinkop:'Deinem Physiotherapeuten Bescheid geben',sintro:'Einmal tippen und dein Signal steht auf dieser Karte. Dein Physiotherapeut sieht es erst beim nächsten Einloggen, also nicht immer am selben Tag.',vraag:'Ich habe eine Frage',akop:'Nachricht von deinem Physiotherapeuten',adank:'Entfernt.',aweg:'Verstanden, entfernen',pijn:'Es tut zu weh',goed:'Es läuft gut',dank:'Gesendet. Dein Physiotherapeut sieht dein Signal erst beim nächsten Einloggen, also nicht immer am selben Tag.',fout:'Das Senden hat nicht geklappt; versuch es gleich noch einmal.'},
+    fr:{seinkop:'Prévenir votre kinésithérapeute',sintro:'Un geste et votre signal apparaît sur cette carte. Votre kinésithérapeute ne le voit qu’à sa prochaine connexion, donc pas toujours le jour même.',vraag:'J’ai une question',akop:'Message de votre kinésithérapeute',adank:'Retiré.',aweg:'Compris, retirer',pijn:'J’ai trop mal',goed:'Ça va bien',dank:'Envoyé. Votre kinésithérapeute ne verra votre signal qu’à sa prochaine connexion, donc pas toujours le jour même.',fout:'L’envoi n’a pas fonctionné ; réessayez dans un instant.'},
+    es:{seinkop:'Avisar a tu fisioterapeuta',sintro:'Un toque y tu señal queda en esta tarjeta. Tu fisioterapeuta solo la ve cuando vuelve a iniciar sesión, así que no siempre el mismo día.',vraag:'Tengo una pregunta',akop:'Mensaje de tu fisioterapeuta',adank:'Quitado.',aweg:'Entendido, quitar',pijn:'Me duele demasiado',goed:'Va bien',dank:'Enviado. Tu fisioterapeuta solo verá tu señal cuando vuelva a iniciar sesión, así que no siempre el mismo día.',fout:'El envío no ha funcionado; inténtalo de nuevo en un momento.'},
+    pl:{seinkop:'Daj znać fizjoterapeucie',sintro:'Jedno dotknięcie i Twój sygnał pojawi się przy tej karcie. Fizjoterapeuta zobaczy go dopiero po zalogowaniu, więc nie zawsze tego samego dnia.',vraag:'Mam pytanie',akop:'Wiadomość od fizjoterapeuty',adank:'Usunięto.',aweg:'Rozumiem, usuń',pijn:'Za bardzo boli',goed:'Idzie dobrze',dank:'Wysłano. Fizjoterapeuta zobaczy Twój sygnał dopiero po zalogowaniu, więc nie zawsze tego samego dnia.',fout:'Wysłanie się nie powiodło; spróbuj ponownie za chwilę.'},
+    tr:{seinkop:'Fizyoterapistine haber ver',sintro:'Tek dokunuşla işaretin bu karta eklenir. Fizyoterapistin onu ancak giriş yaptığında görür, yani her zaman aynı gün değil.',vraag:'Bir sorum var',akop:'Fizyoterapistinden mesaj',adank:'Kaldırıldı.',aweg:'Anladım, kaldır',pijn:'Çok acıyor',goed:'İyi gidiyor',dank:'Gönderildi. Fizyoterapistin işaretini ancak giriş yaptığında görür, yani her zaman aynı gün değil.',fout:'Gönderme çalışmadı; birazdan tekrar dene.'},
+    ar:{seinkop:'أخبر أخصائي العلاج الطبيعي',sintro:'نقرة واحدة وتظهر إشارتك على هذه البطاقة. لا يراها أخصائي العلاج الطبيعي إلا عند تسجيل دخوله التالي، وليس دائمًا في اليوم نفسه.',vraag:'لديّ سؤال',akop:'رسالة من أخصائي العلاج الطبيعي',adank:'أُزيلت.',aweg:'فهمت، أزل الرسالة',pijn:'الألم شديد جدًا',goed:'الأمور تسير جيدًا',dank:'تم الإرسال. لن يرى أخصائي العلاج الطبيعي إشارتك إلا عند تسجيل دخوله التالي، وليس دائمًا في اليوم نفسه.',fout:'تعذّر الإرسال؛ حاول مرة أخرى بعد قليل.'},
+    uk:{seinkop:'Повідомити фізіотерапевта',sintro:'Один дотик — і твій сигнал з’явиться на цій картці. Фізіотерапевт побачить його лише тоді, коли наступного разу увійде в систему, тож не завжди того ж дня.',vraag:'У мене є запитання',akop:'Повідомлення від фізіотерапевта',adank:'Прибрано.',aweg:'Зрозуміло, прибрати',pijn:'Надто болить',goed:'Все йде добре',dank:'Надіслано. Фізіотерапевт побачить твій сигнал лише тоді, коли наступного разу увійде в систему, тож не завжди того ж дня.',fout:'Не вдалося надіслати; спробуй ще раз за мить.'}
   };
   function trs(k){var d=TSN[TAAL]||TSN.nl;return d[k]!=null?d[k]:TSN.nl[k];}
   // teksten voor het ervaren herstel (GROC-achtig; apart blokje, valt terug op Nederlands)
@@ -1496,6 +1513,11 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // oefenstand staat hij onder het beeld, per zin een eigen alinea: dat leest op een
   // telefoon rustiger dan één blok. Een verkeerde knip is alleen een regeleinde.
   var ZO_DOE={nl:'Zo doe je het',en:'How to do it',de:'So geht es',fr:'Comment faire',es:'Cómo hacerlo',pl:'Jak to zrobić',tr:'Nasıl yapılır',ar:'طريقة الأداء',uk:'Як виконувати'};
+  // Wel vertaald: de server laat de uitleg automatisch vertalen (zie /api/kaart/vertaal). Een
+  // fout in een vertaalde uitvoeringsinstructie kan de patiënt verkeerd laten oefenen; daarom
+  // staat eronder dat het een automatische vertaling is en wat te doen bij twijfel.
+  var AUTO_VERTAALD={nl:'',en:'Translated automatically from Dutch. In doubt? Ask your physiotherapist.',de:'Automatisch aus dem Niederländischen übersetzt. Unsicher? Frag deine Physiotherapeutin oder deinen Physiotherapeuten.',fr:'Traduit automatiquement du néerlandais. Un doute ? Demandez à votre kinésithérapeute.',es:'Traducido automáticamente del neerlandés. ¿Dudas? Pregunta a tu fisioterapeuta.',pl:'Przetłumaczono automatycznie z niderlandzkiego. Masz wątpliwości? Zapytaj swojego fizjoterapeutę.',tr:'Felemenkçeden otomatik olarak çevrildi. Emin değil misin? Fizyoterapistine sor.',ar:'تُرجم تلقائيًا من الهولندية. هل لديك شك؟ اسأل أخصائي العلاج الطبيعي.',uk:'Автоматично перекладено з нідерландської. Сумніваєшся? Запитай свого фізіотерапевта.'};
+  function uitlegAutoVertaald(s){return !!s&&TAAL!=='nl'&&vt(s)!==s;}
   function uitlegZinnen(t){
     return String(t||'').replace(/([.!?…])\s+(?=[A-ZÀ-ÖØ-ÞĄ-Ž\u0400-\u042F¿¡])/g,'$1\n').split('\n').map(function(z){return z.trim();}).filter(Boolean);
   }
@@ -1504,7 +1526,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var nl=uitlegNietVertaald(o.uitleg);
     return '<div class="oefuitleg"><h3>'+esc(ZO_DOE[TAAL]||ZO_DOE.nl)+'</h3>'+
       uitlegZinnen(vt(o.uitleg)).map(function(z){return '<p dir="auto"'+(nl?' lang="nl"':'')+'>'+esc(z)+'</p>';}).join('')+
-      (nl?'<div class="nietvertaald" role="note">'+esc(NIET_VERTAALD[TAAL]||NIET_VERTAALD.en)+'</div>':'')+'</div>';
+      (nl?'<div class="nietvertaald" role="note">'+esc(NIET_VERTAALD[TAAL]||NIET_VERTAALD.en)+'</div>':'')+
+      (uitlegAutoVertaald(o.uitleg)?'<div class="nietvertaald autovertaald" role="note">'+esc(AUTO_VERTAALD[TAAL]||AUTO_VERTAALD.en)+'</div>':'')+'</div>';
   }
   // Uitwijklink onder een ingesloten YouTube-video. Dit herstelt de ingesloten speler niet:
   // YouTube verwacht een Referer en de kaart stuurt bewust geen (referrer-policy same-origin;

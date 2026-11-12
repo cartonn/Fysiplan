@@ -8,20 +8,63 @@ Zakelijke en juridische beslissingen staan onder "Voor Ahmed" in `docs/mensenwer
 
 | Gebied | Laatst gecontroleerd |
 |---|---|
-| (a) privacyverklaring (art. 13/14 AVG) | 2026-11-10 21u (Anthropic-rij beloofde "geen vrije tekst van de therapeut" en "bibliotheekteksten", maar namen van eigen oefeningen gaan mee naar vertaling en vraaghulp: opgelost; bron van teamledengegevens (art. 14 lid 2 f): opgelost; proefvelden, externe hosts in code, Cloudflare Stream (alleen bibliotheekvideo's van beheer), rechten en klachtrecht: klopt; Resend-rij wacht nog op #167) |
+| (a) privacyverklaring (art. 13/14 AVG) | 2026-11-12 09u (na #214/#217/#222/#225: sleutel van de tweede stap, reservecodes, teller foute codes, link "wachtwoord vergeten" en inlogsessies stonden nergens: opgelost met rij #inloggen; vraaghulp stond beschreven alsof hij aan staat terwijl hij standaard uit is: opgelost, tekst volgt `VRAAGHULP_AAN`; `PRIVACY_VERSIE` 2026-11-12; Resend-rij dekt herstel- en slotmails, rechten, klachtrecht, doorgifte: klopt) · 2026-11-10 21u (Anthropic-rij beloofde "geen vrije tekst van de therapeut" en "bibliotheekteksten", maar namen van eigen oefeningen gaan mee naar vertaling en vraaghulp: opgelost; bron van teamledengegevens (art. 14 lid 2 f): opgelost; proefvelden, externe hosts in code, Cloudflare Stream (alleen bibliotheekvideo's van beheer), rechten en klachtrecht: klopt; Resend-rij wacht nog op #167) |
 | (b) verwerkersovereenkomst (art. 28 AVG) + subverwerkers | 2026-11-11 05u (art. 5 beloofde "vrije tekst van de therapeut gaat niet naar AI-diensten", maar namen van eigen oefeningen gaan mee: opgelost; art. 2 miste kaartnaam, doelactiviteit, weekdoel, werknotitie, behandelaar en contactlogboek: opgelost, fail-closed test; /privacy logboekregel zei 500, code houdt 300 + 50 per praktijk: opgelost; externe hosts in code tegen subverwerkerslijst (Railway, Anthropic, Cloudflare, YouTube, Resend, Mollie apart): geen gat; art. 28 lid 3 a-h verder ongewijzigd) · 2026-11-09 13u |
 | (c) algemene voorwaarden | 2026-11-11 21u (landing belooft "je prijs staat minstens 24 maanden vast" en "24 maanden prijsgarantie", art. 4 zei alleen "nieuwe prijs 30 dagen vooraf": opgelost, `AV_VERSIE` 2026-11-11-2; opzeggen/intrekken, mislukte incasso zonder herkansing, geen kaarten na de proef, btw exclusief, links vanaf landing/proef/app: klopt met de code) · 2026-11-10 05u |
 | (d) code tegen tekst | 2026-11-11 09u (na #167 en #183: reservekopie buiten Railway bevat nu ook uploads, /privacy zei "behalve video's": wacht op open PR #184; Resend-rij te smal: opgelost; inleiding subverwerkers zei "het zijn Amerikaanse bedrijven", terwijl de reservekopie-partij Europees kan zijn: opgelost) · 2026-11-10 17u (patiëntroute `PATIENT_VELDEN` tegen /privacy#patient: doelactiviteit, bericht van de praktijk, weekdoel en eigen video/foto ontbraken, afspraak stond onder "zelf aantikt"; opgelost. Mails via Resend gaan ook over betaling en wachtwoord: open tot #167 gemerged is. Logs, auditlog 500, cookies, reservekopie 7 dagen, uitnodiging 7 dagen: klopt) |
 | (e) rechten van betrokkenen: inzien, exporteren, wissen | 2026-11-11 13u (na #191 prullenbak: een praktijk kon een kaart niet meer meteen wissen, alleen na 7 dagen of door de hele praktijk te wissen, en /privacy zei daarom "buiten gebruik stellen": opgelost met Definitief verwijderen; download gaf kaarten in de prullenbak verlooptOp 1970: opgelost; VWO art. 10 was gewijzigd zonder nieuwe versie: opgelost) · 2026-11-10 01u (vertaalcache hield namen van eigen oefeningen na "Alles wissen"; download bevat geen geheimen, wel alle kaartvelden) |
 | (f) cookies en lokale opslag | 2026-11-11 01u (alle localStorage-, sessionStorage-, Cache- en IndexedDB-sleutels van /k en /v2/app tegen /privacy#opslag; kaart weg bij de praktijk (404): `fp_beelden_<id>` (kaart-id + oefenbeelden) en de beelden zelf bleven op de telefoon, opgelost; privacylink op een anderstalige kaart zegt nu dat de pagina Nederlands is; cookies `fpproef`/`fp1` en "Wis Fysiplan van dit apparaat" (alle `fp_`/`fysiplan`-sleutels, IndexedDB, caches): klopt) · 2026-11-09 21u |
-| (g) MDR en AI-verordening | 2026-11-10 13u (nieuwe patiëntkaart #162: de AI-stem bij oefeningen zonder AI-video en via de knop bovenaan/vergroting had geen AI-melding: opgelost; landing, app en kaart zonder diagnose-, doserings- of sorteerbelofte; vraaghulp-grens ongewijzigd) |
-| (h) WGBO en KNGF-beroepsregels | 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
+| (g) MDR en AI-verordening | 2026-11-12 05u (zoekhulp in /v2/app liet een AI-dienst oefeningen kiezen zonder dat de therapeut dat zag: opgelost; AI-vertaalde uitleg op /k zonder melding: opgelost met "automatisch vertaald"; hoofdbeeld /v2 draagt "Beeld gemaakt met AI", montages "Met AI bewerkte montage"; videolabel "klinisch gecontroleerd" alleen bij `clinicallyReviewed`; seintjesmail #212 zonder inhoud en "geen alarmknop"; sorteren op meldingen van de patiënt, geen scores; landing zonder diagnose-, doserings- of sorteerbelofte: klopt) · 2026-11-10 13u |
+| (h) WGBO en KNGF-beroepsregels | 2026-11-12 05u (na #191 prullenbak: een verwijderde kaart kon niet meer naar het dossier, ook niet binnen de 7 dagen herstel, en de vragen bij Verwijderen en Definitief verwijderen zeiden dat niet: opgelost; dossiertekst, contactlogboek, bronregel, landingtekst "je dossier blijft in je EPD": klopt) · 2026-11-10 09u (verdwijndatum in overzicht, weekbrief, dossiertekst en patiëntkaart negeerde het wissen van de hele praktijk na proef of abonnement: opgelost; dossierkopie en contactlogboek ongewijzigd) |
 | (i) begrijpelijkheid (B1) | 2026-11-11 17u (gemeten op /privacy, /verwerkersovereenkomst, /voorwaarden, /v2/proef, /v2/gegevens en /v2: gem. 9–12 woorden per zin, juridische pagina's geen zin > 40, patiëntdeel ≤ 30; /v2/gegevens zei "Een losse kaart wis je met Verwijderen" terwijl die sinds #191 nog 7 dagen in de prullenbak staat: opgelost; waarschuwing bij Alles wissen 35 woorden: opgelost als lijst; /v2/gegevens nu ook in `test-juridisch-b1.mjs`) · 2026-11-09 17u (alle drie pagina's gemeten: geen zin > 40 woorden, patiëntdeel ≤ 30; samenvatting voorwaarden klopte niet met art. 5; grondslag en bezwaar in gewone taal; test `test-juridisch-b1.mjs`) |
 
-Volgende run: (h) WGBO, dan (g) MDR, dan (a) privacyverklaring (landing is door #197 in de Active Tech-stijl herschreven: nieuwe hero met een persoon in squathouding; nagaan of dat beeld een foto of AI-beeld is en of het een melding of 'Fotomontage' nodig heeft). Open daarna: patiëntdeel /privacy in de kaarttalen.
+Volgende run: (d) code tegen tekst, dan (b) verwerkersovereenkomst (art. 5 noemt de tweede stap nog niet als maatregel; geen gat, wel een kans). Hoofdbeeld /v2: gecontroleerd 2026-11-12, AI-beeld met zichtbare melding. Open daarna: patiëntdeel /privacy in de kaarttalen.
 De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de juridische ronde daarna); #41 botst nu en moet worden bijgewerkt of gesloten.
 
 ## Open
+
+- **MIDDEL — MDR/AI-verordening (g) 2026-11-12 05u: de zoekhulp en de vertaalde uitleg zeiden niet dat ze automatisch zijn.**
+  (1) De zoekhulp in /v2/app stuurt lichaamsdeel en doel naar een AI-dienst, die 4 tot 8 oefeningen kiest en per oefening
+  een korte zin schrijft. Het venster zei alleen "De zoekhulp kent geen patiënt en geeft geen dosering"; nergens dat een
+  AI-systeem de keuze maakt (AI-verordening art. 50 lid 1, van kracht sinds 2 augustus 2026) of dat die keuze ernaast kan
+  zitten. Voor de MDR-grens is belangrijk dat de therapeut ziet dat hij zelf beoordeelt (MDCG 2019-11: geen automatische
+  behandelkeuze). (2) Op /k vertaalt de server de uitleg van bibliotheekoefeningen automatisch naar de kaarttaal; de
+  patiënt zag dat niet. Een fout in een vertaalde uitvoeringsinstructie kan iemand verkeerd laten oefenen. Er was wel een
+  melding als de uitleg níet vertaald is, maar niet als hij dat wel is.
+  OPGELOST 2026-11-12 (deze PR): zoekhulpvenster "De zoekhulp werkt met AI … kijk zelf of een oefening past" en
+  "Gekozen met AI" boven de uitkomst (alleen v2; v1 toont de knop niet); onder vertaalde uitleg op /k in alle 8 talen
+  "Automatisch vertaald uit het Nederlands. Twijfel je? Vraag het je fysiotherapeut." (zonder het woord AI: de wet vraagt
+  hier geen AI-melding). Test `scripts/test-ai-melding-zoekhulp-vertaling.mjs` (in test:privacy en CI; faalt zonder fix).
+  Bron: Verordening (EU) 2024/1689 art. 50 lid 1 en art. 113; MDCG 2019-11 (stap 3: software die zelf een behandelkeuze
+  maakt). Jurist: laten bevestigen dat dit voor art. 50 volstaat.
+- **LAAG — privacyverklaring (a)/(d) 2026-11-12 05u: vraaghulp staat standaard uit, /privacy beschrijft hem alsof hij aan staat.**
+  Sinds #206 werkt de vraaghulp alleen met `VRAAGHULP=aan`; /privacy#patient en de Anthropic-rij beschrijven hem zonder
+  voorbehoud. Te ruim is minder erg dan te smal, maar het klopt niet. Voorstel: regel laten afhangen van `VRAAGHULP_AAN`
+  ("staat nu uit") net als `BETAAL_RIJ_HTML`. Niet in deze PR (één gebied per run). Bron: AVG art. 12 lid 1, art. 13.
+  OPGELOST 2026-11-12 (deze PR): patiëntregel staat tussen `<!--vraaghulp-->`-markeringen en verdwijnt als hij uit staat;
+  de Anthropic-rij zegt dan "(staat nu uit)". Test `scripts/test-privacy-inloggen.mjs` (beide standen, in test:privacy en CI).
+- **MIDDEL — privacyverklaring (a) 2026-11-12 09u: gegevens van de eigen login stonden niet in /privacy.**
+  Sinds #214, #217, #222 en #225 bewaart de server per login de sleutel van de tweede stap (leesbaar, zoals de code-app hem
+  ook heeft), acht reservecodes als hash, een teller van foute codes (24 uur), een link voor een nieuw wachtwoord als hash
+  (een uur, of 48 uur via beheer; eenmalig) en de inlogsessies als hash van het token (30 dagen). De tabel "Voor praktijken"
+  noemde alleen naam, e-mail, rol, wachtwoordhash en uitnodiging. Art. 13 lid 1 c en lid 2 a AVG vragen welke gegevens,
+  waarvoor en hoe lang. OPGELOST 2026-11-12 (deze PR): rij `#inloggen` met doel (art. 32 AVG) en termijnen; de sessieduur komt
+  uit `SESSIE_MS`. Download op /v2/gegevens bevat het geheim terecht niet (alleen aan/uit, sinds, aantal reservecodes).
+  Bron: AVG art. 13; https://eur-lex.europa.eu/eli/reg/2016/679/oj.
+- **LAAG — landing (voor de gebruikers-sweep): aria-label van het hoofdbeeld op /v2 leest voor "De dame in squathouding
+  uit het originele Active Tech-voorbeeld".** Interne ontwerptaal voor schermlezers; niet aangeraakt wegens open PR #204 op v2.html.
+
+- **MIDDEL — WGBO (h) 2026-11-12 05u: een kaart in de prullenbak kon niet meer naar het dossier.**
+  Wat de patiënt via de kaart meldt (seintjes, "te zwaar", pijnscores, PSK, berichten van de praktijk) staat alleen in
+  Fysiplan; de praktijk hoort dat in het eigen dossier te zetten (WGBO art. 7:454 BW, KNGF-richtlijn verslaglegging).
+  Sinds #191 zet Verwijderen een kaart 7 dagen in de prullenbak, maar `/api/praktijk/kaart` weigerde verwijderde
+  kaarten, dus "Kopieer samenvatting voor dossier" kon niet meer. De vraag bij Verwijderen zei niets over het dossier,
+  en die bij Definitief verwijderen ging ervan uit dat het al in het dossier stond.
+  OPGELOST 2026-11-12 (deze PR): `GET /api/praktijk/kaart?prullenbak=1` geeft een herstelbare kaart terug, alleen aan
+  maker of beheerder (zelfde regel als herstellen); knop "Kopieer voor dossier" in de prullenbak; de dossiertekst zegt
+  "Status: kaart verwijderd, de patiëntlink werkt niet meer"; beide vragen noemen het dossier. Patiëntlink en gewone
+  route blijven dicht. Test in `scripts/test-kaart-prullenbak.mjs` (faalt zonder fix: 404).
+  Bron: WGBO art. 7:454 BW (dossierplicht), AVG art. 5 lid 1 d (juistheid).
 
 - **MIDDEL — voorwaarden (c) 2026-11-11 21u: de prijsbelofte van de landing stond niet in de voorwaarden.**
   /v2 (sinds de Active Tech-landing #197) zegt "je prijs staat minstens 24 maanden vast" en "De prijsbelofte", en bij de

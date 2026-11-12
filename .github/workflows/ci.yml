@@ -30,14 +30,21 @@ jobs:
       - run: npm run test:drafts
       - run: npm run test:beheer
       - run: npm run test:backup
+      - run: npm run test:sessieherstart
       - run: npm run test:proefpoort
       - run: npm run test:proefverplicht
       - run: npm run test:wisvooraf
+      - run: npm run test:proefeindemail
       - run: npm run test:oudeproef
       - run: npm run test:abonnement
       - run: npm run test:sweep
       - run: npm run test:patientmobiel
       - run: npm run test:grotelettersk
+      - run: npm run test:opnamegeencamera
+      - run: npm run test:onderbalkgroot
+      - run: npm run test:houdingengroot
+      - run: npm run test:spronglinks
+      - run: npm run test:loginanderepraktijk
       - run: npm run test:agendadubbel
       - run: npm run test:offline
       - run: npm run test:tablet
@@ -47,6 +54,7 @@ jobs:
       - run: npm run test:opname-eigen
       - run: npm run test:videoquotum
       - run: node scripts/test-vraaghulp-grens.mjs
+      - run: npm run test:vraaghulpschakelaar
       - run: node scripts/test-praktijkgegevens.mjs
       - run: node scripts/test-gegevens-proef.mjs
       - run: node scripts/test-kaart-weg.mjs
@@ -58,6 +66,8 @@ jobs:
       - run: node scripts/test-verdwijndatum-praktijk.mjs
       - run: node scripts/test-juridisch-b1.mjs
       - run: node scripts/test-stem-ai-melding.mjs
+      - run: node scripts/test-ai-melding-zoekhulp-vertaling.mjs
+      - run: node scripts/test-privacy-inloggen.mjs
       - run: npm run test:kaartversie
       - run: npm run test:hernoem
       - run: npm run test:topbar
@@ -66,6 +76,7 @@ jobs:
       - run: npm run test:praktijkcode
       - run: npm run test:team
       - run: npm run test:teamherstel
+      - run: npm run test:teameigenbeheer
       - run: npm run test:uitnodigmail
       - run: npm run test:printknop
       - run: npm run test:logoveeg
@@ -76,6 +87,7 @@ jobs:
       - run: npm run test:seintje
       - run: npm run test:sweepoverzicht
       - run: npm run test:gedeeldwerk
+      - run: npm run test:sjabloondelen
       - run: npm run test:weekverder
       - run: npm run test:daguitvraag
       - run: npm run test:profielcollega
@@ -110,6 +122,13 @@ jobs:
       - run: npm run test:vertaallaat
       - run: npm run test:kaartweg
       - run: npm run test:v2contrast
+      - run: npm run test:seinvenster
+      - run: npm run test:lichtladen
+      - run: npm run test:beheerherstel
+      - run: npm run test:seinmail
+      - run: npm run test:tweedestap
+      - run: npm run test:stapverplicht
+      - run: npm run test:eigenloginverplicht
       - run: npm run test:qrroepnaam
       - run: npm run test:uitnodigingpraktijk
       - run: npm run test:rempraktijk
@@ -128,6 +147,10 @@ jobs:
       - run: npm run test:auditspoor
       - run: npm run test:profielbeheer
       - run: npm run test:opzeggenbeheer
+      - run: npm run test:praktijknaambezet
+      - run: npm run test:naamerftniets
+      - run: npm run test:kaartpraktijknaam
+      - run: npm run test:wachtwoordvergeten
       - run: npm run test:zwaaroffline
       - run: npm run test:dagwisseltaal
       - run: npm run test:reekstitel

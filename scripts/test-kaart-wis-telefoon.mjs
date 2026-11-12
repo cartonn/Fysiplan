@@ -73,8 +73,15 @@ if (pw) {
       localStorage.setItem("fp_wacht_" + i, JSON.stringify({ a: { pad: "/api/kaart/meting", body: {} } }));
       localStorage.setItem("fp_oefdaan_ander12345678", "{}");
     }, id);
-    // offline-cache gevuld (service worker) plus een gedeeld plaatje en de bibliotheek
-    await page.waitForFunction(async (i) => { const ns = await caches.keys(); for (const n of ns) { const c = await caches.open(n); if (await c.match("/k/" + i)) return true; } return false; }, id, { timeout: 15000, polling: 250 });
+    // offline-cache gevuld (service worker) plus een gedeeld plaatje en de bibliotheek. Met
+    // evaluate in een lus: waitForFunction wacht niet op een async functie (de Promise zelf
+    // telt al als waar).
+    let gevuld = false;
+    for (let n = 0; n < 60 && !gevuld; n++) {
+      gevuld = await page.evaluate(async (i) => { for (const naam of await caches.keys()) { const c = await caches.open(naam); if (await c.match("/k/" + i)) return true; } return false; }, id);
+      if (!gevuld) await wacht(250);
+    }
+    assert.ok(gevuld, "de service worker bewaart de kaart na het eerste bezoek");
     await page.evaluate(async () => { const c = await caches.open("fysiplan-kaart-v2"); await c.put("/oefeningen.json", new Response("[]")); await c.put("/beelden/test-oefening.png", new Response("x")); });
     let vraag = "";
     page.once("dialog", (d) => { vraag = d.message(); d.accept(); });

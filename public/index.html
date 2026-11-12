@@ -201,6 +201,7 @@
      elke klik), en het veld dat mist krijgt een rode rand */
   #ps_msg{font-size:12px;color:var(--muted);margin-top:6px}
   #ps_msg.fout{color:#b42318;background:#fef3f2;border:1px solid #fecdca;border-radius:8px;padding:7px 9px;font-size:12.5px;font-weight:600}
+  #ps_msg.fout a{color:inherit;text-decoration:underline}
   #ps_msg.flits{animation:psflits .4s ease}
   @keyframes psflits{20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
   @media (prefers-reduced-motion:reduce){#ps_msg.flits{animation:none}}
@@ -245,6 +246,7 @@
   .uphelp{margin-top:14px;font-size:12.5px;color:var(--muted);line-height:1.6;background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
   .uphelp b{color:var(--ink)}
   .uphelp code{background:#fff;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12px}
+  .uphelp .up-voorbeeld{background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-top:8px;font-family:monospace;font-size:12px;white-space:pre}
   .helpgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .helpsection{background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.55;color:var(--muted)}
   .helpsection b{display:block;color:var(--ink);margin-bottom:4px}
@@ -443,7 +445,7 @@
       Eén tekstbestand. Per oefening: eerst de <b>naam van de oefening</b> op een regel, daaronder de
       <b>bestandsnamen van de plaatjes</b> die erbij horen (elk op een eigen regel). Dan een
       <b>lege regel</b>, en daarna de volgende oefening. Enzovoort:
-      <div style="background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin-top:8px;font-family:monospace;font-size:12px;white-space:pre">Squat (kniebuiging)
+      <div class="up-voorbeeld">Squat (kniebuiging)
 squat-start.png
 squat-uitvoering.png
 
@@ -531,7 +533,7 @@ bridge2.jpg</div>
       Er staat al een <b>voorbeeldkaart</b> voor lage rugklachten klaar. Zo ga je verder:
       <ol style="margin:8px 0 0 18px;padding:0">
         <li>Pas de oefeningen aan: klik links om toe te voegen, op de min om weg te halen. Er passen <b>maximaal 12</b> op een A4.</li>
-        <li><b>Zet een wachtwoord op je praktijk</b> (knop Kaarten). Pas dan gaat een kaart naar je pati&euml;nt en ziet alleen jouw praktijk het overzicht.</li>
+        <li><b>Beveilig je praktijk</b> (knop Kaarten). Pas dan gaat een kaart naar je pati&euml;nt en ziet alleen jouw praktijk het overzicht.</li>
         <li><b>Print</b> de kaart of bewaar hem als PDF, met de QR-code erop.</li>
         <li><b>Scan de QR-code met je eigen telefoon</b> en zie wat je pati&euml;nt ziet.</li>
       </ol>
@@ -568,7 +570,7 @@ bridge2.jpg</div>
       <ol style="margin:8px 0 0 18px;padding:0">
         <li>Vul de <b>naam van je praktijk</b> in; die komt boven op elke kaart.</li>
         <li>Kies een <b>standaard behandelkaart</b> per klacht (knop Sjablonen), of klik links oefeningen aan.</li>
-        <li>Zet een <b>wachtwoord op je praktijk</b> (knop Kaarten) en vul een <b>roepnaam</b> in, zoals Jan K. De QR-code naar de digitale kaart komt er dan vanzelf op.</li>
+        <li><b>Beveilig je praktijk</b> (knop Kaarten) en vul een <b>roepnaam</b> in, zoals Jan K. De QR-code naar de digitale kaart komt er dan vanzelf op.</li>
         <li><b>Print</b> de A4 of deel de link via WhatsApp.</li>
       </ol>
     </div>
@@ -624,6 +626,8 @@ bridge2.jpg</div>
     <div style="font-size:12.5px;color:var(--muted);margin:2px 0 8px;line-height:1.5">
       Zoek oefeningen in de bibliotheek op lichaamsdeel en trainingsdoel. De zoekhulp
       kent geen pati&euml;nt en geeft geen dosering: jij kiest de oefeningen en de dosering.
+      <span id="ai_melding" style="display:block;margin-top:4px">De zoekhulp werkt met AI: een AI-dienst kiest de oefeningen
+      en schrijft de korte zin erbij. Dat kan ernaast zitten; kijk zelf of een oefening past.</span>
     </div>
     <label for="ai_regio">Lichaamsdeel</label>
     <select id="ai_regio" style="width:100%;margin-bottom:7px">
@@ -685,7 +689,7 @@ bridge2.jpg</div>
     <div class="video-status" id="vup_status"></div>
     <div style="display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap">
       <button class="btn" type="button" id="vup_opname">Opnemen met telefoon</button>
-      <button class="btn" type="button" id="vup_wis" style="display:none;color:#b3261e">Geüploade video verwijderen</button>
+      <button class="btn" type="button" id="vup_wis" style="display:none;color:var(--fout,#b3261e)">Geüploade video verwijderen</button>
     </div>
     <div class="acts">
       <button class="btn" id="vup_cancel">Sluiten</button>
@@ -726,7 +730,7 @@ bridge2.jpg</div>
     </div>
     <label for="cat_nieuw_naam">Naam van de categorie</label>
     <input type="text" id="cat_nieuw_naam" maxlength="40" placeholder="bijv. Werp-ABC" style="width:100%"/>
-    <div id="cat_nieuw_melding" style="display:none;font-size:12.5px;color:#b3261e;margin-top:8px"></div>
+    <div id="cat_nieuw_melding" style="display:none;font-size:12.5px;color:var(--fout,#b3261e);margin-top:8px"></div>
     <div class="acts">
       <button class="btn" id="cat_nieuw_cancel">Annuleren</button>
       <button class="btn primary" id="cat_nieuw_ok">Toevoegen</button>
@@ -873,7 +877,12 @@ bridge2.jpg</div>
       var src=im.src;
       if(USE_V2_LIBRARY&&V2_BEELD==='lijn'&&im.lineSrc)src=im.lineSrc;
       else if(USE_V2_LIBRARY&&V2_BEELD==='kleur'&&im.colorSrc)src=im.colorSrc;
-      return "<img class='thumb' style='width:"+(size||34)+"px;height:"+(size||34)+"px' src='"+src+"'/>";
+      // Lijst en sjabloonkiezer (vakjes tot 76 px): een kleine versie van het bibliotheekbeeld, en
+      // pas ophalen als het vakje in beeld komt. Voorheen haalde de app bij het openen alle 818
+      // volledige bestanden op (166 MB, platformreview 2026-11-11). De A4 houdt het volledige beeld.
+      var klein=USE_V2_LIBRARY&&(size||34)<=76;
+      if(klein)src=String(src).replace(/^(\/v2\/|\/)?images\//,function(m,voor){return (voor||'')+'klein/images/';});
+      return "<img class='thumb'"+(klein?" loading='lazy' decoding='async'":"")+" style='width:"+(size||34)+"px;height:"+(size||34)+"px' src='"+src+"'/>";
     }
     return svgStr(im.key,im.m,size);
   }
@@ -1186,7 +1195,7 @@ bridge2.jpg</div>
       'Op de server staan dan de roepnaam, de oefeningen met dosering en uitleg, het doel en de opmerking die je invult, en wat je pati&euml;nt zelf aanvinkt of meldt. '+
       'Leeftijd en Casus blijven op papier en in deze browser. '+
       'Een gedeelde kaart verdwijnt vanzelf van de server na een periode zonder activiteit, en kort nadat je hem afrondt (archiveert). Kopieer daarom wat je wilt bewaren naar je dossier. '+
-      'Werk je op een gedeelde computer, of stop je bij de praktijk? Kies dan bij Kaarten voor <b>Wis Fysiplan van dit apparaat</b>. '+
+      'Werk je op een gedeelde computer, of stop je bij de praktijk? Kies dan bij Kaarten voor <strong>Wis Fysiplan van dit apparaat</strong>. '+
       'Meer in de <a href="/privacy" target="_blank" rel="noopener">privacyverklaring</a>, de <a href="/verwerkersovereenkomst" target="_blank" rel="noopener">verwerkersovereenkomst</a> en de <a href="/voorwaarden" target="_blank" rel="noopener">algemene voorwaarden</a>.';
   }
   // EPD-koppeling zonder koppeling: elk EPD met een extern-link-veld (Intramed,
@@ -1350,6 +1359,32 @@ bridge2.jpg</div>
     bouwZijbalk();
     var _pb=document.getElementById('printBtn');_pb.textContent='Printen';_pb.title='Print het trainingsschema of bewaar het als PDF';
     document.getElementById('eigenOefBtn').textContent='Eigen oefening';
+    bouwSprongLinks();
+  }
+  // V2: de oefenlijst heeft per rij een ster en een plus, samen ruim 1.600 tabstops vóór de kaart en Kaarten
+  // (gebruikers-sweep 2026-11-12, Sanne met alleen een toetsenbord). Bovenaan staan daarom sprongkoppelingen die
+  // pas zichtbaar worden bij focus; in het zoekveld zetten pijltjes + Enter een oefening op de kaart.
+  function bouwSprongLinks(){
+    if(document.getElementById('sprongLinks'))return;
+    var nav=document.createElement('nav');nav.id='sprongLinks';nav.className='spronglinks no-print';nav.setAttribute('aria-label','Snel naar');
+    [['sprong_zoek','Naar oefening zoeken'],['sprong_kaart','Naar de kaart'],['sprong_kaarten','Kaarten openen']].forEach(function(d){
+      var a=document.createElement('a');a.href='#';a.id=d[0];a.textContent=d[1];nav.appendChild(a);
+    });
+    document.body.insertBefore(nav,document.body.firstChild);
+    var zoek=document.getElementById('search');
+    if(zoek){
+      zoek.setAttribute('aria-label','Zoek oefening');
+      var hint=document.createElement('span');hint.id='zoekUitleg';hint.className='sr-only';
+      hint.textContent='Typ om te zoeken. Met pijltje omlaag en omhoog kies je een oefening, Enter zet hem op de kaart of haalt hem eraf.';
+      zoek.parentNode.insertBefore(hint,zoek.nextSibling);zoek.setAttribute('aria-describedby','zoekUitleg');
+    }
+    var a4=document.getElementById('a4wrap');if(a4&&!a4.hasAttribute('tabindex'))a4.setAttribute('tabindex','-1');
+    nav.addEventListener('click',function(e){
+      var a=e.target.closest('a');if(!a)return;e.preventDefault();
+      if(a.id==='sprong_zoek'){var z=document.getElementById('search');if(z){z.focus();z.select();}}
+      else if(a.id==='sprong_kaart'){var w=document.getElementById('a4wrap');if(w){w.focus();w.scrollIntoView({block:'start'});}}
+      else{var kb=document.getElementById('kaartenBtn');if(kb)kb.click();}
+    });
   }
   if(USE_V2_LIBRARY){
     var _beeldKeuze=document.getElementById('beeldKeuze');
@@ -1553,8 +1588,8 @@ bridge2.jpg</div>
         :"";
       return "<div class='row"+(IS_ADMIN?" beheer-row":"")+(index===keyboardIndex?" keyboard-focus":"")+"' data-id='"+o.id+"'>"+imgRender(o.imgs[0],56)+
         "<div class='nm'>"+esc(o.naam)+"<small>"+sub+"</small>"+videoBeheer+"</div>"+ren+
-        "<button class='fav"+(isFavorite(o)?" on":"")+"' data-fav='"+o.id+"' title='"+(isFavorite(o)?"uit favorieten":"toevoegen aan favorieten")+"' aria-label='favoriet'>★</button>"+
-        "<button class='add"+(has?" on":"")+"' data-add='"+o.id+"' title='"+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"' aria-label='"+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"'>"+(has?"−":"+")+"</button></div>";
+        "<button class='fav"+(isFavorite(o)?" on":"")+"' data-fav='"+o.id+"' title='"+(isFavorite(o)?"uit favorieten":"toevoegen aan favorieten")+"' aria-label='"+(IS_V2?esc(o.naam)+": favoriet":"favoriet")+"'"+(IS_V2?" aria-pressed='"+(isFavorite(o)?"true":"false")+"'":"")+">★</button>"+
+        "<button class='add"+(has?" on":"")+"' data-add='"+o.id+"' title='"+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"' aria-label='"+(IS_V2?esc(o.naam)+": ":"")+(has?"van kaart halen":(metVideo?"oefening en video op kaart zetten":"op kaart zetten"))+"'>"+(has?"−":"+")+"</button></div>";
     }).join("");
   }
   // v2: patiëntsignalen in de editor — opent de therapeut een gedeelde kaart om
@@ -1562,7 +1597,7 @@ bridge2.jpg</div>
   // schema, precies op het moment van de doseringsbeslissing. De data komt uit
   // de praktijkprojectie (de kaartenlijst); de patiëntroute blijft dit veld
   // bewust kwijt. Leeg zodra een andere, lokale of lege kaart begint.
-  var SRV_SIGNALEN={},SIGNAAL_KAART=null;
+  var SRV_SIGNALEN={},SIGNAAL_KAART=null,SRV_KAART={};
   function verseZwaar(){
     if(!IS_V2||!SIGNAAL_KAART||!SIGNAAL_KAART.oefZwaar)return {};
     var uit={},nuZ=Date.now();
@@ -1832,11 +1867,11 @@ bridge2.jpg</div>
     if(!file)return;
     if(!videoMime(file)){
       pendingVideoFile=null;document.getElementById('vup_keuze').textContent='Kies een avatarvideo';
-      status.style.color='#b3261e';status.textContent='Gebruik een MP4- of WebM-bestand.';setVideoBusy(false);return;
+      status.style.color='var(--fout,#b3261e)';status.textContent='Gebruik een MP4- of WebM-bestand.';setVideoBusy(false);return;
     }
     if(file.size>200*1024*1024){
       pendingVideoFile=null;document.getElementById('vup_keuze').textContent='Kies een avatarvideo';
-      status.style.color='#b3261e';status.textContent='Deze video is groter dan 200 MB. Exporteer hem als korte web-MP4.';setVideoBusy(false);return;
+      status.style.color='var(--fout,#b3261e)';status.textContent='Deze video is groter dan 200 MB. Exporteer hem als korte web-MP4.';setVideoBusy(false);return;
     }
     pendingVideoFile=file;
     document.getElementById('vup_keuze').textContent=file.name+' · '+Math.max(1,Math.round(file.size/1024/1024))+' MB';
@@ -1866,11 +1901,11 @@ bridge2.jpg</div>
     var catalog=o.video&&o.video.catalog;o.video=d.video||{};if(catalog)o.video.catalog=catalog;
     pendingVideoFile=null;vupFile.value='';document.getElementById('vup_keuze').textContent='Kies een nieuwe avatarvideo';
     var progress=document.getElementById('vup_progress'),status=document.getElementById('vup_status');
-    progress.firstElementChild.style.width='100%';status.style.color='#287a4b';status.textContent='Klaar — de video is gekoppeld en gaat voortaan automatisch mee met deze oefening.';
+    progress.firstElementChild.style.width='100%';status.style.color='var(--goed,#287a4b)';status.textContent='Klaar — de video is gekoppeld en gaat voortaan automatisch mee met deze oefening.';
     renderVideoPreview(o);renderList();setVideoBusy(false);
   }
   function videoUploadFout(tekst){
-    var status=document.getElementById('vup_status');status.style.color='#b3261e';status.textContent=tekst||'Uploaden is niet gelukt.';setVideoBusy(false);
+    var status=document.getElementById('vup_status');status.style.color='var(--fout,#b3261e)';status.textContent=tekst||'Uploaden is niet gelukt.';setVideoBusy(false);
   }
   document.getElementById('vup_upload').addEventListener('click',function(){
     var o=OEF[pendingVideoId],file=pendingVideoFile;if(!o||!file||videoUploadBusy)return;
@@ -1915,13 +1950,13 @@ bridge2.jpg</div>
         if(!d.ok)throw new Error(d.fout||'Verwijderen is niet gelukt.');
         var catalog=o.video&&o.video.catalog;o.video=d.video||null;
         if(catalog){o.video=o.video||{};o.video.catalog=catalog;}
-        renderVideoPreview(o);renderList();document.getElementById('vup_status').style.color='#287a4b';document.getElementById('vup_status').textContent='De geüploade video is verwijderd.';setVideoBusy(false);
-      }).catch(function(err){document.getElementById('vup_status').style.color='#b3261e';document.getElementById('vup_status').textContent=err.message||'Verwijderen is niet gelukt.';setVideoBusy(false);});
+        renderVideoPreview(o);renderList();document.getElementById('vup_status').style.color='var(--goed,#287a4b)';document.getElementById('vup_status').textContent='De geüploade video is verwijderd.';setVideoBusy(false);
+      }).catch(function(err){document.getElementById('vup_status').style.color='var(--fout,#b3261e)';document.getElementById('vup_status').textContent=err.message||'Verwijderen is niet gelukt.';setVideoBusy(false);});
   });
   document.getElementById('vup_opname').addEventListener('click',function(){
     var o=OEF[pendingVideoId];if(!o||videoUploadBusy)return;
     closeOv('ovVideo');
-    startOpname('oefening',o.naam,function(pad){o.video=o.video||{};o.video.eigen=pad;delete o.video.stream;renderList();openVideoManager(o.id);document.getElementById('vup_status').style.color='#287a4b';document.getElementById('vup_status').textContent='De opname is gekoppeld aan deze oefening.';});
+    startOpname('oefening',o.naam,function(pad){o.video=o.video||{};o.video.eigen=pad;delete o.video.stream;renderList();openVideoManager(o.id);document.getElementById('vup_status').style.color='var(--goed,#287a4b)';document.getElementById('vup_status').textContent='De opname is gekoppeld aan deze oefening.';});
   });
 
   // Een lege categorie los kunnen aanmaken; de server bewaart hem totdat er
@@ -2227,7 +2262,8 @@ bridge2.jpg</div>
   function toonDeelWeigering(d,naam){
     var pr=(SET.praktijk||'').trim();
     if(d.beveilig){
-      toonQrHint('Zet eerst een wachtwoord op je praktijk; daarna komt de QR-code er vanzelf op. Zonder wachtwoord deelt Fysiplan geen pati\u00ebntkaarten.',[{act:'beveilig',label:'Beveilig mijn praktijk'}]);
+      toonQrHint(PRAKSLOT.eigenLogin?'Beveilig eerst je praktijk met je eigen login; daarna komt de QR-code er vanzelf op. Een onbeveiligde praktijk deelt geen pati\u00ebntkaarten.'
+        :'Zet eerst een wachtwoord op je praktijk; daarna komt de QR-code er vanzelf op. Zonder wachtwoord deelt Fysiplan geen pati\u00ebntkaarten.',[{act:'beveilig',label:'Beveilig mijn praktijk'}]);
       return true;
     }
     if(d.bestaat){
@@ -2270,11 +2306,22 @@ bridge2.jpg</div>
   function openBeveiligen(daarna){
     NA_BEVEILIG=daarna||null;
     document.getElementById('kaartenBtn').click();
-    setTimeout(function(){
+    // het paneel haalt eerst de stand van de praktijk op; pas dan is zeker welk formulier er staat
+    var toon=function(wacht){
+      if(!PRAKSLOT.bekend&&wacht>0){setTimeout(function(){toon(wacht-1);},150);return;}
+      if(PRAKSLOT.eigenLogin){
+        // eigen login voor iedereen: een onbeveiligde praktijk krijgt meteen het venster, een
+        // beveiligde het inlogformulier (de knop heet dan Inloggen)
+        if(!PRAKSLOT.geclaimd){openEigenLogin('nieuw');return;}
+        psFocusLogin();
+        toonPsMsg('Log in met je e-mailadres en wachtwoord. Daarna komt de QR-code vanzelf op je kaart.');
+        return;
+      }
       var ww=document.getElementById('ps_ww');
       if(ww){ww.scrollIntoView({block:'center'});ww.focus();}
       toonPsMsg('Kies een wachtwoord en vink het akkoord aan. Daarna komt de QR-code vanzelf op je kaart.');
-    },350);
+    };
+    setTimeout(function(){toon(12);},350);
   }
   // QR van de kaartlink met de patiënttaal; past die niet in de kleine QR (langere
   // domeinnaam), dan de kale link: de kaart kiest dan zelf de taal van de telefoon
@@ -2502,7 +2549,7 @@ bridge2.jpg</div>
       if(!d.ok){
         // praktijk nog niet beveiligd: venster blijft open met de reden en "Print zonder
         // QR-code", in plaats van stil naar Beveiligen te springen (nieuwe proefgebruiker)
-        if(IS_V2&&d.beveilig){prMelding('Voor de QR-code moet je praktijk eerst beveiligd zijn met een wachtwoord, zodat alleen jullie de kaarten zien. Je kunt ook meteen printen, alleen zonder QR-code.',[{act:'beveilig',label:'Beveiligen',hoofd:true}]);return;}
+        if(IS_V2&&d.beveilig){prMelding('Voor de QR-code moet je praktijk eerst beveiligd zijn'+(PRAKSLOT.eigenLogin?'':' met een wachtwoord')+', zodat alleen jullie de kaarten zien. Je kunt ook meteen printen, alleen zonder QR-code.',[{act:'beveilig',label:'Beveiligen',hoofd:true}]);return;}
         if(IS_V2&&d.bestaat){prMelding('Er is al een kaart \u201c'+(d.naam||naam)+'\u201d in je praktijk. Is dit dezelfde pati\u00ebnt? Anders: geef deze kaart een andere roepnaam, bijvoorbeeld met een initiaal.',[{act:'overschrijf',label:'Ja, die kaart bijwerken',hoofd:true}]);return;}
         if(IS_V2&&d.verouderd){prMelding((KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen verloren.',[{act:'nieuwste',label:'Open de nieuwste versie',hoofd:true},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);return;}
         if(IS_V2&&d.login){prMelding('De praktijk \u201c'+(SET.praktijk||'').trim()+'\u201d is beveiligd en je bent niet ingelogd. Log eerst in.',[{act:'beveilig',label:'Inloggen',hoofd:true}]);return;}
@@ -2557,9 +2604,16 @@ bridge2.jpg</div>
     if(!p.praktijk.trim()||!p.adres.trim())return;
     clearTimeout(prakSaveTimer);
     prakSaveTimer=setTimeout(function(){
-      fetch('api/praktijken',{method:'POST',headers:PJSON(),body:JSON.stringify(p)})
-        .then(function(r){return r.json();}).then(function(d){if(d.ok)loadPraktijken();}).catch(function(){});
+      stuurPraktijk(p);
     },600);
+  }
+  // Heeft een andere praktijk deze naam al, dan vraagt de server eerst of dat echt zo moet (409 bezet).
+  function stuurPraktijk(p){
+    fetch('api/praktijken',{method:'POST',headers:PJSON(),body:JSON.stringify(p)})
+      .then(function(r){return r.json();}).then(function(d){
+        if(d.ok){loadPraktijken();return;}
+        if(d.bezet&&!p.zelfdeNaam&&window.confirm(d.fout||'Er is al een andere praktijk met deze naam. Toch zo noemen?')){p.zelfdeNaam=true;stuurPraktijk(p);}
+      }).catch(function(){});
   }
   ['praktijk','p_adres','p_plaats','p_tel','p_email','p_website'].forEach(function(id){
     var el=document.getElementById(id);
@@ -2772,7 +2826,7 @@ bridge2.jpg</div>
   function proefTeller(){
     if(!PROEF)return;
     var t=document.getElementById('pb_teller');
-    if(t){t.textContent=chosen.length+' / 12 oefeningen';t.style.color=chosen.length>=12?'#b42318':'';}
+    if(t){t.textContent=chosen.length+' / 12 oefeningen';t.style.color=chosen.length>=12?'var(--fout,#b42318)':'';}
   }
   function proefZetPraktijk(nm){
     var el=document.getElementById('praktijk');
@@ -2997,20 +3051,33 @@ bridge2.jpg</div>
       return;
     }
     if(wat==='weg'&&it.bron==='eigen'){
+      // gebruikers-sweep 2026-11-12: een dubbelklik op "Delen met de praktijk" landde met de tweede klik op
+      // "Verwijderen" ernaast; kort na Delen telt een klik op Verwijderen niet.
+      if(Date.now()<(SJ_STAAT.deelKlikTot||0))return;
       if(!confirm('Je eigen kaart "'+s.naam+'" verwijderen?'))return;
       var lst=leesEigenSjab();lst.splice(it.i,1);bewaarEigenSjab(lst);SJ_STAAT.sel=null;renderSjabLijst();return;
     }
     // eigen kaart delen met de hele praktijk (v2)
     if(wat==='deel'){
-      k.disabled=true;k.textContent='Bezig…';
-      fetch('api/praktijk/sjablonen',{method:'POST',headers:PJSON(),
-        body:JSON.stringify({praktijk:SET.praktijk||'',naam:s.naam,oefeningen:s.oefeningen||[]})})
-        .then(function(r){return r.json();})
-        .then(function(d){
-          if(d.ok){PRAKSJAB=d.sjablonen;renderSjabLijst();}
-          else{k.disabled=false;k.textContent='Delen met de praktijk';alert(d.fout||'Delen is niet gelukt.'+(d.login?' Log eerst in bij de praktijk (via Kaarten).':''));}
-        })
-        .catch(function(){k.disabled=false;k.textContent='Delen met de praktijk';alert('Delen is niet gelukt: geen verbinding.');});
+      if(k.disabled)return;
+      SJ_STAAT.deelKlikTot=Date.now()+1500;
+      k.style.minWidth=k.offsetWidth+'px';k.disabled=true;k.textContent='Bezig…';
+      var herstel=function(){k.disabled=false;k.textContent='Delen met de praktijk';};
+      var deel=function(vervang){
+        fetch('api/praktijk/sjablonen',{method:'POST',headers:PJSON(),
+          body:JSON.stringify({praktijk:SET.praktijk||'',naam:s.naam,oefeningen:s.oefeningen||[],vervang:!!vervang})})
+          .then(function(r){return r.json();})
+          .then(function(d){
+            if(d.ok){PRAKSJAB=d.sjablonen;renderSjabLijst();alert((vervang?'Het teamsjabloon "':'Gedeeld: "')+s.naam+(vervang?'" is vervangen. Je collega\'s zien nu deze versie.':'" staat nu bij de kaarten van de praktijk.'));}
+            else if(d.bestaat&&!vervang){
+              if(confirm('Er is al een teamsjabloon "'+(d.naam||s.naam)+'" in de praktijk.\n\nVervangen door deze versie? Je collega\'s zien dan alleen nog de nieuwe.'))deel(true);
+              else herstel();
+            }
+            else{herstel();alert(d.fout||'Delen is niet gelukt.'+(d.login?' Log eerst in bij de praktijk (via Kaarten).':''));}
+          })
+          .catch(function(){herstel();alert('Delen is niet gelukt: geen verbinding.');});
+      };
+      deel(false);
       return;
     }
     // gedeelde praktijkkaart (voor iedereen) verwijderen
@@ -3052,7 +3119,7 @@ bridge2.jpg</div>
         go.disabled=false;go.textContent='Zoek oefeningen';
         if(!d.ok){uit.innerHTML="<div class='hint'>"+esc(d.fout||'De zoekhulp is even niet bereikbaar.')+"</div>";return;}
         AI_VOORSTEL=d;
-        uit.innerHTML="<div class='ai-toel'>Vink aan wat je wilt gebruiken. De oefeningen komen erbij op de kaart; de dosering vul je zelf in.</div>"+
+        uit.innerHTML="<div class='ai-toel'>Gekozen met AI. Vink aan wat je wilt gebruiken. De oefeningen komen erbij op de kaart; de dosering vul je zelf in.</div>"+
           d.oefeningen.map(function(o,i){
             // laat zien welke oefeningen een instructievideo meekrijgen
             var bron=OEF[byNorm[normEx(o.naam)]];
@@ -3161,6 +3228,8 @@ bridge2.jpg</div>
       "<div id='ps_form' style='display:none;gap:6px;align-items:center;flex-wrap:wrap'>"+
         "<input id='ps_email' type='email' autocomplete='username' placeholder='Je e-mail (eigen login)' style='flex:1;min-width:170px;display:none'/>"+
         "<input id='ps_ww' type='password' autocomplete='current-password' placeholder='Wachtwoord' style='flex:1;min-width:130px'/>"+
+        // tweede stap: de server vraagt erom als deze login er een heeft (zes cijfers, of een reservecode)
+        "<input id='ps_code' type='text' autocomplete='one-time-code' autocapitalize='characters' spellcheck='false' maxlength='24' placeholder='Code uit je code-app' aria-label='Code uit je code-app, of een reservecode' style='flex:1;min-width:150px;display:none'/>"+
         "<button class='btn' id='ps_do' type='button'></button></div>"+
       // AVG art. 28: wie de praktijk beveiligt, gaat namens de praktijk akkoord met de
       // algemene voorwaarden en de verwerkersovereenkomst, in één vinkje (alleen bij
@@ -3173,6 +3242,10 @@ bridge2.jpg</div>
         "<input id='ps_hcode' type='text' autocomplete='one-time-code' placeholder='Herstelcode (FP-…)' style='flex:1;min-width:150px'/>"+
         "<input id='ps_hnieuw' type='password' autocomplete='new-password' placeholder='Nieuw wachtwoord (min. 8 tekens)' style='flex:1;min-width:150px'/>"+
         "<button class='btn' id='ps_hdo' type='button'>Herstel</button></div>"+
+      // wachtwoord vergeten met een eigen login: een link naar het adres van die login
+      "<div id='ps_vergeet' style='display:none;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px'>"+
+        "<input id='ps_vmail' type='email' autocomplete='username' placeholder='Je e-mail (eigen login)' aria-label='Het e-mailadres van je eigen login' style='flex:1;min-width:170px'/>"+
+        "<button class='btn' id='ps_vdo' type='button'>Stuur link</button></div>"+
       "<div id='ps_wijzig' style='display:none;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px'>"+
         "<input id='ps_huidig' type='password' autocomplete='current-password' placeholder='Huidig wachtwoord' style='flex:1;min-width:130px'/>"+
         "<input id='ps_nieuw' type='password' autocomplete='new-password' placeholder='Nieuw wachtwoord (min. 8 tekens)' style='flex:1;min-width:150px'/>"+
@@ -3185,12 +3258,17 @@ bridge2.jpg</div>
     blok.insertBefore(s,blok.firstChild);
     document.getElementById('ps_do').addEventListener('click',prakSlotActie);
     document.getElementById('ps_ww').addEventListener('keydown',function(e){if(e.key==='Enter')prakSlotActie();});
+    document.getElementById('ps_code').addEventListener('keydown',function(e){if(e.key==='Enter')prakSlotActie();});
     s.addEventListener('input',psLive);s.addEventListener('change',psLive);
     document.getElementById('ps_wdo').addEventListener('click',prakWachtwoord);
     document.getElementById('ps_hdo').addEventListener('click',prakHerstel);
+    document.getElementById('ps_vdo').addEventListener('click',prakVergeten);
+    document.getElementById('ps_vmail').addEventListener('keydown',function(e){if(e.key==='Enter')prakVergeten();});
     document.getElementById('ps_hcdo').addEventListener('click',prakNieuweCode);
   }
-  var PRAKSLOT={geclaimd:false,ingelogd:false,pr:'',bewaar:null,naam:'',nieuw:false,wie:'',perEmail:false,akkoord:null};
+  // eigenLogin: de server vraagt van iedereen een eigen login met een tweede stap (EIGEN_LOGIN_VERPLICHT);
+  // er is dan geen gedeeld praktijkwachtwoord. voorstel: naam en e-mail uit de proefaanmelding, als voorzet.
+  var PRAKSLOT={geclaimd:false,ingelogd:false,pr:'',bewaar:null,naam:'',nieuw:false,wie:'',perEmail:false,akkoord:null,tweedeStap:null,eigenLogin:false,voorstel:null,bekend:false};
   // bewaartermijnen zoals de server ze hanteert (standaard 90 en 30 dagen)
   function bewaarAfgerond(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.afgerond)||30;}
   function bewaarStil(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.stil)||90;}
@@ -3198,7 +3276,8 @@ bridge2.jpg</div>
     PRAKSLOT.pr=pr;
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){if(!r.ok)throw r.status;return r.json();}).then(function(d){
-        PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;PRAKSLOT.naam=d.naam||'';PRAKSLOT.wie=d.wie||'';PRAKSLOT.perEmail=!!d.perEmail;PRAKSLOT.akkoord=d.akkoord||null;
+        PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;PRAKSLOT.naam=d.naam||'';PRAKSLOT.wie=d.wie||'';PRAKSLOT.perEmail=!!d.perEmail;PRAKSLOT.akkoord=d.akkoord||null;PRAKSLOT.tweedeStap=typeof d.tweedeStap==='boolean'?d.tweedeStap:null;
+        PRAKSLOT.eigenLogin=!!d.eigenLogin;PRAKSLOT.voorstel=d.voorstel||null;PRAKSLOT.proefNodig=!!d.proefNodig;PRAKSLOT.bekend=true;
         if(pr!==PRAKSLOT.nieuwVoor)PRAKSLOT.nieuw=false;
         if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
         rendPrakSlot();
@@ -3230,14 +3309,23 @@ bridge2.jpg</div>
     if(!st)return;
     tekenAkkoord();
     if(!PRAKSLOT.geclaimd||(PRAKSLOT.nieuw&&!PRAKSLOT.ingelogd)){
-      st.innerHTML=PRAKSLOT.nieuw?"🔓 Nieuwe praktijk met de naam \u201c"+esc(PRAKSLOT.pr)+"\u201d. Je krijgt een eigen beveiligde praktijk, los van de andere met deze naam. <a href='#' id='ps_terug'>Toch inloggen</a>":"🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op: daarna deel je kaarten met je pati\u00ebnten en ziet alleen jouw praktijk het overzicht.";
-      form.style.display='flex';ww.placeholder='Kies een wachtwoord (min. 8 tekens)';ww.autocomplete='new-password';knop.textContent='Beveiligen';knop.dataset.act='claim';
+      // eigen login voor iedereen: beveiligen is dan je eigen login maken. Dat gaat in een eigen
+      // venster (naam, e-mail, wachtwoord, akkoord en werkregels); hier staat alleen de knop.
+      var eig=PRAKSLOT.eigenLogin;
+      st.innerHTML=PRAKSLOT.nieuw?"🔓 Nieuwe praktijk met de naam \u201c"+esc(PRAKSLOT.pr)+"\u201d. Je krijgt een eigen beveiligde praktijk, los van de andere met deze naam. <a href='#' id='ps_terug'>Toch inloggen</a>"
+        :eig?"🔓 Deze praktijk is nog niet beveiligd. Maak je eigen login: daarna deel je kaarten met je pati\u00ebnten en ziet alleen jouw praktijk het overzicht."
+        :"🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op: daarna deel je kaarten met je pati\u00ebnten en ziet alleen jouw praktijk het overzicht.";
+      form.style.display='flex';ww.style.display=eig?'none':'';ww.placeholder='Kies een wachtwoord (min. 8 tekens)';ww.autocomplete='new-password';knop.textContent='Beveiligen';knop.dataset.act=eig?'eigen':'claim';
       document.getElementById('ps_email').style.display='none';
-      document.getElementById('ps_vwolab').style.display='flex';
+      psCodeWeg();
+      document.getElementById('ps_vwolab').style.display=eig?'none':'flex';
+      if(eig)document.getElementById('ps_herstel').style.display='none';
+      document.getElementById('ps_vergeet').style.display='none';
       var tr=document.getElementById('ps_terug');
       if(tr)tr.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.nieuw=false;rendPrakSlot();});
     }else if(PRAKSLOT.ingelogd){
       document.getElementById('ps_vwolab').style.display='none';
+      document.getElementById('ps_vergeet').style.display='none';
       // de server handelt altijd voor de ingelogde praktijk; staat er op de kaart een
       // andere naam, dan zie je hier bij welke praktijk je werkt
       var bij=PRAKSLOT.naam&&PRAKSLOT.naam.toLowerCase()!==String(PRAKSLOT.pr||'').toLowerCase()?' bij \u201c'+esc(PRAKSLOT.naam)+'\u201d':'';
@@ -3255,6 +3343,13 @@ bridge2.jpg</div>
       var wa=document.getElementById('ps_wis');if(wa)wa.addEventListener('click',function(e){e.preventDefault();wisApparaat();});
       // met een eigen login heb je geen herstelcode van de praktijk nodig
       if(PRAKSLOT.wie){var hcl=document.getElementById('ps_hctoon');if(hcl)hcl.remove();}
+      // eigen login zonder tweede stap: de weg ernaartoe (het instellen zelf staat in het Team-venster)
+      if(PRAKSLOT.tweedeStap===false&&tm){
+        var sl=document.createElement('a');sl.href='#';sl.id='ps_stap';sl.textContent='Tweede stap instellen';
+        sl.title='Na je wachtwoord vraagt Fysiplan dan om een code uit een code-app op je telefoon';
+        tm.parentNode.insertBefore(sl,tm.nextSibling);
+        sl.addEventListener('click',function(e){e.preventDefault();openTeam(true);});
+      }
     }else{
       document.getElementById('ps_vwolab').style.display='none';
       document.getElementById('ps_wijzig').style.display='none';
@@ -3263,11 +3358,31 @@ bridge2.jpg</div>
       var wa2=document.getElementById('ps_wis');if(wa2)wa2.addEventListener('click',function(e){e.preventDefault();wisApparaat();});
       var nw=document.getElementById('ps_nieuw');
       if(nw)nw.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.nieuw=true;PRAKSLOT.nieuwVoor=PRAKSLOT.pr;rendPrakSlot();});
-      form.style.display='flex';ww.placeholder=PRAKSLOT.perEmail?'Je wachtwoord':'Wachtwoord (van jou of van de praktijk)';ww.autocomplete='current-password';knop.textContent='Inloggen';knop.dataset.act='login';
+      form.style.display='flex';ww.style.display='';ww.placeholder=PRAKSLOT.perEmail?'Je wachtwoord':'Wachtwoord (van jou of van de praktijk)';ww.autocomplete='current-password';knop.textContent='Inloggen';knop.dataset.act='login';
       var em=document.getElementById('ps_email');em.style.display='';
       em.placeholder=PRAKSLOT.perEmail?'Je e-mail':'Je e-mail (leeg = praktijkwachtwoord)';
       var vg=document.getElementById('ps_vergeten');
-      if(vg)vg.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_herstel');f.style.display=f.style.display==='none'?'flex':'none';if(f.style.display==='flex')toonPsMsg('Vul de herstelcode in die je bij het beveiligen hebt bewaard, en kies een nieuw wachtwoord.');});
+      if(vg)vg.addEventListener('click',function(e){
+        e.preventDefault();
+        var f=document.getElementById('ps_herstel'),v=document.getElementById('ps_vergeet');
+        // Deze praktijk logt alleen per persoon in: er is geen praktijkwachtwoord om te herstellen,
+        // dus ook geen herstelcode. Je vraagt een link aan op het adres van je eigen login.
+        if(PRAKSLOT.perEmail){
+          f.style.display='none';
+          psVergeetToon(v.style.display==='none');
+          return;
+        }
+        v.style.display='none';
+        f.style.display=f.style.display==='none'?'flex':'none';
+        if(f.style.display==='flex'){
+          toonPsMsg('Vul de herstelcode in die je bij het beveiligen hebt bewaard, en kies een nieuw wachtwoord.');
+          // wie met een eigen e-mailadres inlogt, heeft geen herstelcode nodig: die krijgt een link per mail
+          var m=document.getElementById('ps_msg'),a=document.createElement('a');
+          a.href='#';a.id='ps_vlink';a.textContent='Log je in met je eigen e-mailadres? Vraag een link per mail aan.';
+          m.appendChild(document.createTextNode(' '));m.appendChild(a);
+          a.addEventListener('click',function(e2){e2.preventDefault();f.style.display='none';psVergeetToon(true);});
+        }
+      });
     }
   }
 
@@ -3279,7 +3394,254 @@ bridge2.jpg</div>
     return fetch('api/praktijk/team/'+pad,{method:'POST',headers:PJSON(),body:JSON.stringify(lijf||{})})
       .then(function(r){return r.json().catch(function(){return{ok:false};});});
   }
-  function openTeam(){
+  // ---- tweede stap: wat het Team-venster en het inloggen delen ----
+  // Het instelvak: de QR (in de browser getekend), de sleutel om over te typen en het veld voor
+  // de eerste code. `p` is het voorvoegsel van de id's: 'tm' in het Team-venster, 'li' bij het
+  // inloggen in een praktijk die de tweede stap van iedereen vraagt.
+  function stapInstelHtml(p,r,knop){
+    // de QR wordt hier in de browser getekend (ruime stand van qr.js); de link met het geheim gaat nergens anders heen
+    var qr=window.FYSIQR?FYSIQR.svg(r.uri,176,true):'';
+    var sleutel=String(r.geheim||'').replace(/(.{4})(?=.)/g,'$1 ');
+    return "<div style='display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;margin-top:8px;padding:12px;border:1px solid var(--line);border-radius:12px'>"+
+      (qr?"<div id='"+p+"_sqr' role='img' aria-label='QR-code om te scannen met je code-app' style='background:#fff;color:#18343b;padding:4px;border-radius:8px;line-height:0;flex:0 0 auto'>"+qr+"</div>":"")+
+      "<div style='flex:1;min-width:220px'>"+
+      "<div><b style='color:var(--ink)'>1. Scan de code</b> met de code-app op je telefoon.</div>"+
+      "<div style='margin-top:4px'>Lukt scannen niet? Kies in de app voor handmatig invoeren (op tijd gebaseerd) en vul deze sleutel in:</div>"+
+      "<div id='"+p+"_ssleutel' style='font:700 13.5px/1.6 ui-monospace,monospace;user-select:all;color:var(--ink);max-width:20ch;margin-top:2px'>"+esc(sleutel)+"</div>"+
+      "<div style='margin-top:2px'>Code-app op dit apparaat? <a id='"+p+"_sapp' href='#'>Open hem hier</a>.</div>"+
+      "<div style='margin-top:12px'><b style='color:var(--ink)'>2. Vul de zes cijfers in</b> die de app nu toont.</div>"+
+      "<div class='tm-uitnodig' style='display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;padding:0;border:0;background:none'><input id='"+p+"_scode' type='text' inputmode='numeric' autocomplete='one-time-code' maxlength='7' placeholder='123456' aria-label='Code uit je code-app' style='flex:0 1 112px;min-width:96px'/>"+
+      "<button class='btn primary' id='"+p+"_sbev' type='button'>"+knop+"</button></div>"+
+      "</div></div>";
+  }
+  // De reservecodes: één keer getoond, met Kopieer en een knop om verder te gaan (`klaar`).
+  function reservecodesHtml(p,codes,kop,extra){
+    return "<div style='margin-top:8px;padding:12px;border:1px solid var(--line);border-radius:12px'>"+kop+
+      "<div id='"+p+"_rcodes' style='font:700 14px/1.7 ui-monospace,monospace;user-select:all;columns:2;max-width:400px;margin:8px 0;color:var(--ink)'>"+codes.map(function(c){return "<div>"+esc(c)+"</div>";}).join('')+"</div>"+
+      (extra||'')+
+      "<div style='display:flex;gap:6px;flex-wrap:wrap;margin-top:10px'><button class='btn' id='"+p+"_rckopie' type='button'>Kopieer</button><button class='btn primary' id='"+p+"_rcklaar' type='button'>Ik heb ze bewaard</button></div></div>";
+  }
+  function reservecodesKnoppen(p,codes,klaar){
+    document.getElementById(p+'_rckopie').addEventListener('click',function(){
+      var b=this;try{navigator.clipboard.writeText(codes.join('\n')).then(function(){b.textContent='Gekopieerd';},function(){b.textContent='Selecteer en kopieer';});}catch(e){b.textContent='Selecteer en kopieer';}
+    });
+    document.getElementById(p+'_rcklaar').addEventListener('click',klaar);
+  }
+  // ---- inloggen in een praktijk die de tweede stap van iedereen vraagt ----
+  // Het wachtwoord klopte en deze login heeft nog geen tweede stap: instellen hoort dan bij het
+  // inloggen. De server gaf het geheim (d). E-mail, wachtwoord, dat geheim en de eerste code
+  // gaan samen opnieuw naar het inloggen; pas dan is er een sessie. Het wachtwoord staat alleen
+  // in het geheugen van dit venster en is weg zodra het sluit. `ingelogd` is het gewone vervolg
+  // na een geslaagde login. `opts` komt van het venster voor de eigen login (openEigenLogin): daar
+  // is dit stap 2 van 2, en wie hier afbreekt, leest wat er al wel geregeld is (opts.afgebroken).
+  function openStapBijLogin(d,lijf,ingelogd,opts){
+    opts=opts||{};
+    var ov=document.getElementById('ovStapLogin');
+    if(!ov){
+      ov=document.createElement('div');ov.className='ov';ov.id='ovStapLogin';
+      ov.innerHTML="<div class='modal' style='max-width:560px'><div class='el-stap' id='li_stap'></div><h3>Stel je tweede stap in</h3><div id='li_inhoud' class='hint' style='line-height:1.5;text-align:left;padding:0'></div>"+
+        "<div class='acts' style='margin-top:14px'><button class='btn' id='li_sluit' type='button'>Annuleren</button></div></div>";
+      document.body.appendChild(ov);
+    }
+    var el=document.getElementById('li_inhoud'),sluit=document.getElementById('li_sluit'),kop=ov.querySelector('h3'),stapEl=document.getElementById('li_stap');
+    var wie={praktijk:lijf.praktijk,email:lijf.email,wachtwoord:lijf.wachtwoord},lopend='';
+    // wie de tweede stap vraagt: Fysiplan van elke login, of deze praktijk van haar eigen team
+    var vrager=d.voorIedereen?'Fysiplan':'Je praktijk';
+    var dicht=function(){wie=null;closeOv('ovStapLogin');el.innerHTML='';};
+    var msg=function(t){var m=document.getElementById('li_msg');if(m)m.textContent=t||'';};
+    kop.textContent='Stel je tweede stap in';
+    stapEl.textContent=opts.stap||'';stapEl.style.display=opts.stap?'':'none';
+    sluit.parentNode.style.display='';
+    sluit.onclick=function(){
+      dicht();
+      toonPsMsg(opts.afgebroken||'Je bent nog niet ingelogd, want je tweede stap is niet ingesteld. Log opnieuw in om dat te doen.');
+      psFocusLogin();
+    };
+    var teken=function(r,melding){
+      lopend=r.geheim;
+      el.innerHTML=(opts.login?"<div style='margin-bottom:8px'><b style='color:var(--ink)'>Je login staat klaar:</b> "+esc(opts.login)+"</div>":"")+
+        "<div>"+vrager+" vraagt van iedereen een tweede stap bij het inloggen: na je wachtwoord een code uit een code-app op je telefoon, zoals Google Authenticator, Microsoft Authenticator of Wachtwoorden op een iPhone. Je stelt hem nu één keer in.</div>"+
+        stapInstelHtml('li',r,'Zet aan en log in')+
+        "<div id='li_msg' role='status' aria-live='polite' style='margin-top:6px;color:var(--fout,#b4372f)'></div>";
+      document.getElementById('li_sapp').setAttribute('href',r.uri);
+      var bev=document.getElementById('li_sbev'),ci=document.getElementById('li_scode');
+      var stuur=function(){
+        var c=ci.value.replace(/\s/g,'');
+        if(!/^\d{6}$/.test(c)){msg('Vul de zes cijfers uit je code-app in.');ci.focus();return;}
+        if(!wie)return;
+        bev.disabled=true;
+        fetch('api/praktijk/login',{method:'POST',headers:{'content-type':'application/json'},
+          body:JSON.stringify({praktijk:wie.praktijk,email:wie.email,wachtwoord:wie.wachtwoord,geheim:lopend,code:c})})
+          .then(function(x){return x.json().catch(function(){return{ok:false};});})
+          .then(function(r2){
+            bev.disabled=false;
+            if(r2.ok){
+              // ingelogd: het gewone vervolg loopt meteen, de reservecodes blijven staan tot ze bewaard zijn
+              wie=null;ingelogd(r2);
+              var codes=r2.reservecodes||[];
+              if(!codes.length){dicht();return;}
+              // geen Annuleren meer (er valt niets af te breken): het venster sluit met "Ik heb ze bewaard"
+              kop.textContent='Bewaar je reservecodes';
+              stapEl.style.display='none';
+              sluit.parentNode.style.display='none';
+              el.innerHTML=reservecodesHtml('li',codes,"<b style='color:var(--ink)'>De tweede stap staat aan en je bent ingelogd.</b> Bewaar deze reservecodes op een veilige plek, niet op je telefoon. Ben je je telefoon kwijt, dan log je in met een reservecode in plaats van de code uit de app. Elke code werkt één keer en je ziet ze alleen nu.");
+              reservecodesKnoppen('li',codes,dicht);
+              return;
+            }
+            if(r2.stapInstellen){
+              // de server gaf een nieuw geheim (het instellen was verlopen of is elders opnieuw begonnen): nieuwe QR
+              if(r2.geheim){teken(r2,r2.fout||'De QR-code is vernieuwd. Scan hem opnieuw en vul de code in die de app dan toont.');return;}
+              msg(r2.fout||'Die code klopt niet.');ci.select();return;
+            }
+            if(r2.tweedeStap){
+              // deze login heeft intussen een tweede stap (op een ander apparaat ingesteld): gewoon de code vragen
+              dicht();
+              var cv=document.getElementById('ps_code');
+              if(cv){cv.value='';cv.style.display='';}
+              toonPsMsg('Je tweede stap is intussen ingesteld. Vul de code uit je code-app in.');
+              if(cv)cv.focus();
+              return;
+            }
+            msg(r2.fout||'Dat lukte niet.');
+          }).catch(function(){bev.disabled=false;msg('Geen verbinding met de server. Probeer het zo opnieuw.');});
+      };
+      bev.addEventListener('click',stuur);
+      ci.addEventListener('keydown',function(e){if(e.key==='Enter')stuur();});
+      msg(melding);
+      ci.focus();
+    };
+    el.textContent='Even kijken…';
+    openOv('ovStapLogin');
+    ensureQr(function(){if(wie)teken(d,'');});
+  }
+  // ---- eigen login voor iedereen: een praktijk beveiligen, of overstappen van het praktijkwachtwoord ----
+  // Vraagt de server van iedereen een eigen login met een tweede stap (PRAKSLOT.eigenLogin), dan is
+  // er geen gedeeld praktijkwachtwoord meer.
+  //   'nieuw':    wie de praktijk beveiligt, maakt hier de eigen login: de eerste beheerder.
+  //   'overstap': een account van vóór die regel heeft alleen een praktijkwachtwoord. Wie daarmee
+  //               inlogt (opts.gedeeld), maakt er alleen nog de eigen login mee; daarna werkt het
+  //               praktijkwachtwoord niet meer.
+  // In beide gevallen antwoordt de server met het geheim voor de tweede stap en neemt
+  // openStapBijLogin het over: pas met de eerste code is er een sessie. De wachtwoorden staan
+  // alleen in het geheugen van dit venster en zijn weg zodra het sluit.
+  function openEigenLogin(soort,opts){
+    opts=opts||{};
+    var nieuw=soort!=='overstap',pr=PRAKSLOT.pr||(SET.praktijk||'').trim(),gedeeld=opts.gedeeld||'';
+    // zonder lopende proef valt er niets te beveiligen: dat staat er vóór het formulier, niet erna
+    if(nieuw&&PRAKSLOT.proefNodig){
+      psFout('Start eerst je gratis proef. Daarna beveilig je hier je praktijk en deel je kaarten. Werkt je praktijk al met Fysiplan? Vraag je collega dan om een uitnodiging.');
+      var pn=document.getElementById('ps_msg');
+      if(pn){var pl=document.createElement('a');pl.href='/v2/proef';pl.textContent='Start de gratis proef';pn.appendChild(document.createTextNode(' '));pn.appendChild(pl);}
+      return;
+    }
+    var ov=document.getElementById('ovEigenLogin');
+    if(!ov){
+      ov=document.createElement('div');ov.className='ov';ov.id='ovEigenLogin';
+      ov.innerHTML="<div class='modal'><div class='el-stap'>Stap 1 van 2</div><h3></h3><div id='el_inhoud' class='hint' style='line-height:1.5;text-align:left;padding:0'></div>"+
+        "<div class='acts' style='margin-top:14px'><button class='btn' id='el_sluit' type='button'>Annuleren</button><button class='btn primary' id='el_do' type='button'>Verder</button></div></div>";
+      document.body.appendChild(ov);
+    }
+    var el=document.getElementById('el_inhoud'),sluit=document.getElementById('el_sluit'),doe=document.getElementById('el_do');
+    ov.querySelector('h3').textContent=nieuw?'Beveilig je praktijk':'Maak je eigen login';
+    // de voorzet uit de proefaanmelding, alleen voor wie de praktijk zelf beveiligt
+    var v=(nieuw&&PRAKSLOT.voorstel)||{};
+    el.innerHTML=
+      "<div>"+(nieuw
+        ?"Je maakt je eigen login bij “"+esc(pr)+"” en wordt beheerder. In stap 2 koppel je een code-app op je telefoon; houd hem bij de hand. Collega’s nodig je daarna uit onder Team: iedereen logt in met een eigen login."
+        :"Fysiplan werkt voortaan met een eigen login per persoon en een tweede stap. Met het praktijkwachtwoord maak je hier je eigen login bij “"+esc(pr)+"”; je wordt beheerder. Het praktijkwachtwoord werkt daarna niet meer. In stap 2 koppel je een code-app op je telefoon.")+"</div>"+
+      "<div class='el-twee'>"+
+        "<div><label for='el_naam'>Je naam</label><input id='el_naam' autocomplete='name' maxlength='60' value='"+esc(v.naam||'')+"'/></div>"+
+        "<div><label for='el_email'>Je e-mail</label><input id='el_email' type='email' autocomplete='username' maxlength='120' value='"+esc(v.email||'')+"'/></div>"+
+      "</div>"+
+      "<label for='el_ww'>"+(nieuw?"Kies een wachtwoord":"Kies je eigen wachtwoord")+"</label>"+
+      "<div class='el-ww'><input id='el_ww' type='password' autocomplete='new-password' maxlength='200' aria-describedby='el_wwuitleg'/>"+
+        "<button class='btn' id='el_toon' type='button' aria-pressed='false' aria-label='Toon het wachtwoord'>Toon</button></div>"+
+      "<div class='el-klein' id='el_wwuitleg'>Minstens 8 tekens. Dit wachtwoord is alleen van jou"+(nieuw?".":"; kies een ander dan het praktijkwachtwoord.")+"</div>"+
+      // AVG art. 28: wie de praktijk beveiligt, gaat namens de praktijk akkoord (zelfde zin als in het slot)
+      (nieuw?"<label class='keuze el-vink'><input type='checkbox' id='el_vwo'/><span>Ik ga namens de praktijk akkoord met de <a href='/voorwaarden' target='_blank' rel='noopener'>algemene voorwaarden</a> en de <a href='/verwerkersovereenkomst' target='_blank' rel='noopener'>verwerkersovereenkomst</a>. Fysiplan bewaart de kaarten alleen in opdracht van de praktijk.</span></label>":"")+
+      "<div class='el-regels'><b>Werkregels</b>"+REGELS_HTML+"</div>"+
+      "<label class='keuze el-vink'><input type='checkbox' id='el_regels'/><span>Ik heb de werkregels gelezen en houd me eraan.</span></label>"+
+      "<div id='el_msg' role='alert'></div>";
+    var naam=document.getElementById('el_naam'),email=document.getElementById('el_email'),ww=document.getElementById('el_ww'),
+        vwo=document.getElementById('el_vwo'),regels=document.getElementById('el_regels'),toon=document.getElementById('el_toon');
+    var msgEl=document.getElementById('el_msg');
+    var msg=function(t){msgEl.textContent=t||'';if(t){try{msgEl.scrollIntoView({block:'nearest'});}catch(e){}}};
+    var geenMist=function(){el.querySelectorAll('.mist,[aria-invalid]').forEach(function(x){x.classList.remove('mist');x.removeAttribute('aria-invalid');});};
+    var mist=function(veld){if(!veld)return;(veld.type==='checkbox'?veld.parentNode:veld).classList.add('mist');veld.setAttribute('aria-invalid','true');};
+    var dicht=function(){gedeeld='';closeOv('ovEigenLogin');el.innerHTML='';};
+    doe.disabled=false;
+    toon.addEventListener('click',function(){
+      var zichtbaar=ww.type==='password';
+      ww.type=zichtbaar?'text':'password';toon.textContent=zichtbaar?'Verberg':'Toon';
+      toon.setAttribute('aria-pressed',zichtbaar?'true':'false');toon.setAttribute('aria-label',zichtbaar?'Verberg het wachtwoord':'Toon het wachtwoord');
+    });
+    sluit.onclick=function(){
+      dicht();
+      if(!nieuw){toonPsMsg('Je bent nog niet ingelogd. Met het praktijkwachtwoord maak je eerst je eigen login; log opnieuw in om dat te doen.');psFocusLogin();}
+    };
+    var stuur=function(){
+      if(doe.disabled)return;
+      geenMist();
+      // alles wat nog ontbreekt in één keer, met de velden die het betreft
+      var mis=[],velden=[],nm=naam.value.trim(),em=email.value.trim(),eigenWw=ww.value;
+      if(!nm){mis.push('je naam');velden.push(naam);}
+      if(!/^\S+@\S+\.\S+$/.test(em)){mis.push('een geldig e-mailadres');velden.push(email);}
+      if(eigenWw.length<8){mis.push('een wachtwoord van minstens 8 tekens'+(eigenWw.length?' (nu '+eigenWw.length+')':''));velden.push(ww);}
+      if(vwo&&!vwo.checked){mis.push('een vinkje bij de algemene voorwaarden en de verwerkersovereenkomst');velden.push(vwo);}
+      if(!regels.checked){mis.push('een vinkje bij de werkregels');velden.push(regels);}
+      if(mis.length){
+        velden.forEach(mist);
+        msg('Nog nodig: '+(mis.length>1?mis.slice(0,-1).join(', ')+' en '+mis[mis.length-1]:mis[0])+'.');
+        velden[0].focus();return;
+      }
+      var lijf=nieuw?{praktijk:pr,naam:nm,email:em,wachtwoord:eigenWw,akkoord:true,regels:true}
+        :{praktijk:pr,wachtwoord:gedeeld,eigen:{naam:nm,email:em,wachtwoord:eigenWw,regels:true}};
+      if(nieuw&&PRAKSLOT.nieuw)lijf.nieuw=true;
+      doe.disabled=true;msg('');
+      fetch('api/praktijk/'+(nieuw?'claim':'login'),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(lijf)})
+        .then(function(r){return r.json().catch(function(){return{ok:false};});})
+        .then(function(d){
+          doe.disabled=false;
+          if(d.ok&&d.stapInstellen){
+            // De login bestaat; een sessie is er pas na de tweede stap. Het slot toont vanaf nu het
+            // inloggen per persoon, met het e-mailadres al ingevuld voor wie stap 2 afbreekt.
+            var login=d.email||em;
+            dicht();
+            PRAKSLOT.geclaimd=true;PRAKSLOT.perEmail=true;PRAKSLOT.nieuw=false;rendPrakSlot();
+            var pe=document.getElementById('ps_email'),pw=document.getElementById('ps_ww'),pm=document.getElementById('ps_msg');
+            if(pe)pe.value=login;if(pw)pw.value='';if(pm)pm.style.display='none';
+            toonPrakSlot(pr);
+            openStapBijLogin(d,{praktijk:pr,email:login,wachtwoord:eigenWw},function(r2){psIngelogd(r2,nieuw);},
+              {stap:'Stap 2 van 2',login:login,
+                afgebroken:(nieuw?'Je praktijk is beveiligd met je eigen login':'Je eigen login is gemaakt')+', maar je bent nog niet ingelogd: de tweede stap is niet ingesteld. Log in met je e-mailadres en wachtwoord om dat te doen.'});
+            return;
+          }
+          // de naam is intussen door iemand anders beveiligd, of de overstap is elders al gemaakt:
+          // het slot weet de weg (inloggen, of "Andere praktijk met deze naam")
+          if(d.login||d.perEmail){dicht();toonPrakSlot(pr);psFout(d.fout||'Deze praktijk is al beveiligd. Log in.');return;}
+          geenMist();
+          mist({naam:naam,email:email,wachtwoord:ww}[d.veld]||(d.akkoord?vwo:d.regels?regels:null));
+          msg(d.fout||'Dat lukte niet.');
+          // zonder proef of na de proef: de weg naar de proefpagina erbij
+          if(d.proefNodig||d.proefVerlopen){
+            var pa=document.createElement('a');pa.href='/v2/proef';pa.textContent=d.proefNodig?'Start de gratis proef':'Naar je proef';
+            msgEl.appendChild(document.createTextNode(' '));msgEl.appendChild(pa);
+          }
+          var fv={naam:naam,email:email,wachtwoord:ww}[d.veld];
+          if(fv){fv.focus();if(fv.select)fv.select();}
+        })
+        .catch(function(){doe.disabled=false;msg('Geen verbinding met de server. Probeer het zo opnieuw.');});
+    };
+    doe.onclick=stuur;
+    [naam,email,ww].forEach(function(veld){veld.addEventListener('keydown',function(e){if(e.key==='Enter')stuur();});});
+    // het rood verdwijnt zodra een veld in orde is (on…: het vak blijft bestaan, de inhoud niet)
+    el.oninput=function(e){var t=e.target;if(t&&t.classList){t.classList.remove('mist');t.removeAttribute('aria-invalid');}};
+    el.onchange=function(e){var t=e.target;if(t&&t.type==='checkbox'&&t.checked){t.parentNode.classList.remove('mist');t.removeAttribute('aria-invalid');}};
+    openOv('ovEigenLogin');
+    // de cursor in het eerste veld dat nog leeg is (naam en e-mail kunnen al zijn ingevuld)
+    setTimeout(function(){var eerste=!naam.value?naam:!email.value?email:ww;try{eerste.focus();}catch(e){}},0);
+  }
+  function openTeam(naarStap){
     var ovT=document.getElementById('ovTeam');
     if(!ovT){
       ovT=document.createElement('div');ovT.className='ov';ovT.id='ovTeam';
@@ -3288,7 +3650,12 @@ bridge2.jpg</div>
       document.body.appendChild(ovT);
       document.getElementById('tm_sluit').addEventListener('click',function(){closeOv('ovTeam');});
     }
-    openOv('ovTeam');laadTeam();
+    openOv('ovTeam');
+    laadTeam(naarStap?function(){
+      var deel=document.getElementById('tm_stapdeel'),ww=document.getElementById('tm_sww');
+      try{if(deel)deel.scrollIntoView({block:'nearest'});}catch(e){}
+      if(ww)ww.focus();
+    }:null);
   }
   var REGELS_HTML="<ul style='margin:6px 0 0;padding-left:18px'>"+
     "<li>Op een kaart staat alleen een roepnaam (“Jan K.”). De volledige naam hoort in het EPD.</li>"+
@@ -3312,17 +3679,58 @@ bridge2.jpg</div>
           "<label style='display:flex;gap:6px;align-items:flex-start;margin-top:6px'><input type='checkbox' id='tm_eregels' style='width:auto;height:auto;margin-top:2px'/><span>Ik heb de werkregels gelezen en houd me eraan.</span></label>"+
           "<button class='btn primary' id='tm_edo' type='button' style='margin-top:8px'>Maak mijn login</button></div>";
       }
+      // Tweede stap van de eigen login: een code uit een code-app na het wachtwoord. Het blok staat
+      // onder het team zelf (de mensen blijven het eerste wat je ziet) en direct boven het
+      // praktijkwachtwoord, want dat logt in zonder tweede stap.
+      var hStap='';
+      var dagMaand=function(t){return esc(new Date(t).toLocaleDateString('nl-NL',{day:'numeric',month:'long'}));};
+      if(d.ik){
+        hStap+="<div id='tm_stapdeel' style='margin-top:12px;border-top:1px solid var(--line);padding-top:10px'>"+
+          "<div class='tm-kop' style='font-weight:600;color:var(--ink);margin:0 0 4px'>Tweede stap bij het inloggen</div>";
+        if(d.ik.tweedeStap){
+          var rc=d.ik.reservecodesOver||0;
+          // vraagt de praktijk hem van iedereen, dan is uitzetten "opnieuw instellen" (nieuwe telefoon)
+          hStap+="<div id='tm_stap'>Aan"+(d.ik.tweedeStapSinds?" sinds "+dagMaand(d.ik.tweedeStapSinds):"")+
+            ". Na je wachtwoord vraagt Fysiplan om de code uit je code-app. "+
+            (rc?"Je hebt nog "+rc+" reservecode"+(rc===1?"":"s")+" voor als je je telefoon kwijt bent. ":"Je reservecodes zijn op; maak nieuwe, voor als je je telefoon kwijt bent. ")+
+            "<a href='#' data-stapact='reservecodes'>Nieuwe reservecodes</a> · <a href='#' data-stapact='uit'>"+(d.stapVerplicht?"Nieuwe telefoon? Stel opnieuw in":"Zet de tweede stap uit")+"</a></div>";
+        }else{
+          hStap+="<div id='tm_stap'>Met een tweede stap vraagt Fysiplan na je wachtwoord om een code uit een code-app op je telefoon, zoals Google Authenticator, Microsoft Authenticator of Wachtwoorden op een iPhone. Wie je wachtwoord te weten komt, kan er dan nog niet in.</div>"+
+            "<div class='tm-uitnodig' id='tm_stapstart' style='display:flex;gap:6px;flex-wrap:wrap;margin-top:6px'><input id='tm_sww' type='password' autocomplete='current-password' placeholder='Je wachtwoord' aria-label='Je wachtwoord' style='flex:1;min-width:160px'/>"+
+            "<button class='btn primary' id='tm_sdo' type='button'>Stel in</button></div>";
+        }
+        hStap+="<div id='tm_stapvak'></div><div id='tm_stapmsg' role='status' aria-live='polite' style='margin-top:6px;color:var(--fout,#b4372f)'></div>";
+        // Voor de hele praktijk: een beheerder met een eigen tweede stap kan hem van iedereen vragen
+        // of dat weer opheffen. Ieder ander ziet alleen dat het geldt.
+        if(d.stapVoorIedereen){
+          // eigen login voor iedereen: Fysiplan vraagt hem van elke login, per praktijk valt er niets te kiezen
+          hStap+="<div id='tm_verplicht' style='margin-top:8px'>Fysiplan vraagt de tweede stap van iedereen die inlogt.</div>";
+        }else if(d.stapVerplicht){
+          hStap+="<div id='tm_verplicht' style='margin-top:8px'>Je praktijk vraagt de tweede stap van iedereen"+(d.stapVerplichtSinds?", sinds "+dagMaand(d.stapVerplichtSinds):"")+"."+
+            (d.beheer?" <a href='#' id='tm_vdo' data-aan='0' style='white-space:nowrap'>Verplichting opheffen</a>":"")+"</div>";
+        }else if(d.beheer){
+          hStap+="<div id='tm_verplicht' style='margin-top:8px'>"+(d.ik.tweedeStap
+            ?"Nu kiest iedereen in je praktijk zelf. <a href='#' id='tm_vdo' data-aan='1'>Maak de tweede stap verplicht voor iedereen</a>"
+            :"Heb je hem zelf ingesteld, dan kun je de tweede stap verplicht maken voor iedereen in je praktijk.")+"</div>";
+        }
+        if(d.beheer)hStap+="<div id='tm_vvak'></div><div id='tm_vmsg' role='status' aria-live='polite' style='margin-top:6px;color:var(--fout,#b4372f)'></div>";
+        hStap+="</div>";
+      }
       h+="<div class='tm-kop' style='font-weight:600;color:var(--ink);margin-bottom:4px'>Mensen in "+esc(d.praktijk||'je praktijk')+"</div>";
       if(!d.leden.length)h+="<div>Nog niemand met een eigen login.</div>";
       h+=d.leden.map(function(l){
         var zelf=d.ik&&d.ik.id===l.id;
         var st=l.status==='actief'?(l.laatst?'laatst ingelogd '+new Date(l.laatst).toLocaleDateString('nl-NL',{day:'numeric',month:'short'}):'actief'):'uitgenodigd';
+        if(l.tweedeStap)st+=' · tweede stap aan';
+        else if(d.stapVerplicht&&l.status==='actief')st+=' · stelt de tweede stap in bij het inloggen';
+        // telefoon en reservecodes kwijt: een beheerder met een eigen login wist de tweede stap van een collega
+        var wis2=(d.beheer&&d.ik&&!zelf&&l.tweedeStap)?" · <a href='#' data-tm2wis='"+esc(l.id)+"' data-naam='"+esc(l.naam||l.email)+"' title='Telefoon en reservecodes kwijt? Na het wissen "+(d.stapVerplicht?"stelt je collega de tweede stap opnieuw in bij het inloggen.":"logt je collega in met alleen het wachtwoord en stelt de tweede stap opnieuw in.")+"'>wissen</a>":"";
         var rol=d.beheer&&!zelf?"<select data-tmrol='"+esc(l.id)+"' style='width:auto'><option value='therapeut'"+(l.rol==='therapeut'?' selected':'')+">Therapeut</option><option value='beheerder'"+(l.rol==='beheerder'?' selected':'')+">Beheerder</option></select>"
           :"<span class='tm-rol'>"+(l.rol==='beheerder'?'Beheerder':'Therapeut')+"</span>";
 
         return "<div class='tm-lid"+(l.status==='actief'?'':' uitgenodigd')+"' style='display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line)'>"+
           avRond(l.naam||l.email,'tm-av')+
-          "<div class='tm-naam' style='flex:1;min-width:0'><b style='color:var(--ink)'>"+esc(l.naam||l.email)+(zelf?' (jij)':'')+"</b><div style='font-size:11.5px'>"+esc(l.email)+" · "+esc(st)+"</div></div>"+rol+
+          "<div class='tm-naam' style='flex:1;min-width:0'><b style='color:var(--ink)'>"+esc(l.naam||l.email)+(zelf?' (jij)':'')+"</b><div style='font-size:11.5px'>"+esc(l.email)+" · "+esc(st)+wis2+"</div></div>"+rol+
           (d.beheer&&!zelf?"<button class='btn tm-weg' type='button' data-tmweg='"+esc(l.id)+"' aria-label='verwijderen' title='Verwijderen; de kaarten blijven bij de praktijk'>&times;</button>":"")+"</div>";
       }).join('');
       if(d.beheer){
@@ -3332,15 +3740,192 @@ bridge2.jpg</div>
           "<input id='tm_uemail' type='email' placeholder='E-mail' style='flex:1;min-width:160px'/>"+
           "<select id='tm_urol' style='width:auto'><option value='therapeut'>Therapeut</option><option value='beheerder'>Beheerder</option></select>"+
           "<button class='btn primary' id='tm_udo' type='button'>Nodig uit</button></div><div id='tm_link'></div>";
-        if(d.ik)h+="<div style='margin-top:12px;border-top:1px solid var(--line);padding-top:10px'>"+(d.gedeeldUit
-          ?"Het praktijkwachtwoord staat uit: iedereen logt in met een eigen login. <a href='#' id='tm_gedeeld' data-uit='0'>Weer aanzetten</a>"
-          :"Het praktijkwachtwoord werkt nog. Heeft iedereen een eigen login? <a href='#' id='tm_gedeeld' data-uit='1'>Zet het praktijkwachtwoord uit</a>. Wie er nog mee is ingelogd, wordt dan uitgelogd.")+"</div>";
       }else{
         h+="<div style='margin-top:10px'>Een beheerder van je praktijk past het team aan.</div>";
       }
-      h+="<div id='tm_msg' style='margin-top:8px;color:var(--danger,#b4372f)'></div>";
+      h+=hStap;
+      if(d.beheer){
+        if(d.ik)h+="<div id='tm_gedeeldregel' style='margin-top:12px;border-top:1px solid var(--line);padding-top:10px'>"+(d.stapVoorIedereen
+          ?"Iedereen logt in met een eigen login en een tweede stap. Een gedeeld praktijkwachtwoord is er niet."
+          :d.stapVerplicht
+          ?"Het praktijkwachtwoord staat uit: iedereen logt in met een eigen login en een tweede stap."
+          :d.gedeeldUit
+          ?"Het praktijkwachtwoord staat uit: iedereen logt in met een eigen login. <a href='#' id='tm_gedeeld' data-uit='0'>Weer aanzetten</a>"
+          :"Het praktijkwachtwoord werkt nog"+(d.leden.some(function(l){return l.tweedeStap;})?", zonder tweede stap":"")+". Heeft iedereen een eigen login? <a href='#' id='tm_gedeeld' data-uit='1'>Zet het praktijkwachtwoord uit</a>. Wie er nog mee is ingelogd, wordt dan uitgelogd.")+"</div>";
+      }
+      // mail bij een seintje: alleen tonen als de server kan mailen; een beheerder zet het aan of uit
+      if(d.seinMail&&d.seinMail.kan){
+        h+="<div class='tm-sein' style='margin-top:12px;border-top:1px solid var(--line);padding-top:10px'>"+
+          "<label style='display:flex;gap:6px;align-items:center;margin:0'><input type='checkbox' id='tm_seinmail' style='width:auto;height:auto;margin:0'"+(d.seinMail.aan?" checked":"")+(d.beheer?"":" disabled")+"/>"+
+          "<span>E-mail bij een seintje</span></label>"+
+          "<div style='margin:3px 0 0 20px'>Bij “Ik heb een vraag” of “Het doet te veel pijn” krijgt de behandelaar van de kaart een korte mail, zonder gegevens van de patiënt. "+
+          (d.seinMail.naar&&d.seinMail.naar.length
+            ?"Heeft de kaart geen behandelaar of maker met een eigen login, dan gaat de mail naar "+esc(d.seinMail.naar.join(', '))+"."
+            :"Dat werkt alleen voor wie een eigen login heeft.")+"</div></div>";
+      }
+      h+="<div id='tm_msg' style='margin-top:8px;color:var(--fout,#b4372f)'></div>";
       el.innerHTML=h;
       var msg=function(t){var m=document.getElementById('tm_msg');if(m)m.textContent=t||'';};
+      var sm=document.getElementById('tm_seinmail');
+      if(sm)sm.addEventListener('change',function(){
+        var wil=sm.checked;sm.disabled=true;
+        teamPost('sein-mail',{aan:wil}).then(function(r){sm.disabled=false;if(!r.ok){sm.checked=!wil;msg(r.fout||'Dat lukte niet.');}else msg('');})
+          .catch(function(){sm.disabled=false;sm.checked=!wil;msg('Geen verbinding.');});
+      });
+      // ---- tweede stap: instellen (QR of sleutel, dan de eerste code), reservecodes, uitzetten ----
+      var stapVak=document.getElementById('tm_stapvak');
+      var smsg=function(t){var m=document.getElementById('tm_stapmsg');if(m)m.textContent=t||'';};
+      // reservecodes één keer tonen; het venster ververst pas als de gebruiker zegt dat ze bewaard zijn
+      var toonCodes=function(codes,kop,extra){
+        var uitleg=document.getElementById('tm_stap');if(uitleg)uitleg.style.display='none';
+        stapVak.innerHTML=reservecodesHtml('tm',codes,kop,extra);
+        reservecodesKnoppen('tm',codes,function(){laadTeam();});
+        try{stapVak.scrollIntoView({block:'nearest'});}catch(e){}
+      };
+      var toonStapInstellen=function(r){
+        stapVak.innerHTML=stapInstelHtml('tm',r,'Zet aan');
+        document.getElementById('tm_sapp').setAttribute('href',r.uri);
+        var bev=document.getElementById('tm_sbev'),ci=document.getElementById('tm_scode');
+        var stapBevestig=function(){
+          var c=ci.value.replace(/\s/g,'');
+          if(!/^\d{6}$/.test(c)){smsg('Vul de zes cijfers uit je code-app in.');ci.focus();return;}
+          bev.disabled=true;
+          teamPost('tweede-stap/bevestig',{code:c}).then(function(r2){
+            bev.disabled=false;
+            if(!r2.ok){
+              if(r2.opnieuw){laadTeam(function(){var m=document.getElementById('tm_stapmsg');if(m)m.textContent=r2.fout||'';});return;}
+              smsg(r2.fout||'Dat lukte niet.');ci.select();return;
+            }
+            smsg('');setPrakSes(r2.sessie);PRAKSLOT.tweedeStap=true;rendPrakSlot();
+            toonCodes(r2.reservecodes,"<b style='color:var(--ink)'>De tweede stap staat aan.</b> Bewaar deze reservecodes op een veilige plek, niet op je telefoon. Ben je je telefoon kwijt, dan log je in met een reservecode in plaats van de code uit de app. Elke code werkt één keer en je ziet ze alleen nu.",
+              "<div>Op andere apparaten waar je was ingelogd, ben je uitgelogd.</div>"+
+              (r2.gedeeldAan?"<div style='margin-top:4px'>Het praktijkwachtwoord werkt nog: wie dat kent, logt in zonder tweede stap. "+(d.beheer?"Uitzetten kan hieronder.":"Een beheerder van je praktijk kan het uitzetten.")+"</div>":""));
+          }).catch(function(){bev.disabled=false;smsg('Geen verbinding.');});
+        };
+        bev.addEventListener('click',stapBevestig);
+        ci.addEventListener('keydown',function(e){if(e.key==='Enter')stapBevestig();});
+        ci.focus();
+        // het hele vak in beeld (QR en sleutel staan boven het veld), ook in een lang team
+        try{stapVak.scrollIntoView({block:'nearest'});}catch(e){}
+      };
+      var sDo=document.getElementById('tm_sdo');
+      if(sDo){
+        var stapStart=function(){
+          var ww=document.getElementById('tm_sww');
+          if(!ww.value){smsg('Vul je wachtwoord in.');ww.focus();return;}
+          sDo.disabled=true;
+          teamPost('tweede-stap/start',{wachtwoord:ww.value}).then(function(r){
+            sDo.disabled=false;
+            if(!r.ok){smsg(r.fout||'Dat lukte niet.');ww.select();return;}
+            smsg('');
+            document.getElementById('tm_stapstart').style.display='none';
+            ensureQr(function(){toonStapInstellen(r);});
+          }).catch(function(){sDo.disabled=false;smsg('Geen verbinding.');});
+        };
+        sDo.addEventListener('click',stapStart);
+        document.getElementById('tm_sww').addEventListener('keydown',function(e){if(e.key==='Enter')stapStart();});
+      }
+      el.querySelectorAll('[data-stapact]').forEach(function(a){
+        a.addEventListener('click',function(e){
+          e.preventDefault();
+          var act=a.getAttribute('data-stapact'),uit=act==='uit';
+          smsg('');
+          var opnieuw=uit&&d.stapVerplicht; // de praktijk vraagt hem van iedereen: uitzetten is dan opnieuw instellen
+          stapVak.innerHTML="<div style='margin-top:6px'>"+(opnieuw?"Je tweede stap vervalt en je bent overal uitgelogd. Bij het inloggen stel je hem opnieuw in, bijvoorbeeld op je nieuwe telefoon."
+            :uit?"Zet je de tweede stap uit, dan is je wachtwoord weer genoeg om in te loggen.":"Je krijgt acht nieuwe reservecodes; de oude werken daarna niet meer.")+
+            " Bevestig met je wachtwoord en een code uit je code-app (of een reservecode).</div>"+
+            "<div class='tm-uitnodig' style='display:flex;gap:6px;flex-wrap:wrap;margin-top:6px'><input id='tm_sww2' type='password' autocomplete='current-password' placeholder='Je wachtwoord' aria-label='Je wachtwoord' style='flex:1;min-width:150px'/>"+
+            "<input id='tm_scode2' type='text' autocomplete='one-time-code' autocapitalize='characters' spellcheck='false' maxlength='24' placeholder='Code uit je code-app' aria-label='Code uit je code-app, of een reservecode' style='flex:1;min-width:150px'/>"+
+            "<button class='btn primary' id='tm_sdo2' type='button'>"+(opnieuw?"Stel opnieuw in":uit?"Zet uit":"Maak nieuwe codes")+"</button></div>";
+          var doe=document.getElementById('tm_sdo2');
+          var stuur=function(){
+            var w=document.getElementById('tm_sww2'),c=document.getElementById('tm_scode2');
+            if(!w.value){smsg('Vul je wachtwoord in.');w.focus();return;}
+            if(!c.value.trim()){smsg('Vul de code uit je code-app in, of een reservecode.');c.focus();return;}
+            doe.disabled=true;
+            teamPost('tweede-stap/'+act,{wachtwoord:w.value,code:c.value.trim()}).then(function(r){
+              doe.disabled=false;
+              if(!r.ok){smsg(r.fout||'Dat lukte niet.');(r.code?c:w).select();return;}
+              smsg('');
+              if(r.opnieuwInloggen){
+                // de server heeft deze login overal uitgelogd: terug naar het inloggen, waar het instellen begint
+                closeOv('ovTeam');prakUitgelogd();
+                toonPsMsg('Je tweede stap is vervallen en je bent uitgelogd. Log opnieuw in: je stelt hem dan meteen opnieuw in.');
+                psFocusLogin();
+                return;
+              }
+              if(uit){
+                PRAKSLOT.tweedeStap=false;rendPrakSlot();
+                laadTeam(function(){var m=document.getElementById('tm_stapmsg');if(m){m.style.color='var(--ink)';m.textContent='De tweede stap staat uit. Je logt weer in met alleen je wachtwoord.';}});
+                return;
+              }
+              toonCodes(r.reservecodes,"<b style='color:var(--ink)'>Dit zijn je nieuwe reservecodes.</b> De oude werken niet meer. Bewaar ze op een veilige plek, niet op je telefoon. Elke code werkt één keer en je ziet ze alleen nu.");
+            }).catch(function(){doe.disabled=false;smsg('Geen verbinding.');});
+          };
+          doe.addEventListener('click',stuur);
+          ['tm_sww2','tm_scode2'].forEach(function(id){document.getElementById(id).addEventListener('keydown',function(ev){if(ev.key==='Enter')stuur();});});
+          document.getElementById('tm_sww2').focus();
+        });
+      });
+      // de tweede stap verplicht stellen voor iedereen (met het eigen wachtwoord), of dat opheffen
+      // (wachtwoord en code)
+      var vDo=document.getElementById('tm_vdo');
+      if(vDo)vDo.addEventListener('click',function(e){
+        e.preventDefault();
+        var aan=vDo.getAttribute('data-aan')==='1',vak=document.getElementById('tm_vvak');
+        var vmsg=function(t){var m=document.getElementById('tm_vmsg');if(m){m.style.color='var(--fout,#b4372f)';m.textContent=t||'';}};
+        vmsg('');
+        if(vak.innerHTML){vak.innerHTML='';return;}
+        var zonder=d.leden.filter(function(l){return l.status==='actief'&&!l.tweedeStap;}).length;
+        vak.innerHTML="<div style='margin-top:6px'>"+(aan
+          ?"Iedereen logt dan in met een eigen login en een code uit een code-app. "+
+            (d.gedeeldUit?"":"Het praktijkwachtwoord gaat uit; wie daarmee is ingelogd, wordt uitgelogd. ")+
+            (zonder?(zonder===1?"Eén collega heeft nog geen tweede stap: die wordt uitgelogd en stelt hem in":zonder+" collega’s hebben nog geen tweede stap: zij worden uitgelogd en stellen hem in")+" bij de volgende keer inloggen. ":"")+
+            "Bevestig met je wachtwoord."
+          :"Daarna kiest iedereen weer zelf. Het praktijkwachtwoord blijft uit. Bevestig met je wachtwoord en een code uit je code-app (of een reservecode).")+"</div>"+
+          "<div class='tm-uitnodig' style='display:flex;gap:6px;flex-wrap:wrap;margin-top:6px'><input id='tm_vww' type='password' autocomplete='current-password' placeholder='Je wachtwoord' aria-label='Je wachtwoord' style='flex:1;min-width:150px'/>"+
+          (aan?"":"<input id='tm_vcode' type='text' autocomplete='one-time-code' autocapitalize='characters' spellcheck='false' maxlength='24' placeholder='Code uit je code-app' aria-label='Code uit je code-app, of een reservecode' style='flex:1;min-width:150px'/>")+
+          "<button class='btn primary' id='tm_vbev' type='button'>"+(aan?"Maak verplicht":"Hef op")+"</button></div>";
+        var w=document.getElementById('tm_vww'),c=document.getElementById('tm_vcode'),bev=document.getElementById('tm_vbev');
+        var stuur=function(){
+          if(!w.value){vmsg('Vul je wachtwoord in.');w.focus();return;}
+          if(c&&!c.value.trim()){vmsg('Vul de code uit je code-app in, of een reservecode.');c.focus();return;}
+          bev.disabled=true;
+          teamPost('stap-verplicht',{aan:aan,wachtwoord:w.value,code:c?c.value.trim():undefined}).then(function(r){
+            bev.disabled=false;
+            if(!r.ok){vmsg(r.fout||'Dat lukte niet.');((r.code&&c)?c:w).select();return;}
+            toonPrakSlot(PRAKSLOT.pr);
+            laadTeam(function(){
+              var m=document.getElementById('tm_vmsg');if(!m)return;
+              m.style.color='var(--ink)';
+              m.textContent=!aan?'De tweede stap is niet meer verplicht. Wie hem heeft, houdt hem.'
+                :!r.zonder?'Aangezet. Iedereen met een login heeft hem al.'
+                :'Aangezet. '+(r.zonder===1?'Eén collega stelt':r.zonder+' collega’s stellen')+' hem in bij de volgende keer inloggen.';
+              try{m.scrollIntoView({block:'nearest'});}catch(e2){}
+            });
+          }).catch(function(){bev.disabled=false;vmsg('Geen verbinding.');});
+        };
+        bev.addEventListener('click',stuur);
+        [w,c].forEach(function(v){if(v)v.addEventListener('keydown',function(ev){if(ev.key==='Enter')stuur();});});
+        w.focus();
+        try{vak.scrollIntoView({block:'nearest'});}catch(e3){}
+      });
+      el.querySelectorAll('[data-tm2wis]').forEach(function(a){
+        a.addEventListener('click',function(e){
+          e.preventDefault();
+          if(a.dataset.zeker!=='1'){a.dataset.zeker='1';a.textContent='zeker wissen?';return;}
+          var naam=a.getAttribute('data-naam')||'je collega';
+          teamPost('tweede-stap/wis',{id:a.getAttribute('data-tm2wis')}).then(function(r){
+            laadTeam(function(){
+              var m=document.getElementById('tm_msg');if(!m)return;
+              if(!r.ok){m.textContent=r.fout||'Dat lukte niet.';return;}
+              m.style.color='var(--ink)';
+              m.textContent='De tweede stap van '+naam+' is gewist. '+naam+' is overal uitgelogd'+(d.stapVerplicht?' en stelt de tweede stap opnieuw in bij het inloggen.':', logt in met alleen het wachtwoord en stelt de tweede stap daarna opnieuw in.');
+              try{m.scrollIntoView({block:'nearest'});}catch(e2){}
+            });
+          }).catch(function(){msg('Geen verbinding.');});
+        });
+      });
       var eDo=document.getElementById('tm_edo');
       if(eDo)eDo.addEventListener('click',function(){
         eDo.disabled=true;
@@ -3446,9 +4031,17 @@ bridge2.jpg</div>
       'wachtwoord-wijzigen-mislukt':'wachtwoordwijziging geweigerd','wachtwoord-hersteld':'wachtwoord hersteld met herstelcode',
       'herstel-mislukt':'herstelpoging geweigerd','herstelcode-vernieuwd':'nieuwe herstelcode gemaakt',
       'herstelcode-vernieuwen-mislukt':'nieuwe herstelcode geweigerd','claim-gereset-door-beheer':'beveiliging gereset door beheer',
+      'herstel-door-beheer':'herstelmail naar de praktijk gestuurd','wachtwoord-vergeten-mail':'link voor een nieuw wachtwoord gemaild','wachtwoord-hersteld-per-mail':'nieuw wachtwoord gekozen via de link in de mail','sein-mail-uit':'e-mail bij een seintje uitgezet','sein-mail-aan':'e-mail bij een seintje aangezet',
       'kaart-link-vernieuwd':'kaartlink vernieuwd','eigen-login-gemaakt':'eigen login gemaakt','collega-uitgenodigd':'collega uitgenodigd',
-      'uitnodiging-aangenomen':'uitnodiging aangenomen','collega-verwijderd':'collega verwijderd','rol-gewijzigd':'rol gewijzigd',
-      'praktijkwachtwoord-uit':'praktijkwachtwoord uitgezet','praktijkwachtwoord-aan':'praktijkwachtwoord weer aangezet','kaart-verwijderd':'patiëntkaart naar de prullenbak','kaart-hersteld':'patiëntkaart hersteld uit de prullenbak','kaart-definitief-verwijderd':'patiëntkaart definitief verwijderd','profiel-gewijzigd':'praktijkgegevens of logo gewijzigd','abonnement-opgezegd':'abonnement opgezegd','opzeggen-mislukt':'opzeggen geweigerd (fout wachtwoord)'};
+      'uitnodiging-aangenomen':'uitnodiging aangenomen','collega-verwijderd':'collega verwijderd','rol-gewijzigd':'rol gewijzigd','team-wijziging-geweigerd':'teamwijziging geweigerd',
+      'praktijkwachtwoord-uit':'praktijkwachtwoord uitgezet','praktijkwachtwoord-aan':'praktijkwachtwoord weer aangezet','kaart-verwijderd':'patiëntkaart naar de prullenbak','kaart-hersteld':'patiëntkaart hersteld uit de prullenbak','kaart-definitief-verwijderd':'patiëntkaart definitief verwijderd','profiel-gewijzigd':'praktijkgegevens of logo gewijzigd','abonnement-opgezegd':'abonnement opgezegd','opzeggen-mislukt':'opzeggen geweigerd (fout wachtwoord)',
+      'tweede-stap-aan':'tweede stap bij het inloggen aangezet','tweede-stap-uit':'tweede stap bij het inloggen uitgezet','tweede-stap-gewist':'tweede stap gewist',
+      'tweede-stap-mislukt':'foute code na een goed wachtwoord','tweede-stap-op-slot':'te veel foute codes na een goed wachtwoord; de code-app werkt 24 uur niet','ingelogd-met-reservecode':'ingelogd met een reservecode','reservecodes-vernieuwd':'nieuwe reservecodes gemaakt',
+      'tweede-stap-verplicht':'tweede stap verplicht gemaakt voor iedereen','tweede-stap-niet-verplicht':'tweede stap niet meer verplicht',
+      'opzeggen-geweigerd':'opzeggen met het praktijkwachtwoord geweigerd','praktijknaam-gewijzigd':'praktijknaam gewijzigd'};
+    // bij een foute code is de naam die van de login waarop het gebeurde, niet van wie het deed
+    var BIJ={'tweede-stap-mislukt':1,'tweede-stap-op-slot':1,'wachtwoord-vergeten-mail':1};
+    // 'geclaimd' met een naam erbij: beveiligd met een eigen login, er is dan geen praktijkwachtwoord gezet
     fetch('api/praktijk/activiteit?praktijk='+encodeURIComponent((SET.praktijk||'').trim()),PGET())
       .then(function(r){return r.json();})
       .then(function(d){
@@ -3457,7 +4050,7 @@ bridge2.jpg</div>
         box.innerHTML='<b style="color:var(--tekst,inherit)">Recente accountactiviteit</b> (nieuwste eerst, IP gemaskeerd):<br/>'+
           d.activiteit.map(function(a){
             var wn=new Date(a.t).toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-            return esc(wn)+' — '+esc(LBL[a.actie]||a.actie)+(a.wie?' door '+esc(a.wie):'')+(a.ip?' <small>('+esc(a.ip)+')</small>':'');
+            return esc(wn)+' — '+esc(a.actie==='geclaimd'&&a.wie?'praktijk beveiligd':(LBL[a.actie]||a.actie))+(a.wie?(BIJ[a.actie]?', login van ':' door ')+esc(a.wie):'')+(a.ip?' <small>('+esc(a.ip)+')</small>':'');
           }).join('<br/>');
       })
       .catch(function(){box.textContent='De activiteit is nu niet beschikbaar.';});
@@ -3521,10 +4114,45 @@ bridge2.jpg</div>
       .then(function(d){
         knop.disabled=false;
         if(!d.ok){psFout(d.fout||'Dat lukte niet. Controleer de herstelcode.',code,true);return;}
+        if(d.eigenLoginNodig){
+          // Eigen login voor iedereen: het nieuwe praktijkwachtwoord geeft geen sessie. Je maakt er
+          // meteen je eigen login mee; de nieuwe herstelcode staat er voor het geval je dat uitstelt.
+          var gedeeld=nw.value;code.value='';nw.value='';
+          document.getElementById('ps_herstel').style.display='none';
+          toonHerstelcode(d.herstelcode,'Je praktijkwachtwoord is vernieuwd. Maak nu je eigen login: daarna heb je het praktijkwachtwoord en deze code niet meer nodig. Stel je dat uit, bewaar dan deze nieuwe herstelcode (de oude werkt niet meer):');
+          openEigenLogin('overstap',{gedeeld:gedeeld});
+          return;
+        }
         setPrakSes(d.sessie);code.value='';nw.value='';
         document.getElementById('ps_herstel').style.display='none';
         PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();reloadLibraryKeepingCard();
         toonHerstelcode(d.herstelcode,'Je wachtwoord is vernieuwd. Dit is je nieuwe herstelcode (de oude werkt niet meer); bewaar hem op een veilige plek:');
+      })
+      .catch(function(){knop.disabled=false;psFout('Geen verbinding met de server. Probeer het zo opnieuw.');});
+  }
+  // "Wachtwoord vergeten?" met een eigen login: alleen het e-mailadres. De server stuurt een link
+  // naar dat adres als het bij een login van deze praktijk hoort, en zegt in beide gevallen hetzelfde.
+  function psVergeetToon(aan){
+    var v=document.getElementById('ps_vergeet'),vm=document.getElementById('ps_vmail'),em=document.getElementById('ps_email');
+    v.style.display=aan?'flex':'none';
+    if(!aan){document.getElementById('ps_msg').style.display='none';return;}
+    if(!vm.value&&em&&em.value)vm.value=em.value.trim();
+    toonPsMsg('Vul het e-mailadres van je eigen login in. Je krijgt een mail met een link om een nieuw wachtwoord te kiezen. Heb je een tweede stap (code-app), dan blijft die zoals hij is.');
+    vm.focus();
+  }
+  function prakVergeten(){
+    var vm=document.getElementById('ps_vmail'),knop=document.getElementById('ps_vdo'),adres=vm.value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(adres)){psFout('Vul het e-mailadres van je eigen login in.',vm);return;}
+    knop.disabled=true;
+    fetch('api/praktijk/wachtwoord-vergeten',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({praktijk:PRAKSLOT.pr,email:adres})})
+      .then(function(r){return r.json().catch(function(){return{ok:false};});})
+      .then(function(d){
+        knop.disabled=false;
+        if(!d.ok){psFout(d.fout||'Dat lukte niet. Probeer het zo opnieuw.',vm);return;}
+        psGeenMist();
+        document.getElementById('ps_vergeet').style.display='none';
+        toonPsMsg('Hoort '+adres+' bij een login van deze praktijk, dan staat er binnen een paar minuten een mail in je inbox met een link om een nieuw wachtwoord te kiezen. De link is een uur geldig. Geen mail? Kijk bij ongewenste mail en controleer het adres: een beheerder van je praktijk ziet onder Team met welk adres je login is gemaakt.');
       })
       .catch(function(){knop.disabled=false;psFout('Geen verbinding met de server. Probeer het zo opnieuw.');});
   }
@@ -3535,9 +4163,27 @@ bridge2.jpg</div>
     if(!(vwo&&vwo.checked)){mis.push('een vinkje bij de algemene voorwaarden en de verwerkersovereenkomst');velden.push(vwo);}
     return {tekst:mis.length?'Nog nodig: '+mis.join(' en ')+'.':'',velden:velden};
   }
+  // het vervolg na een geslaagde login of beveiliging (d is het antwoord van de server; beveiligd:
+  // de praktijk is zojuist beveiligd, niet alleen ingelogd)
+  function psIngelogd(d,beveiligd){
+    var ww=document.getElementById('ps_ww');
+    psGeenMist();setPrakSes(d.sessie);if(ww)ww.value='';psCodeWeg();document.getElementById('ps_msg').style.display='none';
+    PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;PRAKSLOT.nieuw=false;rendPrakSlot();toonPrakSlot(PRAKSLOT.pr);toonSrvKaarten();reloadLibraryKeepingCard();
+    if(d.herstelcode)toonHerstelcode(d.herstelcode);
+    // ingelogd met een reservecode: zeggen hoeveel er nog zijn (elke code werkt één keer)
+    if(typeof d.reservecodesOver==='number')toonPsMsg('Je bent ingelogd met een reservecode. Je hebt er nog '+d.reservecodesOver+'. Nieuwe maak je onder Team.');
+    // de kaart in de editor mag nu gedeeld worden: de QR komt er vanzelf op
+    if(IS_V2){laatsteDeel='';deelNu();}
+    // het praktijkprofiel (adres, telefoon) wordt pas na beveiligen bewaard; stuur het nu mee
+    if(IS_V2&&beveiligd)upsertPraktijk();
+  }
   function prakSlotActie(){
     var knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww'),vwo=document.getElementById('ps_vwo');
+    // er loopt al een verzoek (twee keer Enter): geen tweede. Bij het instellen van de tweede stap
+    // zou het tweede antwoord het geheim van het eerste ongeldig maken.
+    if(knop.disabled)return;
     var act=knop.dataset.act,w=ww.value;
+    if(act==='eigen'){openEigenLogin('nieuw');return;}
     if(act==='claim'){
       var o=psOntbreekt();
       if(o.tekst){psFout(o.tekst,o.velden);PS_MIS=true;return;}
@@ -3549,11 +4195,42 @@ bridge2.jpg</div>
     if(act==='login'&&PRAKSLOT.perEmail&&!lijf.email){knop.disabled=false;psFout('Vul je e-mailadres in. Deze praktijk logt in met je eigen login.',document.getElementById('ps_email'));return;}
     if(act==='claim')lijf.akkoord=true;
     if(act==='claim'&&PRAKSLOT.nieuw)lijf.nieuw=true;
+    // tweede stap: het codeveld staat er pas als de server erom vroeg
+    var cv=document.getElementById('ps_code'),codeStond=!!cv&&cv.style.display!=='none';
+    if(act==='login'&&codeStond&&cv.value.trim())lijf.code=cv.value.trim();
+    var ingelogd=function(d){psIngelogd(d,act==='claim');};
     fetch('api/praktijk/'+(act==='claim'?'claim':'login'),{method:'POST',headers:{'content-type':'application/json'},
       body:JSON.stringify(lijf)})
       .then(function(r){return r.json().catch(function(){return{ok:false};});})
       .then(function(d){
         knop.disabled=false;
+        if(!d.ok&&d.tweedeStap&&act==='login'){
+          // wachtwoord goed, nu de code: de eerste keer is het een vraag, daarna een fout
+          cv.style.display='';
+          if(codeStond&&lijf.code)psFout(d.fout||'Die code klopt niet.',cv,true);
+          else{psGeenMist();toonPsMsg(d.fout||'Vul de code uit je code-app in.');cv.focus();}
+          return;
+        }
+        if(!d.ok&&d.stapInstellen&&act==='login'){
+          // de praktijk vraagt de tweede stap van iedereen en deze login heeft er nog geen:
+          // instellen hoort dan bij het inloggen (eigen venster; daarna het gewone vervolg)
+          psGeenMist();document.getElementById('ps_msg').style.display='none';
+          openStapBijLogin(d,lijf,ingelogd);
+          return;
+        }
+        if(!d.ok&&d.eigenLoginNodig&&act==='login'){
+          // Een account van vóór de eigen login voor iedereen, met alleen een praktijkwachtwoord.
+          // Dat wachtwoord klopte; het geeft geen sessie meer, alleen de weg naar je eigen login.
+          psGeenMist();document.getElementById('ps_msg').style.display='none';
+          openEigenLogin('overstap',{gedeeld:w});
+          return;
+        }
+        if(!d.ok&&d.eigenLogin&&act==='claim'){
+          // de server vraagt intussen een eigen login van iedereen (de pagina stond al open): het venster
+          PRAKSLOT.eigenLogin=true;ww.value='';psGeenMist();document.getElementById('ps_msg').style.display='none';
+          rendPrakSlot();openEigenLogin('nieuw');
+          return;
+        }
         if(!d.ok){
           psFout(d.fout||'Dat lukte niet.',d.akkoord?vwo:(act==='login'?ww:null),act==='login');
           if(d.login&&act==='claim')toonPrakSlot(PRAKSLOT.pr);
@@ -3564,13 +4241,7 @@ bridge2.jpg</div>
           }
           return;
         }
-        psGeenMist();setPrakSes(d.sessie);ww.value='';document.getElementById('ps_msg').style.display='none';
-        PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;PRAKSLOT.nieuw=false;rendPrakSlot();toonPrakSlot(PRAKSLOT.pr);toonSrvKaarten();reloadLibraryKeepingCard();
-        if(d.herstelcode)toonHerstelcode(d.herstelcode);
-        // de kaart in de editor mag nu gedeeld worden: de QR komt er vanzelf op
-        if(IS_V2){laatsteDeel='';deelNu();}
-        // het praktijkprofiel (adres, telefoon) wordt pas na beveiligen bewaard; stuur het nu mee
-        if(IS_V2&&act==='claim')upsertPraktijk();
+        ingelogd(d);
       })
       .catch(function(){knop.disabled=false;psFout('Geen verbinding met de server. Probeer het zo opnieuw.');});
   }
@@ -3613,14 +4284,14 @@ bridge2.jpg</div>
     var b=document.getElementById('ps_akdo');
     if(b)b.addEventListener('click',function(){
       var m=document.getElementById('ps_akmsg');
-      if(!document.getElementById('ps_akvink').checked){m.textContent='Vink eerst het akkoord aan.';m.style.color='#b3261e';return;}
+      if(!document.getElementById('ps_akvink').checked){m.textContent='Vink eerst het akkoord aan.';m.style.color='var(--fout,#b3261e)';return;}
       b.disabled=true;
       fetch('api/praktijk/akkoord',{method:'POST',headers:PJSON(),body:JSON.stringify({akkoord:true})})
         .then(function(r){return r.json().catch(function(){return{ok:false};});})
         .then(function(d){b.disabled=false;
           if(d&&d.ok){PRAKSLOT.akkoord=d.akkoord;tekenAkkoord();toonPsMsg('Bedankt. Het akkoord is vastgelegd met datum en jouw naam.');}
-          else{m.textContent=(d&&d.fout)||'Dat lukte niet. Probeer het opnieuw.';m.style.color='#b3261e';}})
-        .catch(function(){b.disabled=false;m.textContent='Geen verbinding. Probeer het opnieuw.';m.style.color='#b3261e';});
+          else{m.textContent=(d&&d.fout)||'Dat lukte niet. Probeer het opnieuw.';m.style.color='var(--fout,#b3261e)';}})
+        .catch(function(){b.disabled=false;m.textContent='Geen verbinding. Probeer het opnieuw.';m.style.color='var(--fout,#b3261e)';});
     });
   }
   // ---- Wis Fysiplan van dit apparaat: login, concepten, eigen oefeningen en instellingen ----
@@ -3642,6 +4313,10 @@ bridge2.jpg</div>
   try{if(/[?&]gewist=1/.test(location.search)&&document.body){history.replaceState(null,'',location.pathname);var gw=document.createElement('div');gw.id='gewist_melding';gw.setAttribute('role','status');gw.textContent='Fysiplan is van dit apparaat gewist.';gw.style.cssText='position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:99999;background:#1f3b2c;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;box-shadow:0 4px 16px rgba(0,0,0,.2)';document.body.appendChild(gw);setTimeout(function(){gw.remove();},6000);}}catch(e){}
   function prakLogout(){
     fetch('api/praktijk/logout',{method:'POST',headers:PJSON()}).catch(function(){});
+    prakUitgelogd();
+  }
+  // het scherm na het uitloggen; ook als de server de sessie zelf al heeft ingetrokken
+  function prakUitgelogd(){
     setPrakSes('');PRAKSLOT.ingelogd=false;rendPrakSlot();toonSrvKaarten();
     // uitgelogd = geen patiënt meer op het scherm: QR, deelknoppen en roepnaam van de
     // laatste kaart weg, ook na herladen (gebruikers-sweep 2026-11-10, Sanne). De
@@ -3677,6 +4352,13 @@ bridge2.jpg</div>
     var m=document.getElementById('ps_msg');if(m&&m.scrollIntoView)m.scrollIntoView({block:'nearest'});
   }
   function psNu(veld){var n=veld.value.length;return n?' (nu '+n+')':'';}
+  function psCodeWeg(){var c=document.getElementById('ps_code');if(c){c.value='';c.style.display='none';}}
+  // de cursor in het inlogformulier: het e-mailveld als dat nog leeg is, anders het wachtwoord
+  function psFocusLogin(){
+    var em=document.getElementById('ps_email'),ww=document.getElementById('ps_ww');
+    var v=(em&&em.style.display!=='none'&&!em.value)?em:ww;
+    if(v){try{v.focus();}catch(e){}}
+  }
   function psGeenMist(){document.querySelectorAll('#prakslot .mist, #prakslot [aria-invalid]').forEach(function(e){e.classList.remove('mist');e.removeAttribute('aria-invalid');e.removeAttribute('aria-describedby');});}
   // tijdens het herstellen: het rood verdwijnt zodra een veld in orde is, en de
   // opsomming van wat er voor Beveiligen nog ontbreekt loopt mee
@@ -3774,7 +4456,9 @@ bridge2.jpg</div>
     if(kaart.ts)r.push('Kaart laatst opgeslagen: '+new Date(kaart.ts).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}));
     // bij een afgeronde (gearchiveerde) behandeling is dit de eindsamenvatting:
     // dat mag het dossier expliciet weten
-    if(kaart.gearchiveerd)r.push('Status: behandeling afgerond'+(kaart.verloopt?' (de digitale kaart verdwijnt op '+new Date(kaart.verloopt).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})+')':'')+'.');
+    // uit de prullenbak gekopieerd (WGBO): het dossier moet weten dat de digitale kaart niet meer werkt
+    if(kaart.inPrullenbak)r.push('Status: kaart verwijderd, de patiëntlink werkt niet meer'+(kaart.verloopt?' (definitief weg op '+new Date(kaart.verloopt).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})+')':'')+'.');
+    else if(kaart.gearchiveerd)r.push('Status: behandeling afgerond'+(kaart.verloopt?' (de digitale kaart verdwijnt op '+new Date(kaart.verloopt).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})+')':'')+'.');
     if(cl.c_doel)r.push('Doel: '+cl.c_doel);
     if(cl.c_cave)r.push('Casus/let op: '+cl.c_cave);
     if(cl.c_opm)r.push('Opmerking: '+cl.c_opm);
@@ -4052,7 +4736,7 @@ bridge2.jpg</div>
     v.innerHTML="<div class='hint' style='flex-basis:100%'>Vul eerst de naam van je praktijk in. Daarna beveilig je hem met een wachtwoord en deel je kaarten met je pati\u00ebnten.</div>"+
       "<input id='k_pr_in' maxlength='80' autocomplete='organization' placeholder='Naam van je praktijk' aria-label='Naam van je praktijk' style='flex:1;min-width:180px;min-height:44px'/>"+
       "<button class='btn primary' type='submit' style='min-height:44px'>Verder</button>"+
-      "<div id='k_pr_fout' role='alert' style='flex-basis:100%;color:#b42318;font-size:12.5px'></div>";
+      "<div id='k_pr_fout' role='alert' style='flex-basis:100%;color:var(--fout,#b42318);font-size:12.5px'></div>";
     blok.insertBefore(v,document.getElementById('k_srv_lijst'));
     v.addEventListener('submit',function(e){
       e.preventDefault();
@@ -4159,14 +4843,28 @@ bridge2.jpg</div>
       fetch('api/kaarten/prullenbak?praktijk='+encodeURIComponent(pr),PGET())
         .then(function(r){return r.json();}).then(function(d){
           if(!d.ok){uit.textContent=d.fout||'Prullenbak ophalen is niet gelukt.';return;}
-          uit.innerHTML='<p>Alleen de maker en beheerder kunnen herstellen. De patiëntlink werkt tot die tijd niet. Herstellen kan maximaal zeven dagen, nooit langer dan de bestaande bewaartermijn. Vraagt de patiënt om wissen, kies dan Definitief verwijderen.</p>'+
-            (d.kaarten.length?d.kaarten.map(function(k){return "<p><b>"+esc(k.naam)+"</b> — herstellen tot "+esc(new Date(k.herstelTot).toLocaleString('nl-NL'))+" <button class='btn' data-prulherstel='"+esc(k.id)+"'>Herstellen</button> <button class='btn' data-pruldef='"+esc(k.id)+"'>Definitief verwijderen</button></p>";}).join(''):'<p>Geen kaarten die je kunt herstellen.</p>');
+          uit.innerHTML='<p>Alleen de maker en beheerder kunnen herstellen. De patiëntlink werkt tot die tijd niet. Herstellen kan maximaal zeven dagen, nooit langer dan de bestaande bewaartermijn. Vraagt de patiënt om wissen, kies dan Definitief verwijderen. Kopieer eerst de samenvatting voor het dossier: na definitief verwijderen kan dat niet meer.</p>'+
+            (d.kaarten.length?d.kaarten.map(function(k){return "<p><b>"+esc(k.naam)+"</b> — herstellen tot "+esc(new Date(k.herstelTot).toLocaleString('nl-NL'))+" <button class='btn' data-prulherstel='"+esc(k.id)+"'>Herstellen</button> <button class='btn' data-pruldos='"+esc(k.id)+"'>Kopieer voor dossier</button> <button class='btn' data-pruldef='"+esc(k.id)+"'>Definitief verwijderen</button></p>";}).join(''):'<p>Geen kaarten die je kunt herstellen.</p>');
         }).catch(function(){uit.textContent='Geen verbinding. Probeer opnieuw.';}).then(function(){knop.disabled=false;});
     };
     uit.onclick=function(e){
+      // WGBO: wat de patiënt via de kaart meldde, staat alleen in Fysiplan. Ook na Verwijderen
+      // moet de praktijk dat nog in het eigen dossier kunnen zetten, zolang de kaart herstelbaar is.
+      var dz=e.target.closest('[data-pruldos]');
+      if(dz){
+        var oudT=dz.textContent,toonZ=function(t){dz.textContent=t;setTimeout(function(){dz.textContent=oudT;},1800);};
+        fetch(praktijkKaartUrl(dz.dataset.pruldos)+'&prullenbak=1',PGET()).then(function(r){return r.json();}).then(function(dk){
+          if(!dk.ok){toonZ('Ophalen mislukt');return;}
+          var tekst=dossierTekst(dk.kaart);
+          if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(tekst).then(function(){toonZ('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de samenvatting voor het dossier:',tekst);});
+          }else window.prompt('Kopieer de samenvatting voor het dossier:',tekst);
+        }).catch(function(){toonZ('Geen verbinding');});
+        return;
+      }
       var d0=e.target.closest('[data-pruldef]');
       if(d0){
-        if(!confirm('Deze kaart en de opnames erbij nu definitief verwijderen? Dit kan niet ongedaan worden gemaakt. Wat de praktijk moet bewaren, staat in het eigen dossier.'))return;
+        if(!confirm('Deze kaart en de opnames erbij nu definitief verwijderen? Dit kan niet ongedaan worden gemaakt. Heb je de samenvatting al in het dossier gezet? Gebruik anders eerst Kopieer voor dossier.'))return;
         d0.disabled=true;
         fetch('api/kaarten/definitief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:d0.dataset.pruldef})})
           .then(function(r){return r.json();}).then(function(d){if(d.ok){markeerKaartWeg(d0.dataset.pruldef);var r0=d0.closest('p');if(r0)r0.remove();}else{d0.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
@@ -4245,7 +4943,7 @@ bridge2.jpg</div>
           if(zoekEl)zoekEl.style.display='none';
           var samW=document.getElementById('k_srv_sam');if(samW)samW.style.display='none';
           el.innerHTML="<div class='hint'>"+(l.beveilig
-            ?"Zet hierboven een wachtwoord op je praktijk. Daarna deel je kaarten met je pati\u00ebnten en zie je hier hun oefenweek en meldingen; niemand anders kan ze openen."
+            ?(PRAKSLOT.eigenLogin?"Beveilig hierboven je praktijk.":"Zet hierboven een wachtwoord op je praktijk.")+" Daarna deel je kaarten met je pati\u00ebnten en zie je hier hun oefenweek en meldingen; niemand anders kan ze openen."
             :"Log hierboven in om de kaarten van deze praktijk te zien.")+"</div>";
           zetSeinBadge(0);return;
         }
@@ -4257,7 +4955,7 @@ bridge2.jpg</div>
         l=l.filter(function(c){return !c.gearchiveerd;});
         // signalen-cache voor de editor: bij "Openen" reizen de verse
         // te zwaar-meldingen mee naar het schema (zie renderA4)
-        l.concat(lArch).forEach(function(c){if(c.id)SRV_SIGNALEN[c.id]={naam:c.naam,oefZwaar:c.oefZwaar||null};});
+        l.concat(lArch).forEach(function(c){if(c.id){SRV_SIGNALEN[c.id]={naam:c.naam,oefZwaar:c.oefZwaar||null};SRV_KAART[c.id]=c;}});
         zetSeinBadge(l.filter(function(c){return c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn');}).length);
         // suggesties voor het behandelaarveld: de namen die op kaarten van deze
         // praktijk al staan, zodat het team consequent dezelfde spelling gebruikt
@@ -4370,7 +5068,7 @@ bridge2.jpg</div>
           // bewaartermijn: ruim van tevoren laten zien dat de kaart verdwijnt
           if(c.verloopt){
             var vDg=Math.max(0,Math.ceil((c.verloopt-Date.now())/864e5));
-            if(vDg<=14)bwTxt+=" · <span title='Bewaartermijn: zonder nieuwe activiteit gaat deze kaart met scores en video\u2019s van de server. Kopieer eerst de samenvatting voor het dossier.' style='color:#a23f2c;white-space:nowrap'>verdwijnt "+(vDg<=0?'vandaag':(vDg===1?'morgen':'over '+vDg+' dagen'))+"</span>";
+            if(vDg<=14)bwTxt+=" · <span title='Bewaartermijn: zonder nieuwe activiteit gaat deze kaart met scores en video\u2019s van de server. Kopieer eerst de samenvatting voor het dossier.' style='color:var(--fout,#a23f2c);white-space:nowrap'>verdwijnt "+(vDg<=0?'vandaag':(vDg===1?'morgen':'over '+vDg+' dagen'))+"</span>";
           }
           // oudere kaarten met een volledige naam: zacht wijzen op de roepnaam
           if(naamLijktVolledig(c.naam))bwTxt+=" · <span title='Op de server hoort alleen een roepnaam (Jan K.). Tik op Naam wijzigen; de pati\u00ebntlink en de voortgang blijven.' style='white-space:nowrap'>volledige naam</span>";
@@ -4380,7 +5078,7 @@ bridge2.jpg</div>
               var dS=Math.floor((nuB-c.bekeken)/dagB);
               bkTxt=" · kaart bekeken: "+(dS<=0?'vandaag':(dS===1?'gisteren':dS+' dagen geleden'));
             }else if(c.ts&&nuB-c.ts>dagB){
-              bkTxt=" · <span style='color:#a23f2c'>kaart nog niet geopend</span>";
+              bkTxt=" · <span style='color:var(--fout,#a23f2c)'>kaart nog niet geopend</span>";
             }
           }
           bkTxt+=bwTxt;
@@ -4452,7 +5150,7 @@ bridge2.jpg</div>
             if(zwN.length){
               zwN.sort(function(a,b){return (c.oefZwaar[b].t||0)-(c.oefZwaar[a].t||0);});
               var zwWan=function(t){var dg=Math.floor((zwNu-t)/864e5);return dg<=0?'vandaag':(dg===1?'gisteren':dg+' dagen geleden');};
-              zw="<div style='margin-top:8px'><small style='color:#a23f2c'>Door de pati&euml;nt als te zwaar gemeld: "+
+              zw="<div style='margin-top:8px'><small style='color:var(--fout,#a23f2c)'>Door de pati&euml;nt als te zwaar gemeld: "+
                 zwN.map(function(k2){return esc(k2)+" ("+zwWan(c.oefZwaar[k2].t)+")";}).join(", ")+".</small></div>";
             }
           }
@@ -4651,14 +5349,14 @@ bridge2.jpg</div>
             zoek.id='k_srv_zoek';zoek.type='search';zoek.className='no-print';
             zoek.setAttribute('placeholder','Zoek op roepnaam, behandelaar of werknotitie…');
             zoek.setAttribute('aria-label','Zoek een gedeelde kaart op roepnaam, behandelaar of werknotitie');
-            zoek.style.cssText='width:100%;margin:2px 0 8px;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff';
+            zoek.style.cssText='width:100%;margin:2px 0 8px;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:8px';
             el.parentNode.insertBefore(zoek,el);
           }
           zoek.style.display='';zoek.oninput=toon;
         }else if(zoek)zoek.style.display='none';
         // sorteertoggle vanaf twee kaarten: nieuwste, meldingen, langst stil of afspraak
         var sortEl=document.getElementById('k_srv_sort');
-        var markeerSort=function(){if(!sortEl)return;var m=sortEl.dataset.mode||'nieuw';sortEl.querySelectorAll('[data-sort]').forEach(function(b){var aan=b.dataset.sort===m;b.style.background=aan?'var(--brand)':'';b.style.color=aan?'#fff':'';b.style.borderColor=aan?'var(--brand)':'';b.setAttribute('aria-pressed',aan?'true':'false');});};
+        var markeerSort=function(){if(!sortEl)return;var m=sortEl.dataset.mode||'nieuw';sortEl.querySelectorAll('[data-sort]').forEach(function(b){var aan=b.dataset.sort===m;b.style.background=aan?'var(--brand)':'';b.style.color=aan?'var(--op-merk,#fff)':'';b.style.borderColor=aan?'var(--brand)':'';b.setAttribute('aria-pressed',aan?'true':'false');});};
         var markeerFilter=function(){if(!sortEl)return;var f=sortEl.dataset.filter==='aandacht';var b=sortEl.querySelector('[data-filter="aandacht"]');if(b){b.style.background=f?'#a23f2c':'';b.style.color=f?'#fff':'';b.style.borderColor=f?'#a23f2c':'';b.setAttribute('aria-pressed',f?'true':'false');}};
         if(huidig.length>=2){
           if(!sortEl){
@@ -4683,7 +5381,7 @@ bridge2.jpg</div>
               behSel=document.createElement('select');
               behSel.id='k_srv_beh';
               behSel.setAttribute('aria-label','Toon alleen de kaarten van één behandelaar');
-              behSel.style.cssText='font-size:11.5px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:#fff';
+              behSel.style.cssText='font-size:11.5px;padding:3px 6px;border:1px solid var(--line);border-radius:6px';
               behLab.appendChild(behSel);
               sortEl.appendChild(behLab);
             }
@@ -4726,7 +5424,7 @@ bridge2.jpg</div>
             el.parentNode.insertBefore(samEl,zoek||sortEl||el);
           }
           var chip=function(t,st){return "<span style='background:var(--chip,#f1f3f5);border:1px solid var(--line);border-radius:99px;padding:3px 10px;"+(st||'')+"'>"+t+"</span>";};
-          var archKnop=function(txt,aan){return "<button type='button' id='k_srv_arch' class='no-print' aria-pressed='"+(aan?'true':'false')+"' style='cursor:pointer;background:"+(aan?'var(--brand)':'var(--chip,#f1f3f5)')+";color:"+(aan?'#fff':'inherit')+";border:1px solid "+(aan?'var(--brand)':'var(--line)')+";border-radius:99px;padding:3px 10px;font-size:12px'>"+txt+"</button>";};
+          var archKnop=function(txt,aan){return "<button type='button' id='k_srv_arch' class='no-print' aria-pressed='"+(aan?'true':'false')+"' style='cursor:pointer;background:"+(aan?'var(--brand)':'var(--chip,#f1f3f5)')+";color:"+(aan?'var(--op-merk,#fff)':'inherit')+";border:1px solid "+(aan?'var(--brand)':'var(--line)')+";border-radius:99px;padding:3px 10px;font-size:12px'>"+txt+"</button>";};
           var h;
           if(srvArchiefView){
             h=chip('<b>'+lArch.length+'</b> gearchiveerd')+archKnop('&larr; Terug naar actueel',true);
@@ -5145,7 +5843,7 @@ bridge2.jpg</div>
       if(KAARTEN_BEZIG[delSlot])return;
       KAARTEN_BEZIG[delSlot]=1;
       var delVrij=function(){setTimeout(function(){delete KAARTEN_BEZIG[delSlot];},400);};
-      if(!confirm('Gedeelde kaart “'+nm+'” naar de prullenbak? De patiëntlink stopt direct. Maker en beheerder kunnen maximaal zeven dagen herstellen (of korter als de bewaartermijn eerder eindigt).')){delVrij();return;}
+      if(!confirm('Gedeelde kaart “'+nm+'” naar de prullenbak? De patiëntlink stopt direct. Maker en beheerder kunnen maximaal zeven dagen herstellen (of korter als de bewaartermijn eerder eindigt). Zet wat je moet bewaren in het dossier; dat kan ook nog vanuit de prullenbak.')){delVrij();return;}
       x.disabled=true;
       fetch('api/kaarten/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',naam:nm,id:x.dataset.sdelid})})
         .then(function(r){return r.json();})
@@ -5248,6 +5946,30 @@ bridge2.jpg</div>
   // Seintje van een patiënt beantwoorden of bewust alleen afhandelen.
   // "Beantwoorden" kan alleen met tekst; "Alleen afhandelen" is een aparte knop,
   // en Enter in het tekstveld verstuurt nooit een leeg antwoord.
+  // Wat de patiënt op deze kaart doorgaf, voor boven het antwoordveld: wie, welk seintje en
+  // wanneer, plus de laatste pijnscore, "te zwaar" en herstel als die er zijn. Zo schrijf je een
+  // antwoord met de melding voor je (platformreview 2026-11-11). Tonen, niet duiden (MDR).
+  function seinFeitenHtml(c){
+    var sj=c&&c.seintje,wat={vraag:'Heeft een vraag',pijn:'Meldt te veel pijn',goed:'Meldt: het gaat goed'};
+    if(!sj||!sj.soort)return '';
+    var kleur={vraag:'#7fb0ff',pijn:'#ff9d8c',goed:'#8fd6a4'}[sj.soort]||'#7fb0ff';
+    var h="<div class='sn-wat'><b><span class='sn-stip' style='background:"+kleur+"'></span>"+esc(wat[sj.soort]||'Seintje')+
+      " <small>· "+esc(wanneerTekst(sj.t))+"</small></b>";
+    var ook=(sj.ook||[]).filter(function(x){return x!==sj.soort&&(x==='vraag'||x==='pijn');});
+    if(ook.length)h+="<div class='sn-ook'>Ook: "+esc(ook.map(function(x){return wat[x].toLowerCase();}).join(' en '))+"</div>";
+    var f=[];
+    var m=c.scores&&c.scores.length?c.scores[c.scores.length-1]:null;
+    if(m&&m.t)f.push("Laatste pijnscore: <b>"+esc(m.s)+"</b> <small>· "+esc(wanneerTekst(m.t))+"</small>");
+    Object.keys(c.oefZwaar||{}).forEach(function(n){var z=c.oefZwaar[n];if(z&&z.t)f.push("Te zwaar gemeld: "+esc(n)+" <small>· "+esc(wanneerTekst(z.t))+"</small>");});
+    var e=c.ervaring&&c.ervaring.length?c.ervaring[c.ervaring.length-1]:null;
+    if(e&&e.t)f.push("Herstel: "+esc({'-2':'veel slechter','-1':'iets slechter','0':'hetzelfde','1':'iets beter','2':'veel beter'}[String(e.s)]||e.s)+" <small>· "+esc(wanneerTekst(e.t))+"</small>");
+    if(c.behandelaar)f.push("Behandelaar: "+esc(c.behandelaar));
+    if(f.length)h+="<ul class='sn-feiten'>"+f.map(function(x){return "<li>"+x+"</li>";}).join('')+"</ul>";
+    h+="</div>";
+    if(c.antwoord&&c.antwoord.tekst)h+="<div class='sn-eerder'>Er staat nog een bericht van de praktijk op de kaart ("+esc(wanneerTekst(c.antwoord.t))+
+      "): \u201c"+esc(c.antwoord.tekst)+"\u201d Een nieuw antwoord vervangt dat bericht.</div>";
+    return h;
+  }
   function openSeinVenster(id,uitleg){
     var ov=document.getElementById('ovSein');
     if(!ov){
@@ -5257,7 +5979,7 @@ bridge2.jpg</div>
         "<div class='hint' id='sn_uitleg' style='margin:2px 0 10px;line-height:1.5'></div>"+
         "<label class='hint' for='sn_tekst' style='display:block;margin-bottom:4px'>Antwoord voor de pati\u00ebnt (komt op de kaart te staan, max. 300 tekens):</label>"+
         "<textarea id='sn_tekst' maxlength='300' rows='3' style='width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;resize:vertical'></textarea>"+
-        "<div id='sn_fout' role='alert' style='color:#b42318;font-size:13px;min-height:1.2em;margin-top:6px'></div>"+
+        "<div id='sn_fout' role='alert' style='color:var(--fout,#b42318);font-size:13px;min-height:1.2em;margin-top:6px'></div>"+
         "<div class='acts' style='margin-top:10px;flex-wrap:wrap;gap:8px'><button class='btn' id='sn_sluit' type='button'>Annuleren</button>"+
         "<button class='btn' id='sn_af' type='button'>Alleen afhandelen</button>"+
         "<button class='btn primary' id='sn_ok' type='button'>Beantwoorden</button></div></div>";
@@ -5286,7 +6008,10 @@ bridge2.jpg</div>
       ov.addEventListener('keydown',function(e){if(e.key==='Escape')closeOv('ovSein');});
     }
     ov.dataset.id=id;
-    document.getElementById('sn_uitleg').textContent=uitleg;
+    var sk=SRV_KAART[id],feiten=sk?seinFeitenHtml(sk):'';
+    document.getElementById('sn_titel').textContent=sk&&sk.naam?'Seintje van '+sk.naam:'Seintje van de pati\u00ebnt';
+    if(feiten)document.getElementById('sn_uitleg').innerHTML=feiten;
+    else document.getElementById('sn_uitleg').textContent=uitleg;
     document.getElementById('sn_tekst').value='';
     document.getElementById('sn_fout').textContent='';
     openOv('ovSein');
@@ -5357,7 +6082,7 @@ bridge2.jpg</div>
       .then(function(r){return r.json();})
       .then(function(d){
         if(!d.geclaimd||!d.ingelogd){
-          intro.textContent='Eigen oefeningen worden bij je praktijk op de server bewaard, zodat je hele team en je pati\u00ebnten ze zien. Zet daarom eerst een wachtwoord op je praktijk (of log in) onder Kaarten.';
+          intro.textContent='Eigen oefeningen worden bij je praktijk op de server bewaard, zodat je hele team en je pati\u00ebnten ze zien. '+(PRAKSLOT.eigenLogin?'Beveilig daarom eerst je praktijk':'Zet daarom eerst een wachtwoord op je praktijk')+' (of log in) onder Kaarten.';
           return;
         }
         intro.textContent='De oefening komt in je bibliotheek onder \u201c'+EIGEN_GROEP+'\u201d, voor iedereen van je praktijk, en met foto en uitleg op de digitale kaart.';

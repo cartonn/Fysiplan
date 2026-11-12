@@ -5,7 +5,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {spawn} from 'node:child_process';
 import {randomBytes} from 'node:crypto';
-import {maakSnapshot,leesManifest,herstelUpload,LIMITS,MANIFEST} from '../lib/backup-snapshots.js';
+import {maakSnapshot,leesManifest,herstelUpload,LIMITS,MANIFEST,indexReserve,gegevensRuimte} from '../lib/backup-snapshots.js';
 import {ontsleutel,versleutel} from '../lib/backup-elders.js';
 const objects=new Map();let copied=0,putBytes=0,copyError=false,failUploadOnce=false;
 const srv=createServer(async(req,res)=>{
@@ -36,7 +36,9 @@ const cli=(source,dest,extra=[])=>new Promise(resolve=>spawn(process.execPath,['
 try{
  await writeFile(paths[0],'{"kaart":"test"}');await mkdir(join(root,'uploads'));
  const original=randomBytes(100000);await writeFile(join(root,'uploads','video.mp4'),original);
+ const metaGrootte=(await readFile(paths[0])).length;
  const a=await maakSnapshot(inst,root,paths,{nu:day(11)});assert.equal(a.deels,false);assert.equal(a.uploaded,1);
+ assert.equal(a.gegevensBytes,metaGrootte,'de kopie meldt hoe groot de gegevensbestanden zijn');
  const ma=manifest(a);assert.deepEqual(await herstelUpload(inst,ma.uploads['uploads/video.mp4']),original);
  const before=putBytes;
  const b=await maakSnapshot(inst,root,paths,{nu:day(12),vorigeObject:a.object});
@@ -59,12 +61,12 @@ try{
  const f=await maakSnapshot(inst,root,paths,{nu:day(16),limits:{...LIMITS,snapshot:changed.length+1024}});
  assert.equal(f.deels,true);assert.ok(objects.get('/bak/'+f.object));assert.equal(manifest(f).complete,false);
  assert.equal(JSON.parse(ontsleutel(objects.get('/bak/'+f.object),inst.sleutel).bestanden['kaarten.json']).kaart,'test');
- const noBudget=await maakSnapshot(inst,root,paths,{nu:day(17),limits:{...LIMITS,transfer:LIMITS.metadata+1024*1024+100}});assert.equal(noBudget.deels,true);
+ const noBudget=await maakSnapshot(inst,root,paths,{nu:day(17),limits:{...LIMITS,transfer:indexReserve(metaGrootte)+100}});assert.equal(noBudget.deels,true);
  // Niet leesbare/onveilige inventaris is expliciet onvolledig, metadata blijft bewaard.
  await symlink('/etc/passwd',join(root,'uploads','link'));
  const bad=await maakSnapshot(inst,root,paths,{nu:day(18)});assert.equal(bad.deels,true);assert.equal(bad.errors,1);await rm(join(root,'uploads','link'));
  // Reeds opgeslagen uploads passen ook als het dagbudget alleen nog de index toelaat.
- const reused=await maakSnapshot(inst,root,paths,{nu:day(19),vorigeObject:c.object,limits:{...LIMITS,transfer:LIMITS.metadata+1024*1024+100}});
+ const reused=await maakSnapshot(inst,root,paths,{nu:day(19),vorigeObject:c.object,limits:{...LIMITS,transfer:indexReserve(metaGrootte)+100}});
  assert.equal(reused.deels,false);assert.equal(reused.copied,1);assert.equal(reused.uploaded,0);
  // Volledig herstel via echte CLI, inclusief referenties en inhoudhashcontrole.
  const index=join(root,'index.fpb');await writeFile(index,objects.get('/bak/'+c.object));
@@ -92,5 +94,22 @@ try{
  // Path traversal / vreemde remote bestemming wordt afgewezen vóór schrijven.
  const evil={version:2,complete:true,missing:[],uploads:{'../escape':ref}};
  await writeFile(index,versleutel({[MANIFEST]:Buffer.from(JSON.stringify(evil))},inst.sleutel));assert.notEqual(await cli(index,join(root,'unsafe')),0);
+ // Gegevensgrens: 64 MiB, één byte erboven mislukt met de grens in de melding, en vanaf de helft is het krap.
+ assert.equal(LIMITS.metadata,64*1024*1024);
+ const klein={...LIMITS,metadata:metaGrootte};
+ assert.equal((await maakSnapshot(inst,root,paths,{nu:day(21),limits:klein})).gegevensBytes,metaGrootte,'precies op de grens past');
+ await assert.rejects(maakSnapshot(inst,root,paths,{nu:day(21),limits:{...LIMITS,metadata:metaGrootte-1}}),/gegevensbestanden groter dan/);
+ // 12 MiB aan gegevens: te veel voor de oude grens van 10 MiB, past ruim in de nieuwe
+ const groot=join(root,'praktijk-audit.json');await writeFile(groot,Buffer.alloc(12*1024*1024,'a'));
+ await assert.rejects(maakSnapshot(inst,root,[...paths,groot],{nu:day(21),limits:{...LIMITS,metadata:10*1024*1024}}),/gegevensbestanden groter dan 10 MiB/);
+ const ruim=await maakSnapshot(inst,root,[...paths,groot],{nu:day(21)});
+ assert.equal(ruim.gegevensBytes,metaGrootte+12*1024*1024);assert.equal(gegevensRuimte(ruim.gegevensBytes).krap,false);
+ assert.equal(ontsleutel(objects.get('/bak/'+ruim.object),inst.sleutel).bestanden['praktijk-audit.json'].length,12*1024*1024,'het grote bestand zit heel in de kopie');
+ await rm(groot);
+ assert.deepEqual(gegevensRuimte(16*1024*1024),{bytes:16*1024*1024,grens:64*1024*1024,procent:25,krap:false});
+ assert.equal(gegevensRuimte(32*1024*1024).krap,false,'precies de helft is nog niet krap');
+ assert.equal(gegevensRuimte(32*1024*1024+1).krap,true);
+ assert.equal(indexReserve(1000),11*1024*1024,'kleine gegevens: dezelfde reserve als voorheen');
+ assert.equal(indexReserve(40*1024*1024),41*1024*1024,'grote gegevens: de reserve groeit mee');
  assert.ok(copied>=1);console.log('Snapshots: dagkopieën, server-copy, wijzigingen, verwijderingen, verlopen bron, budget, onveilige inventaris, corruptie en CLI-herstel geslaagd.');
 }finally{srv.close();await rm(root,{recursive:true,force:true});}

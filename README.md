@@ -35,6 +35,9 @@ Live Railway URL: https://fysiplan-production.up.railway.app
   hosting, kosten en de eerste pilot.
 - `server.js` — minimale Node-server (geen dependencies): serveert `public/` en `/health`.
 - `scripts/build.js` — schrijft buildmetadata naar `dist/build-info.json`.
+- `scripts/kleine-beelden.mjs` — bouwstap: zet van elk beeld in `public/images/` een versie van
+  hooguit 160 px in `dist/klein/` voor de oefenlijst en de sjabloonkiezer. De A4, de pdf en de
+  patiëntkaart gebruiken het volledige bestand. `/health` toont het aantal als `kleineBeelden`.
 - `scripts/convert-images.mjs` — eenmalig hulpscript: zet zware BMP/PNG naar compacte JPEG's en
   (her)bouwt `public/oefeningen.json`. Zie "Nieuwe plaatjes toevoegen" hieronder.
 - `scripts/normalize-image-visibility.py` — brengt lijnzwart, randscherpte en kleur per afbeelding
@@ -44,7 +47,8 @@ Live Railway URL: https://fysiplan-production.up.railway.app
 
 ## Scripts
 
-- `npm run build` — schrijft buildmetadata naar `dist/build-info.json`.
+- `npm run build` — draait de controles, maakt de kleine beelden in `dist/klein/` en schrijft
+  buildmetadata naar `dist/build-info.json`.
 - `npm run images:normalize` — normaliseert oefentekeningen naar de biceps-referentie
   (vereist Python + Pillow).
 - `npm run videos:check` — controleert IDs, reviewstatus en veilige Stream-URL's van de videotheek.
@@ -110,6 +114,79 @@ terug naar de gedeelde server-lijst.
   Cloudflare Stream → beoordeelde Fysiplan-video → YouTube-link uit de bibliotheek →
   conceptvideo. Zo gaat er zo min mogelijk naar YouTube. Video's worden geserveerd met
   Range-ondersteuning (vereist voor iPhone/Safari).
+- **Tweede stap bij het inloggen:** wie een eigen login heeft, zet onder Kaarten → Team een tweede
+  stap aan. Na het wachtwoord vraagt Fysiplan dan om een code uit een code-app (TOTP, RFC 6238:
+  Google Authenticator, Microsoft Authenticator, Wachtwoorden op een iPhone, 1Password). Instellen
+  gaat met een QR-code die de browser zelf tekent (`public/qr.js` in de ruime stand; het geheim
+  gaat niet door de QR-cache van de server) of door de sleutel over te typen, en staat pas aan als
+  de eerste code klopt. Een code werkt één keer. Bij het aanzetten krijgt de gebruiker acht
+  reservecodes, elk één keer bruikbaar, voor als de telefoon weg is. De tweede stap geldt bij het
+  inloggen in de app en op de formulieren die met e-mail en wachtwoord werken (overzicht na de
+  proef, praktijkgegevens downloaden of wissen). Uitzetten en nieuwe reservecodes vragen het
+  wachtwoord en een code.
+  - *Raden.* De code wordt pas bekeken als het wachtwoord klopt. Na 20 foute codes binnen 24 uur
+    werkt voor die login 24 uur lang alleen nog een reservecode; de teller staat op schijf, dus
+    een uitrol geeft geen nieuwe pogingen. Op dat moment krijgt de eigenaar van de login een mail (als mail
+    is ingesteld) en staat het in de Activiteit van de praktijk: wie zo ver komt, kent het
+    wachtwoord.
+  - *Telefoon en reservecodes kwijt.* Een beheerder met een eigen login wist de tweede stap van een
+    collega (Team → wissen); de collega logt dan in met alleen het wachtwoord en stelt hem opnieuw
+    in. Is de enige beheerder het zelf kwijt, dan stuurt Fysiplan-beheer de herstelmail met
+    `"tweedeStap": true` (zie **Beheer**).
+  - *Wachtwoord vergeten.* Elke eigen login vraagt onder Kaarten met "Wachtwoord vergeten?" een
+    link aan op het eigen e-mailadres (`POST /api/praktijk/wachtwoord-vergeten`). Het antwoord is
+    altijd hetzelfde, of het adres nu bij een login van de praktijk hoort of niet, en ook bij een
+    mailstoring. De link is een uur geldig en werkt één keer; een nieuwe aanvraag maakt de vorige
+    ongeldig, en tot gebruik blijft het oude wachtwoord werken. De pagina achter de link vraagt
+    alleen een nieuw wachtwoord; de naam en het akkoord op de werkregels blijven zoals ze zijn.
+    De tweede stap blijft staan: met alleen de mailbox is er bij zo'n login geen sessie. Remmen:
+    drie mails per uur per adres en zes aanvragen per uur per verbinding. Een lopende herstelmail
+    van beheer wordt niet overschreven, en een uitnodiging die nog niet is aangenomen is geen
+    login. Zonder mail op de server geeft de route 503 (`npm run test:wachtwoordvergeten`).
+  - *Verplicht voor de hele praktijk.* Een beheerder met een eigen login en een eigen tweede stap
+    kan hem onder Team van iedereen vragen (met het eigen wachtwoord). Het gedeelde
+    praktijkwachtwoord gaat dan uit en kan niet weer aan. Wie nog geen tweede stap heeft, is
+    uitgelogd en stelt hem in bij het inloggen: na het goede wachtwoord toont de app de QR-code, en
+    pas met de eerste code is er een sessie. In zo'n praktijk bestaat geen sessie zonder tweede
+    stap. "Uitzetten" is daar opnieuw instellen (nieuwe telefoon), en een gewiste tweede stap
+    wordt bij het inloggen opnieuw ingesteld. Opheffen vraagt wachtwoord en code; het
+    praktijkwachtwoord blijft daarna uit. De schakelaar staat standaard uit
+    (`npm run test:stapverplicht`).
+  - *Voor elke praktijk (`EIGEN_LOGIN_VERPLICHT`).* Staat deze schakelaar van de server aan, dan
+    geldt het voorgaande voor elke praktijk en bestaat er geen gedeeld praktijkwachtwoord meer.
+    Wie een praktijk beveiligt (Kaarten → Beveiligen), maakt daarmee de eigen login en wordt
+    beheerder: naam, e-mailadres, wachtwoord, akkoord en werkregels, en daarna meteen de tweede
+    stap. Pas met de eerste code is er een sessie. Een praktijkwachtwoord en een herstelcode op
+    papier komen er niet, en Team kan de verplichting niet opheffen of het praktijkwachtwoord
+    aanzetten. Collega's komen erbij met een uitnodiging en stellen de tweede stap in bij hun
+    eerste login. Een account van vóór de schakelaar met alleen een praktijkwachtwoord maakt bij
+    het inloggen eerst een eigen login (de overstap): het praktijkwachtwoord geeft geen sessie
+    meer en vervalt, met de herstelcode, zodra de praktijk een beheerder met een eigen login
+    heeft. Tot die overstap werken de formulieren zonder script (overzicht na de proef, gegevens
+    downloaden of wissen) nog met het praktijkwachtwoord. Standaard aan in productie, uit op een
+    ontwikkelmachine en in de andere tests; `EIGEN_LOGIN_VERPLICHT=aan` of `=uit` dwingt het af.
+    Terug naar `uit` breekt niets: logins en tweede stappen blijven bestaan. Een praktijk die met
+    eigen logins startte of de overstap maakte, houdt het praktijkwachtwoord uit; stond het bij
+    een ouder account nog aan naast een beheerder met een eigen login, dan werkt het daar weer
+    (`npm run test:eigenloginverplicht`).
+  - *Grenzen.* Zonder die schakelaar is de tweede stap een eigen keuze per login, en logt het
+    gedeelde praktijkwachtwoord in zonder tweede stap en met beheerdersrechten: zet het uit (Team)
+    zodra iedereen een eigen login heeft. Met de schakelaar aan kan wie het wachtwoord kent van een
+    login die de tweede stap nog niet heeft ingesteld, hem als eerste instellen. De eigenaar komt
+    er dan niet in en het staat in de Activiteit; een beheerder wist hem (Team → wissen). Stil
+    meekijken kan niet: elk antwoord met een geheim maakt het vorige ongeldig, dus het geheim dat
+    in gebruik komt, heeft alleen de browser gezien die het instellen afmaakt.
+    Met `EIGEN_LOGIN_VERPLICHT` controleert Fysiplan het e-mailadres van de eerste login niet
+    met een mail: een tikfout merk je pas als een herstelmail niet aankomt. Bij de overstap wordt
+    beheerder wie het praktijkwachtwoord kent; dat was hij met dat wachtwoord al. Wie het eigen
+    wachtwoord vergeet, vraagt zelf een link aan (zie *Wachtwoord vergeten*); dat werkt alleen als
+    het e-mailadres van de login klopt en mail op de server aanstaat. Voor een login zonder
+    tweede stap (schakelaar uit, of nog niet ingesteld) is de mailbox van dat adres daarmee
+    genoeg om in te loggen, zoals bij elke herstelmail.
+    Het geheim staat leesbaar in `praktijk-accounts.json`, want de server moet de code kunnen
+    narekenen; wie die schijf kan lezen, heeft ook de tweede stap. De login van V1 (`/`) en de
+    beheersleutel hebben geen tweede stap. `npm run test:tweedestap` dekt de rekenkern (testvectoren
+    uit RFC 4226 en RFC 6238), de QR-code en de routes.
 
 ## Gratis proef van 14 dagen (/v2/proef)
 
@@ -164,6 +241,51 @@ in geen enkel publiek bestand. Live (Railway of `NODE_ENV=production`) werkt all
 `ADMIN_KEY`: zonder die variabele blijft beheer dicht. Alleen lokaal is `admin88` de standaard.
 Met de standaardsleutel kan beheer **geen** kaartoverzicht of patiëntgegevens van een praktijk
 lezen; alleen met een eigen `ADMIN_KEY` op de server werkt die beheeringang.
+
+**Een praktijk die er niet meer in komt.** Beheer kan het account van een praktijk niet wissen
+en komt met de sleutel niet bij de kaarten van een beveiligde praktijk (de oude
+`/api/praktijk/reset` wist niets meer en antwoordt 410). Wie met een eigen login alleen het
+wachtwoord kwijt is, vraagt zelf een link aan (zie *Wachtwoord vergeten*); beheer is pas nodig
+als dat niet kan, bijvoorbeeld omdat het adres niet klopt of omdat de enige beheerder ook de
+tweede stap kwijt is. Is een praktijk haar wachtwoord en herstelcode kwijt, dan laat beheer de
+server een herstelmail sturen:
+
+```
+curl -X POST https://fysiplan.nl/api/beheer/praktijk-herstel \
+  -H "x-admin-sleutel: $ADMIN_KEY" -H "content-type: application/json" \
+  -d '{"praktijk":"Naam of p-code","reden":"Praktijk belde: wachtwoord en herstelcode kwijt"}'
+```
+
+De mail gaat naar een adres dat de praktijk zelf heeft opgegeven: de beheerders met een eigen
+login (zij kiezen via een link een nieuw wachtwoord), en als die er niet zijn de aanmelder van de
+proef (die krijgt een herstelcode voor het praktijkwachtwoord). De reden is verplicht en staat in
+de mail en in het logboek dat de praktijk zelf ziet. De link of code is 48 uur geldig en staat
+nooit in het antwoord aan beheer, alleen het gemaskeerde adres. Tot de praktijk de mail gebruikt
+verandert er niets: wachtwoorden en sessies blijven werken. Hooguit drie aanvragen per praktijk
+per dag. Is er van de praktijk geen eigen adres bekend, of staat mail uit, dan kan het niet via
+deze weg (`npm run test:beheerherstel`). De beheersleutel alleen opent zo geen praktijk meer. Wie
+bij de server of bij de mailprovider kan (die bewaart verzonden mail), blijft technisch bij
+gegevens kunnen; daarom staan de reden en het moment in het logboek van de praktijk.
+
+Heeft een beheerder een tweede stap bij het inloggen en is ook die kwijt (telefoon én
+reservecodes), stuur dan `"tweedeStap": true` mee in hetzelfde verzoek. De mail zegt dan dat met de
+link ook de tweede stap vervalt; dat gebeurt pas als de beheerder de link gebruikt, en het staat in
+het logboek van de praktijk. Zonder die vlag blijft de tweede stap staan en is de mailbox alleen
+niet genoeg om in te loggen. Doe dit alleen na controle dat de vraag echt van de praktijk komt
+(terugbellen op het bekende nummer): met de vlag is toegang tot de mailbox weer genoeg.
+
+**Mail bij een seintje.** Tikt een patiënt “Ik heb een vraag” of “Het doet te veel pijn”, dan
+stuurt de server een korte mail naar de praktijk (als `MAIL_API_SLEUTEL` en `MAIL_AFZENDER` gezet
+zijn): dát er een seintje is, met een link naar de app. Er staat geen naam van de patiënt, geen
+soort seintje en geen inhoud in. De mail gaat naar de behandelaar van de kaart, anders naar wie de
+kaart maakte, anders naar de beheerders met een eigen login, anders naar de aanmelder van de proef;
+nooit naar het openbare contactadres uit het profiel. Alleen een nieuw open seintje of een vraag
+die oploopt naar pijn geeft een mail, “Het gaat goed” niet. Per adres hooguit één mail per
+kwartier (wat in die tijd binnenkomt, gaat samen in de volgende) en per praktijk hooguit 40 per
+24 uur. Wat nog niet gemaild is, blijft op schijf gemerkt (`seintje.meld`) en gaat alsnog: na de
+rem, na een storing bij de mailprovider of na een herstart. De patiënt wacht nooit op de mail. Een
+beheerder zet het per praktijk uit onder Kaarten → Team. Het is geen alarm: wat de patiënt te
+lezen krijgt (“ziet het pas bij het inloggen”) blijft gelden (`npm run test:seinmail`).
 
 ## V1-account en bevestigingsmail
 
@@ -256,6 +378,10 @@ persoonsgegevens.
 de kaart een roepnaam, dan deelt de app hem met de patiënt. Fysiplan is dan verwerker voor de
 praktijk (AVG art. 28): bij het beveiligen en bij de proefaanmelding gaat de praktijk akkoord met
 de verwerkersovereenkomst; de versie en het tijdstip staan bij het praktijkaccount (`vwo`).
+Beveiligen geeft toegang tot wat de praktijk daarna zelf deelt. Stond er onder dezelfde naam al
+iets zonder account (v1 en beheer delen kaarten onder de praktijknaam), dan krijgt de nieuwe
+praktijk een eigen code en gaat daar niets van mee; v1 blijft bij de eigen kaarten kunnen
+(`npm run test:naamerftniets`).
 
 - **Op de server per gedeelde kaart:** roepnaam (`client.c_naam`), max. HF en trainingszone,
   doel en opmerking van de therapeut, de oefeningen met dosering en schema, persoonlijke video's,
@@ -265,13 +391,29 @@ de verwerkersovereenkomst; de versie en het tijdstip staan bij het praktijkaccou
 - **De patiënt ziet** (`GET /api/kaart`): alleen het eerste woord van de roepnaam, het doel, de
   opmerking en de kaartinhoud. De volledige kaart staat alleen op `GET /api/praktijk/kaart`
   (ingelogde praktijk).
+- **Inloggen blijft over een uitrol heen:** praktijksessies staan in het geheugen en in
+  `praktijk-sessies.json` in de datamap (`lib/sessie-opslag.js`). Op schijf staat alleen de
+  SHA-256 van het sessietoken, nooit het token zelf. Een sessie geldt 30 dagen en hoort bij het
+  wachtwoord waarmee is ingelogd: na een wachtwoordwijziging werkt hij niet meer. Het bestand
+  gaat niet mee in de reservekopie. Wil je iedereen opnieuw laten inloggen (bijvoorbeeld na het
+  terugzetten van een reservekopie), verwijder dan dat bestand en herstart. Bij een uitrol
+  (SIGTERM) maakt de server lopende verzoeken af voordat hij stopt.
+- **Tweede stap bij het inloggen:** heeft een login een tweede stap, dan staan bij dat lid in
+  `praktijk-accounts.json` het geheim van de code-app (leesbaar), de SHA-256 van de ongebruikte
+  reservecodes, de laatst gebruikte tijdstap en de teller van foute codes. Ze gaan mee in de
+  reservekopie en verdwijnen bij uitzetten, bij wissen door een beheerder en met het account. De
+  waarschuwingsmail na te veel foute codes gaat naar het adres van de login zelf en bevat de
+  praktijknaam en de voornaam, geen code en geen geheim. Vraagt een praktijk de tweede stap
+  van iedereen, dan staat dat met het moment bij de praktijk zelf (`stapVerplicht`); het staat ook
+  in de download van de praktijkgegevens.
 - **Bewaartermijn** (automatisch, elke 6 uur en bij het opstarten): een kaart verdwijnt na
   `BEWAAR_STIL_DAGEN` (standaard 90) dagen zonder activiteit, of `BEWAAR_AFGEROND_DAGEN`
   (standaard 30) dagen na afronden (archiveren). Na de invoering geldt eenmalig een aanloop van
   `BEWAAR_AANLOOP_DAGEN` (standaard 30) dagen (`bewaartermijn.json`), zodat niemand onverwacht
   kaarten kwijtraakt. De dagelijkse reservekopie bewaart hooguit 7 dagen.
 - **AI** (alleen met `ANTHROPIC_API_KEY`): de zoekhulp stuurt alleen lichaamsdeel, trainingsdoel
-  en een paar zoekwoorden; de vraaghulp op de patiëntkaart stuurt de vraag plus de namen en
+  en een paar zoekwoorden; de vraaghulp op de patiëntkaart (standaard uit, alleen aan met
+  `VRAAGHULP=aan`) stuurt de vraag plus de namen en
   bibliotheekuitleg van de oefeningen; vertalen gaat alleen over bibliotheekteksten en namen van
   eigen oefeningen. Geen naam, doel, opmerking of score gaat naar de AI-dienst. De weekbrief is
   een vaste feitenlijst zonder AI. De patiëntkaart zegt in negen talen dat antwoorden van een
