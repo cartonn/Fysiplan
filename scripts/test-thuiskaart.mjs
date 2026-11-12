@@ -21,7 +21,9 @@ assert.match(index, /'printBtn'\)\.addEventListener\('click',function\(\)\{\n   
 assert.match(index, /var thuis=IS_V2&&document\.getElementById\('pr_thuis'\)\.checked;/, "alleen V2 print een thuiskaart");
 
 const require = createRequire(import.meta.url);
-const { chromium } = require("playwright");
+let chromium;
+// CI heeft geen browser: dan alleen de schermcode hierboven
+try { ({ chromium } = require("playwright")); } catch { console.log("test-thuiskaart: geen Playwright, browserdeel overgeslagen"); process.exit(0); }
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-thuiskaart-"));
 const reserve = createServer();
 await new Promise((r) => reserve.listen(0, "127.0.0.1", r));
