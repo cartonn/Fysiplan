@@ -201,6 +201,7 @@
      elke klik), en het veld dat mist krijgt een rode rand */
   #ps_msg{font-size:12px;color:var(--muted);margin-top:6px}
   #ps_msg.fout{color:#b42318;background:#fef3f2;border:1px solid #fecdca;border-radius:8px;padding:7px 9px;font-size:12.5px;font-weight:600}
+  #ps_msg.fout a{color:inherit;text-decoration:underline}
   #ps_msg.flits{animation:psflits .4s ease}
   @keyframes psflits{20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
   @media (prefers-reduced-motion:reduce){#ps_msg.flits{animation:none}}
@@ -532,7 +533,7 @@ bridge2.jpg</div>
       Er staat al een <b>voorbeeldkaart</b> voor lage rugklachten klaar. Zo ga je verder:
       <ol style="margin:8px 0 0 18px;padding:0">
         <li>Pas de oefeningen aan: klik links om toe te voegen, op de min om weg te halen. Er passen <b>maximaal 12</b> op een A4.</li>
-        <li><b>Zet een wachtwoord op je praktijk</b> (knop Kaarten). Pas dan gaat een kaart naar je pati&euml;nt en ziet alleen jouw praktijk het overzicht.</li>
+        <li><b>Beveilig je praktijk</b> (knop Kaarten). Pas dan gaat een kaart naar je pati&euml;nt en ziet alleen jouw praktijk het overzicht.</li>
         <li><b>Print</b> de kaart of bewaar hem als PDF, met de QR-code erop.</li>
         <li><b>Scan de QR-code met je eigen telefoon</b> en zie wat je pati&euml;nt ziet.</li>
       </ol>
@@ -569,7 +570,7 @@ bridge2.jpg</div>
       <ol style="margin:8px 0 0 18px;padding:0">
         <li>Vul de <b>naam van je praktijk</b> in; die komt boven op elke kaart.</li>
         <li>Kies een <b>standaard behandelkaart</b> per klacht (knop Sjablonen), of klik links oefeningen aan.</li>
-        <li>Zet een <b>wachtwoord op je praktijk</b> (knop Kaarten) en vul een <b>roepnaam</b> in, zoals Jan K. De QR-code naar de digitale kaart komt er dan vanzelf op.</li>
+        <li><b>Beveilig je praktijk</b> (knop Kaarten) en vul een <b>roepnaam</b> in, zoals Jan K. De QR-code naar de digitale kaart komt er dan vanzelf op.</li>
         <li><b>Print</b> de A4 of deel de link via WhatsApp.</li>
       </ol>
     </div>
@@ -2261,7 +2262,8 @@ bridge2.jpg</div>
   function toonDeelWeigering(d,naam){
     var pr=(SET.praktijk||'').trim();
     if(d.beveilig){
-      toonQrHint('Zet eerst een wachtwoord op je praktijk; daarna komt de QR-code er vanzelf op. Zonder wachtwoord deelt Fysiplan geen pati\u00ebntkaarten.',[{act:'beveilig',label:'Beveilig mijn praktijk'}]);
+      toonQrHint(PRAKSLOT.eigenLogin?'Beveilig eerst je praktijk met je eigen login; daarna komt de QR-code er vanzelf op. Een onbeveiligde praktijk deelt geen pati\u00ebntkaarten.'
+        :'Zet eerst een wachtwoord op je praktijk; daarna komt de QR-code er vanzelf op. Zonder wachtwoord deelt Fysiplan geen pati\u00ebntkaarten.',[{act:'beveilig',label:'Beveilig mijn praktijk'}]);
       return true;
     }
     if(d.bestaat){
@@ -2304,11 +2306,22 @@ bridge2.jpg</div>
   function openBeveiligen(daarna){
     NA_BEVEILIG=daarna||null;
     document.getElementById('kaartenBtn').click();
-    setTimeout(function(){
+    // het paneel haalt eerst de stand van de praktijk op; pas dan is zeker welk formulier er staat
+    var toon=function(wacht){
+      if(!PRAKSLOT.bekend&&wacht>0){setTimeout(function(){toon(wacht-1);},150);return;}
+      if(PRAKSLOT.eigenLogin){
+        // eigen login voor iedereen: een onbeveiligde praktijk krijgt meteen het venster, een
+        // beveiligde het inlogformulier (de knop heet dan Inloggen)
+        if(!PRAKSLOT.geclaimd){openEigenLogin('nieuw');return;}
+        psFocusLogin();
+        toonPsMsg('Log in met je e-mailadres en wachtwoord. Daarna komt de QR-code vanzelf op je kaart.');
+        return;
+      }
       var ww=document.getElementById('ps_ww');
       if(ww){ww.scrollIntoView({block:'center'});ww.focus();}
       toonPsMsg('Kies een wachtwoord en vink het akkoord aan. Daarna komt de QR-code vanzelf op je kaart.');
-    },350);
+    };
+    setTimeout(function(){toon(12);},350);
   }
   // QR van de kaartlink met de patiënttaal; past die niet in de kleine QR (langere
   // domeinnaam), dan de kale link: de kaart kiest dan zelf de taal van de telefoon
@@ -2536,7 +2549,7 @@ bridge2.jpg</div>
       if(!d.ok){
         // praktijk nog niet beveiligd: venster blijft open met de reden en "Print zonder
         // QR-code", in plaats van stil naar Beveiligen te springen (nieuwe proefgebruiker)
-        if(IS_V2&&d.beveilig){prMelding('Voor de QR-code moet je praktijk eerst beveiligd zijn met een wachtwoord, zodat alleen jullie de kaarten zien. Je kunt ook meteen printen, alleen zonder QR-code.',[{act:'beveilig',label:'Beveiligen',hoofd:true}]);return;}
+        if(IS_V2&&d.beveilig){prMelding('Voor de QR-code moet je praktijk eerst beveiligd zijn'+(PRAKSLOT.eigenLogin?'':' met een wachtwoord')+', zodat alleen jullie de kaarten zien. Je kunt ook meteen printen, alleen zonder QR-code.',[{act:'beveilig',label:'Beveiligen',hoofd:true}]);return;}
         if(IS_V2&&d.bestaat){prMelding('Er is al een kaart \u201c'+(d.naam||naam)+'\u201d in je praktijk. Is dit dezelfde pati\u00ebnt? Anders: geef deze kaart een andere roepnaam, bijvoorbeeld met een initiaal.',[{act:'overschrijf',label:'Ja, die kaart bijwerken',hoofd:true}]);return;}
         if(IS_V2&&d.verouderd){prMelding((KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen verloren.',[{act:'nieuwste',label:'Open de nieuwste versie',hoofd:true},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);return;}
         if(IS_V2&&d.login){prMelding('De praktijk \u201c'+(SET.praktijk||'').trim()+'\u201d is beveiligd en je bent niet ingelogd. Log eerst in.',[{act:'beveilig',label:'Inloggen',hoofd:true}]);return;}
@@ -3247,7 +3260,9 @@ bridge2.jpg</div>
     document.getElementById('ps_hdo').addEventListener('click',prakHerstel);
     document.getElementById('ps_hcdo').addEventListener('click',prakNieuweCode);
   }
-  var PRAKSLOT={geclaimd:false,ingelogd:false,pr:'',bewaar:null,naam:'',nieuw:false,wie:'',perEmail:false,akkoord:null,tweedeStap:null};
+  // eigenLogin: de server vraagt van iedereen een eigen login met een tweede stap (EIGEN_LOGIN_VERPLICHT);
+  // er is dan geen gedeeld praktijkwachtwoord. voorstel: naam en e-mail uit de proefaanmelding, als voorzet.
+  var PRAKSLOT={geclaimd:false,ingelogd:false,pr:'',bewaar:null,naam:'',nieuw:false,wie:'',perEmail:false,akkoord:null,tweedeStap:null,eigenLogin:false,voorstel:null,bekend:false};
   // bewaartermijnen zoals de server ze hanteert (standaard 90 en 30 dagen)
   function bewaarAfgerond(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.afgerond)||30;}
   function bewaarStil(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.stil)||90;}
@@ -3256,6 +3271,7 @@ bridge2.jpg</div>
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){if(!r.ok)throw r.status;return r.json();}).then(function(d){
         PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;PRAKSLOT.naam=d.naam||'';PRAKSLOT.wie=d.wie||'';PRAKSLOT.perEmail=!!d.perEmail;PRAKSLOT.akkoord=d.akkoord||null;PRAKSLOT.tweedeStap=typeof d.tweedeStap==='boolean'?d.tweedeStap:null;
+        PRAKSLOT.eigenLogin=!!d.eigenLogin;PRAKSLOT.voorstel=d.voorstel||null;PRAKSLOT.proefNodig=!!d.proefNodig;PRAKSLOT.bekend=true;
         if(pr!==PRAKSLOT.nieuwVoor)PRAKSLOT.nieuw=false;
         if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
         rendPrakSlot();
@@ -3287,11 +3303,17 @@ bridge2.jpg</div>
     if(!st)return;
     tekenAkkoord();
     if(!PRAKSLOT.geclaimd||(PRAKSLOT.nieuw&&!PRAKSLOT.ingelogd)){
-      st.innerHTML=PRAKSLOT.nieuw?"🔓 Nieuwe praktijk met de naam \u201c"+esc(PRAKSLOT.pr)+"\u201d. Je krijgt een eigen beveiligde praktijk, los van de andere met deze naam. <a href='#' id='ps_terug'>Toch inloggen</a>":"🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op: daarna deel je kaarten met je pati\u00ebnten en ziet alleen jouw praktijk het overzicht.";
-      form.style.display='flex';ww.placeholder='Kies een wachtwoord (min. 8 tekens)';ww.autocomplete='new-password';knop.textContent='Beveiligen';knop.dataset.act='claim';
+      // eigen login voor iedereen: beveiligen is dan je eigen login maken. Dat gaat in een eigen
+      // venster (naam, e-mail, wachtwoord, akkoord en werkregels); hier staat alleen de knop.
+      var eig=PRAKSLOT.eigenLogin;
+      st.innerHTML=PRAKSLOT.nieuw?"🔓 Nieuwe praktijk met de naam \u201c"+esc(PRAKSLOT.pr)+"\u201d. Je krijgt een eigen beveiligde praktijk, los van de andere met deze naam. <a href='#' id='ps_terug'>Toch inloggen</a>"
+        :eig?"🔓 Deze praktijk is nog niet beveiligd. Maak je eigen login: daarna deel je kaarten met je pati\u00ebnten en ziet alleen jouw praktijk het overzicht."
+        :"🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op: daarna deel je kaarten met je pati\u00ebnten en ziet alleen jouw praktijk het overzicht.";
+      form.style.display='flex';ww.style.display=eig?'none':'';ww.placeholder='Kies een wachtwoord (min. 8 tekens)';ww.autocomplete='new-password';knop.textContent='Beveiligen';knop.dataset.act=eig?'eigen':'claim';
       document.getElementById('ps_email').style.display='none';
       psCodeWeg();
-      document.getElementById('ps_vwolab').style.display='flex';
+      document.getElementById('ps_vwolab').style.display=eig?'none':'flex';
+      if(eig)document.getElementById('ps_herstel').style.display='none';
       var tr=document.getElementById('ps_terug');
       if(tr)tr.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.nieuw=false;rendPrakSlot();});
     }else if(PRAKSLOT.ingelogd){
@@ -3328,11 +3350,23 @@ bridge2.jpg</div>
       var wa2=document.getElementById('ps_wis');if(wa2)wa2.addEventListener('click',function(e){e.preventDefault();wisApparaat();});
       var nw=document.getElementById('ps_nieuw');
       if(nw)nw.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.nieuw=true;PRAKSLOT.nieuwVoor=PRAKSLOT.pr;rendPrakSlot();});
-      form.style.display='flex';ww.placeholder=PRAKSLOT.perEmail?'Je wachtwoord':'Wachtwoord (van jou of van de praktijk)';ww.autocomplete='current-password';knop.textContent='Inloggen';knop.dataset.act='login';
+      form.style.display='flex';ww.style.display='';ww.placeholder=PRAKSLOT.perEmail?'Je wachtwoord':'Wachtwoord (van jou of van de praktijk)';ww.autocomplete='current-password';knop.textContent='Inloggen';knop.dataset.act='login';
       var em=document.getElementById('ps_email');em.style.display='';
       em.placeholder=PRAKSLOT.perEmail?'Je e-mail':'Je e-mail (leeg = praktijkwachtwoord)';
       var vg=document.getElementById('ps_vergeten');
-      if(vg)vg.addEventListener('click',function(e){e.preventDefault();var f=document.getElementById('ps_herstel');f.style.display=f.style.display==='none'?'flex':'none';if(f.style.display==='flex')toonPsMsg('Vul de herstelcode in die je bij het beveiligen hebt bewaard, en kies een nieuw wachtwoord.');});
+      if(vg)vg.addEventListener('click',function(e){
+        e.preventDefault();
+        var f=document.getElementById('ps_herstel');
+        // Deze praktijk logt alleen per persoon in: er is geen praktijkwachtwoord om te herstellen,
+        // dus ook geen herstelcode. Het formulier ervoor liep dood op een weigering van de server.
+        if(PRAKSLOT.perEmail){
+          f.style.display='none';
+          toonPsMsg('Je logt in met je eigen e-mailadres en wachtwoord. Wachtwoord kwijt? Vraag een beheerder van je praktijk om een nieuwe uitnodiging. Ben je de enige beheerder, antwoord dan op een mail van Fysiplan (zoals de welkomstmail van je proef): je krijgt een herstellink op je eigen adres.');
+          return;
+        }
+        f.style.display=f.style.display==='none'?'flex':'none';
+        if(f.style.display==='flex')toonPsMsg('Vul de herstelcode in die je bij het beveiligen hebt bewaard, en kies een nieuw wachtwoord.');
+      });
     }
   }
 
@@ -3382,29 +3416,35 @@ bridge2.jpg</div>
   // inloggen. De server gaf het geheim (d). E-mail, wachtwoord, dat geheim en de eerste code
   // gaan samen opnieuw naar het inloggen; pas dan is er een sessie. Het wachtwoord staat alleen
   // in het geheugen van dit venster en is weg zodra het sluit. `ingelogd` is het gewone vervolg
-  // na een geslaagde login.
-  function openStapBijLogin(d,lijf,ingelogd){
+  // na een geslaagde login. `opts` komt van het venster voor de eigen login (openEigenLogin): daar
+  // is dit stap 2 van 2, en wie hier afbreekt, leest wat er al wel geregeld is (opts.afgebroken).
+  function openStapBijLogin(d,lijf,ingelogd,opts){
+    opts=opts||{};
     var ov=document.getElementById('ovStapLogin');
     if(!ov){
       ov=document.createElement('div');ov.className='ov';ov.id='ovStapLogin';
-      ov.innerHTML="<div class='modal' style='max-width:560px'><h3>Stel je tweede stap in</h3><div id='li_inhoud' class='hint' style='line-height:1.5;text-align:left;padding:0'></div>"+
+      ov.innerHTML="<div class='modal' style='max-width:560px'><div class='el-stap' id='li_stap'></div><h3>Stel je tweede stap in</h3><div id='li_inhoud' class='hint' style='line-height:1.5;text-align:left;padding:0'></div>"+
         "<div class='acts' style='margin-top:14px'><button class='btn' id='li_sluit' type='button'>Annuleren</button></div></div>";
       document.body.appendChild(ov);
     }
-    var el=document.getElementById('li_inhoud'),sluit=document.getElementById('li_sluit'),kop=ov.querySelector('h3');
+    var el=document.getElementById('li_inhoud'),sluit=document.getElementById('li_sluit'),kop=ov.querySelector('h3'),stapEl=document.getElementById('li_stap');
     var wie={praktijk:lijf.praktijk,email:lijf.email,wachtwoord:lijf.wachtwoord},lopend='';
+    // wie de tweede stap vraagt: Fysiplan van elke login, of deze praktijk van haar eigen team
+    var vrager=d.voorIedereen?'Fysiplan':'Je praktijk';
     var dicht=function(){wie=null;closeOv('ovStapLogin');el.innerHTML='';};
     var msg=function(t){var m=document.getElementById('li_msg');if(m)m.textContent=t||'';};
     kop.textContent='Stel je tweede stap in';
+    stapEl.textContent=opts.stap||'';stapEl.style.display=opts.stap?'':'none';
     sluit.parentNode.style.display='';
     sluit.onclick=function(){
       dicht();
-      toonPsMsg('Je bent nog niet ingelogd, want je tweede stap is niet ingesteld. Log opnieuw in om dat te doen.');
+      toonPsMsg(opts.afgebroken||'Je bent nog niet ingelogd, want je tweede stap is niet ingesteld. Log opnieuw in om dat te doen.');
       psFocusLogin();
     };
     var teken=function(r,melding){
       lopend=r.geheim;
-      el.innerHTML="<div>Je praktijk vraagt van iedereen een tweede stap bij het inloggen: na je wachtwoord een code uit een code-app op je telefoon, zoals Google Authenticator, Microsoft Authenticator of Wachtwoorden op een iPhone. Je stelt hem nu één keer in.</div>"+
+      el.innerHTML=(opts.login?"<div style='margin-bottom:8px'><b style='color:var(--ink)'>Je login staat klaar:</b> "+esc(opts.login)+"</div>":"")+
+        "<div>"+vrager+" vraagt van iedereen een tweede stap bij het inloggen: na je wachtwoord een code uit een code-app op je telefoon, zoals Google Authenticator, Microsoft Authenticator of Wachtwoorden op een iPhone. Je stelt hem nu één keer in.</div>"+
         stapInstelHtml('li',r,'Zet aan en log in')+
         "<div id='li_msg' role='status' aria-live='polite' style='margin-top:6px;color:var(--fout,#b4372f)'></div>";
       document.getElementById('li_sapp').setAttribute('href',r.uri);
@@ -3426,6 +3466,7 @@ bridge2.jpg</div>
               if(!codes.length){dicht();return;}
               // geen Annuleren meer (er valt niets af te breken): het venster sluit met "Ik heb ze bewaard"
               kop.textContent='Bewaar je reservecodes';
+              stapEl.style.display='none';
               sluit.parentNode.style.display='none';
               el.innerHTML=reservecodesHtml('li',codes,"<b style='color:var(--ink)'>De tweede stap staat aan en je bent ingelogd.</b> Bewaar deze reservecodes op een veilige plek, niet op je telefoon. Ben je je telefoon kwijt, dan log je in met een reservecode in plaats van de code uit de app. Elke code werkt één keer en je ziet ze alleen nu.");
               reservecodesKnoppen('li',codes,dicht);
@@ -3456,6 +3497,133 @@ bridge2.jpg</div>
     el.textContent='Even kijken…';
     openOv('ovStapLogin');
     ensureQr(function(){if(wie)teken(d,'');});
+  }
+  // ---- eigen login voor iedereen: een praktijk beveiligen, of overstappen van het praktijkwachtwoord ----
+  // Vraagt de server van iedereen een eigen login met een tweede stap (PRAKSLOT.eigenLogin), dan is
+  // er geen gedeeld praktijkwachtwoord meer.
+  //   'nieuw':    wie de praktijk beveiligt, maakt hier de eigen login: de eerste beheerder.
+  //   'overstap': een account van vóór die regel heeft alleen een praktijkwachtwoord. Wie daarmee
+  //               inlogt (opts.gedeeld), maakt er alleen nog de eigen login mee; daarna werkt het
+  //               praktijkwachtwoord niet meer.
+  // In beide gevallen antwoordt de server met het geheim voor de tweede stap en neemt
+  // openStapBijLogin het over: pas met de eerste code is er een sessie. De wachtwoorden staan
+  // alleen in het geheugen van dit venster en zijn weg zodra het sluit.
+  function openEigenLogin(soort,opts){
+    opts=opts||{};
+    var nieuw=soort!=='overstap',pr=PRAKSLOT.pr||(SET.praktijk||'').trim(),gedeeld=opts.gedeeld||'';
+    // zonder lopende proef valt er niets te beveiligen: dat staat er vóór het formulier, niet erna
+    if(nieuw&&PRAKSLOT.proefNodig){
+      psFout('Start eerst je gratis proef. Daarna beveilig je hier je praktijk en deel je kaarten. Werkt je praktijk al met Fysiplan? Vraag je collega dan om een uitnodiging.');
+      var pn=document.getElementById('ps_msg');
+      if(pn){var pl=document.createElement('a');pl.href='/v2/proef';pl.textContent='Start de gratis proef';pn.appendChild(document.createTextNode(' '));pn.appendChild(pl);}
+      return;
+    }
+    var ov=document.getElementById('ovEigenLogin');
+    if(!ov){
+      ov=document.createElement('div');ov.className='ov';ov.id='ovEigenLogin';
+      ov.innerHTML="<div class='modal'><div class='el-stap'>Stap 1 van 2</div><h3></h3><div id='el_inhoud' class='hint' style='line-height:1.5;text-align:left;padding:0'></div>"+
+        "<div class='acts' style='margin-top:14px'><button class='btn' id='el_sluit' type='button'>Annuleren</button><button class='btn primary' id='el_do' type='button'>Verder</button></div></div>";
+      document.body.appendChild(ov);
+    }
+    var el=document.getElementById('el_inhoud'),sluit=document.getElementById('el_sluit'),doe=document.getElementById('el_do');
+    ov.querySelector('h3').textContent=nieuw?'Beveilig je praktijk':'Maak je eigen login';
+    // de voorzet uit de proefaanmelding, alleen voor wie de praktijk zelf beveiligt
+    var v=(nieuw&&PRAKSLOT.voorstel)||{};
+    el.innerHTML=
+      "<div>"+(nieuw
+        ?"Je maakt je eigen login bij “"+esc(pr)+"” en wordt beheerder. In stap 2 koppel je een code-app op je telefoon; houd hem bij de hand. Collega’s nodig je daarna uit onder Team: iedereen logt in met een eigen login."
+        :"Fysiplan werkt voortaan met een eigen login per persoon en een tweede stap. Met het praktijkwachtwoord maak je hier je eigen login bij “"+esc(pr)+"”; je wordt beheerder. Het praktijkwachtwoord werkt daarna niet meer. In stap 2 koppel je een code-app op je telefoon.")+"</div>"+
+      "<div class='el-twee'>"+
+        "<div><label for='el_naam'>Je naam</label><input id='el_naam' autocomplete='name' maxlength='60' value='"+esc(v.naam||'')+"'/></div>"+
+        "<div><label for='el_email'>Je e-mail</label><input id='el_email' type='email' autocomplete='username' maxlength='120' value='"+esc(v.email||'')+"'/></div>"+
+      "</div>"+
+      "<label for='el_ww'>"+(nieuw?"Kies een wachtwoord":"Kies je eigen wachtwoord")+"</label>"+
+      "<div class='el-ww'><input id='el_ww' type='password' autocomplete='new-password' maxlength='200' aria-describedby='el_wwuitleg'/>"+
+        "<button class='btn' id='el_toon' type='button' aria-pressed='false' aria-label='Toon het wachtwoord'>Toon</button></div>"+
+      "<div class='el-klein' id='el_wwuitleg'>Minstens 8 tekens. Dit wachtwoord is alleen van jou"+(nieuw?".":"; kies een ander dan het praktijkwachtwoord.")+"</div>"+
+      // AVG art. 28: wie de praktijk beveiligt, gaat namens de praktijk akkoord (zelfde zin als in het slot)
+      (nieuw?"<label class='keuze el-vink'><input type='checkbox' id='el_vwo'/><span>Ik ga namens de praktijk akkoord met de <a href='/voorwaarden' target='_blank' rel='noopener'>algemene voorwaarden</a> en de <a href='/verwerkersovereenkomst' target='_blank' rel='noopener'>verwerkersovereenkomst</a>. Fysiplan bewaart de kaarten alleen in opdracht van de praktijk.</span></label>":"")+
+      "<div class='el-regels'><b>Werkregels</b>"+REGELS_HTML+"</div>"+
+      "<label class='keuze el-vink'><input type='checkbox' id='el_regels'/><span>Ik heb de werkregels gelezen en houd me eraan.</span></label>"+
+      "<div id='el_msg' role='alert'></div>";
+    var naam=document.getElementById('el_naam'),email=document.getElementById('el_email'),ww=document.getElementById('el_ww'),
+        vwo=document.getElementById('el_vwo'),regels=document.getElementById('el_regels'),toon=document.getElementById('el_toon');
+    var msgEl=document.getElementById('el_msg');
+    var msg=function(t){msgEl.textContent=t||'';if(t){try{msgEl.scrollIntoView({block:'nearest'});}catch(e){}}};
+    var geenMist=function(){el.querySelectorAll('.mist,[aria-invalid]').forEach(function(x){x.classList.remove('mist');x.removeAttribute('aria-invalid');});};
+    var mist=function(veld){if(!veld)return;(veld.type==='checkbox'?veld.parentNode:veld).classList.add('mist');veld.setAttribute('aria-invalid','true');};
+    var dicht=function(){gedeeld='';closeOv('ovEigenLogin');el.innerHTML='';};
+    doe.disabled=false;
+    toon.addEventListener('click',function(){
+      var zichtbaar=ww.type==='password';
+      ww.type=zichtbaar?'text':'password';toon.textContent=zichtbaar?'Verberg':'Toon';
+      toon.setAttribute('aria-pressed',zichtbaar?'true':'false');toon.setAttribute('aria-label',zichtbaar?'Verberg het wachtwoord':'Toon het wachtwoord');
+    });
+    sluit.onclick=function(){
+      dicht();
+      if(!nieuw){toonPsMsg('Je bent nog niet ingelogd. Met het praktijkwachtwoord maak je eerst je eigen login; log opnieuw in om dat te doen.');psFocusLogin();}
+    };
+    var stuur=function(){
+      if(doe.disabled)return;
+      geenMist();
+      // alles wat nog ontbreekt in één keer, met de velden die het betreft
+      var mis=[],velden=[],nm=naam.value.trim(),em=email.value.trim(),eigenWw=ww.value;
+      if(!nm){mis.push('je naam');velden.push(naam);}
+      if(!/^\S+@\S+\.\S+$/.test(em)){mis.push('een geldig e-mailadres');velden.push(email);}
+      if(eigenWw.length<8){mis.push('een wachtwoord van minstens 8 tekens'+(eigenWw.length?' (nu '+eigenWw.length+')':''));velden.push(ww);}
+      if(vwo&&!vwo.checked){mis.push('een vinkje bij de algemene voorwaarden en de verwerkersovereenkomst');velden.push(vwo);}
+      if(!regels.checked){mis.push('een vinkje bij de werkregels');velden.push(regels);}
+      if(mis.length){
+        velden.forEach(mist);
+        msg('Nog nodig: '+(mis.length>1?mis.slice(0,-1).join(', ')+' en '+mis[mis.length-1]:mis[0])+'.');
+        velden[0].focus();return;
+      }
+      var lijf=nieuw?{praktijk:pr,naam:nm,email:em,wachtwoord:eigenWw,akkoord:true,regels:true}
+        :{praktijk:pr,wachtwoord:gedeeld,eigen:{naam:nm,email:em,wachtwoord:eigenWw,regels:true}};
+      if(nieuw&&PRAKSLOT.nieuw)lijf.nieuw=true;
+      doe.disabled=true;msg('');
+      fetch('api/praktijk/'+(nieuw?'claim':'login'),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(lijf)})
+        .then(function(r){return r.json().catch(function(){return{ok:false};});})
+        .then(function(d){
+          doe.disabled=false;
+          if(d.ok&&d.stapInstellen){
+            // De login bestaat; een sessie is er pas na de tweede stap. Het slot toont vanaf nu het
+            // inloggen per persoon, met het e-mailadres al ingevuld voor wie stap 2 afbreekt.
+            var login=d.email||em;
+            dicht();
+            PRAKSLOT.geclaimd=true;PRAKSLOT.perEmail=true;PRAKSLOT.nieuw=false;rendPrakSlot();
+            var pe=document.getElementById('ps_email'),pw=document.getElementById('ps_ww'),pm=document.getElementById('ps_msg');
+            if(pe)pe.value=login;if(pw)pw.value='';if(pm)pm.style.display='none';
+            toonPrakSlot(pr);
+            openStapBijLogin(d,{praktijk:pr,email:login,wachtwoord:eigenWw},function(r2){psIngelogd(r2,nieuw);},
+              {stap:'Stap 2 van 2',login:login,
+                afgebroken:(nieuw?'Je praktijk is beveiligd met je eigen login':'Je eigen login is gemaakt')+', maar je bent nog niet ingelogd: de tweede stap is niet ingesteld. Log in met je e-mailadres en wachtwoord om dat te doen.'});
+            return;
+          }
+          // de naam is intussen door iemand anders beveiligd, of de overstap is elders al gemaakt:
+          // het slot weet de weg (inloggen, of "Andere praktijk met deze naam")
+          if(d.login||d.perEmail){dicht();toonPrakSlot(pr);psFout(d.fout||'Deze praktijk is al beveiligd. Log in.');return;}
+          geenMist();
+          mist({naam:naam,email:email,wachtwoord:ww}[d.veld]||(d.akkoord?vwo:d.regels?regels:null));
+          msg(d.fout||'Dat lukte niet.');
+          // zonder proef of na de proef: de weg naar de proefpagina erbij
+          if(d.proefNodig||d.proefVerlopen){
+            var pa=document.createElement('a');pa.href='/v2/proef';pa.textContent=d.proefNodig?'Start de gratis proef':'Naar je proef';
+            msgEl.appendChild(document.createTextNode(' '));msgEl.appendChild(pa);
+          }
+          var fv={naam:naam,email:email,wachtwoord:ww}[d.veld];
+          if(fv){fv.focus();if(fv.select)fv.select();}
+        })
+        .catch(function(){doe.disabled=false;msg('Geen verbinding met de server. Probeer het zo opnieuw.');});
+    };
+    doe.onclick=stuur;
+    [naam,email,ww].forEach(function(veld){veld.addEventListener('keydown',function(e){if(e.key==='Enter')stuur();});});
+    // het rood verdwijnt zodra een veld in orde is (on…: het vak blijft bestaan, de inhoud niet)
+    el.oninput=function(e){var t=e.target;if(t&&t.classList){t.classList.remove('mist');t.removeAttribute('aria-invalid');}};
+    el.onchange=function(e){var t=e.target;if(t&&t.type==='checkbox'&&t.checked){t.parentNode.classList.remove('mist');t.removeAttribute('aria-invalid');}};
+    openOv('ovEigenLogin');
+    // de cursor in het eerste veld dat nog leeg is (naam en e-mail kunnen al zijn ingevuld)
+    setTimeout(function(){var eerste=!naam.value?naam:!email.value?email:ww;try{eerste.focus();}catch(e){}},0);
   }
   function openTeam(naarStap){
     var ovT=document.getElementById('ovTeam');
@@ -3518,7 +3686,10 @@ bridge2.jpg</div>
         hStap+="<div id='tm_stapvak'></div><div id='tm_stapmsg' role='status' aria-live='polite' style='margin-top:6px;color:var(--fout,#b4372f)'></div>";
         // Voor de hele praktijk: een beheerder met een eigen tweede stap kan hem van iedereen vragen
         // of dat weer opheffen. Ieder ander ziet alleen dat het geldt.
-        if(d.stapVerplicht){
+        if(d.stapVoorIedereen){
+          // eigen login voor iedereen: Fysiplan vraagt hem van elke login, per praktijk valt er niets te kiezen
+          hStap+="<div id='tm_verplicht' style='margin-top:8px'>Fysiplan vraagt de tweede stap van iedereen die inlogt.</div>";
+        }else if(d.stapVerplicht){
           hStap+="<div id='tm_verplicht' style='margin-top:8px'>Je praktijk vraagt de tweede stap van iedereen"+(d.stapVerplichtSinds?", sinds "+dagMaand(d.stapVerplichtSinds):"")+"."+
             (d.beheer?" <a href='#' id='tm_vdo' data-aan='0' style='white-space:nowrap'>Verplichting opheffen</a>":"")+"</div>";
         }else if(d.beheer){
@@ -3558,7 +3729,9 @@ bridge2.jpg</div>
       }
       h+=hStap;
       if(d.beheer){
-        if(d.ik)h+="<div style='margin-top:12px;border-top:1px solid var(--line);padding-top:10px'>"+(d.stapVerplicht
+        if(d.ik)h+="<div id='tm_gedeeldregel' style='margin-top:12px;border-top:1px solid var(--line);padding-top:10px'>"+(d.stapVoorIedereen
+          ?"Iedereen logt in met een eigen login en een tweede stap. Een gedeeld praktijkwachtwoord is er niet."
+          :d.stapVerplicht
           ?"Het praktijkwachtwoord staat uit: iedereen logt in met een eigen login en een tweede stap."
           :d.gedeeldUit
           ?"Het praktijkwachtwoord staat uit: iedereen logt in met een eigen login. <a href='#' id='tm_gedeeld' data-uit='0'>Weer aanzetten</a>"
@@ -3852,6 +4025,7 @@ bridge2.jpg</div>
       'opzeggen-geweigerd':'opzeggen met het praktijkwachtwoord geweigerd','praktijknaam-gewijzigd':'praktijknaam gewijzigd'};
     // bij een foute code is de naam die van de login waarop het gebeurde, niet van wie het deed
     var BIJ={'tweede-stap-mislukt':1,'tweede-stap-op-slot':1};
+    // 'geclaimd' met een naam erbij: beveiligd met een eigen login, er is dan geen praktijkwachtwoord gezet
     fetch('api/praktijk/activiteit?praktijk='+encodeURIComponent((SET.praktijk||'').trim()),PGET())
       .then(function(r){return r.json();})
       .then(function(d){
@@ -3860,7 +4034,7 @@ bridge2.jpg</div>
         box.innerHTML='<b style="color:var(--tekst,inherit)">Recente accountactiviteit</b> (nieuwste eerst, IP gemaskeerd):<br/>'+
           d.activiteit.map(function(a){
             var wn=new Date(a.t).toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-            return esc(wn)+' — '+esc(LBL[a.actie]||a.actie)+(a.wie?(BIJ[a.actie]?', login van ':' door ')+esc(a.wie):'')+(a.ip?' <small>('+esc(a.ip)+')</small>':'');
+            return esc(wn)+' — '+esc(a.actie==='geclaimd'&&a.wie?'praktijk beveiligd':(LBL[a.actie]||a.actie))+(a.wie?(BIJ[a.actie]?', login van ':' door ')+esc(a.wie):'')+(a.ip?' <small>('+esc(a.ip)+')</small>':'');
           }).join('<br/>');
       })
       .catch(function(){box.textContent='De activiteit is nu niet beschikbaar.';});
@@ -3924,6 +4098,15 @@ bridge2.jpg</div>
       .then(function(d){
         knop.disabled=false;
         if(!d.ok){psFout(d.fout||'Dat lukte niet. Controleer de herstelcode.',code,true);return;}
+        if(d.eigenLoginNodig){
+          // Eigen login voor iedereen: het nieuwe praktijkwachtwoord geeft geen sessie. Je maakt er
+          // meteen je eigen login mee; de nieuwe herstelcode staat er voor het geval je dat uitstelt.
+          var gedeeld=nw.value;code.value='';nw.value='';
+          document.getElementById('ps_herstel').style.display='none';
+          toonHerstelcode(d.herstelcode,'Je praktijkwachtwoord is vernieuwd. Maak nu je eigen login: daarna heb je het praktijkwachtwoord en deze code niet meer nodig. Stel je dat uit, bewaar dan deze nieuwe herstelcode (de oude werkt niet meer):');
+          openEigenLogin('overstap',{gedeeld:gedeeld});
+          return;
+        }
         setPrakSes(d.sessie);code.value='';nw.value='';
         document.getElementById('ps_herstel').style.display='none';
         PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;rendPrakSlot();toonSrvKaarten();reloadLibraryKeepingCard();
@@ -3938,12 +4121,27 @@ bridge2.jpg</div>
     if(!(vwo&&vwo.checked)){mis.push('een vinkje bij de algemene voorwaarden en de verwerkersovereenkomst');velden.push(vwo);}
     return {tekst:mis.length?'Nog nodig: '+mis.join(' en ')+'.':'',velden:velden};
   }
+  // het vervolg na een geslaagde login of beveiliging (d is het antwoord van de server; beveiligd:
+  // de praktijk is zojuist beveiligd, niet alleen ingelogd)
+  function psIngelogd(d,beveiligd){
+    var ww=document.getElementById('ps_ww');
+    psGeenMist();setPrakSes(d.sessie);if(ww)ww.value='';psCodeWeg();document.getElementById('ps_msg').style.display='none';
+    PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;PRAKSLOT.nieuw=false;rendPrakSlot();toonPrakSlot(PRAKSLOT.pr);toonSrvKaarten();reloadLibraryKeepingCard();
+    if(d.herstelcode)toonHerstelcode(d.herstelcode);
+    // ingelogd met een reservecode: zeggen hoeveel er nog zijn (elke code werkt één keer)
+    if(typeof d.reservecodesOver==='number')toonPsMsg('Je bent ingelogd met een reservecode. Je hebt er nog '+d.reservecodesOver+'. Nieuwe maak je onder Team.');
+    // de kaart in de editor mag nu gedeeld worden: de QR komt er vanzelf op
+    if(IS_V2){laatsteDeel='';deelNu();}
+    // het praktijkprofiel (adres, telefoon) wordt pas na beveiligen bewaard; stuur het nu mee
+    if(IS_V2&&beveiligd)upsertPraktijk();
+  }
   function prakSlotActie(){
     var knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww'),vwo=document.getElementById('ps_vwo');
     // er loopt al een verzoek (twee keer Enter): geen tweede. Bij het instellen van de tweede stap
     // zou het tweede antwoord het geheim van het eerste ongeldig maken.
     if(knop.disabled)return;
     var act=knop.dataset.act,w=ww.value;
+    if(act==='eigen'){openEigenLogin('nieuw');return;}
     if(act==='claim'){
       var o=psOntbreekt();
       if(o.tekst){psFout(o.tekst,o.velden);PS_MIS=true;return;}
@@ -3958,18 +4156,7 @@ bridge2.jpg</div>
     // tweede stap: het codeveld staat er pas als de server erom vroeg
     var cv=document.getElementById('ps_code'),codeStond=!!cv&&cv.style.display!=='none';
     if(act==='login'&&codeStond&&cv.value.trim())lijf.code=cv.value.trim();
-    // het vervolg na een geslaagde login of beveiliging (d is het antwoord van de server)
-    var ingelogd=function(d){
-      psGeenMist();setPrakSes(d.sessie);ww.value='';psCodeWeg();document.getElementById('ps_msg').style.display='none';
-      PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;PRAKSLOT.nieuw=false;rendPrakSlot();toonPrakSlot(PRAKSLOT.pr);toonSrvKaarten();reloadLibraryKeepingCard();
-      if(d.herstelcode)toonHerstelcode(d.herstelcode);
-      // ingelogd met een reservecode: zeggen hoeveel er nog zijn (elke code werkt één keer)
-      if(typeof d.reservecodesOver==='number')toonPsMsg('Je bent ingelogd met een reservecode. Je hebt er nog '+d.reservecodesOver+'. Nieuwe maak je onder Team.');
-      // de kaart in de editor mag nu gedeeld worden: de QR komt er vanzelf op
-      if(IS_V2){laatsteDeel='';deelNu();}
-      // het praktijkprofiel (adres, telefoon) wordt pas na beveiligen bewaard; stuur het nu mee
-      if(IS_V2&&act==='claim')upsertPraktijk();
-    };
+    var ingelogd=function(d){psIngelogd(d,act==='claim');};
     fetch('api/praktijk/'+(act==='claim'?'claim':'login'),{method:'POST',headers:{'content-type':'application/json'},
       body:JSON.stringify(lijf)})
       .then(function(r){return r.json().catch(function(){return{ok:false};});})
@@ -3987,6 +4174,19 @@ bridge2.jpg</div>
           // instellen hoort dan bij het inloggen (eigen venster; daarna het gewone vervolg)
           psGeenMist();document.getElementById('ps_msg').style.display='none';
           openStapBijLogin(d,lijf,ingelogd);
+          return;
+        }
+        if(!d.ok&&d.eigenLoginNodig&&act==='login'){
+          // Een account van vóór de eigen login voor iedereen, met alleen een praktijkwachtwoord.
+          // Dat wachtwoord klopte; het geeft geen sessie meer, alleen de weg naar je eigen login.
+          psGeenMist();document.getElementById('ps_msg').style.display='none';
+          openEigenLogin('overstap',{gedeeld:w});
+          return;
+        }
+        if(!d.ok&&d.eigenLogin&&act==='claim'){
+          // de server vraagt intussen een eigen login van iedereen (de pagina stond al open): het venster
+          PRAKSLOT.eigenLogin=true;ww.value='';psGeenMist();document.getElementById('ps_msg').style.display='none';
+          rendPrakSlot();openEigenLogin('nieuw');
           return;
         }
         if(!d.ok){
@@ -4701,7 +4901,7 @@ bridge2.jpg</div>
           if(zoekEl)zoekEl.style.display='none';
           var samW=document.getElementById('k_srv_sam');if(samW)samW.style.display='none';
           el.innerHTML="<div class='hint'>"+(l.beveilig
-            ?"Zet hierboven een wachtwoord op je praktijk. Daarna deel je kaarten met je pati\u00ebnten en zie je hier hun oefenweek en meldingen; niemand anders kan ze openen."
+            ?(PRAKSLOT.eigenLogin?"Beveilig hierboven je praktijk.":"Zet hierboven een wachtwoord op je praktijk.")+" Daarna deel je kaarten met je pati\u00ebnten en zie je hier hun oefenweek en meldingen; niemand anders kan ze openen."
             :"Log hierboven in om de kaarten van deze praktijk te zien.")+"</div>";
           zetSeinBadge(0);return;
         }
@@ -5840,7 +6040,7 @@ bridge2.jpg</div>
       .then(function(r){return r.json();})
       .then(function(d){
         if(!d.geclaimd||!d.ingelogd){
-          intro.textContent='Eigen oefeningen worden bij je praktijk op de server bewaard, zodat je hele team en je pati\u00ebnten ze zien. Zet daarom eerst een wachtwoord op je praktijk (of log in) onder Kaarten.';
+          intro.textContent='Eigen oefeningen worden bij je praktijk op de server bewaard, zodat je hele team en je pati\u00ebnten ze zien. '+(PRAKSLOT.eigenLogin?'Beveilig daarom eerst je praktijk':'Zet daarom eerst een wachtwoord op je praktijk')+' (of log in) onder Kaarten.';
           return;
         }
         intro.textContent='De oefening komt in je bibliotheek onder \u201c'+EIGEN_GROEP+'\u201d, voor iedereen van je praktijk, en met foto en uitleg op de digitale kaart.';

@@ -142,6 +142,23 @@ terug naar de gedeelde server-lijst.
     wordt bij het inloggen opnieuw ingesteld. Opheffen vraagt wachtwoord en code; het
     praktijkwachtwoord blijft daarna uit. De schakelaar staat standaard uit
     (`npm run test:stapverplicht`).
+  - *Voor elke praktijk (`EIGEN_LOGIN_VERPLICHT`).* Staat deze schakelaar van de server aan, dan
+    geldt het voorgaande voor elke praktijk en bestaat er geen gedeeld praktijkwachtwoord meer.
+    Wie een praktijk beveiligt (Kaarten → Beveiligen), maakt daarmee de eigen login en wordt
+    beheerder: naam, e-mailadres, wachtwoord, akkoord en werkregels, en daarna meteen de tweede
+    stap. Pas met de eerste code is er een sessie. Een praktijkwachtwoord en een herstelcode op
+    papier komen er niet, en Team kan de verplichting niet opheffen of het praktijkwachtwoord
+    aanzetten. Collega's komen erbij met een uitnodiging en stellen de tweede stap in bij hun
+    eerste login. Een account van vóór de schakelaar met alleen een praktijkwachtwoord maakt bij
+    het inloggen eerst een eigen login (de overstap): het praktijkwachtwoord geeft geen sessie
+    meer en vervalt, met de herstelcode, zodra de praktijk een beheerder met een eigen login
+    heeft. Tot die overstap werken de formulieren zonder script (overzicht na de proef, gegevens
+    downloaden of wissen) nog met het praktijkwachtwoord. Standaard aan in productie, uit op een
+    ontwikkelmachine en in de andere tests; `EIGEN_LOGIN_VERPLICHT=aan` of `=uit` dwingt het af.
+    Terug naar `uit` breekt niets: logins en tweede stappen blijven bestaan. Een praktijk die met
+    eigen logins startte of de overstap maakte, houdt het praktijkwachtwoord uit; stond het bij
+    een ouder account nog aan naast een beheerder met een eigen login, dan werkt het daar weer
+    (`npm run test:eigenloginverplicht`).
   - *Grenzen.* Zonder die schakelaar is de tweede stap een eigen keuze per login, en logt het
     gedeelde praktijkwachtwoord in zonder tweede stap en met beheerdersrechten: zet het uit (Team)
     zodra iedereen een eigen login heeft. Met de schakelaar aan kan wie het wachtwoord kent van een
@@ -149,6 +166,11 @@ terug naar de gedeelde server-lijst.
     er dan niet in en het staat in de Activiteit; een beheerder wist hem (Team → wissen). Stil
     meekijken kan niet: elk antwoord met een geheim maakt het vorige ongeldig, dus het geheim dat
     in gebruik komt, heeft alleen de browser gezien die het instellen afmaakt.
+    Met `EIGEN_LOGIN_VERPLICHT` controleert Fysiplan het e-mailadres van de eerste login niet
+    met een mail: een tikfout merk je pas als een herstelmail niet aankomt. Bij de overstap wordt
+    beheerder wie het praktijkwachtwoord kent; dat was hij met dat wachtwoord al. En een enige
+    beheerder die het eigen wachtwoord vergeet, komt er alleen weer in met de herstelmail van
+    Fysiplan-beheer (zie **Beheer**).
     Het geheim staat leesbaar in `praktijk-accounts.json`, want de server moet de code kunnen
     narekenen; wie die schijf kan lezen, heeft ook de tweede stap. De login van V1 (`/`) en de
     beheersleutel hebben geen tweede stap. `npm run test:tweedestap` dekt de rekenkern (testvectoren

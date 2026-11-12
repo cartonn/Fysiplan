@@ -34,7 +34,7 @@ async function start(env) {
   const origin = "http://127.0.0.1:" + port;
   const app = spawn(process.execPath, ["server.js"], { cwd: process.cwd(),
     env: { ...process.env, HOST: "127.0.0.1", PORT: String(port), DATA_DIR: dataDir, ADMIN_KEY: "", ANTHROPIC_API_KEY: "", MOLLIE_API_KEY: "",
-      RAILWAY_ENVIRONMENT: "", RAILWAY_ENVIRONMENT_NAME: "", RAILWAY_PROJECT_ID: "", NODE_ENV: "", PROEF_VERPLICHT: "", ...env },
+      RAILWAY_ENVIRONMENT: "", RAILWAY_ENVIRONMENT_NAME: "", RAILWAY_PROJECT_ID: "", NODE_ENV: "", PROEF_VERPLICHT: "", EIGEN_LOGIN_VERPLICHT: "", ...env },
     stdio: ["ignore", "pipe", "pipe"] });
   let uit = "";
   app.stdout.on("data", (c) => { uit += c; }); app.stderr.on("data", (c) => { uit += c; });
@@ -92,7 +92,14 @@ s = await start({});
 try { assert.equal((await s.claim("Fysio Lokaal")).status, 200, "lokaal: uit"); } finally { await s.stop(); }
 s = await start({ NODE_ENV: "production", ADMIN_KEY: "eigen-beheersleutel-1234" });
 try { assert.equal((await s.claim("Fysio Live")).status, 403, "productie: standaard aan"); } finally { await s.stop(); }
+// In productie beveilig je een praktijk met je eigen login (EIGEN_LOGIN_VERPLICHT, standaard aan in
+// productie; `npm run test:eigenloginverplicht`): de proef gaat voor, daarna telt de login.
 s = await start({ NODE_ENV: "production", ADMIN_KEY: "eigen-beheersleutel-1234", PROEF_VERPLICHT: "uit" });
-try { assert.equal((await s.claim("Fysio Live")).status, 200, "productie met PROEF_VERPLICHT=uit: open"); } finally { await s.stop(); }
+try {
+  assert.equal((await s.claim("Fysio Live")).status, 400, "productie met PROEF_VERPLICHT=uit: open, maar alleen met een eigen login");
+  assert.equal((await s.claim("Fysio Live", null, { naam: "Lia Live", email: "lia@live.invalid", regels: true })).status, 200, "productie met PROEF_VERPLICHT=uit: open");
+} finally { await s.stop(); }
+s = await start({ NODE_ENV: "production", ADMIN_KEY: "eigen-beheersleutel-1234", PROEF_VERPLICHT: "uit", EIGEN_LOGIN_VERPLICHT: "uit" });
+try { assert.equal((await s.claim("Fysio Live")).status, 200, "productie met beide schakelaars uit: de oude weg"); } finally { await s.stop(); }
 
 console.log("Proef verplicht: nieuwe praktijk alleen met lopende proef of als klant; bestaande praktijken werken door.");

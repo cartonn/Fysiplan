@@ -121,6 +121,7 @@
     "test:seinmail": "node scripts/test-sein-mail.mjs",
     "test:tweedestap": "node scripts/test-tweede-stap.mjs",
     "test:stapverplicht": "node scripts/test-tweede-stap-verplicht.mjs",
+    "test:eigenloginverplicht": "node scripts/test-eigen-login-verplicht.mjs",
     "test:qrroepnaam": "node scripts/test-sweep-qr-roepnaam.mjs",
     "test:uitnodigingpraktijk": "node scripts/test-sweep-uitnodiging-praktijk.mjs",
     "test:rempraktijk": "node scripts/test-rem-praktijk.mjs",
