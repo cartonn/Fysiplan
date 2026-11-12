@@ -5105,6 +5105,16 @@ async function afhandelen(request, response) {
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
     const id = String(q.get("id") || "");
     const nu = Date.now();
+    // WGBO: ook een kaart in de prullenbak moet nog naar het dossier kunnen (contactlogboek,
+    // scores, gemelde klachten staan alleen hier). Alleen voor wie hem mag herstellen of wissen,
+    // alleen zolang hij herstelbaar is, en alleen als de praktijk daar expliciet om vraagt.
+    if (q.get("prullenbak") === "1") {
+      const pkaart = Object.values(kaarten[pk] || {}).find((k) => k.verwijderdOp && k.id === id &&
+        Math.min(Number(k.herstelTot) || 0, praktijkWisOp(pk)) > nu && magKaartVerwijderen(request, pk, k)) || null;
+      if (!pkaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Geen kaart in de prullenbak gevonden." }); return; }
+      await sendJson(response, 200, { ok: true, kaart: { ...pkaart, inPrullenbak: true, verloopt: Math.min(Number(pkaart.herstelTot) || 0, praktijkWisOp(pk)) } });
+      return;
+    }
     const kaart = Object.values(kaarten[pk] || {}).find((k) => !k.verwijderdOp && k.id === id && (k.demo || verlooptOp(k) > nu)) || null;
     if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     await sendJson(response, 200, { ok: true, kaart: { ...kaart, verloopt: verdwijntOp(pk, kaart) } });

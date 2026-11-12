@@ -3797,7 +3797,9 @@ bridge2.jpg</div>
     if(kaart.ts)r.push('Kaart laatst opgeslagen: '+new Date(kaart.ts).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'}));
     // bij een afgeronde (gearchiveerde) behandeling is dit de eindsamenvatting:
     // dat mag het dossier expliciet weten
-    if(kaart.gearchiveerd)r.push('Status: behandeling afgerond'+(kaart.verloopt?' (de digitale kaart verdwijnt op '+new Date(kaart.verloopt).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})+')':'')+'.');
+    // uit de prullenbak gekopieerd (WGBO): het dossier moet weten dat de digitale kaart niet meer werkt
+    if(kaart.inPrullenbak)r.push('Status: kaart verwijderd, de patiëntlink werkt niet meer'+(kaart.verloopt?' (definitief weg op '+new Date(kaart.verloopt).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})+')':'')+'.');
+    else if(kaart.gearchiveerd)r.push('Status: behandeling afgerond'+(kaart.verloopt?' (de digitale kaart verdwijnt op '+new Date(kaart.verloopt).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})+')':'')+'.');
     if(cl.c_doel)r.push('Doel: '+cl.c_doel);
     if(cl.c_cave)r.push('Casus/let op: '+cl.c_cave);
     if(cl.c_opm)r.push('Opmerking: '+cl.c_opm);
@@ -4182,14 +4184,28 @@ bridge2.jpg</div>
       fetch('api/kaarten/prullenbak?praktijk='+encodeURIComponent(pr),PGET())
         .then(function(r){return r.json();}).then(function(d){
           if(!d.ok){uit.textContent=d.fout||'Prullenbak ophalen is niet gelukt.';return;}
-          uit.innerHTML='<p>Alleen de maker en beheerder kunnen herstellen. De patiëntlink werkt tot die tijd niet. Herstellen kan maximaal zeven dagen, nooit langer dan de bestaande bewaartermijn. Vraagt de patiënt om wissen, kies dan Definitief verwijderen.</p>'+
-            (d.kaarten.length?d.kaarten.map(function(k){return "<p><b>"+esc(k.naam)+"</b> — herstellen tot "+esc(new Date(k.herstelTot).toLocaleString('nl-NL'))+" <button class='btn' data-prulherstel='"+esc(k.id)+"'>Herstellen</button> <button class='btn' data-pruldef='"+esc(k.id)+"'>Definitief verwijderen</button></p>";}).join(''):'<p>Geen kaarten die je kunt herstellen.</p>');
+          uit.innerHTML='<p>Alleen de maker en beheerder kunnen herstellen. De patiëntlink werkt tot die tijd niet. Herstellen kan maximaal zeven dagen, nooit langer dan de bestaande bewaartermijn. Vraagt de patiënt om wissen, kies dan Definitief verwijderen. Kopieer eerst de samenvatting voor het dossier: na definitief verwijderen kan dat niet meer.</p>'+
+            (d.kaarten.length?d.kaarten.map(function(k){return "<p><b>"+esc(k.naam)+"</b> — herstellen tot "+esc(new Date(k.herstelTot).toLocaleString('nl-NL'))+" <button class='btn' data-prulherstel='"+esc(k.id)+"'>Herstellen</button> <button class='btn' data-pruldos='"+esc(k.id)+"'>Kopieer voor dossier</button> <button class='btn' data-pruldef='"+esc(k.id)+"'>Definitief verwijderen</button></p>";}).join(''):'<p>Geen kaarten die je kunt herstellen.</p>');
         }).catch(function(){uit.textContent='Geen verbinding. Probeer opnieuw.';}).then(function(){knop.disabled=false;});
     };
     uit.onclick=function(e){
+      // WGBO: wat de patiënt via de kaart meldde, staat alleen in Fysiplan. Ook na Verwijderen
+      // moet de praktijk dat nog in het eigen dossier kunnen zetten, zolang de kaart herstelbaar is.
+      var dz=e.target.closest('[data-pruldos]');
+      if(dz){
+        var oudT=dz.textContent,toonZ=function(t){dz.textContent=t;setTimeout(function(){dz.textContent=oudT;},1800);};
+        fetch(praktijkKaartUrl(dz.dataset.pruldos)+'&prullenbak=1',PGET()).then(function(r){return r.json();}).then(function(dk){
+          if(!dk.ok){toonZ('Ophalen mislukt');return;}
+          var tekst=dossierTekst(dk.kaart);
+          if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(tekst).then(function(){toonZ('Gekopieerd ✓');}).catch(function(){window.prompt('Kopieer de samenvatting voor het dossier:',tekst);});
+          }else window.prompt('Kopieer de samenvatting voor het dossier:',tekst);
+        }).catch(function(){toonZ('Geen verbinding');});
+        return;
+      }
       var d0=e.target.closest('[data-pruldef]');
       if(d0){
-        if(!confirm('Deze kaart en de opnames erbij nu definitief verwijderen? Dit kan niet ongedaan worden gemaakt. Wat de praktijk moet bewaren, staat in het eigen dossier.'))return;
+        if(!confirm('Deze kaart en de opnames erbij nu definitief verwijderen? Dit kan niet ongedaan worden gemaakt. Heb je de samenvatting al in het dossier gezet? Gebruik anders eerst Kopieer voor dossier.'))return;
         d0.disabled=true;
         fetch('api/kaarten/definitief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:d0.dataset.pruldef})})
           .then(function(r){return r.json();}).then(function(d){if(d.ok){markeerKaartWeg(d0.dataset.pruldef);var r0=d0.closest('p');if(r0)r0.remove();}else{d0.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
@@ -5168,7 +5184,7 @@ bridge2.jpg</div>
       if(KAARTEN_BEZIG[delSlot])return;
       KAARTEN_BEZIG[delSlot]=1;
       var delVrij=function(){setTimeout(function(){delete KAARTEN_BEZIG[delSlot];},400);};
-      if(!confirm('Gedeelde kaart “'+nm+'” naar de prullenbak? De patiëntlink stopt direct. Maker en beheerder kunnen maximaal zeven dagen herstellen (of korter als de bewaartermijn eerder eindigt).')){delVrij();return;}
+      if(!confirm('Gedeelde kaart “'+nm+'” naar de prullenbak? De patiëntlink stopt direct. Maker en beheerder kunnen maximaal zeven dagen herstellen (of korter als de bewaartermijn eerder eindigt). Zet wat je moet bewaren in het dossier; dat kan ook nog vanuit de prullenbak.')){delVrij();return;}
       x.disabled=true;
       fetch('api/kaarten/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',naam:nm,id:x.dataset.sdelid})})
         .then(function(r){return r.json();})
