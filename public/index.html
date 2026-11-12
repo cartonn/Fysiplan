@@ -874,7 +874,12 @@ bridge2.jpg</div>
       var src=im.src;
       if(USE_V2_LIBRARY&&V2_BEELD==='lijn'&&im.lineSrc)src=im.lineSrc;
       else if(USE_V2_LIBRARY&&V2_BEELD==='kleur'&&im.colorSrc)src=im.colorSrc;
-      return "<img class='thumb' style='width:"+(size||34)+"px;height:"+(size||34)+"px' src='"+src+"'/>";
+      // Lijst en sjabloonkiezer (vakjes tot 76 px): een kleine versie van het bibliotheekbeeld, en
+      // pas ophalen als het vakje in beeld komt. Voorheen haalde de app bij het openen alle 818
+      // volledige bestanden op (166 MB, platformreview 2026-11-11). De A4 houdt het volledige beeld.
+      var klein=USE_V2_LIBRARY&&(size||34)<=76;
+      if(klein)src=String(src).replace(/^(\/v2\/|\/)?images\//,function(m,voor){return (voor||'')+'klein/images/';});
+      return "<img class='thumb'"+(klein?" loading='lazy' decoding='async'":"")+" style='width:"+(size||34)+"px;height:"+(size||34)+"px' src='"+src+"'/>";
     }
     return svgStr(im.key,im.m,size);
   }

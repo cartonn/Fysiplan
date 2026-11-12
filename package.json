@@ -6,7 +6,7 @@
   "scripts": {
     "drafts:import": "node scripts/import-exercise-draft.mjs",
     "test:drafts": "node scripts/test-exercise-drafts.mjs && node scripts/test-exercise-drafts-http.mjs && node scripts/test-draft-motion.mjs",
-    "build": "node scripts/publication-channel-graph.mjs && node scripts/core1000.mjs && node scripts/video-language-plan.mjs && node scripts/video-catalogus.mjs && node scripts/video-productie.mjs && node scripts/validate-exercise-backgrounds.mjs && node scripts/valideer-sjablonen.mjs && node scripts/build.js",
+    "build": "node scripts/publication-channel-graph.mjs && node scripts/core1000.mjs && node scripts/video-language-plan.mjs && node scripts/video-catalogus.mjs && node scripts/video-productie.mjs && node scripts/validate-exercise-backgrounds.mjs && node scripts/valideer-sjablonen.mjs && node scripts/kleine-beelden.mjs && node scripts/build.js",
     "images:normalize": "python3 scripts/normalize-image-visibility.py --write",
     "images:graph": "node scripts/exercise-image-graph.mjs plan",
     "images:graph:status": "node scripts/exercise-image-graph.mjs status",
@@ -114,6 +114,7 @@
     "test:kaartweg": "node scripts/test-sweep-kaart-weg.mjs",
     "test:v2contrast": "node scripts/test-sweep-v2-contrast.mjs",
     "test:seinvenster": "node scripts/test-seintje-venster.mjs",
+    "test:lichtladen": "node scripts/test-licht-laden.mjs",
     "test:qrroepnaam": "node scripts/test-sweep-qr-roepnaam.mjs",
     "test:uitnodigingpraktijk": "node scripts/test-sweep-uitnodiging-praktijk.mjs",
     "test:rempraktijk": "node scripts/test-rem-praktijk.mjs",
