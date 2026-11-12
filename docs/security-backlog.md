@@ -21,6 +21,12 @@ daaruit tot en met 2026-11-06.
 
 Volgende run: (c) proef-tokens, daarna (a) beheer.
 
+Sanity 2026-11-12 12u op #230 (persoonlijke beheeraccounts): beheer telt alleen met cookie `fpbeheer`/`__Host-fpbeheer`
+(HttpOnly, SameSite=Strict, genegeerd bij `kruisSite`) plús de kop `x-admin-sleutel: account`, die een andere website niet kan meesturen;
+login met kruisSite-weigering, rem per adres en per IP, nephash tegen tijdsverschil, startwachtwoord 100 bits en een week geldig,
+pas na eigen wachtwoord en eerste code een sessie; gegevens van praktijken alleen via `beheerEigen` (niet met de openbare
+standaardsleutel van een lokale server); productie zonder eigen `ADMIN_KEY` en zonder account blijft dicht. Geen gat.
+
 Sanity 2026-11-12 12u op #224–#229 (praktijknaam van de praktijk, wachtwoord vergeten, privacyverklaring, kaartpakket, eigen
 video/pijnscore, sessiecookie): de resetlink gebruikt `instelBasis` → `eigenHost` (alleen fysiplan.nl, subdomeinen of localhost, dus
 geen Host-vergiftiging); de link geeft geen sessie en de tweede stap blijft; /v2/gegevens vraagt ook de code. #229: elke route die een

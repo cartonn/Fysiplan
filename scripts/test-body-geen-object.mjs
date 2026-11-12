@@ -17,7 +17,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const bron = (await readFile(join(root, "server.js"), "utf8")).split("\n");
 let gezien = 0;
 bron.forEach((regel, i) => {
-  if (!/^\s*try \{ b = JSON\.parse\(await readBody\(request[^)]*\)\); \} catch/.test(regel)) return;
+  if (!/^\s*try \{ b = JSON\.parse\(await readBody\(request[^)]*\)\); \} catch \{ await sendJson/.test(regel)) return;
   gezien++;
   const volgende = bron.slice(i + 1, i + 3).join("\n");
   assert.match(volgende, /typeof b !== "object"/, "server.js r. " + (i + 1) + ": body na JSON.parse niet op object gecontroleerd");
