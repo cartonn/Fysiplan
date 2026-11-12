@@ -171,6 +171,8 @@ jobs:
       - run: npm run test:prijs
       - run: npm run test:plaatsen
       - run: npm run test:leeslog
+      # tegen een echte PostgreSQL: de test start er zelf een met initdb (staat op de runner)
+      - run: npm run test:database
       - run: npm run test:medialink
       - run: npm run test:vertalingen
       - run: npm run test:zwaaroffline

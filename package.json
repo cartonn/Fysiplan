@@ -176,6 +176,7 @@
     "test:prijs": "node scripts/test-prijs.mjs",
     "test:plaatsen": "node scripts/test-plaatsen.mjs",
     "test:leeslog": "node scripts/test-leeslog.mjs",
+    "test:database": "node scripts/test-database.mjs",
     "test:medialink": "node scripts/test-medialink.mjs",
     "test:vertalingen": "node scripts/test-vertalingen.mjs",
     "test:wachtwoordrem": "node scripts/test-wachtwoord-rem-lid.mjs",
@@ -188,6 +189,7 @@
   },
   "dependencies": {
     "@runwayml/sdk": "^4.10.0",
+    "pg": "^8.16.3",
     "sharp": "^0.35.3"
   }
 }

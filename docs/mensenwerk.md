@@ -301,6 +301,33 @@ Zonder `MOLLIE_API_KEY` bestaat er geen online abonnement, dus verandert er niet
 2. Na het einde van een opgezegde maand gaat de app nog niet vanzelf op slot; dat komt samen met de maandincasso.
    Tot dan zie je opzeggingen in je mail en zet je de praktijk zelf op "geen klant" in /aanmeldingen.
 
+### Database die meeschrijft (reviewlijst punt 11, 2026-11-12)
+**Wat de code nu doet** (`lib/database.js`, test `npm run test:database`): niets, tot jij hem aanzet. Staat hij aan,
+dan:
+- leest de server bij het starten alle gegevensbestanden in een PostgreSQL-database (sessies en sleutels niet);
+- krijgt de database na elke schrijfactie een kopie. Het bestand blijft de enige bron: de app leest nooit uit de
+  database, en een trage of onbereikbare database houdt niemand op;
+- staan er naast de bestanden ook tabellen voor praktijken, logins (zonder wachtwoord), kaarten, elke bewaarde
+  versie van een kaart (hooguit 100 per kaart; weg met de kaart) en het leeslog. Dat is het begin van het model uit
+  de review;
+- vergelijkt de server elke nacht om 3 uur bestand voor bestand en tabel voor tabel. De uitkomst staat in `/health`
+  onder `database` en in de tabel `fp_vergelijking`;
+- zet `scripts/database-terugzetten.mjs` alles uit de database terug naar een lege map en vergelijkt die met de
+  datamap. Dat is de hersteltest. `scripts/database-overzetten.mjs` oefent de overstap op een kopie van de datamap.
+
+**Wat jij moet doen om hem aan te zetten:**
+1. Railway, project Fysiplan, omgeving production: "New", dan "Database", dan "PostgreSQL". Kies dezelfde regio
+   als de app (EU West, Amsterdam).
+2. Bij de dienst Fysiplan twee variabelen: `DATABASE_URL` = `${{Postgres.DATABASE_URL}}` en
+   `DATABASE_MEESCHRIJVEN` = `aan`.
+3. Na de uitrol staat in `/health` bij `database` de stand "meeschrijven" en de wachtrij op 0.
+4. Geef de omgeving test een eigen PostgreSQL, nooit die van productie.
+
+**Wat bij jou blijft:** de stap waarin de database de bron wordt, is niet gebouwd. Die komt pas als de
+vergelijking een week lang elke nacht gelijk is en terugzetten werkt. In de database staan dezelfde gegevens als in
+de bestanden, ook van patiënten, bij dezelfde leverancier (Railway) en in dezelfde regio. Leg aan de jurist voor of
+de privacyverklaring en de verwerkersovereenkomst dat apart moeten noemen.
+
 ### Factuur per online betaling (praktijk-routine, 2026-11-08)
 **Wat de code nu doet:** na een online betaling ziet de praktijk op de bedankpagina en in "Mijn proef"
 een link naar `/v2/proef/factuur` (alleen met de eigen proefcookie, printbaar, scriptloos). Elke betaling
