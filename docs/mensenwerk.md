@@ -275,8 +275,9 @@ kaart opnieuw verbinding heeft. Video's werden al niet offline bewaard, dus voor
 - **Twee jaar en "verdwijnt met de kaart" zijn mijn keuze.** De norm voor logging in de zorg (NEN 7513) gaat uit
   van langer bewaren, maar de kaarten zelf verdwijnen na 90 dagen stilte en Fysiplan is het dossier niet. Leg dit
   voor aan de jurist bij het gesprek over beveiliging.
-- **De privacyverklaring en de verwerkersovereenkomst noemen het leeslog nog niet.** Het is een logboek over
-  medewerkers van de praktijk; die tekst hoort erbij. Ik heb de juridische teksten niet aangeraakt.
+- **Privacyverklaring en verwerkersovereenkomst noemen het leeslog sinds 2026-11-12 21u** (legal-routine: rij
+  "Leeslog per kaart" op /privacy en art. 5 van de verwerkersovereenkomst, versie 2026-11-12-2; praktijken gaan
+  daarvoor één keer opnieuw akkoord in de app).
 - Wie met het gedeelde praktijkwachtwoord werkt, staat erin als "gedeeld wachtwoord": dan is niet te zien wie het
   was. Sinds elke nieuwe praktijk een eigen login per persoon heeft, speelt dat alleen bij oude accounts.
 
@@ -358,8 +359,11 @@ dan:
 
 **Wat bij jou blijft:** de stap waarin de database de bron wordt, is niet gebouwd. Die komt pas als de
 vergelijking een week lang elke nacht gelijk is en terugzetten werkt. In de database staan dezelfde gegevens als in
-de bestanden, ook van patiënten, bij dezelfde leverancier (Railway) en in dezelfde regio. Leg aan de jurist voor of
-de privacyverklaring en de verwerkersovereenkomst dat apart moeten noemen.
+de bestanden, ook van patiënten, bij dezelfde leverancier (Railway) en in dezelfde regio. Zodra je hem aanzet, noemt
+/privacy hem vanzelf in de rij van Railway (legal-routine 2026-11-12 21u), met de eerdere versies van een kaart. Kies
+bij Railway echt dezelfde regio (EU West, Amsterdam): de tekst zegt "in dezelfde regio". Voor de jurist blijft de vraag
+of de verwerkersovereenkomst de database apart moet noemen; volgens de legal-routine valt hij onder "Railway, server
+en opslag", omdat het dezelfde subverwerker is.
 
 ### Factuur per online betaling (praktijk-routine, 2026-11-08)
 **Wat de code nu doet:** na een online betaling ziet de praktijk op de bedankpagina en in "Mijn proef"
