@@ -99,12 +99,12 @@ const ADMIN_KEY = (() => {
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88" && process.env.ADMIN_KEY !== "account";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-12";
+const VWO_VERSIE = "2026-11-12-2";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
 const AV_VERSIE = "2026-11-11-2";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-12-3";
+const PRIVACY_VERSIE = "2026-11-12-4";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -125,7 +125,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-11", tekst: "Gegevens: de lijst noemt nu ook de kaartnaam, doelactiviteit, weekdoel, werknotitie, behandelaar en het contactlogboek. AI: namen van eigen oefeningen gaan mee naar de vertaal- en vraaghulp; roepnaam, scores en notities niet." },
   { stuk: "av", versie: "2026-11-11-2", tekst: "Prijsbelofte: je prijs per therapeut staat minstens 24 maanden vast vanaf de start van je abonnement, zoals op fysiplan.nl staat. Pas daarna kan een nieuwe prijs ingaan, met 30 dagen vooraf een mail." },
   { stuk: "vwo", versie: "2026-11-11-2", tekst: "Bewaartermijn: een verwijderde kaart staat eerst hooguit 7 dagen in de prullenbak, waar de maker of een beheerder hem kan herstellen of meteen definitief kan verwijderen (bijvoorbeeld als een patiënt om wissen vraagt)." },
-  { stuk: "vwo", versie: "2026-11-12", tekst: "Beveiliging: elke login heeft een tweede stap, ook die van medewerkers van Fysiplan. Fysiplan legt vast wie wanneer gegevens van je praktijk inzag of een herstelmail stuurde, en waarom; je kunt dit opvragen." }
+  { stuk: "vwo", versie: "2026-11-12", tekst: "Beveiliging: elke login heeft een tweede stap, ook die van medewerkers van Fysiplan. Fysiplan legt vast wie wanneer gegevens van je praktijk inzag of een herstelmail stuurde, en waarom; je kunt dit opvragen." },
+  { stuk: "vwo", versie: "2026-11-12-2", tekst: "Beveiliging: per kaart houdt Fysiplan bij wie van je praktijk haar opende of bewaarde, en wanneer (het leeslog), zonder naam van de patiënt. Een beheerder van je praktijk ziet het; het verdwijnt met de kaart en blijft hooguit twee jaar." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -8629,6 +8630,7 @@ async function afhandelen(request, response) {
         CONTACT_HTML: contact ? '<p>Vragen over privacy: <a href="mailto:' + htmlEsc(contact) + '">' + htmlEsc(contact) + "</a></p>" : "",
         HOSTING: FYSIPLAN_ID.hosting || "nog niet vastgelegd",
         STIL: String(BEWAAR_STIL_DAGEN), AFGEROND: String(BEWAAR_AFGEROND_DAGEN),
+        LEESLOG_DAGEN: String(leeslogRegels.BEWAAR_DAGEN), LEESLOG_PER_KAART: String(leeslogRegels.MAX_PER_KAART),
         AUDIT_PER: String(AUDIT_PER_PRAKTIJK), AUDIT_RUIS: String(AUDIT_RUIS_PER_PRAKTIJK),
         SESSIE_DAGEN: String(Math.round(SESSIE_MS / 86400000)),
         // de vraaghulp staat standaard uit (VRAAGHULP=aan zet hem aan); de tekst zegt wat er echt gebeurt
@@ -8652,6 +8654,9 @@ async function afhandelen(request, response) {
       if (!VRAAGHULP_AAN) html = html.replace(/[ \t]*<!--vraaghulp-->[\s\S]*?<!--\/vraaghulp-->\n?/g, "");
       else html = html.replace(/<!--\/?vraaghulp-->/g, "");
       // het taalmodel bij de ideeënbox staat standaard uit (IDEEEN_AI=aan); de tekst volgt de server
+      // de database die meeschrijft (lib/database.js) staat standaard uit; de Railway-rij noemt hem pas als hij aan staat
+      if (!DATABASE_MEESCHRIJVEN) html = html.replace(/<!--database-->[\s\S]*?<!--\/database-->/g, "");
+      else html = html.replace(/<!--\/?database-->/g, "");
       if (!IDEEEN_AI) html = html.replace(/<!--ideeenai-->[\s\S]*?<!--\/ideeenai-->/g, "");
       else html = html.replace(/<!--\/?ideeenai-->/g, "");
       response.setHeader("x-frame-options", "DENY");

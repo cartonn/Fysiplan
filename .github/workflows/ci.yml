@@ -69,6 +69,7 @@ jobs:
       - run: node scripts/test-stem-ai-melding.mjs
       - run: node scripts/test-ai-melding-zoekhulp-vertaling.mjs
       - run: node scripts/test-privacy-inloggen.mjs
+      - run: node scripts/test-privacy-leeslog.mjs
       - run: npm run test:kaartversie
       - run: npm run test:hernoem
       - run: npm run test:topbar
