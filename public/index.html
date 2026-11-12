@@ -6311,10 +6311,9 @@ bridge2.jpg</div>
   // eigen-videoknopje op het plaatje ook met Enter of spatie (het is een span met role=button)
   elMon.addEventListener('keydown',function(e){
     if(e.key!=='Enter'&&e.key!==' ')return;
-    var vq=e.target.closest&&e.target.closest('[data-vvid]');
-    if(vq){e.preventDefault();var cq=chosen[+vq.dataset.vvid],oq=cq&&OEF[cq.o];if(oq)openVasteVragen(oq);return;}
-    var ev=e.target.closest&&e.target.closest('[data-evid]');if(!ev)return;
+    var ev=e.target.closest&&e.target.closest('[data-evid]'),vq=e.target.closest&&e.target.closest('[data-vvid]');if(!ev&&!vq)return;
     e.preventDefault();
+    if(vq){var cq=chosen[+vq.dataset.vvid],oq=cq&&OEF[cq.o];if(oq)openVasteVragen(oq);return;}
     var c=chosen[+ev.dataset.evid],eo=c&&OEF[c.o];if(eo)openEigenVideo(eo);
   });
   // ---- v2: eigen oefeningen van de praktijk (naam, foto, uitleg) ----
