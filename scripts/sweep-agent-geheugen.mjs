@@ -6,7 +6,8 @@
 //   3. een terugkerend contact onder een andere code
 //   4. rechtenoverschrijding: andere rol, beheerroutes met de agentsleutel, padtrucs, rare acties
 //   5. sleutel per rol (PR #260, vervolg): kruistoets met de sleutel van support, intrekken werkt
-//      direct, de stopknop blokkeert alle vijf rollen, op schijf alleen afdrukken
+//      direct, de stopknop blokkeert alle vijf rollen (ook in de demo), geweigerde persoonsgegevens
+//      niet in het auditlog, op schijf alleen afdrukken
 // Start een eigen server op een lege datamap. `npm run sweep:agentgeheugen`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -167,6 +168,30 @@ try {
     assert.equal((await beheer("loket/pauze", { bron: "echt", aan: false })).status, 200);
     assert.equal((await agent("staf/werk")).body.gepauzeerd, false);
     meld("5c stopknop", "alle vijf rollen kregen geen werk en 423 op elke actie; na opheffen weer werk");
+
+    // de stopknop en intrekken in de demo blokkeren ook de agents op proef
+    assert.equal((await beheer("loket/pauze", { bron: "demo", aan: true })).status, 200);
+    for (const rol of ["support", "tech", "finance", "staf", "groei"]) {
+      assert.equal((await agent(rol + "/werk")).body.gepauzeerd, true, rol);
+      assert.equal((await agent(rol + "/actie", { actie: "verslag", tekst: "Tijdens de demopauze komt dit er niet in." })).status, 423, rol);
+    }
+    assert.equal((await beheer("loket/pauze", { bron: "demo", aan: false })).status, 200);
+    assert.equal((await beheer("loket/sleutel", { bron: "demo", rol: "finance", actie: "intrekken" })).status, 200);
+    assert.equal((await agent("finance/werk")).status, 401);
+    assert.equal((await agent("support/werk")).status, 200);
+    await beheer("loket/sleutel", { bron: "demo", rol: "finance" });
+    assert.equal((await agent("finance/werk")).status, 200);
+    meld("5e demo-stopknop en demo-intrekken", "op proef blokkeren ook de stopknop (5 rollen, werk leeg en 423) en een in de demo ingetrokken sleutel (401)");
+
+    // geweigerde persoonsgegevens komen niet in het auditlog
+    // eerst een verse demo: de daglimieten zijn na scenario 1 op
+    assert.equal((await beheer("demo-opnieuw", {})).status, 200);
+    const PII = "piet.pietersen@praktijk.example", TEL = "0612345678";
+    assert.equal((await agent("groei/actie", { ...CONCEPT, sleutel: "pii-sweep-1", tekst: CONCEPT.tekst + " Mail " + PII + " of bel " + TEL + "." })).status, 400);
+    assert.equal((await agent("staf/actie", { actie: "taak-voorstel", sleutel: "pii-sweep-2", titel: "Bel " + TEL + " terug", uitleg: "Of mail naar " + PII + " vandaag nog." })).status, 400);
+    const spoor = JSON.stringify(await pagina()) + JSON.stringify(await logboek());
+    assert.ok(!spoor.includes("pietersen") && !spoor.includes("12345678"), "geen geweigerde persoonsgegevens in audit, geheugen of beheerlogboek");
+    meld("5f persoonsgegevens", "concept en taak met e-mailadres en telefoonnummer geweigerd (400); niets ervan in audit, geheugen of beheerlogboek");
 
     // op schijf alleen afdrukken
     const ruw = await readFile(join(dataDir, "beheer-loket.json"), "utf8");

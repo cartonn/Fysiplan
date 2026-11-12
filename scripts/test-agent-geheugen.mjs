@@ -16,7 +16,7 @@
 // `npm run test:agentgeheugen`
 import assert from "node:assert/strict";
 import { ALLE_RECHTEN, AGENT_ROLLEN, nieuweSleutel } from "../lib/beheer-toegang.js";
-import { leegGeheugen, poort, voerUit, besluitTaak, besluitConcept, meldAf, keurConcept, keurTaakVoorstel, werkStaf, werkGroei, contactAfdruk, isAfgemeld, ACTIES, ALLEEN_PROEF } from "../lib/agent-geheugen.js";
+import { leegGeheugen, audit, poort, voerUit, besluitTaak, besluitConcept, meldAf, keurConcept, keurTaakVoorstel, werkStaf, werkGroei, contactAfdruk, isAfgemeld, ACTIES, ALLEEN_PROEF } from "../lib/agent-geheugen.js";
 import { demoGeheugen } from "../lib/beheer-demo.js";
 import { maakBeheerOmgeving } from "../lib/beheer-omgeving-routes.js";
 
@@ -231,6 +231,31 @@ const doe = (G, rol, actie, b, nu = NU) => poort(G, { rol, actie, b, nu, uitvoer
   assert.equal(r.body.loket.geheugen.groei.find((c) => c.id === conceptId).stand, "goedgekeurd");
   r = await beheer("loket/afmelding", { bron: "demo", contact: metToestemming.contact });
   assert.equal(r.body.loket.geheugen.taken.find((t) => t.id === contactTaak).status, "vervallen", "afmelden na akkoord laat het contact alsnog vervallen");
+
+  // geweigerde persoonsgegevens komen niet alsnog in het auditlog
+  const PII = "jan.jansen@praktijk.example", TEL = "06 12345678";
+  r = await agent("POST", "groei/actie", { actie: "concept", ...GOED_CONCEPT, sleutel: "pii-concept-1", tekst: GOED_CONCEPT.tekst + " Mail " + PII + " of bel " + TEL + "." });
+  assert.deepEqual([r.status, r.body.reden], [400, "afgekeurd"]);
+  r = await agent("POST", "staf/actie", { actie: "taak-voorstel", sleutel: "pii-taak-1", titel: "Bel " + TEL, uitleg: "Mail ook " + PII + " even." });
+  assert.equal(r.status, 400);
+  const auditNa = JSON.stringify((await roep("GET", "/api/beheer/omgeving?bron=demo")).body.loket.geheugen);
+  assert.ok(!auditNa.includes(PII) && !auditNa.includes("12345678") && !auditNa.includes("jan.jansen"), "geen geweigerde persoonsgegevens in geheugen of audit");
+  assert.doesNotMatch(JSON.stringify(gelogd), /jan\.jansen|12345678/, "en niet in het beheerlogboek");
+  // ook als iemand een vrije tekst als reden of doel aan audit geeft, wordt die vervangen
+  const G2 = leegGeheugen();
+  audit(G2, { nu: NU, wie: "groei-agent", actie: "concept", besluit: "geweigerd", reden: "bevat " + PII, doel: "bel " + TEL });
+  assert.deepEqual([G2.audit[0].reden, "doel" in G2.audit[0]], ["afgekeurd", false]);
+
+  // de stopknop en een ingetrokken sleutel in de demo blokkeren ook de agents op proef
+  await beheer("loket/pauze", { bron: "demo", aan: true });
+  assert.equal((await agent("GET", "groei/werk")).body.gepauzeerd, true);
+  assert.equal((await agent("POST", "staf/actie", { actie: "verslag", tekst: "Tijdens de demopauze niet." })).status, 423);
+  await beheer("loket/pauze", { bron: "demo", aan: false });
+  await beheer("loket/sleutel", { bron: "demo", rol: "groei", actie: "intrekken" });
+  assert.equal((await agent("GET", "groei/werk")).status, 401, "in de demo ingetrokken: de agent op proef komt er niet meer in");
+  assert.equal((await agent("GET", "staf/werk")).status, 200, "de andere rol werkt door");
+  await beheer("loket/sleutel", { bron: "demo", rol: "groei" });
+  assert.equal((await agent("GET", "groei/werk")).status, 200);
 
   // niets in de datamap, geen mail
   assert.doesNotMatch(JSON.stringify(opgeslagen), /taak-voorstel|contact-voorstel|Oefenkaart in één minuut|"geheugen"|C-[a-f0-9]{6}/, "het geheugen komt niet in de datamap");

@@ -44,7 +44,8 @@ Stap 3 t/m 5 doe jij zelf. De sleutels en geheimen raak ik niet aan (afspraak: n
 - Intrekken per rol werkt direct (volgend verzoek **401**); de andere rollen werken door.
 - Een nieuwe sleutel voor een rol maakt de vorige van die rol meteen ongeldig.
 - Een nieuwe gedeelde sleutel maken kan niet meer (400); de oude kan alleen nog worden ingetrokken.
-- De stopknop blokkeert alle vijf rollen: werk geeft niets, elke actie 423.
+- De stopknop blokkeert alle vijf rollen: werk geeft niets, elke actie 423. Dat geldt ook voor agents op proef als je in de **demo** stilzet, en een sleutel die je in de demo intrekt, blokkeert die agent op proef (401).
+- Geweigerde persoonsgegevens komen niet in het auditlog: van een agent staan daar alleen vaste codes (rol, actie, besluit, redencode, id). Getest met een concept en een taak met e-mailadres en telefoonnummer.
 - Staf en groei blijven op proef ("aan" weigert de server).
 
 ## Kosten en neveneffecten (schatting)
