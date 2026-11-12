@@ -454,6 +454,24 @@ server die omvalt neemt het alarm niet mee.
 
 Alles staat in gewone taal in [docs/bewaker.md](docs/bewaker.md). Test: `npm run test:bewaker`.
 
+
+## De testomgeving
+
+Dezelfde server op een eigen adres, met verzonnen praktijken en patiënten (`lib/omgeving.js`). De server beslist bij het
+starten zelf welke omgeving hij is: `OMGEVING=test` of `productie` wint; op Railway is de omgeving `production` productie
+en `test` een testomgeving, en met elke andere naam start hij niet. `/health` zegt het in het veld `omgeving`.
+
+In een testomgeving, ook als de sleutels van productie zijn meegekopieerd:
+
+- **Mail** komt in de testpostbak (`/test/postbak`, alleen beheer). Echt versturen alleen naar `TEST_MAIL_AAN`.
+- **Betalen** alleen met een Mollie-sleutel die met `test_` begint; **de reservekopie buiten Railway** en **Cloudflare** staan uit.
+- **Links** wijzen naar de testomgeving zelf; elke pagina draagt een lint en `noindex`.
+- **De datamap** krijgt het merk `omgeving.json`: een testomgeving start niet op gegevens zonder dat merk, productie niet op
+  gegevens met dat merk.
+
+Nepgegevens: `node scripts/nepgegevens.mjs <adres>` (alleen op een testomgeving of lokaal). Alles in gewone taal, met de
+stappen voor Railway, in [docs/testomgeving.md](docs/testomgeving.md). Test: `npm run test:omgeving`.
+
 ## Nieuwe plaatjes toevoegen (in de repo)
 
 De 215 oefening-plaatjes staan in `public/images/` (per categorie in een submap) en zijn

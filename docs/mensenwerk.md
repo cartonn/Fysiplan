@@ -13,6 +13,16 @@ zijn toegewezen; (2) wil je een bericht op je telefoon, zet dan een adres van nt
 **Wat hij niet kan:** elke minuut kijken en je bellen. Daarvoor is een dienst van buiten nodig die `/health` opvraagt; die
 kies en betaal je zelf. Maak je de repository besloten, dan zet de bewaker zichzelf uit tot je de variabele `BEWAKER` kiest.
 
+### De testomgeving: maak haar bij Railway (bouw, 2026-11-12)
+**Wat er is:** de server weet zelf of hij productie of een testomgeving is. In een testomgeving mailt hij niemand (alles komt
+in een testpostbak), staat betalen en de reservekopie uit en staat er een rood lint op elke pagina, ook als de sleutels van
+productie zijn meegekopieerd. Een script zet er twee verzonnen praktijken in. Uitleg met de stappen: [docs/testomgeving.md](testomgeving.md).
+**Wat alleen jij kunt doen:** bij Railway de omgeving maken. Ze moet precies `test` heten, een nieuw leeg volume krijgen en een
+eigen `ADMIN_KEY`. Daarna één keer `node scripts/nepgegevens.mjs <adres>` draaien.
+**Een keuze die nog open staat:** nu krijgen productie en test een wijziging tegelijk. Wil je dat een wijziging eerst op test
+staat en pas na jouw akkoord naar productie gaat, dan moet productie aan een eigen tak hangen. Dat hoort bij het punt "vaste
+uitrolmomenten".
+
 ### Hoe lang bewaren we het beheerlogboek? (legal, 2026-11-12 13u)
 **Wat er is:** sinds #230 legt Fysiplan elke beheeractie vast (wie bij Fysiplan, wat, wanneer, bij welke praktijk; bij een
 herstelmail de reden en een gemaskeerd adres). Geen patiëntgegevens. Het bestand groeit zonder einde en gaat mee in de reservekopie.

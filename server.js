@@ -26,9 +26,20 @@ import { leesNamenLaag, kiesNamen, maakZoeker, sleutelVoor, verhuisNaamgebonden 
 import { maakIdeeenbox } from "./lib/ideeen-routes.js";
 import { AGENT_SCHEMA as AGENT_SCHEMA_IDEEEN, AGENT_SYSTEEM as AGENT_SYSTEEM_IDEEEN } from "./lib/ideeen.js";
 import { UurTeller, telAntwoord } from "./lib/uurteller.js";
+import { omgevingVan, keurDatamap, testRegels, magEchtMailen, testBericht, TestPostbak, testPagina, ROBOTS_TEST } from "./lib/omgeving.js";
 
 const port = Number(process.env.PORT || 3000);
 const host = process.env.HOST || "0.0.0.0";
+// Kan de server niet veilig starten (lib/omgeving.js zegt wanneer), dan zegt hij in één regel
+// waarom en stopt hij. Bij Railway staat die regel in de logs van de uitrol.
+function startNiet(reden) { console.error("Fysiplan start niet: " + reden); process.exit(1); }
+// Productie, een testomgeving of lokaal (lib/omgeving.js, docs/testomgeving.md). In een
+// testomgeving gaat er niets naar buiten dat echt is: geen mail naar echte adressen, geen echte
+// betaling, geen reservekopie in de opslag van productie en geen video bij Cloudflare. TEST is
+// wat daar anders is; buiten een testomgeving is het null en verandert er niets.
+let OMGEVING = "lokaal";
+try { OMGEVING = omgevingVan(process.env); } catch (e) { startNiet(e.message); }
+const TEST = OMGEVING === "test" ? testRegels(process.env, port) : null;
 const publicDir = join(process.cwd(), "public");
 const arrowCatalog = JSON.parse(await readFile(join(process.cwd(), "content/beginhouding-pijl.json"), "utf8"));
 const arrowImages = new Map(arrowCatalog.entries.map(e => [e.source, e.img]));
@@ -67,8 +78,8 @@ try {
 // beheer kan alleen met een account. De standaardsleutel "admin88" staat in de openbare repo
 // en werkt daarom alleen nog lokaal (ontwikkelen en tests), nooit live. Het woord "account"
 // kan geen sleutel zijn: dat stuurt een beheerpagina mee die met een account werkt.
-const IS_PRODUCTIE = !!(process.env.RAILWAY_ENVIRONMENT || process.env.RAILWAY_ENVIRONMENT_NAME ||
-  process.env.RAILWAY_PROJECT_ID || process.env.NODE_ENV === "production");
+// Een testomgeving telt hier als productie: ze hangt net zo aan het internet (lib/omgeving.js).
+const IS_PRODUCTIE = OMGEVING !== "lokaal";
 const ADMIN_KEY = (() => {
   const eigen = String(process.env.ADMIN_KEY || "");
   if (eigen && eigen !== "admin88" && eigen !== "account") return eigen;
@@ -129,7 +140,8 @@ const FYSIPLAN_ID = {
 };
 const STREAM_ACCOUNT_ID = String(process.env.CLOUDFLARE_ACCOUNT_ID || "").trim();
 const STREAM_API_TOKEN = String(process.env.CLOUDFLARE_STREAM_TOKEN || process.env.CLOUDFLARE_API_TOKEN || "").trim();
-const STREAM_ENABLED = !!(STREAM_ACCOUNT_ID && STREAM_API_TOKEN);
+// in een testomgeving nooit: video's zouden bij de opslag van productie komen te staan
+const STREAM_ENABLED = !TEST && !!(STREAM_ACCOUNT_ID && STREAM_API_TOKEN);
 // net als MAIL_API_BASIS: de API-basis is instelbaar zodat de hele Stream-keten
 // tegen een lokale mock te testen is; in productie blijft dit api.cloudflare.com
 const STREAM_API_BASIS = String(process.env.STREAM_API_BASIS || "https://api.cloudflare.com");
@@ -184,6 +196,10 @@ async function resolveDataDir() {
   return join(process.cwd(), "data");
 }
 const dataDir = await resolveDataDir();
+// Een testomgeving start alleen op een lege map of op een map met het merk van een
+// testomgeving; productie en lokaal starten niet op een map met dat merk. Dit staat vóór het
+// eerste bestand wordt gelezen of geschreven.
+try { await keurDatamap(dataDir, OMGEVING); } catch (e) { startNiet(e.message); }
 const uploadsDir = join(dataDir, "uploads");
 const renamesPath = join(dataDir, "naam-wijzigingen.json");
 const praktijkenPath = join(dataDir, "praktijken.json");
@@ -738,8 +754,20 @@ const MAIL_API_SLEUTEL = String(process.env.MAIL_API_SLEUTEL || "");
 const MAIL_AFZENDER = String(process.env.MAIL_AFZENDER || "");
 const MAIL_API_BASIS = String(process.env.MAIL_API_BASIS || "https://api.resend.com");
 const V1_PRAKTIJK = "FysioTotaal";
-const mailIngesteld = () => !!(MAIL_API_SLEUTEL && MAIL_AFZENDER);
+// In een testomgeving werkt mail altijd: wat niet echt weg mag, ligt in de testpostbak
+// (/test/postbak, alleen voor beheer). Echt versturen gaat alleen naar de adressen in
+// TEST_MAIL_AAN, met "[TEST]" in het onderwerp en zonder link naar productie.
+const mailIngesteld = () => !!TEST || !!(MAIL_API_SLEUTEL && MAIL_AFZENDER);
+const testPostbak = TEST ? new TestPostbak(join(dataDir, "test-postbak.json"), (pad, wat) => saveJson(pad, wat)) : null;
+if (testPostbak) await testPostbak.laad();
 async function stuurMail(naar, onderwerp, tekst) {
+  if (TEST) {
+    const bericht = testBericht(naar, onderwerp, tekst, TEST.basis);
+    const echt = !!(MAIL_API_SLEUTEL && MAIL_AFZENDER) && magEchtMailen(naar, TEST.mailAan);
+    await testPostbak.leg(bericht, echt);
+    if (!echt) return;
+    onderwerp = bericht.onderwerp; tekst = bericht.tekst;
+  }
   const r = await fetch(MAIL_API_BASIS + "/emails", {
     method: "POST",
     headers: { authorization: "Bearer " + MAIL_API_SLEUTEL, "content-type": "application/json" },
@@ -830,7 +858,8 @@ const getalEnv = (naam, standaard) => { const v = process.env[naam]; return v !=
 const SEIN_MAIL_TUSSEN_MS = getalEnv("SEIN_MAIL_TUSSEN_S", 900) * 1000; // de omgevingsvariabelen zijn er voor de test
 const SEIN_MAIL_RONDE_MS = Math.max(100, getalEnv("SEIN_MAIL_RONDE_S", 60) * 1000);
 const SEIN_MAILS_PER_DAG = getalEnv("SEIN_MAILS_PER_DAG", 40);
-const APP_BASIS = String(process.env.FYSIPLAN_BASIS_URL || "https://fysiplan.nl").replace(/\/+$/, "");
+// in een testomgeving het adres van die omgeving zelf, nooit dat van productie
+const APP_BASIS = TEST ? TEST.basis : String(process.env.FYSIPLAN_BASIS_URL || "https://fysiplan.nl").replace(/\/+$/, "");
 const seinMailLaatst = new Map(); // adres -> moment van de laatste mail (of poging)
 const seinMailMis = new Map();    // adres -> aantal mislukte pogingen op rij
 const seinMailTeller = new Map(); // pk -> { start, n }
@@ -1087,13 +1116,16 @@ async function verbruikInstelToken(token) {
   await saveJson(v1TokensPath, v1Tokens);
   return t.email;
 }
-// alleen het eigen domein mag in de maillink staan (zelfde host-pinning als de
-// ICS-agenda en de demo-QR); elke andere Host-header valt terug op fysiplan.nl
+// alleen het eigen domein mag in een link staan (de maillinks, de ICS-agenda en de demo-QR);
+// elke andere Host-header valt terug op fysiplan.nl. In een testomgeving is het eigen domein
+// het adres van die omgeving, en valt al het andere daarop terug: nooit op productie.
 function eigenHost(request) {
   const rawHost = String(request.headers.host || "");
   const netjes = /^[a-z0-9.-]+(:\d+)?$/i.test(rawHost) ? rawHost : "";
   const kaal = netjes.split(":")[0].toLowerCase();
-  const eigen = kaal === "fysiplan.nl" || kaal.endsWith(".fysiplan.nl") || kaal === "localhost" || kaal === "127.0.0.1";
+  const lokaal = kaal === "localhost" || kaal === "127.0.0.1";
+  if (TEST) return netjes.toLowerCase() === TEST.host || lokaal ? netjes : TEST.host;
+  const eigen = kaal === "fysiplan.nl" || kaal.endsWith(".fysiplan.nl") || lokaal;
   return eigen ? netjes : "fysiplan.nl";
 }
 const v1Sessies = new Map(); // token -> { email, t }
@@ -1361,7 +1393,8 @@ function proefVars(p, extra = {}) {
 // Zonder sleutel: geen betaalknop, /v2/proef/betalen en de webhook bestaan niet, en
 // "Ja, ik wil doorgaan" (Ahmed belt) blijft de enige weg. Met sleutel betaalt de
 // praktijk de eerste maand (iDEAL of kaart) en wordt de proef direct een klant.
-const MOLLIE_SLEUTEL = String(process.env.MOLLIE_API_KEY || "");
+// in een testomgeving alleen een testsleutel van Mollie (test_…): een gekopieerde echte sleutel int geen geld
+const MOLLIE_SLEUTEL = TEST ? TEST.mollie : String(process.env.MOLLIE_API_KEY || "");
 const MOLLIE_BASIS = String(process.env.MOLLIE_API_BASIS || "https://api.mollie.com");
 const mollieAan = () => !!MOLLIE_SLEUTEL;
 const mollieBetaalIndex = new Map(); // tr_… -> proef-id: de webhook zoekt alleen eigen betalingen op
@@ -1374,7 +1407,7 @@ for (const p of Object.values(proeven)) {
 // de voorwaarden beloven dat de praktijk het vooraf hoort. Zonder: niets verandert.
 const MOLLIE_INCASSO = /^(aan|ja|1|true)$/i.test(String(process.env.MOLLIE_INCASSO || "").trim());
 const incassoAan = () => mollieAan() && MOLLIE_INCASSO && mailIngesteld();
-const INCASSO_WEBHOOK = String(process.env.FYSIPLAN_BASIS_URL || "https://fysiplan.nl").replace(/\/+$/, "") + "/api/mollie/webhook";
+const INCASSO_WEBHOOK = APP_BASIS + "/api/mollie/webhook";
 function betaalBlok(p) {
   if (!p) return "";
   const a = p.abonnement;
@@ -2609,7 +2642,8 @@ backupBestanden.push(join(dataDir, "ideeen.json"));
 // reservekopie buiten Railway (lib/backup-elders.js): dezelfde bestanden, versleuteld, naar een
 // S3-opslagbak elders. Uit zolang de BACKUP_-variabelen ontbreken. /health laat zien of het
 // loopt (zonder geheimen); mislukt het, dan krijgt de beheerder hooguit één mail per dag.
-const backupElders = backupInstellingen();
+// in een testomgeving uit: met de sleutels van productie zou ze de kopie van productie overschrijven
+const backupElders = TEST ? null : backupInstellingen();
 const backupEldersStatus = { ok: null, fout: null, foutMail: 0, deels: false, resultaat: null, pogingen: 0, volgende: null, ruimte: null };
 let backupEldersBezig = false;
 async function maakBackupElders() {
@@ -3062,6 +3096,8 @@ async function send(res, status, type, body) {
     await Promise.all([praktijkSessies.bijgewerkt(), beheerSessieTabel.bijgewerkt()]);
     if (res.headersSent || res.destroyed || res.writableEnded) return;
   }
+  // een testomgeving: het lint en "[TEST]" op elke pagina, en geen link naar productie
+  if (TEST && body != null && type.startsWith("text/html")) body = testPagina(body, TEST.basis);
   // nosniff en een sobere referrer-policy op alles: puur verhardend, verandert geen gedrag
   const kop = { "content-type": type, "x-content-type-options": "nosniff",
     "referrer-policy": "same-origin", ...cacheHeaders(type) };
@@ -3358,6 +3394,8 @@ ideeenbox.start();
 const server = createServer((request, response) => {
   // de tellers voor /health: een antwoord 500 of 502 telt mee zodra het de deur uit is
   telAntwoord(response, { server: serverFouten, buiten: buitenFouten });
+  // een testomgeving hoort in geen enkele zoekmachine
+  if (TEST) response.setHeader("x-robots-tag", "noindex, nofollow, noarchive");
   afhandelen(request, response).catch((err) => {
     console.error("verzoek mislukt:", request.method, logPad(request.url), "-", (err && err.message) || err);
     try {
@@ -3443,6 +3481,9 @@ async function afhandelen(request, response) {
       // sinds wanneer dit proces draait, en hoe vaak het het afgelopen uur misging (zie
       // serverFouten en buitenFouten bovenaan): de bewaker van buitenaf leest dit
       gestart: new Date(startTijd).toISOString(),
+      // "productie", "test" of "lokaal" (lib/omgeving.js): de bewaker slaat alarm als het adres
+      // van productie een testomgeving blijkt, of omgekeerd
+      omgeving: OMGEVING,
       fouten: { uur: serverFouten.som(), buiten: buitenFouten.som() },
       oefeningen: v1Count,
       v1Oefeningen: v1Count,
@@ -4843,6 +4884,22 @@ async function afhandelen(request, response) {
 
   // de beheer- en finance-omgeving (lib/beheer-omgeving-routes.js)
   if ((urlPath.startsWith("/api/beheer/omgeving") || urlPath.startsWith("/api/agent") || urlPath.startsWith("/dashboard88/omgeving") || urlPath === "/beheer.html") && await beheerOmgeving.afhandelen(request, response, urlPath)) return;
+
+  // ---- de testpostbak: wat een testomgeving had willen mailen (alleen daar, alleen voor beheer) ----
+  if (urlPath === "/api/test/mail" || urlPath === "/test/postbak" || urlPath === "/test-postbak.html") {
+    if (!TEST) { await send(response, 404, "text/plain; charset=utf-8", "Not found"); return; }
+    if (urlPath === "/api/test/mail") {
+      if (request.method !== "GET") { await sendJson(response, 405, { ok: false, fout: "Alleen lezen." }); return; }
+      if (!isAdmin(request)) { await denied(request, response, urlPath); return; }
+      await sendJson(response, 200, { ok: true, echtNaar: TEST.mailAan, berichten: testPostbak.lijst() });
+      return;
+    }
+    // dezelfde koppen als de andere beheerpagina's (zie BEHEER_PAGINAS)
+    response.setHeader("x-frame-options", "DENY");
+    response.setHeader("content-security-policy", "frame-ancestors 'none'");
+    await send(response, 200, "text/html; charset=utf-8", await readFile(join(publicDir, "test-postbak.html"), "utf8"));
+    return;
+  }
 
   // ---- persoonlijke beheeraccounts (uitleg bij beheerAccountVan) ----
   // wie is hier ingelogd? Voor de beheerpagina's; zonder login gewoon 200 met wie: null, zodat
@@ -7049,12 +7106,7 @@ async function afhandelen(request, response) {
     const dtStart = datum.replace(/-/g, "") + "T" + uur.replace(":", "") + "00";
     const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
     const icsTekst = (s) => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/[\r\n]+/g, "\\n");
-    const rawHost = String(request.headers.host || "");
-    const netjes = /^[a-z0-9.-]+(:\d+)?$/i.test(rawHost) ? rawHost : "";
-    const kaalHost = netjes.split(":")[0].toLowerCase();
-    const eigenDomein = kaalHost === "fysiplan.nl" || kaalHost.endsWith(".fysiplan.nl")
-      || kaalHost === "localhost" || kaalHost === "127.0.0.1";
-    const veiligeHost = eigenDomein ? netjes : "fysiplan.nl";
+    const veiligeHost = eigenHost(request);
     const link = "https://" + veiligeHost + "/k/" + found.id;
     const ics = [
       "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN",
@@ -7261,12 +7313,7 @@ async function afhandelen(request, response) {
     // Alleen het eigen domein (of loopback tijdens ontwikkeling) mag in de link staan; elke
     // andere waarde valt terug op het canonieke fysiplan.nl, zodat de kaartlink nooit naar
     // een vreemd domein kan wijzen, wat er ook in de Host-header wordt meegestuurd.
-    const rawHost = String(request.headers.host || "");
-    const netjes = /^[a-z0-9.-]+(:\d+)?$/i.test(rawHost) ? rawHost : "";
-    const kaalHost = netjes.split(":")[0].toLowerCase();
-    const eigenDomein = kaalHost === "fysiplan.nl" || kaalHost.endsWith(".fysiplan.nl")
-      || kaalHost === "localhost" || kaalHost === "127.0.0.1";
-    const veiligeHost = eigenDomein ? netjes : "fysiplan.nl";
+    const veiligeHost = eigenHost(request);
     const link = "https://" + veiligeHost + "/k/" + found.id;
     const ics = [
       "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN",
@@ -7642,11 +7689,7 @@ async function afhandelen(request, response) {
       // app-vrije patiëntkaart meteen op de eigen telefoon. Host-pinning zoals bij
       // de ICS-agenda: alleen het eigen domein mag in de link, anders fysiplan.nl.
       if (html.indexOf("__DEMO_QR__") >= 0) {
-        const rawHost = String(request.headers.host || "");
-        const netjes = /^[a-z0-9.-]+(:\d+)?$/i.test(rawHost) ? rawHost : "";
-        const kaalHost = netjes.split(":")[0].toLowerCase();
-        const eigenDomein = kaalHost === "fysiplan.nl" || kaalHost.endsWith(".fysiplan.nl") || kaalHost === "localhost" || kaalHost === "127.0.0.1";
-        const veiligeHost = eigenDomein ? netjes : "fysiplan.nl";
+        const veiligeHost = eigenHost(request);
         html = html.replace(/__DEMO_QR__/g, await qrSvgVoor("https://" + veiligeHost + "/k/demo", 132));
       }
       // FAQPage-structuur voor zoekmachines, bij het serveren opgebouwd uit de
@@ -8437,6 +8480,7 @@ async function afhandelen(request, response) {
   // weg bij de patiëntpaden; die sturen bovendien al een noindex-header. De
   // Sitemap-regel wijst zoekmachines naar de landingspagina.
   if (urlPath === "/robots.txt") {
+    if (TEST) { await send(response, 200, "text/plain; charset=utf-8", ROBOTS_TEST); return; }
     await send(response, 200, "text/plain; charset=utf-8",
       "User-agent: *\nDisallow: /k/\nDisallow: /o/\nDisallow: /uploads/\nDisallow: /api/\nSitemap: https://fysiplan.nl/sitemap.xml\n");
     return;
@@ -8725,6 +8769,12 @@ setTimeout(() => seinMailRonde(), Math.min(5000, SEIN_MAIL_RONDE_MS)).unref();
 setInterval(() => seinMailRonde(), SEIN_MAIL_RONDE_MS).unref();
 server.listen(port, host, () => {
   console.log(`Fysiplan listening on ${host}:${port} (data: ${dataDir})`);
+  if (TEST) {
+    console.log("TESTOMGEVING op " + TEST.basis + ": mail blijft in de testpostbak (/test/postbak)" +
+      (TEST.mailAan.length ? ", behalve naar " + TEST.mailAan.length + " adres(sen) uit TEST_MAIL_AAN" + (MAIL_API_SLEUTEL && MAIL_AFZENDER ? "" : " zodra mail is ingesteld") : "") +
+      "; betalen " + (TEST.mollie ? "met de testsleutel van Mollie" : "uit") + "; reservekopie buiten Railway uit; video's op het eigen volume.");
+    for (const g of TEST.genegeerd) console.log("TESTOMGEVING: genegeerd: " + g);
+  }
   // na de eerste reservekopie: verlopen kaarten weg, leeftijd/Casus uit oude kaarten,
   // vertaalcache terug naar alleen bibliotheekteksten (alle drie idempotent)
   eersteBackup.finally(async () => {
