@@ -120,6 +120,17 @@ versie, wanneer en wie (ook in de download van /v2/gegevens).
 3. Laat de jurist privacyverklaring, verwerkersovereenkomst en voorwaarden samen toetsen (staat al
    hieronder bij Algemene voorwaarden, punt 7).
 
+### Mail op de dag dat de proef afloopt (praktijk-routine, 2026-11-12)
+**Wat de code nu doet:** op de dag dat een gratis proef afloopt, krijgt de aanmelder één mail "Je Fysiplan-proef is
+afgelopen": nieuwe kaarten kunnen niet meer, gedeelde kaarten blijven werken, hoe je doorgaat en op welke datum alles
+gewist wordt als de praktijk geen klant wordt. Jij (`PROEF_MELDING_AAN`) krijgt "Proef afgelopen: …", een goed moment
+om te bellen. Geen mail aan klanten, aan wie al "Ja, ik wil doorgaan" koos, of aan proeven die bij de uitrol al langer
+dan een dag voorbij waren. Staat `MOLLIE_API_KEY`, dan noemen deze mail én de herinnering twee dagen vooraf de link
+om de eerste maand online af te rekenen (fysiplan.nl/v2/proef?mijn=1, 9,99 per therapeut, exclusief btw); zonder
+Mollie blijft het "antwoord op deze mail, dan bellen we je".
+**Env:** werkt alleen met mail (`MAIL_API_SLEUTEL` + `MAIL_AFZENDER`, staan al op Railway); de betaallink alleen met `MOLLIE_API_KEY`.
+**Wat jij moet doen:** niets. Kijk bij de eerste "Proef afgelopen"-mail of de toon je bevalt.
+
 ### Online betalen via Mollie (praktijk-routine, 2026-11-07)
 **Wat de code nu doet:** zet je `MOLLIE_API_KEY` op Railway, dan krijgen "Mijn proef" en de
 verlopen-pagina een blok "Direct online afrekenen": aantal therapeuten kiezen, eerste maand
