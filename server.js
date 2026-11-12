@@ -30,6 +30,7 @@ import { leesNamenLaag, kiesNamen, maakZoeker, sleutelVoor, verhuisNaamgebonden 
 import { maakIdeeenbox } from "./lib/ideeen-routes.js";
 import { maakVertaalbeheer } from "./lib/vertaal-routes.js";
 import { TALEN as VERTAAL_TALEN, bron as vertaalBron, sleutelVan as vertaalSleutel, lees as leesVertaling, zetAuto as zetAutoVertaling, begrens as begrensVertalingen, vertaalOpdracht } from "./lib/vertaling.js";
+import { maakMeeschrijver } from "./lib/database.js";
 import { AGENT_SCHEMA as AGENT_SCHEMA_IDEEEN, AGENT_SYSTEEM as AGENT_SYSTEEM_IDEEEN } from "./lib/ideeen.js";
 import { UurTeller, telAntwoord } from "./lib/uurteller.js";
 import { omgevingVan, keurDatamap, testRegels, magEchtMailen, testBericht, TestPostbak, testPagina, ROBOTS_TEST } from "./lib/omgeving.js";
@@ -202,6 +203,21 @@ async function resolveDataDir() {
   return join(process.cwd(), "data");
 }
 const dataDir = await resolveDataDir();
+// De database die meeschrijft (lib/database.js, reviewlijst punt 11): uit, tenzij DATABASE_URL
+// gezet is én DATABASE_MEESCHRIJVEN=aan. De bestanden blijven de enige bron; de database krijgt
+// na elke schrijfactie een kopie (saveJson) en wordt elke nacht vergeleken.
+const DATABASE_MEESCHRIJVEN = !!process.env.DATABASE_URL && /^(aan|ja|1|true)$/i.test(String(process.env.DATABASE_MEESCHRIJVEN || "").trim());
+let meeschrijver = null, meeschrijverDb = null, meeschrijverStartFout = "";
+if (DATABASE_MEESCHRIJVEN) {
+  try {
+    const { maakPgDb } = await import("./lib/database-pg.js");
+    meeschrijverDb = maakPgDb(process.env.DATABASE_URL);
+    meeschrijver = maakMeeschrijver({ db: meeschrijverDb, dataDir });
+  } catch (e) {
+    meeschrijverStartFout = String((e && e.message) || e).slice(0, 200);
+    console.error("database: meeschrijven start niet:", meeschrijverStartFout);
+  }
+}
 // Een testomgeving start alleen op een lege map of op een map met het merk van een
 // testomgeving; productie en lokaal starten niet op een map met dat merk. Dit staat vóór het
 // eerste bestand wordt gelezen of geschreven.
@@ -2851,13 +2867,16 @@ async function saveJson(path, obj) {
   // uniek tijdelijk bestand per schrijfactie: twee gelijktijdige saves kunnen elkaars
   // halfgeschreven bestand dan nooit als definitief bestand neerzetten
   const tmp = path + ".tmp-" + randomBytes(4).toString("hex");
+  const tekst = JSON.stringify(obj, null, 2);
   try {
-    await writeFile(tmp, JSON.stringify(obj, null, 2));
+    await writeFile(tmp, tekst);
     await rename(tmp, path);
   } catch (err) {
     try { await unlink(tmp); } catch {}
     throw err;
   }
+  // de database schrijft mee (als hij aan staat): pas nu het bestand er staat, en zonder te wachten
+  if (meeschrijver) meeschrijver.meld(path, tekst);
   // beheerwijzigingen die het manifest raken maken de manifestcache direct leeg
   if (manifestStores.has(path)) wisManifestCache();
 }
@@ -3595,6 +3614,24 @@ async function afhandelen(request, response) {
   // de vertalingen (lib/vertaal-routes.js)
   if ((urlPath === "/dashboard88/vertalingen" || urlPath.startsWith("/api/beheer/vertalingen")) && await vertaalbeheer.afhandelen(request, response, urlPath)) return;
 
+  // de database die meeschrijft: de stand, en een vergelijking nu in plaats van vannacht
+  if (urlPath === "/api/beheer/database" || urlPath === "/api/beheer/database/vergelijk") {
+    if (!beheerEigen(request) || !beheerRechten(request).has("beheer")) { await denied(request, response, urlPath); return; }
+    if (urlPath === "/api/beheer/database" && request.method === "GET") {
+      await sendJson(response, 200, { ok: true, database: meeschrijver ? meeschrijver.stand() : "uit", ...(meeschrijverStartFout ? { startFout: meeschrijverStartFout } : {}) });
+      return;
+    }
+    if (urlPath === "/api/beheer/database/vergelijk" && request.method === "POST") {
+      if (kruisSite(request)) { await weigerKruis(response); return; }
+      if (!meeschrijver) { await sendJson(response, 409, { ok: false, fout: "De database schrijft niet mee (DATABASE_URL en DATABASE_MEESCHRIJVEN=aan)." }); return; }
+      try { await sendJson(response, 200, { ok: true, vergelijking: await meeschrijver.vergelijk() }); }
+      catch (e) { await sendJson(response, 502, { ok: false, fout: "Vergelijken lukte niet: " + String((e && e.message) || e).slice(0, 160) }); }
+      return;
+    }
+    await sendJson(response, 405, { ok: false, fout: "Niet toegestaan." });
+    return;
+  }
+
   if (urlPath === "/api/beheer/backup-status" && request.method === "GET") {
     if (!isAdmin(request)) { await denied(request,response,urlPath); return; }
     await sendJson(response,200,{status:!backupElders?'uit':backupEldersStatus.deels?'deels':backupEldersStatus.fout?'fout':backupEldersStatus.ok?'ok':'wacht',
@@ -3633,6 +3670,8 @@ async function afhandelen(request, response) {
       // van productie een testomgeving blijkt, of omgekeerd
       omgeving: OMGEVING,
       fouten: { uur: serverFouten.som(), buiten: buitenFouten.som() },
+      // de database die meeschrijft: "uit", of de stand van de wachtrij en de laatste vergelijking
+      database: meeschrijver ? { ...meeschrijver.stand(), ...(meeschrijverStartFout ? { startFout: meeschrijverStartFout } : {}) } : (meeschrijverStartFout ? { stand: "fout", startFout: meeschrijverStartFout } : "uit"),
       oefeningen: v1Count,
       v1Oefeningen: v1Count,
       v2Oefeningen: v2Count,
@@ -8996,6 +9035,8 @@ async function netjesStoppen(signaal) {
   try { await praktijkSessies.opSchijf(); } catch {}
   try { await beheerSessieTabel.opSchijf(); } catch {}
   try { await leeslogRij; } catch {}
+  // de database even laten bijschrijven; wat niet lukt, haalt de eerste ronde na de start in
+  if (meeschrijver) { try { await meeschrijver.stop(2500); await meeschrijverDb.sluit(); } catch {} }
   process.exit(0);
 }
 process.on("SIGTERM", () => { netjesStoppen("SIGTERM"); });
@@ -9005,8 +9046,34 @@ process.on("SIGINT", () => { netjesStoppen("SIGINT"); });
 // een herstart komt wat nog wachtte, daarna elke minuut wat door een rem is blijven staan.
 setTimeout(() => seinMailRonde(), Math.min(5000, SEIN_MAIL_RONDE_MS)).unref();
 setInterval(() => seinMailRonde(), SEIN_MAIL_RONDE_MS).unref();
+// De database: de tabellen maken en alle bestanden een eerste keer inlezen. Lukt dat niet (de
+// database is er nog niet), dan over een minuut opnieuw. Daarna elke nacht om 3 uur vergelijken.
+async function startMeeschrijven() {
+  try {
+    await meeschrijver.start();
+    meeschrijverStartFout = "";
+    console.log("database: schrijft mee");
+  } catch (e) {
+    meeschrijverStartFout = String((e && e.message) || e).slice(0, 200);
+    console.error("database: start mislukt, over een minuut opnieuw:", meeschrijverStartFout);
+    setTimeout(startMeeschrijven, 60000).unref();
+    return;
+  }
+  let laatsteDag = "";
+  const kijk = async () => {
+    const [dag, uur] = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Amsterdam", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", hourCycle: "h23" }).format(new Date()).split(" ");
+    if (Number(uur) !== 3 || dag === laatsteDag) return;
+    laatsteDag = dag;
+    try {
+      const u = await meeschrijver.vergelijk();
+      console.log("database: vergelijking " + (u.gelijk ? "gelijk" : u.verschillen.length + " verschillen: " + JSON.stringify(u.verschillen.slice(0, 5))));
+    } catch (e) { console.error("database: vergelijking mislukt:", e && e.message); }
+  };
+  setInterval(kijk, 10 * 60000).unref();
+}
 server.listen(port, host, () => {
   console.log(`Fysiplan listening on ${host}:${port} (data: ${dataDir})`);
+  if (meeschrijver) startMeeschrijven();
   if (TEST) {
     console.log("TESTOMGEVING op " + TEST.basis + ": mail blijft in de testpostbak (/test/postbak)" +
       (TEST.mailAan.length ? ", behalve naar " + TEST.mailAan.length + " adres(sen) uit TEST_MAIL_AAN" + (MAIL_API_SLEUTEL && MAIL_AFZENDER ? "" : " zodra mail is ingesteld") : "") +
