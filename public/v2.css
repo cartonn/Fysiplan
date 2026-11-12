@@ -973,7 +973,33 @@ html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
   html.v2[data-scherm="vandaag"] .topbar #beeldKeuze,html.v2[data-scherm="patienten"] .topbar #beeldKeuze,html.v2[data-scherm="praktijk"] .topbar #beeldKeuze{visibility:hidden}
   html.v2 .kp-tegel span{font-size:12.5px;color:var(--muted);line-height:1.45}
 }
-@media screen and (max-width:920px){
+/* Onder 1100 px krijgen de schermknoppen een eigen rij over de hele breedte. Eerst gebeurde dat
+   pas onder 920 px: op een liggende iPad (1080 breed) liep het menu dan van het scherm en raakte
+   een tik op Praktijk Kaart maken (gebruikers-sweep 2026-11-12, Mark). */
+@media screen and (max-width:1099px){
   html.v2 .fp-schermen{order:8;flex-basis:100%;margin:4px 0 0;overflow-x:auto}
   html.v2 .fp-schermen button{flex:1}
+}
+@media screen and (min-width:921px) and (max-width:1099px){
+  html.v2 header.topbar{height:auto;flex-wrap:wrap;row-gap:6px;padding-top:8px;padding-bottom:8px}
+}
+/* 1100–1279 px: Ideeën en Hulp als icoon (de naam blijft voor schermlezers en als tooltip),
+   anders paste de bovenbalk op 1100 breed niet */
+@media screen and (min-width:1100px) and (max-width:1279px){
+  html.v2 .fp-hulpknop{gap:0}
+  html.v2 .fp-hulpknop>span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+}
+/* aanraakscherm: schermknoppen van minstens 44 px hoog */
+@media screen and (pointer:coarse){
+  html.v2 .fp-schermen button{min-height:44px}
+}
+@media screen{
+  /* zonder dit werd de bovenbalk op 1280 zes px te breed zodra Vandaag een getal toont:
+     het praktijkvak mag smaller worden (de naam krijgt dan ... ) */
+  html.v2 .zb-praktijk{flex:0 1 auto;min-width:0}
+  /* de knop Ideeën onder 1100 px: dezelfde opmaak als Hulp, niet de grijze standaardknop */
+  html.v2 .fp-ideeknop{height:34px;display:inline-flex;align-items:center;gap:6px;padding:0 10px;border:0;border-radius:9px;background:transparent;color:#fff;
+    font:inherit;font-size:13px;font-weight:550;cursor:pointer}
+  html.v2 .fp-ideeknop:hover{background:#ffffff20;color:#fff}
+  html.v2 .fp-ideeknop:focus-visible{outline:none;box-shadow:var(--ring)}
 }
