@@ -323,6 +323,12 @@
   <button class="btn primary" id="sjb_bbewaar">Bewaar als mijn kaart</button>
   <button class="btn" id="sjb_bstop">Stoppen</button>
 </div>
+<div id="bibBalk" class="proefbalk no-print" role="alert" hidden>
+  <span><b id="bib_kop"></b> <span id="bib_tekst"></span></span>
+  <span class="pb-ruimte"></span>
+  <button type="button" class="btn primary" id="bib_doe"></button>
+  <button type="button" class="btn" id="bib_leeg" hidden>Begin een lege kaart</button>
+</div>
 <div id="proefBalk" class="proefbalk no-print" role="status" hidden>
   <span><b>Gratis proef</b> <span id="pb_tekst"></span></span>
   <span class="pb-tel" id="pb_teller" title="Er passen maximaal 12 oefeningen op één A4">0 / 12 oefeningen</span>
@@ -975,10 +981,75 @@ bridge2.jpg</div>
   // kreeg. Gaat mee als basisTs: is de kaart intussen elders bewaard, dan weigert de
   // server (409 verouderd) in plaats van de nieuwere versie en opnames te overschrijven.
   var KAART_TS=0;
+  // ---- v2: de open kaart en de bibliotheek ----
+  // De open kaart verwijst naar oefeningen uit de bibliotheek van de server en naar de eigen
+  // oefeningen van de praktijk. Zolang die er niet staan, heeft de editor niet de kaart in handen
+  // maar een deel ervan. Bewaarde of deelde hij dan toch, dan raakte de open kaart oefeningen
+  // kwijt, en na het inloggen ook de kaart van de patiënt (gemeten op 2026-11-12: sessie
+  // verlopen, pagina herladen, opnieuw ingelogd, en de eigen oefening was van de patiëntkaart
+  // af). Daarom bewaart en deelt v2 pas als de open kaart tegen de volledige bibliotheek is
+  // hersteld (herstelOpenKaart). v1 werkt zoals altijd.
+  var BIB_KLAAR=!window.FYSIPLAN_V2;
+  // waarom de open kaart nog niet hersteld is: 'bib' (de oefeningen zijn niet geladen) of 'login'
+  // (er staan eigen oefeningen van de praktijk op en niemand is ingelogd); '' als alles er staat
+  var BIB_REDEN='';
+  // de invulvelden komen één keer uit de bewaarde staat: wat de therapeut typt terwijl de
+  // bibliotheek laadt, blijft staan. Alleen een kaart die achter een melding heeft gewacht, komt
+  // met haar eigen invulvelden terug (zie herstelOpenKaart).
+  var veldenHersteld=false;
+  // De kaart met vaste verwijzingen: per oefening het vaste id en de naam in plaats van de plek in
+  // de lijst, en de vakjes op dezelfde manier. Zo gaat de kaart naar de server, en zo bewaart v2
+  // ook de open kaart: verandert de bibliotheek (een oefening erbij of eraf, een andere volgorde),
+  // dan staan er na herladen geen andere oefeningen op.
+  function vasteKaart(){
+    var ch=chosen.map(function(c){return OEF[c.o]?{n:OEF[c.o].naam,id:OEF[c.o].exerciseId||'',i:c.i}:null;}).filter(Boolean);
+    var cells={};
+    Object.keys(GRID.cells).forEach(function(k){
+      var m=k.match(/^e(\d+)\.(\d+)\|(.+)$/);
+      if(m&&OEF[+m[1]]){
+        var oef=OEF[+m[1]],prefix=oef.exerciseId?('x'+oef.exerciseId):('n'+normEx(oef.naam));
+        cells[prefix+'.'+m[2]+'|'+m[3]]=GRID.cells[k];
+      }
+      else cells[k]=GRID.cells[k];
+    });
+    return {chosen:ch,cells:cells};
+  }
+  // En terug: van vaste verwijzingen naar plekken in de bibliotheek van nu. Geeft ook de namen
+  // terug die niet meer te vinden zijn. Het vaste id is dat van een bibliotheekoefening (fp_) of
+  // van een eigen oefening van de praktijk (po_): die laatste ontbrak hier, waardoor de dosering
+  // van een eigen oefening na het openen van een kaart niet meer in de vakjes stond.
+  function vanVasteKaart(c){
+    var uit={chosen:[],cells:{},vids:{},missing:[]};
+    if(c.vids&&typeof c.vids==='object')Object.keys(c.vids).forEach(function(k){uit.vids[k]=c.vids[k];});
+    (c.chosen||[]).forEach(function(x){
+      var id=(x.id&&byStable[x.id]!=null)?byStable[x.id]:byNorm[normEx(x.n)];
+      if(id!=null&&OEF[id]&&OEF[id].imgs[x.i||0]){
+        uit.chosen.push({o:id,i:x.i||0});
+        // eigen video's staan op de naam die de oefening op de kaart had. Heet ze nu anders, dan
+        // verhuist de video mee (op een kopie: de kaart zelf blijft zoals hij was).
+        var was=normEx(x.n),nu=normEx(OEF[id].naam);
+        if(was!==nu&&uit.vids[was]&&!uit.vids[nu]){uit.vids[nu]=uit.vids[was];delete uit.vids[was];}
+      }
+      else uit.missing.push(x.n);
+    });
+    Object.keys(c.cells||{}).forEach(function(k){
+      var stable=k.match(/^x((?:fp_[a-f0-9]{16}|po_[a-f0-9]{12}))\.(\d+)\|(.+)$/);
+      var m=k.match(/^n([a-z0-9]*)\.(\d+)\|(.+)$/);
+      if(stable){var sid=byStable[stable[1]];if(sid!=null)uit.cells['e'+sid+'.'+stable[2]+'|'+stable[3]]=c.cells[k];}
+      else if(m){var id=byNorm[m[1]];if(id!=null)uit.cells['e'+id+'.'+m[2]+'|'+m[3]]=c.cells[k];}
+      else uit.cells[k]=c.cells[k];
+    });
+    return uit;
+  }
   function saveState(){
+    // v2: zolang de open kaart niet is hersteld, blijft wat er bewaard staat zoals het is
+    if(!BIB_KLAAR)return;
     try{
       var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
-      localStorage.setItem('fysiplan_state',JSON.stringify({chosen:chosen,client:client,grid:GRID,vids:VIDS,kaartId:KAART_ID,kaartTs:KAART_TS}));
+      var st={chosen:chosen,client:client,grid:GRID,vids:VIDS,kaartId:KAART_ID,kaartTs:KAART_TS};
+      // v2: ook met vaste verwijzingen; daarmee wordt de kaart hersteld (zie loadState)
+      if(IS_V2)st.vast=vasteKaart();
+      localStorage.setItem('fysiplan_state',JSON.stringify(st));
     }catch(e){}
     planAutoDeel();
   }
@@ -1000,15 +1071,38 @@ bridge2.jpg</div>
   }
   function zetKaartId(id,ts){
     KAART_ID=id||'';KAART_TS=Number(ts)||0;
+    // v2: de bewaarde kaart blijft ook hier zoals hij is tot de open kaart is hersteld
+    if(!BIB_KLAAR)return;
     try{var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');st.kaartId=KAART_ID;st.kaartTs=KAART_TS;localStorage.setItem('fysiplan_state',JSON.stringify(st));}catch(e){}
+  }
+  // v2, de open kaart wacht nog op de bibliotheek: de koppeling met de patiëntkaart en de
+  // invulvelden uit de bewaarde kaart halen, en de oefeningen laten staan (bij het uitloggen)
+  function bewaardeKaartZonderPatient(){
+    try{
+      var st=JSON.parse(localStorage.getItem('fysiplan_state')||'null');
+      if(!st||typeof st!=='object')return;
+      st.kaartId='';st.kaartTs=0;st.client={};
+      localStorage.setItem('fysiplan_state',JSON.stringify(st));
+    }catch(e){}
   }
   function loadState(){
     try{
       var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');
       if(typeof st.kaartId==='string')KAART_ID=st.kaartId;
       KAART_TS=Number(st.kaartTs)||0;
+      if(st.client&&!veldenHersteld)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
+      veldenHersteld=true;
+      // v2: de oefeningen zelf pas als de bibliotheek van de server er staat (zie BIB_KLAAR)
+      if(!BIB_KLAAR)return;
+      var vast=(IS_V2&&st.vast&&typeof st.vast==='object'&&Array.isArray(st.vast.chosen))?st.vast:null;
+      if(vast){
+        var uit=vanVasteKaart({chosen:vast.chosen,cells:vast.cells,vids:st.vids});
+        chosen=uit.chosen;VIDS=uit.vids;
+        GRID={rows:(st.grid&&typeof st.grid==='object'&&st.grid.rows)||{},cells:uit.cells};
+        return;
+      }
+      // v1, en in v2 een staat die de vorige versie van de pagina bewaarde: op plek in de lijst
       if(Array.isArray(st.chosen))chosen=st.chosen.filter(function(c){return OEF[c.o]&&OEF[c.o].imgs[c.i];});
-      if(st.client)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
       if(st.grid&&typeof st.grid==='object'){GRID={rows:st.grid.rows||{},cells:st.grid.cells||{}};}
       if(st.vids&&typeof st.vids==='object')VIDS=st.vids;
       vidsNaarNaamVanNu();
@@ -1247,7 +1341,8 @@ bridge2.jpg</div>
   // (een openstaand concept blijft onaangetast). De parameters worden één keer
   // gelezen; de URL wordt meteen schoongeveegd zodat de naam niet in adresbalk
   // of historie blijft. loadState() draait bij v2 een tweede keer (async, tegen
-  // de echte bibliotheek) en zet de velden dan opnieuw — daarom wordt dit ná
+  // de echte bibliotheek); de velden komen alleen de eerste keer uit de bewaarde
+  // kaart, en opnieuw als de kaart achter een melding heeft gewacht. Dit wordt ná
   // élke loadState aangeroepen; het "alleen indien leeg" maakt dat idempotent.
   // Voorkeur: /v2/app#client={naam} — het deel na # gaat nooit naar de server en
   // komt dus ook niet in serverlogs. De oude ?client=-links blijven werken.
@@ -1800,6 +1895,7 @@ bridge2.jpg</div>
   function render(){updateChipCounts();renderList();renderA4();saveState();proefTeller();}
 
   function toggleExercise(id){
+    if(kaartWachtNog())return;
     var has=chosen.some(function(c){return c.o===id;});
     if(has){chosen=chosen.filter(function(c){return c.o!==id;});}
     else{if(chosen.length>=12){alert('Maximaal 12 plaatjes op één A4.');return;}chosen.push({o:id,i:0});var o=OEF[id];if(o){var key=exerciseKey(o);RECENT=[key].concat(RECENT.filter(function(x){return x!==key;})).slice(0,24);try{localStorage.setItem('fysiplan_recent',JSON.stringify(RECENT));}catch(e){}}}
@@ -1823,8 +1919,17 @@ bridge2.jpg</div>
   }
   // bibliotheek opnieuw laden zonder de huidige kaart te verliezen (koppeling op naam)
   function reloadLibraryKeepingCard(){
+    // v2: de open kaart was nog niet hersteld (de bibliotheek of de eigen oefeningen ontbraken).
+    // Dan is dit de herkansing, bijvoorbeeld direct na het inloggen.
+    if(IS_V2&&!BIB_KLAAR)return startBib();
     var snap=currentCard('');
-    return loadDefaultLibrary().then(function(){openCard(snap);});
+    return loadDefaultLibrary().then(function(){
+      // v2: zijn de eigen oefeningen van de praktijk bij het herladen weggevallen (de sessie is
+      // verlopen, of de server antwoordde niet) terwijl ze op de open kaart staan, dan blijft de
+      // bewaarde kaart heel en wacht de editor tot ze er weer zijn
+      if(IS_V2&&EIGEN_STAND!=='ok'&&mistEigen(snap.chosen)){herstelOpenKaart();render();return;}
+      openCard(snap);
+    });
   }
   // ---- video opnemen via de telefoon: QR op het scherm, opnamepagina op de telefoon ----
   // qr.js wordt alleen op /v2/app standaard geladen; elders (beheer) laden we hem on demand
@@ -2463,6 +2568,8 @@ bridge2.jpg</div>
   }
   function doeAutoDeel(){
     if(PROEF_VOORBIJ)return;
+    // de open kaart is nog niet hersteld: wat de editor nu in handen heeft, is niet de kaart
+    if(!BIB_KLAAR)return;
     var naam=huidigeKaartNaam();
     var pr=(SET.praktijk||'').trim();
     if(!naam||!chosen.length){verbergQr();laatsteDeel='';return;}
@@ -2505,7 +2612,7 @@ bridge2.jpg</div>
   // na een 409 verouderd: de versie van de server in deze editor laden (zelfde
   // stappen als Openen in Kaarten), zodat er niets van het andere apparaat verloren gaat
   function openNieuwsteVersie(){
-    if(!KAART_ID)return;
+    if(!KAART_ID||kaartWachtNog())return;
     var id=KAART_ID;
     fetch(praktijkKaartUrl(id),PGET())
       .then(function(r){return r.json();})
@@ -2932,7 +3039,8 @@ bridge2.jpg</div>
   // De QR-code komt erop zodra de praktijk beveiligd is (pakket B).
   function proefVoorbeeldkaart(){
     fetch('sjablonen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).then(function(l){
-      if(chosen.length||!Array.isArray(l)||!l.length)return;
+      // wacht de open kaart nog (zie BIB_KLAAR), dan komt er ook geen voorbeeldkaart op
+      if(!BIB_KLAAR||chosen.length||!Array.isArray(l)||!l.length)return;
       var s=l.filter(function(x){return x.naam==='Lage rugklachten';})[0]||l[0];
       // zes oefeningen: haalbaar voor de patiënt en ruimte om er zelf bij te zetten
       pasSjabloonToe({naam:s.naam,dosering:s.dosering,oefeningen:(s.oefeningen||[]).slice(0,6)});
@@ -3042,6 +3150,7 @@ bridge2.jpg</div>
   // anders vervangt de behandelkaart de hele kaart (eerst vragen als er al iets op staat)
   function pasSjabloonToe(s,erbij){
     if(!s)return;
+    if(kaartWachtNog())return;
     if(!erbij&&chosen.length&&!confirm('Je hebt al '+chosen.length+' oefening'+(chosen.length===1?'':'en')+' gekozen. Vervangen door "'+s.naam+'"?'))return;
     stopSjabBewerk();
     var missing=[],vol=0;
@@ -3231,6 +3340,7 @@ bridge2.jpg</div>
   });
   document.getElementById('ai_result').addEventListener('click',function(e){
     if(e.target.id!=='ai_apply'||!AI_VOORSTEL)return;
+    if(kaartWachtNog())return;
     var ids=[];
     document.querySelectorAll('#ai_result [data-ai]').forEach(function(cb){
       if(!cb.checked)return;
@@ -3252,51 +3362,22 @@ bridge2.jpg</div>
   function persistCards(l){try{localStorage.setItem('fysiplan_kaarten',JSON.stringify(l));return true;}catch(e){alert('Kaart opslaan is niet gelukt (opslagruimte vol?).');return false;}}
   function currentCard(naam){
     var client={};CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);client[k]=el?el.value:'';});
-    var ch=chosen.map(function(c){return OEF[c.o]?{n:OEF[c.o].naam,id:OEF[c.o].exerciseId||'',i:c.i}:null;}).filter(Boolean);
-    var cells={};
-    Object.keys(GRID.cells).forEach(function(k){
-      var m=k.match(/^e(\d+)\.(\d+)\|(.+)$/);
-      if(m&&OEF[+m[1]]){
-        var oef=OEF[+m[1]],prefix=oef.exerciseId?('x'+oef.exerciseId):('n'+normEx(oef.naam));
-        cells[prefix+'.'+m[2]+'|'+m[3]]=GRID.cells[k];
-      }
-      else cells[k]=GRID.cells[k];
-    });
+    var vast=vasteKaart();
     // alleen persoonlijke video's van oefeningen die nu op de kaart staan
     var vids={};
     chosen.forEach(function(c){var o=OEF[c.o];if(o){var k=normEx(o.naam);if(VIDS[k])vids[k]=VIDS[k];}});
-    return {naam:naam,ts:Date.now(),client:client,chosen:ch,rows:GRID.rows,cells:cells,vids:vids};
+    return {naam:naam,ts:Date.now(),client:client,chosen:vast.chosen,rows:GRID.rows,cells:vast.cells,vids:vids};
   }
   function openCard(c){
     SIGNAAL_KAART=null;
-    var missing=[];
-    chosen=[];
-    // eigen video's staan op de naam die de oefening op de kaart had. Heet ze nu anders, dan
-    // verhuist de video mee (op een kopie: de kaart uit de lijst blijft zoals hij was).
-    var vids={};
-    if(c.vids&&typeof c.vids==='object')Object.keys(c.vids).forEach(function(k){vids[k]=c.vids[k];});
-    (c.chosen||[]).forEach(function(x){
-      var id=(x.id&&byStable[x.id]!=null)?byStable[x.id]:byNorm[normEx(x.n)];
-      if(id!=null&&OEF[id]&&OEF[id].imgs[x.i||0]){
-        chosen.push({o:id,i:x.i||0});
-        var was=normEx(x.n),nu=normEx(OEF[id].naam);
-        if(was!==nu&&vids[was]&&!vids[nu]){vids[nu]=vids[was];delete vids[was];}
-      }
-      else missing.push(x.n);
-    });
-    GRID={rows:c.rows||{},cells:{}};
-    VIDS=vids;
-    Object.keys(c.cells||{}).forEach(function(k){
-      var stable=k.match(/^x(fp_[a-f0-9]{16})\.(\d+)\|(.+)$/);
-      var m=k.match(/^n([a-z0-9]*)\.(\d+)\|(.+)$/);
-      if(stable){var sid=byStable[stable[1]];if(sid!=null)GRID.cells['e'+sid+'.'+stable[2]+'|'+stable[3]]=c.cells[k];}
-      else if(m){var id=byNorm[m[1]];if(id!=null)GRID.cells['e'+id+'.'+m[2]+'|'+m[3]]=c.cells[k];}
-      else GRID.cells[k]=c.cells[k];
-    });
+    var uit=vanVasteKaart(c);
+    chosen=uit.chosen;
+    GRID={rows:c.rows||{},cells:uit.cells};
+    VIDS=uit.vids;
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value=(c.client&&c.client[k])||'';});
     normalizePrintableTextFields();
     render();
-    if(missing.length)alert('Niet meer in de oefeningenlijst (overgeslagen): '+missing.join(', '));
+    if(uit.missing.length)alert('Niet meer in de oefeningenlijst (overgeslagen): '+uit.missing.join(', '));
   }
   function renderCardList(){
     var lijst=loadCards();
@@ -4447,6 +4528,9 @@ bridge2.jpg</div>
     laatsteDeel='';QR_UIT_VOOR=null;verbergQr();
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
     if(typeof normalizePrintableTextFields==='function')normalizePrintableTextFields();
+    // wacht de open kaart nog op de bibliotheek (zie BIB_KLAAR), dan bewaart render() niets en
+    // stond de patiënt na herladen weer op het scherm: dan gaat hij hier uit de bewaarde kaart
+    if(!BIB_KLAAR)bewaardeKaartZonderPatient();
     render();
   }
   // meldingen in het beveiligingsblok. Een uitleg is grijs; een fout (iets ontbreekt
@@ -4513,6 +4597,11 @@ bridge2.jpg</div>
     if(typeof ensureQr==='function')ensureQr(function(){toonQr(d.id);});
   }
   function saveServerCard(naam,cb,keuze){
+    // de open kaart is nog niet hersteld: niets naar de server, ook niet voor de QR-code
+    if(!BIB_KLAAR){
+      cb({ok:false,fout:BIB_REDEN==='login'?'Log eerst in. De kaart die hier open stond, komt daarna terug; tot dan wordt er niets gedeeld.':'De oefeningen zijn niet geladen, dus de kaart is niet gedeeld. Probeer het opnieuw via de melding bovenaan.'});
+      return;
+    }
     if(kaartIsWeg()){
       if(!confirm('Deze kaart is verwijderd. Opnieuw delen maakt een nieuwe patiëntkaart met een nieuwe QR-code.\n\nOK = opnieuw delen\nAnnuleren = niets delen')){
         cb({ok:false,geannuleerd:true,fout:'Niet gedeeld: deze kaart is verwijderd.'});return;
@@ -5900,6 +5989,7 @@ bridge2.jpg</div>
     // de app het als een níeuwe kaart (de originele kaart blijft ongemoeid).
     var kp=e.target.closest('[data-skopie]');
     if(kp){
+      if(kaartWachtNog())return;
       // dubbelklik: één kopie, één vraag (de tweede klik valt binnen het slot)
       var kpSlot='kopie:'+kp.dataset.skopie;
       if(KAARTEN_BEZIG[kpSlot])return;
@@ -5942,6 +6032,7 @@ bridge2.jpg</div>
     }
     var o=e.target.closest('[data-sopen]'),x=e.target.closest('[data-sdel]');
     if(o){
+      if(kaartWachtNog())return;
       fetch(praktijkKaartUrl(o.dataset.sopen),PGET())
         .then(function(r){return r.json();})
         .then(function(d){
@@ -5979,6 +6070,7 @@ bridge2.jpg</div>
     if(NA_BEVEILIG&&PRAKSLOT.ingelogd){var verder=NA_BEVEILIG;NA_BEVEILIG=null;setTimeout(verder,150);}
   });
   document.getElementById('k_save').addEventListener('click',function(){
+    if(kaartWachtNog())return;
     var naam=document.getElementById('k_naam').value.trim();
     if(!naam){alert('Geef de kaart een naam.');return;}
     var lijst=loadCards();
@@ -5993,6 +6085,7 @@ bridge2.jpg</div>
     var o=e.target.closest('[data-kopen]'),x=e.target.closest('[data-kdel]');
     var lijst=loadCards();
     if(o){
+      if(kaartWachtNog())return;
       var c=lijst[+o.dataset.kopen];if(!c)return;
       if(chosen.length&&!confirm('Huidige kaart vervangen door “'+c.naam+'”?'))return;
       openCard(c);verbergQr();closeOv('ovKaarten');zetKaartId('');OVERSCHRIJF='';
@@ -6013,13 +6106,17 @@ bridge2.jpg</div>
   document.getElementById('wis_plaatjes').addEventListener('click',function(){
     chosen=[];VIDS={};laatsteDeel='';QR_UIT_VOOR=null;verbergQr();closeOv('ovWis');render();
   });
-  document.getElementById('wis_alles').addEventListener('click',function(){
+  function wisAlles(){
+    // v2: wacht de open kaart nog op het inloggen, dan is alles wissen de keuze voor een lege
+    // kaart; vanaf hier wordt er weer bewaard
+    if(IS_V2&&!BIB_KLAAR&&SERVERLIB){BIB_KLAAR=true;toonBibMelding('');}
     SIGNAAL_KAART=null;zetKaartId('');OVERSCHRIJF='';NAAM_OK='';
     chosen=[];GRID={rows:{},cells:{}};VIDS={};
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
     normalizePrintableTextFields();
     verbergQr();closeOv('ovWis');render();
-  });
+  }
+  document.getElementById('wis_alles').addEventListener('click',wisAlles);
   elMon.addEventListener('click',function(e){
     // v2: oefening een kolom naar links/rechts verplaatsen (herordenen)
     var ml=e.target.closest('[data-mvl]'),mr=e.target.closest('[data-mvr]');
@@ -6042,6 +6139,10 @@ bridge2.jpg</div>
   // team en op de digitale kaart van de patiënt verschijnen. Ze komen achteraan de
   // bibliotheek in de groep "Eigen oefeningen".
   var EIGEN_GROEP='Eigen oefeningen';
+  // Hoe het met de eigen oefeningen van de praktijk staat: 'ok' (geladen), 'uit' (geen praktijk of
+  // niet ingelogd: er zijn er dan geen) of 'storing' (de server gaf geen antwoord; dan blijft de
+  // laatst geladen lijst staan). Zie herstelOpenKaart.
+  var EIGEN_STAND='uit',EIGEN_LAATST=[];
   function voegPraktijkOefToe(){
     var pr=(SET.praktijk||'').trim();
     OEF=OEF.filter(function(o){return o.bron!=='praktijk';});
@@ -6059,11 +6160,19 @@ bridge2.jpg</div>
       }
       rebuildLookup();
     };
-    if(!pr){klaar([]);return Promise.resolve();}
+    if(!pr){EIGEN_STAND='uit';EIGEN_LAATST=[];klaar([]);return Promise.resolve();}
     return fetch('api/praktijk/oefeningen?praktijk='+encodeURIComponent(pr),PGET())
-      .then(function(r){return r.ok?r.json():null;})
-      .then(function(d){klaar(d&&d.ok&&Array.isArray(d.oefeningen)?d.oefeningen:[]);})
-      .catch(function(){klaar([]);});
+      .then(function(r){
+        if(r.ok)return r.json();
+        // 401: niet ingelogd, of de praktijk is nog niet beveiligd. Dan zijn er geen eigen
+        // oefeningen. Elke andere weigering is een storing, en geen antwoord is geen lege lijst.
+        return r.status===401?{ok:true,uit:true,oefeningen:[]}:null;
+      })
+      .then(function(d){
+        if(d&&d.ok&&Array.isArray(d.oefeningen)){EIGEN_STAND=d.uit?'uit':'ok';EIGEN_LAATST=d.oefeningen;klaar(d.oefeningen);}
+        else{EIGEN_STAND='storing';klaar(EIGEN_LAATST);}
+      })
+      .catch(function(){EIGEN_STAND='storing';klaar(EIGEN_LAATST);});
   }
   // Seintje van een patiënt beantwoorden of bewust alleen afhandelen.
   // "Beantwoorden" kan alleen met tekst; "Alleen afhandelen" is een aparte knop,
@@ -6184,7 +6293,7 @@ bridge2.jpg</div>
                 reloadLibraryKeepingCard().then(function(){
                   // meteen op de kaart zetten: daarvoor voegde de therapeut hem toe
                   var nieuw=OEF.filter(function(o){return o.bron==='praktijk'&&o.naam===naam;})[0];
-                  if(nieuw&&chosen.length<12&&!chosen.some(function(c){return c.o===nieuw.id;}))toggleExercise(nieuw.id);
+                  if(BIB_KLAAR&&nieuw&&chosen.length<12&&!chosen.some(function(c){return c.o===nieuw.id;}))toggleExercise(nieuw.id);
                   toonEigenLijst();
                 });
               })
@@ -6573,11 +6682,107 @@ bridge2.jpg</div>
       .then(function(r){return r.ok?r.json():{categorieen:[]};})
       .then(function(d){return d&&Array.isArray(d.categorieen)?d.categorieen:[];})
       .catch(function(){return [];}):Promise.resolve([]);
+    // Lukt het ophalen niet, dan gaat het ook verder: in v2 blijft de bibliotheek staan die er
+    // stond (bibMislukt), en de eigen oefeningen van de praktijk worden daar opnieuw bij gehaald.
+    // Die hangen aan de login, niet aan de bibliotheek: wie inlogt terwijl de lijst even niet te
+    // halen is, ziet ze dan toch.
     return Promise.all([bibliotheek,categorieen])
-      .then(function(data){if(data[0]&&data[0].length){buildServerLibrary(data[0],data[1]);}else{buildDefault();}})
+      .then(function(data){if(data[0]&&data[0].length){buildServerLibrary(data[0],data[1]);}else{bibMislukt();}},function(){bibMislukt();})
       .then(function(){if(IS_V2&&SERVERLIB)return voegPraktijkOefToe();})
-      .catch(function(){buildDefault();});
+      .catch(function(){bibMislukt();});
   }
+  // De bibliotheek kon niet worden opgehaald. v2 houdt de bibliotheek die er al stond: de open
+  // kaart verwijst ernaar, en de ingebedde standaardlijst zou er andere oefeningen onder zetten.
+  // Alleen als er nog geen stond, komt die standaardlijst (en bewaart v2 niets, zie BIB_KLAAR).
+  function bibMislukt(){
+    if(IS_V2&&SERVERLIB)return;
+    buildDefault();
+  }
+  // ---- v2: de open kaart herstellen als alles er staat ----
+  // staat er in deze lijst van de kaart een eigen oefening van de praktijk die nu niet in de
+  // bibliotheek staat?
+  function mistEigen(lijst){
+    return (Array.isArray(lijst)?lijst:[]).some(function(x){return !!x&&/^po_/.test(String(x.id||''))&&byStable[x.id]==null;});
+  }
+  function bewaardeStaatMistEigen(){
+    var st={};
+    try{st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}')||{};}catch(e){}
+    if(st.vast&&typeof st.vast==='object'&&Array.isArray(st.vast.chosen))return mistEigen(st.vast.chosen);
+    // een staat van de vorige versie van de pagina: de eigen oefeningen stonden achter de bibliotheek
+    return Array.isArray(st.chosen)&&st.chosen.some(function(c){return !!c&&typeof c.o==='number'&&c.o>=OEF.length;});
+  }
+  // staat er in de bewaarde staat een kaart: oefeningen, of de koppeling met een gedeelde kaart?
+  function bewaardeKaartStond(){
+    var st={};
+    try{st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}')||{};}catch(e){}
+    var lijst=(st.vast&&typeof st.vast==='object'&&Array.isArray(st.vast.chosen))?st.vast.chosen:st.chosen;
+    return (Array.isArray(lijst)&&lijst.length>0)||!!st.kaartId;
+  }
+  // Zet de open kaart terug als de bibliotheek van de server er staat en de eigen oefeningen die
+  // op de kaart staan er ook zijn. Anders blijft de bewaarde kaart onaangeroerd: de editor toont
+  // een lege kaart met bovenaan de reden, en bewaart en deelt niets tot het wel kan.
+  function herstelOpenKaart(){
+    var reden='';
+    if(!SERVERLIB)reden='bib';
+    else if(EIGEN_STAND!=='ok'&&bewaardeStaatMistEigen())reden=EIGEN_STAND==='storing'?'bib':'login';
+    // De open kaart komt uit de bewaarde staat, niet uit wat er intussen in de editor staat: dat
+    // zijn plekken in de lijst van daarnet, en in de bibliotheek van nu staan daar andere oefeningen.
+    chosen=[];GRID={rows:{},cells:{}};VIDS={};
+    if(reden){BIB_KLAAR=false;toonBibMelding(reden);return false;}
+    // Wachtte de kaart achter een melding, dan komt ze terug zoals ze bewaard is, met haar eigen
+    // invulvelden: wat er intussen is getypt, hoort niet bij deze kaart (de melding zei dat er
+    // niets werd bewaard). Stond er geen kaart, dan is er niets om terug te zetten en blijft het staan.
+    if(BIB_REDEN&&bewaardeKaartStond())veldenHersteld=false;
+    BIB_KLAAR=true;toonBibMelding('');loadState();
+    return true;
+  }
+  // Zolang de open kaart wacht, komt er niets op de kaart, gaat er geen andere kaart open en wordt
+  // de lege kaart niet in deze browser opgeslagen: het werk zou weg zijn zodra de kaart die hier
+  // stond terugkomt. De therapeut leest meteen waarom, in plaats van achteraf zijn werk kwijt te zijn.
+  function kaartWachtNog(){
+    if(BIB_KLAAR)return false;
+    alert(BIB_REDEN==='login'?'Dat kan nu niet: de kaart die hier open stond, wacht op het inloggen. Log in, of kies \u201cBegin een lege kaart\u201d in de melding bovenaan.'
+      :BIB_REDEN==='bib'?'Dat kan nu niet: de oefeningen zijn niet geladen. Kies \u201cOpnieuw proberen\u201d in de melding bovenaan.'
+      :'De oefeningen worden nog geladen. Probeer het zo opnieuw.');
+    return true;
+  }
+  // de bibliotheek (opnieuw) laden en de open kaart herstellen: bij de start, na "Opnieuw
+  // proberen" en na het inloggen
+  function startBib(){
+    return loadDefaultLibrary().then(function(){
+      herstelOpenKaart();epdVoorinvul();toonSrvKaarten();
+      applySettings();render();
+    });
+  }
+  function toonBibMelding(reden){
+    BIB_REDEN=reden||'';
+    var balk=document.getElementById('bibBalk');if(!balk)return;
+    if(!BIB_REDEN){balk.hidden=true;return;}
+    var login=BIB_REDEN==='login';
+    document.getElementById('bib_kop').textContent=login?'Log in om je kaart te zien.':'De oefeningen zijn niet geladen.';
+    // stond er een kaart open, dan zegt de melding dat die er nog is
+    var stond=bewaardeKaartStond();
+    document.getElementById('bib_tekst').textContent=login
+      ?'Op de kaart die hier open stond, staan eigen oefeningen van je praktijk. Die zie je na het inloggen weer. Tot dan wordt er niets bewaard.'
+      :(stond?'De kaart die hier open stond, is niet gewijzigd. ':'')+'Er wordt niets bewaard tot de oefeningen er staan.';
+    document.getElementById('bib_doe').textContent=login?'Inloggen':'Opnieuw proberen';
+    document.getElementById('bib_leeg').hidden=!login;
+    balk.hidden=false;
+  }
+  (function(){
+    var doe=document.getElementById('bib_doe'),leeg=document.getElementById('bib_leeg');
+    if(!doe||!leeg)return;
+    doe.addEventListener('click',function(){
+      if(BIB_REDEN==='login'){document.getElementById('kaartenBtn').click();return;}
+      doe.disabled=true;
+      var klaar=function(){doe.disabled=false;};
+      startBib().then(klaar,klaar);
+    });
+    leeg.addEventListener('click',function(){
+      if(!confirm('Een lege kaart beginnen?\n\nDe kaart die hier open stond, verdwijnt dan van dit apparaat. Een kaart die je met je praktijk hebt gedeeld, blijft onder Kaarten staan.'))return;
+      wisAlles();
+    });
+  })();
   function buildDefault(){
     OEF=BASE.map(mkOef);
     try{var saved=JSON.parse(localStorage.getItem('fysiplan_custom')||'[]');saved.forEach(function(o){o.id=OEF.length;o.starthouding=o.starthouding||'';o.uitvoering=o.uitvoering||'';o.opmerking=o.opmerking||'';OEF.push(o);});}catch(e){}
@@ -6626,20 +6831,26 @@ bridge2.jpg</div>
   });
 
   // init: eigen upload heeft voorrang; anders de server-bibliotheek (voor iedereen), dan renderen
-  idbAll().then(function(imgs){
+  // v2 heeft de zelf geüploade plaatjes (een functie van v1) niet nodig: kan de browser die
+  // opslag niet openen, dan laadt de bibliotheek van de server toch
+  (IS_V2?idbAll().catch(function(){return {};}):idbAll()).then(function(imgs){
     IMGCACHE=imgs||{};
     var lib=loadLib();
-    if(lib){buildLibrary(lib);chosen=[];applySettings();render();if(IS_V2)toonSrvKaarten();return;}
+    if(lib){buildLibrary(lib);chosen=[];BIB_KLAAR=true;applySettings();render();if(IS_V2)toonSrvKaarten();return;}
     return loadDefaultLibrary().then(function(){
-      // v2: de kaartstaat is opgeslagen tegen de server-bibliotheek, maar de
-      // eerste loadState() draaide tegen de ingebedde standaardlijst en
-      // filterde die ids weg. Nu de echte bibliotheek er staat: opnieuw
-      // herstellen, anders is de kaart na elke herlaadbeurt leeg.
-      if(IS_V2){loadState();epdVoorinvul();toonSrvKaarten();}
+      // v2: de open kaart is bewaard tegen de bibliotheek van de server. De eerste loadState()
+      // draaide tegen de ingebedde standaardlijst en zette alleen de invulvelden terug. Nu de
+      // echte bibliotheek er staat (of niet): de kaart herstellen, en pas daarna bewaren en delen.
+      if(IS_V2){herstelOpenKaart();epdVoorinvul();toonSrvKaarten();}
       applySettings();render();
       proefStart();
     });
-  }).catch(function(){buildDefault();applySettings();render();});
+  }).catch(function(){
+    buildDefault();
+    // v2: zonder de bibliotheek van de server is er geen open kaart om te tonen of te bewaren
+    if(IS_V2){BIB_KLAAR=false;chosen=[];toonBibMelding('bib');}
+    applySettings();render();
+  });
 })();
 </script>
 <script src="/release-notes.js" defer></script>
