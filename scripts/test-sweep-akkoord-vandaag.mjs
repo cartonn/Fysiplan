@@ -145,9 +145,20 @@ if (pw) {
       await pb.waitForSelector("#ps_akkoord", { state: "visible", timeout: 5000 });
       assert.equal(await pb.locator("#k_akwijs").isVisible(), false, "op Praktijk staat het blok zelf, niet de melding");
       assert.equal(await pb.evaluate(() => document.activeElement && document.activeElement.id), "ps_akvink", "focus op het vinkje");
+      // het vinkje is leesbaar: label in de tekstkleur van het gele blok, niet wit (Sanne, 1,04:1)
+      const kl = await pb.evaluate(() => {
+        const lab = document.querySelector("#ps_akkoord label"), blok = document.getElementById("ps_akkoord");
+        const rgb = (c) => c.match(/\d+(\.\d+)?/g).slice(0, 3).map(Number);
+        const lum = ([r, g, b]) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+        const a = lum(rgb(getComputedStyle(lab).color)), b = lum(rgb(getComputedStyle(blok).backgroundColor));
+        return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+      });
+      assert.ok(kl >= 4.5, "akkoordtekst leesbaar: contrast " + kl.toFixed(2));
+      assert.ok((await pb.locator("#ps_akdo").boundingBox()).height >= 44, "knop Akkoord minstens 44 px (Karin, iPad 34 px)");
       await pb.check("#ps_akvink");
       await pb.click("#ps_akdo");
       await pb.waitForSelector("#ps_akkoord", { state: "hidden", timeout: 5000 });
+      assert.equal(await pb.evaluate(() => document.activeElement && document.activeElement.id), "ps_msg", "focus naar de bevestiging, niet naar body");
       assert.equal(await pb.locator("#fpSchermen .fs-ak").count(), 0, "stip weg na akkoord");
       assert.equal(await pb.locator("#k_akwijs").count(), 0, "melding weg na akkoord");
       assert.equal(JSON.parse(await readFile(accPad, "utf8"))[SL].akkoord.av, AV);

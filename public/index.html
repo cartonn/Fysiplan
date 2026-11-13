@@ -4824,7 +4824,7 @@ bridge2.jpg</div>
       fetch('api/praktijk/akkoord',{method:'POST',headers:PJSON(),body:JSON.stringify({akkoord:true})})
         .then(function(r){return r.json().catch(function(){return{ok:false};});})
         .then(function(d){b.disabled=false;
-          if(d&&d.ok){PRAKSLOT.akkoord=d.akkoord;tekenAkkoord();toonPsMsg('Bedankt. Het akkoord is vastgelegd met datum en jouw naam.');}
+          if(d&&d.ok){PRAKSLOT.akkoord=d.akkoord;tekenAkkoord();toonPsMsg('Bedankt. Het akkoord is vastgelegd met datum en jouw naam.');var pm=document.getElementById('ps_msg');if(pm){pm.setAttribute('tabindex','-1');try{pm.focus();}catch(_){}}}
           else{m.textContent=(d&&d.fout)||'Dat lukte niet. Probeer het opnieuw.';m.style.color='var(--fout,#b3261e)';}})
         .catch(function(){b.disabled=false;m.textContent='Geen verbinding. Probeer het opnieuw.';m.style.color='var(--fout,#b3261e)';});
     });

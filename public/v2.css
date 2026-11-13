@@ -354,6 +354,10 @@ html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
   html.v2 #ps_akkoord summary{cursor:pointer;font-weight:600;color:#92400e;width:max-content;max-width:100%}
   html.v2 #ps_akkoord ul{margin:6px 0 2px 18px!important;padding:0}
   html.v2 #ps_akkoord li{margin:3px 0}
+  /* het akkoordvinkje: niet de witte labelkleur van het donkere paneel (gebruikers-sweep 2026-11-13, Sanne: 1,04:1) */
+  html.v2 #ps_akkoord label{color:inherit}
+  html.v2 #ps_akkoord input[type=checkbox]{width:20px!important;height:20px!important}
+  html.v2 #ps_akkoord #ps_akdo{min-height:44px;padding-left:18px;padding-right:18px}
   html.v2 #ps_akkoord a{color:#92400e}
   html.v2 #ps_akkoord .ak-rij{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
 
