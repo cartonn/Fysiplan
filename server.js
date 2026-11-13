@@ -106,7 +106,7 @@ const VWO_VERSIE = "2026-11-13";
 const AV_VERSIE = "2026-11-13";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-13";
+const PRIVACY_VERSIE = "2026-11-13-2";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -1442,6 +1442,7 @@ function proefNaPraktijkWissen(id, nu = Date.now()) {
 // /v2/gegevens en door het automatisch wissen 30 dagen na het einde van een abonnement.
 async function praktijkAllesWissen(pk) {
   const acc = Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
+  const naamVoorWissen = weergaveNaam(pk) || pk;
   // alleen het eigen profiel: op sleutel, en bij een oude sleutel (de naam) ook een
   // profiel onder die naam dat niemand anders geclaimd heeft
   const eigenProfiel = ([k, p]) => k === pk || (!isPraktijkCode(pk) && !praktijkGeclaimd(k) && String(p && p.praktijk || "").toLowerCase() === pk);
@@ -1475,6 +1476,8 @@ async function praktijkAllesWissen(pk) {
   if (leeslogRegels.wisPraktijk(leeslog, pk)) await leeslogBewaar();
   // ideeënbox: open ideeën van de praktijk weg, besloten ideeën en stemmen zonder herkomst
   try { await ideeenbox.wisPraktijk(pk); } catch {}
+  // support-agent en agents met taalmodel: logboekregels, open zaken en berichten aan deze praktijk
+  try { await beheerOmgeving.wisPraktijk(pk, naamVoorWissen); } catch (e) { console.error("wissen beheer:", e.message); }
   // vertaalde namen van de eigen oefeningen staan los in de vertaalcache; die gaan nu
   // ook weg, niet pas bij de volgende herstart (art. 17 AVG: echt alles van de praktijk)
   try { await vertaalCacheOpschonen(); } catch {}
