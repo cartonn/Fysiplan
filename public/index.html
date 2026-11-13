@@ -1322,7 +1322,9 @@ bridge2.jpg</div>
   // app zelf iets in localStorage zet.
   var PROEF=(IS_V2&&window.FYSIPLAN_PROEF&&!window.FYSIPLAN_PROEF.klant)?window.FYSIPLAN_PROEF:null;
   var PROEF_VERS=false,PROEF_LEEG=false;
-  if(PROEF){try{PROEF_VERS=!localStorage.getItem('fysiplan_proef_start');PROEF_LEEG=!localStorage.getItem('fysiplan_state');}catch(e){}}
+  // PROEF.elders: de proef is op een ander apparaat begonnen (tweede apparaat of collega); dan
+  // alleen de proefbalk met de einddatum, geen proefwelkom of voorbeeldkaart
+  if(PROEF&&!PROEF.elders){try{PROEF_VERS=!localStorage.getItem('fysiplan_proef_start');PROEF_LEEG=!localStorage.getItem('fysiplan_state');}catch(e){}}
   // praktijksessie (v2-accountlaag): de sessiesleutel staat in een cookie die scripts niet
   // kunnen lezen (HttpOnly); de browser stuurt hem zelf mee, dus deze pagina kent hem niet.
   // Tot en met 12 november 2026 stond hij in localStorage ('fp_praksessie'). Staat hij daar
@@ -3395,6 +3397,9 @@ bridge2.jpg</div>
     var d=PROEF.dagenOver;
     document.getElementById('pb_tekst').textContent=d<=1?'\u00b7 laatste dag, t/m '+PROEF.tot:'\u00b7 nog '+d+' dagen, t/m '+PROEF.tot;
     balk.hidden=false;
+    // een collega (geen beheerder) kan de proef niet verlengen of afrekenen: geen link naar
+    // de proefpagina, die toont hem anders het aanmeldformulier
+    if(PROEF.elders&&!PROEF.beheer){var mp=balk.querySelector('a[href^="/v2/proef"]');if(mp)mp.hidden=true;}
     proefTeller();
     if(!(SET.praktijk||'').trim()&&PROEF.praktijk)proefZetPraktijk(PROEF.praktijk);
     if(PROEF_VERS){

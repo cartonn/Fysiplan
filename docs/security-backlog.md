@@ -402,6 +402,15 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL (nieuw, gebruikers-sweep 2026-11-13 14u, Karin, gemeten lokaal via de API) — een therapeut kan de vaste vragen van een
+  collega of beheerder overschrijven of wissen.** Karin (beheerder) zet een vaste vraag op Squat; collega Pieter (therapeut) doet
+  `POST /api/praktijk/vragen {oef:"Squat", vragen:[]}` → 200 en de vraag is van alle kaarten van de praktijk weg (alleen Activiteit meldt
+  "vragen-aangepast"). Teamsjablonen en eigen oefeningen weigeren dit wel (403 via `magGedeeldAanpassen`). server.js r. ~5651–5672;
+  lib/vaste-vragen.js `zet` (r. ~181) bewaart `door` maar niemand controleert het. Voorstel: dezelfde regel als bij sjablonen.
+- **LAAG (nieuw, gebruikers-sweep 2026-11-13 14u, Karin) — `POST /v2/proef/wissen` (zeker=1) met een therapeut-sessie zonder proefcookie
+  toont "Je gegevens zijn gewist … je proef is gestopt"** en wist de proefcookie, terwijl er niets gewist is (server.js r. ~8097, bij `!p`
+  toch de succespagina). Geen gegevensverlies; misleidende tekst. Verwacht: "Dit regelt een beheerder", zoals /v2/proef?mijn=1.
+
 - **OPGELOST 2026-11-13 08u (deze PR, test:websiteveilig) — LAAG (gebruikers-sweep 2026-11-13 06u, Karin) — praktijkwebsite accepteert `javascript:alert(1)`.** Nu bewaart POST /api/praktijken alleen `https://`, `http://` of een kale domeinnaam (`lib/website.js`), anders 400 met `website: true` (de app zet dan het profiel van de server terug en toont de melding); een oud ongeldig adres op schijf gaat via `publiekProfiel` niet meer naar /k of de app. Oorspronkelijk: (200, `cleanName(b.website)`
   server.js r. ~5951, geen http(s)-controle). Op /k en in de app alleen als ge-escapete tekst (kaart.html r. ~1747), dus nu niet uit te
   buiten; wordt het ooit een link, dan wel. Voorstel: alleen `https?://` (of een kale domeinnaam) opslaan.

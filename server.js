@@ -1347,6 +1347,23 @@ function proefVanBeheer(req) {
   return p && !p.gewist ? p : null;
 }
 const proefVoorPagina = (req) => proefVan(req) || proefVanBeheer(req);
+// De proefbalk ("laatste dag, t/m …") hing alleen aan de proefcookie van het apparaat waarop de
+// aanmelding begon: op een tweede apparaat en bij collega's stond nergens dat de proef bijna
+// afliep, tot het schrijven ineens werd geweigerd (gebruikers-sweep, drie runs open sinds
+// 2026-11-12). Nu krijgt elke ingelogde sessie van de praktijk de einddatum mee; zonder naam,
+// e-mail of telefoon van wie de proef aanmeldde. beheer: alleen een beheerder krijgt de link
+// naar de proef- en betaalpagina (zie proefVanBeheer).
+function proefVanPraktijk(req) {
+  const s = sessieVan(req);
+  if (!s || !Object.hasOwn(praktijkAccounts, s.pk) || !praktijkGeclaimd(s.pk)) return null;
+  const k = praktijkAccounts[s.pk].proef;
+  if (!k) return null;
+  const p = Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
+  if (p && (p.klant || p.gewist)) return null;
+  const verloopt = Number((p && p.verloopt) || k.verloopt || 0);
+  if (!verloopt || Date.now() >= verloopt) return null;
+  return { verloopt, praktijk: weergaveNaam(s.pk) || "", beheer: !!isBeheer(s) };
+}
 // De proef hangt niet alleen aan het apparaat (cookie) maar ook aan het praktijkaccount
 // dat tijdens de proef werd beveiligd: anders maakte dezelfde praktijksessie op een
 // ander apparaat (of met gewiste cookies) gewoon verder kaarten. Op het account staan
@@ -8686,8 +8703,13 @@ async function afhandelen(request, response) {
       let html = await readFile(join(publicDir, "index.html"), "utf8");
       // tijdens een proef krijgt de app de stand mee (banner, voorbeeldkaart, QR-test);
       // alleen wat de app nodig heeft, geen telefoon of e-mail
-      const proefJs = proef ? ";window.FYSIPLAN_PROEF=" + JSON.stringify({ naam: (proef.naam || "").split(" ")[0], praktijk: proef.praktijk || "",
-        dagenOver: proef.klant ? null : dagenOver(proef.verloopt), tot: datumNl(proef.verloopt), klant: !!proef.klant }).replace(/</g, "\\u003c") : "";
+      const elders = proef ? null : proefVanPraktijk(request);
+      const proefData = proef ? { naam: (proef.naam || "").split(" ")[0], praktijk: proef.praktijk || "",
+        dagenOver: proef.klant ? null : dagenOver(proef.verloopt), tot: datumNl(proef.verloopt), klant: !!proef.klant }
+        // tweede apparaat of collega: alleen de einddatum, geen welkom of voorbeeldkaart
+        : elders ? { naam: "", praktijk: elders.praktijk, dagenOver: dagenOver(elders.verloopt), tot: datumNl(elders.verloopt),
+          klant: false, elders: true, beheer: elders.beheer } : null;
+      const proefJs = proefData ? ";window.FYSIPLAN_PROEF=" + JSON.stringify(proefData).replace(/</g, "\\u003c") : "";
       html = html.replace("<head>", () => '<head><base href="/"/><meta name="color-scheme" content="light"/><script>window.FYSIPLAN_V2=true' + proefJs + '</script>');
       html = html.replace("</head>", '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'8\' fill=\'%232456a6\'/%3E%3Cpath d=\'M5 16h5l2.5 6 5-12 2.5 7h7\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'2.6\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E"/><link rel="stylesheet" href="/v2.css?v=active-tech-3"/><script src="/qr.js" defer></script></head>');
       // nonce op de inline scripts (na alle injecties); de externe /qr.js houdt zijn src en valt onder 'self'
