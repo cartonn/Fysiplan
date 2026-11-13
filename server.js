@@ -14,7 +14,7 @@ import * as vasteVragen from "./lib/vaste-vragen.js";
 import { prijsRegels, prijsZin, metBtwBijschrift, bedragVoor, euro as euroTekst } from "./lib/prijs.js";
 import * as leeslogRegels from "./lib/leeslog.js";
 import { mediaSoort, mediaLink, leesMediaLink } from "./lib/medialink.js";
-import { plaatsenVan, merkPiek, volgendAantal, nieuwePeriode, kaartVol } from "./lib/plaatsen.js";
+import { plaatsenVan, merkPiek, volgendAantal, nieuwePeriode, kaartVol, KAARTEN_PROEF, KAARTEN_PER_LOGIN } from "./lib/plaatsen.js";
 import { maandBedrag, betaalBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
 import { volgendFactuurNr, naarCent, factuurHtml, isFactuur, isKor, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
@@ -102,7 +102,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-13";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-11-2";
+const AV_VERSIE = "2026-11-13";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-13";
@@ -128,7 +128,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-11-2", tekst: "Bewaartermijn: een verwijderde kaart staat eerst hooguit 7 dagen in de prullenbak, waar de maker of een beheerder hem kan herstellen of meteen definitief kan verwijderen (bijvoorbeeld als een patiënt om wissen vraagt)." },
   { stuk: "vwo", versie: "2026-11-12", tekst: "Beveiliging: elke login heeft een tweede stap, ook die van medewerkers van Fysiplan. Fysiplan legt vast wie wanneer gegevens van je praktijk inzag of een herstelmail stuurde, en waarom; je kunt dit opvragen." },
   { stuk: "vwo", versie: "2026-11-12-2", tekst: "Beveiliging: per kaart houdt Fysiplan bij wie van je praktijk haar opende of bewaarde, en wanneer (het leeslog), zonder naam van de patiënt. Een beheerder van je praktijk ziet het; het verdwijnt met de kaart en blijft hooguit twee jaar." },
-  { stuk: "vwo", versie: "2026-11-13", tekst: "Doel: Fysiplan telt per praktijk en per login hoeveel kaarten er zijn gemaakt, zonder iets van wat erop staat, en gebruikt dat aantal alleen om je te helpen als het gebruik stokt." }
+  { stuk: "vwo", versie: "2026-11-13", tekst: "Doel: Fysiplan telt per praktijk en per login hoeveel kaarten er zijn gemaakt, zonder iets van wat erop staat, en gebruikt dat aantal alleen om je te helpen als het gebruik stokt." },
+  { stuk: "av", versie: "2026-11-13", tekst: "Grens op kaarten: tijdens de proef hooguit 100 lopende kaarten, als klant 300 per login. Ideeën in de Ideeënbox mag Fysiplan gebruiken om Fysiplan beter te maken. De btw achter de prijs volgt wat Fysiplan rekent." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -8716,6 +8717,8 @@ async function afhandelen(request, response) {
         // de vraaghulp staat standaard uit (VRAAGHULP=aan zet hem aan); de tekst zegt wat er echt gebeurt
         VRAAGHULP_STAND: VRAAGHULP_AAN ? "" : " (staat nu uit)",
         PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN), PROEF_DAGEN: String(PROEF_DAGEN), NA_EINDE: String(NA_EINDE_WISSEN_DAGEN), INCASSO_VOORAF: String(INCASSO_VOORAF_DAGEN),
+        // grens op lopende kaarten uit lib/plaatsen.js: de voorwaarden noemen hetzelfde getal als de server hanteert
+        KAARTEN_PROEF: String(KAARTEN_PROEF), KAARTEN_PER_LOGIN: String(KAARTEN_PER_LOGIN),
         // Mollie staat alleen in de privacyverklaring als online betalen echt aan staat
         BETAAL_RIJ_HTML: mollieAan() ? '<tr id="betalen"><td>Betaling: naam van de praktijk (of je eigen naam), e-mail, aantal therapeuten, bedrag, '
           + "en de kenmerken van klant, betaling en machtiging bij Mollie. Geen rekeningnummer of kaartgegevens; die vul je alleen bij Mollie in.</td>"
@@ -8731,6 +8734,9 @@ async function afhandelen(request, response) {
       // moeten allebei worden ingevuld
       html = html.replace(/__([A-Z][A-Z_]*?)__/g, (heel, k) => k in vars ? (k.endsWith("_HTML") ? vars[k] : htmlEsc(vars[k]))
         : (k + "_HTML") in vars ? vars[k + "_HTML"] : "");
+      // de btw achter de prijs in de voorwaarden volgt de keuze uit de beheeromgeving (lib/prijs.js),
+      // net als op de landing; een vast bijschrift klopt niet bij de kleineondernemersregeling of inclusief
+      if (blok === "voorwaarden") html = metBtwBijschrift(html, prijsNu());
       if (!VRAAGHULP_AAN) html = html.replace(/[ \t]*<!--vraaghulp-->[\s\S]*?<!--\/vraaghulp-->\n?/g, "");
       else html = html.replace(/<!--\/?vraaghulp-->/g, "");
       // het taalmodel bij de ideeënbox staat standaard uit (IDEEEN_AI=aan); de tekst volgt de server

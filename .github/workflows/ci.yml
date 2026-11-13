@@ -66,6 +66,7 @@ jobs:
       - run: node scripts/test-proef-einde-wissen.mjs
       - run: node scripts/test-verdwijndatum-praktijk.mjs
       - run: node scripts/test-juridisch-b1.mjs
+      - run: node scripts/test-voorwaarden-code.mjs
       - run: node scripts/test-stem-ai-melding.mjs
       - run: node scripts/test-ai-melding-zoekhulp-vertaling.mjs
       - run: node scripts/test-privacy-inloggen.mjs
