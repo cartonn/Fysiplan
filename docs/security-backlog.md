@@ -411,6 +411,10 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **LAAG (nieuw, gebruikers-sweep 2026-11-13 18u, Truus en Jayden) — invoercontrole op /k neemt arrays en voorloopnullen aan.**
+  `eenVan` in lib/invoer.js (r. ~20) doet `String(x)`, dus `soort:["vraag"]` telt als "vraag"; `index()` (r. ~25) neemt `oef:[0]`, `"01"`,
+  `"0001"` aan. Geen toegang tot iets anders (alleen de eigen kaart), wel slordig. Kleinste stap: alleen `typeof === "string"`/geheel getal.
+
 - **OPGELOST 2026-11-13 16u (deze PR, test:vragenrollen) — MIDDEL (gebruikers-sweep 2026-11-13 14u, Karin, gemeten lokaal via de API) — een therapeut kan de vaste vragen van een
   collega of beheerder overschrijven of wissen.** Nu: elke bestaande vraag die niet ongewijzigd terugkomt, moet van de therapeut zelf
   zijn (`door`) of hij moet beheerder zijn (`magGedeeldAanpassen`), anders 403 en niets verandert (logboek `vragen-aanpassen-geweigerd`);
