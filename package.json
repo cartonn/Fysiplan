@@ -171,6 +171,7 @@
     "test:reekstitel": "node scripts/test-kaart-reeks-titel.mjs",
     "test:auditspoor": "node scripts/test-audit-spoor.mjs",
     "test:profielbeheer": "node scripts/test-profiel-beheer.mjs",
+    "test:websiteveilig": "node scripts/test-website-veilig.mjs",
     "test:opzeggenbeheer": "node scripts/test-opzeggen-beheer.mjs",
     "test:praktijknaambezet": "node scripts/test-praktijknaam-bezet.mjs",
     "test:naamerftniets": "node scripts/test-naam-erft-niets.mjs",
