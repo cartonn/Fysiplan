@@ -2150,7 +2150,7 @@ bridge2.jpg</div>
   // de laatste opname-aanvraag onthouden: verloopt de QR (een kwartier), dan
   // start de 'Nieuwe QR-code'-knop dezelfde opname opnieuw zonder het venster
   // te sluiten en de hele flow opnieuw op te zoeken
-  var OPNAME_LAATSTE=null;
+  var OPNAME_LAATSTE=null,OPNAME_TOKEN=null;
   function startOpname(doel,naam,cb){
     OPNAME_LAATSTE={doel:doel,naam:naam,cb:cb};
     var retry=document.getElementById('on_retry');if(retry)retry.style.display='none';
@@ -2159,7 +2159,10 @@ bridge2.jpg</div>
     fetch('api/opname/start',{method:'POST',headers:hdrs,body:JSON.stringify({doel:doel,naam:naam})})
       .then(function(r){return r.json();})
       .then(function(d){
+        // verlopen proef: dezelfde proefbalk als bij de andere knoppen, geen kale melding
+        if(!d.ok&&d.proefVerlopen){toonProefVoorbij();return;}
         if(!d.ok){alert(d.fout||'Opname starten is niet gelukt.');return;}
+        OPNAME_TOKEN=d.token;
         document.getElementById('on_titel').textContent=naam?('Video opnemen — '+naam):'Video opnemen';
         document.getElementById('on_status').textContent='Wachten op de video…';
         var url=location.origin+'/o/'+d.token;
@@ -2183,7 +2186,11 @@ bridge2.jpg</div>
       })
       .catch(function(){alert('Opname starten is niet gelukt: geen verbinding met de server.');});
   }
-  document.getElementById('on_cancel').addEventListener('click',function(){stopOpname();closeOv('ovOpname');});
+  document.getElementById('on_cancel').addEventListener('click',function(){
+    // het wachtende token teruggeven, zodat het niet een kwartier meetelt voor het plafond van de praktijk
+    if(OPNAME_TOKEN){fetch('api/opname/stop',{method:'POST',headers:PJSON(),body:JSON.stringify({token:OPNAME_TOKEN})}).catch(function(){});OPNAME_TOKEN=null;}
+    stopOpname();closeOv('ovOpname');
+  });
   document.getElementById('on_retry').addEventListener('click',function(){
     if(OPNAME_LAATSTE)startOpname(OPNAME_LAATSTE.doel,OPNAME_LAATSTE.naam,OPNAME_LAATSTE.cb);
   });
