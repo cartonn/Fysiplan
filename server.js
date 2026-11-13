@@ -2735,7 +2735,10 @@ async function vraagClaude(model, maxTokens, system, user, opties = {}) {
   }
   const d = await r.json();
   const tekst = (d.content || []).map((c) => c.text || "").join("");
-  if (opties.schema) return JSON.parse(tekst);
+  if (opties.schema) {
+    if (d.stop_reason === "max_tokens") throw new Error("modelantwoord-afgebroken");
+    return JSON.parse(tekst);
+  }
   const m = tekst.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
   if (!m) throw new Error("geen json in antwoord");
   return JSON.parse(m[0]);
@@ -3577,7 +3580,7 @@ function beheerBronEcht() {
 }
 const beheerOmgeving = maakBeheerOmgeving({
   demoModelAan: () => !!(process.env.AGENT_DEMO_API_KEY || AI_KEY),
-  demoModelVraag: ({ model, system, user, schema }) => vraagClaude(model, 2000, system, user, { schema, effort: "low", apiKey: process.env.AGENT_DEMO_API_KEY || AI_KEY, workspace: process.env.AGENT_DEMO_WORKSPACE_ID || AI_WORKSPACE_ID }),
+  demoModelVraag: ({ model, system, user, schema }) => vraagClaude(model, 4000, system, user, { schema, effort: "low", apiKey: process.env.AGENT_DEMO_API_KEY || AI_KEY, workspace: process.env.AGENT_DEMO_WORKSPACE_ID || AI_WORKSPACE_ID }),
   dataDir, publicDir, bronEcht: beheerBronEcht, leverancier: () => FYSIPLAN_ID,
   beheerEigen, denied, send, sendJson, readBody, kruisSite, weigerKruis, saveJson, beheerLog, beheerIp,
   stuurMail, mailIngesteld, mailOpSlot, maskeerEmail,

@@ -5,7 +5,7 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { once } from 'node:events';
-import { DEMO_MODEL, demoModelInvoer } from '../lib/agent-demo-model.js';
+import { DEMO_MODEL, DEMO_RONDES_PER_DAG, demoModelInvoer } from '../lib/agent-demo-model.js';
 const growthContext = JSON.parse(demoModelInvoer('groei', {modus:'proef',feiten:['Fysiplan geeft geen diagnose, geen behandeladvies en stelt geen kaart voor: de therapeut kiest de oefeningen.'],vorigeConcepten:[{concept:'G-12345678',tekst:'Onbewezen tijdwinst',stand:'afgewezen',redenVanBeheer:'Geen tijdwinst beloven'}]}).user);
 assert.ok(!JSON.stringify(growthContext).includes('diagnose'));
 assert.equal(growthContext.vorigeConcepten[0].tekst,undefined);
@@ -38,7 +38,7 @@ try{
  let r=await post('loket/demoronde',{rol:'staf'});
  assert.equal(r.status,200,JSON.stringify(r.body)); assert.equal(r.body.modelRonde.resultaten[0].ok,true);
  assert.equal(r.body.loket.geheugen.taken.length,before+1);
- assert.equal(input[0].model,DEMO_MODEL); assert.equal(input[0].max_tokens,2000);
+ assert.equal(input[0].model,DEMO_MODEL); assert.equal(input[0].max_tokens,4000);
  assert.ok(!input[0].messages[0].content.includes('@'));
  mode='wrongrole';r=await post('loket/demoronde',{rol:'staf'});assert.equal(r.body.modelRonde.resultaten[0].status,403);
  mode='hold';const began=new Promise(r=>entered=r);const running=post('loket/demoronde',{rol:'staf'});await began;
@@ -48,9 +48,10 @@ try{
  mode='error';r=await post('loket/demoronde',{rol:'staf'});assert.equal(r.status,502);assert.equal(r.body.code,'model-provider');
  mode='bad';r=await post('loket/demoronde',{rol:'staf'});assert.equal(r.status,502);assert.equal(r.body.code,'modelantwoord-ongeldig');
  mode='normal';assert.equal((await post('loket/demoronde',{rol:'staf'})).status,200);
- assert.equal(calls,6); assert.equal((await post('loket/demoronde',{rol:'staf'})).status,429);
+ for(let i=calls;i<DEMO_RONDES_PER_DAG;i++) assert.equal((await post('loket/demoronde',{rol:'staf'})).status,200);
+ assert.equal(calls,DEMO_RONDES_PER_DAG); assert.equal((await post('loket/demoronde',{rol:'staf'})).status,429);
  await post('demo-opnieuw');assert.equal((await post('loket/demoronde',{rol:'staf'})).status,429);
- await stop();await start();assert.equal((await post('loket/demoronde',{rol:'staf'})).status,429);assert.equal(calls,6);
+ await stop();await start();assert.equal((await post('loket/demoronde',{rol:'staf'})).status,429);assert.equal(calls,DEMO_RONDES_PER_DAG);
  await post('loket/agent',{rol:'groei',stand:'uit'});assert.equal((await post('loket/demoronde',{rol:'groei'})).status,423);
  console.log('test-demo-model: ok (modelkeuze, demo-only, rollen, gelijktijdigheid, stop tijdens aanvraag, API-fout, ongeldig antwoord, dagbudget, reset en herstart)');
 }catch(e){console.error(logs.slice(-1500));throw e;}finally{if(child?.exitCode===null)await stop();api.close();await rm(dir,{recursive:true,force:true});}

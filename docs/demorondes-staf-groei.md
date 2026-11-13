@@ -5,8 +5,8 @@ De pagina Beheer → Demo → Agents heeft voor de chief of staff en groei-agent
 ## Koppeling en grenzen
 
 - `AGENT_DEMO_API_KEY` en eventueel `AGENT_DEMO_WORKSPACE_ID` koppelen alleen deze demorondes. De sleutel verschijnt nooit in de browser. Een al ingestelde `ANTHROPIC_API_KEY` / `ANTHROPIC_WORKSPACE_ID` kan ook worden gebruikt. De afzonderlijke demo-variabelen zetten de patiëntvraaghulp of andere AI-functies niet aan.
-- Zes aanvragen per rol per kalenderdag (serverfunctie `dagVan`), inclusief mislukte aanvragen. Het budget staat los van de demo in het bestaande loketbestand en blijft over reset en herstart behouden.
-- Maximaal 40.000 bytes werkinvoer en 2.000 uitvoertokens per aanvraag; geen tools of externe links volgen; één lopende ronde tegelijk per serverproces.
+- Twintig aanvragen per rol per kalenderdag (serverfunctie `dagVan`), inclusief mislukte aanvragen. Het budget staat los van de demo in het bestaande loketbestand en blijft over reset en herstart behouden.
+- Maximaal 40.000 bytes werkinvoer en 4.000 uitvoertokens per aanvraag; geen tools of externe links volgen; één lopende ronde tegelijk per serverproces.
 - De knop werkt alleen in Demo, voor staf/groei op Proef, met beheerrecht Agents. De globale stopknop en de demostop gelden ook. Na stoppen, uitschakelen of reset tijdens de aanvraag wordt het antwoord niet uitgevoerd. Een aanvraag die al bij de provider loopt kan wel kosten maken.
 - Dit is een handmatige serveraanroep. Er zijn hiervoor geen Claude-projecten of rolsleutels nodig. De externe geplande Claude-taken blijven een afzonderlijke route, met een eigen sleutel per rol. Er zijn geen nieuwe geplande taken gemaakt.
 - Uitrol van deze branch alleen naar de Railway-testservice; main/productie pas na review en expliciete merge.
