@@ -88,12 +88,12 @@ try {
   assert.equal(t.Brug.d, nlDag(Date.now()), "toekomst telt als nu");
 
   // 2. twee gelijktijdige verzoeken met dezelfde eigen oefening
-  const body = { praktijk: P, naam: "Muurzit", uitleg: "Rug tegen de muur.", img: pngUrl };
+  const body = { praktijk: P, naam: "Muurzit eigen variant", uitleg: "Rug tegen de muur.", img: pngUrl };
   const [a, b] = await Promise.all([post("/api/praktijk/oefeningen", body, S), post("/api/praktijk/oefeningen", body, S)]);
   const codes = [a.status, b.status].sort();
   assert.deepEqual(codes, [200, 409], "precies één toegevoegd, één nette 409: " + codes);
   const lijst = await (await get("/api/praktijk/oefeningen?praktijk=" + encodeURIComponent(P), S)).json();
-  const muur = (lijst.oefeningen || []).filter((o) => o.naam === "Muurzit");
+  const muur = (lijst.oefeningen || []).filter((o) => o.naam === "Muurzit eigen variant");
   assert.equal(muur.length, 1, "één oefening Muurzit: " + JSON.stringify(lijst).slice(0, 300));
 
   // 3. browser: offline vinkje komt later alsnog aan (alleen waar Playwright staat)

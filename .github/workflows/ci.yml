@@ -96,6 +96,7 @@ jobs:
       - run: npm run test:seintje
       - run: npm run test:sweepoverzicht
       - run: npm run test:gedeeldwerk
+      - run: npm run test:eigenbibnaam
       - run: npm run test:gegevensrem
       - run: npm run test:sjabloondelen
       - run: npm run test:weekverder
@@ -127,6 +128,7 @@ jobs:
       - run: npm run test:dubbelklikoverzicht
       - run: npm run test:kaart200taal
       - run: npm run test:roepnaamander
+      - run: npm run test:printroepnaam
       - run: npm run test:kaartladen
       - run: npm run test:noorstop
       - run: npm run test:kaartdruk
