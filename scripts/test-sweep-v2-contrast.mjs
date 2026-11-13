@@ -1,3 +1,5 @@
+// 2026-11-13 (Ahmed): het werkvlak is weer licht (zachte groene tint), alleen de kopbalk blijft donker petrol.
+// Deze test controleert nu hetzelfde op het lichte werkvlak: geen lichte tekst op een licht vlak.
 // Gebruikers-sweep 2026-11-11 18u (Karin, beheerder, desktop en iPad): sinds het donkere V2-thema
 // (Active Tech, #197) waren het Team-venster en het Kaarten-paneel bijna onleesbaar. De lichtblauwe
 // naamblokken (--naamblok #eaf2fd) bleven licht terwijl de tekst wit werd (contrast ±1,1:1), de rolkeuze
@@ -21,14 +23,17 @@ import { createRequire } from "node:module";
 
 const root = process.cwd();
 const css = await readFile(join(root, "public/v2.css"), "utf8");
-// het donkere schermblok (na de Active Tech-kleuren) moet de lichte naamblokken overschrijven
-const donker = css.slice(css.indexOf("--bg:#18343b"));
-assert.ok(donker.length > 10, "donker thema gevonden");
-assert.match(donker, /--naamblok:#[0-9a-f]{6}/i, "naamblok krijgt in het donkere thema een eigen kleur");
-const nb = donker.match(/--naamblok:#([0-9a-f]{6})/i)[1];
+// Sinds 2026-11-13 (Ahmed) is het werkvlak licht met een zachte groene tint en alleen de kopbalk donker.
+// Het schermblok "Licht werkvlak" (na de Active Tech-kleuren) moet de oude blauwe naamblokken overschrijven.
+// De variabele heet nog `donker` omdat de controles hieronder dezelfde blokken lezen.
+const donker = css.slice(css.indexOf("/* Licht werkvlak"));
+assert.ok(css.includes("/* Licht werkvlak") && donker.length > 10, "licht werkvlak gevonden");
+assert.match(donker, /--naamblok:#[0-9a-f]{6}/i, "naamblok krijgt op het lichte werkvlak een eigen kleur");
+const nb = donker.match(/html\.v2\{[^}]*--naamblok:#([0-9a-f]{6})/i)[1];
 const lum = (hex) => { const c = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((v) => v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
 const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
-assert.ok(ratio("ffffff", nb) >= 4.5, "witte naam op het naamblok minstens 4,5:1, nu " + ratio("ffffff", nb).toFixed(2));
+assert.ok(ratio("18343b", nb) >= 4.5, "petrol naam op het naamblok minstens 4,5:1, nu " + ratio("18343b", nb).toFixed(2));
+assert.ok(lum(nb) > 0.6, "het naamblok is licht (geen donker petrol vlak meer)");
 
 // proefformulier (Mark): een veld met een fout was witte tekst op #fffafa, het pijnseintje rood op petrol
 const proef = await readFile(join(root, "public/proef.html"), "utf8");
@@ -41,7 +46,7 @@ const alarm = proefDonker.match(/\.alarm\{background:#([0-9a-f]{6})/i);
 assert.ok(alarm && ratio(fout[1], alarm[1]) >= 4.5, "alarmregel leesbaar");
 
 // ---- tweede ronde (platformreview 2026-11-11): vlakken en tekstkleuren in het donkere thema ----
-const PANEEL = "20464f", BLOK = "2b5054", LIMOEN = "b9e34b";
+const PANEEL = "ffffff", BLOK = "f1f6f3", LIMOEN = "b9e34b", MERK = "20464f";
 const hex6 = (h) => (h.length === 3 ? h.split("").map((c) => c + c).join("") : h).toLowerCase();
 // de achtergrond die het donkere thema aan een selector geeft (laatste regel wint)
 // ook de tekstkleur, als dezelfde regel die zet
@@ -67,7 +72,7 @@ for (const [selector, wat] of [
   const v = vlakVan(selector);
   assert.ok(v, wat + ": het donkere thema geeft " + selector + " een eigen achtergrond");
   // zet de regel zelf de tekstkleur, dan telt die; anders de gewone tekst en de gedempte tekst van het thema
-  for (const kleur of v.kleur ? [v.kleur] : ["ffffff", "e0eae7", "bdcfca"]) {
+  for (const kleur of v.kleur ? [v.kleur] : ["18343b", "314d53", "526b70"]) {
     assert.ok(ratio(kleur, v.bg) >= 4.5, wat + ": tekst #" + kleur + " leesbaar op #" + v.bg + " (" + ratio(kleur, v.bg).toFixed(2) + ":1)");
   }
 }
@@ -79,9 +84,9 @@ assert.ok(ratio(hex6(veldRegel[3]), hex6(veldRegel[2])) >= 4.5, "getypte tekst l
 // tekst op de merkkleur, foutrood en goedgroen lopen via variabelen die het donkere thema omzet
 const kleurVar = (naam) => { const m = [...donker.matchAll(new RegExp("html\\.v2\\{[^}]*--" + naam + ":#([0-9a-f]{6})", "gi"))].pop(); return m ? m[1] : null; };
 const opMerk = kleurVar("op-merk"), foutKleur = kleurVar("fout"), goedKleur = kleurVar("goed");
-assert.ok(opMerk && ratio(opMerk, LIMOEN) >= 4.5, "tekst op limoen leesbaar (--op-merk)");
+assert.ok(opMerk && ratio(opMerk, MERK) >= 4.5, "tekst op de petrol merkkleur leesbaar (--op-merk)");
 for (const [naam, kleur] of [["--fout", foutKleur], ["--goed", goedKleur]]) {
-  assert.ok(kleur, naam + " heeft in het donkere thema een eigen tint");
+  assert.ok(kleur, naam + " heeft op het lichte werkvlak een eigen tint");
   assert.ok(ratio(kleur, PANEEL) >= 4.5 && ratio(kleur, BLOK) >= 4.5, naam + " leesbaar op het paneel en op een blok");
 }
 assert.match(donker, /html\.v2 #a4\{[^}]*--op-merk:#fff[^}]*--fout:#b42318/, "op de A4 (papier) blijven de drukkleuren");
@@ -98,8 +103,8 @@ for (const bestand of ["public/index.html", "public/release-notes.js"]) {
       const tekst = st.match(/(?:^|;)\s*color:\s*#([0-9a-fA-F]{3,6})\b/);
       const vlak = st.match(/background(?:-color)?:\s*#([0-9a-fA-F]{3,6})\b/);
       const heeftVlak = /background(?:-color)?:/.test(st), heeftTekst = /(?:^|;)\s*color:/.test(st);
-      if (tekst && !heeftVlak && ratio(hex6(tekst[1]), PANEEL) < 4.5) mis.push((i + 1) + ": donkere tekst #" + tekst[1] + " zonder eigen vlak");
-      if (vlak && !heeftTekst && lum(hex6(vlak[1])) > 0.6) mis.push((i + 1) + ": licht vlak #" + vlak[1] + " zonder eigen tekstkleur");
+      if (tekst && !heeftVlak && ratio(hex6(tekst[1]), PANEEL) < 4.5) mis.push((i + 1) + ": lichte tekst #" + tekst[1] + " zonder eigen vlak");
+      if (vlak && !heeftTekst && lum(hex6(vlak[1])) < 0.15) mis.push((i + 1) + ": donker vlak #" + vlak[1] + " zonder eigen tekstkleur");
     }
     for (const m of regel.matchAll(/\.style\.color\s*=\s*([^;]{0,90})/g)) {
       // de terugvalkleur in var(--naam,#kleur) telt niet; een zin die ook de achtergrond zet evenmin
@@ -108,7 +113,7 @@ for (const bestand of ["public/index.html", "public/release-notes.js"]) {
       for (const h of kaal.match(/#[0-9a-fA-F]{3,6}\b/g) || []) if (ratio(hex6(h.slice(1)), PANEEL) < 4.5) mis.push((i + 1) + ": style.color=" + h + " zonder variabele");
     }
   });
-  assert.deepEqual(mis, [], bestand + ": kleuren die in het donkere thema onleesbaar zijn: " + mis.join(" | "));
+  assert.deepEqual(mis, [], bestand + ": kleuren die op het lichte werkvlak onleesbaar zijn: " + mis.join(" | "));
 }
 const rn = await readFile(join(root, "public/release-notes.js"), "utf8");
 assert.match(rn, /dialog\.className='no-print fp-nieuw'/, "Nieuw in Fysiplan gebruikt de opmaak uit v2.css");
@@ -239,8 +244,6 @@ try {
       await el.fill("Voorbeeldtekst"); await el.focus(); await wacht(220);
       const m = await meetEl(el);
       assert.deepEqual(m, [], wat + " met getypte tekst leesbaar: " + JSON.stringify(m));
-      const vlak = await el.evaluate((e) => getComputedStyle(e).backgroundColor);
-      assert.notEqual(vlak, "rgb(255, 255, 255)", wat + ": geen wit veld in het donkere scherm");
       await el.fill("");
     };
 
@@ -297,11 +300,11 @@ try {
     await wacht(400);
     assert.deepEqual(await page.evaluate(meet, "#ovTeam"), [], "foutmelding in het teamvenster leesbaar");
 
-    // Nieuw in Fysiplan: donker vlak, in het midden, met een echte achtergrond erachter
+    // Nieuw in Fysiplan: eigen vlak, in het midden, met een echte achtergrond erachter
     await sluit();
     const nieuw = await page.evaluate(() => { const d = document.querySelector("dialog.fp-nieuw"); d.showModal(); const r = d.getBoundingClientRect(); return { links: Math.round(r.left), rechts: Math.round(innerWidth - r.right), vlak: getComputedStyle(d).backgroundColor, achter: getComputedStyle(d, "::backdrop").backgroundColor }; });
     assert.ok(Math.abs(nieuw.links - nieuw.rechts) <= 2, "Nieuw in Fysiplan staat in het midden: " + JSON.stringify(nieuw));
-    assert.notEqual(nieuw.vlak, "rgb(255, 255, 255)", "Nieuw in Fysiplan is geen wit venster");
+    assert.equal(nieuw.vlak, "rgb(255, 255, 255)", "Nieuw in Fysiplan is een wit venster met een echte achtergrond");
     assert.match(nieuw.achter, /rgba\(\d+, \d+, \d+, 0\.[3-9]/, "Nieuw in Fysiplan heeft een achtergrond: " + nieuw.achter);
     assert.deepEqual(await page.evaluate(meet, "dialog.fp-nieuw"), [], "Nieuw in Fysiplan leesbaar");
     await ctx.close();
