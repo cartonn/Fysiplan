@@ -4,6 +4,13 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Mails die een agent zelf schrijft: één vraag voor de jurist (legal, 2026-11-13 21u)
+
+Een mail die een agent met taalmodel zelf verstuurt (mailstand "automatisch" bij de support-agent) krijgt nu onderaan:
+"Dit bericht is met AI geschreven en niet vooraf door een medewerker van Fysiplan gelezen." Dat volgt uit de AI-verordening
+(art. 50 lid 1). Keurt een medewerker het bericht eerst goed, dan staat die regel er niet onder: dan verstuurt een mens het.
+**Vraag voor de jurist:** is dat genoeg, of wil je de regel ook bij mails na akkoord? Zeg het, dan zet ik hem er altijd onder.
+
 ### Voorwaarden: btw, grens op kaarten en de Ideeënbox (legal, 2026-11-13 05u)
 
 De voorwaarden zijn bijgewerkt naar versie 2026-11-13; praktijken gaan in de app opnieuw akkoord. Drie dingen voor jou of de jurist:

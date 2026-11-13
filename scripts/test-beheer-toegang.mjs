@@ -76,6 +76,15 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
   assert.equal(m.onderwerp, "Lukt het nog met de kaarten?");
   assert.ok(m.tekst.startsWith("Hallo Iris,\n\nWe zagen dat er bij Fysio Test de laatste weken") && m.tekst.endsWith("\n\nGroet,\nFysiplan-support"));
   assert.ok(eigenMail(goed, {}).tekst.startsWith("Hallo,\n\nWe zagen dat er bij je praktijk"));
+  {
+    const html = await readFile(new URL("../public/juridisch.html", import.meta.url), "utf8");
+    const rij = html.slice(html.indexOf('<tr id="support">'), html.indexOf("</tr>", html.indexOf('<tr id="support">')));
+    assert.match(rij, /zonder dat een medewerker hem eerst las\? Dan staat in de mail dat hij met AI is geschreven/, "/privacy#support noemt de AI-regel in een mail die een agent zelf verstuurt");
+  }
+  // AI-verordening art. 50 lid 1: zonder mens ertussen zegt de mail dat hij met AI is geschreven, na akkoord niet
+  assert.doesNotMatch(m.tekst, /\bAI\b/, "na akkoord van een medewerker geen AI-regel");
+  const zelf = eigenMail(goed, { naam: "Iris de Boer", praktijk: "Fysio Test", zonderMens: true });
+  assert.ok(zelf.tekst.includes("met AI geschreven") && zelf.tekst.endsWith("niet vooraf door een medewerker van Fysiplan gelezen.\n\nGroet,\nFysiplan-support"), zelf.tekst);
   const fout = (extra, patroon) => { const r = keurEigenBericht({ ...GOED, ...extra }); assert.equal(r.ok, false, JSON.stringify(extra)); assert.match(r.fouten.join(" "), patroon); };
   fout({ onderwerp: "Hoi" }, /onderwerp/);
   fout({ tekst: "Te kort." }, /tussen 40 en 1500/);
