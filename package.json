@@ -199,7 +199,8 @@
     "test:prullenbak": "node scripts/test-kaart-prullenbak.mjs",
     "test:beveiligingfeedback": "node scripts/test-beveiliging-feedback.mjs",
     "test:welkomlink": "node scripts/test-welkomlink.mjs",
-    "test:proeftokenverloop": "node scripts/test-proef-token-verloop.mjs"
+    "test:proeftokenverloop": "node scripts/test-proef-token-verloop.mjs",
+    "test:foutpagina": "node scripts/test-foutpagina.mjs"
   },
   "engines": {
     "node": ">=20"
