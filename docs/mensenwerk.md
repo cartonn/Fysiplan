@@ -4,6 +4,14 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Voorwaarden: btw, grens op kaarten en de Ideeënbox (legal, 2026-11-13 05u)
+
+De voorwaarden zijn bijgewerkt naar versie 2026-11-13; praktijken gaan in de app opnieuw akkoord. Drie dingen voor jou of de jurist:
+
+1. **Btw.** Art. 4 zegt nu wat je in de beheeromgeving onder Finance kiest (zolang dat open staat: "exclusief btw", net als de landing). Een praktijk gaat akkoord met een versie, niet met het btw-bijschrift van dat moment. Laat de jurist zeggen of dat genoeg is, of dat een wijziging van de btw-keuze een nieuwe versie moet worden.
+2. **Grens op kaarten.** De voorwaarden noemen nu 100 lopende kaarten tijdens de proef en 300 per login voor een klant (lib/plaatsen.js). Wil je die getallen zakelijk anders, zeg het: de tekst volgt de code vanzelf.
+3. **Ideeënbox.** Art. 9 zegt nu dat Fysiplan een idee mag gebruiken om Fysiplan beter te maken, zonder vergoeding. Laat de jurist kijken of dat zo ruim mag (rechten op een idee, en of het in de app bij het plaatsen ook moet staan).
+
 ### Hulp van Fysiplan-support: drie vragen voor de jurist (legal, 2026-11-13)
 **Wat er is:** /privacy heeft nu een rij "Hulp van Fysiplan-support". Fysiplan meet per praktijk en per login het gebruik
 (laatste login, actieve logins per dag, foute wachtwoorden, tweede stap, kaarten per week), maakt daar een stand van en kan
