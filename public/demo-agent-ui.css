@@ -1,0 +1,11 @@
+.demo-sdk-taken ui-tabs-list { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+.demo-sdk-taken [role=tab][aria-selected=true] { background:#18343b; color:#fff; }
+.demo-sdk-taken ui-tabs-panel { display:block; }
+.demo-sdk-taken [hidden], .demo-sdk-concept[hidden], .demo-sdk-backdrop[hidden] { display:none; }
+.demo-sdk-concept { box-sizing:border-box; position:fixed; inset:0; margin:auto; width:min(640px, calc(100vw - 32px)); max-height:85dvh; overflow:auto; padding:24px; background:#fff; color:#18343b; border:1px solid #92aaa5; border-radius:16px; box-shadow:0 20px 80px #0005; }
+.demo-sdk-concept ui-dialog-title { display:block; font-size:1.4rem; font-weight:700; margin-bottom:12px; }
+.demo-sdk-concept ui-dialog-description { display:block; margin-bottom:16px; }
+.demo-sdk-concept pre { font:inherit; white-space:pre-wrap; overflow-wrap:anywhere; }
+.demo-sdk-backdrop { position:fixed; inset:0; background:#102b34aa; }
+.demo-sdk-concept::backdrop { background:#102b34aa; }
+.demo-sdk-taken :focus-visible, .demo-sdk-concept :focus-visible { outline:3px solid #547f00; outline-offset:3px; }

@@ -20,6 +20,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      - run: node scripts/build-demo-ui.mjs --check
+      - run: node scripts/test-demo-ui-policy.mjs
       - run: npm run test:categories
       # De mobiele poorten draaiden tot nu toe alleen lokaal. Juist daar zit de
       # patiëntkaart: beoordeelde uitsnedes, teruggehouden beelden, houdlijsten en

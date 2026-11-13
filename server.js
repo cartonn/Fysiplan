@@ -3579,6 +3579,7 @@ function beheerBronEcht() {
   return { soort: "echt", nu, praktijken, facturen, kosten: [], systeem: { versie: buildInfo.commit || "", uptimeUren: Math.round((nu - startTijd) / 360000) / 10, checks, beschikbaarheid: [] } };
 }
 const beheerOmgeving = maakBeheerOmgeving({
+  uiSdkDemo: OMGEVING === "test",
   demoModelAan: () => !!(process.env.AGENT_DEMO_API_KEY || AI_KEY),
   demoModelVraag: ({ model, system, user, schema }) => vraagClaude(model, 4000, system, user, { schema, effort: "low", apiKey: process.env.AGENT_DEMO_API_KEY || AI_KEY, workspace: process.env.AGENT_DEMO_WORKSPACE_ID || AI_WORKSPACE_ID }),
   dataDir, publicDir, bronEcht: beheerBronEcht, leverancier: () => FYSIPLAN_ID,
