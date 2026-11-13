@@ -419,6 +419,15 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **LAAG (nieuw, gebruikers-sweep 2026-11-13 22u, Jayden, gemeten lokaal) — rest van de invoercontrole op /k na #295.** `aan:"false"` en
+  `aan:[true]` op /api/kaart/gedaan en /api/kaart/oefening werken als omschakeling (`[true]` haalde de oefendag weg; lib/patient-routes.js
+  r. ~101/~122: alleen `=== true/false` telt, de rest valt in de oude tik); `n` als lijst wordt genegeerd en slaat de naamcontrole van
+  #291 over (r. ~73); `wanneer:"01"` of `[1]` → 200; een id als lijst → 404 i.p.v. 400. Alleen de eigen kaart, geen toegang tot iets anders.
+  Kleinste stap: `aan` alleen boolean of afwezig, `n` alleen tekst of afwezig, anders 400.
+- **LAAG (nieuw, gebruikers-sweep 2026-11-13 22u, Mark, alleen gelezen) — `/api/opname/start` controleert `kruisSite` niet** (server.js
+  r. ~6336), `/stop` en `/upload` wel. Een andere site kan met de cookie van een ingelogde therapeut een opnametoken laten aanmaken
+  (telt tegen het plafond van 20). Nagaan en zo nodig `kruisSite` toevoegen.
+
 - **OPGELOST 2026-11-13 20u (deze PR, test:patientonderdeel) — LAAG (gebruikers-sweep 2026-11-13 18u, Truus en Jayden) — invoercontrole op /k neemt arrays en voorloopnullen aan.**
   Nu: `eenVan` neemt alleen een echte tekst, `index` alleen een getal of cijfertekst zonder voorloopnul (`[0]`, `"01"`, `"00"` → 400).
   `eenVan` in lib/invoer.js (r. ~20) doet `String(x)`, dus `soort:["vraag"]` telt als "vraag"; `index()` (r. ~25) neemt `oef:[0]`, `"01"`,
