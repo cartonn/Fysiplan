@@ -8164,8 +8164,18 @@ async function afhandelen(request, response) {
         KNOP_HTML: '<a class="knop oranje" href="/v2/gegevens">Naar Mijn gegevens</a> <a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Naar mijn abonnement</a>' }, 409);
       return;
     }
+    // Geen (geldige) proefcookie op dit apparaat, bijvoorbeeld een therapeut die via de app
+    // binnenkwam: niets wissen en dat ook zeggen. Voorheen kwam hier "Je gegevens zijn gewist"
+    // terwijl er niets gewist was (gebruikers-sweep 2026-11-13, Karin; security-backlog LAAG).
+    if (!p) {
+      await serveerProef(request, response, "bericht", { TITEL: "Gegevens wissen", ETIKET: "Gegevens",
+        KOP: "Er is niets gewist.",
+        TEKST: "Op dit apparaat staat geen proef van je praktijk. Gegevens van een praktijk wist een beheerder op Mijn gegevens.",
+        KNOP_HTML: '<a class="knop oranje" href="/v2/gegevens">Naar Mijn gegevens</a> <a class="knop omlijnd" href="/v2">Terug naar de site</a>' }, 409);
+      return;
+    }
     // na een online betaling blijft wat de fiscale bewaarplicht vraagt (7 jaar); de rest gaat weg
-    if (p) { proefNaPraktijkWissen(p.id); await bewaarProeven(); }
+    proefNaPraktijkWissen(p.id); await bewaarProeven();
     response.setHeader("set-cookie", proefCookie("", request));
     await serveerProef(request, response, "bericht", { TITEL: "Gegevens gewist", ETIKET: "Gewist", KOP: "Je gegevens zijn gewist.",
       TEKST: "We bewaren niets meer van je aanmelding en je proef is gestopt. Kaarten die je met patiënten deelde blijven werken tot hun bewaartermijn afloopt.",
