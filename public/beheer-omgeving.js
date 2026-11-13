@@ -115,7 +115,7 @@ function teken() {
   $('#tSupport').textContent = problemen || '';
   const btwOpen = data.finance.btw.filter((b) => b.stand === 'te-doen' || b.stand === 'te-laat').length;
   $('#tBtw').textContent = btwOpen || '';
-  $('#tAgents').textContent = (data.loket ? data.loket.concepten.filter((c) => c.stand === 'wacht').length : 0) || '';
+  $('#tAgents').textContent = (data.loket ? data.loket.concepten.filter((c) => c.stand === 'wacht').length + geheugenWacht(data.loket.geheugen) : 0) || '';
   $('#tIdeeen').textContent = (data.ideeen && data.ideeen.wacht) || '';
   if (p !== 'agents') st.nieuweSleutel = null; // de nieuwe sleutel is alleen te zien tot je de pagina verlaat
   const el = $('#pagina');
@@ -582,14 +582,14 @@ function agents() {
   const eigen = data.agent.stand['eigen-bericht'] || 'uit';
   const metNaam = (c, t) => t.replaceAll('{praktijk}', c.praktijk);
   const standPil = (k) => pil({ uit: 'Uit', proef: 'Proef', aan: 'Aan' }[k], { uit: 'neutraal', proef: 'petrol', aan: 'goed' }[k]);
-  const seg = (rol, k, l) => '<button type="button" data-agent="' + rol + '" data-stand="' + k + '" class="' + (L.agents[rol].stand === k ? 'aan' : '') + '">' + l + '</button>';
+  const seg = (rol, k, l) => '<button type="button" data-agent="' + rol + '" data-stand="' + k + '" class="' + (L.agents[rol].stand === k ? 'aan' : '') + '"' + (k === 'aan' && rollen[rol].alleenProef ? ' disabled title="Voorlopig alleen op proef: het gedeelde geheugen bestaat nog alleen in de demo"' : '') + '>' + l + '</button>';
   const agentKaart = (rol) => {
     const a = L.agents[rol], r = rollen[rol];
     return '<div class="kaart agentkaart"><div class="kaartkop"><h2>' + esc(r.titel) + '</h2>' + standPil(a.stand) + '</div>' +
       '<dl><dt>Ziet</dt><dd>' + esc(r.ziet) + '</dd><dt>Doet</dt><dd>' + esc(r.doet) + '</dd></dl>' +
       '<div class="rij"><span class="seg" role="group" aria-label="Stand van de ' + esc(r.titel) + '">' + seg(rol, 'uit', 'Uit') + seg(rol, 'proef', 'Proef') + seg(rol, 'aan', 'Aan') + '</span>' +
         (rol === 'tech' ? '<label class="vink"><input type="checkbox" id="mergen"' + (a.mergen ? ' checked' : '') + '/>Zelf mergen</label>' : '') + '</div>' +
-      '<p class="uitleg">' + (a.stand === 'uit' ? 'Het loket geeft deze agent niets.' : a.stand === 'proef' ? (demo ? 'Op proef: werkt op deze demo-gegevens.' : 'Op proef: werkt op de demo-gegevens. Wat hij doet, zie je bij Demo.') : 'Werkt op de gegevens van ' + (demo ? 'de demo' : 'fysiplan.nl') + '.') +
+      '<p class="uitleg">' + (r.alleenProef ? 'Voorlopig alleen op proef. ' : '') + (a.stand === 'uit' ? 'Het loket geeft deze agent niets.' : a.stand === 'proef' ? (demo ? 'Op proef: werkt op deze demo-gegevens.' : 'Op proef: werkt op de demo-gegevens. Wat hij doet, zie je bij Demo.') : 'Werkt op de gegevens van ' + (demo ? 'de demo' : 'fysiplan.nl') + '.') +
         ' Laatst bij het loket: ' + esc(sindsTekst(a.gezien)) + '.</p></div>';
   };
   const conceptHtml = (c) => '<div class="zaak aandacht"><div class="zaakkop">' + pil(rollen[c.rol].titel, 'neutraal', true) + '<b>' + esc(c.praktijk) + '</b><span class="hint">' + esc(c.wat) + '</span></div>' +
@@ -605,11 +605,20 @@ function agents() {
     (v.punten.length ? '<ul>' + v.punten.map((p) => '<li>' + pil(...(PUNT[p.soort] || PUNT['let-op']), true) + '<span>' + (p.praktijk ? '<b>' + esc(p.praktijk) + '</b> ' : '') + esc(p.tekst) +
       (p.pr ? ' <a href="https://github.com/cartonn/Fysiplan/pull/' + Number(p.pr) + '" target="_blank" rel="noopener">PR #' + Number(p.pr) + '</a>' : '') + '</span></li>').join('') + '</ul>' : '') + '</article>';
   const chip = (k, l) => '<button type="button" class="chip' + (st.verslagRol === k ? ' aan' : '') + '" data-vrol="' + k + '">' + l + '</button>';
-  const sleutelKaart = !L.magSleutel ? '' : '<div class="kaart mt"><h2>Sleutel van de agents</h2><p class="ks">Hiermee komen de agents bij het loket. Fysiplan bewaart alleen een afdruk.</p>' +
-    (st.nieuweSleutel ? '<div class="sleutelbox"><label for="sleutelTekst">Nieuwe sleutel, alleen nu te zien</label><input id="sleutelTekst" readonly value="' + esc(st.nieuweSleutel) + '"/><button type="button" class="knop klein" id="sleutelKopie">Kopieer</button>' +
-      '<p class="uitleg">' + (demo ? 'Dit is een nepsleutel: in demo opent hij niets.' : 'Zet hem in de omgeving van de agents in Claude als netwerkgeheim voor fysiplan.nl. Plak hem nergens anders, ook niet in een chat.') + '</p></div>' : '') +
-    (L.sleutel ? '<p>Gemaakt op ' + esc(tijd(L.sleutel.gemaakt)) + (L.sleutel.door ? ' door ' + esc(L.sleutel.door) : '') + '.</p><div class="knoppen los"><button type="button" class="knop licht klein" id="sleutelNieuw">Nieuwe sleutel</button><button type="button" class="knop licht klein" id="sleutelWeg">Intrekken</button></div>'
-      : '<p>Er is geen sleutel: het loket is dicht en geen agent kan erbij.</p><button type="button" class="knop klein" id="sleutelNieuw">Sleutel maken</button>') + '</div>';
+  // één sleutel per agent; de oude gedeelde sleutel kan alleen nog worden ingetrokken
+  const sl = L.sleutels || {}, pog = L.pogingen || [];
+  const sleutelRij = (r) => '<div class="logregel">' + pil(sl[r] ? 'Sleutel' : 'Geen', sl[r] ? 'goed' : 'neutraal', true) + '<div><b>' + esc(rollen[r].titel) + '</b><span>' +
+    (sl[r] ? 'Gemaakt op ' + esc(tijd(sl[r].gemaakt)) + (sl[r].door ? ' door ' + esc(sl[r].door) : '') : 'Deze agent komt niet bij het loket.') + '</span>' +
+    '<div class="knoppen los"><button type="button" class="knop licht klein" data-sleutel-nieuw="' + r + '">' + (sl[r] ? 'Nieuwe sleutel' : 'Sleutel maken') + '</button>' +
+    (sl[r] ? '<button type="button" class="knop licht klein" data-sleutel-weg="' + r + '">Intrekken</button>' : '') + '</div></div></div>';
+  const sleutelKaart = !L.magSleutel ? '' : '<div class="kaart mt"><h2>Sleutels van de agents</h2><p class="ks">Elke agent heeft een eigen sleutel; de server leidt de rol af uit de sleutel, niet uit het adres. Fysiplan bewaart alleen een afdruk. Intrekken werkt meteen en alleen voor die agent.</p>' +
+    (st.nieuweSleutel ? '<div class="sleutelbox"><label for="sleutelTekst">Nieuwe sleutel voor de ' + esc(rollen[st.nieuweSleutelRol] ? rollen[st.nieuweSleutelRol].titel : 'agent') + ', alleen nu te zien</label><input id="sleutelTekst" readonly value="' + esc(st.nieuweSleutel) + '"/><button type="button" class="knop klein" id="sleutelKopie">Kopieer</button>' +
+      '<p class="uitleg">' + (demo ? 'Dit is een nepsleutel: in demo opent hij niets.' : 'Zet hem als netwerkgeheim voor fysiplan.nl in de eigen omgeving van déze agent in Claude, niet in een gedeelde omgeving. Plak hem nergens anders, ook niet in een chat.') + '</p></div>' : '') +
+    (L.sleutel ? '<div class="waarschuwing">Er staat nog een oude gedeelde sleutel (gemaakt op ' + esc(tijd(L.sleutel.gemaakt)) + '). Die werkt alleen nog voor support, tech en finance. Trek hem in zodra elke agent zijn eigen sleutel gebruikt. <button type="button" class="knop licht klein" id="sleutelWeg">Gedeelde sleutel intrekken</button></div>' : '') +
+    '<div class="logboek">' + Object.keys(rollen).map(sleutelRij).join('') + '</div>' +
+    '<h2 class="ruim">Pogingen tot rechtenoverschrijding</h2>' +
+    (pog.length ? '<div class="logboek">' + pog.slice(0, 8).map((x) => '<div class="logregel">' + pil('Geweigerd', 'aandacht', true) + '<div><span>Sleutel van ' + esc(rollen[x.sleutel] ? rollen[x.sleutel].titel.toLowerCase() : 'de oude gedeelde sleutel') + ' op het adres van ' + esc(rollen[x.adres] ? rollen[x.adres].titel.toLowerCase() : x.adres) + '</span><time>' + esc(tijd(x.t)) + '</time></div></div>').join('') + '</div>'
+      : '<p class="leeg">Geen. Een sleutel op het adres van een andere agent wordt geweigerd en komt hier en in het beheerlogboek.</p>') + '</div>';
   return (L.pauze ? '<div class="waarschuwing stil">Alle agents staan stil sinds ' + esc(tijd(L.pauze.op)) + (L.pauze.door ? ', door ' + esc(L.pauze.door) : '') + '. Het loket geeft ze niets en voert niets voor ze uit.</div><div class="mt"></div>' : '') +
     '<div class="raster r4">' +
       kpi('Agents aan', standen.filter((k) => k === 'aan').length + ' van ' + standen.length, standen.includes('proef') ? aantal(standen.filter((k) => k === 'proef').length, 'agent', 'agents') + ' op proef' : 'geen op proef', true) +
@@ -617,7 +626,7 @@ function agents() {
       kpi('Verslagen deze week', week, L.verslagen[0] ? 'laatste ' + esc(sindsTekst(L.verslagen[0].t)) : 'nog geen verslag') +
       kpi('Eigen berichten vandaag', L.limieten.eigenVandaag + ' van ' + L.limieten.eigenPerDag, { uit: 'staan uit', handmatig: 'wachten op akkoord', automatisch: 'de agent verstuurt zelf' }[eigen]) +
     '</div>' +
-    '<div class="raster r3 mt">' + Object.keys(rollen).map(agentKaart).join('') + '</div>' +
+    '<div class="raster r3 mt">' + Object.keys(rollen).map(agentKaart).join('') + '</div>' + geheugenHtml(L.geheugen, demo) +
     '<div class="raster r21 mt"><div>' +
       '<div class="kaart"><h2>Wacht op jouw akkoord</h2><p class="ks">Berichten die een agent zelf schreef. De aanhef, de afsluiting en de ontvangers zet Fysiplan erbij; de agent kent geen namen en geen adressen.</p>' +
         (wacht.length ? wacht.map(conceptHtml).join('') : '<p class="leeg">' + (eigen === 'uit' ? 'Eigen berichten van agents staan uit. Zet ze bij de support-agent op handmatig om ze hier te krijgen.' : 'Niets dat op je wacht.') + '</p>') +
@@ -635,6 +644,46 @@ function agents() {
         check(eigen === 'automatisch' ? null : true, 'Mailen zonder jouw regel', eigen === 'uit' ? 'Eigen berichten staan uit: er gaat niets weg.' : eigen === 'handmatig' ? 'Eigen berichten wachten op akkoord. Dat stel je in bij de support-agent.' : 'Eigen berichten gaan nu zonder akkoord weg, hooguit ' + L.limieten.eigenPerDag + ' per dag. Dat stel je in bij de support-agent.') +
       '</div>' + sleutelKaart +
       (L.notities.length ? '<div class="kaart mt"><h2>Notities van de finance-agent</h2><p class="ks">Wat hij klaarzet bij een kwartaal of een boekjaar</p><div class="logboek">' + L.notities.slice(0, 6).map((n) => '<div class="logregel">' + pil(n.periode.replace('-K', ' K'), 'neutraal', true) + '<div><span>' + esc(n.tekst) + '</span><time>' + esc(tijd(n.t)) + '</time></div></div>').join('') + '</div></div>' : '') +
+    '</div></div>';
+}
+// ---------- het gedeelde geheugen (chief of staff en groei-agent) ----------
+const geheugenWacht = (G) => G ? G.taken.filter((t) => t.status === 'voorgesteld' || t.status === 'wacht-op-akkoord').length + G.groei.filter((c) => c.stand === 'wacht').length : 0;
+const TAAK = { voorgesteld: ['Voorstel', 'petrol'], open: ['Open', 'aandacht'], 'wacht-op-akkoord': ['Wacht op akkoord', 'aandacht'], goedgekeurd: ['Goedgekeurd', 'goed'], klaar: ['Klaar', 'goed'], afgewezen: ['Afgewezen', 'neutraal'], vervallen: ['Vervallen', 'neutraal'] };
+const DOOR = { 'staf-agent': 'chief of staff', 'groei-agent': 'groei-agent' };
+const BESLUIT = { geweigerd: ['Geweigerd', 'probleem'], 'wacht-op-akkoord': ['Wacht', 'aandacht'], uitgevoerd: ['Gedaan', 'goed'], herhaald: ['Herhaald', 'neutraal'], open: ['Open', 'aandacht'], goedgekeurd: ['Akkoord', 'goed'], klaar: ['Klaar', 'goed'], afgewezen: ['Afgewezen', 'neutraal'], vervallen: ['Vervallen', 'neutraal'], vastgelegd: ['Vastgelegd', 'petrol'] };
+function geheugenHtml(G, demo) {
+  if (!G) return '<div class="kaart mt"><h2>Gedeeld geheugen</h2><p class="ks">De takenlijst van de chief of staff en de groei-agent bestaat nog alleen in de demo. Open Demo om haar te zien en te testen.</p></div>';
+  const prio = (p) => p ? pil('P' + p, p === 1 ? 'probleem' : p === 2 ? 'aandacht' : 'neutraal', true) : '';
+  const wacht = G.taken.filter((t) => t.status === 'voorgesteld' || t.status === 'wacht-op-akkoord');
+  const lopend = G.taken.filter((t) => t.status === 'open' || t.status === 'goedgekeurd');
+  const klaar = G.taken.filter((t) => ['klaar', 'afgewezen', 'vervallen'].includes(t.status)).slice(0, 5);
+  const taakHtml = (t, knoppen) => '<div class="zaak' + (knoppen === 'besluit' ? ' aandacht' : '') + '"><div class="zaakkop">' + pil(...TAAK[t.status], true) + prio(t.prioriteit) + '<b>' + esc(t.titel) + '</b></div>' +
+    '<div class="wat">' + esc(t.uitleg) + (t.contact ? '<br><small>Contact: ' + esc(t.contactNaam) + ' · kanaal ' + esc(t.kanaal) + '</small>' : '') + '</div>' +
+    (t.adviezen && t.adviezen.length ? '<div class="hint">' + t.adviezen.map((a) => 'Advies ' + esc(DOOR[a.door] || a.door) + (a.prioriteit ? ' (P' + a.prioriteit + ')' : '') + ': ' + esc(a.tekst)).join('<br>') + '</div>' : '') +
+    '<div class="zaakvoet">Van de ' + esc(DOOR[t.door] || t.door) + ' · ' + esc(sindsTekst(t.t)) + (t.besluitReden ? ' · “' + esc(t.besluitReden) + '”' : '') +
+      (knoppen === 'besluit' ? '<span class="knoppen"><button type="button" class="knop licht klein" data-taak="' + esc(t.id) + '" data-besluit="afwijzen">Afwijzen</button><button type="button" class="knop klein" data-taak="' + esc(t.id) + '" data-besluit="akkoord">' + (t.soort === 'contact' ? 'Akkoord, ik neem contact op' : 'Zet open') + '</button></span>'
+        : knoppen === 'klaar' ? '<span class="knoppen"><button type="button" class="knop licht klein" data-taak="' + esc(t.id) + '" data-besluit="klaar">Klaar</button></span>' : '') + '</div></div>';
+  const conceptHtml = (c) => '<div class="zaak aandacht"><div class="zaakkop">' + pil(c.soort, 'neutraal', true) + '<b>' + esc(c.titel) + '</b></div><div class="hint">Doel: ' + esc(c.doel) + '</div>' +
+    '<details class="mail"><summary>Lees de tekst</summary><pre>' + esc(c.tekst) + '</pre></details>' +
+    '<div class="zaakvoet">Geschreven ' + esc(sindsTekst(c.t)) + ' · publiceren doe je zelf<span class="knoppen"><button type="button" class="knop licht klein" data-groei="' + esc(c.id) + '" data-besluit="afwijzen">Afwijzen</button><button type="button" class="knop klein" data-groei="' + esc(c.id) + '" data-besluit="goedkeuren">Goedkeuren</button></span></div></div>';
+  const groeiWacht = G.groei.filter((c) => c.stand === 'wacht'), groeiEerder = G.groei.filter((c) => c.stand !== 'wacht').slice(0, 4);
+  const ja = (v, l) => pil(l, v ? 'goed' : 'neutraal', true);
+  const contactHtml = (c) => '<div class="logregel">' + (c.afgemeld ? pil('Afgemeld', 'probleem', true) : pil(c.segment, 'neutraal', true)) + '<div><b>' + esc(c.naam) + '</b><span>' + esc(c.code) + ' · ' + aantal(c.therapeuten, 'therapeut', 'therapeuten') + ' · ' + esc(c.bron) + '</span>' +
+    '<span>' + ja(c.toestemming && c.toestemming.mail, 'mail') + ' ' + ja(c.toestemming && c.toestemming.bellen, 'bellen') + (c.laatsteContact ? ' · contact ' + esc(sindsTekst(c.laatsteContact)) : '') + '</span>' +
+    (c.afgemeld ? '' : '<button type="button" class="knop licht klein" data-afmelden="' + esc(c.code) + '">Afmelden</button>') + '</div></div>';
+  const auditHtml = (a) => '<div class="logregel">' + pil(...(BESLUIT[a.besluit] || [a.besluit, 'neutraal']), true) + '<div><b>' + esc(DOOR[a.wie] || a.wie) + '</b><span>' + esc(a.actie) + (a.reden ? ' · ' + esc(a.reden) : '') + (a.doel ? ' · ' + esc(a.doelNaam || a.doel) : '') + '</span><time>' + esc(tijd(a.t)) + '</time></div></div>';
+  return '<h2 class="ruim">Gedeeld geheugen' + (demo ? ' (demo)' : '') + '</h2><p class="ks">De takenlijst van de chief of staff en de groei-agent. Elke actie gaat door de poort van de server: rol, daglimiet, sleutel tegen dubbel uitvoeren, toestemming en afmeldlijst. Fysiplan voert zelf nog geen contact uit, ook niet na akkoord.</p>' +
+    '<div class="raster r21 mt"><div>' +
+      '<div class="kaart"><h2>Taken die op jou wachten</h2>' + (wacht.length ? wacht.map((t) => taakHtml(t, 'besluit')).join('') : '<p class="leeg">Niets dat op je wacht.</p>') + '</div>' +
+      '<div class="kaart mt"><h2>Lopende taken</h2>' + (lopend.length ? lopend.map((t) => taakHtml(t, 'klaar')).join('') : '<p class="leeg">Geen lopende taken.</p>') +
+        (klaar.length ? '<h2 class="ruim">Afgerond</h2>' + klaar.map((t) => taakHtml(t, '')).join('') : '') + '</div>' +
+      '<div class="kaart mt"><h2>Concepten van de groei-agent</h2><p class="ks">Getoetst aan de vaste feiten. Goedkeuren betekent: mag gebruikt worden. Er wordt niets vanzelf gepubliceerd.</p>' +
+        (groeiWacht.length ? groeiWacht.map(conceptHtml).join('') : '<p class="leeg">Geen concept dat op je wacht.</p>') +
+        (groeiEerder.length ? '<div class="logboek mt">' + groeiEerder.map((c) => '<div class="logregel">' + pil(c.stand === 'goedgekeurd' ? 'Goedgekeurd' : 'Afgewezen', c.stand === 'goedgekeurd' ? 'goed' : 'neutraal', true) + '<div><b>' + esc(c.titel) + '</b><span>' + esc(c.besluitReden ? '“' + c.besluitReden + '”' : c.soort) + '</span><time>' + esc(tijd(c.op || c.t)) + '</time></div></div>').join('') + '</div>' : '') + '</div>' +
+    '</div><div>' +
+      '<div class="kaart"><h2>Prospects</h2><p class="ks">Praktijken die nog geen klant zijn, nooit patiënten. De agents zien alleen de code. Een afmelding geldt meteen en voor altijd.</p><div class="logboek">' + G.contacten.map(contactHtml).join('') + '</div></div>' +
+      '<div class="kaart mt"><h2>Auditlog</h2><p class="ks">Elk besluit van de poort en van beheer, ook elke weigering. Nieuwste boven.</p><div class="logboek">' + G.audit.slice(0, 12).map(auditHtml).join('') + '</div></div>' +
+      '<div class="kaart mt"><h2>Feiten voor de groei-agent</h2><ul class="feitlijst">' + G.feiten.map((f) => '<li>' + esc(f) + '</li>').join('') + '</ul></div>' +
     '</div></div>';
 }
 function bindAgents(el) {
@@ -665,13 +714,40 @@ function bindAgents(el) {
     const j = await post('loket/concept', { id: b.dataset.afwijzen, besluit: 'afwijzen', reden });
     if (j) melden('Afgewezen.');
   }));
-  $('#sleutelNieuw', el)?.addEventListener('click', async () => {
-    if (data.loket.sleutel && !confirm('Een nieuwe sleutel maken? De oude werkt dan niet meer: de agents komen pas weer binnen als de nieuwe in hun omgeving staat.')) return;
-    const j = await post('loket/sleutel', { actie: 'nieuw' }, true);
-    if (j) { st.nieuweSleutel = j.nieuweSleutel || null; delete data.nieuweSleutel; teken(); $('#sleutelTekst')?.select(); }
-  });
-  $('#sleutelWeg', el)?.addEventListener('click', async () => { if (confirm('De sleutel intrekken? Geen agent komt dan nog bij het loket.')) { st.nieuweSleutel = null; const j = await post('loket/sleutel', { actie: 'intrekken' }); if (j) melden('De sleutel is ingetrokken.'); } });
+  el.querySelectorAll('[data-sleutel-nieuw]').forEach((b) => b.addEventListener('click', async () => {
+    const rol = b.dataset.sleutelNieuw, titel = data.loket.rollen[rol].titel;
+    if ((data.loket.sleutels || {})[rol] && !confirm('Een nieuwe sleutel voor de ' + titel + '? De oude werkt dan meteen niet meer: deze agent komt pas weer binnen als de nieuwe in zijn eigen omgeving staat.')) return;
+    const j = await post('loket/sleutel', { actie: 'nieuw', rol }, true);
+    if (j) { st.nieuweSleutel = j.nieuweSleutel || null; st.nieuweSleutelRol = rol; delete data.nieuweSleutel; teken(); $('#sleutelTekst')?.select(); }
+  }));
+  el.querySelectorAll('[data-sleutel-weg]').forEach((b) => b.addEventListener('click', async () => {
+    const rol = b.dataset.sleutelWeg;
+    if (!confirm('De sleutel van de ' + data.loket.rollen[rol].titel + ' intrekken? Deze agent komt dan meteen niet meer bij het loket; de andere werken door.')) return;
+    st.nieuweSleutel = null;
+    const j = await post('loket/sleutel', { actie: 'intrekken', rol });
+    if (j) melden('De sleutel van de ' + data.loket.rollen[rol].titel + ' is ingetrokken.');
+  }));
+  $('#sleutelWeg', el)?.addEventListener('click', async () => { if (confirm('De oude gedeelde sleutel intrekken? Een agent die nog geen eigen sleutel heeft, komt dan niet meer bij het loket.')) { st.nieuweSleutel = null; const j = await post('loket/sleutel', { actie: 'intrekken' }); if (j) melden('De gedeelde sleutel is ingetrokken.'); } });
   $('#sleutelKopie', el)?.addEventListener('click', async () => { try { await navigator.clipboard.writeText(st.nieuweSleutel); melden('Gekopieerd.'); } catch { $('#sleutelTekst', el).select(); melden('Kopiëren lukte niet; selecteer de sleutel en kopieer hem zelf.', true); } });
+  el.querySelectorAll('[data-taak]').forEach((b) => b.addEventListener('click', async () => {
+    let reden = '';
+    if (b.dataset.besluit === 'afwijzen') { reden = prompt('Waarom niet? De agent leest dit bij zijn volgende ronde (mag leeg).', ''); if (reden === null) return; }
+    b.disabled = true;
+    const j = await post('loket/taak', { id: b.dataset.taak, besluit: b.dataset.besluit, reden });
+    if (j) melden({ akkoord: 'Akkoord gegeven.', afwijzen: 'Afgewezen.', klaar: 'Op klaar gezet.' }[b.dataset.besluit]); else b.disabled = false;
+  }));
+  el.querySelectorAll('[data-groei]').forEach((b) => b.addEventListener('click', async () => {
+    let reden = '';
+    if (b.dataset.besluit === 'afwijzen') { reden = prompt('Waarom niet? De groei-agent leest dit bij zijn volgende ronde (mag leeg).', ''); if (reden === null) return; }
+    b.disabled = true;
+    const j = await post('loket/groei', { id: b.dataset.groei, besluit: b.dataset.besluit, reden });
+    if (j) melden(b.dataset.besluit === 'goedkeuren' ? 'Goedgekeurd. Publiceren doe je zelf.' : 'Afgewezen.'); else b.disabled = false;
+  }));
+  el.querySelectorAll('[data-afmelden]').forEach((b) => b.addEventListener('click', async () => {
+    if (!confirm('Dit contact afmelden? Dat geldt meteen en voor altijd; open voorstellen vervallen.')) return;
+    const j = await post('loket/afmelding', { contact: b.dataset.afmelden });
+    if (j) melden('Afgemeld.');
+  }));
   el.querySelectorAll('[data-vrol]').forEach((b) => b.addEventListener('click', () => { st.verslagRol = b.dataset.vrol; st.verslagAlles = false; teken(); }));
   $('#verslagAlles', el)?.addEventListener('click', () => { st.verslagAlles = !st.verslagAlles; teken(); });
 }

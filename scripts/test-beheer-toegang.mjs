@@ -184,7 +184,7 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
   const opgeslagen = {}, gemaild = [], gelogd = [];
   const accounts = { "een@x.example": { email: "een@x.example", naam: "Een", hash: "h", totp: { geheim: "G" } }, "twee@x.example": { email: "twee@x.example", naam: "Twee", hash: "h", totp: { geheim: "G" } } };
   let sleutelAan = false, mailAan = true, ideeenWacht = 2;
-  const om = maakBeheerOmgeving({
+  const omOpties = {
     dataDir: "/nergens", publicDir: "/nergens", leverancier: () => ({}),
     bronEcht: () => ({ soort: "echt", nu: Date.now(), facturen: [], kosten: [], systeem: { checks: [], versie: "abc1234" }, praktijken: JSON.parse(JSON.stringify(praktijken)) }),
     beheerEigen: (req) => { req.beheerWie = req.wie || "een@x.example"; return true; }, beheerRechten: (req) => new Set(req.R || ALLE_RECHTEN),
@@ -195,7 +195,8 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
     stuurMail: async (aan, onderwerp, tekst) => { gemaild.push({ aan, onderwerp, tekst }); },
     accounts: () => accounts, bewaarAccounts: async () => { opgeslagen["beheer-accounts.json"] = JSON.parse(JSON.stringify(accounts)); }, sleutelAan: () => sleutelAan,
     ideeenWacht: () => ideeenWacht
-  });
+  };
+  const om = maakBeheerOmgeving(omOpties);
   try {
     await om.laad();
     assert.match(opgeslagen["beheer-loket.json"].zout, /^[a-f0-9]{32}$/, "het zout van de codes staat meteen vast");
@@ -205,14 +206,23 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
 
     // zonder sleutel bestaat het loket niet
     assert.equal((await roep("GET", "/api/agent/support/werk", { headers: { authorization: "Bearer " + nieuweSleutel() } })).status, 404);
-    // alleen volledig beheer maakt de sleutel; de server bewaart de afdruk
-    assert.equal((await beheer("loket/sleutel", {}, { R: ["agents", "support"] })).status, 403);
-    let r = await beheer("loket/sleutel", {});
-    const sleutel = r.body.nieuweSleutel;
-    assert.match(sleutel, /^fpa_[a-f0-9]{48}$/);
-    assert.deepEqual([opgeslagen["beheer-loket.json"].sleutel.hash, JSON.stringify(opgeslagen).includes(sleutel), JSON.stringify(r.body.loket).includes(sleutel)], [sleutelHash(sleutel), false, false]);
-    assert.equal(gelogd.at(-1).actie, "agents: nieuwe sleutel gemaakt");
-    const agent = (method, pad, body, extra = {}) => roep(method, "/api/agent/" + pad, { headers: { authorization: "Bearer " + sleutel }, body, ...extra });
+    // alleen volledig beheer maakt een sleutel, één per rol; de server bewaart de afdruk
+    assert.equal((await beheer("loket/sleutel", { rol: "support" }, { R: ["agents", "support"] })).status, 403);
+    assert.equal((await beheer("loket/sleutel", {})).status, 400, "een gedeelde sleutel voor alle agents kan niet meer");
+    assert.equal((await beheer("loket/sleutel", { rol: "baas" })).status, 400);
+    const sleutels = {};
+    for (const rol of ["support", "tech", "finance"]) {
+      const r = await beheer("loket/sleutel", { rol });
+      sleutels[rol] = r.body.nieuweSleutel;
+      assert.match(sleutels[rol], /^fpa_[a-f0-9]{48}$/);
+      assert.deepEqual([r.body.rol, opgeslagen["beheer-loket.json"].sleutels[rol].hash, JSON.stringify(opgeslagen).includes(sleutels[rol]), JSON.stringify(r.body.loket).includes(sleutels[rol]), !!r.body.loket.sleutels[rol]], [rol, sleutelHash(sleutels[rol]), false, false, true]);
+      assert.equal(gelogd.at(-1).actie, "agents: nieuwe sleutel voor de " + rol + "-agent");
+    }
+    assert.equal(new Set(Object.values(sleutels)).size, 3, "elke rol een eigen sleutel");
+    let r;
+    const sleutel = sleutels.support;
+    // de agent gebruikt de sleutel van de rol in het adres
+    const agent = (method, pad, body, extra = {}) => roep(method, "/api/agent/" + pad, { headers: { authorization: "Bearer " + (sleutels[pad.split("/")[0]] || sleutel) }, body, ...extra });
 
     // tien verkeerde sleutels per verbinding, daarna dicht voor die verbinding (ook met de goede)
     for (let i = 0; i < 10; i++) assert.equal((await roep("GET", "/api/agent/support/werk", { headers: { authorization: "Bearer " + nieuweSleutel() }, ip: "9.9.9.x" })).status, 401);
@@ -358,23 +368,74 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
     assert.equal((await beheer("loket/pauze", { aan: true }, { R: ["support"] })).status, 403);
     r = await beheer("loket/pauze", { aan: true });
     assert.deepEqual([r.body.loket.pauze.door, gelogd.at(-1).actie], ["een@x.example", "agents: alle agents stilgezet"]);
-    for (const rol of ["support", "tech", "finance"]) {
+    // de stopknop blokkeert alle rollen, ook staf en groei (op proef)
+    for (const rol of ["staf", "groei"]) { sleutels[rol] = (await beheer("loket/sleutel", { rol })).body.nieuweSleutel; await beheer("loket/agent", { rol, stand: "proef" }); }
+    for (const rol of ["support", "tech", "finance", "staf", "groei"]) {
       r = await agent("GET", rol + "/werk");
       assert.deepEqual([r.status, r.body.gepauzeerd, "werk" in r.body], [200, true, false], rol);
+      r = await agent("POST", rol + "/actie", { actie: "verslag", tekst: "Dit verslag komt er tijdens de pauze niet in." });
+      assert.deepEqual([r.status, r.body.ok], [423, false], rol);
     }
-    r = await agent("POST", "tech/actie", { actie: "verslag", tekst: "Dit verslag komt er tijdens de pauze niet in." });
-    assert.deepEqual([r.status, r.body.ok], [423, false]);
     assert.equal((await beheer("loket/pauze", { aan: false })).body.loket.pauze, null);
     assert.equal((await agent("GET", "tech/werk")).body.gepauzeerd, false);
     assert.ok((await pagina()).loket.agents.tech.gezien, "wanneer een agent voor het laatst bij het loket was");
 
-    // de sleutel intrekken sluit het loket; een nieuwe sleutel maakt de oude ongeldig
-    r = await beheer("loket/sleutel", { actie: "nieuw" });
-    assert.notEqual(r.body.nieuweSleutel, sleutel);
-    assert.equal((await agent("GET", "tech/werk")).status, 401, "de oude sleutel werkt niet meer");
-    assert.equal((await roep("GET", "/api/agent/tech/werk", { headers: { "x-agent-sleutel": r.body.nieuweSleutel } })).status, 200);
-    assert.equal((await beheer("loket/sleutel", { actie: "intrekken" })).body.loket.sleutel, null);
-    assert.equal((await roep("GET", "/api/agent/tech/werk", { headers: { "x-agent-sleutel": r.body.nieuweSleutel } })).status, 404);
+    // kruistoets: de sleutel van support op elk ander adres wordt geweigerd en vastgelegd
+    const pogingenVoor = (await pagina()).loket.pogingen.length;
+    for (const [pad, methode, body] of [["finance/werk", "GET"], ["finance/actie", "POST", { actie: "notitie", periode: "2026-K2", tekst: "Dit mag de support-agent niet." }],
+      ["tech/werk", "GET"], ["tech/actie", "POST", { actie: "verslag", tekst: "Dit verslag mag de support-agent niet schrijven." }],
+      ["staf/werk", "GET"], ["staf/actie", "POST", { actie: "advies", tekst: "x" }], ["groei/werk", "GET"], ["groei/actie", "POST", { actie: "concept", soort: "linkedin", tekst: "x" }]]) {
+      const rr = await roep(methode, "/api/agent/" + pad, { headers: { authorization: "Bearer " + sleutels.support }, body });
+      assert.deepEqual([rr.status, gelogd.at(-1).actie, gelogd.at(-1).wie], [403, "agents: poging tot rechtenoverschrijding", "support-agent"], pad);
+      assert.match(gelogd.at(-1).reden, new RegExp("op het adres van de " + pad.split("/")[0] + "-agent"));
+    }
+    let p2 = await pagina();
+    assert.deepEqual([p2.loket.pogingen.length - pogingenVoor, p2.loket.pogingen[0].sleutel, p2.loket.pogingen[0].adres], [8, "support", "groei"]);
+    assert.equal(opgeslagen["beheer-loket.json"].pogingen.length, p2.loket.pogingen.length, "de pogingen staan ook op schijf");
+    assert.doesNotMatch(JSON.stringify(gelogd) + JSON.stringify(opgeslagen), new RegExp(sleutels.support.slice(4)), "de sleutel staat nergens in een log of bestand");
+    // beheer en de beheerroutes gaan niet open met een agentsleutel
+    for (const k of [{ authorization: "Bearer " + sleutels.support }, { "x-agent-sleutel": sleutels.support }, { "x-admin-sleutel": sleutels.support }]) {
+      assert.equal((await roep("GET", "/api/agent/beheer/werk", { headers: k })).status, ("x-admin-sleutel" in k) ? 401 : 404, "beheer is geen agent");
+    }
+    // het adres van een andere rol telt ook niet als geldig met een omweg
+    assert.equal((await roep("GET", "/api/agent/support/../finance/werk", { headers: { authorization: "Bearer " + sleutels.support } })).status, 404);
+
+    // intrekken werkt direct en alleen voor die rol
+    r = await beheer("loket/sleutel", { rol: "tech", actie: "intrekken" });
+    assert.deepEqual([r.status, r.body.loket.sleutels.tech, !!r.body.loket.sleutels.support, gelogd.at(-1).actie, "tech" in opgeslagen["beheer-loket.json"].sleutels], [200, null, true, "agents: sleutel van de tech-agent ingetrokken", false]);
+    assert.equal((await agent("GET", "tech/werk")).status, 401, "de ingetrokken sleutel werkt meteen niet meer");
+    assert.equal((await agent("GET", "support/werk")).status, 200, "de andere rollen werken door");
+    assert.equal((await agent("GET", "finance/werk")).status, 200);
+    // een nieuwe sleutel voor dezelfde rol maakt de oude ongeldig
+    const oudFinance = sleutels.finance;
+    r = await beheer("loket/sleutel", { rol: "finance", actie: "nieuw" });
+    sleutels.finance = r.body.nieuweSleutel;
+    assert.notEqual(sleutels.finance, oudFinance);
+    assert.equal((await roep("GET", "/api/agent/finance/werk", { headers: { "x-agent-sleutel": oudFinance } })).status, 401, "de vorige sleutel van finance werkt niet meer");
+    assert.equal((await agent("GET", "finance/werk")).status, 200);
+    sleutels.tech = (await beheer("loket/sleutel", { rol: "tech" })).body.nieuweSleutel;
+
+    // de oude gedeelde sleutel (van vóór de overstap): alleen support, tech en finance, en intrekken kan
+    const gedeeld = nieuweSleutel();
+    {
+      // een bestand van vóór de overstap, met de gedeelde sleutel én de sleutels per rol
+      const map = await mkdtemp(join(tmpdir(), "fysiplan-loket-"));
+      await writeFile(join(map, "beheer-loket.json"), JSON.stringify({ ...opgeslagen["beheer-loket.json"], sleutel: { hash: sleutelHash(gedeeld), gemaakt: new Date().toISOString(), door: "oud" } }));
+      const om2 = maakBeheerOmgeving({ ...omOpties, dataDir: map, saveJson: async () => {} });
+      await om2.laad();
+      const roep2 = async (method, pad, extra = {}) => { const res = { setHeader() {} }; await om2.afhandelen({ method, url: pad, headers: extra.headers || {}, body: extra.body, R: extra.R, wie: extra.wie, ip: extra.ip }, res, pad.split("?")[0]); return res; };
+      assert.equal((await roep2("GET", "/api/agent/support/werk", { headers: { "x-agent-sleutel": gedeeld } })).status, 200, "de oude sleutel werkt tijdens de overstap");
+      assert.equal((await roep2("GET", "/api/agent/staf/werk", { headers: { "x-agent-sleutel": gedeeld } })).status, 403, "maar niet voor de nieuwe rollen");
+      assert.equal(gelogd.at(-1).wie, "gedeelde sleutel");
+      r = await roep2("POST", "/api/beheer/omgeving/loket/sleutel", { body: { bron: "echt", actie: "intrekken" } });
+      assert.deepEqual([r.status, r.body.loket.sleutel, gelogd.at(-1).actie], [200, null, "agents: gedeelde sleutel ingetrokken"]);
+      assert.equal((await roep2("GET", "/api/agent/support/werk", { headers: { "x-agent-sleutel": gedeeld } })).status, 401, "na intrekken direct geweigerd");
+      assert.equal((await roep2("GET", "/api/agent/support/werk", { headers: { "x-agent-sleutel": sleutels.support } })).status, 200, "de eigen sleutel blijft werken");
+      // alle sleutels weg: het loket is dicht
+      for (const rol of ["support", "tech", "finance", "staf", "groei"]) await roep2("POST", "/api/beheer/omgeving/loket/sleutel", { body: { bron: "echt", rol, actie: "intrekken" } });
+      assert.equal((await roep2("GET", "/api/agent/support/werk", { headers: { "x-agent-sleutel": sleutels.support } })).status, 404);
+      await rm(map, { recursive: true, force: true });
+    }
 
     // rechten wijzigen: alleen volledig beheer, niet voor jezelf, en er blijft iemand met alles
     assert.equal((await beheer("rechten", { email: "twee@x.example", rechten: ["finance"] }, { R: ["agents", "finance"] })).status, 403);
@@ -400,7 +461,8 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
     r = await demoPost("rechten", { email: "mila@fysiplan.invalid", rechten: ["finance"] });
     assert.deepEqual(r.body.toegang.accounts.find((a) => a.email === "mila@fysiplan.invalid").rechten, ["finance"]);
     assert.equal((await demoPost("rechten", { email: "sanne@fysiplan.invalid", rechten: [] })).status, 409);
-    r = await demoPost("loket/sleutel", {});
+    assert.equal((await demoPost("loket/sleutel", {})).status, 400);
+    r = await demoPost("loket/sleutel", { rol: "groei" });
     assert.equal(sleutelKlopt(r.body.nieuweSleutel, sleutelHash(r.body.nieuweSleutel)), false, "de sleutel van de demo is geen echte sleutel");
     assert.equal((await demoPost("loket/pauze", { aan: true })).body.loket.pauze.door, "een@x.example");
     const wachtend = (await roep("GET", "/api/beheer/omgeving?bron=demo")).body.loket.concepten.filter((c) => c.stand === "wacht");
@@ -507,7 +569,7 @@ try {
     let r = await om("finn", "kosten", { datum: "2026-11-03", omschrijving: "Hosting november", categorie: "Hosting", bedrag: "24,20", btw: "4,20" });
     assert.equal(r.status, 200);
     for (const [pad, body, recht] of [["finance", { kor: "nee" }, "boekhouding"], ["aangifte", { kwartaal: "2026-K3", ingediend: true }, "boekhouding"], ["afsluiten", { jaar: "2025" }, "boekhouding"], ["ronde", {}, "support"],
-      ["storing", {}, "berichten"], ["mailstand", { soort: "stil", stand: "automatisch" }, "agents"], ["loket/pauze", { aan: true }, "agents"], ["loket/sleutel", {}, "beheer"], ["rechten", { email: "finn@beheer.example", rechten: null }, "beheer"]]) {
+      ["storing", {}, "berichten"], ["mailstand", { soort: "stil", stand: "automatisch" }, "agents"], ["loket/pauze", { aan: true }, "agents"], ["loket/sleutel", { rol: "support" }, "beheer"], ["rechten", { email: "finn@beheer.example", rechten: null }, "beheer"]]) {
       r = await om("finn", pad, body);
       assert.deepEqual([r.status, (await r.json()).geenRecht], [403, recht], pad);
     }
@@ -552,13 +614,16 @@ try {
     // alleen de post aan de praktijk telt hier: de meldingen aan beheerders over het account van Finn (stap 2) kunnen nog onderweg zijn
     const post = () => mails.filter((m) => (m.to || []).some((a) => /@testlaan\.example$/.test(a)));
     assert.equal((await fetch(origin + "/api/agent/support/werk", { headers: { authorization: "Bearer " + nieuweSleutel() } })).status, 404, "zonder sleutel is het loket dicht");
-    let r = await om("vera", "loket/sleutel", {});
-    const sleutel = (await r.json()).nieuweSleutel;
+    assert.equal((await om("vera", "loket/sleutel", {})).status, 400, "geen gedeelde sleutel meer");
+    const sleutels = {};
+    for (const rol of ["support", "tech", "finance"]) sleutels[rol] = (await (await om("vera", "loket/sleutel", { rol })).json()).nieuweSleutel;
+    let r;
+    const sleutel = sleutels.support;
     assert.match(sleutel, /^fpa_[a-f0-9]{48}$/);
     const ruw = await readFile(join(dataDir, "beheer-loket.json"), "utf8");
-    assert.ok(!ruw.includes(sleutel) && JSON.parse(ruw).sleutel.hash === sleutelHash(sleutel), "op schijf staat alleen de afdruk");
-    assert.doesNotMatch((await logboek()).map((x) => JSON.stringify(x)).join("\n"), new RegExp(sleutel.slice(4, 20)), "de sleutel staat niet in het beheerlogboek");
-    const agent = (pad, body) => fetch(origin + "/api/agent/" + pad, { method: body ? "POST" : "GET", headers: { authorization: "Bearer " + sleutel, "content-type": "application/json", "x-forwarded-for": xff() }, body: body ? JSON.stringify(body) : undefined });
+    for (const rol of ["support", "tech", "finance"]) assert.ok(!ruw.includes(sleutels[rol]) && JSON.parse(ruw).sleutels[rol].hash === sleutelHash(sleutels[rol]), "op schijf staat alleen de afdruk (" + rol + ")");
+    assert.doesNotMatch((await logboek()).map((x) => JSON.stringify(x)).join("\n"), new RegExp(Object.values(sleutels).map((k) => k.slice(4, 20)).join("|")), "geen sleutel in het beheerlogboek");
+    const agent = (pad, body) => fetch(origin + "/api/agent/" + pad, { method: body ? "POST" : "GET", headers: { authorization: "Bearer " + (sleutels[pad.split("/")[0]] || sleutel), "content-type": "application/json", "x-forwarded-for": xff() }, body: body ? JSON.stringify(body) : undefined });
     // de sleutel van de agents opent geen beheer, en een beheeraccount opent het loket niet
     assert.ok([401, 403].includes((await fetch(origin + "/api/beheer/omgeving", { headers: { authorization: "Bearer " + sleutel, "x-admin-sleutel": sleutel } })).status));
     assert.equal((await get("vera", "/api/agent/support/werk")).status, 401);
@@ -627,10 +692,18 @@ try {
     assert.equal((await (await agent("support/werk")).json()).gepauzeerd, true);
     assert.equal((await agent("support/actie", { actie: "verslag", tekst: "Tijdens de pauze komt dit verslag er niet in." })).status, 423);
     assert.equal((await om("vera", "loket/pauze", { aan: false })).status, 200);
-    assert.equal((await om("vera", "loket/sleutel", { actie: "intrekken" })).status, 200);
-    assert.equal((await agent("support/werk")).status, 404);
+    // de sleutel van support op het adres van finance: 403, vastgelegd in het logboek en op schijf
+    assert.equal((await fetch(origin + "/api/agent/finance/werk", { headers: { authorization: "Bearer " + sleutels.support, "x-forwarded-for": xff() } })).status, 403);
+    assert.deepEqual([(await logboek()).at(-1).actie, (await logboek()).at(-1).wie], ["agents: poging tot rechtenoverschrijding", "support-agent"]);
+    assert.equal(JSON.parse(await readFile(join(dataDir, "beheer-loket.json"), "utf8")).pogingen[0].adres, "finance");
+    // intrekken: direct geweigerd, de andere rollen werken door
+    assert.equal((await om("vera", "loket/sleutel", { rol: "support", actie: "intrekken" })).status, 200);
+    assert.equal((await agent("support/werk")).status, 401);
+    assert.equal((await agent("tech/werk")).status, 200);
+    for (const rol of ["tech", "finance"]) assert.equal((await om("vera", "loket/sleutel", { rol, actie: "intrekken" })).status, 200);
+    assert.equal((await agent("tech/werk")).status, 404, "zonder sleutels is het loket dicht");
     const acties = (await logboek()).map((x) => x.actie);
-    for (const a of ["agents: nieuwe sleutel gemaakt", "agents: support-agent op ‘aan’", "agents: alle agents stilgezet", "agents: stilzetten opgeheven", "agents: sleutel ingetrokken", "support-agent: mails ‘Eigen bericht van een agent’ op automatisch"]) assert.ok(acties.includes(a), a);
+    for (const a of ["agents: nieuwe sleutel voor de support-agent", "agents: support-agent op ‘aan’", "agents: alle agents stilgezet", "agents: stilzetten opgeheven", "agents: sleutel van de support-agent ingetrokken", "support-agent: mails ‘Eigen bericht van een agent’ op automatisch"]) assert.ok(acties.includes(a), a);
   }
 
   // ---- 4. wat er in de bestanden staat ----
@@ -642,7 +715,8 @@ try {
     const loket = await readFile(join(root, "lib/beheer-loket-routes.js"), "utf8");
     assert.match(loket, /const fouten = maakFouten\(eigenWoorden\);/, "in een routepatroon voor de tech-agent staan alleen woorden van de server zelf");
     assert.doesNotMatch(loket, /\.aangiftes\b|\.afgesloten\b|storingOntvangers|inst\.\w+ *=[^=]/, "het loket kan geen aangifte markeren, geen jaar afsluiten en niet naar alle praktijken mailen");
-    assert.deepEqual(Object.values(AGENT_ROLLEN).flatMap((r) => r.acties).filter((a, i, l) => l.indexOf(a) === i).sort(), ["eigen-mail", "notitie", "verslag"]);
+    // de acties van de chief of staff en de groei-agent gaan door de poort van lib/agent-geheugen.js (scripts/test-agent-geheugen.mjs)
+    assert.deepEqual(Object.values(AGENT_ROLLEN).flatMap((r) => r.acties).filter((a, i, l) => l.indexOf(a) === i).sort(), ["advies", "concept", "contact-voorstel", "eigen-mail", "notitie", "taak-voorstel", "verslag"]);
     assert.equal(MAIL_SOORTEN["eigen-bericht"].titel, "Eigen bericht van een agent");
     assert.match(server, /ideeenWacht: \(\) => ideeenbox\.wacht\(\)/);
     assert.match(await readFile(join(root, "public/beheer.html"), "utf8"), /<a href="\/dashboard88\/ideeen" data-recht="beheer">/, "de ideeënbox staat in het menu, alleen voor volledig beheer");
