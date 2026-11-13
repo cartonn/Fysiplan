@@ -207,14 +207,20 @@
     "test:welkomlink": "node scripts/test-welkomlink.mjs",
     "test:proeftokenverloop": "node scripts/test-proef-token-verloop.mjs",
     "test:foutpagina": "node scripts/test-foutpagina.mjs",
-    "test:demomodel": "node scripts/test-demo-model.mjs"
+    "test:demomodel": "node scripts/test-demo-model.mjs",
+    "build:demo-ui": "node scripts/build-demo-ui.mjs"
   },
   "engines": {
     "node": ">=20"
   },
   "dependencies": {
     "@runwayml/sdk": "^4.10.0",
+    "@ui-sdk/core": "0.1.0-beta.1",
+    "@ui-sdk/web": "0.1.0-beta.1",
     "pg": "^8.16.3",
     "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
   }
 }

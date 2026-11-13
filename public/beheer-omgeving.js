@@ -44,6 +44,20 @@ const mag = (recht) => !data || !Array.isArray(data.rechten) || data.rechten.inc
 
 let HDR = {};
 let data = null;
+let sdkCleanup = null;
+let sdkRender = 0;
+async function laadDemoSdk(el, render) {
+  try {
+    const sdk = await import('/demo-agent-ui.js');
+    if (render !== sdkRender || bron !== 'demo' || pagina() !== 'agents') return;
+    if (!document.querySelector('#demoSdkCss')) {
+      const link = document.createElement('link');
+      link.id = 'demoSdkCss'; link.rel = 'stylesheet'; link.href = '/demo-agent-ui.css';
+      document.head.append(link);
+    }
+    sdkCleanup = sdk.mount(el);
+  } catch { melden('De nieuwe demobediening kon niet laden. De gewone knoppen blijven beschikbaar.', true); }
+}
 let bron = 'echt';
 try { if (localStorage.getItem('fp-beheer-bron') === 'demo') bron = 'demo'; } catch {}
 // een link met ?bron=demo opent meteen de demo
@@ -92,6 +106,8 @@ function pagina() {
 }
 function teken() {
   if (!data) return;
+  sdkCleanup?.(); sdkCleanup = null;
+  const sdkNu = ++sdkRender;
   redenOpen = null; // opnieuw tekenen haalt een open afwijsformulier weg
   const p = pagina();
   // wat dit account niet mag, staat niet in het menu; een groep zonder pagina's ook niet
@@ -130,6 +146,7 @@ function teken() {
   bindTips(el);
   ({ overzicht: bindOverzicht, praktijken: bindPraktijken, support: bindSupport, berichten: bindBerichten, finance: bindFinance, facturen: bindFacturen, btw: bindBtw, jaar: bindJaar, agents: bindAgents, beheerders: bindBeheerders })[p]?.(el);
   if (st.ladePk) tekenLade();
+  if (document.documentElement.dataset.uiSdkDemo === "true" && bron === "demo" && p === "agents") laadDemoSdk(el, sdkNu);
 }
 
 // ---------- bouwstenen ----------
@@ -617,8 +634,11 @@ function vraagReden(knop, vraag, doe) {
   });
   vorm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (bevestig.disabled) return;
     bevestig.disabled = true;
-    const gelukt = await doe(veld.value);
+    let gelukt = false;
+    try { gelukt = await doe(veld.value); }
+    catch { melden('Dat lukte niet. Je feedback is bewaard; probeer opnieuw.', true); }
     // gelukt: de pagina is opnieuw getekend en het formulier is weg; mislukt: de reden blijft staan
     if (gelukt) { if (redenOpen && redenOpen.vorm === vorm) sluitReden(false); }
     else { bevestig.disabled = false; veld.focus(); }
@@ -720,7 +740,7 @@ function geheugenHtml(G, demo) {
     '<div class="zaakvoet">Van de ' + esc(DOOR[t.door] || t.door) + ' · ' + esc(sindsTekst(t.t)) + (t.besluitReden ? ' · “' + esc(t.besluitReden) + '”' : '') +
       (knoppen === 'besluit' ? '<span class="knoppen"><button type="button" class="knop licht klein" data-taak="' + esc(t.id) + '" data-besluit="afwijzen">Afwijzen</button><button type="button" class="knop klein" data-taak="' + esc(t.id) + '" data-besluit="akkoord">' + (t.soort === 'contact' ? 'Akkoord, ik neem contact op' : 'Zet open') + '</button></span>'
         : knoppen === 'klaar' ? '<span class="knoppen"><button type="button" class="knop licht klein" data-taak="' + esc(t.id) + '" data-besluit="klaar">Klaar</button></span>' : '') + '</div></div>';
-  const conceptHtml = (c) => '<div class="zaak aandacht"><div class="zaakkop">' + pil(c.soort, 'neutraal', true) + '<b>' + esc(c.titel) + '</b></div><div class="hint">Doel: ' + esc(c.doel) + '</div>' +
+  const conceptHtml = (c) => '<div data-demo-concept class="zaak aandacht"><div class="zaakkop">' + pil(c.soort, 'neutraal', true) + '<b>' + esc(c.titel) + '</b></div><div class="hint">Doel: ' + esc(c.doel) + '</div>' +
     '<details class="mail"><summary>Lees de tekst</summary><pre>' + esc(c.tekst) + '</pre></details>' +
     '<div class="zaakvoet">Geschreven ' + esc(sindsTekst(c.t)) + (c.taak ? ' · taak ' + esc(c.taak) : '') + ' · publiceren doe je zelf<span class="knoppen"><button type="button" class="knop licht klein" data-groei="' + esc(c.id) + '" data-besluit="afwijzen">Afwijzen</button><button type="button" class="knop klein" data-groei="' + esc(c.id) + '" data-besluit="goedkeuren">Goedkeuren</button></span></div></div>';
   const groeiWacht = G.groei.filter((c) => c.stand === 'wacht'), groeiEerder = G.groei.filter((c) => c.stand !== 'wacht').slice(0, 4);
@@ -732,8 +752,8 @@ function geheugenHtml(G, demo) {
   return '<h2 class="ruim">Gedeeld geheugen' + (demo ? ' (demo)' : '') + '</h2><p class="ks">De takenlijst van de chief of staff en de groei-agent. Elke actie gaat door de poort van de server: rol, daglimiet, sleutel tegen dubbel uitvoeren, toestemming en afmeldlijst. Fysiplan voert zelf nog geen contact uit, ook niet na akkoord.</p>' +
     (G.aanpak ? '<div class="kaart mt"><h2>Aanpak groei-agent</h2><p>' + esc(G.aanpak.varianten.A) + '</p><ul>' + G.aanpak.regels.filter((r) => !r.startsWith('Noem in marketing')).map((r) => '<li>' + esc(r) + '</li>').join('') + '</ul><p>Afsluiting van nieuwe mailconcepten:</p><pre>' + esc(G.aanpak.afsluiting) + '</pre></div>' : '') +
     '<div class="raster r21 mt"><div>' +
-      '<div class="kaart"><h2>Taken die op jou wachten</h2>' + (wacht.length ? wacht.map((t) => taakHtml(t, 'besluit')).join('') : '<p class="leeg">Niets dat op je wacht.</p>') + '</div>' +
-      '<div class="kaart mt"><h2>Lopende taken</h2>' + (lopend.length ? lopend.map((t) => taakHtml(t, 'klaar')).join('') : '<p class="leeg">Geen lopende taken.</p>') +
+      '<div data-demo-taken="wacht" class="kaart"><h2>Taken die op jou wachten</h2>' + (wacht.length ? wacht.map((t) => taakHtml(t, 'besluit')).join('') : '<p class="leeg">Niets dat op je wacht.</p>') + '</div>' +
+      '<div data-demo-taken="lopend" class="kaart mt"><h2>Lopende taken</h2>' + (lopend.length ? lopend.map((t) => taakHtml(t, 'klaar')).join('') : '<p class="leeg">Geen lopende taken.</p>') +
         (klaar.length ? '<h2 class="ruim">Afgerond</h2>' + klaar.map((t) => taakHtml(t, '')).join('') : '') + '</div>' +
       '<div class="kaart mt"><h2>Concepten van de groei-agent</h2><p class="ks">Gebaseerd op de feitenlijst; controleer de inhoud. Goedkeuren betekent: mag gebruikt worden. Er wordt niets vanzelf gepubliceerd.</p>' +
         (groeiWacht.length ? groeiWacht.map(conceptHtml).join('') : '<p class="leeg">Geen concept dat op je wacht.</p>') +
