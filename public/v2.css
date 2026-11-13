@@ -354,6 +354,10 @@ html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
   html.v2 #ps_akkoord summary{cursor:pointer;font-weight:600;color:#92400e;width:max-content;max-width:100%}
   html.v2 #ps_akkoord ul{margin:6px 0 2px 18px!important;padding:0}
   html.v2 #ps_akkoord li{margin:3px 0}
+  /* het akkoordvinkje: niet de witte labelkleur van het donkere paneel (gebruikers-sweep 2026-11-13, Sanne: 1,04:1) */
+  html.v2 #ps_akkoord label{color:inherit}
+  html.v2 #ps_akkoord input[type=checkbox]{width:20px!important;height:20px!important}
+  html.v2 #ps_akkoord #ps_akdo{min-height:44px;padding-left:18px;padding-right:18px}
   html.v2 #ps_akkoord a{color:#92400e}
   html.v2 #ps_akkoord .ak-rij{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
 
@@ -958,6 +962,12 @@ html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
   html.v2[data-scherm="praktijk"] #k_srv>*:not(#prakslot):not(#k_praktijk):not(#k_pr_vraag){display:none!important}
   /* buiten de schermen hoort "niet geoefend" en de tegels niet in het zijpaneel */
   html.v2[data-scherm="maken"] #k_nietgeoefend,html.v2[data-scherm="maken"] #k_praktijk{display:none}
+  /* nieuwe voorwaarden: melding op Vandaag en Patiënten voor een beheerder (op Praktijk staat het blok zelf) */
+  html.v2 #k_akwijs{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 10px;padding:10px 12px;border:1px solid #f2d999;
+    background:#fff7e6;color:#5a4300;border-radius:8px;font-size:13px;line-height:1.45}
+  html.v2 #k_akwijs>span{flex:1 1 260px;min-width:0}
+  html.v2 #k_akwijs .btn{min-height:44px;flex:0 0 auto}
+  html.v2[data-scherm="maken"] #k_akwijs,html.v2[data-scherm="praktijk"] #k_akwijs{display:none}
   html.v2 #k_nietgeoefend{margin:18px 0 6px}
   html.v2 #k_nietgeoefend>label{font-size:15px!important;font-weight:650}
   html.v2 #k_nietgeoefend .ib-item{background:var(--naamblok);border:1px solid var(--naamblok-rand);border-radius:12px;display:flex;align-items:center;gap:10px;padding:9px 12px;margin-top:6px}
