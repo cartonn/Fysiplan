@@ -99,12 +99,12 @@ const ADMIN_KEY = (() => {
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88" && process.env.ADMIN_KEY !== "account";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-12-2";
+const VWO_VERSIE = "2026-11-13";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
 const AV_VERSIE = "2026-11-11-2";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-12-4";
+const PRIVACY_VERSIE = "2026-11-13";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -126,7 +126,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-11-2", tekst: "Prijsbelofte: je prijs per therapeut staat minstens 24 maanden vast vanaf de start van je abonnement, zoals op fysiplan.nl staat. Pas daarna kan een nieuwe prijs ingaan, met 30 dagen vooraf een mail." },
   { stuk: "vwo", versie: "2026-11-11-2", tekst: "Bewaartermijn: een verwijderde kaart staat eerst hooguit 7 dagen in de prullenbak, waar de maker of een beheerder hem kan herstellen of meteen definitief kan verwijderen (bijvoorbeeld als een patiënt om wissen vraagt)." },
   { stuk: "vwo", versie: "2026-11-12", tekst: "Beveiliging: elke login heeft een tweede stap, ook die van medewerkers van Fysiplan. Fysiplan legt vast wie wanneer gegevens van je praktijk inzag of een herstelmail stuurde, en waarom; je kunt dit opvragen." },
-  { stuk: "vwo", versie: "2026-11-12-2", tekst: "Beveiliging: per kaart houdt Fysiplan bij wie van je praktijk haar opende of bewaarde, en wanneer (het leeslog), zonder naam van de patiënt. Een beheerder van je praktijk ziet het; het verdwijnt met de kaart en blijft hooguit twee jaar." }
+  { stuk: "vwo", versie: "2026-11-12-2", tekst: "Beveiliging: per kaart houdt Fysiplan bij wie van je praktijk haar opende of bewaarde, en wanneer (het leeslog), zonder naam van de patiënt. Een beheerder van je praktijk ziet het; het verdwijnt met de kaart en blijft hooguit twee jaar." },
+  { stuk: "vwo", versie: "2026-11-13", tekst: "Doel: Fysiplan telt per praktijk en per login hoeveel kaarten er zijn gemaakt, zonder iets van wat erop staat, en gebruikt dat aantal alleen om je te helpen als het gebruik stokt." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
