@@ -13,7 +13,7 @@ De pagina Beheer → Demo → Agents heeft voor de chief of staff en groei-agent
 
 ## Werkstroom
 
-Staf kan taken voorstellen en advies bij bestaande taken bewaren. Beheer zet een groeitaak open; de groei-agent krijgt de open taak met code en advies in zijn werkpakket. Hij kan een concept aan die code koppelen. Beheer keurt het concept goed of wijst het met feedback af. Zowel de tekst als feedback blijft beschikbaar voor volgende rondes; een goedgekeurde tekst blijft leesbaar in beheer. Een concept markeert een taak niet automatisch als klaar.
+Staf kan taken voorstellen en advies bij bestaande taken bewaren. Beheer zet een groeitaak open; de groei-agent krijgt de open taak met code en advies in zijn werkpakket. Hij kan een concept aan die code koppelen. Beheer keurt het concept goed of wijst het met feedback af. Voor volgende modelrondes blijven de metadata en feedback beschikbaar; de volledige eerdere concepttekst gaat niet opnieuw naar het model. De volledige tekst blijft leesbaar in beheer. Een concept markeert een taak niet automatisch als klaar.
 
 Contactvoorstellen controleren kanaaltoestemming, afmelding en recent contact opnieuw bij goedkeuren én bij afronden. Herkenbare persoonsgegevens worden ook in het doelveld van een concept geweigerd. Het tekstfilter is een vangnet, geen garantie van anonimiteit of inhoudelijke juistheid. Beheer blijft verantwoordelijk voor beoordeling.
 
@@ -26,3 +26,9 @@ Contactvoorstellen controleren kanaaltoestemming, afmelding en recent contact op
 - Dit is een kleine acceptatieproef, geen bewijs dat elk toekomstig antwoord goed is.
 
 Model/prijzen gecontroleerd op de officiële [modelpagina](https://platform.claude.com/docs/en/models/haiku-5-5/overview) en [prijslijst](https://platform.claude.com/docs/en/about-claude/pricing). Geen automatische overstap naar een duurder model.
+
+## Aanvullende acceptatieproef op de testservice
+
+Op 13 november is een echte stafronde gelukt (advies opgeslagen). De groei-agent is nog niet betrouwbaar geaccepteerd: een ronde werd inhoudelijk geweigerd, waarna de modelinvoer is verbeterd; de laatste ronde op `f6a623d` gaf `modelantwoord-ongeldig` zonder acties te verwerken. De exacte oorzaak van dat ongeldige antwoord is nog niet vastgesteld. De zes groeirondes voor vandaag zijn gebruikt; de limiet is niet gereset. Dit blijft een open acceptatiepunt, geen geslaagde oplevering van de modelwerking.
+
+De lokale browserproef met uitsluitend testgegevens bevestigde afwijzen met feedback, een taak openzetten, een geldig concept goedkeuren en een bericht naar het demopostvak sturen. Dit bewijst de beheerwerkstroom, niet echte mailbezorging. Staf en groei blijven op proef, berichten op handmatig. Telefonie is op verzoek uitgesteld; geen Twilio-upgrade of telefoonaankoop gedaan. Productie is niet gemerged.
