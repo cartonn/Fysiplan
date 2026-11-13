@@ -3045,6 +3045,13 @@ function normenVan(lijst) {
   if (!n) { n = lijst.map((o) => [o.naam, ...(o.eerder || [])].map(normEx)); libNormen.set(lijst, n); }
   return n;
 }
+// staat deze naam (nu of eerder) in de bibliotheek? Zelfde vergelijking als de app (normEx)
+async function bibliotheekHeeftNaam(naam) {
+  const n = normEx(naam);
+  if (!n) return false;
+  const alles = await manifestV2Gecacht();
+  return normenVan(alles).some((r) => r.includes(n));
+}
 async function kaartPakket(kaart, eigenOef) {
   const gekozen = (Array.isArray(kaart.chosen) ? kaart.chosen : []).filter((x) => x && typeof x === "object");
   const ids = new Set(gekozen.map((x) => String(x.id || "")).filter(Boolean));
@@ -5615,6 +5622,12 @@ async function afhandelen(request, response) {
       const buf = Buffer.from(m[2], "base64");
       if (buf.length < 100 || buf.length > 600 * 1024) { await sendJson(response, 400, { ok: false, fout: "De foto is te groot (max. 600 kB)." }); return; }
       if (!echteAfbeelding(buf, m[1])) { await sendJson(response, 400, { ok: false, fout: "Dit bestand is geen geldige JPEG of PNG." }); return; }
+      // Een eigen oefening met de naam van een bibliotheekoefening ("Squat") nam in de app stil
+      // de plek van die oefening in: standaardsjablonen en nieuwe kaarten toonden de eigen foto
+      // (gebruikers-sweep 2026-11-13, Mark). De app zoekt oefeningen op hun naam zonder
+      // hoofdletters, accenten en tekens; dezelfde vergelijking hier, ook met eerdere namen.
+      // Vóór de naamcontrole hieronder: tussen die controle en lijst.push mag geen await zitten.
+      if (await bibliotheekHeeftNaam(naam)) { await sendJson(response, 409, { ok: false, bibliotheek: true, fout: "\u201c" + naam + "\u201d staat al in de bibliotheek. Gebruik die oefening, of geef je eigen oefening een andere naam (bijvoorbeeld met de naam van je praktijk erbij)." }); return; }
       const lijst = (praktijkOefeningen[pk] = praktijkOefeningen[pk] || []);
       if (lijst.length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum van 200 eigen oefeningen bereikt." }); return; }
       if (lijst.some((x) => x.naam.toLowerCase() === naam.toLowerCase())) { await sendJson(response, 409, { ok: false, fout: "Er is al een eigen oefening met deze naam." }); return; }
