@@ -41,8 +41,8 @@ try{
  assert.equal((await post('loket/demoronde',{rol:'groei'})).status,409);
  await post('loket/pauze',{aan:true});hold();assert.equal((await running).status,409);
  assert.equal((await post('loket/demoronde',{rol:'staf'})).status,423);await post('loket/pauze',{aan:false});
- mode='error';assert.equal((await post('loket/demoronde',{rol:'staf'})).status,502);
- mode='bad';assert.equal((await post('loket/demoronde',{rol:'staf'})).status,502);
+ mode='error';r=await post('loket/demoronde',{rol:'staf'});assert.equal(r.status,502);assert.equal(r.body.code,'model-provider');
+ mode='bad';r=await post('loket/demoronde',{rol:'staf'});assert.equal(r.status,502);assert.equal(r.body.code,'modelantwoord-ongeldig');
  mode='normal';assert.equal((await post('loket/demoronde',{rol:'staf'})).status,200);
  assert.equal(calls,6); assert.equal((await post('loket/demoronde',{rol:'staf'})).status,429);
  await post('demo-opnieuw');assert.equal((await post('loket/demoronde',{rol:'staf'})).status,429);
