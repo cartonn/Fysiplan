@@ -1051,3 +1051,34 @@ html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
  /* invulvelden op de A4 (roepnaam, schema): de app zette daar outline:none met alleen een lichte achtergrond; 4 px omdat de A4 op het scherm verkleind staat (zoom ±0,5) */
  html.v2 #a4 :is(input,textarea,select,[contenteditable]):focus-visible{outline:4px solid var(--focus);outline-offset:1px}
 }
+
+/* Kopbalk onder 1100 px (iPad staand 810, liggend 1080): het praktijkvak stond alleen vanaf 1100 px,
+   dus op een iPad stond nergens bij welke praktijk en als wie je was ingelogd; staand stond Ideeën links
+   van het logo (gebruikers-sweep 2026-11-13 18u, Karin). Nu: logo, praktijk, dan Ideeën en Printen;
+   het praktijkvak compact (naam en status ingekort), op aanraakschermen 44 px hoog. */
+@media screen and (max-width:1099px){
+  html.v2 .zb-praktijk{order:2;display:flex;align-items:center;gap:8px;max-width:240px;height:40px;padding:0 10px 0 5px;
+    border:1px solid #658087;border-radius:10px;cursor:pointer;text-align:left;font:inherit}
+  html.v2 .zb-pav{width:28px;height:28px;border-radius:8px;background:#b9e34b;color:#18343b;display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:750;flex:0 0 28px}
+  html.v2 .zb-ptekst{min-width:0;display:flex;flex-direction:column;line-height:1.2}
+  html.v2 .zb-ptekst b{font-size:12.5px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  html.v2 .zb-ptekst small{font-size:11px;color:#dbe7e3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  html.v2 .fp-ideeknop{order:3}
+}
+@media screen and (max-width:1099px) and (pointer:coarse){
+  html.v2 .zb-praktijk,html.v2 .fp-ideeknop{min-height:44px}
+}
+@media screen and (max-width:920px){
+  html.v2 header.topbar .brand{margin-right:0}
+  html.v2 .zb-praktijk{margin-right:auto;max-width:200px}
+  html.v2 header.topbar #printBtn{order:4}
+  html.v2 header.topbar .menu{order:5}
+}
+@media screen and (min-width:921px) and (max-width:1099px){
+  html.v2 header.topbar .brand{order:1}
+  html.v2 header.topbar .menu{order:3}
+  html.v2 header.topbar .spacer{order:4}
+  html.v2 .fp-ideeknop{order:5}
+  html.v2 header.topbar #printBtn{order:6}
+}

@@ -1495,7 +1495,18 @@ bridge2.jpg</div>
     pk.title='Je praktijk: inloggen, team en gedeelde kaarten';
     pk.innerHTML="<span class='zb-pav' id='zb_pav'>?</span><span class='zb-ptekst'><b id='zb_pnaam'>Je praktijk</b><small id='zb_pstat'>Open Kaarten om in te loggen</small></span>";
     hb.insertBefore(pk,hb.querySelector('.menu'));
-    pk.addEventListener('click',klik('kaartenBtn'));
+    // nog geen praktijknaam ("Vul je praktijknaam in"): naar het naamveld op de kaart, niet naar Kaarten,
+    // waar de focus in "Huidige kaart opslaan als" viel en de getypte naam de kaartnaam werd
+    // (gebruikers-sweep 2026-11-13 18u, Sanne met toetsenbord)
+    pk.addEventListener('click',function(){
+      var pe=document.getElementById('praktijk');
+      if(!(SET.praktijk||'').trim()&&pe){
+        if(IS_V2&&SCHERM!=='maken')zetScherm('maken');
+        pe.scrollIntoView({block:'center'});pe.focus();
+        return;
+      }
+      klik('kaartenBtn')();
+    });
     // ideeënbox (public/ideeenbox.js): ideeën voor Fysiplan plaatsen en erop stemmen
     var ideeen=function(){import('/ideeenbox.js?v=1').then(function(m){m.openIdeeenbox();}).catch(function(){alert('De ideeënbox kon niet laden. Probeer het zo opnieuw.');});};
     var hulp=[
