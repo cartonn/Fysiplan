@@ -3027,7 +3027,10 @@ bridge2.jpg</div>
     if(IS_V2&&cn&&naamLijktVolledig(cn.value)&&NAAM_OK!==cn.value.trim().toLowerCase()){
       var vs=kaartLabelVan(cn.value);
       if(confirm('\u201c'+cn.value.trim()+'\u201d lijkt een volledige naam. Op de digitale kaart hoort alleen een roepnaam; de volledige naam staat in je EPD.\n\nOK = maak er \u201c'+vs+'\u201d van\nAnnuleren = zo laten'))
-        {cn.value=vs;cn.dispatchEvent(new Event('input',{bubbles:true}));}
+        // ROEP_VOOR: staat de kaart al onder de volledige naam op de server (QR getest,
+        // autosave), dan hernoemt de server die kaart (zelfde QR) in plaats van een tweede
+        // kaart te maken (gebruikers-sweep 2026-11-13, Sanne)
+        {cn.value=vs;cn.dispatchEvent(new Event('input',{bubbles:true}));ROEP_VOOR=vs.toLowerCase();}
       else NAAM_OK=cn.value.trim().toLowerCase();
     }
     var naam=(cn&&cn.value.trim())||('Kaart '+new Date().toLocaleDateString('nl-NL'));
@@ -3428,6 +3431,14 @@ bridge2.jpg</div>
     if(!(SET.praktijk||'').trim()){alert('Vul eerst de naam van je praktijk in, linksboven op de kaart.');var pe=document.getElementById('praktijk');if(pe)pe.focus();return;}
     var cn=document.getElementById('c_naam');
     if(!cn.value.trim()){cn.value='Voorbeeldpati\u00ebnt';cn.dispatchEvent(new Event('input'));}
+    // ook hier eerst het roepnaamvoorstel: "Test de QR" deelde een volledige naam zonder
+    // de vraag die Delen en Printen wel stellen (gebruikers-sweep 2026-11-13, Sanne)
+    if(IS_V2&&naamLijktVolledig(cn.value)&&NAAM_OK!==cn.value.trim().toLowerCase()){
+      var vsq=kaartLabelVan(cn.value);
+      if(confirm('\u201c'+cn.value.trim()+'\u201d lijkt een volledige naam. Op de digitale kaart hoort alleen een roepnaam; de volledige naam staat in je EPD.\n\nOK = maak er \u201c'+vsq+'\u201d van\nAnnuleren = zo laten'))
+        {cn.value=vsq;cn.dispatchEvent(new Event('input',{bubbles:true}));ROEP_VOOR=vsq.toLowerCase();}
+      else NAAM_OK=cn.value.trim().toLowerCase();
+    }
     knop.disabled=true;knop.textContent='QR-code maken\u2026';
     saveServerCard(cn.value.trim(),function(d){
       knop.disabled=false;knop.textContent='Test de QR op je telefoon';
