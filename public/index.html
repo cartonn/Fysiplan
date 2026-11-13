@@ -2789,11 +2789,11 @@ bridge2.jpg</div>
     };
     setTimeout(function(){toon(12);},350);
   }
-  // QR van de kaartlink met de patiënttaal; past die niet in de kleine QR (langere
-  // domeinnaam), dan de kale link: de kaart kiest dan zelf de taal van de telefoon
+  // V2 gebruikt voor langere domeinnamen de ruime QR, met behoud van de patiënttaal.
+  // Korte QR-codes en de bestaande V1-fallback blijven ongewijzigd.
   function qrSvg(id,px){
     if(!window.FYSIQR)return '';
-    return FYSIQR.svg(kaartUrl(id),px)||FYSIQR.svg(location.origin+'/k/'+id,px);
+    return FYSIQR.svg(kaartUrl(id),px)||(IS_V2&&FYSIQR.svg(kaartUrl(id),px,true))||FYSIQR.svg(location.origin+'/k/'+id,px);
   }
   function toonQr(id){
     // met de gekozen patiënttaal (?taal=..), net als de WhatsApp-link: de geprinte QR

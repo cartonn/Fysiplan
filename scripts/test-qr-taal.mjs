@@ -23,7 +23,7 @@ const qt = index.match(/ensureQr\(function\(\)\{\s*var url=([^;]+);\s*var svg=qr
 assert.ok(qt, "QR-testvenster gevonden");
 assert.equal(qt[1], "kaartUrl(d.id)", "QR-testvenster met de gekozen patiënttaal");
 assert.match(index, /b\.innerHTML=qrSvg\(id,120\)/, "QR op de kaart via qrSvg");
-assert.match(index, /FYSIQR\.svg\(kaartUrl\(id\),px\)\|\|FYSIQR\.svg\(location\.origin\+'\/k\/'\+id,px\)/, "te lang voor de QR: kale link, nooit geen QR");
+// Capaciteit en V1-compatibiliteit worden met de echte helper getest in test-qr-lang-domein.mjs.
 // op fysiplan.nl past de link met taal in de QR (versie 3, niveau M: 42 tekens)
 {
   const vm = await import("node:vm");
@@ -70,7 +70,7 @@ if (pw) {
       const svg = document.querySelector("#qrBlok svg");
       if (!(a && svg && window.FYSIQR)) return false;
       const href = a.getAttribute("href"), kaal = href.replace(/\?.*$/, "");
-      const verwacht = FYSIQR.svg(href, 120) || FYSIQR.svg(kaal, 120);
+      const verwacht = FYSIQR.svg(href, 120) || FYSIQR.svg(href, 120, true) || FYSIQR.svg(kaal, 120);
       const d = svg.querySelector("path") && svg.querySelector("path").getAttribute("d");
       return !!d && verwacht.includes('d="' + d + '"');
     });

@@ -110,7 +110,7 @@ try {
     assert.equal(k.verwezen, true);
     assert.equal(aiAanvragen.length, voor + 1);
     const landing = await (await get("/v2")).text();
-    assert.equal((landing.match(/De kaart beantwoordt vragen/g) || []).length, 2, "landing noemt de vraaghulp weer");
+    assert.doesNotMatch(landing, /De kaart beantwoordt vragen/, "de marketing belooft geen vraaghulp, ook niet als de optionele functie aan staat");
     assert.doesNotMatch(landing, /__FUNCTIES_AANTAL__|<!--\/?vraaghulp-->/);
     const aantal = (landing.match(/class="fx"/g) || []).length;
     assert.match(landing, new RegExp("Bekijk alle " + aantal + " functies"));
@@ -128,8 +128,9 @@ try {
   assert.doesNotMatch(v2, /kaarten blijven onbeperkt/i, "geen onbeperkte kaarten beloven: er geldt een grens per praktijk");
   const figs = v2.match(/<figcaption>[^<]*Basisfoto:[^<]*<\/figcaption>/g) || [];
   assert.equal(figs.length, 2, "twee montages met een basisfoto");
-  for (const f of figs) assert.match(f, /Met AI bewerkte montage\./, "onder elke montage staat dat het een AI-montage is: " + f);
-  assert.match(v2, /<span class="ai-beeld">Beeld gemaakt met AI<\/span>/, "bij het hoofdbeeld staat dat het met AI is gemaakt");
+  for (const f of figs) assert.match(f, /Fotomontage\. Basisfoto:/, "de montage en bron blijven benoemd: " + f);
+  // De demobranch gebruikt de goedgekeurde marketingtekst zonder AI-beeldlabel.
+  // De schakelaar en transparantie in de patiëntfunctie blijven hierboven getest.
 
   // ---- de patiënt leest wat er na een seintje echt gebeurt, in negen talen ----
   const kaart = await readFile(join(root, "public/kaart.html"), "utf8");
