@@ -1506,7 +1506,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     // zo ziet de therapeut welke oefening blijft liggen — zonder patiënt-app
     if(id&&id!=='demo'){
       // via stuur(): zonder internet gaat het vinkje in de wachtrij en later alsnog mee
-      try{stuur('/api/kaart/oefening',{id:id,oef:idx,aan:p===-1}).catch(function(){});}catch(e){}
+      try{stuur('/api/kaart/oefening',{id:id,oef:idx,n:oefNamen([idx])[0],aan:p===-1}).catch(function(){});}catch(e){}
     }
     // alle oefeningen af -> bevestig de dag-teller (idempotent; server telt één keer per dag)
     var totaal=document.querySelectorAll('#oefs .oefdone').length;
@@ -3415,10 +3415,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         // pas "Doorgegeven" tonen als de server de melding echt heeft: offline, 429
         // of 5xx gaf eerst stil "Doorgegeven ✓" terwijl de therapeut niets kreeg
         oz.dataset.bezig='1';oz.disabled=true;oz.textContent=trg('zwaarbezig');
-        fetch('/api/kaart/oefzwaar',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id,oef:zidx})})
+        fetch('/api/kaart/oefzwaar',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id,oef:zidx,n:oefNamen([zidx])[0]})})
           // zonder internet: in de wachtrij en dat ook zeggen ("Opgeslagen op je telefoon…"),
           // niet "Doorgegeven ✓" terwijl de therapeut nog niets heeft (sweep 2026-11-10 22u, Truus en Jayden)
-          .catch(function(){WACHT_REDEN='net';zetInWacht('/api/kaart/oefzwaar',{id:id,oef:zidx});return {ok:true,wacht:true};})
+          .catch(function(){WACHT_REDEN='net';zetInWacht('/api/kaart/oefzwaar',{id:id,oef:zidx,n:oefNamen([zidx])[0]});return {ok:true,wacht:true};})
           .then(function(r){if(!r.ok)throw r.status;delete oz.dataset.bezig;zetZwaar();})
           .catch(function(){delete oz.dataset.bezig;oz.disabled=false;oz.textContent=trg('zwaarmis');});
         return;

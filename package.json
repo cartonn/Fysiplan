@@ -77,6 +77,7 @@
     "test:inbox": "node scripts/test-inbox.mjs",
     "test:patientkant": "node scripts/test-patientkant.mjs",
     "test:akkoord": "node scripts/test-akkoord.mjs",
+    "test:oefnaam": "node scripts/test-kaart-oefening-naam.mjs",
     "test:gedaansync": "node scripts/test-kaart-gedaan-sync.mjs",
     "test:seintje": "node scripts/test-sweep-seintje-afspraak.mjs",
     "test:seintjevoorrang": "node scripts/test-seintje-voorrang.mjs",
