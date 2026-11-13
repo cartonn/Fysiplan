@@ -181,6 +181,7 @@
     "test:plaatsen": "node scripts/test-plaatsen.mjs",
     "test:leeslog": "node scripts/test-leeslog.mjs",
     "test:database": "node scripts/test-database.mjs",
+    "test:healthdbfout": "node scripts/test-health-database-fout.mjs",
     "test:thuiskaart": "node scripts/test-thuiskaart.mjs",
     "test:medialink": "node scripts/test-medialink.mjs",
     "test:patientonderdeel": "node scripts/test-patient-onderdeel.mjs",

@@ -19,7 +19,8 @@ const nlDag = (t) => new Date(t).toLocaleDateString("sv-SE", { timeZone: "Europe
 // alleen afgevinkte oefeningen (vandaag), geen dagvink: telt als oefendag
 const alleenVinkjes = ctx.oefDagen({ gedaan: [], oefTrouw: { Squat: { n: 1, d: nlDag(nu) }, Brug: { n: 3, d: nlDag(nu) } } });
 assert.equal(alleenVinkjes.length, 1, "twee vinkjes op dezelfde dag zijn één oefendag");
-assert.ok(nu - alleenVinkjes[0].t < 7 * dag && alleenVinkjes[0].t <= nu, "vandaag valt in deze week en niet in de toekomst");
+// (oefDagen kapt af op zijn eigen Date.now(), dat een paar ms na `nu` kan liggen: vergelijk met de klok van nu)
+assert.ok(nu - alleenVinkjes[0].t < 7 * dag && alleenVinkjes[0].t <= Date.now(), "vandaag valt in deze week en niet in de toekomst");
 // dagvink en vinkje op dezelfde dag tellen één keer; een oudere dag komt ervoor
 const gemengd = ctx.oefDagen({ gedaan: [{ t: nu - 2 * dag }, { t: nu }], oefTrouw: { Squat: { n: 2, d: nlDag(nu) }, Oud: { n: 1, d: nlDag(nu - 20 * dag) } } });
 assert.equal(gemengd.length, 3, "drie verschillende dagen");
