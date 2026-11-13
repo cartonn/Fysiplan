@@ -787,7 +787,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   <p class="datum" id="vandaag"></p>
   <h2><span id="oefkop">Jouw oefeningen</span> <span class="tel" id="oeftel"></span></h2>
   <div class="client" id="clientblok" style="display:none"></div>
-  <div class="oefvoortgang" id="oefvoortgang" style="display:none"><span class="ovbalk" aria-hidden="true"><i id="ovvul"></i></span><span class="ovtekst" id="ovtekst"></span></div>
+  <div class="oefvoortgang" id="oefvoortgang" style="display:none"><span class="ovbalk" aria-hidden="true"><i id="ovvul"></i></span><span class="ovtekst" id="ovtekst" role="status" tabindex="-1"></span></div>
   <button type="button" class="kn1" id="startknop" style="display:none"></button>
   <div class="leesrij">
     <button type="button" id="leesBtn" style="display:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg><span id="leesTxt">Lees voor</span></button>
@@ -1453,6 +1453,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       b.classList.toggle('aan',aan);
       b.setAttribute('aria-pressed',aan?'true':'false');
       var t=b.querySelector('.odt');if(t)t.textContent=trg('oefdaan');
+      // de schermlezer hoorde zes keer alleen "Gedaan": noem de oefening erbij
+      // (gebruikers-sweep 2026-11-13, Truus)
+      var nm=b.closest('.oef');nm=nm&&nm.querySelector('.naam');
+      if(nm&&nm.textContent)b.setAttribute('aria-label',nm.textContent+': '+trg('oefdaan'));
     });
     tekenZwaar();
     if(typeof tekenSessie==='function')tekenSessie();
@@ -1492,6 +1496,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var st=leesOefDaan();
     var totaal=document.querySelectorAll('#oefs .oefdone').length;
     for(var i=0;i<totaal;i++)if(st.done.indexOf(i)===-1)toggleOefDaan(i);
+    // de knop verdwijnt na de tik: zet de focus op de bevestiging erboven, anders viel
+    // hij op de pagina en zag of hoorde de patiënt niets (gebruikers-sweep 2026-11-13, Truus)
+    var ov=document.getElementById('ovtekst');
+    if(ov&&ov.offsetParent){try{ov.scrollIntoView({block:'center'});}catch(e){}try{ov.focus({preventScroll:true});}catch(e){ov.focus();}}
   }
   (function(){var b=document.getElementById('ovalles');if(b)b.addEventListener('click',doeAllesDaan);})();
   var OEF_SLOT={};
