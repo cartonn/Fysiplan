@@ -218,7 +218,8 @@
     "test:beveiligingfeedback": "node scripts/test-beveiliging-feedback.mjs",
     "test:welkomlink": "node scripts/test-welkomlink.mjs",
     "test:proeftokenverloop": "node scripts/test-proef-token-verloop.mjs",
-    "test:foutpagina": "node scripts/test-foutpagina.mjs"
+    "test:foutpagina": "node scripts/test-foutpagina.mjs",
+    "test:oefweg": "node scripts/test-sweep-kaart-oefweg.mjs"
   },
   "engines": {
     "node": ">=20"
