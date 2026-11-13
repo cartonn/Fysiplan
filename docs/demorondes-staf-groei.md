@@ -27,8 +27,21 @@ Contactvoorstellen controleren kanaaltoestemming, afmelding en recent contact op
 
 Model/prijzen gecontroleerd op de officiële [modelpagina](https://platform.claude.com/docs/en/models/haiku-5-5/overview) en [prijslijst](https://platform.claude.com/docs/en/about-claude/pricing). Geen automatische overstap naar een duurder model.
 
-## Aanvullende acceptatieproef op de testservice
+## Eerste acceptatieproef op de testservice (historisch)
 
 Op 13 november is een echte stafronde gelukt (advies opgeslagen). De groei-agent is nog niet betrouwbaar geaccepteerd: een ronde werd inhoudelijk geweigerd, waarna de modelinvoer is verbeterd; de laatste ronde op `f6a623d` gaf `modelantwoord-ongeldig` zonder acties te verwerken. De exacte oorzaak van dat ongeldige antwoord is nog niet vastgesteld. De zes groeirondes voor vandaag zijn gebruikt; de limiet is niet gereset. Dit blijft een open acceptatiepunt, geen geslaagde oplevering van de modelwerking.
 
 De lokale browserproef met uitsluitend testgegevens bevestigde afwijzen met feedback, een taak openzetten, een geldig concept goedkeuren en een bericht naar het demopostvak sturen. Dit bewijst de beheerwerkstroom, niet echte mailbezorging. Staf en groei blijven op proef, berichten op handmatig. Telefonie is op verzoek uitgesteld; geen Twilio-upgrade of telefoonaankoop gedaan. Productie is niet gemerged.
+
+## Hertest na verhoging en reparatie — 13 november 2026, 09:53–09:55 UTC
+
+Op expliciet verzoek is de limiet verhoogd van zes naar twintig aanvragen per rol per dag, met behoud van de bestaande tellers. De uitvoerruimte is verhoogd van 2.000 naar 4.000 tokens; een afgebroken antwoord wordt apart herkend en nooit uitgevoerd. De precieze oorzaak van de eerdere ongeldige respons is niet achteraf bewezen.
+
+Tegen testcommit `6e4e3b7` zijn vier opeenvolgende echte Haiku-rondes via de beheerroute geslaagd:
+
+1. Concept `G-1d761e3b` opgeslagen; beoordeeld en met feedback afgewezen. Het belvoorstel is afgewezen omdat telefonie uitgesteld is.
+2. Herziening `G-42624e81` opgeslagen; de formulering over papier/telefoon was nog verwarrend en kreeg concrete feedback. Geen nieuw belvoorstel.
+3. Herziening `G-5b8576d6` opgeslagen: één oefenkaart, op papier of via QR-code op de telefoon. Staat op wacht voor menselijke beoordeling.
+4. Nieuwe ronde geeft nul acties: bestaand wachtend concept en contactbeperkingen correct herkend. Geen dubbel concept.
+
+`test:beheeromgeving` en `sweep:agentgeheugen` (14 scenario's) slagen. Een extra regressietest simuleert een afgebroken providerantwoord en controleert de specifieke foutcategorie. Deze test bevestigt de werkstroom met inhoudelijke feedback; het is geen garantie dat toekomstige teksten zonder redactie goed zijn. Staf/groei blijven op proef, berichten handmatig. Geen productie-merge, echte mail of telefoongesprek.

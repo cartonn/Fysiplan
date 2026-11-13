@@ -18,6 +18,7 @@ const api = createServer(async (req,res) => {
   const j=JSON.parse(b); input.push(j); calls++;
   if (mode==='hold') { entered?.(); await new Promise(r=>hold=r); }
   if (mode==='error') { res.writeHead(503); res.end('{}'); return; }
+  if (mode==='truncated') { res.setHeader('content-type','application/json'); res.end(JSON.stringify({stop_reason:'max_tokens',content:[{type:'text',text:'{"samenvatting":'}]})); return; }
   const plan = mode==='bad' ? {wat:'onjuist'} : {samenvatting:'Een voorstel voor de demo; beheer moet de inhoud nog beoordelen.',acties:mode==='wrongrole' ? [{actie:'contact-voorstel',gegevens:{contact:'C-aaaaaa',kanaal:'mail',reden:'Voorstel dat niet bij de staf hoort.'}}] : [{actie:'taak-voorstel',gegevens:{titel:'Controleer de groeitekst',uitleg:'Controleer de feiten voordat iemand deze tekst gebruikt.',soort:'groei',prioriteit:2}}]};
   res.setHeader('content-type','application/json'); res.end(JSON.stringify({content:[{type:'text',text:JSON.stringify(plan)}]}));
 });
@@ -46,6 +47,7 @@ try{
  await post('loket/pauze',{aan:true});hold();assert.equal((await running).status,409);
  assert.equal((await post('loket/demoronde',{rol:'staf'})).status,423);await post('loket/pauze',{aan:false});
  mode='error';r=await post('loket/demoronde',{rol:'staf'});assert.equal(r.status,502);assert.equal(r.body.code,'model-provider');
+ mode='truncated';r=await post('loket/demoronde',{rol:'staf'});assert.equal(r.status,502);assert.equal(r.body.code,'modelantwoord-afgebroken');
  mode='bad';r=await post('loket/demoronde',{rol:'staf'});assert.equal(r.status,502);assert.equal(r.body.code,'modelantwoord-ongeldig');
  mode='normal';assert.equal((await post('loket/demoronde',{rol:'staf'})).status,200);
  for(let i=calls;i<DEMO_RONDES_PER_DAG;i++) assert.equal((await post('loket/demoronde',{rol:'staf'})).status,200);
