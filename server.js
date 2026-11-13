@@ -597,6 +597,12 @@ const magGedeeldAanpassen = (s, item, pk) => !s || s.pk !== pk || isBeheer(s) ||
 // Eigen oefeningen voor de app, met magWeg: alleen de maker of een beheerder ziet het kruisje.
 // Een therapeut zag "×" bij de oefening van een collega en kreeg pas na bevestigen een 403
 // (gebruikers-sweep 2026-11-11).
+// Eigen vragen voor de app, met mag: alleen de maker of een beheerder kan een vraag wijzigen of weghalen.
+const vragenVoorApp = (request, pk) => {
+  const s = sessieVan(request), uit = vasteVragen.voorApp(praktijkVragen, pk);
+  for (const lijst of Object.values(uit)) for (const x of lijst) x.mag = magGedeeldAanpassen(s, x.door ? x : null, pk);
+  return uit;
+};
 const oefeningenVoorApp = (request, pk) => {
   const sessie = sessieVan(request);
   return (praktijkOefeningen[pk] || []).map((o) => ({ ...o, magWeg: magGedeeldAanpassen(sessie, o, pk) }));
@@ -5662,7 +5668,7 @@ async function afhandelen(request, response) {
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
     const pk = praktijkVan(request, q.get("praktijk"));
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
-    await sendJson(response, 200, { ok: true, standaard: vasteVragen.standaardIn("nl"), eigen: vasteVragen.voorApp(praktijkVragen, pk), max: vasteVragen.MAX_PER_OEF });
+    await sendJson(response, 200, { ok: true, standaard: vasteVragen.standaardIn("nl"), eigen: vragenVoorApp(request, pk), max: vasteVragen.MAX_PER_OEF });
     return;
   }
   if (urlPath === "/api/praktijk/vragen" && request.method === "POST") {
@@ -5679,12 +5685,22 @@ async function afhandelen(request, response) {
     if (!c.ok) { await sendJson(response, 400, { ok: false, fout: c.fout }); return; }
     const s = sessieVan(request);
     const door = s && s.pk === pk && s.lid ? s.lid : "";
+    // Vragen van een collega weghalen of wijzigen: alleen de maker of een beheerder, net als bij
+    // teamsjablonen en eigen oefeningen. Een therapeut wiste met vragen:[] de vragen van de beheerder
+    // van alle kaarten van de praktijk (gebruikers-sweep 2026-11-13). Erbij zetten mag iedereen.
+    const huidig = vasteVragen.voorApp(praktijkVragen, pk)[oef] || [];
+    const blijft = (x) => c.vragen.some((n) => n.v === x.v && n.a === x.a);
+    if (huidig.some((x) => !blijft(x) && !magGedeeldAanpassen(s, x.door ? x : null, pk))) {
+      auditLog(pk, "vragen-aanpassen-geweigerd", request);
+      await sendJson(response, 403, { ok: false, fout: "Een vraag van een collega kan alleen die collega of een beheerder van de praktijk wijzigen of weghalen.", eigen: vragenVoorApp(request, pk) });
+      return;
+    }
     if (!vasteVragen.zet(praktijkVragen, pk, oef, c.vragen, door) && c.vragen.length) {
       await sendJson(response, 400, { ok: false, fout: "Maximum aantal oefeningen met eigen vragen bereikt." }); return;
     }
     await saveJson(praktijkVragenPath, praktijkVragen);
     auditLog(pk, "vragen-aangepast", request);
-    await sendJson(response, 200, { ok: true, eigen: vasteVragen.voorApp(praktijkVragen, pk) });
+    await sendJson(response, 200, { ok: true, eigen: vragenVoorApp(request, pk) });
     return;
   }
 

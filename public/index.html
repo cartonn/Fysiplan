@@ -5923,7 +5923,7 @@ bridge2.jpg</div>
         var behFilterVan=function(){var s=document.getElementById('k_srv_beh'),lab=document.getElementById('k_srv_behlab');return (s&&lab&&lab.style.display!=='none')?String(s.value||''):'';};
         var vanBehandelaar=function(c,bf){return String(c.behandelaar||'').trim().toLowerCase()===bf;};
         var huidigeBasis=function(){return srvArchiefView?lArch:l;};
-        var toon=function(){
+        var toon=toonVV=function(){
           var base=huidigeBasis();
           var t=zoekTermVan();
           // zoeken op cliëntnaam, behandelaar óf werknotitie: "linkerknie" vindt de
@@ -6545,7 +6545,7 @@ bridge2.jpg</div>
   // laatst geladen lijst staan). Zie herstelOpenKaart.
   var EIGEN_STAND='uit',EIGEN_LAATST=[];
   // vaste vragen per oefening van de praktijk (zie verderop bij openVasteVragen)
-  var VV_EIGEN={},VV_STD=[],VV_MAX=5,VV_OEF=null;
+  var VV_EIGEN={},VV_STD=[],VV_MAX=5,VV_OEF=null,toonVV=function(){};
   function vvSleutel(n){return String(n==null?'':n).replace(/\s+/g,' ').trim().slice(0,120);}
   function laadVasteVragen(){
     var pr=(SET.praktijk||'').trim();
@@ -6753,11 +6753,14 @@ bridge2.jpg</div>
   // In plaats van de vraaghulp: de patiënt ziet bij elke oefening een paar vaste vragen met
   // nagekeken antwoorden, plus de vragen die de praktijk zelf bij die oefening schrijft. Die
   // staan bij de praktijk op de server en verschijnen op elke kaart met deze oefening.
+  // een vraag van een collega (mag===false) alleen lezen: wijzigen of weghalen kan alleen die
+  // collega of een beheerder (de server weigert het anders met 403)
   function vvRijHtml(x){
+    var ro=x.mag===false?" readonly aria-readonly='true'":"";
     return "<div class='vv-rij' style='border-top:1px solid var(--line);padding:10px 0'>"+
-      "<input class='vv-v' maxlength='140' placeholder='Vraag, bijvoorbeeld: Mag ik dit ook staand doen?' value='"+esc(x.v||'')+"' style='width:100%;margin-bottom:6px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
-      "<textarea class='vv-a' maxlength='600' rows='3' placeholder='Antwoord voor de pati\u00ebnt' style='width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit'>"+esc(x.a||'')+"</textarea>"+
-      "<button class='btn vv-weg' type='button' style='margin-top:4px'>Vraag weghalen</button></div>";
+      "<input class='vv-v' maxlength='140' placeholder='Vraag, bijvoorbeeld: Mag ik dit ook staand doen?' value='"+esc(x.v||'')+"'"+ro+" style='width:100%;margin-bottom:6px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
+      "<textarea class='vv-a' maxlength='600' rows='3' placeholder='Antwoord voor de pati\u00ebnt'"+ro+" style='width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit'>"+esc(x.a||'')+"</textarea>"+
+      (ro?"<div class='hint' style='margin-top:4px'>Van een collega: alleen die collega of een beheerder kan deze vraag wijzigen of weghalen.</div>":"<button class='btn vv-weg' type='button' style='margin-top:4px'>Vraag weghalen</button>")+"</div>";
   }
   function openVasteVragen(o){
     VV_OEF=o;
@@ -6794,7 +6797,7 @@ bridge2.jpg</div>
           .then(function(r){return r.json();})
           .then(function(d){
             knop.disabled=false;knop.textContent='Bewaren';
-            if(!d.ok){alert(d.fout||'Bewaren is niet gelukt.');return;}
+            if(!d.ok){if(d.eigen){VV_EIGEN=d.eigen;toonVV();}alert(d.fout||'Bewaren is niet gelukt.');return;}
             VV_EIGEN=d.eigen||{};render();closeOv('ovVasteVragen');
           })
           .catch(function(){knop.disabled=false;knop.textContent='Bewaren';alert('Bewaren is niet gelukt: geen verbinding.');});
@@ -6802,7 +6805,7 @@ bridge2.jpg</div>
     }
     document.getElementById('vv_titel').textContent='Vragen bij \u201c'+o.naam+'\u201d';
     var std=document.getElementById('vv_std'),st=document.getElementById('vv_status'),form=document.getElementById('vv_form'),bew=document.getElementById('vv_bewaar');
-    var toon=function(){
+    var toon=toonVV=function(){
       std.innerHTML=VV_STD.length?VV_STD.map(function(x){return "<p style='margin:0 0 8px'><b>"+esc(x.v)+"</b><br>"+esc(x.a)+"</p>";}).join(''):'';
       var eigen=VV_EIGEN[vvSleutel(o.naam)]||[];
       document.getElementById('vv_rijen').innerHTML=(eigen.length?eigen:[{}]).map(vvRijHtml).join('');

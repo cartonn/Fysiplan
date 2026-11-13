@@ -204,6 +204,7 @@
     "test:alles": "node scripts/test-alles.mjs",
     "test:vertalingen": "node scripts/test-vertalingen.mjs",
     "test:vastevragen": "node scripts/test-vaste-vragen.mjs",
+    "test:vragenrollen": "node scripts/test-vragen-rollen.mjs",
     "test:schermen": "node scripts/test-schermen.mjs",
     "test:schermtoetsenbord": "node scripts/test-scherm-toetsenbord.mjs",
     "test:thuiskaartuitleg": "node scripts/test-thuiskaart-uitleg.mjs",
