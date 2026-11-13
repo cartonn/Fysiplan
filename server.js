@@ -6328,13 +6328,23 @@ async function afhandelen(request, response) {
       // per praktijk hooguit OPNAME_PRAKTIJK_MAX open opnames (wachtend of binnen en nog op geen kaart). Sinds
       // een binnengekomen opname 4 uur op een kaart wacht (#277) kon één praktijk (ook een gratis proef) met
       // 200 kleine uploads de opname voor álle praktijken 4 uur blokkeren (security 2026-11-13 12u).
-      let openTotaal = 0, openPraktijk = 0;
+      // Een opname die al op een bewaarde kaart staat, is niet meer "open": die telde 4 uur mee, zodat een
+      // praktijk die op één middag 20 video's opnam en bewaarde vastzat (gebruikers-sweep 2026-11-13 14u, Mark).
+      let openTotaal = 0, openPraktijk = 0, opKaart = null;
       for (const x of opnames.values()) {
         if (!x.video) openTotaal++;
-        if (praktijkSessie && x.praktijk === praktijkSessie) openPraktijk++;
+        if (!praktijkSessie || x.praktijk !== praktijkSessie) continue;
+        if (x.video) {
+          if (!opKaart) { opKaart = new Set(); for (const k of Object.values((Object.hasOwn(kaarten, praktijkSessie) && kaarten[praktijkSessie]) || {})) for (const v of Object.values((k && k.vids) || {})) opKaart.add(v); }
+          if (opKaart.has(x.video)) continue;
+        }
+        openPraktijk++;
       }
-      if (openTotaal >= OPNAME_OPEN_MAX || (praktijkSessie && !isAdmin(request) && openPraktijk >= OPNAME_PRAKTIJK_MAX)) {
-        await sendJson(response, 429, { ok: false, fout: "Te veel gelijktijdige opnames; probeer het zo weer." }); return;
+      if (openTotaal >= OPNAME_OPEN_MAX) {
+        await sendJson(response, 429, { ok: false, fout: "Het is nu erg druk met opnames. Probeer het over een paar minuten opnieuw." }); return;
+      }
+      if (praktijkSessie && !isAdmin(request) && openPraktijk >= OPNAME_PRAKTIJK_MAX) {
+        await sendJson(response, 429, { ok: false, fout: "Je praktijk heeft al " + OPNAME_PRAKTIJK_MAX + " opnames die nog op geen bewaarde kaart staan. Bewaar eerst de kaart met je opname, of probeer het over een kwartier opnieuw." }); return;
       }
       // kort token: de QR-URL (/o/<token>) moet in een kleine, snel scanbare code passen
       const token = randomBytes(6).toString("hex");
@@ -6351,6 +6361,22 @@ async function afhandelen(request, response) {
 
   // het beeldscherm pollt tot de telefoon de video heeft geüpload; de limiet is ruim
   // (13+ schermen tegelijk achter één IP) maar smoort een eindeloze flood
+  // Annuleren in het QR-venster geeft het wachtende token terug: anders telde elk geannuleerd venster
+  // een kwartier mee voor het plafond van de praktijk (gebruikers-sweep 2026-11-13 14u, Mark). Alleen een
+  // token zonder upload en alleen van de eigen praktijk; een binnengekomen opname blijft staan.
+  if (urlPath === "/api/opname/stop" && request.method === "POST") {
+    if (schrijfLimiet(request, response)) return;
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    const ps = praktijkSessieVan(request);
+    let b = null;
+    try { b = JSON.parse(await readBody(request)); } catch {}
+    const t = b && typeof b === "object" ? String(b.token || "") : "";
+    const o = /^[a-f0-9]{12}$/.test(t) ? opnames.get(t) : null;
+    if (o && !o.video && !o.bezig && ps && o.praktijk === ps) opnames.delete(t);
+    await sendJson(response, 200, { ok: true });
+    return;
+  }
+
   if (urlPath === "/api/opname/status" && request.method === "GET") {
     const nuPoll = Date.now();
     const ipPoll = ipSleutel(request);
