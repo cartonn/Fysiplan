@@ -3089,7 +3089,8 @@ bridge2.jpg</div>
     fetch('api/praktijken',{method:'POST',headers:PJSON(),body:JSON.stringify(p)})
       .then(function(r){return r.json();}).then(function(d){
         if(d.ok){loadPraktijken();return;}
-        if(d.beheer){profielTerug(d.fout);return;}
+        // beheer: alleen een beheerder wijzigt het profiel; website: geen gewoon webadres (javascript:, data:)
+        if(d.beheer||d.website){profielTerug(d.fout);return;}
         if(d.bezet&&!p.zelfdeNaam&&window.confirm(d.fout||'Er is al een andere praktijk met deze naam. Toch zo noemen?')){p.zelfdeNaam=true;stuurPraktijk(p);}
       }).catch(function(){});
   }

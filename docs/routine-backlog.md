@@ -73,6 +73,13 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+- **NAKIJKEN (doorgezet door security 2026-11-13 08u, gemeten lokaal) — MIDDEL?, functioneel — eigen opname vóór het bewaren van de kaart.**
+  Sinds #249 geeft de server een eigen opname (`uploads/videos/v-…`) alleen via de link van een kaart of aan de praktijk van een kaart
+  die hem draagt. Direct na het opnemen (scherm-QR → telefoon → `zetOpnameVideo`) staat de video nog op geen enkele bewaarde kaart:
+  `GET /uploads/videos/v-<token>.mp4` met de sessie van de eigen praktijk geeft dan 404. Kijk met een persona of het voorbeeld in de
+  app leeg blijft tot de kaart bewaard is. Mogelijke fix (server.js `magMedia`): ook toestaan als `opnames` een token met `video === pad`
+  en `praktijk === sessie.pk` heeft.
+
 ### Sweep 2026-11-13 06u (vijf persona's lokaal met EIGEN_LOGIN_VERPLICHT=aan en PROEF_VERPLICHT=aan; geen 500's of pageerrors; alle beheergrenzen hielden, ook X ↔ Y, 15 beheerroutes 403 als therapeut)
 - **OPGELOST 2026-11-13 PR #269 (test:akkoordvandaag) — HOOG (Sanne) — de zin bij het akkoordvinkje was onleesbaar** (wit op #fffbeb, 1,04:1,
   `html.v2 .modal label{color:var(--ink)}` won van `#ps_akkoord`), precies bij het akkoord dat elke praktijk na #265/#268 opnieuw moet geven.

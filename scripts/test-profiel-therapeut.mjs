@@ -16,7 +16,7 @@ import { createRequire } from "node:module";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(join(root, "public/index.html"), "utf8");
-assert.match(html, /if\(d\.beheer\)\{profielTerug\(d\.fout\);return;\}/, "een 403 van het praktijkprofiel wordt afgehandeld");
+assert.match(html, /if\(d\.beheer(\|\|d\.website)?\)\{profielTerug\(d\.fout\);return;\}/, "een 403 van het praktijkprofiel wordt afgehandeld");
 assert.match(html, /PRAKSLOT\.akkoord\.beheer===false/, "de logoknop kijkt naar de rol");
 assert.match(html, /if\(Date\.now\(\)-Number\(btn\.dataset\.zekerT\|\|0\)<700\)return;/, "bevestiging van verwijderen telt pas na een pauze");
 

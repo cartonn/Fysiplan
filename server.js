@@ -14,6 +14,7 @@ import * as vasteVragen from "./lib/vaste-vragen.js";
 import { prijsRegels, prijsZin, metBtwBijschrift, bedragVoor, euro as euroTekst } from "./lib/prijs.js";
 import * as leeslogRegels from "./lib/leeslog.js";
 import { mediaSoort, mediaLink, leesMediaLink } from "./lib/medialink.js";
+import { veiligeWebsite } from "./lib/website.js";
 import { plaatsenVan, merkPiek, volgendAantal, nieuwePeriode, kaartVol, KAARTEN_PROEF, KAARTEN_PER_LOGIN } from "./lib/plaatsen.js";
 import { maandBedrag, betaalBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
@@ -810,6 +811,8 @@ const PROFIEL_VELDEN = ["praktijk", "adres", "plaats", "tel", "email", "logo", "
 function publiekProfiel(p) {
   const uit = {};
   for (const veld of PROFIEL_VELDEN) if (p && veld in p) uit[veld] = p[veld];
+  // een webadres van vóór de controle bij het bewaren (javascript:, data:, //host) gaat nooit mee naar buiten
+  if ("website" in uit && veiligeWebsite(uit.website) === null) uit.website = "";
   return uit;
 }
 
@@ -5951,6 +5954,12 @@ async function afhandelen(request, response) {
         website: cleanName(b.website, 200)
       };
       if (!p.praktijk || !p.adres) { await sendJson(response, 400, { ok: false, fout: "Vul minimaal praktijknaam en adres in." }); return; }
+      // alleen een gewoon webadres (lib/website.js): geen javascript:, data: of //host bij de praktijknaam op /k
+      if (Object.hasOwn(b, "website")) {
+        const web = veiligeWebsite(p.website);
+        if (web === null) { await sendJson(response, 400, { ok: false, website: true, fout: "Vul als website een gewoon webadres in, zoals www.praktijk.nl of https://praktijk.nl." }); return; }
+        p.website = web;
+      }
       // met een sessie altijd het profiel van de eigen praktijk (vaste code), ook als
       // de naam verandert; anders zoals vroeger op naam
       const key = praktijkVan(request, p.praktijk);
