@@ -158,6 +158,7 @@
     "test:agendadubbel": "node scripts/test-kaart-agenda-dubbel.mjs",
     "test:proeftweedeapparaat": "node scripts/test-sweep-proef-tweede-apparaat.mjs",
     "test:proefbeheer": "node scripts/test-proef-beheer-tweede-apparaat.mjs",
+    "test:proefdag": "node scripts/test-sweep-proefdag-elders.mjs",
     "test:vandaagdatums": "node scripts/test-sweep-vandaag-datums.mjs",
     "test:verloopsmal": "node scripts/test-sweep-verloop-smal.mjs",
     "test:vragennaastweg": "node scripts/test-sweep-vragen-naast-weg.mjs",
