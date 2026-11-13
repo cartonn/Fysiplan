@@ -23,6 +23,12 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **MIDDEL (nieuw, gebruikers-sweep 2026-11-13 10u, Karin, gemeten lokaal) — rechten (e): "Alles wissen" laat de praktijknaam samen
+  met de login-id's tot een dag staan in `beheer-gebruik.json`** (`gezien` met `"<praktijk>|<lid-id>"` en een blok per praktijk), terwijl
+  de bevestiging zegt "Alles van je praktijk is gewist". `wisPraktijk` (lib/beheer-omgeving-routes.js r. ~341–350) ruimt `gebruik` niet op;
+  `snoeiGebruik` (r. ~215) draait één keer per dag. Kleinste stap: in `wisPraktijk` meteen de gebruiksmeting van die praktijk snoeien.
+  Al het andere was na het wissen weg (sessies, login, kaart, uitnodiging, logo, profiel, leeslog, ideeën, vaste vragen, support, loket).
+
 - **LAAG (nieuw, 2026-11-13 09u) — rechten (e): de download op /v2/gegevens bevat niet wat Fysiplan-support over de praktijk
   bijhoudt** (stand, logboekregels, verstuurde supportmails). Daar is Fysiplan zelf verantwoordelijke (art. 15 AVG geldt per
   persoon, niet per praktijk); opvragen kan via contact. Kleinste stap later: in de download een blok `support` met de
