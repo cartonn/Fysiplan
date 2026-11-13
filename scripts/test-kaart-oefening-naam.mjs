@@ -15,8 +15,8 @@ import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const kaart = await readFile(join(root, "public/kaart.html"), "utf8");
 assert.match(kaart, /stuur\('\/api\/kaart\/oefening',\{id:id,oef:idx,n:oefNamen\(\[idx\]\)\[0\]/, "vinkje stuurt de naam mee");
-assert.match(kaart, /JSON\.stringify\(\{id:id,oef:zidx,n:oefNamen\(\[zidx\]\)\[0\]\}\)/, "te zwaar stuurt de naam mee");
-assert.match(kaart, /zetInWacht\('\/api\/kaart\/oefzwaar',\{id:id,oef:zidx,n:/, "te zwaar in de wachtrij met naam");
+assert.match(kaart, /var zn=oefNamen\(\[zidx\]\)\[0\];[\s\S]{0,200}JSON\.stringify\(\{id:id,oef:zidx,n:zn\}\)/, "te zwaar stuurt de naam mee");
+assert.match(kaart, /zetInWacht\('\/api\/kaart\/oefzwaar',\{id:id,oef:zidx,n:zn\}\)/, "te zwaar in de wachtrij met naam");
 
 const ID = "0e5a0e5a1234";
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-oefnaam-"));

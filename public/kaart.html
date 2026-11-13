@@ -3423,10 +3423,11 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         // pas "Doorgegeven" tonen als de server de melding echt heeft: offline, 429
         // of 5xx gaf eerst stil "Doorgegeven ✓" terwijl de therapeut niets kreeg
         oz.dataset.bezig='1';oz.disabled=true;oz.textContent=trg('zwaarbezig');
-        fetch('/api/kaart/oefzwaar',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id,oef:zidx,n:oefNamen([zidx])[0]})})
+        var zn=oefNamen([zidx])[0];
+        fetch('/api/kaart/oefzwaar',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id,oef:zidx,n:zn})})
           // zonder internet: in de wachtrij en dat ook zeggen ("Opgeslagen op je telefoon…"),
           // niet "Doorgegeven ✓" terwijl de therapeut nog niets heeft (sweep 2026-11-10 22u, Truus en Jayden)
-          .catch(function(){WACHT_REDEN='net';zetInWacht('/api/kaart/oefzwaar',{id:id,oef:zidx,n:oefNamen([zidx])[0]});return {ok:true,wacht:true};})
+          .catch(function(){WACHT_REDEN='net';zetInWacht('/api/kaart/oefzwaar',{id:id,oef:zidx,n:zn});return {ok:true,wacht:true};})
           .then(function(r){if(!r.ok)throw r.status;delete oz.dataset.bezig;zetZwaar();})
           .catch(function(){delete oz.dataset.bezig;oz.disabled=false;oz.textContent=trg('zwaarmis');});
         return;
