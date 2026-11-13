@@ -4266,7 +4266,16 @@ async function afhandelen(request, response) {
       akkoord: ingelogd ? { ...akkoordStatus(praktijkAccounts[eigen]), beheer: isBeheer(sessieVan(request)) } : undefined,
       // verlopen proef (dit apparaat of de ingelogde praktijk): de app toont het meteen bij
       // het laden, niet pas na de eerste geweigerde opslag (gebruikers-sweep, tweede apparaat)
-      proefVerlopen: proefVerlopen(proefVan(request)) || (ingelogd && praktijkProefVerlopen(eigen)) || undefined });
+      proefVerlopen: proefVerlopen(proefVan(request)) || (ingelogd && praktijkProefVerlopen(eigen)) || undefined,
+      // lopende proef van de ingelogde praktijk (zelfde velden als /v2/app meegeeft aan een tweede
+      // apparaat of collega): na het inloggen toont de app de proefbalk meteen, niet pas na herladen
+      // (gebruikers-sweep 2026-11-13, Mark). Alleen einddatum en praktijknaam, geen aanmeldgegevens.
+      proef: (() => {
+        if (!ingelogd || proefVan(request)) return undefined;
+        const el = proefVanPraktijk(request);
+        return el ? { naam: "", praktijk: el.praktijk, dagenOver: dagenOver(el.verloopt), tot: datumNl(el.verloopt),
+          klant: false, elders: true, beheer: el.beheer } : undefined;
+      })() });
     return;
   }
 

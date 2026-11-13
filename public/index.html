@@ -3804,6 +3804,9 @@ bridge2.jpg</div>
         try{applyLogo();}catch(e){}
         // verlopen proef op een apparaat zonder proefcookie (ingelogde collega): meteen de balk
         if(d.proefVerlopen&&!PROEF_VOORBIJ)toonProefVoorbij(null,true);
+        // net ingelogd op een tweede apparaat of als collega: de einddatum kwam niet mee bij het laden
+        // van /v2/app; de server geeft hem nu, dus de proefbalk komt meteen (zonder herladen)
+        else if(IS_V2&&d.proef&&d.proef.elders&&!PROEF&&!PROEF_VOORBIJ){PROEF=d.proef;proefStart();}
       }).catch(function(code){
         // een 429/5xx of geen verbinding is niet "nog niet beveiligd": niets laten beveiligen
         var st=document.getElementById('ps_status'),form=document.getElementById('ps_form');
