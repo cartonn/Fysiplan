@@ -55,7 +55,7 @@ for (const [re, wat] of [
   [/geen e-mailadressen of pati&euml;ntgegevens/, "geen adressen of patiëntgegevens naar de agents"],
   [/alleen het aantal, niet wat erop staat/, "kaarten alleen als aantal"],
   [/120 dagen/, "termijn actieve logins (maakGebruik bewaart 120 dagen)"], [/Foute wachtwoorden: 24 uur/, "termijn foute wachtwoorden"],
-  [/Stopt je praktijk, dan blijven die regels staan/, "wat er na het stoppen blijft"]]) assert.match(rij, re, "supportrij noemt " + wat);
+  [/gaan de regels over je praktijk tegelijk weg/, "wat er na het wissen gebeurt"]]) assert.match(rij, re, "supportrij noemt " + wat);
 
 // elke mailsoort van support moet in de rij of de Resend-rij te herkennen zijn
 const SOORT_TEKST = {
@@ -93,7 +93,7 @@ const anthropic = (privacy.match(/<tr><td>Anthropic<\/td>[\s\S]*?<\/tr>/) || [""
 assert.match(anthropic, /agents van Fysiplan-support/, "Anthropic-rij noemt de agents");
 assert.match(anthropic, /codes in plaats van namen/, "Anthropic-rij zegt wat de agents krijgen");
 const einde = (privacy.match(/<p id="einde">[\s\S]*?<\/p>/) || [""])[0];
-assert.match(einde, /supportmails/, "Als je stopt noemt wat er in beheer blijft staan");
+assert.match(einde, /supportmails gaan weg/, "Als je stopt zegt dat de regels van support mee gaan (wisPraktijk)");
 assert.match(privacy, /hulp van Fysiplan-support<\/a>; daartegen kun je bezwaar maken/, "grondslagalinea noemt support en bezwaar (art. 21)");
 
 const vwo = pagina["/verwerkersovereenkomst"];

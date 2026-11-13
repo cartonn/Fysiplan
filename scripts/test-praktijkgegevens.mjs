@@ -64,6 +64,22 @@ await writeFile(join(dataDir, "vertalingen.json"), JSON.stringify({
   en: { [vsleutel("Eigen brug")]: "Own bridge", [vsleutel("Eigen plank")]: "Own plank" }
 }));
 
+// support-agent en agents met taalmodel (legal 2026-11-13 09u): logboekregels (nieuw met pk, oud alleen
+// met de naam), open zaken, verstuurd en een bericht aan de praktijk. Na Alles wissen is niets van A over.
+const t0 = new Date(nu).toISOString();
+await writeFile(join(dataDir, "beheer-agent.json"), JSON.stringify({ stand: {}, rondes: [], laatsteRonde: null,
+  verstuurd: { "stil|fysio wis|": nu, "stil|fysio blijf|": nu },
+  open: { "stil|fysio wis|": { praktijk: "Fysio Wis", tekst: "Stil", sinds: nu }, "stil|fysio blijf|": { praktijk: "Fysio Blijf", tekst: "Stil", sinds: nu } },
+  logboek: [
+    { t: t0, wat: "gemaild", pk: "fysio wis", praktijk: "Fysio Wis", tekst: "Stil", onderwerp: "Hulp voor Wis", aan: 1, wie: "agent" },
+    { t: t0, wat: "nieuw", praktijk: "Fysio Wis", tekst: "Oude regel zonder pk" },
+    { t: t0, wat: "gemaild", pk: "fysio blijf", praktijk: "Fysio Blijf", tekst: "Stil", onderwerp: "Hulp voor Blijf", aan: 1, wie: "agent" }
+  ] }));
+await writeFile(join(dataDir, "beheer-loket.json"), JSON.stringify({ zout: "", concepten: [
+  { id: "c1", t: t0, rol: "support", soort: "stil", pk: "fysio wis", praktijk: "Fysio Wis", onderwerp: "Bericht aan Wis", tekst: "Geheim voor Wis", stand: "verstuurd" },
+  { id: "c2", t: t0, rol: "support", soort: "stil", pk: "fysio blijf", praktijk: "Fysio Blijf", onderwerp: "Bericht aan Blijf", tekst: "Voor Blijf", stand: "verstuurd" }
+] }));
+
 // ---- server ----
 const reserve = createServer();
 await new Promise((resolve) => reserve.listen(0, "127.0.0.1", resolve));
@@ -182,6 +198,14 @@ try {
   assert.doesNotMatch(ideeenNa, /fysio wis|Idee van Wis"/, "open idee van de praktijk weg, besloten idee zonder herkomst");
   assert.match(ideeenNa, /Besloten idee van Wis/, "besloten idee blijft, zoals /privacy#ideeen zegt");
   assert.ok((await leesJson("praktijk-audit.json")).some((a) => a.actie === "praktijk-alles-gewist"), "het wissen zelf is gelogd, zonder naam");
+  // legal 2026-11-13 09u: /privacy#support belooft dat de regels van support over de praktijk tegelijk weggaan
+  const agentNa = JSON.stringify(await leesJson("beheer-agent.json"));
+  assert.doesNotMatch(agentNa, /fysio wis|Fysio Wis|Hulp voor Wis|Oude regel zonder pk/i, "support-agent onthoudt niets meer van de gewiste praktijk");
+  assert.match(agentNa, /Hulp voor Blijf/, "logboek van de andere praktijk blijft");
+  assert.match(agentNa, /stil\|fysio blijf\|/, "open zaak van de andere praktijk blijft");
+  const loketNa = JSON.stringify(await leesJson("beheer-loket.json"));
+  assert.doesNotMatch(loketNa, /fysio wis|Geheim voor Wis/i, "berichten van agents aan de gewiste praktijk zijn weg");
+  assert.match(loketNa, /Voor Blijf/, "bericht aan de andere praktijk blijft");
   for (const f of ["uploads/videos/v-aa11.mp4", "uploads/oef-aaaaaaaaaaaa.jpg", "uploads/logo-fysio-wis-1.png"]) {
     assert.equal(await bestaat(f), false, f + " is van de schijf");
   }
