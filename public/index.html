@@ -4770,7 +4770,38 @@ bridge2.jpg</div>
       .catch(function(){knop.disabled=false;psFout('Geen verbinding met de server. Probeer het zo opnieuw.');});
   }
   // ---- één akkoord: nieuwe voorwaarden tonen met wat er veranderd is ----
+  // Nieuwe voorwaarden ook buiten Praktijk laten zien (gebruikers-sweep 2026-11-12 22u en 2026-11-13,
+  // Karin): het akkoord stond alleen in het blok op Praktijk, terwijl de app op Vandaag opent. Een
+  // beheerder krijgt nu een stip op de knop Praktijk en een melding op Vandaag en Patiënten met een
+  // knop die er meteen heen gaat. Een collega kan niets doen en krijgt dus geen melding.
+  function tekenAkkoordWijs(){
+    if(!IS_V2)return;
+    var a=PRAKSLOT.akkoord,aan=!!(PRAKSLOT.ingelogd&&a&&a.nodig&&a.beheer);
+    var kn=document.querySelector('#fpSchermen [data-scherm="praktijk"]');
+    if(kn){
+      var stip=kn.querySelector('.fs-ak');
+      if(aan&&!stip){stip=document.createElement('span');stip.className='fs-tel fs-ak';stip.setAttribute('aria-hidden','true');stip.textContent='!';kn.appendChild(stip);}
+      if(!aan&&stip)kn.removeChild(stip);
+      if(aan){kn.setAttribute('aria-label','Praktijk, nieuwe voorwaarden: akkoord nodig');kn.title='Nieuwe voorwaarden: ga als beheerder opnieuw akkoord';}
+      else{kn.removeAttribute('aria-label');kn.removeAttribute('title');}
+    }
+    var blok=document.getElementById('k_srv'),w=document.getElementById('k_akwijs');
+    if(!aan){if(w&&w.parentNode)w.parentNode.removeChild(w);return;}
+    if(!blok)return;
+    if(!w){w=document.createElement('div');w.id='k_akwijs';w.className='k-akwijs';w.setAttribute('role','status');blok.insertBefore(w,blok.firstChild);}
+    var st=(a.wijzigingen||[]).map(function(x){return x.stuk;}),av=st.indexOf('av')>=0,vwo=st.indexOf('vwo')>=0;
+    var wat=av&&!vwo?'De algemene voorwaarden zijn bijgewerkt.':vwo&&!av?'De verwerkersovereenkomst is bijgewerkt.':'De voorwaarden en de verwerkersovereenkomst zijn bijgewerkt.';
+    w.innerHTML="<span><b>"+wat+"</b> Ga als beheerder namens de praktijk opnieuw akkoord; je kunt gewoon doorwerken.</span>"+
+      "<button class='btn' type='button' id='k_akwijs_ga'>Naar Praktijk</button>";
+    document.getElementById('k_akwijs_ga').addEventListener('click',function(){
+      SCHERM_GEKOZEN=true;try{localStorage.setItem('fysiplan_scherm','praktijk');}catch(_){}
+      zetScherm('praktijk');
+      var ak=document.getElementById('ps_akkoord');
+      if(ak){try{ak.scrollIntoView({block:'center'});}catch(_){}var v=document.getElementById('ps_akvink');if(v)v.focus();}
+    });
+  }
   function tekenAkkoord(){
+    tekenAkkoordWijs();
     var el=document.getElementById('ps_akkoord');if(!el)return;
     var a=PRAKSLOT.akkoord;
     if(!PRAKSLOT.ingelogd||!a||!a.nodig){el.style.display='none';el.innerHTML='';return;}

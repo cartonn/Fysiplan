@@ -156,6 +156,7 @@ jobs:
       - run: npm run test:proeftweedeapparaat
       - run: npm run test:proefbeheer
       - run: npm run test:vandaagdatums
+      - run: npm run test:akkoordvandaag
       - run: npm run test:veiliggroot
       - run: npm run test:printgroot
       - run: npm run test:vuleersterij

@@ -152,6 +152,7 @@
     "test:proeftweedeapparaat": "node scripts/test-sweep-proef-tweede-apparaat.mjs",
     "test:proefbeheer": "node scripts/test-proef-beheer-tweede-apparaat.mjs",
     "test:vandaagdatums": "node scripts/test-sweep-vandaag-datums.mjs",
+    "test:akkoordvandaag": "node scripts/test-sweep-akkoord-vandaag.mjs",
     "test:veiliggroot": "node scripts/test-kaart-veilig-groot.mjs",
     "test:printgroot": "node scripts/test-sweep-print-groot.mjs",
     "test:printcompact": "node scripts/test-sweep-print-compact.mjs",
