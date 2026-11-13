@@ -1,3 +1,5 @@
+import {runBackup} from '../lib/backup-runner.js';
+import {herstelKaartVideo,uploadReferenties} from '../lib/backup-uploadreferenties.js';
 import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
 import {mkdtemp,writeFile,mkdir,rm,readFile,symlink} from 'node:fs/promises';
@@ -111,5 +113,28 @@ try{
  assert.equal(gegevensRuimte(32*1024*1024+1).krap,true);
  assert.equal(indexReserve(1000),11*1024*1024,'kleine gegevens: dezelfde reserve als voorheen');
  assert.equal(indexReserve(40*1024*1024),41*1024*1024,'grote gegevens: de reserve groeit mee');
+
+ // Echte herstelbevinding: kaart verwijst naar video die al vóór de back-up ontbreekt.
+ const missing='uploads/videos/v-0cd07852ac7f.mp4';
+ const cards={test:{kaart:{id:'abc',chosen:[{n:'Oefening'}],rows:[{s:3}],vids:{oefening:missing,andere:'uploads/video.mp4'},metingen:[{s:2}]}}};
+ await writeFile(paths[0],JSON.stringify(cards));
+ let tick=day(25).getTime();
+ const partial=await runBackup(inst,root,paths,{now:()=>tick});
+ assert.equal(partial.status,'deels');assert.equal(partial.fullAt,null);
+ assert.equal(partial.resultaat.ontbrekendeVerwijzingen,1);
+ assert.match(partial.error,/uploadverwijzing/);assert.ok(!partial.error.includes(missing),'geen paden in alarm');
+ assert.deepEqual(manifest(partial.resultaat).missing,[{name:missing,reason:'verwijzing naar ontbrekende upload'}]);
+ assert.deepEqual(JSON.parse(ontsleutel(objects.get('/bak/'+partial.object),inst.sleutel).bestanden['kaarten.json']),cards,'metadata behouden bij ontbrekende video');
+ const fixed=herstelKaartVideo(cards,missing);assert.equal(fixed.verwijderd,1);
+ assert.equal(cards.test.kaart.vids.oefening,missing,'bronkaart intact');
+ assert.deepEqual(fixed.kaarten,{test:{kaart:{...cards.test.kaart,vids:{andere:'uploads/video.mp4'}}}});
+ await writeFile(paths[0],JSON.stringify(fixed.kaarten));tick+=16*60000;
+ const recovered=await runBackup(inst,root,paths,{now:()=>tick});
+ assert.equal(recovered.status,'ok');assert.equal(recovered.resultaat.ontbrekendeVerwijzingen,0);
+ const refs=uploadReferenties({'kaarten.json':Buffer.from(JSON.stringify(['/'+missing+'?k=123','https://fysiplan.nl/'+missing,'https://extern.nl/uploads/external.mp4']))});
+ assert.deepEqual([...refs.paths],[missing]);assert.equal(refs.fouten,0);
+ assert.ok(uploadReferenties({'kaarten.json':Buffer.from('{')}).fouten);
+ assert.ok(uploadReferenties({'kaarten.json':Buffer.from(JSON.stringify('uploads/%2e%2e/secrets'))}).fouten);
+ assert.equal(uploadReferenties({'praktijk-audit.json':Buffer.from(JSON.stringify({oudeVerwijzing:missing}))}).paths.size,0,'historische logregels zijn geen actieve uploadreferenties');
  assert.ok(copied>=1);console.log('Snapshots: dagkopieën, server-copy, wijzigingen, verwijderingen, verlopen bron, budget, onveilige inventaris, corruptie en CLI-herstel geslaagd.');
 }finally{srv.close();await rm(root,{recursive:true,force:true});}
