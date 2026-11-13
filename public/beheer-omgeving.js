@@ -35,7 +35,7 @@ const PAGINAS = {
   facturen: ['Facturen en kosten', 'Wat er is gefactureerd, betaald en open staat'],
   btw: ['Btw-aangifte', 'Per kwartaal de rubrieken voor de aangifte omzetbelasting'],
   jaar: ['Jaarafsluiting', 'De accountant-agent loopt het boekjaar na'],
-  agents: ['Agents', 'Wat de agents met taalmodel mogen, wat ze deden en wat ze aan jou voorleggen'],
+  agents: ['Agents', 'Wat de agents mogen, wat ze deden en wat ze aan jou voorleggen'],
   beheerders: ['Beheerders', 'Wie in deze omgeving wat mag zien en doen']
 };
 // welk recht een pagina vraagt; de server stuurt alleen mee wat dit account mag zien
@@ -642,7 +642,7 @@ function agents() {
         (rol === 'tech' ? '<label class="vink"><input type="checkbox" id="mergen"' + (a.mergen ? ' checked' : '') + '/>Zelf mergen</label>' : '') + '</div>' +
       '<p class="uitleg">' + (r.alleenProef ? 'Voorlopig alleen op proef. ' : '') + (demo ? (a.stand === 'uit' ? 'Staat in de demo uit: ook op proef doet hij hier niets.' : (r.alleenProef ? 'Handmatige modelrondes werken alleen op deze demo-gegevens. Een externe Claude-taak heeft daarnaast een eigen rolsleutel en de echte stand proef nodig.' : 'Werkt op deze demo-gegevens, zolang de echte agent op proef staat. Deze knop verandert niets aan de echte agent.')) : a.stand === 'uit' ? 'Het loket geeft deze agent niets.' : a.stand === 'proef' ? 'Op proef: werkt op de demo-gegevens. Wat hij doet, zie je bij Demo; daar kun je hem ook stilzetten.' : 'Werkt op de gegevens van fysiplan.nl.') +
         ' Laatst bij het loket: ' + esc(sindsTekst(a.gezien)) + '.</p>' +
-      (demo && r.alleenProef && L.demoModel ? '<p class="uitleg">Model: ' + esc(L.demoModel.model) + '. Alleen handmatig; maximaal ' + L.demoModel.perDag + ' rondes per dag. ' + L.demoModel.over[rol] + ' over. ' + (!L.demoModel.beschikbaar ? 'API-sleutel ontbreekt op deze server.' : 'Voorstellen blijven op jouw akkoord wachten.') + '</p><button type="button" class="knop" data-demoronde="' + rol + '"' + (!L.demoModel.beschikbaar || L.demoModel.bezig || a.stand !== 'proef' || L.pauze || !L.demoModel.over[rol] ? ' disabled' : '') + '>Start demoronde</button>' : '') + '</div>';
+      (demo && r.alleenProef && L.demoModel ? '<p class="uitleg">Alleen handmatig; maximaal ' + L.demoModel.perDag + ' rondes per dag. ' + L.demoModel.over[rol] + ' over. ' + (!L.demoModel.beschikbaar ? 'API-sleutel ontbreekt op deze server.' : 'Voorstellen blijven op jouw akkoord wachten.') + '</p><button type="button" class="knop" data-demoronde="' + rol + '"' + (!L.demoModel.beschikbaar || L.demoModel.bezig || a.stand !== 'proef' || L.pauze || !L.demoModel.over[rol] ? ' disabled' : '') + '>Start demoronde</button>' : '') + '</div>';
   };
   // een bericht dat bij een herstart onderweg was: niet opnieuw versturen, eerst nakijken bij de mailprovider
   const onbekendHtml = (c) => '<div class="zaak probleem"><div class="zaakkop">' + pil('Uitkomst onbekend', 'probleem', true) + '<b>' + esc(c.praktijk) + '</b><span class="hint">' + esc(metNaam(c, c.onderwerp)) + '</span></div>' +
@@ -684,6 +684,7 @@ function agents() {
       kpi('Eigen berichten vandaag', L.limieten.eigenVandaag + ' van ' + L.limieten.eigenPerDag, { uit: 'staan uit', handmatig: 'wachten op akkoord', automatisch: 'de agent verstuurt zelf' }[eigen]) +
     '</div>' +
     '<div class="raster r3 mt">' + Object.keys(rollen).map(agentKaart).join('') + '</div>' + geheugenHtml(L.geheugen, demo) +
+    (G.aanpak ? '<div class="kaart mt"><h2>Aanpak groei-agent</h2><p>' + esc(G.aanpak.varianten.A) + '</p><ul>' + G.aanpak.regels.map((r) => '<li>' + esc(r) + '</li>').join('') + '</ul><p>Afsluiting van nieuwe mailconcepten:</p><pre>' + esc(G.aanpak.afsluiting) + '</pre></div>' : '') +
     '<div class="raster r21 mt"><div>' +
       '<div class="kaart"><h2>Wacht op jouw akkoord</h2><p class="ks">Berichten die een agent zelf schreef. De aanhef, de afsluiting en de ontvangers zet Fysiplan erbij; de agent kent geen namen en geen adressen.</p>' +
         (wacht.length ? wacht.map(conceptHtml).join('') : '<p class="leeg">' + (eigen === 'uit' ? 'Eigen berichten van agents staan uit. Zet ze bij de support-agent op handmatig om ze hier te krijgen.' : 'Niets dat op je wacht.') + '</p>') +
@@ -730,6 +731,7 @@ function geheugenHtml(G, demo) {
     (c.afgemeld ? '' : '<button type="button" class="knop licht klein" data-afmelden="' + esc(c.code) + '">Afmelden</button>') + '</div></div>';
   const auditHtml = (a) => '<div class="logregel">' + pil(...(BESLUIT[a.besluit] || [a.besluit, 'neutraal']), true) + '<div><b>' + esc(DOOR[a.wie] || a.wie) + '</b><span>' + esc(a.actie) + (a.reden ? ' · ' + esc(a.reden) : '') + (a.doel ? ' · ' + esc(a.doelNaam || a.doel) : '') + '</span><time>' + esc(tijd(a.t)) + '</time></div></div>';
   return '<h2 class="ruim">Gedeeld geheugen' + (demo ? ' (demo)' : '') + '</h2><p class="ks">De takenlijst van de chief of staff en de groei-agent. Elke actie gaat door de poort van de server: rol, daglimiet, sleutel tegen dubbel uitvoeren, toestemming en afmeldlijst. Fysiplan voert zelf nog geen contact uit, ook niet na akkoord.</p>' +
+    (G.aanpak ? '<div class="kaart mt"><h2>Aanpak groei-agent</h2><p>' + esc(G.aanpak.varianten.A) + '</p><ul>' + G.aanpak.regels.map((r) => '<li>' + esc(r) + '</li>').join('') + '</ul><p>Afsluiting van nieuwe mailconcepten:</p><pre>' + esc(G.aanpak.afsluiting) + '</pre></div>' : '') +
     '<div class="raster r21 mt"><div>' +
       '<div class="kaart"><h2>Taken die op jou wachten</h2>' + (wacht.length ? wacht.map((t) => taakHtml(t, 'besluit')).join('') : '<p class="leeg">Niets dat op je wacht.</p>') + '</div>' +
       '<div class="kaart mt"><h2>Lopende taken</h2>' + (lopend.length ? lopend.map((t) => taakHtml(t, 'klaar')).join('') : '<p class="leeg">Geen lopende taken.</p>') +
@@ -849,7 +851,7 @@ function beheerders() {
       check(true, 'Beperkt is ook echt beperkt', 'Een account zonder volledig beheer komt alleen in deze omgeving. De andere beheerpagina’s en de gegevens van praktijken weigeren het.') +
       check(true, 'Wat je niet mag zien, wordt niet verstuurd', 'Fysiplan rekent voor een account alleen uit wat bij zijn rechten hoort.') +
       check(true, 'Er blijft altijd iemand met volledig beheer', 'Het laatste account met volledig beheer kun je niet beperken.') +
-      check(true, 'Agents hebben geen account', 'Wat de agents met taalmodel mogen, stel je in op de pagina Agents.') + '</div></div>';
+      check(true, 'Agents hebben geen account', 'Wat de agents mogen, stel je in op de pagina Agents.') + '</div></div>';
 }
 function bindBeheerders(el) {
   el.querySelectorAll('tr[data-email] input[data-recht]').forEach((v) => v.addEventListener('change', async () => {

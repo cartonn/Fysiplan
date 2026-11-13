@@ -299,3 +299,13 @@ console.log("test-agent-geheugen: ok");
   }
 }
 console.log('test-agent-overdracht: ok');
+
+// Zakelijke afzender alleen door server; niet teruggeven aan externe agents.
+{
+ const G = leegGeheugen();
+ const r = doe(G, 'groei', 'concept', {sleutel:'mail-afsluiting-proef', ...GOED_CONCEPT, soort:'mail-sjabloon'});
+ assert.equal(r.status,200);
+ assert.match(G.groei[0].tekst,/Met vriendelijke groet,\nCarla Mastenbroek\nFysiplan$/);
+ assert.match(G.groei[0].tekst,/Liever geen berichten over Fysiplan/);
+ assert.ok(!JSON.stringify(werkGroei(G,{nu:NU})).includes('Carla Mastenbroek'));
+}
