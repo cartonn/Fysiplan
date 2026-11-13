@@ -327,7 +327,10 @@ console.log('test-agent-overdracht: ok');
  // varianten die tot 13-11 17u nog doorkwamen
  for (const zin of ['Onze ai-hulp schrijft mee.', 'Gebouwd met machine learning.', 'Powered by artificial intelligence.', 'Draait op een LLM.', 'Honderden praktijken gingen je voor.', 'Tientallen therapeuten gebruiken het al.', 'Je houdt uren per week over.', 'Je bent twee keer zo snel klaar.', 'Een tientje per therapeut per maand.', 'Kosten: €9.99 per therapeut.', 'Patiënten hebben minder klachten.'])
   assert.equal(k(zin), false, zin);
+ // varianten die tot 13-11 21u nog doorkwamen
+ for (const zin of ['Het kost EUR 12 per maand.', 'Slechts negen euro per therapeut.', 'Voor 10,- per maand.', 'Gebouwd met Gemini.', 'Onze assistent van Mistral helpt.', 'Met Copilot geschreven.', 'Het herstel gaat sneller.', 'Versnelt het herstel van je patiënten.', 'Je patiënten worden pijnvrij.', 'Voorkomt blessures.', 'Verdubbelt de therapietrouw.', 'Al honderd praktijken gingen je voor.', 'Duizend therapeuten gebruiken het.', "Al ruim 300 fysio's werken ermee.", 'Een halve dag per week terug.', 'Je wint een uur per dag.', 'Klaar in de helft van de tijd.'])
+  assert.equal(k(zin), false, zin);
  // feiten en gewone zinnen blijven toegestaan
- for (const zin of ['De bibliotheek heeft honderden oefeningen met tekeningen.', 'Er is een gratis proef van 14 dagen.'])
+ for (const zin of ['De bibliotheek heeft honderden oefeningen met tekeningen.', 'Er is een gratis proef van 14 dagen.', 'Oefen elke dag 10 minuten, zoals de therapeut aangeeft.', 'Je volgt het herstel via de pijnscore van de patiënt.', "Je collega's kunnen dezelfde kaart gebruiken."])
   assert.equal(k(zin), true, zin);
 }
