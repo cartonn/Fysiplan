@@ -73,6 +73,7 @@ jobs:
       - run: node scripts/test-privacy-inloggen.mjs
       - run: node scripts/test-privacy-leeslog.mjs
       - run: node scripts/test-privacy-support.mjs
+      - run: node scripts/test-privacy-inhoud.mjs
       - run: npm run test:kaartversie
       - run: npm run test:hernoem
       - run: npm run test:topbar
