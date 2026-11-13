@@ -1,7 +1,7 @@
 // Gebruikers-sweep 2026-11-13 14u (Sanne, desktop 1280, alleen toetsenbord): in de V2-app kregen gewone knoppen
 // (.btn: "Eigen oefening", "Printen", "Test de QR", Deel/Openen) geen zichtbare focus, omdat de schaduw van
 // `html.v2 .btn` de focusring van de app overschreef. De ring zelf (limoen op 27 % dekking) haalde op het
-// lichte werkvlak en in de kopbalk ±1,4:1. Nu een ondoorzichtige outline, donker petrol op licht, limoen in
+// lichte werkvlak en in de kopbalk ±1,4:1. Het roepnaamveld op de A4 had helemaal geen ring (hertest Sanne). Nu een ondoorzichtige outline, donker petrol op licht, limoen in
 // de kopbalk, minstens 3:1 tegen de achtergrond.
 // Broncontrole altijd (CI); het browserdeel (Tab door Kaart maken en meet de ring) alleen waar Playwright staat.
 // `npm run test:focusring`
@@ -50,7 +50,7 @@ try {
   await page.waitForTimeout(800);
   await page.keyboard.press("Escape");
   const gemeten = [];
-  for (const sel of ["#printBtn", "#eigenOefBtn", "header.topbar .btn", ".btn:not(.primary)"]) {
+  for (const sel of ["#printBtn", "#eigenOefBtn", "header.topbar .btn", ".btn:not(.primary)", "#c_naam"]) {
     const el = page.locator(sel).filter({ visible: true }).first();
     if (!(await el.count())) continue;
     await page.keyboard.press("Tab"); // zet de browser in toetsenbordstand
@@ -68,7 +68,7 @@ try {
   for (const r of gemeten) {
     assert.ok(r.fv, "focus-visible op " + r.id);
     assert.equal(r.stijl, "solid", "zichtbare outline op " + r.id + ": " + JSON.stringify(r));
-    assert.ok(r.breed >= 2, "outline minstens 2 px op " + r.id);
+    assert.ok(r.breed >= 2, "outline minstens 2 px op " + r.id + ": " + JSON.stringify(r));
     assert.ok(ratio(hex(r.kleur), hex(r.bg)) >= 3, "ring op " + r.id + " minstens 3:1, nu " + ratio(hex(r.kleur), hex(r.bg)).toFixed(2));
   }
   console.log("PASS focusring: " + gemeten.length + " knoppen met zichtbare ring (≥ 3:1), ook in de kopbalk");

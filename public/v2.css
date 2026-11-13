@@ -1048,4 +1048,6 @@ html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
  html.v2 :is(button,a,input,select,textarea,summary,[tabindex],[role=button]):focus-visible{outline:3px solid var(--focus);outline-offset:2px}
  html.v2 #search:focus{border-color:#20464f}
  html.v2 #a4wrap:focus-visible{outline:3px solid #20464f;outline-offset:4px}
+ /* invulvelden op de A4 (roepnaam, schema): de app zette daar outline:none met alleen een lichte achtergrond; 4 px omdat de A4 op het scherm verkleind staat (zoom ±0,5) */
+ html.v2 #a4 :is(input,textarea,select,[contenteditable]):focus-visible{outline:4px solid var(--focus);outline-offset:1px}
 }
