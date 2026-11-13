@@ -387,6 +387,10 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **LAAG (nieuw, gebruikers-sweep 2026-11-13 06u, Karin) — praktijkwebsite accepteert `javascript:alert(1)`** (200, `cleanName(b.website)`
+  server.js r. ~5951, geen http(s)-controle). Op /k en in de app alleen als ge-escapete tekst (kaart.html r. ~1747), dus nu niet uit te
+  buiten; wordt het ooit een link, dan wel. Voorstel: alleen `https?://` (of een kale domeinnaam) opslaan.
+
 - **OPGELOST 2026-11-13 00u (deze PR, test:healthdbfout) — LAAG — /health gaf de foutmelding van de database door.** Repro
   (lokaal): `DATABASE_URL=postgres://gebruiker:ww@db-intern.railway.internal:5432/x DATABASE_MEESCHRIJVEN=aan`; het openbare
   `GET /health` gaf `database.startFout` en `database.laatsteFout` = "getaddrinfo ENOTFOUND db-intern.railway.internal". Een

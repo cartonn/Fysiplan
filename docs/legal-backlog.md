@@ -23,6 +23,11 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **LAAG (nieuw, gebruikers-sweep 2026-11-13 06u, Sanne) — voorwaarden beloven wijzigingen 30 dagen vooraf te melden, de app vraagt vandaag
+  akkoord op AV 2026-11-13.** /voorwaarden: "Veranderen deze voorwaarden inhoudelijk … melden we dat minstens 30 dagen vooraf." Na #268
+  (btw, grens op kaarten, Ideeënbox) toont de app meteen "opnieuw akkoord". Legal: bepalen of dit een inhoudelijke wijziging is, en zo ja de
+  ingangsdatum of de tekst laten kloppen (sinds #269 zien beheerders de melding ook op Vandaag).
+
 - **MIDDEL — voorwaarden (c) / code tegen tekst (d) 2026-11-13 05u: btw, grens op kaarten en de Ideeënbox.**
   Art. 4 zei vast "exclusief btw", maar sinds #243 kiest de eigenaar in Finance kleineondernemersregeling, inclusief of
   exclusief; de landing volgde die keuze, de voorwaarden niet (bij "inclusief" een ander bedrag dan Mollie afschrijft).
