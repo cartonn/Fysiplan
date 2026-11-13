@@ -128,6 +128,7 @@
     "test:vertaallaat": "node scripts/test-sweep-vertaal-laat.mjs",
     "test:kaartweg": "node scripts/test-sweep-kaart-weg.mjs",
     "test:v2contrast": "node scripts/test-sweep-v2-contrast.mjs",
+    "test:focusring": "node scripts/test-sweep-focusring.mjs",
     "test:seinvenster": "node scripts/test-seintje-venster.mjs",
     "test:lichtladen": "node scripts/test-licht-laden.mjs",
     "test:beheerherstel": "node scripts/test-beheer-herstel.mjs",

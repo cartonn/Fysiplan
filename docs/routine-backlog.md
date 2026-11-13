@@ -84,6 +84,11 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - **OPGELOST 2026-11-13 (test:proefdag) — MIDDEL (Mark, vier runs open) — laatste proefdag onzichtbaar op een tweede apparaat en bij
   collega's.** /v2/app geeft elke ingelogde sessie van de praktijk de einddatum mee (zonder gegevens van de aanmelder, zonder proefwelkom);
   alleen een beheerder krijgt de link "Mijn proef".
+- **Hertest 14u (Sanne, Mark):** focusring op 13 soorten knoppen 6–10:1, roepnaamveld op de A4 had nog geen ring → mee opgelost (4 px
+  omdat de A4 verkleind staat). Opnameplafond en laatste proefdag opgelost. Rest: **MIDDEL** direct na inloggen op een tweede apparaat
+  komt de proefbalk pas na herladen (einddatum alleen bij het laden van /v2/app; na de inlog geen herlaad); **LAAG** opnameweigering nog als
+  alert() en het venster "Eigen instructievideo" is dan al dicht; "over een kwartier" klopt niet voor een binnengekomen opname zonder
+  kaart (tot 4 uur); proefbalk bij een collega toont ook "0 / 12 oefeningen" en "Test de QR".
 - **MIDDEL (nieuw, Sanne) — roepnaamvoorstel in het printvenster maakt een tweede kaart** en laat de kaart met de volledige naam op de
   server: index.html r. ~3018–3022 zet `cn.value=vs` maar niet `ROEP_VOOR` (vgl. `zet()` r. ~2759), dus geen `roepnaamHernoem` → 409
   hernoemVraag → "nieuwe kaart". Ook "Test de QR" deelt een volledige naam zonder de roepnaamvraag. Eerste kandidaat volgende run.
