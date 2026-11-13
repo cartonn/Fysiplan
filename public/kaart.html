@@ -454,6 +454,7 @@
   .mbar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:0}
   .mbar .staaf{width:100%;max-width:34px;border-radius:4px 4px 0 0;min-height:6px}
   .mbar .mdat{font:500 .75rem/1 var(--disp);color:var(--grijs);white-space:nowrap;margin-top:3px}
+  .mbar .mdat.mdat-l{align-self:flex-start}.mbar .mdat.mdat-r{align-self:flex-end}
   .mbar .mval{font:700 .875rem/1 var(--disp);color:var(--inkt)}
   /* neutrale, feitelijke samenvatting van de scores; bewust geen kleuroordeel,
      de duiding blijft bij de fysiotherapeut */
@@ -1913,12 +1914,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var laatste=m.slice(-14);
     if(laatste.length){
       document.getElementById('mhist').style.display='block';
-      document.getElementById('mbars').innerHTML=laatste.map(function(x){
-        var d=new Date(x.t);
-        return '<div class="mbar"><span class="mval">'+x.s+'</span>'+
-          '<span class="staaf" style="height:'+(6+x.s*3.6)+'px;background:'+staafKleur(x.s)+'"></span>'+
-          '<span class="mdat">'+('0'+d.getDate()).slice(-2)+'-'+('0'+(d.getMonth()+1)).slice(-2)+'</span></div>';
-      }).join('');
+      tekenVerloop(laatste);
     }
     // feitelijke samenvatting: laatste score t.o.v. het gemiddelde van de eerdere.
     // puur beschrijvend (lager/gelijk/hoger), geen oordeel; vanaf drie metingen
@@ -2054,6 +2050,45 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // datums in dezelfde notatie als de rest van de kaart: Engels is en-GB ("27 December 2026"),
   // niet en-US ("December 27, 2026") (gebruikers-sweep 2026-11-13 02u, Jayden). Andere talen
   // houden hun eigen taalcode (ar-SA zou een andere kalender geven).
+  // "Jouw verloop": op een smal scherm of met grote letters passen veertien staven met elk een
+  // datum niet (gebruikers-sweep 2026-11-13, Truus, iPhone SE: "01-1102-1003-10…", bij 200 % + A A
+  // werd de pagina breder dan het scherm). Nu: zoveel staven als er passen (de nieuwste), en een
+  // datum alleen onder de staven waar hij past, gerekend vanaf vandaag; datums in de taal van de kaart.
+  var VERLOOP=null,VERLOOP_RO=null;
+  function tekenVerloop(lijst){
+    var el=document.getElementById('mbars');if(!el)return;
+    VERLOOP=lijst;
+    var cs=getComputedStyle(el),gap=parseFloat(cs.columnGap||cs.gap)||8,breed=el.clientWidth;
+    var fs=parseFloat(getComputedStyle(document.body).fontSize)||16;
+    // een staaf moet minstens het getal "10" kunnen dragen
+    var minSlot=Math.max(14,fs*.875*1.5);
+    var past=breed>0?Math.max(3,Math.floor((breed+gap)/(minSlot+gap))):lijst.length;
+    var toon=lijst.slice(-Math.min(lijst.length,past));
+    el.innerHTML=toon.map(function(x){
+      var d=new Date(x.t),dat='';
+      try{dat=d.toLocaleDateString(datumLocale(),{day:'numeric',month:'numeric'});}catch(e){dat=d.getDate()+'-'+(d.getMonth()+1);}
+      return '<div class="mbar"><span class="mval">'+x.s+'</span>'+
+        '<span class="staaf" style="height:'+(6+x.s*3.6)+'px;background:'+staafKleur(x.s)+'"></span>'+
+        '<span class="mdat" data-dat="'+esc(dat)+'">'+esc(dat)+'</span></div>';
+    }).join('');
+    var lab=[].slice.call(el.querySelectorAll('.mdat')),n=lab.length;
+    if(n){
+      var w=0;lab.forEach(function(l){w=Math.max(w,l.scrollWidth);});
+      var slot=(el.firstChild.getBoundingClientRect().width||minSlot)+gap;
+      var k=Math.max(1,Math.ceil((1.5*w+6)/slot));
+      lab.forEach(function(l,i){
+        var aan=(n-1-i)%k===0;
+        if(!aan){l.textContent=' ';l.setAttribute('aria-hidden','true');}
+        if(i===0&&aan&&n>1)l.classList.add('mdat-l');
+        if(i===n-1&&n>1)l.classList.add('mdat-r');
+      });
+    }
+    if(!VERLOOP_RO&&window.ResizeObserver){
+      var bw=breed;
+      VERLOOP_RO=new ResizeObserver(function(){var nb=el.clientWidth;if(VERLOOP&&nb&&Math.abs(nb-bw)>2){bw=nb;tekenVerloop(VERLOOP);}});
+      VERLOOP_RO.observe(el);
+    }
+  }
   function datumLocale(){return TAAL==='nl'?'nl-NL':TAAL==='en'?'en-GB':TAAL;}
   // afgeronde behandeling: tot wanneer de kaart blijft, en hoe je hem bewaart
   // (niet op de demokaart)
@@ -3763,6 +3798,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var gb=document.getElementById('grootBtn');
     var zetGroot=function(aan){
       document.documentElement.classList.toggle('groot',aan);
+      if(VERLOOP)try{tekenVerloop(VERLOOP);}catch(e){}
       gb.classList.toggle('aan',aan);
       gb.setAttribute('aria-pressed',aan?'true':'false');
       try{localStorage.setItem('fp_groot',aan?'1':'');}catch(e){}
