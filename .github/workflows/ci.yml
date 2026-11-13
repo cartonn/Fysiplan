@@ -91,6 +91,7 @@ jobs:
       - run: npm run test:patientkant
       - run: npm run test:akkoord
       - run: npm run test:gedaansync
+      - run: npm run test:allesgedaan
       - run: npm run test:seintje
       - run: npm run test:sweepoverzicht
       - run: npm run test:gedeeldwerk
