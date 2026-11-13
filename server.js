@@ -2290,6 +2290,11 @@ let lopendeUploads = 0;
 // levensduur van een opnametoken; via env instelbaar zodat tests het verlopen
 // zonder wachttijd kunnen bewijzen
 const OPNAME_TTL_MS = Math.max(1000, Number(process.env.OPNAME_TTL_MS) || 15 * 60 * 1000);
+// Een opname die al binnen is maar nog op geen bewaarde kaart staat, blijft langer bewaard dan het
+// uploadtoken: de editor bewaart de kaart pas als er een roepnaam staat. Met een kwartier ging een
+// opname die vroeg in het consult werd gemaakt stil verloren (gebruikers-sweep 2026-11-13, Mark).
+// Uploaden kan met het token nog steeds maar één keer en alleen binnen OPNAME_TTL_MS.
+const OPNAME_BEWAAR_MS = Math.max(1000, Number(process.env.OPNAME_BEWAAR_MS) || 4 * 60 * 60 * 1000);
 function opnameOpschonen() {
   const nu = Date.now();
   // een geüploade maar nooit geclaimde video (doel 'kaart' zonder opgeslagen kaart,
@@ -2302,7 +2307,7 @@ function opnameOpschonen() {
     // een upload die nog bezig is (o.bezig) niet onder de voeten wegruimen: het
     // token verdwijnt dan vóór o.video gezet is en het zojuist geschreven bestand
     // wordt permanent wees — de volgende opschoningsronde ruimt het alsnog netjes
-    if (nu - o.made > OPNAME_TTL_MS && !o.bezig) {
+    if (nu - (o.video ? (o.klaarOp || o.made) : o.made) > (o.video ? Math.max(OPNAME_BEWAAR_MS, OPNAME_TTL_MS) : OPNAME_TTL_MS) && !o.bezig) {
       opnames.delete(t);
       if (o.video) wezen.push(o.video);
     }
@@ -2447,6 +2452,9 @@ function magMedia(req, pad, verwijzingen) {
   const eigenaars = new Set(foto
     ? Object.keys(praktijkOefeningen).filter((pk) => (praktijkOefeningen[pk] || []).some((o) => o && o.img === pad))
     : verwijzingen.filter((k) => !k.verwijderdOp).map((k) => kaartSleutel(k)));
+  // een opname die de praktijk zelf startte en die nog op geen bewaarde kaart staat: de eigen
+  // praktijk mag hem al bekijken (voorbeeld in de app), niemand anders (sweep 2026-11-13)
+  if (!foto) for (const o of opnames.values()) if (o.video === pad && o.praktijk) eigenaars.add(o.praktijk);
   const s = sessieVan(req);
   if (s && eigenaars.has(s.pk)) return true;
   // de v1-app (eigen accountlaag) bij een praktijk zonder account, en beheer met een eigen sleutel
@@ -6419,7 +6427,7 @@ async function afhandelen(request, response) {
         await saveJson(videolinksPath, videolinks);
         if (oudeStream) verwijderStream(oudeStream);
       }
-      o.video = pad;
+      o.video = pad; o.klaarOp = Date.now();
       await sendJson(response, 200, { ok: true, video: pad });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Upload mislukt (video te groot?)." });
