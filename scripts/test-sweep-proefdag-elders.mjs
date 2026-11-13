@@ -124,8 +124,37 @@ try {
   p = await pagina("/v2/app");
   assert.equal(proefVan(p.html), null, "zonder sessie geen proefbalk");
 
+  // gebruikers-sweep 2026-11-13 18u/22u (Mark): wie op een tweede apparaat inlogt, had /v2/app al geladen
+  // zonder sessie; de proefbalk kwam pas na herladen. /api/praktijk/status (dat de app na elke login
+  // opnieuw vraagt) geeft nu dezelfde einddatum mee, zonder gegevens van de aanmelder.
+  const status = async (extra) => {
+    const r = await fetch(origin + "/api/praktijk/status?praktijk=" + encodeURIComponent("Fysio Duinzicht"),
+      { headers: { "x-forwarded-for": adres(), ...extra } });
+    return { status: r.status, tekst: await r.text() };
+  };
+  let st = await status(MARK);
+  assert.equal(st.status, 200);
+  let sd = JSON.parse(st.tekst);
+  assert.ok(sd.proef, "status na inloggen noemt de lopende proef: " + st.tekst);
+  assert.equal(sd.proef.dagenOver, 1, "met 'laatste dag'");
+  assert.ok(sd.proef.tot, "en de einddatum");
+  assert.equal(sd.proef.elders, true, "zonder proefwelkom of voorbeeldkaart");
+  assert.equal(sd.proef.beheer, true);
+  assert.equal(sd.proef.naam, "");
+  st = await status(LOTTE);
+  sd = JSON.parse(st.tekst);
+  assert.ok(sd.proef, "collega krijgt de einddatum ook");
+  assert.equal(sd.proef.beheer, false, "collega zonder link naar de proef");
+  assert.doesNotMatch(JSON.stringify(sd.proef), /mark|Jansen|612340000/i, "geen gegevens van de aanmelder in de proefstand");
+  sd = JSON.parse((await status()).tekst);
+  assert.equal(sd.proef, undefined, "zonder sessie geen proef in de status");
+  sd = JSON.parse((await status(PROEFCOOKIE)).tekst);
+  assert.equal(sd.proef, undefined, "apparaat met proefcookie kreeg de proef al bij het laden");
+
   // de app gebruikt elders: geen welkom/voorbeeldkaart, collega zonder link "Mijn proef"
   const index = await readFile(join(root, "public", "index.html"), "utf8");
+  assert.match(index, /d\.proef&&d\.proef\.elders&&!PROEF&&!PROEF_VOORBIJ\)\{PROEF=d\.proef;proefStart\(\);\}/,
+    "na inloggen zet de app de proefbalk meteen neer (uit /api/praktijk/status)");
   assert.match(index, /if\(PROEF&&!PROEF\.elders\)\{try\{PROEF_VERS=/, "proefwelkom alleen op het apparaat van de aanmelding");
   assert.match(index, /PROEF\.elders&&!PROEF\.beheer/, "collega krijgt geen link naar de proefpagina");
 
