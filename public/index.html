@@ -222,6 +222,8 @@
   .proefbalk[hidden]{display:none}
   .proefbalk b{color:#3d2008}
   .proefbalk .pb-tel{font-variant-numeric:tabular-nums;background:#fff;border:1px solid #f6d7b8;border-radius:999px;padding:2px 10px;font-weight:600}
+  /* vol (12/12): vast drukrood, want de pil is altijd wit; --fout is in V2 licht (1,7:1, gebruikers-sweep 2026-11-13) */
+  .proefbalk .pb-tel.vol{color:#b42318}
   .proefbalk .pb-ruimte{flex:1}
   .proefbalk a{color:#6b3a12}
   .proefbalk .btn.primary{padding:6px 12px}
@@ -1653,16 +1655,21 @@ bridge2.jpg</div>
       if(ib&&ib.parentNode===blok)blok.insertBefore(el,ib.nextSibling);else blok.appendChild(el);
       el.addEventListener('click',function(e){var b=e.target.closest('[data-ngopen]');if(b)openSrvKaart(b.getAttribute('data-ngopen'));});
     }
-    var dag=864e5,nu=Date.now(),mijn=(PRAKSLOT.wie||'').split(' ')[0].toLowerCase();
+    var dag=864e5,nu=Date.now(),mijn=(PRAKSLOT.wie||'').split(' ')[0].toLowerCase(),geteld=0,nieuw=0;
     var rijen=(lijst||[]).filter(function(c){
-      if(!c||!c.id||c.gearchiveerd||c.demo||!c.ts||nu-c.ts<2*dag)return false;
+      if(!c||!c.id||c.gearchiveerd||c.demo||!c.ts)return false;
       var b=String(c.behandelaar||'').trim().toLowerCase();
       if(INBOX_ALLEEN_MIJN&&mijn&&b&&b.split(/\s+/)[0]!==mijn)return false;
+      if(nu-c.ts<2*dag){nieuw++;return false;}
+      geteld++;
       return !oefDagen(c).some(function(g){return nu-g.t<7*dag;});
     }).map(function(c){var d=oefDagen(c);return {c:c,laatst:d.length?d[d.length-1].t:0};})
       .sort(function(a,b){return a.laatst-b.laatst;});
     var h="<label>Deze week niet geoefend"+(rijen.length?" <span class='ib-tel'>"+rijen.length+"</span>":"")+"</label>";
-    if(!rijen.length)h+="<div class='ib-leeg'>Iedereen met een kaart heeft deze week geoefend.</div>";
+    // "iedereen heeft geoefend" alleen als er echt kaarten meetelden: met alleen nieuwe kaarten (of
+    // geen) stond dat er ook, terwijl niemand oefende (gebruikers-sweep 2026-11-13 02u, Sanne)
+    if(!rijen.length)h+="<div class='ib-leeg'>"+(geteld?"Iedereen met een kaart heeft deze week geoefend.":
+      nieuw?"Nog niets te tellen: een kaart telt hier mee vanaf twee dagen na het delen.":"Nog geen gedeelde kaarten.")+"</div>";
     else{
       h+="<div class='ib-lijst'>"+rijen.slice(0,30).map(function(x){
         var c=x.c,wat=!(c.bekeken>0)?'Heeft de kaart nog nooit geopend':x.laatst?'Laatst geoefend '+esc(wanneerTekst(x.laatst)):'Heeft de kaart geopend, nog niet geoefend';
@@ -3323,7 +3330,7 @@ bridge2.jpg</div>
   function proefTeller(){
     if(!PROEF)return;
     var t=document.getElementById('pb_teller');
-    if(t){t.textContent=chosen.length+' / 12 oefeningen';t.style.color=chosen.length>=12?'var(--fout,#b42318)':'';}
+    if(t){t.textContent=chosen.length+' / 12 oefeningen';t.classList.toggle('vol',chosen.length>=12);}
   }
   function proefZetPraktijk(nm){
     var el=document.getElementById('praktijk');
