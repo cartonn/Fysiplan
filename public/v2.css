@@ -1034,3 +1034,18 @@ html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
   html.v2 .fp-ideeknop:hover{background:#ffffff20;color:#fff}
   html.v2 .fp-ideeknop:focus-visible{outline:none;box-shadow:var(--ring)}
 }
+
+/* Zichtbare focus (gebruikers-sweep 2026-11-13 14u, Sanne, desktop met toetsenbord): op gewone knoppen
+   (.btn) won `html.v2 .btn{box-shadow:…}` van `.btn:focus-visible{box-shadow:var(--ring)}` in de app, dus
+   "Eigen oefening", "Printen", "Test de QR" en Deel/Openen kregen geen enkele ring. De ring zelf (--ring
+   limoen op 27 % dekking) haalde op het lichte werkvlak en in de kopbalk ±1,4:1; WCAG 2.2 vraagt 3:1.
+   Nu een ondoorzichtige ring als outline (wint niet van, maar staat naast elke box-shadow): donker petrol
+   op het lichte werkvlak, limoen in de donkere kopbalk. Het zoekveld houdt bij focus een donkere rand. */
+@media screen{
+ html.v2{--focus:#20464f;--ring:0 0 0 3px #20464f}
+ html.v2 header.topbar{--focus:#b9e34b;--ring:0 0 0 3px #b9e34b}
+ html.v2 header.topbar .fp-hulpmenu{--focus:#20464f;--ring:0 0 0 3px #20464f}
+ html.v2 :is(button,a,input,select,textarea,summary,[tabindex],[role=button]):focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+ html.v2 #search:focus{border-color:#20464f}
+ html.v2 #a4wrap:focus-visible{outline:3px solid #20464f;outline-offset:4px}
+}

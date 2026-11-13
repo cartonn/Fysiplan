@@ -138,6 +138,7 @@ jobs:
       - run: npm run test:vertaallaat
       - run: npm run test:kaartweg
       - run: npm run test:v2contrast
+      - run: npm run test:focusring
       - run: npm run test:seinvenster
       - run: npm run test:lichtladen
       - run: npm run test:beheerherstel
