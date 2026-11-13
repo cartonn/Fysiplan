@@ -91,6 +91,7 @@
     "test:printknop": "node scripts/test-printknop.mjs",
     "test:logoveeg": "node scripts/test-logo-veeg.mjs",
     "test:sweepoverzicht": "node scripts/test-sweep-overzicht-wis.mjs",
+    "test:eigenbibnaam": "node scripts/test-sweep-eigen-oefening-bibnaam.mjs",
     "test:gedeeldwerk": "node scripts/test-team-gedeeld-werk.mjs",
     "test:gegevensrem": "node scripts/test-gegevens-rem.mjs",
     "test:sjabloondelen": "node scripts/test-sweep-sjabloon-delen.mjs",
