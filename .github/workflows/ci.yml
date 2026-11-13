@@ -133,6 +133,7 @@ jobs:
       - run: npm run test:herstellaatstetik
       - run: npm run test:opnameverouderd
       - run: npm run test:opnamewacht
+      - run: npm run test:opnameplafond
       - run: npm run test:nietvertaald
       - run: npm run test:vertaallaat
       - run: npm run test:kaartweg

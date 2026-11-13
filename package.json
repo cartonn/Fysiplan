@@ -123,6 +123,7 @@
     "test:herstellaatstetik": "node scripts/test-sweep-herstel-laatste-tik.mjs",
     "test:opnameverouderd": "node scripts/test-opname-verouderd.mjs",
     "test:opnamewacht": "node scripts/test-sweep-opname-wacht.mjs",
+    "test:opnameplafond": "node scripts/test-opname-plafond.mjs",
     "test:nietvertaald": "node scripts/test-sweep-niet-vertaald.mjs",
     "test:vertaallaat": "node scripts/test-sweep-vertaal-laat.mjs",
     "test:kaartweg": "node scripts/test-sweep-kaart-weg.mjs",
