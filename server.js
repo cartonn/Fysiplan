@@ -2295,6 +2295,7 @@ const OPNAME_TTL_MS = Math.max(1000, Number(process.env.OPNAME_TTL_MS) || 15 * 6
 // opname die vroeg in het consult werd gemaakt stil verloren (gebruikers-sweep 2026-11-13, Mark).
 // Uploaden kan met het token nog steeds maar één keer en alleen binnen OPNAME_TTL_MS.
 const OPNAME_BEWAAR_MS = Math.max(1000, Number(process.env.OPNAME_BEWAAR_MS) || 4 * 60 * 60 * 1000);
+const OPNAME_OPEN_MAX = 200, OPNAME_PRAKTIJK_MAX = 20;
 function opnameOpschonen() {
   const nu = Date.now();
   // een geüploade maar nooit geclaimde video (doel 'kaart' zonder opgeslagen kaart,
@@ -6304,7 +6305,18 @@ async function afhandelen(request, response) {
         b.naam = oefening.naam;
       }
       opnameOpschonen();
-      if (opnames.size >= 200) { await sendJson(response, 429, { ok: false, fout: "Te veel gelijktijdige opnames; probeer het zo weer." }); return; }
+      // Plafonds: hooguit OPNAME_OPEN_MAX wachtende tokens (zonder upload, 15 minuten) voor iedereen samen, en
+      // per praktijk hooguit OPNAME_PRAKTIJK_MAX open opnames (wachtend of binnen en nog op geen kaart). Sinds
+      // een binnengekomen opname 4 uur op een kaart wacht (#277) kon één praktijk (ook een gratis proef) met
+      // 200 kleine uploads de opname voor álle praktijken 4 uur blokkeren (security 2026-11-13 12u).
+      let openTotaal = 0, openPraktijk = 0;
+      for (const x of opnames.values()) {
+        if (!x.video) openTotaal++;
+        if (praktijkSessie && x.praktijk === praktijkSessie) openPraktijk++;
+      }
+      if (openTotaal >= OPNAME_OPEN_MAX || (praktijkSessie && !isAdmin(request) && openPraktijk >= OPNAME_PRAKTIJK_MAX)) {
+        await sendJson(response, 429, { ok: false, fout: "Te veel gelijktijdige opnames; probeer het zo weer." }); return;
+      }
       // kort token: de QR-URL (/o/<token>) moet in een kleine, snel scanbare code passen
       const token = randomBytes(6).toString("hex");
       // praktijk: van wie deze opname is. Alleen díé praktijk mag het pad daarna op een
