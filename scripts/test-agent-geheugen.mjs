@@ -309,3 +309,19 @@ console.log('test-agent-overdracht: ok');
  assert.match(G.groei[0].tekst,/Liever geen berichten over Fysiplan/);
  assert.ok(!JSON.stringify(werkGroei(G,{nu:NU})).includes('Carla Mastenbroek'));
 }
+
+// ---- sweep 2026-11-13: afsluiting precies één keer, en geen AI, andere prijs, tijdwinst, afzendernaam of verzonnen aantallen ----
+{
+ const G = leegGeheugen();
+ const kern = 'Met Fysiplan maak je één oefenkaart die de patiënt op papier en op de telefoon gebruikt. Zal ik een voorbeeldkaart sturen?';
+ const mail = (tekst, sleutel) => doe(G, 'groei', 'concept', { sleutel, soort: 'mail-sjabloon', titel: 'Voorbeeldkaart aanbieden', doel: 'Praktijken die om een voorbeeld vroegen; doel: een eerste kaart.', tekst });
+ for (const [i, slot] of ['\n\nMet vriendelijke groet,\nCarla Mastenbroek\nFysiplan', '\n\nLiever geen berichten over Fysiplan? Laat het weten, dan stoppen we.\n\nMet vriendelijke groet,\nCarla Mastenbroek\nFysiplan', '\n\nGroeten,\nhet team van Fysiplan'].entries()) {
+  const r = mail(kern + slot, 'sweep-slot-' + i);
+  assert.equal(r.status, 200, JSON.stringify(r.body));
+  assert.equal(G.groei[0].tekst, kern + '\n\nLiever geen berichten over Fysiplan? Laat het weten, dan stoppen we.\n\nMet vriendelijke groet,\nCarla Mastenbroek\nFysiplan');
+ }
+ const k = (zin) => keurConcept({ ...GOED_CONCEPT, tekst: GOED_CONCEPT.tekst + ' ' + zin }).ok;
+ assert.equal(k('Dat kost 9,99 euro per therapeut.'), true);
+ for (const zin of ['Fysiplan werkt met AI.', 'Gemaakt met een taalmodel.', 'Het kost 10 euro per therapeut.', 'Je bespaart elke week twee uur.', 'Groet van Carla.', 'Al 250 praktijken gingen je voor.'])
+  assert.equal(k(zin), false, zin);
+}
