@@ -23,7 +23,9 @@ import { PATIENT_ROUTES } from "../lib/patient-routes.js";
   for (const x of [11, -1, 3.5, "3", NaN, null, undefined, true]) assert.equal(geheel(x, 0, 10), undefined, String(x));
   assert.equal(eenVan("pijn", ["vraag", "pijn"]), "pijn"); assert.equal(eenVan("PIJN", ["pijn"]), undefined); assert.equal(eenVan(null, ["pijn"]), undefined);
   assert.equal(index(2, 3), 2); assert.equal(index("1", 3), 1);
-  for (const x of [3, -1, "", " 1", "1e0", 1.5, null, undefined, true, "constructor"]) assert.equal(index(x, 3), undefined, String(x));
+  for (const x of [3, -1, "", " 1", "1e0", 1.5, null, undefined, true, "constructor", [0], ["1"], "01", "0001", "00"]) assert.equal(index(x, 3), undefined, JSON.stringify(x));
+  assert.equal(index("0", 3), 0);
+  for (const x of [["pijn"], { toString: () => "pijn" }]) assert.equal(eenVan(x, ["vraag", "pijn"]), undefined, "geen lijst of object als tekst");
 }
 
 // ---- 2. de echte server ----
@@ -59,7 +61,9 @@ try {
   }
   // een onbekend seintje: 400, ook voor een kaart die niet bestaat (de soort eerst)
   assert.equal((await post("/api/kaart/seintje", { id: "0123456789abcdef", soort: "boos" })).status, 400);
-  assert.equal((await post("/api/kaart/seintje", { id, soort: ["pijn"] })).status, 200, "een lijst met één soort wordt die soort");
+  // sinds 2026-11-13 (security-backlog LAAG): een lijst is geen soort meer, ook niet met één soort erin
+  assert.equal((await post("/api/kaart/seintje", { id, soort: ["pijn"] })).status, 400, "een lijst met één soort is geen soort");
+  assert.equal((await post("/api/kaart/seintje", { id, soort: "pijn" })).status, 200, "dezelfde soort als tekst");
 
   // goede tikken doen wat ze deden
   let d = await (await post("/api/kaart/meting", { id, score: 4 })).json();
@@ -77,6 +81,7 @@ try {
   assert.equal((await post("/api/kaart/oefening", { id, oef: 1 })).status, 200);
   assert.equal((await post("/api/kaart/oefening", { id, oef: 2 })).status, 400, "geen derde oefening");
   assert.equal((await post("/api/kaart/oefzwaar", { id, oef: "0" })).status, 200);
+  for (const oef of [[0], "00", "01"]) assert.equal((await post("/api/kaart/oefening", { id, oef })).status, 400, "geen lijst of voorloopnul: " + JSON.stringify(oef));
   assert.equal((await post("/api/kaart/antwoord/gezien", { id })).status, 200);
   const k = (await (await fetch(origin + "/api/kaart?id=" + id, { headers: kop() })).json()).kaart;
   assert.deepEqual(Object.keys(k.oefTrouw), ["Lunge"]);
