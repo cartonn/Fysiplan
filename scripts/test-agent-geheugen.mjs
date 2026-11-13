@@ -273,3 +273,29 @@ const doe = (G, rol, actie, b, nu = NU) => poort(G, { rol, actie, b, nu, uitvoer
 }
 
 console.log("test-agent-geheugen: ok");
+
+// Staf -> open groeitaak -> gekoppeld concept -> feedback voor een volgende ronde.
+{
+  const G=leegGeheugen();
+  const t=doe(G,'staf','taak-voorstel',{sleutel:'overdracht-groei',soort:'groei',titel:'Schrijf een proefbericht',uitleg:'Leg in een kort bericht uit wat een oefenkaart doet.'}).body.taak;
+  assert.equal(werkGroei(G,{nu:NU}).taken.length,0,'onbeoordeeld voorstel wordt geen groeitaak');
+  besluitTaak(G,{id:t,besluit:'akkoord',wie:'demo',nu:NU});
+  assert.equal(werkGroei(G,{nu:NU}).taken[0].taak,t);
+  const c=doe(G,'groei','concept',{...GOED_CONCEPT,taak:t,sleutel:'overdracht-concept'}).body.concept;
+  assert.equal(G.groei[0].taak,t);
+  besluitConcept(G,{id:c,besluit:'afwijzen',reden:'Maak het korter.',wie:'demo',nu:NU});
+  const vorig=werkGroei(G,{nu:NU}).vorigeConcepten[0];
+  assert.equal(vorig.tekst,GOED_CONCEPT.tekst);assert.equal(vorig.redenVanBeheer,'Maak het korter.');
+  besluitTaak(G,{id:t,besluit:'klaar',wie:'demo',nu:NU});
+  assert.equal(doe(G,'groei','concept',{...GOED_CONCEPT,taak:t,sleutel:'overdracht-afgerond'}).status,409);
+  for(const doel of ['Voor mail test@patient.invalid','Voor BSN 123456782','Voor NL91ABNA0417164300']) assert.equal(keurConcept({...GOED_CONCEPT,doel}).ok,false);
+  for(const naAkkoord of [false,true]) {
+    const H=leegGeheugen();H.contacten=[{code:'C-aaaaaa',toestemming:{mail:true},afdrukken:[]}];
+    const id=doe(H,'groei','contact-voorstel',{sleutel:'verander-toestemming',contact:'C-aaaaaa',kanaal:'mail',reden:'Vroeg om informatie over de oefenkaarten.'}).body.taak;
+    if(naAkkoord) assert.equal(besluitTaak(H,{id,besluit:'akkoord',wie:'demo',nu:NU}).status,200);
+    H.contacten[0].toestemming.mail=false;
+    assert.equal(besluitTaak(H,{id,besluit:naAkkoord?'klaar':'akkoord',wie:'demo',nu:NU}).status,409);
+    assert.equal(H.taken[0].status,'vervallen');
+  }
+}
+console.log('test-agent-overdracht: ok');

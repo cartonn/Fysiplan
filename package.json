@@ -128,7 +128,7 @@
     "test:seinvenster": "node scripts/test-seintje-venster.mjs",
     "test:lichtladen": "node scripts/test-licht-laden.mjs",
     "test:beheerherstel": "node scripts/test-beheer-herstel.mjs",
-    "test:beheeromgeving": "node scripts/test-beheer-omgeving.mjs && node scripts/test-beheer-toegang.mjs && node scripts/test-agent-geheugen.mjs && node scripts/test-demo-opslag.mjs && node scripts/test-loket-demo.mjs",
+    "test:beheeromgeving": "node scripts/test-beheer-omgeving.mjs && node scripts/test-beheer-toegang.mjs && node scripts/test-agent-geheugen.mjs && node scripts/test-demo-opslag.mjs && node scripts/test-loket-demo.mjs && npm run test:demomodel",
     "test:demoopslag": "node scripts/test-demo-opslag.mjs",
     "test:agentgeheugen": "node scripts/test-agent-geheugen.mjs",
     "test:loketdemo": "node scripts/test-loket-demo.mjs",
@@ -206,7 +206,8 @@
     "test:beveiligingfeedback": "node scripts/test-beveiliging-feedback.mjs",
     "test:welkomlink": "node scripts/test-welkomlink.mjs",
     "test:proeftokenverloop": "node scripts/test-proef-token-verloop.mjs",
-    "test:foutpagina": "node scripts/test-foutpagina.mjs"
+    "test:foutpagina": "node scripts/test-foutpagina.mjs",
+    "test:demomodel": "node scripts/test-demo-model.mjs"
   },
   "engines": {
     "node": ">=20"

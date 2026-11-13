@@ -74,9 +74,11 @@ async function haal() {
   $('#bijgewerkt').textContent = 'bijgewerkt ' + new Date().toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
 }
 async function post(pad, body, stil) {
+  const bronVanVerzoek = bron;
   const r = await fetch('/api/beheer/omgeving/' + pad, { method: 'POST', headers: { ...HDR, 'content-type': 'application/json' }, body: JSON.stringify({ bron, ...body }) });
   const j = await r.json().catch(() => ({}));
   if (!r.ok || !j.ok) { melden(j.fout || 'Dat lukte niet.', true); return null; }
+  if (bron !== bronVanVerzoek) { await vernieuw(); return j; }
   data = j;
   if (!stil) teken();
   return j;
@@ -638,8 +640,9 @@ function agents() {
       '<dl><dt>Ziet</dt><dd>' + esc(r.ziet) + '</dd><dt>Doet</dt><dd>' + esc(r.doet) + '</dd></dl>' +
       '<div class="rij"><span class="seg" role="group" aria-label="Stand van de ' + esc(r.titel) + '">' + seg(rol, 'uit', 'Uit') + seg(rol, 'proef', 'Proef') + seg(rol, 'aan', 'Aan') + '</span>' +
         (rol === 'tech' ? '<label class="vink"><input type="checkbox" id="mergen"' + (a.mergen ? ' checked' : '') + '/>Zelf mergen</label>' : '') + '</div>' +
-      '<p class="uitleg">' + (r.alleenProef ? 'Voorlopig alleen op proef. ' : '') + (demo ? (a.stand === 'uit' ? 'Staat in de demo uit: ook op proef doet hij hier niets.' : 'Werkt op deze demo-gegevens, zolang de echte agent op proef staat. Deze knop verandert niets aan de echte agent.') : a.stand === 'uit' ? 'Het loket geeft deze agent niets.' : a.stand === 'proef' ? 'Op proef: werkt op de demo-gegevens. Wat hij doet, zie je bij Demo; daar kun je hem ook stilzetten.' : 'Werkt op de gegevens van fysiplan.nl.') +
-        ' Laatst bij het loket: ' + esc(sindsTekst(a.gezien)) + '.</p></div>';
+      '<p class="uitleg">' + (r.alleenProef ? 'Voorlopig alleen op proef. ' : '') + (demo ? (a.stand === 'uit' ? 'Staat in de demo uit: ook op proef doet hij hier niets.' : (r.alleenProef ? 'Handmatige modelrondes werken alleen op deze demo-gegevens. Een externe Claude-taak heeft daarnaast een eigen rolsleutel en de echte stand proef nodig.' : 'Werkt op deze demo-gegevens, zolang de echte agent op proef staat. Deze knop verandert niets aan de echte agent.')) : a.stand === 'uit' ? 'Het loket geeft deze agent niets.' : a.stand === 'proef' ? 'Op proef: werkt op de demo-gegevens. Wat hij doet, zie je bij Demo; daar kun je hem ook stilzetten.' : 'Werkt op de gegevens van fysiplan.nl.') +
+        ' Laatst bij het loket: ' + esc(sindsTekst(a.gezien)) + '.</p>' +
+      (demo && r.alleenProef && L.demoModel ? '<p class="uitleg">Model: ' + esc(L.demoModel.model) + '. Alleen handmatig; maximaal ' + L.demoModel.perDag + ' rondes per dag. ' + L.demoModel.over[rol] + ' over. ' + (!L.demoModel.beschikbaar ? 'API-sleutel ontbreekt op deze server.' : 'Voorstellen blijven op jouw akkoord wachten.') + '</p><button type="button" class="knop" data-demoronde="' + rol + '"' + (!L.demoModel.beschikbaar || L.demoModel.bezig || a.stand !== 'proef' || L.pauze || !L.demoModel.over[rol] ? ' disabled' : '') + '>Start demoronde</button>' : '') + '</div>';
   };
   // een bericht dat bij een herstart onderweg was: niet opnieuw versturen, eerst nakijken bij de mailprovider
   const onbekendHtml = (c) => '<div class="zaak probleem"><div class="zaakkop">' + pil('Uitkomst onbekend', 'probleem', true) + '<b>' + esc(c.praktijk) + '</b><span class="hint">' + esc(metNaam(c, c.onderwerp)) + '</span></div>' +
@@ -655,7 +658,7 @@ function agents() {
     esc(c.stand === 'verstuurd' ? (/-agent$/.test(c.door || '') ? ' · door de agent zelf verstuurd' : ' · akkoord van ' + c.door) : c.stand === 'afgewezen' ? (c.reden ? ' · “' + c.reden + '”' : ' · zonder reden') : ' · de zaak was al opgelost') + '</span><time>' + esc(tijd(c.op || c.t)) + '</time></div></div>';
   const PUNT = { gedaan: ['Gedaan', 'goed'], voorstel: ['Voorstel', 'petrol'], 'let-op': ['Let op', 'aandacht'] };
   const verslagen = L.verslagen.filter((v) => !st.verslagRol || v.rol === st.verslagRol), toon = st.verslagAlles ? verslagen : verslagen.slice(0, 4);
-  const verslagHtml = (v) => '<article class="verslag"><header>' + pil(rollen[v.rol].titel, 'neutraal', true) + '<time>' + esc(tijd(v.t)) + '</time></header><p>' + esc(v.tekst) + '</p>' +
+  const verslagHtml = (v) => '<article class="verslag"><header>' + pil(rollen[v.rol].titel, 'neutraal', true) + '<time>' + esc(tijd(v.t)) + '</time>' + (v.model ? '<span class="hint">' + esc(v.model) + ' · handmatige demoronde</span>' : '') + '</header><p>' + esc(v.tekst) + '</p>' +
     (v.punten.length ? '<ul>' + v.punten.map((p) => '<li>' + pil(...(PUNT[p.soort] || PUNT['let-op']), true) + '<span>' + (p.praktijk ? '<b>' + esc(p.praktijk) + '</b> ' : '') + esc(p.tekst) +
       (p.pr ? ' <a href="https://github.com/cartonn/Fysiplan/pull/' + Number(p.pr) + '" target="_blank" rel="noopener">PR #' + Number(p.pr) + '</a>' : '') + '</span></li>').join('') + '</ul>' : '') + '</article>';
   const chip = (k, l) => '<button type="button" class="chip' + (st.verslagRol === k ? ' aan' : '') + '" data-vrol="' + k + '">' + l + '</button>';
@@ -719,7 +722,7 @@ function geheugenHtml(G, demo) {
         : knoppen === 'klaar' ? '<span class="knoppen"><button type="button" class="knop licht klein" data-taak="' + esc(t.id) + '" data-besluit="klaar">Klaar</button></span>' : '') + '</div></div>';
   const conceptHtml = (c) => '<div class="zaak aandacht"><div class="zaakkop">' + pil(c.soort, 'neutraal', true) + '<b>' + esc(c.titel) + '</b></div><div class="hint">Doel: ' + esc(c.doel) + '</div>' +
     '<details class="mail"><summary>Lees de tekst</summary><pre>' + esc(c.tekst) + '</pre></details>' +
-    '<div class="zaakvoet">Geschreven ' + esc(sindsTekst(c.t)) + ' · publiceren doe je zelf<span class="knoppen"><button type="button" class="knop licht klein" data-groei="' + esc(c.id) + '" data-besluit="afwijzen">Afwijzen</button><button type="button" class="knop klein" data-groei="' + esc(c.id) + '" data-besluit="goedkeuren">Goedkeuren</button></span></div></div>';
+    '<div class="zaakvoet">Geschreven ' + esc(sindsTekst(c.t)) + (c.taak ? ' · taak ' + esc(c.taak) : '') + ' · publiceren doe je zelf<span class="knoppen"><button type="button" class="knop licht klein" data-groei="' + esc(c.id) + '" data-besluit="afwijzen">Afwijzen</button><button type="button" class="knop klein" data-groei="' + esc(c.id) + '" data-besluit="goedkeuren">Goedkeuren</button></span></div></div>';
   const groeiWacht = G.groei.filter((c) => c.stand === 'wacht'), groeiEerder = G.groei.filter((c) => c.stand !== 'wacht').slice(0, 4);
   const ja = (v, l) => pil(l, v ? 'goed' : 'neutraal', true);
   const contactHtml = (c) => '<div class="logregel">' + (c.afgemeld ? pil('Afgemeld', 'probleem', true) : pil(c.segment, 'neutraal', true)) + '<div><b>' + esc(c.naam) + '</b><span>' + esc(c.code) + ' · ' + aantal(c.therapeuten, 'therapeut', 'therapeuten') + ' · ' + esc(c.bron) + '</span>' +
@@ -731,9 +734,9 @@ function geheugenHtml(G, demo) {
       '<div class="kaart"><h2>Taken die op jou wachten</h2>' + (wacht.length ? wacht.map((t) => taakHtml(t, 'besluit')).join('') : '<p class="leeg">Niets dat op je wacht.</p>') + '</div>' +
       '<div class="kaart mt"><h2>Lopende taken</h2>' + (lopend.length ? lopend.map((t) => taakHtml(t, 'klaar')).join('') : '<p class="leeg">Geen lopende taken.</p>') +
         (klaar.length ? '<h2 class="ruim">Afgerond</h2>' + klaar.map((t) => taakHtml(t, '')).join('') : '') + '</div>' +
-      '<div class="kaart mt"><h2>Concepten van de groei-agent</h2><p class="ks">Getoetst aan de vaste feiten. Goedkeuren betekent: mag gebruikt worden. Er wordt niets vanzelf gepubliceerd.</p>' +
+      '<div class="kaart mt"><h2>Concepten van de groei-agent</h2><p class="ks">Gebaseerd op de feitenlijst; controleer de inhoud. Goedkeuren betekent: mag gebruikt worden. Er wordt niets vanzelf gepubliceerd.</p>' +
         (groeiWacht.length ? groeiWacht.map(conceptHtml).join('') : '<p class="leeg">Geen concept dat op je wacht.</p>') +
-        (groeiEerder.length ? '<div class="logboek mt">' + groeiEerder.map((c) => '<div class="logregel">' + pil(c.stand === 'goedgekeurd' ? 'Goedgekeurd' : 'Afgewezen', c.stand === 'goedgekeurd' ? 'goed' : 'neutraal', true) + '<div><b>' + esc(c.titel) + '</b><span>' + esc(c.besluitReden ? '“' + c.besluitReden + '”' : c.soort) + '</span><time>' + esc(tijd(c.op || c.t)) + '</time></div></div>').join('') + '</div>' : '') + '</div>' +
+        (groeiEerder.length ? '<div class="logboek mt">' + groeiEerder.map((c) => '<div class="logregel">' + pil(c.stand === 'goedgekeurd' ? 'Goedgekeurd' : 'Afgewezen', c.stand === 'goedgekeurd' ? 'goed' : 'neutraal', true) + '<div><b>' + esc(c.titel) + '</b><span>' + esc(c.besluitReden ? '“' + c.besluitReden + '”' : c.soort) + '</span><details class="mail"><summary>Lees de tekst</summary><pre>' + esc(c.tekst) + '</pre></details><time>' + esc(tijd(c.op || c.t)) + '</time></div></div>').join('') + '</div>' : '') + '</div>' +
     '</div><div>' +
       '<div class="kaart"><h2>Prospects</h2><p class="ks">Praktijken die nog geen klant zijn, nooit patiënten. De agents zien alleen de code. Een afmelding geldt meteen en voor altijd.</p><div class="logboek">' + G.contacten.map(contactHtml).join('') + '</div></div>' +
       '<div class="kaart mt"><h2>Auditlog</h2><p class="ks">Elk besluit van de poort en van beheer, ook elke weigering. Nieuwste boven.</p><div class="logboek">' + G.audit.slice(0, 12).map(auditHtml).join('') + '</div></div>' +
@@ -742,6 +745,18 @@ function geheugenHtml(G, demo) {
 }
 function bindAgents(el) {
   const rollen = data.loket.rollen;
+  el.querySelectorAll('[data-demoronde]').forEach((b) => b.addEventListener('click', async () => {
+    b.disabled = true;
+    b.textContent = 'Model werkt…';
+    try {
+      const j = await post('loket/demoronde', { rol: b.dataset.demoronde });
+      if (j) {
+        const rs = j.modelRonde.resultaten;
+        melden('Demoronde klaar: ' + rs.filter((r) => r.ok).length + ' voorstellen of adviezen opgeslagen, ' + rs.filter((r) => !r.ok).length + ' geweigerd. Niets verstuurd of gepubliceerd.');
+      }
+    } catch { melden('Verbinding onderbroken. Controleer het verslag voordat je opnieuw start.', true); }
+    finally { await vernieuw(); }
+  }));
   el.querySelectorAll('[data-agent]').forEach((b) => b.addEventListener('click', async () => {
     if (b.classList.contains('aan')) return;
     const rol = b.dataset.agent, stand = b.dataset.stand, titel = rollen[rol].titel;
