@@ -90,6 +90,7 @@ function pagina() {
 }
 function teken() {
   if (!data) return;
+  redenOpen = null; // opnieuw tekenen haalt een open afwijsformulier weg
   const p = pagina();
   // wat dit account niet mag, staat niet in het menu; een groep zonder pagina's ook niet
   // een link met data-recht (de ideeënbox) gaat naar een beheerpagina buiten deze omgeving
@@ -99,6 +100,10 @@ function teken() {
   const oud = document.querySelector('.zij a.oud');
   if (oud) oud.hidden = !mag('beheer');
   $('#demoband').hidden = bron !== 'demo';
+  // begon de demo bij het starten opnieuw (bestand onleesbaar of van een andere vorm), dan staat hier waarom
+  const rs = bron === 'demo' && data.demoReset;
+  $('#demoReset').hidden = !rs;
+  if (rs) $('#demoReset').textContent = 'Demo opnieuw begonnen op ' + tijd(rs.op) + ': ' + rs.reden + (rs.bestand ? ' Het oude bestand staat apart als ' + rs.bestand + '.' : ' Het oude bestand kon niet apart worden gezet.');
   document.querySelectorAll('#bronSchakel button').forEach((b) => b.classList.toggle('aan', b.dataset.bron === bron));
   $('#bronUitleg').textContent = bron === 'demo' ? 'Verzonnen gegevens om de omgeving en de agents te testen.' : 'De gegevens van fysiplan.nl.';
   // een lezer (alleen het recht Vertalingen) heeft hier geen pagina: meteen naar de vertalingen
@@ -115,7 +120,7 @@ function teken() {
   $('#tSupport').textContent = problemen || '';
   const btwOpen = data.finance.btw.filter((b) => b.stand === 'te-doen' || b.stand === 'te-laat').length;
   $('#tBtw').textContent = btwOpen || '';
-  $('#tAgents').textContent = (data.loket ? data.loket.concepten.filter((c) => c.stand === 'wacht').length + geheugenWacht(data.loket.geheugen) : 0) || '';
+  $('#tAgents').textContent = (data.loket ? data.loket.concepten.filter((c) => c.stand === 'wacht' || c.stand === 'onbekend').length + geheugenWacht(data.loket.geheugen) : 0) || '';
   $('#tIdeeen').textContent = (data.ideeen && data.ideeen.wacht) || '';
   if (p !== 'agents') st.nieuweSleutel = null; // de nieuwe sleutel is alleen te zien tot je de pagina verlaat
   const el = $('#pagina');
@@ -574,9 +579,53 @@ const sindsTekst = (iso) => {
   const m = Math.floor((data.nu - Date.parse(iso)) / 60e3);
   return m < 1 ? 'zojuist' : m < 60 ? m + ' min geleden' : m < 1440 ? Math.floor(m / 60) + ' uur geleden' : tijd(iso);
 };
+// Afwijzen met een reden: een klein formulier in de kaart zelf, geen prompt() (die toont niet elke
+// browser; in een ingebouwde browser gebeurde er dan niets). Annuleren (knop of Esc) laat alles
+// zoals het was. Enter bevestigt, Shift+Enter is een nieuwe regel. Er staat er maar één open; zolang
+// het open staat, ververst de pagina niet vanzelf, zodat een half getypte reden niet verdwijnt.
+var redenOpen = null;
+function sluitReden(terug) {
+  if (!redenOpen) return;
+  const { vorm, knop } = redenOpen;
+  redenOpen = null;
+  vorm.remove();
+  knop.removeAttribute('aria-expanded');
+  knop.disabled = false;
+  if (terug && knop.isConnected) knop.focus();
+}
+function vraagReden(knop, vraag, doe) {
+  sluitReden(false);
+  const kaart = knop.closest('.zaak') || knop.parentElement;
+  const id = 'reden' + Math.random().toString(36).slice(2, 8);
+  const vorm = document.createElement('form');
+  vorm.className = 'redenvorm';
+  vorm.setAttribute('aria-label', 'Afwijzen');
+  vorm.innerHTML = '<label for="' + id + '">' + esc(vraag) + '</label><textarea id="' + id + '" rows="2" maxlength="200"></textarea>' +
+    '<div class="knoppen"><button type="button" class="knop licht klein" data-reden-annuleer>Annuleren</button><button type="submit" class="knop klein">Afwijzen bevestigen</button></div>' +
+    '<p class="hint">Enter bevestigt, Esc annuleert.</p>';
+  kaart.appendChild(vorm);
+  knop.setAttribute('aria-expanded', 'true');
+  knop.disabled = true;
+  redenOpen = { vorm, knop };
+  const veld = vorm.querySelector('textarea'), bevestig = vorm.querySelector('[type=submit]');
+  vorm.querySelector('[data-reden-annuleer]').addEventListener('click', () => sluitReden(true));
+  vorm.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); sluitReden(true); }
+    else if (e.key === 'Enter' && e.target === veld && !e.shiftKey && !e.isComposing) { e.preventDefault(); vorm.requestSubmit(); }
+  });
+  vorm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    bevestig.disabled = true;
+    const gelukt = await doe(veld.value);
+    // gelukt: de pagina is opnieuw getekend en het formulier is weg; mislukt: de reden blijft staan
+    if (gelukt) { if (redenOpen && redenOpen.vorm === vorm) sluitReden(false); }
+    else { bevestig.disabled = false; veld.focus(); }
+  });
+  veld.focus();
+}
 function agents() {
   const L = data.loket, rollen = L.rollen, demo = bron === 'demo';
-  const wacht = L.concepten.filter((c) => c.stand === 'wacht'), eerder = L.concepten.filter((c) => c.stand !== 'wacht').slice(0, 6);
+  const wacht = L.concepten.filter((c) => c.stand === 'wacht' || c.stand === 'onbekend'), eerder = L.concepten.filter((c) => c.stand !== 'wacht' && c.stand !== 'onbekend').slice(0, 6);
   const standen = Object.values(L.agents).map((a) => a.stand);
   const week = L.verslagen.filter((v) => Date.parse(v.t) >= data.nu - 7 * 86400e3).length;
   const eigen = data.agent.stand['eigen-bericht'] || 'uit';
@@ -589,14 +638,19 @@ function agents() {
       '<dl><dt>Ziet</dt><dd>' + esc(r.ziet) + '</dd><dt>Doet</dt><dd>' + esc(r.doet) + '</dd></dl>' +
       '<div class="rij"><span class="seg" role="group" aria-label="Stand van de ' + esc(r.titel) + '">' + seg(rol, 'uit', 'Uit') + seg(rol, 'proef', 'Proef') + seg(rol, 'aan', 'Aan') + '</span>' +
         (rol === 'tech' ? '<label class="vink"><input type="checkbox" id="mergen"' + (a.mergen ? ' checked' : '') + '/>Zelf mergen</label>' : '') + '</div>' +
-      '<p class="uitleg">' + (r.alleenProef ? 'Voorlopig alleen op proef. ' : '') + (a.stand === 'uit' ? 'Het loket geeft deze agent niets.' : a.stand === 'proef' ? (demo ? 'Op proef: werkt op deze demo-gegevens.' : 'Op proef: werkt op de demo-gegevens. Wat hij doet, zie je bij Demo.') : 'Werkt op de gegevens van ' + (demo ? 'de demo' : 'fysiplan.nl') + '.') +
+      '<p class="uitleg">' + (r.alleenProef ? 'Voorlopig alleen op proef. ' : '') + (demo ? (a.stand === 'uit' ? 'Staat in de demo uit: ook op proef doet hij hier niets.' : 'Werkt op deze demo-gegevens, zolang de echte agent op proef staat. Deze knop verandert niets aan de echte agent.') : a.stand === 'uit' ? 'Het loket geeft deze agent niets.' : a.stand === 'proef' ? 'Op proef: werkt op de demo-gegevens. Wat hij doet, zie je bij Demo; daar kun je hem ook stilzetten.' : 'Werkt op de gegevens van fysiplan.nl.') +
         ' Laatst bij het loket: ' + esc(sindsTekst(a.gezien)) + '.</p></div>';
   };
-  const conceptHtml = (c) => '<div class="zaak aandacht"><div class="zaakkop">' + pil(rollen[c.rol].titel, 'neutraal', true) + '<b>' + esc(c.praktijk) + '</b><span class="hint">' + esc(c.wat) + '</span></div>' +
+  // een bericht dat bij een herstart onderweg was: niet opnieuw versturen, eerst nakijken bij de mailprovider
+  const onbekendHtml = (c) => '<div class="zaak probleem"><div class="zaakkop">' + pil('Uitkomst onbekend', 'probleem', true) + '<b>' + esc(c.praktijk) + '</b><span class="hint">' + esc(metNaam(c, c.onderwerp)) + '</span></div>' +
+    '<p class="uitleg">Dit bericht ging net weg toen de server herstartte. Of het aankwam, weet Fysiplan niet. Kijk bij de mailprovider na of het verstuurd is; tot dan krijgt deze praktijk geen nieuw bericht van een agent.</p>' +
+    '<div class="zaakvoet">Geschreven ' + esc(sindsTekst(c.t)) + '<span class="knoppen"><button type="button" class="knop licht klein" data-nagekeken="' + esc(c.id) + '" data-uitkomst="niet-verstuurd">Niet verstuurd</button>' +
+      '<button type="button" class="knop klein" data-nagekeken="' + esc(c.id) + '" data-uitkomst="verstuurd">Wel verstuurd</button></span></div></div>';
+  const conceptHtml = (c) => c.stand === 'onbekend' ? onbekendHtml(c) : '<div class="zaak aandacht"><div class="zaakkop">' + pil(rollen[c.rol].titel, 'neutraal', true) + '<b>' + esc(c.praktijk) + '</b><span class="hint">' + esc(c.wat) + '</span></div>' +
     '<details class="mail" open><summary>' + esc(metNaam(c, c.onderwerp)) + '</summary><pre>' + esc('Hallo [voornaam],\n\n' + metNaam(c, c.tekst) + '\n\nGroet,\nFysiplan-support') + '</pre></details>' +
     '<div class="zaakvoet">Geschreven ' + esc(sindsTekst(c.t)) + ' · gaat naar ' + aantal(c.aan, 'adres', 'adressen') + ' van de praktijk<span class="knoppen"><button type="button" class="knop licht klein" data-afwijzen="' + esc(c.id) + '">Afwijzen</button>' +
       '<button type="button" class="knop klein" data-akkoord="' + esc(c.id) + '">' + (demo ? 'Verstuur (demo)' : 'Verstuur') + '</button></span></div></div>';
-  const EERDER = { verstuurd: ['Verstuurd', 'goed'], afgewezen: ['Afgewezen', 'neutraal'], vervallen: ['Vervallen', 'neutraal'] };
+  const EERDER = { verstuurd: ['Verstuurd', 'goed'], afgewezen: ['Afgewezen', 'neutraal'], vervallen: ['Vervallen', 'neutraal'], 'niet-verstuurd': ['Niet verstuurd', 'neutraal'], bezig: ['Gaat weg', 'petrol'] };
   const eerderHtml = (c) => '<div class="logregel">' + pil(...(EERDER[c.stand] || [c.stand, 'neutraal']), true) + '<div><b>' + esc(c.praktijk) + '</b><span>' + esc(metNaam(c, c.onderwerp)) +
     esc(c.stand === 'verstuurd' ? (/-agent$/.test(c.door || '') ? ' · door de agent zelf verstuurd' : ' · akkoord van ' + c.door) : c.stand === 'afgewezen' ? (c.reden ? ' · “' + c.reden + '”' : ' · zonder reden') : ' · de zaak was al opgelost') + '</span><time>' + esc(tijd(c.op || c.t)) + '</time></div></div>';
   const PUNT = { gedaan: ['Gedaan', 'goed'], voorstel: ['Voorstel', 'petrol'], 'let-op': ['Let op', 'aandacht'] };
@@ -708,11 +762,16 @@ function bindAgents(el) {
     const j = await post('loket/concept', { id: b.dataset.akkoord, besluit: 'verstuur' });
     if (j) melden(bron === 'demo' ? 'Verstuurd in demo (alleen in het postvak bij de support-agent).' : 'Verstuurd.'); else b.disabled = false;
   }));
-  el.querySelectorAll('[data-afwijzen]').forEach((b) => b.addEventListener('click', async () => {
-    const reden = prompt('Waarom niet? De agent leest dit bij zijn volgende ronde (mag leeg).', '');
-    if (reden === null) return;
+  el.querySelectorAll('[data-afwijzen]').forEach((b) => b.addEventListener('click', () => vraagReden(b, 'Waarom niet? De agent die dit schreef, leest dit bij zijn volgende ronde (mag leeg).', async (reden) => {
     const j = await post('loket/concept', { id: b.dataset.afwijzen, besluit: 'afwijzen', reden });
     if (j) melden('Afgewezen.');
+    return !!j;
+  })));
+  // een bericht met een onbekende uitkomst: beheer kijkt na bij de mailprovider en legt vast wat er gebeurde
+  el.querySelectorAll('[data-nagekeken]').forEach((b) => b.addEventListener('click', async () => {
+    b.disabled = true;
+    const j = await post('loket/concept', { id: b.dataset.nagekeken, besluit: 'nagekeken', uitkomst: b.dataset.uitkomst });
+    if (j) melden(b.dataset.uitkomst === 'verstuurd' ? 'Vastgelegd: wel verstuurd.' : 'Vastgelegd: niet verstuurd. De agent kan deze praktijk weer een bericht voorstellen.'); else b.disabled = false;
   }));
   el.querySelectorAll('[data-sleutel-nieuw]').forEach((b) => b.addEventListener('click', async () => {
     const rol = b.dataset.sleutelNieuw, titel = data.loket.rollen[rol].titel;
@@ -730,18 +789,24 @@ function bindAgents(el) {
   $('#sleutelWeg', el)?.addEventListener('click', async () => { if (confirm('De oude gedeelde sleutel intrekken? Een agent die nog geen eigen sleutel heeft, komt dan niet meer bij het loket.')) { st.nieuweSleutel = null; const j = await post('loket/sleutel', { actie: 'intrekken' }); if (j) melden('De gedeelde sleutel is ingetrokken.'); } });
   $('#sleutelKopie', el)?.addEventListener('click', async () => { try { await navigator.clipboard.writeText(st.nieuweSleutel); melden('Gekopieerd.'); } catch { $('#sleutelTekst', el).select(); melden('Kopiëren lukte niet; selecteer de sleutel en kopieer hem zelf.', true); } });
   el.querySelectorAll('[data-taak]').forEach((b) => b.addEventListener('click', async () => {
-    let reden = '';
-    if (b.dataset.besluit === 'afwijzen') { reden = prompt('Waarom niet? De agent leest dit bij zijn volgende ronde (mag leeg).', ''); if (reden === null) return; }
+    const doe = async (reden) => {
+      const j = await post('loket/taak', { id: b.dataset.taak, besluit: b.dataset.besluit, reden });
+      if (j) melden({ akkoord: 'Akkoord gegeven.', afwijzen: 'Afgewezen.', klaar: 'Op klaar gezet.' }[b.dataset.besluit]);
+      return !!j;
+    };
+    if (b.dataset.besluit === 'afwijzen') return vraagReden(b, 'Waarom niet? De agent leest dit bij zijn volgende ronde (mag leeg).', doe);
     b.disabled = true;
-    const j = await post('loket/taak', { id: b.dataset.taak, besluit: b.dataset.besluit, reden });
-    if (j) melden({ akkoord: 'Akkoord gegeven.', afwijzen: 'Afgewezen.', klaar: 'Op klaar gezet.' }[b.dataset.besluit]); else b.disabled = false;
+    if (!(await doe(''))) b.disabled = false;
   }));
   el.querySelectorAll('[data-groei]').forEach((b) => b.addEventListener('click', async () => {
-    let reden = '';
-    if (b.dataset.besluit === 'afwijzen') { reden = prompt('Waarom niet? De groei-agent leest dit bij zijn volgende ronde (mag leeg).', ''); if (reden === null) return; }
+    const doe = async (reden) => {
+      const j = await post('loket/groei', { id: b.dataset.groei, besluit: b.dataset.besluit, reden });
+      if (j) melden(b.dataset.besluit === 'goedkeuren' ? 'Goedgekeurd. Publiceren doe je zelf.' : 'Afgewezen.');
+      return !!j;
+    };
+    if (b.dataset.besluit === 'afwijzen') return vraagReden(b, 'Waarom niet? De groei-agent leest dit bij zijn volgende ronde (mag leeg).', doe);
     b.disabled = true;
-    const j = await post('loket/groei', { id: b.dataset.groei, besluit: b.dataset.besluit, reden });
-    if (j) melden(b.dataset.besluit === 'goedkeuren' ? 'Goedgekeurd. Publiceren doe je zelf.' : 'Afgewezen.'); else b.disabled = false;
+    if (!(await doe(''))) b.disabled = false;
   }));
   el.querySelectorAll('[data-afmelden]').forEach((b) => b.addEventListener('click', async () => {
     if (!confirm('Dit contact afmelden? Dat geldt meteen en voor altijd; open voorstellen vervallen.')) return;
@@ -813,5 +878,5 @@ if (!sleutel) $('#pagina').innerHTML = '<div class="kaart leeg">Log in met je be
 else {
   HDR = { 'x-admin-sleutel': sleutel };
   await vernieuw();
-  setInterval(() => { if (document.visibilityState === 'visible' && $('#lade').hidden) vernieuw(); }, 120000);
+  setInterval(() => { if (document.visibilityState === 'visible' && $('#lade').hidden && !redenOpen) vernieuw(); }, 120000);
 }

@@ -103,6 +103,17 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
   assert.deepEqual(keurNotitie({ periode: "2026-K3", tekst: "Eén bon kwam na het indienen." }).notitie, { periode: "2026-K3", tekst: "Eén bon kwam na het indienen." });
   for (const p of ["2026-K5", "K3", "2026-03", ""]) assert.equal(keurNotitie({ periode: p, tekst: "Eén bon kwam na het indienen." }).ok, false, p);
   assert.equal(keurNotitie({ periode: "2026", tekst: "kort" }).ok, false);
+  // persoonsgegevens: weigeren, en de foutmelding noemt alleen de soort, nooit de tekst zelf
+  for (const [tekst, soort] of [["Mail test@voorbeeld.invalid voor de bon.", /e-mailadres/], ["De patiënt die Jan Testpersoon heet kwam niet.", /patiënten/], ["BSN 000000000 hoort hier niet.", /burgerservice/],
+    ["Betaling van NL91ABNA0417164300 binnen.", /IBAN/], ["Bel haar op 06-12345678 morgen.", /telefoon/], ["Bel +31 6 1234 5678 terug.", /telefoon/], ["Praktijk belt 010-1234567 terug.", /telefoon/], ["Vast nummer +31 20 123 4567.", /telefoon/], ["Bel 0111 123456 even.", /telefoon/], ["Geboren op 1 mei, zegt de praktijk.", /geboorte/], ["Een <b>vet</b> woord in de notitie.", /opmaak/]]) {
+    const n = keurNotitie({ periode: "2026", tekst }), v = keurVerslag({ tekst: "Gewoon verslag van de ronde.", punten: [{ tekst }] });
+    assert.deepEqual([n.ok, v.ok], [false, false], tekst);
+    assert.match(n.fouten.join(" "), soort);
+    for (const f of [...n.fouten, ...v.fouten]) assert.ok(!f.includes(tekst.slice(0, 12)), "de fout herhaalt de tekst niet");
+  }
+  assert.equal(keurNotitie({ periode: "2026", tekst: "Jaarcontroles 2026: 4 van 9; FP-2026-0023 ontbreekt; 129,87 euro open, uiterlijk 31-01-2027, omzet 355837 cent." }).ok, true, "gewone financiële notities blijven kunnen");
+  assert.equal(keurVerslag({ tekst: "Kaarten per week bij P-0b2c4b: 0 14 10 13 10 10 15 11 15 15; 2026-K4 omzet 088340." }).ok, true, "een reeks weekcijfers is geen telefoonnummer");
+  assert.equal(keurEigenBericht({ ...GOED, tekst: GOED.tekst + " Je BSN 000000000 staat erbij." }).ok, false, "ook geen BSN in een bericht");
 
   // wat een agent ziet van de demo: geen naam, geen adres, geen praktijkcode
   const bron = demoBron(), a = demoAgent(bron), inst = demoInstellingen(bron.nu);
@@ -424,12 +435,17 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
       const om2 = maakBeheerOmgeving({ ...omOpties, dataDir: map, saveJson: async () => {} });
       await om2.laad();
       const roep2 = async (method, pad, extra = {}) => { const res = { setHeader() {} }; await om2.afhandelen({ method, url: pad, headers: extra.headers || {}, body: extra.body, R: extra.R, wie: extra.wie, ip: extra.ip }, res, pad.split("?")[0]); return res; };
-      assert.equal((await roep2("GET", "/api/agent/support/werk", { headers: { "x-agent-sleutel": gedeeld } })).status, 200, "de oude sleutel werkt tijdens de overstap");
+      // de oude sleutel werkt tijdens de overstap alleen op proef (finance); bij een agent op aan
+      // (support) niet, want dat zou een omweg naar echte gegevens zijn
+      assert.equal((await roep2("GET", "/api/agent/finance/werk", { headers: { "x-agent-sleutel": gedeeld } })).status, 200, "de oude sleutel werkt op proef");
+      assert.equal((await roep2("GET", "/api/agent/support/werk", { headers: { "x-agent-sleutel": gedeeld } })).status, 403, "de oude sleutel werkt niet bij een agent op aan");
+      assert.equal(gelogd.at(-1).actie, "agents: oude gedeelde sleutel geweigerd");
+      assert.equal((await roep2("POST", "/api/agent/support/actie", { headers: { "x-agent-sleutel": gedeeld }, body: { actie: "notitie", zaak: "x", tekst: "t" } })).status, 403, "ook geen actie op aan");
       assert.equal((await roep2("GET", "/api/agent/staf/werk", { headers: { "x-agent-sleutel": gedeeld } })).status, 403, "maar niet voor de nieuwe rollen");
       assert.equal(gelogd.at(-1).wie, "gedeelde sleutel");
       r = await roep2("POST", "/api/beheer/omgeving/loket/sleutel", { body: { bron: "echt", actie: "intrekken" } });
       assert.deepEqual([r.status, r.body.loket.sleutel, gelogd.at(-1).actie], [200, null, "agents: gedeelde sleutel ingetrokken"]);
-      assert.equal((await roep2("GET", "/api/agent/support/werk", { headers: { "x-agent-sleutel": gedeeld } })).status, 401, "na intrekken direct geweigerd");
+      assert.equal((await roep2("GET", "/api/agent/finance/werk", { headers: { "x-agent-sleutel": gedeeld } })).status, 401, "na intrekken direct geweigerd");
       assert.equal((await roep2("GET", "/api/agent/support/werk", { headers: { "x-agent-sleutel": sleutels.support } })).status, 200, "de eigen sleutel blijft werken");
       // alle sleutels weg: het loket is dicht
       for (const rol of ["support", "tech", "finance", "staf", "groei"]) await roep2("POST", "/api/beheer/omgeving/loket/sleutel", { body: { bron: "echt", rol, actie: "intrekken" } });

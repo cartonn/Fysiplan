@@ -258,7 +258,11 @@ const doe = (G, rol, actie, b, nu = NU) => poort(G, { rol, actie, b, nu, uitvoer
   assert.equal((await agent("GET", "groei/werk")).status, 200);
 
   // niets in de datamap, geen mail
-  assert.doesNotMatch(JSON.stringify(opgeslagen), /taak-voorstel|contact-voorstel|Oefenkaart in één minuut|"geheugen"|C-[a-f0-9]{6}/, "het geheugen komt niet in de datamap");
+  // de demo zelf staat in een eigen bestand (beheer-demo.json, zodat een herstart hem niet wist,
+  // scripts/test-loket-demo.mjs); in de echte bestanden komt er niets van
+  const echtOpgeslagen = Object.fromEntries(Object.entries(opgeslagen).filter(([naam]) => naam !== "beheer-demo.json"));
+  assert.doesNotMatch(JSON.stringify(echtOpgeslagen), /taak-voorstel|contact-voorstel|Oefenkaart in één minuut|"geheugen"|C-[a-f0-9]{6}/, "het geheugen komt niet in de echte bestanden");
+  assert.ok(opgeslagen["beheer-demo.json"]?.loket?.geheugen, "het geheugen van de demo staat in het demobestand");
   assert.equal(gemaild.length, 0, "er gaat geen mail weg");
 
   // een opgeslagen stand "aan" voor deze agents telt niet
