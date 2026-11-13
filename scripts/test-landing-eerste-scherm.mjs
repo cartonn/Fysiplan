@@ -2,6 +2,7 @@
 // - Eén prijskaart, met daaronder één zin voor de eerste 25 praktijken; geen teller met de hand.
 // - De voorbeeldkaart is een echte knop naast "Probeer gratis".
 // - Op 1440 bij 900 staan de kop en beide knoppen in beeld; de banner zelf blijft gelijk.
+// - Op een liggende telefoon (hoogte ≤ 500 px) valt de banner weg en staan kop en knop in beeld.
 // Statisch altijd; het browserdeel alleen waar Playwright staat. `npm run test:landingscherm`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -18,6 +19,7 @@ assert.doesNotMatch(html, /Oprichterspraktijken|__OPRICHTERS_REGEL__/, "geen twe
 assert.match(html, /<p class="oprichters">__OPRICHTERS_ZIN__<\/p>/);
 assert.match(html, /<div class="cta"><a class="knop oranje" href="\/v2\/proef">[^<]*<span[^>]*>[^<]*<\/span><\/a><a class="knop omlijnd" href="\/k\/demo"/, "voorbeeldkaart als knop naast Probeer gratis");
 assert.match(html, /\.reference-banner\{--knip:/, "de banner wordt alleen afgedekt, niet vervangen");
+assert.match(html, /@media\(orientation:landscape\) and \(max-height:500px\)\{\.reference-banner\{display:none\}nav\{position:static\}\}/, "liggende telefoon zonder banner");
 
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-landingscherm-"));
 const reserve = createServer();
@@ -62,6 +64,24 @@ try {
           assert.equal(m.knoppen.length, 2);
           for (const k of m.knoppen) assert.ok(k <= h, w + "x" + h + ": knop in beeld (" + Math.round(k) + ")");
         }
+        await page.close();
+      }
+      // liggende telefoon (gebruikers-sweep 2026-11-13, Jayden): kop en knoppen in beeld, banner weg
+      for (const [naam, w, h] of [["iPhone 14 liggend", 750, 340], ["Pixel 7 liggend", 863, 360], ["iPad mini liggend", 1024, 768]]) {
+        const page = await browser.newPage({ viewport: { width: w, height: h } });
+        await page.goto(origin + "/v2");
+        const m = await page.evaluate(() => ({
+          h1: document.querySelector(".hero h1").getBoundingClientRect().top,
+          knop: document.querySelector(".hero .cta .knop").getBoundingClientRect().top,
+          banner: getComputedStyle(document.querySelector(".reference-banner")).display,
+          breed: document.documentElement.scrollWidth
+        }));
+        assert.equal(m.breed, w, naam + ": geen horizontaal scrollen");
+        if (h <= 500) {
+          assert.equal(m.banner, "none", naam + ": banner valt weg");
+          assert.ok(m.h1 < h / 2, naam + ": kop in de bovenste helft (" + Math.round(m.h1) + ")");
+          assert.ok(m.knop < h - 16, naam + ": eerste knop begint in beeld (" + Math.round(m.knop) + ")");
+        } else assert.notEqual(m.banner, "none", naam + ": tablet houdt de banner");
         await page.close();
       }
     } finally { await browser.close(); }
