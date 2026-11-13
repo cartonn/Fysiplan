@@ -2705,11 +2705,11 @@ const AI_MODEL_VERTAAL = process.env.AI_MODEL_VERTAAL || "claude-haiku-4-5-20251
 const VRAAGHULP_AAN = !!AI_KEY && /^(aan|ja|1|true)$/i.test(String(process.env.VRAAGHULP || "").trim());
 const normEx = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
 async function vraagClaude(model, maxTokens, system, user, opties = {}) {
-  const headers = { "content-type": "application/json", "x-api-key": AI_KEY, "anthropic-version": "2023-06-01" };
+  const headers = { "content-type": "application/json", "x-api-key": opties.apiKey || AI_KEY, "anthropic-version": "2023-06-01" };
   // Nieuwe persoonlijke Anthropic-sleutels werken over meerdere workspaces en
   // vereisen daarom expliciet de workspace waarop de aanvraag wordt geboekt.
   // Voor bestaande workspace-sleutels blijft deze optionele header achterwege.
-  if (AI_WORKSPACE_ID) headers["anthropic-workspace-id"] = AI_WORKSPACE_ID;
+  if (opties.workspace || AI_WORKSPACE_ID) headers["anthropic-workspace-id"] = opties.workspace || AI_WORKSPACE_ID;
   const body = {
     model,
     max_tokens: maxTokens,
@@ -2741,7 +2741,10 @@ async function vraagClaude(model, maxTokens, system, user, opties = {}) {
   }
   const d = await r.json();
   const tekst = (d.content || []).map((c) => c.text || "").join("");
-  if (opties.schema) return JSON.parse(tekst);
+  if (opties.schema) {
+    if (d.stop_reason === "max_tokens") throw new Error("modelantwoord-afgebroken");
+    return JSON.parse(tekst);
+  }
   const m = tekst.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
   if (!m) throw new Error("geen json in antwoord");
   return JSON.parse(m[0]);
@@ -3582,6 +3585,8 @@ function beheerBronEcht() {
   return { soort: "echt", nu, praktijken, facturen, kosten: [], systeem: { versie: buildInfo.commit || "", uptimeUren: Math.round((nu - startTijd) / 360000) / 10, checks, beschikbaarheid: [] } };
 }
 const beheerOmgeving = maakBeheerOmgeving({
+  demoModelAan: () => !!(process.env.AGENT_DEMO_API_KEY || AI_KEY),
+  demoModelVraag: ({ model, system, user, schema }) => vraagClaude(model, 4000, system, user, { schema, effort: "low", apiKey: process.env.AGENT_DEMO_API_KEY || AI_KEY, workspace: process.env.AGENT_DEMO_WORKSPACE_ID || AI_WORKSPACE_ID }),
   dataDir, publicDir, bronEcht: beheerBronEcht, leverancier: () => FYSIPLAN_ID,
   beheerEigen, denied, send, sendJson, readBody, kruisSite, weigerKruis, saveJson, beheerLog, beheerIp,
   stuurMail, mailIngesteld, mailOpSlot, maskeerEmail,
