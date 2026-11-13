@@ -208,6 +208,17 @@ versie, wanneer en wie (ook in de download van /v2/gegevens).
 3. Laat de jurist privacyverklaring, verwerkersovereenkomst en voorwaarden samen toetsen (staat al
    hieronder bij Algemene voorwaarden, punt 7).
 
+### Nette foutpagina op de V2-kant (praktijk-routine, 2026-11-13)
+**Wat de code nu doet:** wie in de browser een adres onder `/v2/` opent dat niet bestaat (tikfout, oude link),
+krijgt een 404-pagina in de huisstijl met "Naar de app" en "Naar de website". Tot nu toe kwam je dan op het
+inlogscherm of de app van V1 terecht. Gaat er bij het openen van een V2-pagina iets mis op de server, dan krijgt
+de browser een 500-pagina ("Er ging bij ons iets mis, er is niets kwijt") in plaats van kale JSON. Verzoeken
+vanuit de app zelf, formulieren, de patiëntkaart `/k` en alles van V1 krijgen hetzelfde antwoord als voorheen.
+Code: `lib/foutpagina.js`, test `npm run test:foutpagina`.
+**Env:** geen; staat meteen aan.
+**Wat jij moet doen:** niets. Wil je op de 500-pagina een telefoonnummer of supportadres, geef het door; nu staat
+er "antwoord op een mail van Fysiplan".
+
 ### Mail op de dag dat de proef afloopt (praktijk-routine, 2026-11-12)
 **Wat de code nu doet:** op de dag dat een gratis proef afloopt, krijgt de aanmelder één mail "Je Fysiplan-proef is
 afgelopen": nieuwe kaarten kunnen niet meer, gedeelde kaarten blijven werken, hoe je doorgaat en op welke datum alles

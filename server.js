@@ -1,4 +1,5 @@
 import { createServer } from "node:http";
+import { foutpaginaHtml, FOUTPAGINA_CSP, isV2Pad, wilPagina } from "./lib/foutpagina.js";
 import { readFile, writeFile, mkdir, rename, access, unlink, copyFile, readdir, rm, stat } from "node:fs/promises";
 import { constants, createReadStream } from "node:fs";
 import { createHash, randomBytes, timingSafeEqual, scryptSync } from "node:crypto";
@@ -3631,7 +3632,14 @@ const server = createServer((request, response) => {
   afhandelen(request, response).catch((err) => {
     console.error("verzoek mislukt:", request.method, logPad(request.url), "-", (err && err.message) || err);
     try {
-      if (!response.headersSent) {
+      let pad = "";
+      try { pad = new URL(request.url, "http://x").pathname; } catch {}
+      if (!response.headersSent && (pad === "/v2" || isV2Pad(pad)) && wilPagina(request)) {
+        // een pagina van de V2-kant: een nette foutpagina in plaats van kale JSON
+        response.writeHead(500, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store",
+          "content-security-policy": FOUTPAGINA_CSP, "x-content-type-options": "nosniff", "x-robots-tag": "noindex" });
+        response.end(request.method === "HEAD" ? undefined : foutpaginaHtml(500));
+      } else if (!response.headersSent) {
         response.writeHead(500, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
         response.end(JSON.stringify({ ok: false, fout: "Onverwachte serverfout." }));
       } else {
@@ -8909,6 +8917,15 @@ async function afhandelen(request, response) {
     }
     await send(response, 200, type, data);
   } catch {
+    // V2: een onbekend adres onder /v2/ dat een browser als pagina opent, krijgt een nette
+    // 404 in de huisstijl in plaats van het inlogscherm of de app van V1
+    if (isV2Pad(urlPath) && wilPagina(request)) {
+      response.setHeader("content-security-policy", FOUTPAGINA_CSP);
+      response.setHeader("x-robots-tag", "noindex");
+      response.setHeader("cache-control", "no-store");
+      await send(response, 404, "text/html; charset=utf-8", foutpaginaHtml(404));
+      return;
+    }
     // SPA-vangnet: onbekende paden serveren de v1-app. Ook dit zit achter de
     // inloggate (behalve /admin88, dat zijn eigen beheersleutel houdt).
     if (urlPath !== "/admin88" && !v1Ingelogd(request)) { await serveerV1Inlog(response); return; }
