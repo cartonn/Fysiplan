@@ -324,4 +324,10 @@ console.log('test-agent-overdracht: ok');
  assert.equal(k('Dat kost 9,99 euro per therapeut.'), true);
  for (const zin of ['Fysiplan werkt met AI.', 'Gemaakt met een taalmodel.', 'Het kost 10 euro per therapeut.', 'Je bespaart elke week twee uur.', 'Groet van Carla.', 'Al 250 praktijken gingen je voor.'])
   assert.equal(k(zin), false, zin);
+ // varianten die tot 13-11 17u nog doorkwamen
+ for (const zin of ['Onze ai-hulp schrijft mee.', 'Gebouwd met machine learning.', 'Powered by artificial intelligence.', 'Draait op een LLM.', 'Honderden praktijken gingen je voor.', 'Tientallen therapeuten gebruiken het al.', 'Je houdt uren per week over.', 'Je bent twee keer zo snel klaar.', 'Een tientje per therapeut per maand.', 'Kosten: €9.99 per therapeut.', 'Patiënten hebben minder klachten.'])
+  assert.equal(k(zin), false, zin);
+ // feiten en gewone zinnen blijven toegestaan
+ for (const zin of ['De bibliotheek heeft honderden oefeningen met tekeningen.', 'Er is een gratis proef van 14 dagen.'])
+  assert.equal(k(zin), true, zin);
 }
