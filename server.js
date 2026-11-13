@@ -1327,6 +1327,21 @@ function proefVan(req) {
   return p;
 }
 const proefVerlopen = (p) => !!p && !p.klant && Date.now() >= p.verloopt;
+// De proef- en abonnementspagina's (/v2/proef en de formulieren erachter) hingen alleen aan de
+// proefcookie van het apparaat waarop de aanmelding begon. Een beheerder die op een tweede
+// apparaat inlogde (eigen login met tweede stap) kreeg bij "Proef en abonnement" en bij "Wil je
+// doorgaan?" het aanmeldformulier, en na een verlopen proef kon hij nergens betalen
+// (gebruikers-sweep 2026-11-13 02u, Mark). Nu telt ook de proef die aan zijn praktijk hangt.
+// Alleen een eigen login met de rol beheerder: een collega (therapeut) of een sessie met het
+// gedeelde praktijkwachtwoord ziet geen betaal- of factuurgegevens.
+function proefVanBeheer(req) {
+  const s = sessieVan(req);
+  if (!s || !s.lid || !isBeheer(s)) return null;
+  const k = Object.hasOwn(praktijkAccounts, s.pk) ? praktijkAccounts[s.pk].proef : null;
+  const p = k && Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
+  return p && !p.gewist ? p : null;
+}
+const proefVoorPagina = (req) => proefVan(req) || proefVanBeheer(req);
 // De proef hangt niet alleen aan het apparaat (cookie) maar ook aan het praktijkaccount
 // dat tijdens de proef werd beveiligd: anders maakte dezelfde praktijksessie op een
 // ander apparaat (of met gewiste cookies) gewoon verder kaarten. Op het account staan
@@ -7855,10 +7870,20 @@ async function afhandelen(request, response) {
   if (urlPath === "/v2/proef" && request.method === "GET") {
     telBezoek(request, false);
     response.setHeader("cache-control", "no-store");
-    const p = proefVan(request);
+    const p = proefVoorPagina(request);
     if (p && proefVerlopen(p)) { await serveerProef(request, response, "verlopen", proefVars(p, { V_PRAKTIJK: p.praktijk || "" })); return; }
     if (p && !new URL(request.url, "http://x").searchParams.has("mijn")) { response.writeHead(303, { location: "/v2/app" }); response.end(); return; }
     if (p) { await serveerProef(request, response, "mijn", proefVars(p, { TITEL: "Mijn proef" })); return; }
+    // ingelogd als collega (geen beheerder) bij een praktijk die al een proef of abonnement heeft:
+    // geen aanmeldformulier, wel zeggen wie dit regelt
+    const sCollega = sessieVan(request);
+    if (sCollega && praktijkAccounts[sCollega.pk]?.proef) {
+      await serveerProef(request, response, "bericht", { TITEL: "Proef en abonnement", ETIKET: "Je praktijk",
+        KOP: "De proef en het abonnement regelt een beheerder van je praktijk.",
+        TEKST: "Je bent ingelogd bij " + weergaveNaam(sCollega.pk) + ". Alleen een beheerder met een eigen login ziet hier de proef, betalen, facturen en opzeggen. Vraag het aan een beheerder van je praktijk.",
+        KNOP_HTML: '<a class="knop omlijnd" href="/v2/app">Terug naar de app</a>' });
+      return;
+    }
     await serveerProef(request, response, "formulier", await proefFormVars(request, {}, {}));
     return;
   }
@@ -7903,7 +7928,7 @@ async function afhandelen(request, response) {
           "Was jij dit niet? Dan hoef je niets te doen; er is niets veranderd.\n\nGroet,\nFysiplan");
         gestuurd = true;
       }
-      await serveerProef(request, response, "bericht", { TITEL: "Kijk in je mail", ETIKET: "Al aangemeld", KOP: "Met dit e-mailadres loopt al een proef.",
+      await serveerProef(request, response, "bericht", { TITEL: "Kijk in je mail", ETIKET: "Al aangemeld", KOP: proefVerlopen(p) ? "Met dit e-mailadres is al een proef gestart." : "Met dit e-mailadres loopt al een proef.",
         TEKST: gestuurd
           ? "We hebben een persoonlijke link naar dat adres gestuurd. Open hem op dit apparaat om verder te gaan; hij werkt 24 uur. Niets ontvangen? Kijk ook bij spam."
           : "Open de persoonlijke link uit je welkomstmail op dit apparaat om verder te gaan, of mail ons; dan helpen we je verder.",
@@ -8007,7 +8032,7 @@ async function afhandelen(request, response) {
     // alleen met het vinkje "Ja, wis mijn gegevens": één verdwaalde tik wiste anders alles
     // (gebruikers-sweep 2026-11-09, Mark iPad)
     if (wb.zeker !== "1") { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
-    const p = proefVan(request);
+    const p = proefVoorPagina(request);
     // Security (2026-11-11): met een betaald abonnement en een gekoppelde praktijk wiste deze
     // route (alleen de proefcookie nodig, geen beheerdersrol) de aanmelding tot de fiscale rest
     // met klant: true. De incasso stopte, het abonnement liep nooit af en de praktijk bleef
@@ -8038,7 +8063,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
-    const p = proefVan(request);
+    const p = proefVoorPagina(request);
     if (!p || !p.abonnement) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     const a = p.abonnement, naam = p.praktijk || p.naam, tot = datumNl(a.betaaldTot);
     const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Terug naar mijn abonnement</a>';
@@ -8114,7 +8139,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
-    const p = proefVan(request);
+    const p = proefVoorPagina(request);
     const a = p && p.abonnement;
     if (!a || !(a.status === "actief" || a.status === "opgezegd")) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#factuurgegevens">Terug naar mijn abonnement</a>';
@@ -8135,7 +8160,7 @@ async function afhandelen(request, response) {
     response.setHeader("cache-control", "no-store");
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try { await readBody(request, 2048); } catch {}
-    const p = proefVan(request);
+    const p = proefVoorPagina(request);
     if (!p) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     if (!p.doorgaan) {
       p.doorgaan = Date.now();
@@ -8155,7 +8180,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
-    const p = proefVan(request);
+    const p = proefVoorPagina(request);
     if (!p || p.klant) { response.writeHead(303, { location: p ? "/v2/app" : "/v2/proef" }); response.end(); return; }
     // het aantal komt niet uit het formulier: de server telt de logins van de praktijk
     const aantal = plaatsenVanProef(p);
@@ -8196,7 +8221,7 @@ async function afhandelen(request, response) {
   // terug van Mollie: status zelf ophalen (werkt ook als de webhook nog niet binnen is)
   if (urlPath === "/v2/proef/betaald" && request.method === "GET" && mollieAan()) {
     response.setHeader("cache-control", "no-store");
-    let p = proefVan(request);
+    let p = proefVoorPagina(request);
     if (p?.betaling?.id && !p.klant) { try { p = (await mollieVerwerk(p.betaling.id)) || p; } catch (err) { console.error("mollie status:", err.message); } }
     if (!p) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     if (p.klant) {
@@ -8217,7 +8242,7 @@ async function afhandelen(request, response) {
   // deze praktijk, alleen lezen, scriptloos. Zonder betaling bestaat de pagina niet.
   if (urlPath === "/v2/proef/factuur" && request.method === "GET") {
     response.setHeader("cache-control", "no-store");
-    const p = proefVan(request);
+    const p = proefVoorPagina(request);
     if (!p || !p.abonnement?.eersteBetaling) { await send(response, 404, "text/plain; charset=utf-8", "Not found"); return; }
     if (geefFactuurNr(p)) await bewaarProeven();
     response.setHeader("x-frame-options", "DENY");
@@ -8259,7 +8284,7 @@ async function afhandelen(request, response) {
     response.setHeader("cache-control", "no-store");
     if (schrijfLimiet(request, response)) return;
     if (kruisSite(request)) { await weigerKruis(response); return; }
-    const p = proefVan(request);
+    const p = proefVoorPagina(request);
     if (!p || !proefVerlopen(p)) { response.writeHead(303, { location: p ? "/v2/app" : "/v2/proef" }); response.end(); return; }
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}

@@ -119,6 +119,9 @@
   .veilig{display:flex;gap:10px;align-items:flex-start;margin:22px 0 0;padding:12px 14px;
     background:var(--veilig-bg);border-radius:10px;font:500 .9375rem/1.45 var(--disp);color:var(--veilig-tekst)}
   .veilig svg{flex:0 0 16px;margin-top:3px}
+  /* de veiligheidszin mag krimpen en afbreken: bij 200 % + "A A" viel "overleg met je fysiotherapeut."
+     rechts weg (gebruikers-sweep 2026-11-13 02u, Truus, iPhone SE) */
+  #veiligTxt{min-width:0;overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}
 
   /* voortgang van vandaag en de startknop */
   .oefvoortgang{display:flex;flex-wrap:wrap;flex-direction:column;gap:8px;margin:0 0 14px}
@@ -467,6 +470,9 @@
   .vvlijst summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;min-height:52px;padding:10px 2px;
     font:600 1.0625rem/1.4 var(--disp);color:var(--inkt)}
   .vvlijst summary::-webkit-details-marker{display:none}
+  /* de vraag zelf mag krimpen en afbreken: bij 200 % + "A A" duwde een lang woord ("overgeslagen.")
+     de pagina 16 px breder en het "+" uit beeld (gebruikers-sweep 2026-11-13 02u, Truus, iPhone SE) */
+  .vvlijst summary>span{min-width:0;overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}
   .vvlijst summary::after{content:"+";margin-left:auto;font:400 1.375rem/1 var(--disp);color:var(--grijs)}
   .vvlijst details[open] summary::after{content:"\2212"}
   .vvlijst details p{margin:0 0 14px;font:400 1.0625rem/1.6 var(--disp);color:var(--tekst);max-width:68ch}
@@ -1545,7 +1551,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function vvLijstHtml(lijst,alsNl){
     return '<div class="vvlijst">'+lijst.map(function(x){
       var l=alsNl?' lang="nl" dir="ltr"':' dir="auto"';
-      return '<details><summary'+l+'>'+esc(x.v)+'</summary><p'+l+'>'+esc(x.a)+'</p></details>';
+      return '<details><summary'+l+'><span>'+esc(x.v)+'</span></summary><p'+l+'>'+esc(x.a)+'</p></details>';
     }).join('')+'</div>';
   }
   function tekenVasteVragen(){
@@ -2041,13 +2047,17 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(!a||!a.tekst){blok.style.display='none';return;}
     document.getElementById('atekst').textContent=a.tekst;
     var d=new Date(a.t||Date.now());
-    document.getElementById('adatum').textContent=d.toLocaleDateString(TAAL==='nl'?'nl-NL':TAAL,{day:'numeric',month:'long',year:'numeric'});
+    document.getElementById('adatum').textContent=d.toLocaleDateString(datumLocale(),{day:'numeric',month:'long',year:'numeric'});
     blok.style.display='block';
   }
 
+  // datums in dezelfde notatie als de rest van de kaart: Engels is en-GB ("27 December 2026"),
+  // niet en-US ("December 27, 2026") (gebruikers-sweep 2026-11-13 02u, Jayden). Andere talen
+  // houden hun eigen taalcode (ar-SA zou een andere kalender geven).
+  function datumLocale(){return TAAL==='nl'?'nl-NL':TAAL==='en'?'en-GB':TAAL;}
   // afgeronde behandeling: tot wanneer de kaart blijft, en hoe je hem bewaart
   // (niet op de demokaart)
-  function datumLang(t){try{return new Date(t).toLocaleDateString(TAAL==='nl'?'nl-NL':TAAL,{day:'numeric',month:'long',year:'numeric'});}catch(e){return new Date(t).toLocaleDateString();}}
+  function datumLang(t){try{return new Date(t).toLocaleDateString(datumLocale(),{day:'numeric',month:'long',year:'numeric'});}catch(e){return new Date(t).toLocaleDateString();}}
   function tekenAfgerond(){
     var el=document.getElementById('afgerond');if(!el)return;
     var aan=!!(K&&K.kaart&&K.kaart.gearchiveerd)&&id!=='demo';
