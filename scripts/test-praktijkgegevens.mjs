@@ -11,6 +11,19 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash, randomBytes, scryptSync } from "node:crypto";
 
+import { maakGebruik } from "../lib/beheer-omgeving.js";
+
+// foute wachtwoorden van de logins van een gewiste praktijk gaan meteen mee (zonder server)
+{
+  const g = maakGebruik();
+  g.loginMis("a@wis.nl", Date.now()); g.loginMis("b@blijf.nl", Date.now());
+  g.gezien("fysio wis", "l1", Date.now());
+  assert.ok(g.wisPraktijk("fysio wis", ["a@wis.nl"]) >= 2);
+  assert.equal(g.misSinds("a@wis.nl", 0, Date.now()), 0, "foute wachtwoorden van de gewiste login weg");
+  assert.equal(g.misSinds("b@blijf.nl", 0, Date.now()), 1, "andere login blijft");
+  assert.equal(g.laatst("fysio wis", "l1"), 0);
+}
+
 const root = process.cwd();
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-gegevens-"));
 const nu = Date.now();
@@ -79,6 +92,13 @@ await writeFile(join(dataDir, "beheer-loket.json"), JSON.stringify({ zout: "", c
   { id: "c1", t: t0, rol: "support", soort: "stil", pk: "fysio wis", praktijk: "Fysio Wis", onderwerp: "Bericht aan Wis", tekst: "Geheim voor Wis", stand: "verstuurd" },
   { id: "c2", t: t0, rol: "support", soort: "stil", pk: "fysio blijf", praktijk: "Fysio Blijf", onderwerp: "Bericht aan Blijf", tekst: "Voor Blijf", stand: "verstuurd" }
 ] }));
+
+// gebruiksmeting van beheer (sweep 2026-11-13 10u): laatst gezien per login, logins per dag, vandaag
+const dagNu = new Date(nu).toISOString().slice(0, 10);
+await writeFile(join(dataDir, "beheer-gebruik.json"), JSON.stringify({ sinds: nu - 86400e3,
+  gezien: { "fysio wis|lid-wis-1": nu, "fysio blijf|lid-blijf-1": nu }, mis: {},
+  dagen: { "2026-01-02": { "fysio wis": 1, "fysio blijf": 2 } },
+  vandaag: { datum: dagNu, pk: { "fysio wis": { "lid-wis-1": 1 }, "fysio blijf": { "lid-blijf-1": 1 } } } }));
 
 // ---- server ----
 const reserve = createServer();
@@ -203,6 +223,10 @@ try {
   assert.doesNotMatch(agentNa, /fysio wis|Fysio Wis|Hulp voor Wis|Oude regel zonder pk/i, "support-agent onthoudt niets meer van de gewiste praktijk");
   assert.match(agentNa, /Hulp voor Blijf/, "logboek van de andere praktijk blijft");
   assert.match(agentNa, /stil\|fysio blijf\|/, "open zaak van de andere praktijk blijft");
+  // legal 2026-11-13 13u: de gebruiksmeting van de praktijk ging pas bij de snoei van de volgende dag weg
+  const gebruikNa = JSON.stringify(await leesJson("beheer-gebruik.json"));
+  assert.doesNotMatch(gebruikNa, /fysio wis|lid-wis-1/, "gebruiksmeting van de gewiste praktijk is meteen weg");
+  assert.match(gebruikNa, /fysio blijf\|lid-blijf-1/, "gebruiksmeting van de andere praktijk blijft");
   const loketNa = JSON.stringify(await leesJson("beheer-loket.json"));
   assert.doesNotMatch(loketNa, /fysio wis|Geheim voor Wis/i, "berichten van agents aan de gewiste praktijk zijn weg");
   assert.match(loketNa, /Voor Blijf/, "bericht aan de andere praktijk blijft");
