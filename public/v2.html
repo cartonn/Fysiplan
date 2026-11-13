@@ -571,6 +571,10 @@ nav .probeer{border-radius:8px;white-space:nowrap}
 /* Op een laag desktopscherm (1440 bij 900) viel de knop onder de vouw. De banner zelf blijft gelijk;
    alleen de onderrand wordt zo nodig afgedekt, zodat kop en knop in beeld staan (platformreview, hoofdstuk 9). */
 @media(min-width:701px){.reference-banner{--knip:clamp(0px,calc(43.342vw - 100svh + 370px),13vw);clip-path:inset(0 0 var(--knip) 0);margin-bottom:calc(-1 * var(--knip))}.reference-banner .ai-beeld{bottom:calc(9px + var(--knip))}}
+/* Een liggende telefoon is breder dan 700 px maar maar 340 tot 430 px hoog: de banner nam ±70 % van het scherm
+   en de kop begon onder de vouw (gebruikers-sweep 2026-11-13, Jayden). Daar valt de banner weg, met zijn AI-bijschrift, en scrollt de
+   navigatie (98 px hoog met de links op een eigen rij) mee in plaats van vast te staan. */
+@media(orientation:landscape) and (max-height:500px){.reference-banner{display:none}nav{position:static}}
 .hero .twee{display:block}.hero .hero-copy{display:grid;grid-template-columns:1fr 1fr;column-gap:60px;max-width:none}
 .hero .hero-brand,.hero .brand-line{display:none}.hero .kicker{grid-column:1/-1;margin-bottom:16px}
 .hero .hero-copy h1{grid-column:1;grid-row:2/5;font-size:clamp(30px,4vw,52px);margin:0}
