@@ -4,6 +4,19 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Hulp van Fysiplan-support: drie vragen voor de jurist (legal, 2026-11-13)
+**Wat er is:** /privacy heeft nu een rij "Hulp van Fysiplan-support". Fysiplan meet per praktijk en per login het gebruik
+(laatste login, actieve logins per dag, foute wachtwoorden, tweede stap, kaarten per week), maakt daar een stand van en kan
+supportmails sturen; de agents met een taalmodel lezen die stand met codes in plaats van namen. Fysiplan is daar zelf
+verantwoordelijk, op grond van gerechtvaardigd belang. De verwerkersovereenkomst (art. 2) noemt nu één uitzondering: Fysiplan
+telt kaarten per praktijk en per login, zonder inhoud. Daardoor is er een nieuwe versie (2026-11-13) en gaat elke praktijk
+opnieuw akkoord in de app.
+**Wat een jurist moet bevestigen:** (1) mag Fysiplan als verwerker het aantal kaarten per praktijk en login zelf gebruiken
+voor support (AVG art. 28 lid 10), of moet dat anders, bijvoorbeeld alleen per praktijk; (2) belangenafweging op papier
+(art. 6 lid 1 f); (3) bezwaar (art. 21): er is nog geen knop om supportmails per praktijk uit te zetten, alleen per soort
+voor iedereen. Komt er een bezwaar, dan moet beheer dat nu met de hand regelen. Wil je een knop per praktijk, zeg het, dan
+bouwt de legal-routine hem.
+
 ### Ideeënbox: twee vragen voor de jurist (legal, 2026-11-12)
 **Wat er is:** /privacy noemt nu de ideeënbox (rij "Ideeënbox"). Fysiplan is daar zelf verantwoordelijk voor de gegevens,
 op grond van gerechtvaardigd belang (het product verbeteren); meedoen is vrijwillig.
