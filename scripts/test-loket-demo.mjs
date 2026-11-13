@@ -125,6 +125,8 @@ try {
     assert.match(antw.find((x) => !x.ok).reden, /^praktijk-/);
     const v = await stand("demo");
     assert.equal(v.agent.mails.length - postvakVoor, antw.find((x) => x.ok).ontvangers, "in het demopostvak staat één bericht, niet twee");
+    // AI-verordening art. 50 lid 1: wat de agent zelf verstuurt, zegt dat het met AI is geschreven
+    for (const m of v.agent.mails.slice(0, v.agent.mails.length - postvakVoor)) assert.match(m.tekst, /met AI geschreven en niet vooraf door een medewerker/, m.tekst);
     assert.equal(v.loket.concepten.filter((c) => c.stand === "verstuurd" && c.praktijk === seed.praktijk && Date.parse(c.op) > Date.now() - 60e3).length, 1);
     // ook daarna: dezelfde praktijk krijgt deze week geen tweede eigen bericht, van geen enkele rol
     s = await werk("support"); f = await werk("finance");
@@ -144,7 +146,10 @@ try {
     const voor = (await stand("demo")).agent.mails.length;
     const kliks = await Promise.all([om("loket/concept", { id: klik.id, besluit: "verstuur" }, "demo"), om("loket/concept", { id: klik.id, besluit: "verstuur" }, "demo")]);
     assert.deepEqual(kliks.map((x) => x.status).sort(), [200, 404], "de tweede klik vindt het concept niet meer als wachtend");
-    assert.equal((await stand("demo")).agent.mails.length - voor, klik.aan);
+    const naKlik = (await stand("demo")).agent.mails;
+    assert.equal(naKlik.length - voor, klik.aan);
+    // na akkoord van een medewerker verstuurt een mens het bericht: geen AI-regel
+    for (const m of naKlik.slice(0, naKlik.length - voor)) assert.doesNotMatch(m.tekst, /met AI geschreven/, m.tekst);
     assert.equal(mails.length, 0, "in de demo gaat er niets naar de mailprovider");
   }
 
