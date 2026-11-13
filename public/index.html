@@ -2482,12 +2482,14 @@ bridge2.jpg</div>
     if(e.target.closest('[data-cat-add]')){openNieuweCategorie();return;}
     var b=e.target.closest('.chip');if(!b)return;
     document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');if(x.hasAttribute('aria-pressed'))x.setAttribute('aria-pressed','false');});
-    b.classList.add('on');if(b.hasAttribute('aria-pressed'))b.setAttribute('aria-pressed','true');curG=b.dataset.g;renderList();
+    b.classList.add('on');if(b.hasAttribute('aria-pressed'))b.setAttribute('aria-pressed','true');curG=b.dataset.g;keyboardIndex=-1;renderList();
   });
-  document.getElementById('search').addEventListener('input',function(e){q=e.target.value.toLowerCase();renderList();});
+  // nieuwe zoekterm of filter = nieuwe lijst: de pijltjeskeuze begint weer bij de eerste treffer (sweep 2026-11-13: anders koos
+  // pijl omlaag + Enter stil de 2e, 3e, … treffer van de nieuwe lijst)
+  document.getElementById('search').addEventListener('input',function(e){q=e.target.value.toLowerCase();keyboardIndex=-1;renderList();});
   document.querySelector('.smart-filters').addEventListener('click',function(e){
     var b=e.target.closest('[data-smart]');if(!b)return;
-    var next=b.dataset.smart;smartFilter=smartFilter===next?'all':next;
+    var next=b.dataset.smart;smartFilter=smartFilter===next?'all':next;keyboardIndex=-1;
     document.querySelectorAll('.smart-filter').forEach(function(x){x.classList.toggle('on',x.dataset.smart===smartFilter);});
     renderList();
   });
