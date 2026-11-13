@@ -178,6 +178,7 @@ jobs:
       - run: npm run test:leeslog
       # tegen een echte PostgreSQL: de test start er zelf een met initdb (staat op de runner)
       - run: npm run test:database
+      - run: npm run test:healthdbfout
       - run: npm run test:thuiskaart
       - run: npm run test:medialink
       - run: npm run test:patientonderdeel

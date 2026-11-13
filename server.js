@@ -225,6 +225,12 @@ if (DATABASE_MEESCHRIJVEN) {
     console.error("database: meeschrijven start niet:", meeschrijverStartFout);
   }
 }
+// De stand van de meeschrijvende database voor het openbare /health: zonder foutteksten.
+function databaseVoorHealth() {
+  if (!meeschrijver) return meeschrijverStartFout ? { stand: "fout", startFout: true } : "uit";
+  const { laatsteFout, ...rest } = meeschrijver.stand();
+  return { ...rest, ...(laatsteFout ? { laatsteFout: true } : {}), ...(meeschrijverStartFout ? { startFout: true } : {}) };
+}
 const uploadsDir = join(dataDir, "uploads");
 const renamesPath = join(dataDir, "naam-wijzigingen.json");
 const praktijkenPath = join(dataDir, "praktijken.json");
@@ -3716,7 +3722,9 @@ async function afhandelen(request, response) {
       omgeving: OMGEVING,
       fouten: { uur: serverFouten.som(), buiten: buitenFouten.som() },
       // de database die meeschrijft: "uit", of de stand van de wachtrij en de laatste vergelijking
-      database: meeschrijver ? { ...meeschrijver.stand(), ...(meeschrijverStartFout ? { startFout: meeschrijverStartFout } : {}) } : (meeschrijverStartFout ? { stand: "fout", startFout: meeschrijverStartFout } : "uit"),
+      // /health is openbaar: alleen de stand en getallen, nooit de foutmelding zelf (die noemt de
+      // interne host, poort of gebruiker van de database). De tekst staat op /api/beheer/database.
+      database: databaseVoorHealth(),
       oefeningen: v1Count,
       v1Oefeningen: v1Count,
       v2Oefeningen: v2Count,
