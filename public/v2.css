@@ -830,18 +830,28 @@ html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
  html.v2 .card .hd,html.v2 .row:hover{background:#edf2ef}
 }
 
+/* Licht werkvlak (Ahmed 2026-11-13): de donkere petrol vlakken bij Kaart maken en in de zijbalk waren
+   te zwaar. Werkvlak, panelen en vensters zijn nu licht met een zachte groene tint; het contrast blijft:
+   petrol tekst, limoen accenten en een donkere petrol kopbalk. Alleen op het scherm; de A4 blijft papier. */
 @media screen{
- html.v2{--bg:#18343b;--tray:#18343b;--panel:#20464f;--ink:#fff;--text:#e0eae7;--muted:#bdcfca;--soft:#abc2bc;--brand:#b9e34b;--brand-700:#d1ef88;--brand-50:#2b5054;--brand-100:#496766;--line:#416068;--line2:#34545c;--ring:0 0 0 3px #b9e34b44}
- html.v2 body,html.v2 .wrap,html.v2 #a4wrap,html.v2 .fp-kop{background:#18343b;color:#e0eae7}
- html.v2 .card,html.v2 .card .hd,html.v2 .modal,html.v2 .row:hover,html.v2 .sjb-kop,html.v2 .sjb-zoek,html.v2 .sjb-cats,html.v2 .sjb-lijst,html.v2 .sjb-rij,html.v2 .sjb-voorbeeld,html.v2 .sjb-vb-acties,html.v2 .sjb-voet,html.v2 .fp-hulpmenu{background:#20464f;color:#e0eae7}
- html.v2 .fp-kop h2,html.v2 .row .title{color:#fff}
- html.v2 input[type=text],html.v2 input.fld,html.v2 input[type=password],html.v2 input[type=email],html.v2 select,html.v2 textarea{background:#112c32;color:#fff;border-color:#658087}
- html.v2 input::placeholder,html.v2 textarea::placeholder{color:#abc2bc}
- html.v2 .btn,html.v2 .fp-kop .tb-acties .btn,html.v2 .zb-praktijk,html.v2 .chip{background:#2b5054;color:#fff;border-color:#658087}
- html.v2 .btn:hover,html.v2 .fp-kop .tb-acties .btn:hover{background:#365e64;color:#fff}
+ html.v2{--bg:#e9f0ec;--tray:#e1ebe5;--panel:#fff;--ink:#18343b;--text:#314d53;--muted:#526b70;--soft:#5d7478;--brand:#20464f;--brand-700:#18343b;--brand-50:#e3f1c9;--brand-100:#d4ebaa;--line:#d3dfda;--line2:#e3ebe7;--ring:0 0 0 3px #668c1544}
+ /* de kopbalk blijft donker petrol: daar gelden de lichte varianten van de kleuren */
+ html.v2 header.topbar{--ink:#fff;--text:#e0eae7;--muted:#c5d6d1;--soft:#abc2bc;--panel:#2b5054;--line:#416068;--line2:#20464f;--naamblok:#2b5054;--naamblok-rand:#496766}
+ html.v2 header.topbar .fp-hulpmenu{--ink:#18343b;--text:#314d53;--muted:#526b70;--panel:#fff;--line:#d3dfda;--line2:#e3ebe7}
+ html.v2 body,html.v2 .wrap,html.v2 .fp-kop{background:var(--bg);color:var(--text)}
+ html.v2 #a4wrap{background:var(--tray);color:var(--text)}
+ html.v2 .card,html.v2 .modal,html.v2 .sjb-kop,html.v2 .sjb-zoek,html.v2 .sjb-lijst,html.v2 .sjb-rij,html.v2 .sjb-voorbeeld,html.v2 .sjb-vb-acties,html.v2 .sjb-voet,html.v2 .fp-hulpmenu{background:#fff;color:#314d53}
+ html.v2 .card .hd,html.v2 .row:hover,html.v2 .sjb-cats{background:#f1f6f3;color:#314d53}
+ /* categoriekolom links: een lichte groene strook naast de witte oefenlijst */
+ html.v2 .fp-kop h2,html.v2 .row .title{color:#18343b}
+ html.v2 input[type=text],html.v2 input.fld,html.v2 input[type=password],html.v2 input[type=email],html.v2 select,html.v2 textarea{background:#fff;color:#18343b;border-color:#a9bcb6}
+ html.v2 input::placeholder,html.v2 textarea::placeholder{color:#5d7478}
+ html.v2 .btn,html.v2 .fp-kop .tb-acties .btn,html.v2 .chip{background:#fff;color:#18343b;border-color:#c3d3cd}
+ html.v2 .btn:hover,html.v2 .fp-kop .tb-acties .btn:hover{background:#eaf2ee;color:#18343b}
+ html.v2 .zb-praktijk{background:#2b5054;color:#fff;border-color:#658087}
  html.v2 .btn.primary,html.v2 #printBtn,html.v2 .chip.on,html.v2 .row .add.on{background:#b9e34b;color:#18343b;border-color:#b9e34b}
- html.v2 .fp-hulpmenu>button,html.v2 .fp-hulpvoet a{color:#fff}
- html.v2 .fp-hulpmenu>button:hover{background:#365e64}
+ html.v2 .fp-hulpmenu>button,html.v2 .fp-hulpvoet a{color:#18343b}
+ html.v2 .fp-hulpmenu>button:hover{background:#eaf2ee}
  html.v2 .topbar #beeldKeuze .beeldsegment{background:#2b5054;border-color:#658087}
  html.v2 .topbar #beeldKeuze .beeldsegment button{color:#dbe7e3}
  html.v2 .topbar #beeldKeuze .beeldsegment button.aan{background:#b9e34b;color:#18343b}
@@ -851,65 +861,64 @@ html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
  html.v2 #a4 input::placeholder,html.v2 #a4 textarea::placeholder{color:#61777b}
 }
 @media screen{
- html.v2 #search,html.v2 #search:focus,html.v2 input[type=search]{background-color:#112c32;color:#fff;border-color:#658087}
- html.v2 .smart-filters button,html.v2 .row .add{background:#2b5054;color:#fff;border-color:#658087}
+ html.v2 #search,html.v2 #search:focus,html.v2 input[type=search]{background-color:#fff;color:#18343b;border-color:#a9bcb6}
+ html.v2 .smart-filters button,html.v2 .row .add{background:#fff;color:#18343b;border-color:#a9bcb6}
  html.v2 .smart-filters button.on,html.v2 .row .add:hover,html.v2 .row .add.on{background:#b9e34b;color:#18343b;border-color:#b9e34b}
 }
-/* Donker thema: vlakken die nog licht waren terwijl de tekst wit werd (sweep 2026-11-11 18u,
-   Karin en Mark: Team-venster en Kaarten-paneel ±1,1:1). Alleen op het scherm; de A4 blijft papier. */
+/* categoriekolom als eigen strook alleen in de brede opstelling (vanaf 1100 px) */
+@media screen and (min-width:1100px){
+ html.v2 #filters{background:#f1f6f3;border-radius:10px;padding:6px 4px 12px 4px}
+}
+/* Naamblokken, Team-venster en Kaarten-paneel op het lichte werkvlak (eerder donker, sweep 2026-11-11). */
 @media screen{
- html.v2{--naamblok:#2b5054;--naamblok-rand:#496766;--chip:#2b5054}
- html.v2 .fp-av{box-shadow:0 0 0 2px #20464f}
- html.v2 #ovKaarten .modal>h3,html.v2 #ovKaarten .modal>.acts{background:rgba(32,70,79,.96);color:#fff}
- html.v2 #prakslot .ps-acties a,html.v2 #prakslot .ps-acties a#ps_wis{background:#20464f;color:#fff;border-color:#658087}
- html.v2 #prakslot .ps-acties a:hover{background:#365e64;color:#fff;border-color:#8aa3a8}
+ html.v2{--naamblok:#f1f6f3;--naamblok-rand:#d3dfda;--chip:#eaf2ee}
+ html.v2 .fp-av{box-shadow:0 0 0 2px #fff}
+ html.v2 #ovKaarten .modal>h3,html.v2 #ovKaarten .modal>.acts{background:rgba(255,255,255,.96);color:#18343b}
+ html.v2 #prakslot .ps-acties a,html.v2 #prakslot .ps-acties a#ps_wis{background:#fff;color:#18343b;border-color:#c3d3cd}
+ html.v2 #prakslot .ps-acties a:hover{background:#eaf2ee;color:#18343b;border-color:#a9bcb6}
  html.v2 #prakslot .ps-acties a#ps_team{background:#b9e34b;border-color:#b9e34b;color:#18343b}
- html.v2 #prakslot .ps-acties a#ps_wis{color:#ffb4a8}
+ html.v2 #prakslot .ps-acties a#ps_wis{color:#b42318}
  html.v2 #k_inbox .ib-tel,html.v2 #k_nietgeoefend .ib-tel{background:#b9e34b;color:#18343b}
  html.v2 #k_inbox .ib-av{background:#20464f;color:#fff}
- html.v2 .tm-lid.uitgenodigd .tm-av{background:#20464f;color:#e0eae7;border-color:#658087}
+ html.v2 .tm-lid.uitgenodigd .tm-av{background:#fff;color:#314d53;border-color:#a9bcb6}
  html.v2 .tm-rol{background:#18343b;color:#fff}
- html.v2 .tm-lid select,html.v2 .tm-uitnodig input,html.v2 .tm-uitnodig select{background:#112c32;color:#fff;border-color:#658087}
- html.v2 .tm-uitnodig{background:#20464f}
- html.v2 #k_srv_rap,html.v2 #k_srv_csv{color:#fff}
+ html.v2 .tm-lid select,html.v2 .tm-uitnodig input,html.v2 .tm-uitnodig select{background:#fff;color:#18343b;border-color:#a9bcb6}
+ html.v2 .tm-uitnodig{background:#f1f6f3}
+ html.v2 #k_srv_rap,html.v2 #k_srv_csv{color:#18343b}
 }
-/* Donker thema, elke toestand nagelopen (platformreview 2026-11-11): in rust, onder de muis en met
-   focus, in elk venster. Onderstaande vlakken bleven licht terwijl de tekst licht werd (1,0 tot
-   1,9:1): de rij onder de muis en de groepskop in de sjabloonkiezer, het hele hulpvenster, velden
-   zonder type-attribuut (praktijknaam bij welkom, eigen login, eigen oefening), de categorie en de
-   beeldkeuze onder de muis, de actieve sorteerknop. Alleen op het scherm; de A4 blijft papier. */
+/* Elke toestand op het lichte werkvlak: in rust, onder de muis en met focus, in elk venster
+   (platformreview 2026-11-11, toen nog donker). Alleen op het scherm; de A4 blijft papier. */
 @media screen{
- /* tekst op een vlak in de merkkleur: wit op petrol (licht en op de A4), petrol op limoen (donker) */
- html.v2{--op-merk:#18343b;--fout:#ffb4a8;--goed:#9fe3b3}
+ /* tekst op een vlak in de merkkleur: wit op petrol */
+ html.v2{--op-merk:#ffffff;--fout:#b42318;--goed:#287a4b}
  html.v2 #a4{--op-merk:#fff;--fout:#b42318;--goed:#287a4b}
  html.v2 .step,html.v2 .row .video-manage:hover,html.v2 .video-drop .video-plus,html.v2 #ps_status .ps-av{color:var(--op-merk)}
- html.v2 input:where(:not([type]),[type=search],[type=tel],[type=url],[type=number],[type=date],[type=time],[type=datetime-local],[type=month],[type=week]){background-color:#112c32;color:#fff;border-color:#658087}
- /* datum en tijd: ook het kalenderknopje en de lege invulvorm van de browser licht op donker */
- html.v2 input:where([type=date],[type=time],[type=datetime-local],[type=month],[type=week]){color-scheme:dark}
- html.v2 #a4 input:where([type=date],[type=time],[type=datetime-local],[type=month],[type=week]){color-scheme:light}
- html.v2 .sjb-groep{background:#20464f}
- html.v2 .sjb-rij:hover{background:#28525b;border-color:#416068}
- html.v2 .sjb-rij.aan{background:var(--brand-50);border-color:#7f9d5a}
- html.v2 .sjb-cat:hover,html.v2 .sjb-dicht:hover{background:#2b5054;color:#fff}
+ html.v2 input:where(:not([type]),[type=search],[type=tel],[type=url],[type=number],[type=date],[type=time],[type=datetime-local],[type=month],[type=week]){background-color:#fff;color:#18343b;border-color:#a9bcb6}
+ html.v2 input:where([type=date],[type=time],[type=datetime-local],[type=month],[type=week]){color-scheme:light}
+ html.v2 .sjb-groep{background:#f1f6f3;color:#18343b}
+ html.v2 .sjb-rij:hover{background:#eaf2ee;border-color:#d3dfda}
+ html.v2 .sjb-rij.aan{background:var(--brand-50);border-color:#9cc054}
+ html.v2 .sjb-cat:hover,html.v2 .sjb-dicht:hover{background:#e3ece7;color:#18343b}
  html.v2 .sjb-cat.aan,html.v2 .sjb-cat.aan:hover{background:var(--brand-50);color:var(--brand-700)}
- html.v2 .helpsection,html.v2 .uphelp,html.v2 .up-voorbeeld,html.v2 .video-preview .video-empty{background:#1b3a42;border-color:#34545c;color:var(--muted)}
- html.v2 .uphelp code{background:#112c32;border-color:#416068;color:#fff}
- html.v2 .video-drop{border-color:#658087}
- html.v2 .video-drop:hover,html.v2 .video-drop.drag{background:#30575d;border-color:#b9e34b}
- html.v2 #filters .chip:hover{background:#2b5054;color:#fff}
- html.v2 #filters .chip.on,html.v2 #filters .chip.on:hover{background:var(--brand-50);color:var(--brand)}
- html.v2 .row .fav:hover{background:#365e64;color:#ffd34d}
+ html.v2 .helpsection,html.v2 .uphelp,html.v2 .up-voorbeeld,html.v2 .video-preview .video-empty{background:#f4f8f6;border-color:#e3ebe7;color:#526b70}
+ html.v2 .uphelp code{background:#eaf2ee;border-color:#d3dfda;color:#18343b}
+ html.v2 .video-drop{border-color:#a9bcb6}
+ html.v2 .video-drop:hover,html.v2 .video-drop.drag{background:#f3f9e6;border-color:#8fb52e}
+ html.v2 #filters .chip:hover{background:#e3ece7;color:#18343b}
+ html.v2 #filters .chip.on,html.v2 #filters .chip.on:hover{background:#b9e34b;color:#18343b}
+ html.v2 .row .fav:not(.on){color:#7f958f}
+ html.v2 .row .fav:hover{background:#eaf2ee;color:#a15c07}
  html.v2 header.topbar .menu .mi:hover{background:#ffffff20;color:#fff}
- /* foutrood dat direct op het donkere vlak staat */
+ /* foutrood op het lichte vlak */
  html.v2 #prakslot label.mist{color:var(--fout)!important}
  html.v2 .sjb-link.rood{color:var(--fout)}
  html.v2 .topbar #beeldKeuze .beeldsegment button:hover{background:#365e64;color:#fff}
  html.v2 .topbar #beeldKeuze .beeldsegment button.aan,html.v2 .topbar #beeldKeuze .beeldsegment button.aan:hover{background:#b9e34b;color:#18343b}
- /* "Nieuw in Fysiplan": was een wit venster met een bijna doorzichtige achtergrond */
- html.v2 dialog.fp-nieuw{box-sizing:border-box;width:min(480px,calc(100vw - 32px));max-width:none;margin:auto;border:1px solid #416068;border-radius:16px;
-   padding:24px 26px;background:#20464f;color:#e0eae7;box-shadow:0 24px 60px rgba(8,22,26,.5)}
+ /* "Nieuw in Fysiplan" */
+ html.v2 dialog.fp-nieuw{box-sizing:border-box;width:min(480px,calc(100vw - 32px));max-width:none;margin:auto;border:1px solid #d3dfda;border-radius:16px;
+   padding:24px 26px;background:#fff;color:#314d53;box-shadow:0 24px 60px rgba(8,22,26,.28)}
  html.v2 dialog.fp-nieuw::backdrop{background:rgba(15,23,42,.42);backdrop-filter:blur(3px)}
- html.v2 dialog.fp-nieuw h2{margin:0 0 10px;font-size:18px;letter-spacing:-.02em;color:#fff}
+ html.v2 dialog.fp-nieuw h2{margin:0 0 10px;font-size:18px;letter-spacing:-.02em;color:#18343b}
  html.v2 dialog.fp-nieuw p{margin:0 0 10px;font-size:14px;line-height:1.55}
  html.v2 dialog.fp-nieuw .btn{margin-top:6px;height:38px;padding:0 16px}
 }
