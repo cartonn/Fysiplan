@@ -4,6 +4,16 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Verwerkersovereenkomst 2026-11-14: medewerkers als betrokkenen (legal, 2026-11-14 13u)
+
+Art. 2 noemt nu naast patiënten ook de medewerkers van de praktijk (wie een kaart maakte, opende of bewaarde, en Activiteit),
+en art. 10 zegt wanneer eigen video's en foto's weggaan. Beheerders zien in de app de vraag om opnieuw akkoord te gaan
+(niet blokkerend). Niets voor jou om te doen.
+
+**Vraag voor de jurist:** /privacy zegt dat Fysiplan zelf verantwoordelijk is voor de gegevens van therapeuten (login, e-mail,
+tweede stap), terwijl het leeslog en Activiteit in opdracht van de praktijk lopen. Klopt die verdeling, of is Fysiplan voor de
+logins van een betalende praktijk ook verwerker?
+
 ### Privacyverklaring 2026-11-14 en één vraag over een functionaris gegevensbescherming (legal, 2026-11-14 09u)
 
 /privacy is bijgewerkt naar versie 2026-11-14: eigen video's op een kaart hebben een eigen rij (waarvoor, hoe lang, tijdelijke
