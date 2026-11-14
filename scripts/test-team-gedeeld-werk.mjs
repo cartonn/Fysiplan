@@ -135,6 +135,35 @@ try {
   assert.match(html, /'oefening-verwijderd':'[^']+'/, "app heeft een leesbare regel voor de oefening");
   assert.match(html, /'sjabloon-verwijderd':'[^']+'/, "app heeft een leesbare regel voor het sjabloon");
 
+  // ---- gebruikers-sweep 2026-11-14 14u (Karin), security-backlog MIDDEL: geweigerde beheerpogingen van een
+  // collega stonden niet in Activiteit; de beheerder zag ze nooit ----
+  const rij = (a, actie, wie) => a.filter((e) => e.actie === actie && (!wie || (e.wie || "").includes(wie)));
+  const activiteit = async () => (await (await get("/api/praktijk/activiteit?praktijk=" + encodeURIComponent(P), S)).json()).activiteit || [];
+  // Mark probeerde hierboven twee sjablonen en twee oefeningen van anderen weg te halen
+  let a2 = await activiteit();
+  assert.equal(rij(a2, "sjabloon-verwijderen-geweigerd", "Mark").length, 1, "geweigerd sjabloon-verwijderen staat in Activiteit: " + a2.map((e) => e.actie).join(","));
+  assert.equal(rij(a2, "sjabloon-verwijderen-geweigerd", "Mark")[0].n, 2, "twee pogingen op één regel met teller");
+  assert.equal(rij(a2, "oefening-verwijderen-geweigerd", "Mark").length, 1, "geweigerd oefening-verwijderen staat in Activiteit");
+  // Mark maakt zichzelf beheerder of haalt de beheerder weg: 403, en het staat erin
+  const ledenNu = (await (await get("/api/praktijk/team", S)).json()).leden;
+  const idVan = (em) => ledenNu.find((l) => l.email === em).id;
+  assert.equal((await post("/api/praktijk/team/rol", { id: idVan("mark@rollen.nl"), rol: "beheerder" }, M)).status, 403);
+  assert.equal((await post("/api/praktijk/team/verwijder", { id: idVan("sanne@rollen.nl"), gedeeld: "laten" }, M)).status, 403);
+  // profiel van de praktijk aanpassen (telefoon op elke patiëntkaart)
+  assert.equal((await post("/api/praktijken", { praktijk: P, adres: "Straat 1", tel: "0612345678" }, M)).status, 403);
+  // een lus van dezelfde poging duwt de echte regels er niet uit
+  for (let i = 0; i < 20; i++) await post("/api/praktijk/team/rol", { id: idVan("mark@rollen.nl"), rol: "beheerder" }, M);
+  a2 = await activiteit();
+  assert.equal(rij(a2, "team-wijziging-geweigerd", "Mark (rol wijzigen").length, 1, "rol wijzigen door Mark: één regel");
+  assert.ok(rij(a2, "team-wijziging-geweigerd", "Mark (rol wijzigen")[0].n >= 15, "met teller voor de herhalingen");
+  assert.equal(rij(a2, "team-wijziging-geweigerd", "Mark (verwijderen").length, 1, "verwijderen van de beheerder door Mark staat erin");
+  assert.equal(rij(a2, "profiel-wijzigen-geweigerd", "Mark").length, 1, "profiel aanpassen door Mark staat erin");
+  assert.equal(rij(a2, "oefening-verwijderd").length, 2, "de echte regels staan er nog");
+  for (const actie of ["oefening-verwijderen-geweigerd", "vragen-aanpassen-geweigerd", "sjabloon-verwijderen-geweigerd", "profiel-wijzigen-geweigerd"]) {
+    assert.match(html, new RegExp("'" + actie + "':'[^']+'"), "app heeft een leesbare regel voor " + actie);
+  }
+  assert.match(html, /a\.n>1\?/, "app toont de teller");
+
   // ---- gebruikers-sweep 2026-11-12: het gedeelde wachtwoord wist niet de hele praktijk (met de eigenaar) ----
   const wisGedeeld = await formulier("/v2/gegevens/wissen", { praktijk: P, wachtwoord: "praktijk-wachtwoord", zeker: "WISSEN" });
   assert.equal(wisGedeeld.status, 403, "alles wissen met alleen het gedeelde praktijkwachtwoord terwijl er een beheerder met eigen login is (was 200)");

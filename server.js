@@ -791,6 +791,25 @@ function auditLog(pk, actie, req, wieExpliciet) {
   auditSnoei(pk, AUDIT_RUIS.has(actie));
   saveJson(auditPath, praktijkAudit).catch(() => {});
 }
+// Een geweigerde beheerpoging van een collega (403 op team, profiel, werk van een ander). Die
+// moet de beheerder in Activiteit zien (gebruikers-sweep 2026-11-14 14u, Karin; security-backlog
+// MIDDEL), maar een lus van dezelfde poging mag de echte regels er niet uitduwen: binnen 10 minuten
+// telt dezelfde poging van dezelfde persoon op de bestaande regel (`n`) in plaats van een nieuwe.
+function auditGeweigerd(pk, actie, req, wieExpliciet) {
+  let wie = wieExpliciet || "";
+  if (!wie && req) { const l = sessieLid(sessieVan(req)); if (l) wie = l.naam || l.email; }
+  const grens = Date.now() - 10 * 60000;
+  for (const a of praktijkAudit) {
+    if (!a || a.praktijk !== pk) continue;
+    if (Date.parse(a.t) < grens) break;
+    if (a.actie === actie && (a.wie || "") === wie) {
+      a.n = Math.min(9999, (Number(a.n) || 1) + 1);
+      saveJson(auditPath, praktijkAudit).catch(() => {});
+      return;
+    }
+  }
+  auditLog(pk, actie, req, wie);
+}
 // Het logboek was één lijst van 500 voor alle praktijken samen. Wie zonder login
 // steeds een kaartroute van een praktijk opvraagt ("toegang-geweigerd") of foute
 // logins op verzonnen namen stuurt, schoof zo binnen minuten het spoor van
@@ -4683,11 +4702,13 @@ async function afhandelen(request, response) {
       "abonnement-opgezegd", "opzeggen-mislukt", "opzeggen-geweigerd", "praktijknaam-gewijzigd",
       "tweede-stap-aan", "tweede-stap-uit", "tweede-stap-gewist", "tweede-stap-mislukt", "tweede-stap-op-slot", "ingelogd-met-reservecode", "reservecodes-vernieuwd",
       "tweede-stap-verplicht", "tweede-stap-niet-verplicht", "vragen-aangepast",
-      "sjabloon-verwijderd", "oefening-verwijderd"]);
+      "sjabloon-verwijderd", "oefening-verwijderd",
+      // geweigerde pogingen van een collega zonder beheerdersrol (auditGeweigerd, met teller `n`)
+      "oefening-verwijderen-geweigerd", "vragen-aanpassen-geweigerd", "sjabloon-verwijderen-geweigerd", "profiel-wijzigen-geweigerd"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
       .slice(0, 15)
-      .map((e) => ({ t: e.t, actie: e.actie, ip: e.ip, ...(e.wie ? { wie: e.wie } : {}) }));
+      .map((e) => ({ t: e.t, actie: e.actie, ip: e.ip, ...(e.wie ? { wie: e.wie } : {}), ...(Number(e.n) > 1 ? { n: Number(e.n) } : {}) }));
     await sendJson(response, 200, { ok: true, activiteit: lijst });
     return;
   }
@@ -4833,7 +4854,15 @@ async function afhandelen(request, response) {
       await sendJson(response, 404, { ok: false, fout: "Niet gevonden." });
       return;
     }
-    if (!isBeheer(s)) { await sendJson(response, 403, { ok: false, fout: "Alleen een beheerder van de praktijk kan het team aanpassen." }); return; }
+    if (!isBeheer(s)) {
+      // vastleggen wat geprobeerd werd (alleen bekende routes, geen vrije tekst uit het verzoek)
+      const wat = { "/api/praktijk/team/sein-mail": "mail bij seintje", "/api/praktijk/team/uitnodigen": "uitnodigen",
+        "/api/praktijk/team/tweede-stap/wis": "tweede stap wissen", "/api/praktijk/team/verwijder": "verwijderen",
+        "/api/praktijk/team/rol": "rol wijzigen", "/api/praktijk/team/gedeeld-uit": "praktijkwachtwoord uit",
+        "/api/praktijk/team/stap-verplicht": "tweede stap verplicht" }[urlPath] || "team aanpassen";
+      auditGeweigerd(pk, "team-wijziging-geweigerd", request, (ik ? (ik.naam || ik.email) : "praktijkwachtwoord") + " (" + wat + ", geen beheerder)");
+      await sendJson(response, 403, { ok: false, fout: "Alleen een beheerder van de praktijk kan het team aanpassen." }); return;
+    }
 
     // mail bij een seintje van een patiënt aan of uit (standaard aan, zie seinMailRonde)
     if (urlPath === "/api/praktijk/team/sein-mail") {
@@ -5754,7 +5783,7 @@ async function afhandelen(request, response) {
       const idx = lijst.findIndex((x) => x.id === idTekst(b.id));
       if (idx === -1) { await sendJson(response, 404, { ok: false, fout: "Oefening niet gevonden." }); return; }
       if (!magGedeeldAanpassen(sessieVan(request), lijst[idx], pk)) {
-        auditLog(pk, "oefening-verwijderen-geweigerd", request);
+        auditGeweigerd(pk, "oefening-verwijderen-geweigerd", request);
         await sendJson(response, 403, { ok: false, fout: "Alleen wie deze oefening toevoegde of een beheerder van de praktijk kan hem verwijderen." }); return;
       }
       const [weg] = lijst.splice(idx, 1);
@@ -5801,7 +5830,7 @@ async function afhandelen(request, response) {
     const huidig = vasteVragen.voorApp(praktijkVragen, pk)[oef] || [];
     const blijft = (x) => c.vragen.some((n) => n.v === x.v && n.a === x.a);
     if (huidig.some((x) => !blijft(x) && !magGedeeldAanpassen(s, x.door ? x : null, pk))) {
-      auditLog(pk, "vragen-aanpassen-geweigerd", request);
+      auditGeweigerd(pk, "vragen-aanpassen-geweigerd", request);
       await sendJson(response, 403, { ok: false, fout: "Een vraag van een collega kan alleen die collega of een beheerder van de praktijk wijzigen of weghalen.", eigen: vragenVoorApp(request, pk) });
       return;
     }
@@ -5879,7 +5908,7 @@ async function afhandelen(request, response) {
       const idx = lijst.findIndex((s) => String(s.naam || "").toLowerCase() === naam);
       if (idx === -1) { await sendJson(response, 404, { ok: false, fout: "Sjabloon niet gevonden." }); return; }
       if (!magGedeeldAanpassen(sessieVan(request), lijst[idx], pk)) {
-        auditLog(pk, "sjabloon-verwijderen-geweigerd", request);
+        auditGeweigerd(pk, "sjabloon-verwijderen-geweigerd", request);
         await sendJson(response, 403, { ok: false, fout: "Alleen wie dit sjabloon deelde of een beheerder van de praktijk kan het verwijderen." }); return;
       }
       lijst.splice(idx, 1);
@@ -6142,6 +6171,7 @@ async function afhandelen(request, response) {
         (Object.hasOwn(b, "website") && (oudProfiel.website || "") !== p.website);
       if (eigenSessie && !gewijzigd) { await sendJson(response, 200, { ok: true, logo: oudProfiel.logo || "" }); return; }
       if (eigenSessie && !isBeheer(sessie)) {
+        auditGeweigerd(key, "profiel-wijzigen-geweigerd", request);
         await sendJson(response, 403, { ok: false, beheer: true, fout: "Alleen een beheerder van de praktijk kan het praktijkprofiel en het logo aanpassen." });
         return;
       }
