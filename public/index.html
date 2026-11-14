@@ -4564,7 +4564,16 @@ bridge2.jpg</div>
           .catch(function(){uDo.disabled=false;msg('Geen verbinding.');});
       });
       el.querySelectorAll('[data-tmrol]').forEach(function(sel){
+        // de rol pas wijzigen na een bevestiging: één pijltoets op de rolkeuze (waar de focus kan
+        // staan als het venster opent) maakte een collega stil beheerder (sweep 14-11 22u, Karin)
+        var oudeRol=sel.value;
         sel.addEventListener('change',function(){
+          var wie=(sel.getAttribute('aria-label')||'').replace(/^Rol van /,'')||'deze collega';
+          var vraag=sel.value==='beheerder'
+            ?wie+' beheerder maken? Een beheerder kan collega’s uitnodigen en verwijderen, rollen wijzigen, alle gegevens van de praktijk downloaden en alles wissen.'
+            :wie+' weer gewone therapeut maken? Beheerrechten vervallen dan meteen.';
+          if(!confirm(vraag)){sel.value=oudeRol;return;}
+          oudeRol=sel.value;
           teamPost('rol',{id:sel.getAttribute('data-tmrol'),rol:sel.value}).then(function(r){if(!r.ok)msg(r.fout||'Dat lukte niet.');laadTeam();});
         });
       });
@@ -7132,7 +7141,8 @@ bridge2.jpg</div>
       setTimeout(function(){
         if(!ov.classList.contains('on')||ov.contains(document.activeElement))return;
         var f=focusbare(ov),m=ov.querySelector('.modal')||ov;
-        var eerste=f.filter(function(el){return /INPUT|SELECT|TEXTAREA/.test(el.tagName);})[0]||f[0]||m;
+        // geen keuzelijst als eerste: een pijltoets wijzigt die meteen (rolkeuze in Team, sweep 14-11)
+        var eerste=f.filter(function(el){return /INPUT|TEXTAREA/.test(el.tagName);})[0]||f.filter(function(el){return el.tagName!=="SELECT";})[0]||m;
         try{eerste.focus();}catch(e){}
       },30);
     }
