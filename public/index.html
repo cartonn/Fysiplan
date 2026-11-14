@@ -5173,7 +5173,9 @@ bridge2.jpg</div>
       var SOORT={vraag:'seintje: heeft een vraag',pijn:'seintje: meldt te veel pijn',goed:'seintje: het gaat goed',zwaar:'oefening te zwaar'};
       r.push('Contact via de digitale kaart:');
       ct.forEach(function(x){
-        if(x.van==='praktijk'&&x.soort==='afgehandeld')r.push('  '+dc(x.t)+' praktijk: afgehandeld'+(x.wie?' door '+x.wie:''));
+        // het logboek houdt de laatste 50 regels: wat daarvoor viel, staat alleen in een eerdere kopie
+        if(x.van==='fysiplan'&&x.soort==='ingekort')r.push('  t/m '+dc(x.t)+': '+(Number(x.n)||0)+' oudere regel'+(Number(x.n)===1?'':'s')+' niet meer in Fysiplan; die staan alleen in een eerdere kopie voor het dossier');
+        else if(x.van==='praktijk'&&x.soort==='afgehandeld')r.push('  '+dc(x.t)+' praktijk: afgehandeld'+(x.wie?' door '+x.wie:''));
         else if(x.van==='praktijk')r.push('  '+dc(x.t)+' praktijk: "'+String(x.tekst||'')+'"');
         else r.push('  '+dc(x.t)+' patiënt: '+(SOORT[x.soort]||'seintje')+(x.oef?' ('+x.oef+')':''));
       });

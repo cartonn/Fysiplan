@@ -26,7 +26,7 @@ import { SESSIE_MS, SessieTabel, laadSessies, sessieSleutel, wachtwoordAfdruk } 
 import { kiesInpak, inpakbaar, pakIn, etagKomtOvereen } from "./lib/inpakken.js";
 import { kleinPadVoor, kleinMap } from "./lib/klein-beeld.js";
 import { nieuwGeheim, controleer, otpauth, nieuweReservecode, reservecodeNormaal } from "./lib/totp.js";
-import { maakBeheerOmgeving, merkGezien, merkLoginMis, merkAntwoord } from "./lib/beheer-omgeving-routes.js";
+import { maakBeheerOmgeving, merkGezien, merkLoginMis, merkAntwoord, vergeetLid } from "./lib/beheer-omgeving-routes.js";
 import { rechtenVan, magBuiten } from "./lib/beheer-toegang.js";
 import { BEHEER_SESSIE_MS, BEHEER_WW_MIN, BEHEER_EERSTE_KEER_MS, BeheerSessies, BeheerLogboek, Rem, laadBeheerSessies, beheerKlaar, beheerVerlopen, beheerUit, beheerPad } from "./lib/beheer.js";
 import { leesNamenLaag, kiesNamen, maakZoeker, sleutelVoor, verhuisNaamgebonden } from "./lib/oefennamen.js";
@@ -2057,10 +2057,18 @@ if (!Number.isFinite(bewaarInfo.invoering)) {
 // dossier van de praktijk. Dit korte logboek houdt ze bij de kaart tot de
 // bewaartermijn, zodat "Kopieer voor dossier" ze meeneemt. Alleen via de
 // praktijkroutes leesbaar, niet via /api/kaart (de allowlist daar noemt het niet).
+// Boven de 50 regels vallen de oudste weg; dan staat vooraan één regel die zegt hoeveel en tot
+// wanneer, zodat de dossiertekst niet stil onvolledig is (WGBO: de praktijk ziet dat er een
+// eerdere kopie nodig is). Die regel is van Fysiplan zelf en telt niet als patiënt of praktijk.
+const CONTACT_MAX = 50;
 const logContact = (kaart, item) => {
   const lijst = Array.isArray(kaart.contact) ? kaart.contact : [];
   lijst.push({ t: Date.now(), ...item });
-  kaart.contact = lijst.slice(-50);
+  if (lijst.length <= CONTACT_MAX) { kaart.contact = lijst; return; }
+  const eerder = lijst[0] && lijst[0].van === "fysiplan" && lijst[0].soort === "ingekort" ? lijst.shift() : null;
+  const weg = lijst.splice(0, lijst.length - (CONTACT_MAX - 1));
+  const n = (eerder ? Number(eerder.n) || 0 : 0) + weg.length;
+  kaart.contact = [{ t: Number(weg[weg.length - 1].t) || Date.now(), van: "fysiplan", soort: "ingekort", n }, ...lijst];
 };
 
 // ---- inbox en dossierlabel ----
@@ -4857,6 +4865,7 @@ async function afhandelen(request, response) {
       await opslaan();
       trekSessiesIn(pk, doel.id);
       if (gedeeldOokUit) trekSessiesIn(pk, null);
+      vergeetLid(pk, doel.id, doel.email);
       auditLog(pk, "collega-verwijderd", request, wieMetDoel(doel));
       if (gedeeldOokUit) auditLog(pk, "praktijkwachtwoord-uit", request);
       await sendJson(response, 200, { ok: true, ...(gedeeldOokUit ? { gedeeldUit: true } : {}) });

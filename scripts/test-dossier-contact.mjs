@@ -129,6 +129,18 @@ try {
   for (let i = 0; i < 60; i++) await post("/api/kaart/seintje", { id: ID, soort: "goed" });
   const opslag = JSON.parse(await readFile(join(dataDir, "kaarten.json"), "utf8"))["fysio dossier"].truus;
   assert.equal(opslag.contact.length, 50, "hooguit 50 regels per kaart");
+  // legal 2026-11-14 (WGBO): wat wegvalt, valt niet stil weg. Er waren 3 + 1 + 60 = 64 regels.
+  assert.deepEqual([opslag.contact[0].van, opslag.contact[0].soort, opslag.contact[0].n], ["fysiplan", "ingekort", 15], "vooraan staat hoeveel er wegviel");
+  for (let i = 0; i < 3; i++) await post("/api/kaart/seintje", { id: ID, soort: "goed" });
+  const pr3 = await (await fetch(origin + "/api/praktijk/kaart?praktijk=fysio%20dossier&id=" + ID, { headers: kop(S) })).json();
+  assert.equal(pr3.kaart.contact.length, 50);
+  assert.equal(pr3.kaart.contact.filter((x) => x.soort === "ingekort").length, 1, "één regel die optelt, niet een nieuwe per keer");
+  assert.equal(pr3.kaart.contact[0].n, 18);
+  const tekst3 = ctx.dossierTekst(pr3.kaart);
+  assert.match(tekst3, /t\/m \d\d-\d\d-\d{4}: 18 oudere regels niet meer in Fysiplan; die staan alleen in een eerdere kopie voor het dossier/);
+  assert.doesNotMatch(tekst3, /patiënt: seintje\n|patiënt: seintje$/m, "de regel van Fysiplan telt niet als seintje van de patiënt");
+  const pat3 = await (await fetch(origin + "/api/kaart?id=" + ID, { headers: kop() })).json();
+  assert.ok(pat3.kaart.mijnSeintjes.every((x) => x.soort !== "ingekort"), "de patiënt ziet geen regel van Fysiplan als eigen seintje");
   console.log("test-dossier-contact: seintjes, te zwaar, berichten en werknotitie gaan mee naar het dossier; het dossierlabel vervalt bij nieuwe praktijkregels");
 } catch (e) {
   console.error(uit.slice(-2000));
