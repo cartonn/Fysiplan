@@ -93,6 +93,9 @@ vm.runInNewContext(blok[1] + ";this.mgTrouwTik=mgTrouwTik;this.mgTrouwDagen=mgTr
   assert.equal(els.gweek.style.display, "flex", "oefenweek ook met alleen vinkjes");
 }
 
+// na een vinkje meteen de oefenweek opnieuw tekenen (anders vult de stip van vandaag pas na herladen; hertest Jayden)
+assert.match(kaart, /zetOefTrouwLokaal\(idx,p===-1\);\s*bewaarOefDaan\(st\);\s*tekenOefDaan\(\);\s*\/\/[^\n]*\n\s*tekenGedaan\(\);/, "vinkje tekent de oefenweek opnieuw");
+
 // 3. app: oefDagen telt alle afvinkdagen
 const app = await readFile(join(root, "public/index.html"), "utf8");
 const od = app.match(/  function oefDagen\(c\)\{[\s\S]*?\n  \}\n/);

@@ -1517,6 +1517,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     zetOefTrouwLokaal(idx,p===-1);
     bewaarOefDaan(st);
     tekenOefDaan();
+    // de oefenweek telt afgevinkte oefeningen mee: de stip van vandaag meteen bijwerken (hertest Jayden 2026-11-14)
+    tekenGedaan();
     // telling per oefening naar de praktijk (best effort, alleen aantallen):
     // zo ziet de therapeut welke oefening blijft liggen — zonder patiënt-app
     if(id&&id!=='demo'){

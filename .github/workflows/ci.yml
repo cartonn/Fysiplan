@@ -109,6 +109,7 @@ jobs:
       - run: npm run test:oefdagen
       - run: npm run test:oefdoelweek
       - run: npm run test:lijstfocus
+      - run: npm run test:dossierannuleren
       - run: npm run test:prullenbak
       - run: npm run test:wachtrijdagen
       - run: npm run test:agendamelding

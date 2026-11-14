@@ -5507,9 +5507,15 @@ bridge2.jpg</div>
                 return fetch('api/kaart/dossier',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:id})})
                   .then(function(){toon('Gekopieerd, label gezet ✓');setTimeout(toonSrvKaarten,900);});
               };
+              // zonder klembord: zelf kopiëren uit het venster. Annuleren (null) zet geen label "in dossier", want dan
+              // staat er niets in het dossier (gebruikers-sweep 2026-11-14 10u en 14u, Mark)
+              var handmatig=function(){
+                if(window.prompt('Kopieer de samenvatting voor het dossier:',tekst)===null){toon('Niet gekopieerd, geen label');return;}
+                label();
+              };
               if(navigator.clipboard&&navigator.clipboard.writeText){
-                navigator.clipboard.writeText(tekst).then(label).catch(function(){window.prompt('Kopieer de samenvatting voor het dossier:',tekst);label();});
-              }else{window.prompt('Kopieer de samenvatting voor het dossier:',tekst);label();}
+                navigator.clipboard.writeText(tekst).then(label).catch(handmatig);
+              }else handmatig();
             }).catch(function(){toon('Geen verbinding');});
           });
         });

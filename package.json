@@ -105,6 +105,7 @@
     "test:oefdagen": "node scripts/test-oefdagen.mjs",
     "test:oefdoelweek": "node scripts/test-oefdoel-week.mjs",
     "test:lijstfocus": "node scripts/test-sweep-lijstfocus.mjs",
+    "test:dossierannuleren": "node scripts/test-sweep-dossier-annuleren.mjs",
     "test:wachtrijdagen": "node scripts/test-wachtrij-dagen.mjs",
     "test:agendamelding": "node scripts/test-agenda-melding.mjs",
     "test:oefvinkje": "node scripts/test-sweep-oefvinkje-wachtrij.mjs",
