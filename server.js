@@ -4643,6 +4643,13 @@ async function afhandelen(request, response) {
       await sendJson(response, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true });
       return;
     }
+    // Alleen een beheerder: het is een logboek over collega's (wie wanneer inlogde, mislukte logins,
+    // rolwijzigingen, wie verwijderd is), net als het leeslog. Een gewone therapeut las het hele team
+    // (gebruikers-sweep 2026-11-12 14u en 2026-11-14 06u, Karin; security-backlog MIDDEL).
+    if (!isBeheer(sessieVan(request))) {
+      await sendJson(response, 403, { ok: false, beheer: true, fout: "Alleen een beheerder van de praktijk ziet de activiteit van het team." });
+      return;
+    }
     const relevant = new Set(["geclaimd", "ingelogd", "login-mislukt", "login-op-slot",
       "wachtwoord-gewijzigd", "wachtwoord-wijzigen-mislukt", "wachtwoord-hersteld",
       "herstel-mislukt", "herstelcode-vernieuwd", "herstelcode-vernieuwen-mislukt",
