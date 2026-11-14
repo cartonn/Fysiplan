@@ -149,6 +149,15 @@ try {
   // tweede poging: nieuwe betaling, gelukt via de webhook
   const r2 = await betaal("mis");
   assert.equal(r2.headers.get("location"), "https://mollie.voorbeeld/checkout/2", "nieuwe poging, nieuwe betaling");
+  // nog een keer op de knop (tweede tabblad, terugknop) terwijl poging 2 bij Mollie nog open
+  // staat: dezelfde betaling, geen derde (anders kon poging 2 alsnog betaald worden zonder te tellen)
+  const telVoor = aangemaakt.length;
+  const r2b = await betaal("mis");
+  assert.equal(r2b.headers.get("location"), "https://mollie.voorbeeld/checkout/2", "lopende poging wordt hergebruikt");
+  const dubbel = await Promise.all([betaal("mis"), betaal("mis"), betaal("mis")]);
+  assert.ok(dubbel.every((r) => r.status === 303), "gelijktijdige klikken: alleen doorverwijzen");
+  assert.equal(aangemaakt.length, telVoor, "geen nieuwe betaling zolang de vorige open staat");
+  assert.equal((await lees()).mis.abonnement.incasso.zelf.id, "tr_zelf2");
   // een late webhook van de afgebroken poging telt niet meer
   betalingen.get("tr_zelf1").status = "paid";
   assert.equal((await webhook("tr_zelf1")).status, 200);
