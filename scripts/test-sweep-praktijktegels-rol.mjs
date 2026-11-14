@@ -3,8 +3,8 @@
 // "Proef en abonnement" en "Gegevens van de praktijk" alsof hij dat mocht. Pas na het hele formulier op
 // /v2/gegevens (incl. tweede stap) kwam "Alleen een beheerder…". Nu zegt de tegel het vooraf en opent
 // de gegevenstegel voor een collega niets. Het deel zonder browser draait altijd (CI heeft geen
-// Ook: de praktijkknop mét naam maar zonder login zet de focus in het inlogveld (sweep 2026-11-14 02u, Sanne).
 // browser); met Playwright klikt het als collega en als beheerder. `npm run test:praktijktegels`
+// Ook: de praktijkknop mét naam maar zonder login zet de focus in het inlogveld (sweep 2026-11-14 02u, Sanne).
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { mkdtemp, readFile, rm } from "node:fs/promises";
