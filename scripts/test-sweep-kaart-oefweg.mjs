@@ -18,10 +18,14 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const kaart = await readFile(join(root, "public/kaart.html"), "utf8");
 assert.match(kaart, /if\(r\.status===409&&j&&typeof j==='object'\)j\.weg=true/, "stuur() geeft een 409 door aan de kaart");
 assert.match(kaart, /\.then\(function\(d\)\{if\(d&&d\.weg\)oefWeg\(idx,p===-1\);\}\)/, "vinkje leest het antwoord");
-assert.match(kaart, /if\(st===409\)\{oz\.textContent=trg\('weg'\);return;\}/, "te zwaar: bij 409 geen 'tik opnieuw'");
+assert.match(kaart, /if\(st===409\)\{oefWeg\(zidx,false\);return;\}/, "te zwaar: bij 409 geen 'tik opnieuw' maar de melding met herlaadknop");
+// Sweep 2026-11-14 06u (Truus, iPhone SE): "Vernieuw de pagina" kon ze vanaf een beginschermicoon niet opvolgen.
+// Nu een echte knop "Kaart opnieuw laden", en in de stappenmodus gaat de kaart terug naar de weggehaalde oefening.
 for (const t of ["nl", "en", "de", "fr", "es", "pl", "tr", "ar", "uk"]) {
-  assert.match(kaart, new RegExp("    " + t + ":\\{weg:'[^']{10,}'"), "melding in het " + t);
+  assert.match(kaart, new RegExp("    " + t + ":\\{weg:'[^']{10,}',herlaad:'[^']{5,}'"), "melding + knop in het " + t);
 }
+assert.doesNotMatch(kaart, /weg:'[^']*(Vernieuw de pagina|reload the page)/, "geen opdracht om zelf de pagina te vernieuwen");
+assert.match(kaart, /if\(SESSIE>-1&&SESSIE!==idx\)openOef\(idx\)/, "stappenmodus gaat terug naar de weggehaalde oefening");
 
 let playwright = null;
 for (const van of [import.meta.url, "/opt/node22/lib/node_modules/"]) {
@@ -71,7 +75,9 @@ try {
   const r1 = await page.evaluate(() => ({
     pressed: document.querySelector('#oefs .oefdone[data-idx="0"]').getAttribute("aria-pressed"),
     tekst: document.querySelector(".oefweg").textContent, rol: document.querySelector(".oefweg").getAttribute("role"),
-    bij: document.querySelector(".oefweg").closest(".oef").dataset.oidx }));
+    bij: document.querySelector(".oefweg").closest(".oef").dataset.oidx,
+    focus: document.activeElement && document.activeElement.className }));
+  assert.equal(r1.focus, "oefweg", "ook in het overzicht focus op de melding (anders onder de vouw bij 200 %)");
   assert.equal(vinkjes, 1);
   assert.equal(r1.pressed, "false", "vinkje teruggedraaid");
   assert.match(r1.tekst, /no longer on your card/, "melding in het Engels: " + r1.tekst);
@@ -84,10 +90,36 @@ try {
   const zt = await page.evaluate(() => document.querySelector('#oefs .oefzwaar[data-zidx="0"]').textContent);
   assert.equal(zwaar, 1, "te zwaar verstuurd");
   assert.doesNotMatch(zt, /retry/i, "geen 'tik opnieuw' bij een weggehaalde oefening: " + zt);
-  assert.match(zt, /no longer on your card/);
+  const zh = await page.evaluate(() => document.querySelector('#oefs .oefzwaar[data-zidx="0"]').hidden);
+  assert.equal(zh, true, "te zwaar verdwijnt bij een weggehaalde oefening");
+  // een echte knop, minstens 44 px, die de kaart opnieuw laadt
+  const hk = await page.evaluate(() => { const b = document.querySelector('#oefs .oef[data-oidx="0"] .oefherlaad');
+    if (!b) return null; const r = b.getBoundingClientRect(); return { t: b.textContent, h: r.height, w: r.width, tag: b.tagName }; });
+  assert.ok(hk, "herlaadknop bij de oefening");
+  assert.equal(hk.tag, "BUTTON");
+  assert.equal(hk.t, "Reload card");
+  assert.ok(hk.h >= 44, "herlaadknop minstens 44 px hoog: " + hk.h);
+  await Promise.all([page.waitForEvent("load"), page.click('#oefs .oef[data-oidx="0"] .oefherlaad')]);
+  await page.waitForSelector('#oefs .oefdone[data-idx="0"]');
+  assert.equal(await page.locator(".oefweg").count(), 0, "na herladen is de melding weg");
+  // stappenmodus: "Done" op de weggehaalde oefening sprong door naar de volgende; de melding stond
+  // op een scherm dat de patiënt net verliet. Nu gaat de kaart terug naar die oefening.
+  await page.evaluate(() => document.querySelectorAll(".ov.on,.lb.on").forEach((o) => o.classList.remove("on")));
+  await page.click("#startknop");
+  await page.waitForSelector('body.sessie #oefs .oef.actief[data-oidx="0"]');
+  await page.click("#sklaar");
+  await page.waitForSelector("body.sessie #oefs .oef.actief .oefweg", { timeout: 4000 });
+  const s1 = await page.evaluate(() => { const a = document.querySelector("#oefs .oef.actief"); const b = a.querySelector(".oefherlaad");
+    const r = b.getBoundingClientRect();
+    return { oidx: a.dataset.oidx, stel: document.getElementById("stel").textContent, zicht: r.width > 0 && r.height >= 44,
+      focus: document.activeElement && document.activeElement.className }; });
+  assert.equal(s1.oidx, "0", "terug bij de weggehaalde oefening");
+  assert.match(s1.stel, /1/, "teller staat op die oefening: " + s1.stel);
+  assert.ok(s1.zicht, "herlaadknop zichtbaar in de stappenmodus");
+  assert.equal(s1.focus, "oefweg", "focus op de melding");
   assert.deepEqual(fouten, []);
   await ctx.close();
-  console.log("PASS weggehaalde oefening op /k: vinkje terug en een melding in de taal van de kaart");
+  console.log("PASS weggehaalde oefening op /k: vinkje terug, melding met herlaadknop, stappenmodus terug naar die oefening");
 } catch (e) {
   console.error(uit.slice(-2000));
   throw e;

@@ -435,6 +435,11 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL (gebruikers-sweep 2026-11-14 06u, Karin, gemeten lokaal desktop + iPad) — een therapeut (geen beheerder) leest de Activiteit
+  van het hele team.** GET /api/praktijk/activiteit en het scherm geven een gewone therapeut 200: wie wanneer inlogde, mislukte logins,
+  rolwijzigingen, wie verwijderd is (IP gemaskeerd). server.js r. ~4642 controleert alleen of de sessie bij de praktijk hoort; het leeslog
+  weigert een therapeut wel (r. ~7156). Verwacht: 403 met een begrijpelijke zin (of alleen de eigen regels), en de tegel alleen voor beheer.
+  Let op: de sweep-PR van 14-11 06u zet ook "sjabloon-verwijderd" en "oefening-verwijderd" in Activiteit.
 - **OPGELOST 2026-11-14 (security, PR volgt in deze run) — LAAG (gebruikers-sweep 2026-11-13 22u, Jayden, gemeten lokaal) — rest van de invoercontrole op /k na #295.**
   Nu: alle patiëntroutes (`kaartVerzoek`, lib/patient-routes.js) eisen `id` als tekst, `aan` als boolean, `n` als tekst en `wanneer`
   als getal (of afwezig/null), anders 400 vóór de kaart wordt opgezocht (telt dus ook niet op de misrem). test:patientinvoer.
