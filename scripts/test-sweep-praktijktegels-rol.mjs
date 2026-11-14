@@ -3,6 +3,7 @@
 // "Proef en abonnement" en "Gegevens van de praktijk" alsof hij dat mocht. Pas na het hele formulier op
 // /v2/gegevens (incl. tweede stap) kwam "Alleen een beheerder…". Nu zegt de tegel het vooraf en opent
 // de gegevenstegel voor een collega niets. Het deel zonder browser draait altijd (CI heeft geen
+// Ook: de praktijkknop mét naam maar zonder login zet de focus in het inlogveld (sweep 2026-11-14 02u, Sanne).
 // browser); met Playwright klikt het als collega en als beheerder. `npm run test:praktijktegels`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -106,7 +107,24 @@ else {
     const pb = await open(await login("karin@tegels.invalid", "karin-wachtwoord"), 2);
     assert.match(await tegel(pb, "team").innerText(), /Collega’s uitnodigen/, "beheerder: zoals altijd");
     assert.equal(await tegel(pb, "gegevens").getAttribute("aria-disabled"), null);
-    assert.deepEqual([...pt.fouten, ...pb.fouten], []);
+    // gebruikers-sweep 2026-11-14 02u (Sanne, toetsenbord): praktijkknop met naam maar niet ingelogd
+    // zette de focus in "Huidige kaart opslaan als"; nu in het inlogveld
+    const ctx3 = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.31.9.3" } });
+    await ctx3.addInitScript((pr) => { try { localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_praktijk", pr); } catch {} }, P);
+    const pu = await ctx3.newPage();
+    pu.fouten = []; pu.on("pageerror", (e) => pu.fouten.push(String(e)));
+    await pu.goto(origin + "/v2/app");
+    await pu.waitForSelector("#zb_praktijk", { timeout: 15000 });
+    await pu.evaluate((pr) => { const p = document.getElementById("praktijk"); if (p && !p.value) { p.value = pr; p.dispatchEvent(new Event("input", { bubbles: true })); } }, P);
+    await pu.evaluate(() => { document.querySelectorAll(".ov.on").forEach((o) => o.classList.remove("on")); });
+    await wacht(800);
+    await pu.focus("#zb_praktijk");
+    await pu.keyboard.press("Enter");
+    await pu.waitForFunction(() => /^ps_(email|ww)$/.test((document.activeElement || {}).id || ""), null, { timeout: 5000 })
+      .catch(async () => assert.fail("focus na praktijkknop zonder login: " + await pu.evaluate(() => document.activeElement && document.activeElement.id)));
+    await wacht(500);
+    assert.match(await pu.evaluate(() => document.activeElement.id), /^ps_(email|ww)$/, "focus blijft in het inlogveld");
+    assert.deepEqual([...pt.fouten, ...pb.fouten, ...pu.fouten], []);
     console.log("test-praktijktegels: browser OK");
   } catch (e) {
     console.error(uit.slice(-2000));

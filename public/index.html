@@ -1506,6 +1506,17 @@ bridge2.jpg</div>
         return;
       }
       klik('kaartenBtn')();
+      // beveiligd maar niet ingelogd: naar het inlogveld, niet naar "Huidige kaart opslaan als"
+      // (gebruikers-sweep 2026-11-14 02u, Sanne met toetsenbord)
+      // (de stand van de praktijk komt soms pas na het openen binnen: even wachten, hooguit 2 s)
+      var poging=0,zoek=function(){
+        if(typeof PRAKSLOT==='undefined'||poging++>20)return;
+        if(PRAKSLOT.bekend&&(PRAKSLOT.ingelogd||!PRAKSLOT.geclaimd))return;
+        var v=['ps_email','ps_ww'].map(function(i){return document.getElementById(i);}).filter(function(e){return e&&e.offsetParent;})[0];
+        if(PRAKSLOT.bekend&&v){v.scrollIntoView({block:'center'});v.focus();return;}
+        setTimeout(zoek,100);
+      };
+      setTimeout(zoek,60);
     });
     // ideeënbox (public/ideeenbox.js): ideeën voor Fysiplan plaatsen en erop stemmen
     var ideeen=function(){import('/ideeenbox.js?v=1').then(function(m){m.openIdeeenbox();}).catch(function(){alert('De ideeënbox kon niet laden. Probeer het zo opnieuw.');});};
