@@ -112,10 +112,21 @@ try {
   assert.equal(d.vanMij, true);
 
   // een echt andere praktijk met dezelfde naam kan nog steeds
+  // security 2026-11-14: een andere proef mag niet uitvinden of een adres lid is van "Fysio Duin"
+  // (het 409-antwoord "die van jou" was een orakel). Hij krijgt een eigen praktijk; Sanne logt gewoon in.
+  r = await post("/api/praktijk/claim", { ...claimLijf("sanne@nieuw.invalid", { nieuw: true }), naam: "Piet Ander", wachtwoord: "Ander-wachtwoord-99!" }, B);
+  d = await r.json();
+  assert.equal(r.status, 200, "geen orakel voor een ander adres dan dat van de eigen proef: " + JSON.stringify(d));
+  assert.equal(d.vanMij, undefined);
+  r = await post("/api/praktijk/login", { praktijk: "Fysio Duin", email: "sanne@nieuw.invalid", wachtwoord: "Lang-wachtwoord-2026!" }, {});
+  d = await r.json();
+  assert.notEqual(r.status, 409, "Sanne komt nog bij haar eigen praktijk: " + JSON.stringify(d));
+  assert.equal(d.tweedeStap, true, "Sanne's login gaat door naar de tweede stap: " + JSON.stringify(d));
+
   r = await post("/api/praktijk/claim", { ...claimLijf("ander@elders.invalid", { nieuw: true }), naam: "Piet Ander" }, B);
   d = await r.json();
   assert.equal(r.status, 200, JSON.stringify(d));
-  assert.equal(await aantal("Fysio Duin"), 2);
+  assert.equal(await aantal("Fysio Duin"), 3);
   assert.doesNotMatch(log, /TypeError|ReferenceError/);
   console.log("PASS tweede stap onderbroken: status vanMij/stapOpen, geen tweede praktijk met hetzelfde adres, inloggen gaat verder, andere praktijk kan nog");
 } catch (e) {

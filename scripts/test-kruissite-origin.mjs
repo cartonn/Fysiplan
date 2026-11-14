@@ -81,13 +81,13 @@ try {
 
   // id als lijst: geen kaart
   const lijst = await meting(7, {}, [ID]);
-  assert.equal(lijst.status, 404, "id als lijst vindt geen kaart");
+  assert.equal(lijst.status, 400, "id als lijst wordt geweigerd");
   const obj = await meting(7, {}, { toString: ID });
-  assert.equal(obj.status, 404, "id als object vindt geen kaart");
+  assert.equal(obj.status, 400, "id als object wordt geweigerd");
   assert.equal((await scores()).at(-1).s, 5);
   const gedaan = await fetch(origin + "/api/kaart/gedaan", { method: "POST",
     headers: { "content-type": "application/json", "x-forwarded-for": "10.33.1.1" }, body: JSON.stringify({ id: [ID], i: 0 }) });
-  assert.equal(gedaan.status, 404, "ook /api/kaart/gedaan weigert een lijst-id");
+  assert.equal(gedaan.status, 400, "ook /api/kaart/gedaan weigert een lijst-id");
 
   console.log("test-kruissite-origin: ok");
 } catch (err) {
