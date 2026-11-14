@@ -14,6 +14,8 @@ import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { KAARTEN_PROEF, KAARTEN_PER_LOGIN } from "../lib/plaatsen.js";
+import { readFileSync } from "node:fs";
+const serverBron = readFileSync(new URL("../server.js", import.meta.url), "utf8");
 
 const tekst = (html) => html.replace(/<style[\s\S]*?<\/style>|<head[\s\S]*?<\/head>/g, "").replace(/<[^>]+>/g, " ")
   .replace(/&euml;/g, "ë").replace(/&[a-z]+;/g, " ").replace(/\s+/g, " ");
@@ -46,6 +48,14 @@ await metServer(null, async (haal) => {
   assert.match(av, /Ideeënbox/, "art. 9 noemt de Ideeënbox als uitzondering");
   assert.match(av, /Fysiplan beter te maken/, "art. 9: wat Fysiplan met een idee mag");
   assert.doesNotMatch(av, /__[A-Z_]+__/, "geen open plekhouders");
+  // Legal 2026-11-14 05u: sinds #306 kan een praktijk een mislukte maandincasso zelf betalen
+  // (/v2/proef/maand-betalen); art. 4 zei alleen "we nemen contact met je op".
+  if (/\/v2\/proef\/maand-betalen/.test(serverBron)) assert.match(av, /die maand dan zelf betalen met iDEAL of je bankkaart/, "art. 4 noemt zelf betalen na een mislukte incasso");
+  // De app vraagt bij elke nieuwe versie meteen opnieuw akkoord (zonder blokkade); art. 11
+  // beloofde voor elke inhoudelijke wijziging 30 dagen vooraf. Nu: 30 dagen voor wat in je nadeel is.
+  assert.match(av, /Elke wijziging krijgt een nieuwe versie/, "art. 11: elke wijziging een nieuwe versie");
+  assert.match(av, /in je nadeel, dan melden we dat minstens 30 dagen vooraf/, "art. 11: 30 dagen voor een wijziging in je nadeel");
+  assert.match(av, /gewoon doorwerken/, "art. 11 zegt hetzelfde als de app: doorwerken kan");
 });
 // 2. inclusief en kleineondernemersregeling: de voorwaarden volgen de keuze, zoals de landing
 await metServer({ kor: "nee", prijsBtw: "inclusief" }, async (haal) => {

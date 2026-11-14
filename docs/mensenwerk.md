@@ -4,6 +4,17 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Voorwaarden 2026-11-14: zelf betalen en wijzigen (legal, 2026-11-14 05u)
+
+De voorwaarden zijn bijgewerkt naar versie 2026-11-14; een beheerder gaat in de app opnieuw akkoord (doorwerken kan gewoon).
+- Art. 4 zegt nu dat je een mislukte maandincasso zelf kunt betalen met iDEAL of bankkaart onder Mijn proef (zoals de app sinds #306 doet).
+- Art. 11 zei: "elke inhoudelijke wijziging 30 dagen vooraf". De app vraagt bij elke nieuwe versie meteen opnieuw akkoord. Nu staat er:
+  elke wijziging krijgt een nieuwe versie; wat in je nadeel is, melden we 30 dagen vooraf; een verduidelijking of iets in je voordeel gaat meteen in.
+
+**Vragen voor de jurist:** (1) Is dit onderscheid goed genoeg (BW 6:231 e.v.)? (2) Versie 2026-11-13 voerde een grens op lopende kaarten in
+(100 in de proef, 300 per login). Is dat "in je nadeel"? Zolang er geen betalende praktijken zijn, speelt het niet. Vanaf de eerste klant moet
+zo'n wijziging 30 dagen vooraf worden aangekondigd, en de app kent nog geen ingangsdatum per versie. Zeg het als dat gebouwd moet worden.
+
 ### Mails die een agent zelf schrijft: één vraag voor de jurist (legal, 2026-11-13 21u)
 
 Een mail die een agent met taalmodel zelf verstuurt (mailstand "automatisch" bij de support-agent) krijgt nu onderaan:
