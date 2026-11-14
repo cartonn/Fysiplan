@@ -1456,6 +1456,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // Zonder internet komt die kaart uit de cache van vóór de tik: een uitgevinkte oefening en een
   // uitgezette dagvink stonden na herladen weer aan, en na het versturen bleef die oude stand in
   // het geheugen hangen (gebruikers-sweep 2026-11-14, Truus).
+  var WACHT_SCORE={'/api/kaart/meting':'metingen','/api/kaart/psk':'psk','/api/kaart/ervaring':'ervaring'};
   function pasWachtToe(){
     if(!K||!K.kaart)return;
     var w=leesWacht();
@@ -1468,6 +1469,12 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         var dag=dagStr(t),g=(K.kaart.gedaan||[]).filter(function(x){return dagStr(x.t)!==dag;});
         if(it.body.aan!==false)g.push({t:t});
         K.kaart.gedaan=g;
+      }
+      // pijnscore, doelactiviteit en herstel: één score per dag, de tik uit de wachtrij vervangt
+      // die dag (offline 4 → 7 en herladen toonde weer 4; gebruikers-sweep 2026-11-14 22u, Truus)
+      else if(WACHT_SCORE[it.pad]&&isFinite(Number(it.body.score))){
+        var veld=WACHT_SCORE[it.pad],sd=dagStr(t);
+        K.kaart[veld]=(K.kaart[veld]||[]).filter(function(x){return dagStr(x.t)!==sd;}).concat([{t:t,s:Number(it.body.score)}]);
       }
     });
   }

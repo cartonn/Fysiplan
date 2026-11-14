@@ -2198,15 +2198,27 @@ bridge2.jpg</div>
   // de laatste opname-aanvraag onthouden: verloopt de QR (een kwartier), dan
   // start de 'Nieuwe QR-code'-knop dezelfde opname opnieuw zonder het venster
   // te sluiten en de hele flow opnieuw op te zoeken
-  var OPNAME_LAATSTE=null,OPNAME_TOKEN=null;
+  var OPNAME_LAATSTE=null,OPNAME_TOKEN=null,OPNAME_BEZIG=false;
   function startOpname(doel,naam,cb){
+    // dubbelklik of tweede tik terwijl de aanvraag loopt: geen tweede opname (sweep 14-11, Mark iPad)
+    if(OPNAME_BEZIG)return;
+    OPNAME_BEZIG=true;
+    // loopt er nog een eerdere opname (venster open, token pollt): die eerst teruggeven,
+    // zodat er nooit twee tokens tegelijk pollen en meetellen voor het plafond
+    if(opnamePoll){
+      stopOpname();
+      if(OPNAME_TOKEN)fetch('api/opname/stop',{method:'POST',headers:PJSON(),body:JSON.stringify({token:OPNAME_TOKEN})}).catch(function(){});
+    }
+    OPNAME_TOKEN=null;
     OPNAME_LAATSTE={doel:doel,naam:naam,cb:cb};
     var retry=document.getElementById('on_retry');if(retry)retry.style.display='none';
     var hdrs=PJSON();
     if(doel==='oefening')Object.assign(hdrs,ADMIN_HDR);
+    var vrij=function(){OPNAME_BEZIG=false;};
     fetch('api/opname/start',{method:'POST',headers:hdrs,body:JSON.stringify({doel:doel,naam:naam})})
       .then(function(r){return r.json();})
       .then(function(d){
+        vrij();
         // verlopen proef: dezelfde proefbalk als bij de andere knoppen, geen kale melding
         if(!d.ok&&d.proefVerlopen){toonProefVoorbij();return;}
         if(!d.ok){alert(d.fout||'Opname starten is niet gelukt.');return;}
@@ -2232,7 +2244,7 @@ bridge2.jpg</div>
             }).catch(function(){});
         },1500);
       })
-      .catch(function(){alert('Opname starten is niet gelukt: geen verbinding met de server.');});
+      .catch(function(){vrij();alert('Opname starten is niet gelukt: geen verbinding met de server.');});
   }
   document.getElementById('on_cancel').addEventListener('click',function(){
     // het wachtende token teruggeven, zodat het niet een kwartier meetelt voor het plafond van de praktijk
@@ -4552,7 +4564,16 @@ bridge2.jpg</div>
           .catch(function(){uDo.disabled=false;msg('Geen verbinding.');});
       });
       el.querySelectorAll('[data-tmrol]').forEach(function(sel){
+        // de rol pas wijzigen na een bevestiging: één pijltoets op de rolkeuze (waar de focus kan
+        // staan als het venster opent) maakte een collega stil beheerder (sweep 14-11 22u, Karin)
+        var oudeRol=sel.value;
         sel.addEventListener('change',function(){
+          var wie=(sel.getAttribute('aria-label')||'').replace(/^Rol van /,'')||'deze collega';
+          var vraag=sel.value==='beheerder'
+            ?wie+' beheerder maken? Een beheerder kan collega’s uitnodigen en verwijderen, rollen wijzigen, alle gegevens van de praktijk downloaden en alles wissen.'
+            :wie+' weer gewone therapeut maken? Beheerrechten vervallen dan meteen.';
+          if(!confirm(vraag)){sel.value=oudeRol;return;}
+          oudeRol=sel.value;
           teamPost('rol',{id:sel.getAttribute('data-tmrol'),rol:sel.value}).then(function(r){if(!r.ok)msg(r.fout||'Dat lukte niet.');laadTeam();});
         });
       });
@@ -6967,14 +6988,17 @@ bridge2.jpg</div>
         var pr=(SET.praktijk||'').trim(),naam=EV_OEF.naam;
         var nietKlaar=function(){alert('Een eigen video opnemen kan zodra je praktijk een wachtwoord heeft en je bent ingelogd. Dat regel je onder Kaarten. Een YouTube-link koppelen kan nu al.');};
         if(!pr){nietKlaar();return;}
+        // dubbelklik: één controle, één opname
+        var knop=this;if(knop.disabled)return;knop.disabled=true;
         fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
           .then(function(r){return r.json();})
           .then(function(d){
+            knop.disabled=false;
             if(!d.geclaimd||!d.ingelogd){nietKlaar();return;}
             closeOv('ovEigenVideo');
             startOpname('kaart',naam,function(pad){zetOpnameVideo(naam,pad);});
           })
-          .catch(function(){alert('Geen verbinding met de server.');});
+          .catch(function(){knop.disabled=false;alert('Geen verbinding met de server.');});
       });
     }
     document.getElementById('ev_titel').textContent='Eigen instructievideo \u2014 '+o.naam;
@@ -7117,7 +7141,8 @@ bridge2.jpg</div>
       setTimeout(function(){
         if(!ov.classList.contains('on')||ov.contains(document.activeElement))return;
         var f=focusbare(ov),m=ov.querySelector('.modal')||ov;
-        var eerste=f.filter(function(el){return /INPUT|SELECT|TEXTAREA/.test(el.tagName);})[0]||f[0]||m;
+        // geen keuzelijst als eerste: een pijltoets wijzigt die meteen (rolkeuze in Team, sweep 14-11)
+        var eerste=f.filter(function(el){return /INPUT|TEXTAREA/.test(el.tagName);})[0]||f.filter(function(el){return el.tagName!=="SELECT";})[0]||m;
         try{eerste.focus();}catch(e){}
       },30);
     }

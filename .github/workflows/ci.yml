@@ -118,6 +118,9 @@ jobs:
       - run: npm run test:eigenoefproef
       - run: npm run test:kaarthangt
       - run: npm run test:hernoemvolledig
+      - run: npm run test:opnamedubbel
+      - run: npm run test:offlinescore
+      - run: npm run test:teamrolbevestig
       - run: npm run test:seintjevoorrang
       - run: npm run test:seintjestand
       - run: npm run test:vertaaldeels

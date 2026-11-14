@@ -450,6 +450,12 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL (gebruikers-sweep 2026-11-14 22u, Karin, gemeten) — nog niet elke geweigerde poging van een collega staat in
+  Activiteit**: kaart van een collega naar de prullenbak (403, server.js r. ~7040), herstellen (r. ~7082) en definitief
+  verwijderen (r. ~7106), opnieuw akkoord door een therapeut (r. ~4380) en "proef doorgaan" geven netjes 403 maar geen
+  `auditGeweigerd`. De 13 andere routes van #317/#320 staan er wel in. LAAG erbij: een download door de beheerder
+  (`alles-gedownload`) staat niet in `relevant` (r. ~4705) en de app heeft geen label voor `akkoord`; 13 weigeringen in een
+  minuut vullen de hele lijst van 15 regels (uitnodigen/aannemen verdwijnen uit beeld).
 - **MIDDEL (gebruikers-sweep 2026-11-14 18u, Mark, gemeten 200) — met een verlopen proef kan afhandelen nog**:
   `/api/praktijk/inbox/afgehandeld`, `/api/kaart/seintje/gezien` en `/api/kaart/dossier` staan niet in `PROEF_SCHRIJFROUTES`
   (server.js r. ~1420–1423), terwijl de app "niet meer beantwoorden of afhandelen" belooft (index.html r. ~6740) en

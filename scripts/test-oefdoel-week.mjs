@@ -13,7 +13,10 @@ import { trouwTik } from "../lib/patient-routes.js";
 const root = process.cwd();
 const dag = 864e5;
 const nlDag = (t) => new Date(t).toLocaleDateString("sv-SE", { timeZone: "Europe/Amsterdam" });
-const week = [6, 5, 4, 3, 2, 1, 0].map((i) => nlDag(Date.now() - i * dag));
+// rekenen vanaf 12:00 UTC van vandaag (NL-datum): met Date.now() - i * dag gaf een sprong over de
+// zomertijd tussen 22 en 23 uur UTC twee keer dezelfde dag (80 !== 81 in de sweep van 14-11 22u)
+const basis = Date.parse(nlDag(Date.now()) + "T12:00:00Z");
+const week = [6, 5, 4, 3, 2, 1, 0].map((i) => nlDag(basis - i * dag));
 
 // 1. server: afvinkdagen per oefening
 {
@@ -39,7 +42,7 @@ const week = [6, 5, 4, 3, 2, 1, 0].map((i) => nlDag(Date.now() - i * dag));
   assert.equal(oud.n, 6);
   // plafond: niet meer dan 60 dagen bewaard
   const lang = { n: 0, d: "" };
-  for (let i = 80; i >= 0; i--) trouwTik(lang, nlDag(Date.now() - i * dag), true);
+  for (let i = 80; i >= 0; i--) trouwTik(lang, nlDag(basis - i * dag), true);
   assert.equal(lang.ds.length, 60, "hooguit 60 dagen");
   assert.equal(lang.n, 81, "het totaal telt door");
   // rare waarden in ds worden genegeerd
