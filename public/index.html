@@ -4637,7 +4637,9 @@ bridge2.jpg</div>
       'tweede-stap-aan':'tweede stap bij het inloggen aangezet','tweede-stap-uit':'tweede stap bij het inloggen uitgezet','tweede-stap-gewist':'tweede stap gewist',
       'tweede-stap-mislukt':'foute code na een goed wachtwoord','tweede-stap-op-slot':'te veel foute codes na een goed wachtwoord; de code-app werkt 24 uur niet','ingelogd-met-reservecode':'ingelogd met een reservecode','reservecodes-vernieuwd':'nieuwe reservecodes gemaakt','vragen-aangepast':'vaste vragen bij een oefening aangepast',
       'tweede-stap-verplicht':'tweede stap verplicht gemaakt voor iedereen','tweede-stap-niet-verplicht':'tweede stap niet meer verplicht',
-      'opzeggen-geweigerd':'opzeggen met het praktijkwachtwoord geweigerd','praktijknaam-gewijzigd':'praktijknaam gewijzigd'};
+      'opzeggen-geweigerd':'opzeggen met het praktijkwachtwoord geweigerd','praktijknaam-gewijzigd':'praktijknaam gewijzigd',
+      'oefening-verwijderen-geweigerd':'eigen oefening van een collega verwijderen geweigerd','vragen-aanpassen-geweigerd':'vaste vragen van een collega aanpassen geweigerd',
+      'sjabloon-verwijderen-geweigerd':'teamsjabloon van een collega verwijderen geweigerd','profiel-wijzigen-geweigerd':'praktijkprofiel aanpassen geweigerd (geen beheerder)'};
     // bij een foute code is de naam die van de login waarop het gebeurde, niet van wie het deed
     var BIJ={'tweede-stap-mislukt':1,'tweede-stap-op-slot':1,'wachtwoord-vergeten-mail':1};
     // 'geclaimd' met een naam erbij: beveiligd met een eigen login, er is dan geen praktijkwachtwoord gezet
@@ -4649,7 +4651,7 @@ bridge2.jpg</div>
         box.innerHTML='<b style="color:var(--tekst,inherit)">Recente accountactiviteit</b> (nieuwste eerst, IP gemaskeerd):<br/>'+
           d.activiteit.map(function(a){
             var wn=new Date(a.t).toLocaleString('nl-NL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-            return esc(wn)+' — '+esc(a.actie==='geclaimd'&&a.wie?'praktijk beveiligd':(LBL[a.actie]||a.actie))+(a.wie?(BIJ[a.actie]?', login van ':' door ')+esc(a.wie):'')+(a.ip?' <small>('+esc(a.ip)+')</small>':'');
+            return esc(wn)+' — '+esc(a.actie==='geclaimd'&&a.wie?'praktijk beveiligd':(LBL[a.actie]||a.actie))+(a.wie?(BIJ[a.actie]?', login van ':' door ')+esc(a.wie):'')+(a.n>1?' ('+esc(String(a.n))+'×)':'')+(a.ip?' <small>('+esc(a.ip)+')</small>':'');
           }).join('<br/>');
       })
       .catch(function(){box.textContent='De activiteit is nu niet beschikbaar.';});
