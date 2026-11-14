@@ -1213,7 +1213,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // offline-banner: de kaart werkt offline (service worker), maar dat hoort de
   // patiënt ook te wéten — anders voelt een mislukte tik als een kapotte kaart
   var TOFF={nl:'Geen verbinding. Je ziet je laatst geladen kaart. Wat je aantikt, bewaren we op je telefoon tot je weer internet hebt.',en:'No connection. You see your last loaded card. What you tap is kept on your phone until you are online again.',de:'Keine Verbindung. Du siehst deine zuletzt geladene Karte. Was du antippst, bleibt auf deinem Handy, bis du wieder online bist.',fr:'Pas de connexion. Vous voyez votre dernière carte chargée. Ce que vous indiquez reste sur votre téléphone jusqu’au retour d’internet.',es:'Sin conexión. Ves tu última tarjeta cargada. Lo que marcas se guarda en tu teléfono hasta que vuelvas a tener internet.',pl:'Brak połączenia. Widzisz ostatnio wczytaną kartę. To, co zaznaczysz, zostaje w telefonie, aż znów będziesz mieć internet.',tr:'Bağlantı yok. Son yüklenen kartını görüyorsun. İşaretlediklerin, internet gelene kadar telefonunda saklanır.',ar:'لا يوجد اتصال. ترى آخر بطاقة تم تحميلها. ما تضغط عليه يُحفظ على هاتفك حتى يعود الإنترنت.',uk:'Немає з’єднання. Ти бачиш останню завантажену картку. Те, що ти позначаєш, зберігається на телефоні, доки не з’явиться інтернет.'};
-  function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(typeof navigator.onLine==='boolean'&&!navigator.onLine)?'block':'none';}
+  // UIT_KOPIE: de verbinding hing en de kaart kwam uit de offline-kopie (laadKaartApi); dan dezelfde balk,
+  // ook al zegt de browser dat hij online is (hertest Jayden 2026-11-14)
+  var UIT_KOPIE=false;
+  function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(UIT_KOPIE||(typeof navigator.onLine==='boolean'&&!navigator.onLine))?'block':'none';}
   window.addEventListener('online',tekenOfflijn);window.addEventListener('offline',tekenOfflijn);
   var TAF={nl:'Je volgende afspraak',en:'Your next appointment',de:'Dein nächster Termin',fr:'Votre prochain rendez-vous',es:'Tu próxima cita',pl:'Twoja następna wizyta',tr:'Bir sonraki randevun',ar:'موعدك القادم',uk:'Твій наступний візит'};
   // afgeronde behandeling: eerlijk over de bewaartermijn. De kaart verdwijnt na een
@@ -3994,7 +3997,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     return fetch(pad,{cache:'no-cache',signal:ac.signal}).then(function(r){clearTimeout(klok);return r;},function(e){
       clearTimeout(klok);
       if(!window.caches)throw e;
-      return caches.match(location.origin+pad).then(function(c){if(c)return c;throw e;},function(){throw e;});
+      return caches.match(location.origin+pad).then(function(c){if(c){UIT_KOPIE=true;return c;}throw e;},function(){throw e;});
     });
   }
   function toonStoring(status){

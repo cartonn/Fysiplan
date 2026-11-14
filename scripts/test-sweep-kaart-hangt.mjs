@@ -15,6 +15,8 @@ const root = process.cwd();
 const html = await readFile(join(root, "public/kaart.html"), "utf8");
 assert.match(html, /function laadKaartApi\(\)\{[\s\S]{0,400}new AbortController\(\)[\s\S]{0,200}KAART_WACHT_MS[\s\S]{0,400}caches\.match/,
   "laadKaartApi heeft een tijdgrens en valt terug op de offline-kopie");
+assert.match(html, /if\(c\)\{UIT_KOPIE=true;return c;\}/, "kaart uit de offline-kopie zet UIT_KOPIE");
+assert.match(html, /function tekenOfflijn\(\)\{[^\n]*UIT_KOPIE\|\|/, "offlinebalk ook bij een kaart uit de offline-kopie");
 assert.match(html, /laadKaartApi\(\)\.then\(function\(r\)\{\s*return r\.json\(\)/, "de kaart laadt via laadKaartApi");
 const ms = Number((html.match(/var KAART_WACHT_MS=(\d+);/) || [])[1]);
 assert.ok(ms >= 5000 && ms <= 20000, "tijdgrens tussen 5 en 20 s: " + ms);
