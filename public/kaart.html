@@ -3983,6 +3983,20 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     uk:{net:['Зараз немає з’єднання','Ваша картка нікуди не зникла, але зараз не завантажується. Спробуйте ще раз за хвилину.','Спробувати ще раз'],
       druk:['Зараз не працює','Ваша картка нікуди не зникла, але Fysiplan зараз не відповідає. Справа не у вашому інтернеті. Спробуйте ще раз за кілька хвилин.','Спробувати ще раз']}
   };
+  // De kaart ophalen met een grens: bleef de verbinding hangen (geen antwoord, geen fout), dan stond
+  // "Je kaart wordt geladen…" eindeloos zonder knop Opnieuw (gebruikers-sweep 2026-11-14, Jayden).
+  // Na KAART_WACHT_MS de laatst geladen kaart uit de offline-kopie, anders het storingsscherm.
+  var KAART_WACHT_MS=12000;
+  function laadKaartApi(){
+    var pad='/api/kaart?id='+id;
+    if(typeof AbortController!=='function')return fetch(pad,{cache:'no-cache'});
+    var ac=new AbortController(),klok=setTimeout(function(){ac.abort();},KAART_WACHT_MS);
+    return fetch(pad,{cache:'no-cache',signal:ac.signal}).then(function(r){clearTimeout(klok);return r;},function(e){
+      clearTimeout(klok);
+      if(!window.caches)throw e;
+      return caches.match(location.origin+pad).then(function(c){if(c)return c;throw e;},function(){throw e;});
+    });
+  }
   function toonStoring(status){
     geenLaden();
     var soort=(status===429||status>=500)?'druk':'net';
@@ -3999,7 +4013,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     // hele bibliotheek en het hele keuringsbestand binnenhaalt. Ontbreekt dat pakket (een
     // antwoord uit de offline-cache van een oudere versie), of klopt het niet, dan leest de
     // kaart de hele bestanden zoals eerst. Een kaart die niet bestaat haalt verder niets op.
-    fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){
+    laadKaartApi().then(function(r){
       return r.json().catch(function(){return {ok:false};}).then(function(d){if(d&&!d.ok)d.status=r.status;return d;});
     }).then(function(d){
       if(!d||!d.ok)return [d,[],null];

@@ -111,6 +111,7 @@
     "test:oefvinkje": "node scripts/test-sweep-oefvinkje-wachtrij.mjs",
     "test:offlineherladen": "node scripts/test-sweep-offline-herladen.mjs",
     "test:eigenoefproef": "node scripts/test-sweep-eigen-oefening-proef-voorbij.mjs",
+    "test:kaarthangt": "node scripts/test-sweep-kaart-hangt.mjs",
     "test:dubbeltik": "node scripts/test-sweep-dubbeltik-breedte.mjs",
     "test:kaartroutes": "node scripts/test-kaart-praktijkroutes.mjs",
     "test:sjablonenslot": "node scripts/test-sjablonen-onbeveiligd.mjs",

@@ -116,6 +116,7 @@ jobs:
       - run: npm run test:oefvinkje
       - run: npm run test:offlineherladen
       - run: npm run test:eigenoefproef
+      - run: npm run test:kaarthangt
       - run: npm run test:seintjevoorrang
       - run: npm run test:seintjestand
       - run: npm run test:vertaaldeels
