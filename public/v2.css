@@ -999,6 +999,8 @@ html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
   html.v2 .kp-tegel{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--panel,#fff);
     color:var(--ink);text-align:left;text-decoration:none;font:inherit;cursor:pointer}
   html.v2 .kp-tegel:hover{border-color:var(--brand)}
+  html.v2 .kp-tegel[aria-disabled="true"]{cursor:default;background:var(--bg,#F2F5F3)}
+  html.v2 .kp-tegel[aria-disabled="true"]:hover{border-color:var(--line)}
   html.v2 .kp-tegel:focus-visible{outline:none;box-shadow:var(--ring)}
   html.v2 .kp-tegel b{font-size:14.5px;color:var(--ink)}
   html.v2[data-scherm="vandaag"] .topbar #beeldKeuze,html.v2[data-scherm="patienten"] .topbar #beeldKeuze,html.v2[data-scherm="praktijk"] .topbar #beeldKeuze{visibility:hidden}

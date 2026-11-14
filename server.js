@@ -5637,7 +5637,8 @@ async function afhandelen(request, response) {
       const b = JSON.parse(await readBody(request, 1024 * 1024));
       const pk = praktijkVan(request, b.praktijk);
       if (await eisBeveiligdePraktijk(request, response, pk)) return;
-      const naam = cleanName(b.naam, 80);
+      // een lijst of object als naam werd "[object Object]" (gebruikers-sweep 2026-11-13 22u, Mark)
+      const naam = typeof b.naam === "string" ? cleanName(b.naam, 80) : "";
       if (!naam) { await sendJson(response, 400, { ok: false, fout: "Geef de oefening een naam." }); return; }
       const uitleg = String(b.uitleg || "").replace(/\s+/g, " ").trim().slice(0, 400);
       const m = String(b.img || "").match(/^data:image\/(jpeg|png);base64,([A-Za-z0-9+/=]+)$/);
@@ -5653,7 +5654,12 @@ async function afhandelen(request, response) {
       if (await bibliotheekHeeftNaam(naam)) { await sendJson(response, 409, { ok: false, bibliotheek: true, fout: "\u201c" + naam + "\u201d staat al in de bibliotheek. Gebruik die oefening, of geef je eigen oefening een andere naam (bijvoorbeeld met de naam van je praktijk erbij)." }); return; }
       const lijst = (praktijkOefeningen[pk] = praktijkOefeningen[pk] || []);
       if (lijst.length >= 200) { await sendJson(response, 400, { ok: false, fout: "Maximum van 200 eigen oefeningen bereikt." }); return; }
-      if (lijst.some((x) => x.naam.toLowerCase() === naam.toLowerCase())) { await sendJson(response, 409, { ok: false, fout: "Er is al een eigen oefening met deze naam." }); return; }
+      // Vergelijk zoals de app (normEx: zonder hoofdletters, accenten en tekens). "Abroller-Testdal" naast
+      // "Abroller Testdal" kreeg 200, terwijl de app ze als één oefening ziet en de laatste laat winnen
+      // (gebruikers-sweep 2026-11-13 22u, Mark). Een naam van alleen tekens valt terug op hoofdletters.
+      const zelfde = (a) => { const x = normEx(a), y = normEx(naam); return x && y ? x === y : String(a || "").toLowerCase() === naam.toLowerCase(); };
+      const dubbel = lijst.find((x) => zelfde(x.naam));
+      if (dubbel) { await sendJson(response, 409, { ok: false, fout: "Er is al een eigen oefening met deze naam: “" + dubbel.naam + "”. Kies een andere naam." }); return; }
       const id = "po_" + randomBytes(6).toString("hex");
       const file = "oef-" + id.slice(3) + (m[1] === "png" ? ".png" : ".jpg");
       const maker = sessieVan(request);

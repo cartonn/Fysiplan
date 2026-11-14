@@ -221,7 +221,8 @@
     "test:proeftokenverloop": "node scripts/test-proef-token-verloop.mjs",
     "test:foutpagina": "node scripts/test-foutpagina.mjs",
     "test:ipadkop": "node scripts/test-sweep-ipadkop.mjs",
-    "test:oefweg": "node scripts/test-sweep-kaart-oefweg.mjs"
+    "test:oefweg": "node scripts/test-sweep-kaart-oefweg.mjs",
+    "test:praktijktegels": "node scripts/test-sweep-praktijktegels-rol.mjs"
   },
   "engines": {
     "node": ">=20"
