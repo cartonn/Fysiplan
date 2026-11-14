@@ -114,6 +114,7 @@
     "test:kaarthangt": "node scripts/test-sweep-kaart-hangt.mjs",
     "test:hernoemvolledig": "node scripts/test-sweep-hernoem-volledig.mjs",
     "test:opnamedubbel": "node scripts/test-sweep-opname-dubbelklik.mjs",
+    "test:offlinescore": "node scripts/test-sweep-offline-score.mjs",
     "test:dubbeltik": "node scripts/test-sweep-dubbeltik-breedte.mjs",
     "test:kaartroutes": "node scripts/test-kaart-praktijkroutes.mjs",
     "test:sjablonenslot": "node scripts/test-sjablonen-onbeveiligd.mjs",
