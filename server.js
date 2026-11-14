@@ -4650,7 +4650,8 @@ async function afhandelen(request, response) {
       "uitnodiging-aangenomen", "collega-verwijderd", "rol-gewijzigd", "team-wijziging-geweigerd", "praktijkwachtwoord-uit", "praktijkwachtwoord-aan", "akkoord", "kaart-verwijderd", "kaart-hersteld", "kaart-definitief-verwijderd", "profiel-gewijzigd",
       "abonnement-opgezegd", "opzeggen-mislukt", "opzeggen-geweigerd", "praktijknaam-gewijzigd",
       "tweede-stap-aan", "tweede-stap-uit", "tweede-stap-gewist", "tweede-stap-mislukt", "tweede-stap-op-slot", "ingelogd-met-reservecode", "reservecodes-vernieuwd",
-      "tweede-stap-verplicht", "tweede-stap-niet-verplicht", "vragen-aangepast"]);
+      "tweede-stap-verplicht", "tweede-stap-niet-verplicht", "vragen-aangepast",
+      "sjabloon-verwijderd", "oefening-verwijderd"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
       .slice(0, 15)
@@ -5726,6 +5727,9 @@ async function afhandelen(request, response) {
       }
       const [weg] = lijst.splice(idx, 1);
       await saveJson(praktijkOefeningenPath, praktijkOefeningen);
+      // spoor in Activiteit: een beheerder kan werk van een collega voor de hele praktijk weghalen
+      // (gebruikers-sweep 2026-11-14 02u, Karin: dat gebeurde zonder spoor)
+      auditLog(pk, "oefening-verwijderd", request);
       if (/^uploads\/oef-[a-f0-9]{12}\.(jpg|png)$/.test(weg.img)) { try { await unlink(join(dataDir, weg.img)); } catch {} }
       // ook de vertalingen van de naam (tenzij een bibliotheek- of andere eigen oefening zo heet)
       try { await vertaalCacheOpschonen(); } catch {}

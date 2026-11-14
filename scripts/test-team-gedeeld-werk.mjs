@@ -126,6 +126,14 @@ try {
   assert.match(html, /alleen die collega of een beheerder van de praktijk verwijderen/, "app legt uit wie het wel mag");
   assert.equal((await post("/api/praktijk/oefeningen/verwijder", { praktijk: P, id: oJ }, J)).status, 200, "Joris verwijdert zijn eigen oefening");
   assert.equal((await post("/api/praktijk/oefeningen/verwijder", { praktijk: P, id: oS }, S)).status, 200, "beheerder verwijdert");
+  // gebruikers-sweep 2026-11-14 (Karin): werk van een collega verdween zonder spoor in Activiteit
+  const act = (await (await get("/api/praktijk/activiteit?praktijk=" + encodeURIComponent(P), S)).json()).activiteit || [];
+  const acties = act.map((e) => e.actie);
+  assert.equal(acties.filter((a) => a === "oefening-verwijderd").length, 2, "beide verwijderde eigen oefeningen staan in Activiteit: " + acties.join(","));
+  assert.ok(acties.includes("sjabloon-verwijderd"), "verwijderd teamsjabloon staat in Activiteit");
+  assert.ok(act.find((e) => e.actie === "oefening-verwijderd").wie, "met wie het deed");
+  assert.match(html, /'oefening-verwijderd':'[^']+'/, "app heeft een leesbare regel voor de oefening");
+  assert.match(html, /'sjabloon-verwijderd':'[^']+'/, "app heeft een leesbare regel voor het sjabloon");
 
   // ---- gebruikers-sweep 2026-11-12: het gedeelde wachtwoord wist niet de hele praktijk (met de eigenaar) ----
   const wisGedeeld = await formulier("/v2/gegevens/wissen", { praktijk: P, wachtwoord: "praktijk-wachtwoord", zeker: "WISSEN" });
