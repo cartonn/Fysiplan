@@ -15,7 +15,7 @@ import { createRequire } from "node:module";
 const root = process.cwd();
 const idx = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(idx, /function kaartIsWeg\(\)/, "editor onthoudt dat zijn kaart weg is");
-assert.match(idx, /if\(kaartIsWeg\(\)\)\{toonKaartWegHint\(\);return;\}/, "geen autosave van een verwijderde kaart");
+assert.match(idx, /if\(kaartIsWeg\(\)&&OPNIEUW_DELEN!==KAART_ID\)\{toonKaartWegHint\(\);return;\}/, "geen autosave van een verwijderde kaart");
 // de vraag staat vóór het maken en versturen van de kaart (ervoor staat alleen nog de weigering
 // zolang de open kaart van v2 niet is hersteld, zie test-open-kaart.mjs)
 const deel = (idx.match(/\n  function saveServerCard\(naam,cb,keuze\)\{[\s\S]*?\n  \}\n/) || [""])[0];

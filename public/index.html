@@ -1135,7 +1135,7 @@ bridge2.jpg</div>
   // Dan geen stille nieuwe kaart meer bij autosave, QR of printen: eerst een vraag
   // (sweep 2026-11-11 18u, Sanne: na "Definitief verwijderen" maakte één klik op "Test de QR"
   // de patiëntkaart stil opnieuw aan, met een nieuwe link). Bewaard over herladen heen.
-  var KAART_WEG='';
+  var KAART_WEG='',OPNIEUW_DELEN='';
   try{KAART_WEG=localStorage.getItem('fp_kaartweg')||'';}catch(e){}
   function kaartIsWeg(){return !!(KAART_WEG&&KAART_ID&&KAART_WEG===KAART_ID);}
   function zetKaartWeg(id){KAART_WEG=id||'';try{if(KAART_WEG)localStorage.setItem('fp_kaartweg',KAART_WEG);else localStorage.removeItem('fp_kaartweg');}catch(e){}}
@@ -2803,6 +2803,9 @@ bridge2.jpg</div>
       return true;
     }
     if(d.login){toonQrHint('De praktijknaam \u201c'+pr+'\u201d is beveiligd en je bent niet ingelogd. Log in via Kaarten.'+andereNaamZin(),[{act:'beveilig',label:'Inloggen'}]);return true;}
+    // de kaart met deze naam staat in de prullenbak: eerder kwam deze 409 nergens op het scherm
+    if(d.verwijderd){toonQrHint('Niet gedeeld: \u201c'+naam+'\u201d staat in de prullenbak. Zet de kaart terug via Kaarten \u2192 Prullenbak \u2192 Herstellen. Gaat het om een andere pati\u00ebnt? Geef deze kaart een andere roepnaam, bijvoorbeeld met een initiaal.');return true;}
+    if(d.fout){toonQrHint(d.fout);return true;}
     return false;
   }
   // volledige naam -> roepnaam met initiaal. Staat er op de server al een kaart met
@@ -2941,8 +2944,9 @@ bridge2.jpg</div>
         [{act:'roepnaam',label:'Maak er \u201c'+voorstel+'\u201d van'},{act:'naamok',label:'Toch zo laten'}]);
       laatsteDeel='';return;
     }
-    if(kaartIsWeg()){toonKaartWegHint();return;}
+    if(kaartIsWeg()&&OPNIEUW_DELEN!==KAART_ID){toonKaartWegHint();return;}
     var c=serverKaart(naam);
+    var opnieuw=kaartIsWeg();if(opnieuw){c.kaartId='';delete c.basisTs;}
     // vergelijken zonder tijdstempel en kaart-id: alleen een echte wijziging wordt een POST
     var afdruk=JSON.stringify(Object.assign({},c,{ts:0,kaartId:'',overschrijf:false,basisTs:0}));
     if(afdruk===laatsteDeel)return;
@@ -2954,16 +2958,17 @@ bridge2.jpg</div>
           // zonder proefcookie serveert /v2/app gewoon weer de app, en dan herlaadde
           // hij eindeloos (gebruikers-sweep 2026-11-06, iPad)
           if(d.proefVerlopen){toonProefVoorbij(null,true);return;}
-          laatsteDeel='';
+          laatsteDeel='';OPNIEUW_DELEN='';
           toonDeelWeigering(d,naam);
           return;
         }
         laatsteDeel=afdruk;
+        if(opnieuw){zetKaartWeg('');OPNIEUW_DELEN='';}
         Object.keys(OPNAME_NIEUW).forEach(function(k){if(c.vids&&c.vids[k]===OPNAME_NIEUW[k])delete OPNAME_NIEUW[k];});
         zetKaartId(d.id,d.ts);OVERSCHRIJF='';
         ensureQr(function(){toonQr(d.id);});
       })
-      .catch(function(){});
+      .catch(function(){OPNIEUW_DELEN='';});
   }
   // na een 409 verouderd: de versie van de server in deze editor laden (zelfde
   // stappen als Openen in Kaarten), zodat er niets van het andere apparaat verloren gaat
@@ -2999,7 +3004,10 @@ bridge2.jpg</div>
       else if(a==='naamok'){NAAM_OK=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
       else if(a==='hernoem'){HERNOEM_VOOR=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
       else if(a==='nieuwkaart'){zetKaartId('',0);laatsteDeel='';deelNu();}
-      else if(a==='opnieuwdelen'){zetKaartWeg('');zetKaartId('',0);laatsteDeel='';deelNu();}
+      // de markering blijft tot de server de nieuwe kaart heeft; een 409 (kaart staat nog in de
+      // prullenbak) verloor anders de markering, en dan maakte Test de QR na Definitief verwijderen
+      // stil een nieuwe kaart (sweep 2026-11-14 10u, Sanne)
+      else if(a==='opnieuwdelen'){OPNIEUW_DELEN=KAART_ID;laatsteDeel='';deelNu();}
       return;
     }
     if(e.target.id!=='qrx')return;
@@ -5053,7 +5061,8 @@ bridge2.jpg</div>
       if(!confirm('Deze kaart is verwijderd. Opnieuw delen maakt een nieuwe patiëntkaart met een nieuwe QR-code.\n\nOK = opnieuw delen\nAnnuleren = niets delen')){
         cb({ok:false,geannuleerd:true,fout:'Niet gedeeld: deze kaart is verwijderd.'});return;
       }
-      zetKaartWeg('');zetKaartId('',0);keuze='nieuw';
+      // markering pas weg als de server de nieuwe kaart heeft (zie opnieuwdelen)
+      keuze='nieuw';
     }
     var c=serverKaart(naam);
     if(keuze==='hernoem')c.hernoem=true;
@@ -5081,7 +5090,7 @@ bridge2.jpg</div>
         // (en daarmee QR en autosave). Bleef hier de oude naam staan, dan gaf elke autosave
         // 409 "bestaat al" en zette "Ja, die kaart bijwerken" de editor stil terug op de
         // kaart van de vorige patiënt (sweep 2026-11-09, Sanne)
-        if(d&&d.ok&&d.id&&keuze==='nieuw'){zetKaartId(d.id,d.ts);volgNieuweKaart(naam,d);cb(d);return;}
+        if(d&&d.ok&&d.id&&keuze==='nieuw'){if(KAART_WEG)zetKaartWeg('');zetKaartId(d.id,d.ts);volgNieuweKaart(naam,d);cb(d);return;}
         // ook bij de eerste deling (nog geen KAART_ID) het id onthouden: anders gaf elke
         // volgende opslag een 409 "bestaat al" over de eigen kaart en kwam een daarna
         // opgenomen eigen video nooit op de kaart van de patiënt (sweep 2026-11-08, Mark)

@@ -133,6 +133,7 @@
     "test:nietvertaald": "node scripts/test-sweep-niet-vertaald.mjs",
     "test:vertaallaat": "node scripts/test-sweep-vertaal-laat.mjs",
     "test:kaartweg": "node scripts/test-sweep-kaart-weg.mjs",
+    "test:opnieuwdelen": "node scripts/test-sweep-opnieuw-delen.mjs",
     "test:v2contrast": "node scripts/test-sweep-v2-contrast.mjs",
     "test:focusring": "node scripts/test-sweep-focusring.mjs",
     "test:seinvenster": "node scripts/test-seintje-venster.mjs",
