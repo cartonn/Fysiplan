@@ -5057,12 +5057,13 @@ bridge2.jpg</div>
       cb({ok:false,fout:BIB_REDEN==='login'?'Log eerst in. De kaart die hier open stond, komt daarna terug; tot dan wordt er niets gedeeld.':'De oefeningen zijn niet geladen, dus de kaart is niet gedeeld. Probeer het opnieuw via de melding bovenaan.'});
       return;
     }
+    var wasWeg=false;
     if(kaartIsWeg()){
       if(!confirm('Deze kaart is verwijderd. Opnieuw delen maakt een nieuwe patiëntkaart met een nieuwe QR-code.\n\nOK = opnieuw delen\nAnnuleren = niets delen')){
         cb({ok:false,geannuleerd:true,fout:'Niet gedeeld: deze kaart is verwijderd.'});return;
       }
       // markering pas weg als de server de nieuwe kaart heeft (zie opnieuwdelen)
-      keuze='nieuw';
+      keuze='nieuw';wasWeg=true;
     }
     var c=serverKaart(naam);
     if(keuze==='hernoem')c.hernoem=true;
@@ -5090,7 +5091,7 @@ bridge2.jpg</div>
         // (en daarmee QR en autosave). Bleef hier de oude naam staan, dan gaf elke autosave
         // 409 "bestaat al" en zette "Ja, die kaart bijwerken" de editor stil terug op de
         // kaart van de vorige patiënt (sweep 2026-11-09, Sanne)
-        if(d&&d.ok&&d.id&&keuze==='nieuw'){if(KAART_WEG)zetKaartWeg('');zetKaartId(d.id,d.ts);volgNieuweKaart(naam,d);cb(d);return;}
+        if(d&&d.ok&&d.id&&keuze==='nieuw'){zetKaartId(d.id,d.ts);volgNieuweKaart(naam,d);if(wasWeg)zetKaartWeg('');cb(d);return;}
         // ook bij de eerste deling (nog geen KAART_ID) het id onthouden: anders gaf elke
         // volgende opslag een 409 "bestaat al" over de eigen kaart en kwam een daarna
         // opgenomen eigen video nooit op de kaart van de patiënt (sweep 2026-11-08, Mark)
