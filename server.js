@@ -1573,6 +1573,7 @@ for (const p of Object.values(proeven)) {
   if (p.abonnement?.incasso?.id) mollieBetaalIndex.set(p.abonnement.incasso.id, p.id);
   if (p.abonnement?.incasso?.zelf?.id) mollieBetaalIndex.set(p.abonnement.incasso.zelf.id, p.id);
 }
+const zelfBetalenBezig = new Set(); // proef-id's met een lopende aanvraag "maand zelf betalen"
 // Maandincasso na de eerste maand: pas aan met MOLLIE_INCASSO=aan (naast de sleutel), zodat
 // Ahmed het eerst met een testsleutel kan proberen (voorwaarden art. 4 beschrijven het). Alleen als mail werkt:
 // de voorwaarden beloven dat de praktijk het vooraf hoort. Zonder: niets verandert.
@@ -8443,8 +8444,25 @@ async function afhandelen(request, response) {
     const host = eigenHost(request), kaal = host.split(":")[0];
     const lokaal = kaal === "localhost" || kaal === "127.0.0.1";
     const basis = (lokaal ? "http://" : "https://") + host;
+    // Eén poging tegelijk per praktijk, en een vorige poging die bij Mollie nog loopt (tweede
+    // tabblad, terugknop, dubbelklik) krijgt geen opvolger: anders kon de praktijk die oude
+    // poging alsnog betalen terwijl de server hem al vergeten was (geld weg, maand nog open)
+    // of de maand twee keer betalen.
+    if (zelfBetalenBezig.has(p.id)) { response.writeHead(303, { location: "/v2/proef/maand-betaald" }); response.end(); return; }
+    zelfBetalenBezig.add(p.id);
     try {
       const vorige = p.abonnement.incasso.zelf?.id;
+      if (vorige) {
+        const oud = await mollie("/payments/" + encodeURIComponent(vorige), { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS });
+        if (!oud || oud.id !== vorige) throw new Error("vorige poging onbekend");
+        if (!["failed", "canceled", "expired"].includes(oud.status)) {
+          if (oud.status === "paid") await zelfVerwerk(p, oud);
+          const verder = String(oud?._links?.checkout?.href || "");
+          const doorgaan = oud.status === "open" && /^https:\/\//.test(verder) ? verder : "/v2/proef/maand-betaald";
+          response.writeHead(303, { location: doorgaan }); response.end();
+          return;
+        }
+      }
       const betaling = await mollie("/payments", { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS, methode: "POST",
         body: zelfBetalenVerzoek(p, basis + "/v2/proef/maand-betaald", lokaal ? "" : basis + "/api/mollie/webhook") });
       const checkout = String(betaling?._links?.checkout?.href || "");
@@ -8458,6 +8476,8 @@ async function afhandelen(request, response) {
       console.error("mollie maand zelf betalen mislukt:", err.message);
       await serveerProef(request, response, "bericht", { TITEL: "Betalen", ETIKET: "Betalen", KOP: "Online betalen lukt op dit moment niet.",
         TEKST: "Er is niets afgeschreven en je kunt gewoon verder. Probeer het later opnieuw, of wacht tot we je bellen.", KNOP_HTML: terug }, 502);
+    } finally {
+      zelfBetalenBezig.delete(p.id);
     }
     return;
   }
