@@ -4337,7 +4337,12 @@ async function afhandelen(request, response) {
       // therapeut bewust "andere praktijk met dezelfde naam" (nieuw: true), dan krijgt
       // die een eigen code; niemand kan een naam meer vooraf voor een ander bezetten.
       const bezet = praktijkGeclaimd(nk) || accountsMetNaam(nk).length > 0;
-      if (bezet && b.nieuw === true && eigen && eigenLidOnderNaam(nk, eigen.email)) {
+      // Alleen voor het adres van de proef op dit apparaat (zoals /api/praktijk/status met vanMij):
+      // anders vertelde dit antwoord iedereen met een proef of een willekeurig e-mailadres lid is van
+      // een praktijk met die naam (security 2026-11-14, accountlaag). Een ander adres krijgt gewoon een
+      // eigen praktijk; inloggen bij de echte praktijk blijft werken, want dat vraagt ook het wachtwoord.
+      const proefAdres = normEmail((proefVan(request) || {}).email);
+      if (bezet && b.nieuw === true && eigen && proefAdres && proefAdres === eigen.email && eigenLidOnderNaam(nk, eigen.email)) {
         await sendJson(response, 409, { ok: false, login: true, vanMij: true, veld: "email",
           fout: "Met dit e-mailadres bestaat deze praktijk al: het is die van jou. Log in met je e-mail en wachtwoord. Was je tweede stap nog niet af, dan ga je daarna verder waar je was." });
         return;
@@ -6344,6 +6349,9 @@ async function afhandelen(request, response) {
   // opname starten: geeft een kortlevend token terug; de scherm-QR wijst naar /opname/<token>
   if (urlPath === "/api/opname/start" && request.method === "POST") {
     if (schrijfLimiet(request, response)) return;
+    // zoals /stop en /upload: een andere site mag met de cookie van een ingelogde therapeut geen
+    // opnametokens laten aanmaken (die tellen tegen het plafond van 20 per praktijk)
+    if (kruisSite(request)) { await weigerKruis(response); return; }
     // sinds de eigen opname uit de app is verdwenen start alleen de beheerder nog
     // opnames; zonder deze grendel kan iedereen uploadtokens munten en de schijf
     // volschrijven met video's van 60 MB per stuk

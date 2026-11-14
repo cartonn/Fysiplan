@@ -100,7 +100,9 @@ try {
 
   // onzin-moment: toekomst of te lang geleden telt als nu
   const id2 = await nieuweKaart("Bep");
-  for (const w of [nu + 3 * DAG, nu - 60 * DAG, "gisteren", 1e20]) {
+  // een wanneer die geen getal is, wordt sinds 2026-11-14 geweigerd (security-backlog, invoer op /k)
+  assert.equal((await post("/api/kaart/meting", { id: id2, score: 2, wanneer: "gisteren" })).status, 400, "wanneer als tekst: 400");
+  for (const w of [nu + 3 * DAG, nu - 60 * DAG, 1e20]) {
     const r = await (await post("/api/kaart/meting", { id: id2, score: 2, wanneer: w })).json();
     assert.equal(r.ok, true);
     assert.equal(r.metingen.length, 1);
