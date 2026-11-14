@@ -4,6 +4,17 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### AI-geletterdheid (art. 4 AI-verordening) en AI in de voorwaarden (legal, 2026-11-14 21u)
+
+De voorwaarden zeggen nu in artikel 2 welke delen van Fysiplan met AI zijn gemaakt of met AI werken, en dat AI nooit zelf
+een oefening of dosering op een kaart zet. Dat is een verduidelijking: beheerders zien de vraag om opnieuw akkoord, niet blokkerend.
+
+**Voor jou:** sinds 2 februari 2025 moet wie AI aanbiedt of gebruikt zorgen dat de mensen die ermee werken er genoeg van
+weten (art. 4 AI-verordening). Bij Fysiplan gaat het om wie de agents met taalmodel instelt en hun berichten goedkeurt, en om
+wie de HeyGen-video's en vertalingen nakijkt. Een korte eigen notitie volstaat waarschijnlijk: wat elke AI-functie doet, waar
+de grenzen liggen (geen diagnose, dosering of kaartvoorstel; gegevens naar een dienst in de VS), en wie wat controleert.
+Laat de jurist kijken of dat genoeg is. Bron: https://eur-lex.europa.eu/eli/reg/2024/1689/oj (art. 4, art. 113 onder a).
+
 ### Verwerkersovereenkomst 2026-11-14: medewerkers als betrokkenen (legal, 2026-11-14 13u)
 
 Art. 2 noemt nu naast patiënten ook de medewerkers van de praktijk (wie een kaart maakte, opende of bewaarde, en Activiteit),

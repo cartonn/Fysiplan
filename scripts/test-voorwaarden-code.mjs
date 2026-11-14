@@ -56,6 +56,19 @@ await metServer(null, async (haal) => {
   assert.match(av, /Elke wijziging krijgt een nieuwe versie/, "art. 11: elke wijziging een nieuwe versie");
   assert.match(av, /in je nadeel, dan melden we dat minstens 30 dagen vooraf/, "art. 11: 30 dagen voor een wijziging in je nadeel");
   assert.match(av, /gewoon doorwerken/, "art. 11 zegt hetzelfde als de app: doorwerken kan");
+  // Legal 2026-11-14 21u (g): de app gebruikt AI (video's en stem met AI gemaakt, vertaling en
+  // zoekhulp via vraagClaude), maar de voorwaarden noemden AI nergens. Art. 2 zegt nu welke delen
+  // en dat AI nooit zelf een oefening of dosering op een kaart zet (MDR-grens).
+  if (/vraagClaude\(/.test(serverBron)) {
+    assert.match(av, /Met AI\. Een deel van Fysiplan is met AI gemaakt of werkt met AI/, "art. 2 noemt dat Fysiplan AI gebruikt");
+    for (const deel of ["video", "stem", "vertaling", "zoekhulp"]) assert.match(av, new RegExp("Met AI\\.[^.]*" + deel), "art. 2 noemt " + deel);
+    assert.match(av, /AI zet nooit zelf een oefening of dosering op een kaart/, "art. 2: AI kiest geen oefening of dosering");
+  }
+  // de vraaghulp staat standaard uit: dan noemen de voorwaarden hem ook niet
+  assert.doesNotMatch(av, /\(de vraaghulp\)/, "vraaghulp uit: niet in de voorwaarden");
+  const akkoord = serverBron.match(/const AKKOORD_WIJZIGINGEN = \[[\s\S]*?\n\];/)[0];
+  const avVersie = serverBron.match(/const AV_VERSIE = "([^"]+)"/)[1];
+  assert.ok(akkoord.includes('stuk: "av", versie: "' + avVersie + '"'), "AKKOORD_WIJZIGINGEN noemt de huidige AV_VERSIE");
 });
 // 2. inclusief en kleineondernemersregeling: de voorwaarden volgen de keuze, zoals de landing
 await metServer({ kor: "nee", prijsBtw: "inclusief" }, async (haal) => {
