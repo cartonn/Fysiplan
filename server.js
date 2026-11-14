@@ -804,6 +804,13 @@ function auditGeweigerd(pk, actie, req, wieExpliciet) {
     if (Date.parse(a.t) < grens) break;
     if (a.actie === actie && (a.wie || "") === wie) {
       a.n = Math.min(9999, (Number(a.n) || 1) + 1);
+      // tijd en plek bijwerken: anders bleef de regel op het tijdstip van de eerste poging staan
+      // en zakte hij uit de 15 die Activiteit toont, terwijl de collega het net opnieuw probeerde
+      // (gebruikers-sweep 2026-11-14 18u, Karin; security-backlog MIDDEL)
+      a.t = new Date().toISOString();
+      if (req) a.ip = maskIp(clientIp(req));
+      const i = praktijkAudit.indexOf(a);
+      if (i > 0) { praktijkAudit.splice(i, 1); praktijkAudit.unshift(a); }
       saveJson(auditPath, praktijkAudit).catch(() => {});
       return;
     }
@@ -4704,7 +4711,8 @@ async function afhandelen(request, response) {
       "tweede-stap-verplicht", "tweede-stap-niet-verplicht", "vragen-aangepast",
       "sjabloon-verwijderd", "oefening-verwijderd",
       // geweigerde pogingen van een collega zonder beheerdersrol (auditGeweigerd, met teller `n`)
-      "oefening-verwijderen-geweigerd", "vragen-aanpassen-geweigerd", "sjabloon-verwijderen-geweigerd", "profiel-wijzigen-geweigerd"]);
+      "oefening-verwijderen-geweigerd", "vragen-aanpassen-geweigerd", "sjabloon-verwijderen-geweigerd", "profiel-wijzigen-geweigerd",
+      "alles-wissen-geweigerd", "download-geweigerd"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
       .slice(0, 15)
@@ -8807,13 +8815,13 @@ async function afhandelen(request, response) {
     const remNaam = em ? "mail:" + em : nk;
     if (remNaam && loginOpSlot(remNaam)) { await opnieuw(em ? "Te veel pogingen met dit e-mailadres; probeer het over een kwartier opnieuw." : "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
     if (beheerOpRem(request)) { await opnieuw("Te veel foute pogingen vanaf deze verbinding; probeer het over een paar minuten opnieuw.", 429); return; }
-    let pk = null, lid = null, geenBeheerder = false;
+    let pk = null, lid = null, geenBeheerder = null;
     if (nk && !verbodenSleutel.test(nk)) {
       if (em) {
         for (const k of accountsMetNaam(nk)) {
           const l = ledenVan(k).find((x) => x.email === em && lidActief(x) && checkHash(String(b.wachtwoord || ""), x.hash)) || null;
           if (l && l.rol === "beheerder") { lid = l; pk = k; break; }
-          if (l) geenBeheerder = true;
+          if (l && !geenBeheerder) geenBeheerder = { pk: k, lid: l };
         }
       } else pk = accountVoorLogin(nk, String(b.wachtwoord || ""));
     }
@@ -8821,7 +8829,10 @@ async function afhandelen(request, response) {
     // een collega met het juiste e-mailadres en wachtwoord maar zonder beheerdersrol: nee, maar
     // geen foute poging (het wachtwoord klopte), dus ook geen stap naar het slot
     if (!acc && geenBeheerder) {
-      auditLog(accountsMetNaam(nk)[0] || nk, wissen ? "alles-wissen-geweigerd" : "download-geweigerd", request, "geen beheerder");
+      // op de praktijk van die collega en met zijn naam, zodat de beheerder het in Activiteit ziet
+      // (gebruikers-sweep 2026-11-14 18u, Karin: stond alleen als "geen beheerder" in het log)
+      auditGeweigerd(geenBeheerder.pk, wissen ? "alles-wissen-geweigerd" : "download-geweigerd", request,
+        (geenBeheerder.lid.naam || geenBeheerder.lid.email) + " (geen beheerder)");
       await opnieuw("Alleen een beheerder van de praktijk kan hier downloaden of wissen. Vraag het een beheerder van je praktijk.", 403);
       return;
     }

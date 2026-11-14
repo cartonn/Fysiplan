@@ -171,6 +171,29 @@ try {
   assert.equal((await post("/api/praktijk/login", { email: "sanne@rollen.nl", wachtwoord: "sanne-wachtwoord" })).status, 200, "de beheerder kan nog inloggen");
   assert.equal((await formulier("/v2/gegevens/download", { praktijk: P, wachtwoord: "praktijk-wachtwoord" })).status, 200, "downloaden met het gedeelde wachtwoord blijft werken");
 
+  // ---- gebruikers-sweep 2026-11-14 18u (Karin), security-backlog MIDDEL: een therapeut die op /v2/gegevens alles
+  // probeert te downloaden of te wissen kreeg 403, maar de beheerder zag het niet in Activiteit (en zonder naam) ----
+  const mailMark = ["mark", "rollen.nl"].join("@");
+  assert.equal((await formulier("/v2/gegevens/download", { praktijk: P, email: mailMark, wachtwoord: "mark-wachtwoord" })).status, 403);
+  assert.equal((await formulier("/v2/gegevens/wissen", { praktijk: P, email: mailMark, wachtwoord: "mark-wachtwoord", zeker: "WISSEN" })).status, 403);
+  a2 = await activiteit();
+  assert.equal(rij(a2, "download-geweigerd", "Mark").length, 1, "download door Mark staat in Activiteit met naam: " + a2.map((e) => e.actie + "/" + e.wie).join(","));
+  assert.equal(rij(a2, "alles-wissen-geweigerd", "Mark").length, 1, "wissen door Mark staat in Activiteit met naam");
+  for (const actie of ["download-geweigerd", "alles-wissen-geweigerd"]) assert.match(html, new RegExp("'" + actie + "':'[^']+'"), "leesbare regel voor " + actie);
+
+  // ---- gebruikers-sweep 2026-11-14 18u (Karin), security-backlog MIDDEL: dezelfde poging later opnieuw verhoogde
+  // alleen de teller op de oude regel; tijd en plek bleven oud en de regel was al uit de 15 geduwd ----
+  const mailSanne = ["sanne", "rollen.nl"].join("@");
+  for (let i = 0; i < 16; i++) assert.equal((await post("/api/praktijk/login", { email: mailSanne, wachtwoord: "sanne-wachtwoord" })).status, 200);
+  a2 = await activiteit();
+  assert.equal(rij(a2, "profiel-wijzigen-geweigerd", "Mark").length, 0, "de oude poging is uit de 15 geduwd");
+  const voor = Date.now();
+  assert.equal((await post("/api/praktijken", { praktijk: P, adres: "Straat 2" }, M)).status, 403);
+  a2 = await activiteit();
+  assert.equal(a2[0].actie, "profiel-wijzigen-geweigerd", "de herhaalde poging staat weer bovenaan: " + a2.slice(0, 3).map((e) => e.actie).join(","));
+  assert.equal(a2[0].n, 2, "met de teller van beide pogingen");
+  assert.ok(Date.parse(a2[0].t) >= voor - 1000, "met de tijd van de laatste poging");
+
   // ---- verlopen proef: geen nieuwe collega's of eigen logins meer ----
   app.kill(); await wacht(200);
   const dag = 86400000;
