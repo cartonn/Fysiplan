@@ -70,6 +70,7 @@
     "test:tegroot": "node scripts/test-body-te-groot.mjs",
     "test:kruissite": "node scripts/test-kruissite-origin.mjs",
     "test:patientinvoer": "node scripts/test-patient-invoervorm.mjs",
+    "test:oudetik": "node scripts/test-oude-tik.mjs",
     "test:bodygeenobject": "node scripts/test-body-geen-object.mjs",
     "test:praktijkcode": "node scripts/test-praktijkcode.mjs",
     "test:team": "node scripts/test-team.mjs",

@@ -2119,6 +2119,14 @@ function werkdagenSinds(t, nu = Date.now()) {
 // de juiste dag staat; `ont` is wanneer de server hem kreeg. Inbox en dossierlabel
 // kijken naar het laatste van de twee, zodat een late tik toch als nieuw telt.
 const WACHT_MAX_TERUG = 14 * 86400000;
+// Een tik van meer dan 14 dagen terug, of meer dan een dag in de toekomst (klok van de
+// telefoon verkeerd), hoort niet op vandaag te landen: die weigert de server (400). Eerder
+// telde hij als "nu" en overschreef de pijnscore van vandaag (gebruikers-sweep 2026-11-14, Jayden).
+function tikBuitenBereik(b, nu) {
+  const w = Number(b && b.wanneer);
+  if (b == null || b.wanneer == null || !Number.isFinite(w)) return false;
+  return w < nu - WACHT_MAX_TERUG || w > nu + 86400000;
+}
 function tikMoment(b, nu) {
   const w = Number(b && b.wanneer);
   if (!Number.isFinite(w) || w > nu + 5 * 60000 || w < nu - WACHT_MAX_TERUG) return nu;
@@ -3698,7 +3706,7 @@ ideeenbox.start();
 let patientkant = null;
 const patientkantVan = () => patientkant || (patientkant = maakPatientkant({
   sendJson, readBody, schrijfLimiet, kruisSite, weigerKruis, vindKaart, idTekst, kaartMisLimiet, verbodenSleutel,
-  zetDagWaarde, tikMoment, tikVeld, nlDag, logContact, zetSeintje, seinVoorPatient, seinOpen, SEIN_GEWICHT, seinMailKan, kaartSleutel, seinMailRonde,
+  zetDagWaarde, tikMoment, tikBuitenBereik, tikVeld, nlDag, logContact, zetSeintje, seinVoorPatient, seinOpen, SEIN_GEWICHT, seinMailKan, kaartSleutel, seinMailRonde,
   bewaarKaarten: () => saveJson(kaartenPath, kaarten),
   telDag: (naam) => { const x = dagStats(vandaagKey()); x[naam] = (x[naam] || 0) + 1; bewaarStats(); }
 }));
