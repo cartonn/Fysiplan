@@ -1333,10 +1333,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var week=document.getElementById('gweek');
     // toon de oefenweek zodra er historie is, óf zodra de therapeut een oefendoel
     // heeft gezet (dan zie je je doel meteen, ook vóór de eerste keer oefenen)
-    if(!g.length&&!(Number(K.kaart.doel)>0)){week.style.display='none';return;}
+    // een oefendag is de dagvink óf een dag met minstens één afgevinkte oefening (keuze Ahmed 2026-11-12,
+    // zoals de app telt); eerder telde de kaart alleen de dagvink en zag wie alleen losse oefeningen
+    // afvinkte "0× deze week" (gebruikers-sweep 2026-11-14 14u, Jayden)
+    var tdagen=mgTrouwDagen(K.kaart.oefTrouw);
+    if(!g.length&&!tdagen.length&&!(Number(K.kaart.doel)>0)){week.style.display='none';return;}
     week.style.display='flex';
     document.getElementById('gweekTitel').textContent=trg('vweek');
-    var set={};g.forEach(function(x){set[dagStr(x.t)]=1;});
+    var set={};g.forEach(function(x){set[dagStr(x.t)]=1;});tdagen.forEach(function(d){set[d]=1;});
     var h='',nweek=0;
     for(var i=6;i>=0;i--){
       var d=new Date(Date.now()-i*864e5);
@@ -2359,8 +2363,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     // "niets" terwijl de kaart "2 van 10 vandaag gedaan" toonde (gebruikers-sweep 2026-11-12 14u, Truus)
     var gdag={};
     (Array.isArray(k.gedaan)?k.gedaan:[]).forEach(function(x){if(x&&x.t)gdag[h.datum(x.t)]=x.t;});
-    var ktr=k.oefTrouw||{};
-    Object.keys(ktr).forEach(function(n){var d=ktr[n]&&ktr[n].d;if(typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)){var t=Date.parse(d+'T12:00:00Z');if(t&&!gdag[h.datum(t)])gdag[h.datum(t)]=t;}});
+    mgTrouwDagen(k.oefTrouw).forEach(function(d){var t=Date.parse(d+'T12:00:00Z');if(t&&!gdag[h.datum(t)])gdag[h.datum(t)]=t;});
     var g=Object.keys(gdag).map(function(x){return gdag[x];}).sort(function(a,b){return a-b;});
     r.push(g.length?'- '+g.map(function(t){return h.datum(t);}).join(', '):'- '+L.geen);
     kop(L.trouw);
@@ -2392,12 +2395,26 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // De telling per oefening en de eigen seintjes lokaal bijwerken zoals de server ze
   // bijwerkt, zodat "Download mijn gegevens" direct na een tik klopt (inzage, art. 15 AVG)
   // en niet pas na herladen. Zelfde regel als /api/kaart/oefening: één dag telt één keer.
+  // zelfde regel als trouwTik in lib/patient-routes.js: per oefening de afvinkdagen zelf (ds, de laatste 60)
   function mgTrouwTik(tr,naam,dag,aan){
     tr=tr||{};
     var rec=Object.prototype.hasOwnProperty.call(tr,naam)?tr[naam]:(tr[naam]={n:0,d:''});
-    if(aan){if(rec.d!==dag){rec.n=Math.min(9999,(Number(rec.n)||0)+1);rec.d=dag;}}
-    else if(rec.d===dag){rec.n=Math.max(0,(Number(rec.n)||0)-1);rec.d='';}
+    var ds=mgTrouwDs(rec),i=ds.indexOf(dag);
+    if(aan&&i===-1){ds.push(dag);ds.sort();while(ds.length>60)ds.shift();rec.n=Math.min(9999,(Number(rec.n)||0)+1);}
+    else if(!aan&&i>-1){ds.splice(i,1);rec.n=Math.max(0,(Number(rec.n)||0)-1);}
+    rec.ds=ds;rec.d=ds.length?ds[ds.length-1]:'';
     return tr;
+  }
+  function mgTrouwDs(rec){
+    var ok=function(x){return typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x);};
+    if(!rec)return [];
+    return Array.isArray(rec.ds)?rec.ds.filter(ok):(ok(rec.d)?[rec.d]:[]);
+  }
+  // alle dagen (JJJJ-MM-DD, Amsterdam) waarop de patiënt minstens één oefening afvinkte
+  function mgTrouwDagen(tr){
+    var per={};tr=tr||{};
+    Object.keys(tr).forEach(function(n){mgTrouwDs(tr[n]).forEach(function(d){per[d]=1;});});
+    return Object.keys(per).sort();
   }
   function mgSeintjeErbij(k,soort,t){
     if(!k||['vraag','pijn','goed'].indexOf(soort)===-1)return;

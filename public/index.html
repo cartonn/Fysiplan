@@ -975,8 +975,11 @@ bridge2.jpg</div>
     var per={},dagNL=function(t){try{return new Date(t).toLocaleDateString('sv-SE',{timeZone:'Europe/Amsterdam'});}catch(e){return new Date(t).toISOString().slice(0,10);}};
     ((c&&c.gedaan)||[]).forEach(function(g){if(g&&g.t){var k=dagNL(g.t);if(!per[k]||g.t>per[k].t)per[k]={t:g.t};}});
     var tr=(c&&c.oefTrouw)||{};
-    Object.keys(tr).forEach(function(n){var d=tr[n]&&tr[n].d;
-      if(typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&!per[d]){var t=Date.parse(d+'T12:00:00Z');if(t)per[d]={t:Math.min(t,Date.now())};}});
+    // per oefening alle afvinkdagen (ds, sinds 2026-11-14); een ouder record kent alleen de laatste dag (d)
+    var okDag=function(d){return typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d);};
+    Object.keys(tr).forEach(function(n){var r=tr[n];if(!r)return;
+      (Array.isArray(r.ds)?r.ds:[r.d]).forEach(function(d){
+        if(okDag(d)&&!per[d]){var t=Date.parse(d+'T12:00:00Z');if(t)per[d]={t:Math.min(t,Date.now())};}});});
     return Object.keys(per).sort().map(function(k){return per[k];});
   }
   function normEx(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
