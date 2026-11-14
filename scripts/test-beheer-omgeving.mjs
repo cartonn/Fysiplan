@@ -322,6 +322,15 @@ const NU = Date.parse("2026-11-12T13:00:00Z");
   assert.deepEqual(Object.keys(na.gezien), ["p|l1"]);
   assert.deepEqual(na.dagen, { "2026-11-12": { p: 2 } });
   assert.deepEqual(na.mis, {}, "foute wachtwoorden van langer dan een dag geleden zijn weg");
+  // een login uit het team: meteen weg, niet pas bij de snoei van morgen (/privacy#support)
+  g.gezien("p", "l1", t0 + 2 * DAG + 1); g.gezien("p", "l5", t0 + 2 * DAG + 2); g.loginMis("l1@x.invalid", t0 + 2 * DAG);
+  assert.equal(g.wisLid("p", "l1", "l1@x.invalid"), 3, "laatst gezien, vandaag en foute wachtwoorden");
+  assert.deepEqual([g.laatst("p", "l1"), g.misSinds("l1@x.invalid", 0, t0 + 2 * DAG + 5)], [0, 0]);
+  assert.equal(g.laatst("p", "l5"), t0 + 2 * DAG + 2, "een collega blijft staan");
+  assert.equal(g.dagen("p", t0 + 2 * DAG + 9).at(-1).n, 2, "het aantal actieve therapeuten vandaag blijft kloppen");
+  const naLid = JSON.stringify(g.uit());
+  assert.ok(!naLid.includes("l1"), "nergens nog het login-id of adres: " + naLid);
+  assert.equal(g.wisLid("p", "l1", "l1@x.invalid"), 0);
   // een praktijkcode is hier een sleutel en raakt nooit iets anders
   g.gezien("__proto__", "vies", t0 + 3 * DAG);
   assert.equal({}.vies, undefined);
@@ -718,6 +727,7 @@ try {
     const server = await readFile(join(root, "server.js"), "utf8");
     assert.match(server, /^backupBestanden\.push\(join\(dataDir, "finance-instellingen\.json"\), join\(dataDir, "finance-kosten\.json"\), join\(dataDir, "beheer-agent\.json"\), join\(dataDir, "beheer-gebruik\.json"\), join\(dataDir, "beheer-loket\.json"\)\);$/m, "de financebestanden, de meting en de instellingen van de agents gaan mee in de reservekopie");
     assert.match(server, /if \(s\.lid\) merkGezien\(s\.pk, s\.lid\);/, "elke geldige eigen sessie telt als gezien");
+    assert.match(server, /trekSessiesIn\(pk, doel\.id\);[\s\S]{0,120}vergeetLid\(pk, doel\.id, doel\.email\);/, "uit het team halen wist ook de meting van die login");
     const routes = await readFile(join(root, "lib/beheer-omgeving-routes.js"), "utf8");
     assert.match(routes, /if \(!d\.beheerEigen\(req\)\) \{ await d\.denied\(req, res, urlPath\); return true; \}/, "elke route vraagt een eigen login van beheer");
   }
