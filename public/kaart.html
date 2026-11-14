@@ -1449,6 +1449,25 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var x=(K.kaart.chosen||[])[idx];var naam=oefTrouwSleutel(x);if(!naam)return;
     K.kaart.oefTrouw=mgTrouwTik(K.kaart.oefTrouw,naam,K.dag,aan);
   }
+  // Wat nog in de wachtrij staat (getikt zonder internet), hoort over de kaart van de server heen.
+  // Zonder internet komt die kaart uit de cache van vóór de tik: een uitgevinkte oefening en een
+  // uitgezette dagvink stonden na herladen weer aan, en na het versturen bleef die oude stand in
+  // het geheugen hangen (gebruikers-sweep 2026-11-14, Truus).
+  function pasWachtToe(){
+    if(!K||!K.kaart)return;
+    var w=leesWacht();
+    Object.keys(w).sort(function(a,b){return (Number(w[a]&&w[a].t)||0)-(Number(w[b]&&w[b].t)||0);}).forEach(function(k){
+      var it=w[k];if(!it||!it.body)return;
+      var t=Number(it.body.wanneer)||Number(it.t)||0;if(!t)return;
+      if(it.pad==='/api/kaart/oefening'&&typeof it.body.n==='string'&&it.body.n)
+        K.kaart.oefTrouw=mgTrouwTik(K.kaart.oefTrouw,it.body.n,dagStr(t),it.body.aan!==false);
+      else if(it.pad==='/api/kaart/gedaan'){
+        var dag=dagStr(t),g=(K.kaart.gedaan||[]).filter(function(x){return dagStr(x.t)!==dag;});
+        if(it.body.aan!==false)g.push({t:t});
+        K.kaart.gedaan=g;
+      }
+    });
+  }
   function bewaarOefDaan(st){try{localStorage.setItem(oefDaanSleutel(),JSON.stringify({d:st.d,done:st.done,n:oefNamen(st.done)}));}catch(e){}}
   function tekenOefDaan(){
     var st=leesOefDaan();
@@ -3995,6 +4014,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     }).then(function(res){
       if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404){toonNietGevonden();vergeetKaartWeg();}else toonStoring(res[0]&&res[0].status);return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai,dag:typeof res[0].dag==='string'?res[0].dag:''};
+      pasWachtToe();
       // Komt het stemmanifest pas na het tekenen binnen, dan zetten we alleen de wachtende
       // luisterregels om (herstelNoorKnoppen), dezelfde weg als een latere geslaagde poging.
       // De hele kaart hertekenen brak een video af die de patiënt intussen had geopend.

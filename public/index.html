@@ -6776,7 +6776,8 @@ bridge2.jpg</div>
         if(!confirm('Deze eigen oefening verwijderen? Kaarten waar hij op staat tonen dan alleen nog de naam.'))return;
         fetch('api/praktijk/oefeningen/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:w.dataset.eoweg})})
           .then(function(r){return r.json();})
-          .then(function(d){if(!d.ok){alert(d.fout||'Verwijderen is niet gelukt.');return;}reloadLibraryKeepingCard().then(toonEigenLijst);})
+          // verlopen proef: dezelfde vaste melding als elders, geen kale alert (gebruikers-sweep 2026-11-14, Mark)
+          .then(function(d){if(!d.ok){if(d.proefVerlopen){toonProefVoorbij(w);return;}alert(d.fout||'Verwijderen is niet gelukt.');return;}reloadLibraryKeepingCard().then(toonEigenLijst);})
           .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding.');});
       });
       document.getElementById('eo_bewaar').addEventListener('click',function(){
@@ -6796,7 +6797,7 @@ bridge2.jpg</div>
               .then(function(r){return r.json();})
               .then(function(d){
                 knop.disabled=false;knop.textContent='Toevoegen';
-                if(!d.ok){alert(d.fout||'Toevoegen is niet gelukt.');return;}
+                if(!d.ok){if(d.proefVerlopen){toonProefVoorbij(knop);return;}alert(d.fout||'Toevoegen is niet gelukt.');return;}
                 document.getElementById('eo_naam').value='';document.getElementById('eo_uitleg').value='';document.getElementById('eo_foto').value='';
                 reloadLibraryKeepingCard().then(function(){
                   // meteen op de kaart zetten: daarvoor voegde de therapeut hem toe
