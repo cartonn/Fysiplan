@@ -1635,21 +1635,40 @@ bridge2.jpg</div>
     else{m.setAttribute('role','dialog');m.setAttribute('aria-modal','true');}
   }
   // Praktijk: wat over de praktijk gaat in plaats van over één patiënt
-  function bouwPraktijkTegels(){
-    var blok=document.getElementById('k_srv');if(!blok||document.getElementById('k_praktijk'))return;
-    var t=document.createElement('div');t.id='k_praktijk';t.className='k-praktijk';
-    var tegels=[
-      ['team','Team en logins','Collega\u2019s uitnodigen, rollen, je eigen login en de tweede stap.'],
+  // Een gewone collega (rol therapeut) zag "Collega's uitnodigen, rollen" en de tegels Proef en
+  // Gegevens zonder te horen dat dat alleen voor een beheerder is; pas na het hele formulier op
+  // /v2/gegevens kwam "Alleen een beheerder\u2026" (gebruikers-sweep 2026-11-13 22u, Karin). Nu zegt de
+  // tegel het vooraf. De rol is pas na het inloggen bekend, dus de teksten volgen bij elk openen.
+  function praktijkTegelTeksten(){
+    var ther=!!(typeof PRAKSLOT!=='undefined'&&PRAKSLOT&&PRAKSLOT.ingelogd&&PRAKSLOT.akkoord&&PRAKSLOT.akkoord.beheer===false);
+    return [
+      ['team','Team en logins',ther?'Je eigen login en de tweede stap. Collega\u2019s uitnodigen en rollen wijzigen doet een beheerder.':'Collega\u2019s uitnodigen, rollen, je eigen login en de tweede stap.'],
       ['eigen','Eigen oefeningen','Oefeningen met jullie eigen foto en uitleg, voor het hele team.'],
       ['sjab','Sjablonen','Vaste behandelkaarten van de praktijk.'],
-      ['abon','Proef en abonnement','Hoe lang je proef nog loopt, betalen en opzeggen.','/v2/proef?mijn=1'],
-      ['gegevens','Gegevens van de praktijk','Alles downloaden, of alles wissen als je stopt.','/v2/gegevens']
+      ['abon','Proef en abonnement',ther?'Hoe lang de proef nog loopt. Betalen en opzeggen doet een beheerder van de praktijk.':'Hoe lang je proef nog loopt, betalen en opzeggen.','/v2/proef?mijn=1'],
+      ['gegevens','Gegevens van de praktijk',ther?'Alleen een beheerder van de praktijk kan alles downloaden of wissen.':'Alles downloaden, of alles wissen als je stopt.','/v2/gegevens',ther]
     ];
+  }
+  function bouwPraktijkTegels(){
+    var blok=document.getElementById('k_srv');if(!blok)return;
+    var tegels=praktijkTegelTeksten();
+    var t=document.getElementById('k_praktijk');
+    if(t){
+      tegels.forEach(function(x){
+        var el=t.querySelector("[data-kpt='"+x[0]+"']");if(!el)return;
+        el.querySelector('span').textContent=x[2];
+        if(x[4])el.setAttribute('aria-disabled','true');else el.removeAttribute('aria-disabled');
+      });
+      return;
+    }
+    t=document.createElement('div');t.id='k_praktijk';t.className='k-praktijk';
     t.innerHTML="<div class='kp-tegels'>"+tegels.map(function(x){
-      return x[3]?"<a class='kp-tegel' href='"+x[3]+"' target='_blank' rel='noopener'><b>"+x[1]+"</b><span>"+x[2]+"</span></a>"
-        :"<button type='button' class='kp-tegel' data-kp='"+x[0]+"'><b>"+x[1]+"</b><span>"+x[2]+"</span></button>";
+      return x[3]?"<a class='kp-tegel' data-kpt='"+x[0]+"' href='"+x[3]+"' target='_blank' rel='noopener'"+(x[4]?" aria-disabled='true'":"")+"><b>"+x[1]+"</b><span>"+x[2]+"</span></a>"
+        :"<button type='button' class='kp-tegel' data-kpt='"+x[0]+"' data-kp='"+x[0]+"'><b>"+x[1]+"</b><span>"+x[2]+"</span></button>";
     }).join('')+"</div>";
     blok.appendChild(t);
+    // een therapeut opent de wis- en downloadpagina niet voor niets
+    t.addEventListener('click',function(e){var a=e.target.closest("a[aria-disabled='true']");if(a)e.preventDefault();});
     t.addEventListener('click',function(e){
       var b=e.target.closest('[data-kp]');if(!b)return;
       var w=b.getAttribute('data-kp');
@@ -3812,6 +3831,7 @@ bridge2.jpg</div>
         if(pr!==PRAKSLOT.nieuwVoor)PRAKSLOT.nieuw=false;
         if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
         rendPrakSlot();
+        if(document.getElementById('k_praktijk'))bouwPraktijkTegels();
         try{applyLogo();}catch(e){}
         // verlopen proef op een apparaat zonder proefcookie (ingelogde collega): meteen de balk
         if(d.proefVerlopen&&!PROEF_VOORBIJ)toonProefVoorbij(null,true);

@@ -62,6 +62,19 @@ try {
   assert.equal(r.status, 200, "eigen naam mag");
   r = await voeg(squat.naam + " met band (Fysio Bibnaam)");
   assert.equal(r.status, 409, "zelfde eigen naam: 409");
+  // eigen namen onderling: dezelfde vergelijking als de app (gebruikers-sweep 2026-11-13 22u, Mark)
+  r = await voeg("Abroller Testdal");
+  assert.equal(r.status, 200, "eerste eigen naam mag");
+  for (const n of ["Abroller-Testdal", "Abröller Testdal", "ABROLLER_TESTDAL", "abroller  testdal!"]) {
+    r = await voeg(n);
+    assert.equal(r.status, 409, "variant '" + n + "' van een eigen naam hoort geweigerd: " + r.status);
+    assert.match((await r.json()).fout, /Abroller Testdal/);
+  }
+  // een lijst of object als naam wordt geen "[object Object]"
+  for (const n of [["Kniebuiging"], { a: 1 }]) {
+    r = await voeg(n);
+    assert.equal(r.status, 400, "naam als " + JSON.stringify(n) + " hoort 400: " + r.status);
+  }
   console.log("eigen oefening met bibliotheeknaam: ok");
 } catch (e) {
   console.error(uit.slice(-2000));
