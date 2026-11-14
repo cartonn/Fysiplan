@@ -111,6 +111,15 @@ try {
   // logboek noemt wie het was
   const act = await (await get("/api/praktijk/activiteit?praktijk=Fysio%20Team", S)).json();
   assert.ok(act.activiteit.some((e) => e.actie === "ingelogd" && e.wie === "Joris Bakker"), "logboek per persoon");
+  // een therapeut leest de activiteit van het team niet (logins, rollen van collega's): alleen een beheerder
+  const actJ = await get("/api/praktijk/activiteit?praktijk=Fysio%20Team", J);
+  assert.equal(actJ.status, 403, "therapeut: geen activiteit van het team");
+  const dActJ = await actJ.json();
+  assert.equal(dActJ.activiteit, undefined, "therapeut krijgt geen regels");
+  assert.match(dActJ.fout, /beheerder/);
+  // en de app toont de knop Activiteit niet aan een therapeut
+  const idxHtml = await readFile(join(root, "public/index.html"), "utf8");
+  assert.match(idxHtml, /PRAKSLOT\.akkoord&&PRAKSLOT\.akkoord\.beheer===false\?"":"<a href='#' id='ps_acttoon'/, "knop Activiteit alleen voor beheer");
 
   // ---- wachtwoord wijzigen met eigen login raakt alleen jezelf ----
   const ww = await post("/api/praktijk/wachtwoord", { praktijk: "Fysio Team", huidig: "joris-wachtwoord", nieuw: "joris-nieuw-ww" }, J);
