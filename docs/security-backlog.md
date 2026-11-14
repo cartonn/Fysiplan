@@ -442,6 +442,12 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL (gebruikers-sweep 2026-11-14 14u, Karin) — geweigerde beheerpogingen van een collega staan niet in Activiteit**: een therapeut
+  die via de API zichzelf beheerder maakt, de beheerder verwijdert of profiel/sjabloon/oefening van een ander wijzigt, krijgt netjes 403,
+  maar de 403 op de teamroutes schrijft geen auditLog (server.js r. ~4836; alleen een gedeelde-wachtwoordsessie logt
+  `team-wijziging-geweigerd`), en `oefening-verwijderen-geweigerd`, `vragen-aanpassen-geweigerd`, `sjabloon-verwijderen-geweigerd`
+  (r. ~5757, ~5804, ~5882) worden wel gelogd maar vallen buiten de set `relevant` (r. ~4678–4686). De beheerder ziet de poging dus nooit.
+
 - **LAAG (gebruikers-sweep 2026-11-14 10u, Karin) — `?praktijk=Y` met een sessie van praktijk X wordt stil genegeerd**: /api/kaarten,
   /api/praktijk/inbox en /api/praktijk/activiteit geven 200 met de gegevens van X (`praktijkVan(request, q.get("praktijk"))` laat de
   sessie voorgaan). Geen lek van Y, maar een tool die een andere praktijknaam meegeeft krijgt zonder melding andere gegevens dan gevraagd;

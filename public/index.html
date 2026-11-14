@@ -975,8 +975,11 @@ bridge2.jpg</div>
     var per={},dagNL=function(t){try{return new Date(t).toLocaleDateString('sv-SE',{timeZone:'Europe/Amsterdam'});}catch(e){return new Date(t).toISOString().slice(0,10);}};
     ((c&&c.gedaan)||[]).forEach(function(g){if(g&&g.t){var k=dagNL(g.t);if(!per[k]||g.t>per[k].t)per[k]={t:g.t};}});
     var tr=(c&&c.oefTrouw)||{};
-    Object.keys(tr).forEach(function(n){var d=tr[n]&&tr[n].d;
-      if(typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&!per[d]){var t=Date.parse(d+'T12:00:00Z');if(t)per[d]={t:Math.min(t,Date.now())};}});
+    // per oefening alle afvinkdagen (ds, sinds 2026-11-14); een ouder record kent alleen de laatste dag (d)
+    var okDag=function(d){return typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d);};
+    Object.keys(tr).forEach(function(n){var r=tr[n];if(!r)return;
+      (Array.isArray(r.ds)?r.ds:[r.d]).forEach(function(d){
+        if(okDag(d)&&!per[d]){var t=Date.parse(d+'T12:00:00Z');if(t)per[d]={t:Math.min(t,Date.now())};}});});
     return Object.keys(per).sort().map(function(k){return per[k];});
   }
   function normEx(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
@@ -2509,9 +2512,17 @@ bridge2.jpg</div>
       })
       .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding met de server.');});
   });
+  // renderList() bouwt alle rijen opnieuw op: de knop met focus verdwijnt en de focus viel naar body, zodat wie
+  // met het toetsenbord "+" of ★ indrukte weer bovenaan begon en bij de eerste rij de net toegevoegde oefening
+  // met Enter weer weghaalde (gebruikers-sweep 2026-11-14 14u, Sanne). Zet de focus terug op dezelfde knop.
+  function lijstFocusTerug(sel){
+    var a=document.activeElement;
+    if(a&&a!==document.body&&document.contains(a))return;
+    var k=elList.querySelector(sel);if(k)try{k.focus({preventScroll:true});}catch(err){k.focus();}
+  }
   elList.addEventListener('click',function(e){
     var fav=e.target.closest('[data-fav]');
-    if(fav){var fo=OEF[+fav.dataset.fav];if(fo){var fk=exerciseKey(fo);if(FAVORITES[fk])delete FAVORITES[fk];else FAVORITES[fk]=true;try{localStorage.setItem('fysiplan_favorites',JSON.stringify(FAVORITES));}catch(err){}renderList();}return;}
+    if(fav){var fo=OEF[+fav.dataset.fav];if(fo){var fk=exerciseKey(fo);if(FAVORITES[fk])delete FAVORITES[fk];else FAVORITES[fk]=true;try{localStorage.setItem('fysiplan_favorites',JSON.stringify(FAVORITES));}catch(err){}renderList();lijstFocusTerug("[data-fav='"+fav.dataset.fav+"']");}return;}
     var video=e.target.closest('[data-video]');
     if(video){openVideoManager(+video.dataset.video);return;}
     var del=e.target.closest('[data-verwijder]');
@@ -2521,6 +2532,7 @@ bridge2.jpg</div>
     var p=e.target.closest('.ren');
     if(p){renameExercise(+p.dataset.ren);return;}
     var r=e.target.closest('.row');if(!r)return;toggleExercise(+r.dataset.id);
+    if(e.target.closest('[data-add]'))lijstFocusTerug("[data-add='"+r.dataset.id+"']");
   });
   document.getElementById('filters').addEventListener('click',function(e){
     if(IS_ADMIN&&e.target.closest('[data-cat-delete]')){
@@ -5495,9 +5507,15 @@ bridge2.jpg</div>
                 return fetch('api/kaart/dossier',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:id})})
                   .then(function(){toon('Gekopieerd, label gezet ✓');setTimeout(toonSrvKaarten,900);});
               };
+              // zonder klembord: zelf kopiëren uit het venster. Annuleren (null) zet geen label "in dossier", want dan
+              // staat er niets in het dossier (gebruikers-sweep 2026-11-14 10u en 14u, Mark)
+              var handmatig=function(){
+                if(window.prompt('Kopieer de samenvatting voor het dossier:',tekst)===null){toon('Niet gekopieerd, geen label');return;}
+                label();
+              };
               if(navigator.clipboard&&navigator.clipboard.writeText){
-                navigator.clipboard.writeText(tekst).then(label).catch(function(){window.prompt('Kopieer de samenvatting voor het dossier:',tekst);label();});
-              }else{window.prompt('Kopieer de samenvatting voor het dossier:',tekst);label();}
+                navigator.clipboard.writeText(tekst).then(label).catch(handmatig);
+              }else handmatig();
             }).catch(function(){toon('Geen verbinding');});
           });
         });
