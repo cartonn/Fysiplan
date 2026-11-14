@@ -6768,7 +6768,7 @@ async function afhandelen(request, response) {
       const map = (kaarten[pk] = kaarten[pk] || {});
       // Een oude editor mag een verwijderde kaart niet opnieuw publiceren of vervangen.
       if (Object.values(map).some((k) => k.verwijderdOp && (k.id === b.kaartId || k.naam.toLowerCase() === kk))) {
-        await sendJson(response, 409, { ok: false, fout: "Deze naam hoort bij een verwijderde kaart. Vraag de maker of beheerder om herstel via de prullenbak. Gaat het om een andere patiënt? Gebruik een onderscheidende naam, bijvoorbeeld Jan K." }); return;
+        await sendJson(response, 409, { ok: false, verwijderd: true, fout: "Deze naam hoort bij een verwijderde kaart. Vraag de maker of beheerder om herstel via de prullenbak. Gaat het om een andere patiënt? Gebruik een onderscheidende naam, bijvoorbeeld Jan K." }); return;
       }
 
       // botsingscheck: v2 stuurt mee welke kaart deze editor bewerkt (kaartId, leeg =

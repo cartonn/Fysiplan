@@ -145,6 +145,7 @@ jobs:
       - run: npm run test:nietvertaald
       - run: npm run test:vertaallaat
       - run: npm run test:kaartweg
+      - run: npm run test:opnieuwdelen
       - run: npm run test:v2contrast
       - run: npm run test:focusring
       - run: npm run test:seinvenster

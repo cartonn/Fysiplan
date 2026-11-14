@@ -442,6 +442,10 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **LAAG (gebruikers-sweep 2026-11-14 10u, Karin) — `?praktijk=Y` met een sessie van praktijk X wordt stil genegeerd**: /api/kaarten,
+  /api/praktijk/inbox en /api/praktijk/activiteit geven 200 met de gegevens van X (`praktijkVan(request, q.get("praktijk"))` laat de
+  sessie voorgaan). Geen lek van Y, maar een tool die een andere praktijknaam meegeeft krijgt zonder melding andere gegevens dan gevraagd;
+  overweeg 403 bij een afwijkende naam. Ook (MIDDEL, routine-backlog): Activiteit houdt maar 15 regels, dus het beheerspoor is snel weg.
 - **LAAG (security 2026-11-14 08u, alleen gelezen) — `/v2/proef/maand-betaald` roept bij elke GET `mollieVerwerk` aan zolang de
   betaling niet "paid" is** (server.js r. ~8502), zonder `leesLimiet` of wachttijd. Wie een eigen proef met een openstaande zelfbetaling
   heeft, kan met een lus de Mollie-API van Fysiplan laten bevragen tot Mollie remt; dan lopen ook de betalingen van andere praktijken
