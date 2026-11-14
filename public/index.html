@@ -2512,9 +2512,17 @@ bridge2.jpg</div>
       })
       .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding met de server.');});
   });
+  // renderList() bouwt alle rijen opnieuw op: de knop met focus verdwijnt en de focus viel naar body, zodat wie
+  // met het toetsenbord "+" of ★ indrukte weer bovenaan begon en bij de eerste rij de net toegevoegde oefening
+  // met Enter weer weghaalde (gebruikers-sweep 2026-11-14 14u, Sanne). Zet de focus terug op dezelfde knop.
+  function lijstFocusTerug(sel){
+    var a=document.activeElement;
+    if(a&&a!==document.body&&document.contains(a))return;
+    var k=elList.querySelector(sel);if(k)try{k.focus({preventScroll:true});}catch(err){k.focus();}
+  }
   elList.addEventListener('click',function(e){
     var fav=e.target.closest('[data-fav]');
-    if(fav){var fo=OEF[+fav.dataset.fav];if(fo){var fk=exerciseKey(fo);if(FAVORITES[fk])delete FAVORITES[fk];else FAVORITES[fk]=true;try{localStorage.setItem('fysiplan_favorites',JSON.stringify(FAVORITES));}catch(err){}renderList();}return;}
+    if(fav){var fo=OEF[+fav.dataset.fav];if(fo){var fk=exerciseKey(fo);if(FAVORITES[fk])delete FAVORITES[fk];else FAVORITES[fk]=true;try{localStorage.setItem('fysiplan_favorites',JSON.stringify(FAVORITES));}catch(err){}renderList();lijstFocusTerug("[data-fav='"+fav.dataset.fav+"']");}return;}
     var video=e.target.closest('[data-video]');
     if(video){openVideoManager(+video.dataset.video);return;}
     var del=e.target.closest('[data-verwijder]');
@@ -2524,6 +2532,7 @@ bridge2.jpg</div>
     var p=e.target.closest('.ren');
     if(p){renameExercise(+p.dataset.ren);return;}
     var r=e.target.closest('.row');if(!r)return;toggleExercise(+r.dataset.id);
+    if(e.target.closest('[data-add]'))lijstFocusTerug("[data-add='"+r.dataset.id+"']");
   });
   document.getElementById('filters').addEventListener('click',function(e){
     if(IS_ADMIN&&e.target.closest('[data-cat-delete]')){
