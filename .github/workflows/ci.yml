@@ -80,6 +80,7 @@ jobs:
       - run: npm run test:tegroot
       - run: npm run test:kruissite
       - run: npm run test:patientinvoer
+      - run: npm run test:oudetik
       - run: npm run test:bodygeenobject
       - run: npm run test:praktijkcode
       - run: npm run test:team

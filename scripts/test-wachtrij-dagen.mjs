@@ -2,7 +2,7 @@
 // - De telefoon bewaart per soort per dag een tik, met het moment van tikken (`wanneer`).
 // - De server zet een tik uit de wachtrij op de dag waarop hij gedaan is (pijnscore,
 //   oefendag, herstel, PSK, seintje), maar telt hem in de inbox toch als nieuw.
-// - Een te oud of toekomstig `wanneer` telt als nu; een oud seintje verdringt geen nieuwer.
+// - Een te oud (> 14 dagen) of ver toekomstig `wanneer` wordt geweigerd (400); een oud seintje verdringt geen nieuwer.
 // API altijd (CI); het browserdeel alleen waar Playwright staat.
 // `npm run test:wachtrijdagen`
 import assert from "node:assert/strict";
@@ -102,11 +102,17 @@ try {
   const id2 = await nieuweKaart("Bep");
   // een wanneer die geen getal is, wordt sinds 2026-11-14 geweigerd (security-backlog, invoer op /k)
   assert.equal((await post("/api/kaart/meting", { id: id2, score: 2, wanneer: "gisteren" })).status, 400, "wanneer als tekst: 400");
+  // sinds sweep 2026-11-14 10u: te oud (> 14 dagen) of > 1 dag vooruit wordt geweigerd, niet als vandaag
+  // geteld (zie test-oude-tik.mjs); een paar minuten vooruit (klok) telt nog als nu
   for (const w of [nu + 3 * DAG, nu - 60 * DAG, 1e20]) {
-    const r = await (await post("/api/kaart/meting", { id: id2, score: 2, wanneer: w })).json();
+    const r = await post("/api/kaart/meting", { id: id2, score: 2, wanneer: w });
+    assert.equal(r.status, 400, "rare wanneer geweigerd: " + w);
+  }
+  {
+    const r = await (await post("/api/kaart/meting", { id: id2, score: 2, wanneer: Date.now() + 10 * 60000 })).json();
     assert.equal(r.ok, true);
     assert.equal(r.metingen.length, 1);
-    assert.equal(nlDag(r.metingen[0].t), nlDag(Date.now()), "rare wanneer telt als vandaag: " + w);
+    assert.equal(nlDag(r.metingen[0].t), nlDag(Date.now()), "klok iets vooruit telt als vandaag");
     assert.ok(r.metingen[0].t <= Date.now());
   }
 

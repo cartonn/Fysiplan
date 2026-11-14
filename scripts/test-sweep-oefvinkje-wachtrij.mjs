@@ -82,10 +82,11 @@ try {
   await post("/api/kaart/oefening", { id, oef: 0, aan: false, wanneer: gisteren });
   t = await trouw();
   assert.equal(t.Squat.d, nlDag(Date.now()), "uitvinken van gisteren laat vandaag staan");
-  // een toekomstig of te oud `wanneer` telt als nu
-  await post("/api/kaart/oefening", { id, oef: 1, aan: true, wanneer: Date.now() + 30 * DAG });
+  // een ver toekomstig `wanneer` wordt sinds sweep 2026-11-14 10u geweigerd; een paar minuten vooruit telt als nu
+  assert.equal((await post("/api/kaart/oefening", { id, oef: 1, aan: true, wanneer: Date.now() + 30 * DAG })).status, 400, "ver vooruit: 400");
+  await post("/api/kaart/oefening", { id, oef: 1, aan: true, wanneer: Date.now() + 10 * 60000 });
   t = await trouw();
-  assert.equal(t.Brug.d, nlDag(Date.now()), "toekomst telt als nu");
+  assert.equal(t.Brug.d, nlDag(Date.now()), "klok iets vooruit telt als nu");
 
   // 2. twee gelijktijdige verzoeken met dezelfde eigen oefening
   const body = { praktijk: P, naam: "Muurzit eigen variant", uitleg: "Rug tegen de muur.", img: pngUrl };
