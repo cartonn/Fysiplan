@@ -115,6 +115,29 @@ try {
     assert.match(profielZin, woord[veld], "/privacy#patient noemt profielveld " + veld);
     assert.match(inhoud, woord[veld], "/privacy rij inhoud noemt profielveld " + veld);
   }
+  // 3) eigen video's op een kaart (legal 2026-11-14 09u, gebied (a)): er kan een patiënt op staan, maar de tabel
+  //    "Voor praktijken" noemde ze niet, met geen doel, geen termijn en niet de tijdelijke link van #249.
+  //    De getallen in de tekst volgen de code: OPNAME_BEWAAR_MS (wachten op een kaart) en VENSTER_MS (link).
+  const opn = rij("opnames");
+  assert.ok(opn, "/privacy#praktijk heeft een rij voor eigen video's op een kaart (id=opnames)");
+  assert.match(opn, /pati[eë]nt zelf op staan/, "rij opnames zegt dat de patiënt erop kan staan");
+  assert.match(opn, /verwerker, in opdracht van de praktijk/, "rij opnames noemt de rol");
+  const bewaarUur = Number(bron.match(/OPNAME_BEWAAR_MS\) \|\| (\d+) \* 60 \* 60 \* 1000/)[1]);
+  assert.match(opn, new RegExp("op geen bewaarde kaart komt: na " + bewaarUur + " uur"), "rij opnames noemt " + bewaarUur + " uur (OPNAME_BEWAAR_MS)");
+  const venster = Number((await readFile("lib/medialink.js", "utf8")).match(/VENSTER_MS = (\d+) \* 60 \* 60 \* 1000/)[1]);
+  assert.match(opn, new RegExp("tijdelijke link die bij zijn kaart hoort en na " + venster + " tot " + 2 * venster + " uur verloopt"), "rij opnames noemt de geldigheid van de link (VENSTER_MS)");
+  assert.match(opn, /verdwijnt de kaart, dan gaat het bestand weg/, "rij opnames: bestand gaat weg met de kaart");
+  assert.match(opn, /7 dagen reservekopie/, "rij opnames noemt de reservekopie");
+  assert.match(bron, /async function ruimKaartVideosOp\(paden\)/, "server.js ruimt video's op die geen kaart meer gebruikt");
+
+  // 4) Activiteit is sinds #310 alleen voor een beheerder; bezwaar (art. 21) geldt voor élk gerechtvaardigd belang
+  assert.match(tabelTekst, /een beheerder van je praktijk ziet dit onder Activiteit/, "Activiteit: alleen een beheerder (#310)");
+  const rechten = tekst(privacy.split('id="rechten"')[1].split("</main>")[0]);
+  const bezwaar = rechten.split("bezwaar maken")[1].split(";")[0];
+  for (const [woord, id] of [[/hulp van Fysiplan-support/, "support"], [/ideeënbox/, "ideeen"]]) {
+    assert.match(bezwaar, woord, "bezwaar maken noemt ook " + id + " (gerechtvaardigd belang)");
+    assert.match(privacy, new RegExp('<tr id="' + id + '">[\\s\\S]*?gerechtvaardigd belang'), "rij " + id + " rust op gerechtvaardigd belang");
+  }
   console.log("ok: /privacy noemt wat de praktijk zelf in Fysiplan zet en wat de patiënt van de praktijk ziet");
 } catch (e) {
   console.error(uitvoer.slice(-2000));

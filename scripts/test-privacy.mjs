@@ -288,7 +288,7 @@ try {
   assert.match(privacy, /binnen een maand antwoord/);
   assert.match(privacy, /alleen door een computer/);
   assert.match(privacy, /zonder die gegevens kunnen we de proef niet starten/);
-  assert.match(privacy, /Versie 13 november 2026/);
+  assert.match(privacy, /Versie 14 november 2026/);
   assert.match(privacy, /hoe vaak, hoeveel of hoe zwaar je oefent/, "privacyverklaring noemt dat doseringsvragen niet naar de AI-dienst gaan");
   assert.match(privacy, /Foutlog/);
   // code tegen tekst (legal 2026-11-10 17u): alles wat de patiëntroute /api/kaart laat
