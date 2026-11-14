@@ -104,7 +104,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-13";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-13";
+const AV_VERSIE = "2026-11-14";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-13-5";
@@ -131,7 +131,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-12", tekst: "Beveiliging: elke login heeft een tweede stap, ook die van medewerkers van Fysiplan. Fysiplan legt vast wie wanneer gegevens van je praktijk inzag of een herstelmail stuurde, en waarom; je kunt dit opvragen." },
   { stuk: "vwo", versie: "2026-11-12-2", tekst: "Beveiliging: per kaart houdt Fysiplan bij wie van je praktijk haar opende of bewaarde, en wanneer (het leeslog), zonder naam van de patiënt. Een beheerder van je praktijk ziet het; het verdwijnt met de kaart en blijft hooguit twee jaar." },
   { stuk: "vwo", versie: "2026-11-13", tekst: "Doel: Fysiplan telt per praktijk en per login hoeveel kaarten er zijn gemaakt, zonder iets van wat erop staat, en gebruikt dat aantal alleen om je te helpen als het gebruik stokt." },
-  { stuk: "av", versie: "2026-11-13", tekst: "Grens op kaarten: tijdens de proef hooguit 100 lopende kaarten, als klant 300 per login. Ideeën in de Ideeënbox mag Fysiplan gebruiken om Fysiplan beter te maken. De btw achter de prijs volgt wat Fysiplan rekent." }
+  { stuk: "av", versie: "2026-11-13", tekst: "Grens op kaarten: tijdens de proef hooguit 100 lopende kaarten, als klant 300 per login. Ideeën in de Ideeënbox mag Fysiplan gebruiken om Fysiplan beter te maken. De btw achter de prijs volgt wat Fysiplan rekent." },
+  { stuk: "av", versie: "2026-11-14", tekst: "Lukt een automatische betaling niet, dan kun je die maand zelf betalen met iDEAL of je bankkaart. Wijzigen: alleen iets in je nadeel melden we 30 dagen vooraf; een verduidelijking of iets in je voordeel gaat meteen in." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
