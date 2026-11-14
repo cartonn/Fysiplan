@@ -6309,10 +6309,20 @@ bridge2.jpg</div>
     if(hn){
       var huidig=hn.dataset.hnaam||'';
       // pakket A: een volledige naam stelt meteen de roepnaam voor (Jan de Vries → Jan V.)
+      // dubbelklik: één vraag en één POST (gebruikers-sweep 2026-11-14 18u, Sanne)
+      if(hn.dataset.bezig)return;
       var nieuw=prompt('Nieuwe naam voor deze kaart (roepnaam, bijv. Jan K.):',(IS_V2&&naamLijktVolledig(huidig))?kaartLabelVan(huidig):huidig);
       if(nieuw===null)return;
       nieuw=nieuw.trim();
+      // ook de NIEUWE naam toetsen: "Truus de Vries" ging anders zonder vraag naar de server en /k,
+      // terwijl Printen, Delen en Test de QR wel eerst de roepnaam voorstellen (Sanne, 2026-11-14 18u)
+      if(IS_V2&&naamLijktVolledig(nieuw)){
+        var roep=prompt('\u201c'+nieuw+'\u201d lijkt een volledige naam. Op de digitale kaart hoort alleen een roepnaam; de volledige naam staat in je EPD. Pas hem aan, of kies OK:',kaartLabelVan(nieuw));
+        if(roep===null)return;
+        nieuw=roep.trim();
+      }
       if(!nieuw||nieuw===huidig)return;
+      hn.dataset.bezig='1';
       var oudH=hn.textContent;hn.textContent='Bezig…';
       fetch('api/kaart/naam',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:hn.dataset.shernoem,naam:nieuw})})
         .then(function(r){return r.json();})
@@ -6329,11 +6339,11 @@ bridge2.jpg</div>
               var knv=document.getElementById('k_naam');
               if(knv)knv.value=d.naam||nieuw;
             }
-            toonSrvKaarten();
+            delete hn.dataset.bezig;toonSrvKaarten();
           }
-          else{hn.textContent=oudH;alert(d.fout||'Naam wijzigen is niet gelukt.');}
+          else{delete hn.dataset.bezig;hn.textContent=oudH;alert(d.fout||'Naam wijzigen is niet gelukt.');}
         })
-        .catch(function(){hn.textContent=oudH;alert('Naam wijzigen is niet gelukt: geen verbinding.');});
+        .catch(function(){delete hn.dataset.bezig;hn.textContent=oudH;alert('Naam wijzigen is niet gelukt: geen verbinding.');});
       return;
     }
     // nieuwe link (oude intrekken): de kaart krijgt een vers id, de oude /k-link
@@ -6776,7 +6786,8 @@ bridge2.jpg</div>
         if(!confirm('Deze eigen oefening verwijderen? Kaarten waar hij op staat tonen dan alleen nog de naam.'))return;
         fetch('api/praktijk/oefeningen/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:w.dataset.eoweg})})
           .then(function(r){return r.json();})
-          .then(function(d){if(!d.ok){alert(d.fout||'Verwijderen is niet gelukt.');return;}reloadLibraryKeepingCard().then(toonEigenLijst);})
+          // verlopen proef: dezelfde vaste melding als elders, geen kale alert (gebruikers-sweep 2026-11-14, Mark)
+          .then(function(d){if(!d.ok){if(d.proefVerlopen){toonProefVoorbij(w);return;}alert(d.fout||'Verwijderen is niet gelukt.');return;}reloadLibraryKeepingCard().then(toonEigenLijst);})
           .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding.');});
       });
       document.getElementById('eo_bewaar').addEventListener('click',function(){
@@ -6796,7 +6807,7 @@ bridge2.jpg</div>
               .then(function(r){return r.json();})
               .then(function(d){
                 knop.disabled=false;knop.textContent='Toevoegen';
-                if(!d.ok){alert(d.fout||'Toevoegen is niet gelukt.');return;}
+                if(!d.ok){if(d.proefVerlopen){toonProefVoorbij(knop);return;}alert(d.fout||'Toevoegen is niet gelukt.');return;}
                 document.getElementById('eo_naam').value='';document.getElementById('eo_uitleg').value='';document.getElementById('eo_foto').value='';
                 reloadLibraryKeepingCard().then(function(){
                   // meteen op de kaart zetten: daarvoor voegde de therapeut hem toe

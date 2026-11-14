@@ -1213,7 +1213,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // offline-banner: de kaart werkt offline (service worker), maar dat hoort de
   // patiënt ook te wéten — anders voelt een mislukte tik als een kapotte kaart
   var TOFF={nl:'Geen verbinding. Je ziet je laatst geladen kaart. Wat je aantikt, bewaren we op je telefoon tot je weer internet hebt.',en:'No connection. You see your last loaded card. What you tap is kept on your phone until you are online again.',de:'Keine Verbindung. Du siehst deine zuletzt geladene Karte. Was du antippst, bleibt auf deinem Handy, bis du wieder online bist.',fr:'Pas de connexion. Vous voyez votre dernière carte chargée. Ce que vous indiquez reste sur votre téléphone jusqu’au retour d’internet.',es:'Sin conexión. Ves tu última tarjeta cargada. Lo que marcas se guarda en tu teléfono hasta que vuelvas a tener internet.',pl:'Brak połączenia. Widzisz ostatnio wczytaną kartę. To, co zaznaczysz, zostaje w telefonie, aż znów będziesz mieć internet.',tr:'Bağlantı yok. Son yüklenen kartını görüyorsun. İşaretlediklerin, internet gelene kadar telefonunda saklanır.',ar:'لا يوجد اتصال. ترى آخر بطاقة تم تحميلها. ما تضغط عليه يُحفظ على هاتفك حتى يعود الإنترنت.',uk:'Немає з’єднання. Ти бачиш останню завантажену картку. Те, що ти позначаєш, зберігається на телефоні, доки не з’явиться інтернет.'};
-  function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(typeof navigator.onLine==='boolean'&&!navigator.onLine)?'block':'none';}
+  // UIT_KOPIE: de verbinding hing en de kaart kwam uit de offline-kopie (laadKaartApi); dan dezelfde balk,
+  // ook al zegt de browser dat hij online is (hertest Jayden 2026-11-14)
+  var UIT_KOPIE=false;
+  function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(UIT_KOPIE||(typeof navigator.onLine==='boolean'&&!navigator.onLine))?'block':'none';}
   window.addEventListener('online',tekenOfflijn);window.addEventListener('offline',tekenOfflijn);
   var TAF={nl:'Je volgende afspraak',en:'Your next appointment',de:'Dein nächster Termin',fr:'Votre prochain rendez-vous',es:'Tu próxima cita',pl:'Twoja następna wizyta',tr:'Bir sonraki randevun',ar:'موعدك القادم',uk:'Твій наступний візит'};
   // afgeronde behandeling: eerlijk over de bewaartermijn. De kaart verdwijnt na een
@@ -1448,6 +1451,25 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(!K||!K.kaart||!K.dag)return;
     var x=(K.kaart.chosen||[])[idx];var naam=oefTrouwSleutel(x);if(!naam)return;
     K.kaart.oefTrouw=mgTrouwTik(K.kaart.oefTrouw,naam,K.dag,aan);
+  }
+  // Wat nog in de wachtrij staat (getikt zonder internet), hoort over de kaart van de server heen.
+  // Zonder internet komt die kaart uit de cache van vóór de tik: een uitgevinkte oefening en een
+  // uitgezette dagvink stonden na herladen weer aan, en na het versturen bleef die oude stand in
+  // het geheugen hangen (gebruikers-sweep 2026-11-14, Truus).
+  function pasWachtToe(){
+    if(!K||!K.kaart)return;
+    var w=leesWacht();
+    Object.keys(w).sort(function(a,b){return (Number(w[a]&&w[a].t)||0)-(Number(w[b]&&w[b].t)||0);}).forEach(function(k){
+      var it=w[k];if(!it||!it.body)return;
+      var t=Number(it.body.wanneer)||Number(it.t)||0;if(!t)return;
+      if(it.pad==='/api/kaart/oefening'&&typeof it.body.n==='string'&&it.body.n)
+        K.kaart.oefTrouw=mgTrouwTik(K.kaart.oefTrouw,it.body.n,dagStr(t),it.body.aan!==false);
+      else if(it.pad==='/api/kaart/gedaan'){
+        var dag=dagStr(t),g=(K.kaart.gedaan||[]).filter(function(x){return dagStr(x.t)!==dag;});
+        if(it.body.aan!==false)g.push({t:t});
+        K.kaart.gedaan=g;
+      }
+    });
   }
   function bewaarOefDaan(st){try{localStorage.setItem(oefDaanSleutel(),JSON.stringify({d:st.d,done:st.done,n:oefNamen(st.done)}));}catch(e){}}
   function tekenOefDaan(){
@@ -3964,6 +3986,20 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     uk:{net:['Зараз немає з’єднання','Ваша картка нікуди не зникла, але зараз не завантажується. Спробуйте ще раз за хвилину.','Спробувати ще раз'],
       druk:['Зараз не працює','Ваша картка нікуди не зникла, але Fysiplan зараз не відповідає. Справа не у вашому інтернеті. Спробуйте ще раз за кілька хвилин.','Спробувати ще раз']}
   };
+  // De kaart ophalen met een grens: bleef de verbinding hangen (geen antwoord, geen fout), dan stond
+  // "Je kaart wordt geladen…" eindeloos zonder knop Opnieuw (gebruikers-sweep 2026-11-14, Jayden).
+  // Na KAART_WACHT_MS de laatst geladen kaart uit de offline-kopie, anders het storingsscherm.
+  var KAART_WACHT_MS=12000;
+  function laadKaartApi(){
+    var pad='/api/kaart?id='+id;
+    if(typeof AbortController!=='function')return fetch(pad,{cache:'no-cache'});
+    var ac=new AbortController(),klok=setTimeout(function(){ac.abort();},KAART_WACHT_MS);
+    return fetch(pad,{cache:'no-cache',signal:ac.signal}).then(function(r){clearTimeout(klok);return r;},function(e){
+      clearTimeout(klok);
+      if(!window.caches)throw e;
+      return caches.match(location.origin+pad).then(function(c){if(c){UIT_KOPIE=true;return c;}throw e;},function(){throw e;});
+    });
+  }
   function toonStoring(status){
     geenLaden();
     var soort=(status===429||status>=500)?'druk':'net';
@@ -3980,7 +4016,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     // hele bibliotheek en het hele keuringsbestand binnenhaalt. Ontbreekt dat pakket (een
     // antwoord uit de offline-cache van een oudere versie), of klopt het niet, dan leest de
     // kaart de hele bestanden zoals eerst. Een kaart die niet bestaat haalt verder niets op.
-    fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){
+    laadKaartApi().then(function(r){
       return r.json().catch(function(){return {ok:false};}).then(function(d){if(d&&!d.ok)d.status=r.status;return d;});
     }).then(function(d){
       if(!d||!d.ok)return [d,[],null];
@@ -3995,6 +4031,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     }).then(function(res){
       if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404){toonNietGevonden();vergeetKaartWeg();}else toonStoring(res[0]&&res[0].status);return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai,dag:typeof res[0].dag==='string'?res[0].dag:''};
+      pasWachtToe();
       // Komt het stemmanifest pas na het tekenen binnen, dan zetten we alleen de wachtende
       // luisterregels om (herstelNoorKnoppen), dezelfde weg als een latere geslaagde poging.
       // De hele kaart hertekenen brak een video af die de patiënt intussen had geopend.
