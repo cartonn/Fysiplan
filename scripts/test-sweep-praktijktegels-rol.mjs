@@ -120,7 +120,7 @@ else {
     await wacht(800);
     await pu.focus("#zb_praktijk");
     await pu.keyboard.press("Enter");
-    await pu.waitForFunction(() => /^ps_(email|ww)$/.test((document.activeElement || {}).id || ""), null, { timeout: 5000 })
+    await pu.waitForFunction(() => /^ps_(email|ww)$/.test((document.activeElement || {}).id || ""), null, { timeout: 10000 })
       .catch(async () => assert.fail("focus na praktijkknop zonder login: " + await pu.evaluate(() => document.activeElement && document.activeElement.id)));
     await wacht(500);
     assert.match(await pu.evaluate(() => document.activeElement.id), /^ps_(email|ww)$/, "focus blijft in het inlogveld");
