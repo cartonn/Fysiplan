@@ -445,6 +445,19 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL (gebruikers-sweep 2026-11-14 18u, Mark, gemeten 200) — met een verlopen proef kan afhandelen nog**:
+  `/api/praktijk/inbox/afgehandeld`, `/api/kaart/seintje/gezien` en `/api/kaart/dossier` staan niet in `PROEF_SCHRIJFROUTES`
+  (server.js r. ~1420–1423), terwijl de app "niet meer beantwoorden of afhandelen" belooft (index.html r. ~6740) en
+  /v2/proef/overzicht "niets wijzigen" zegt. Keuze: routes toevoegen, of de tekst aanpassen als afhandelen bewust mag blijven.
+- **MIDDEL (gebruikers-sweep 2026-11-14 18u, Karin desktop + iPad, gemeten) — herhaalde geweigerde poging verdwijnt uit Activiteit.**
+  Tom (therapeut) wijzigt het profiel om 18:20 (API), 18:23 en 18:26 (scherm): de teller op de oude regel van 18:20 gaat naar 3,
+  maar `t` en de volgorde blijven oud, en die regel was al uit de top 15 geduwd, dus Karin ziet niets (server.js r. ~798–812,
+  `auditGeweigerd` past alleen `n` aan). Ook: elke teamroute geeft een eigen regel (reden in `wie`) en elk profielveld een eigen
+  regel; één collega die 7 knoppen probeert vult 11 van de 15 regels. Voorstel: `t` bijwerken en de regel naar boven halen.
+- **MIDDEL (gebruikers-sweep 2026-11-14 18u, Karin, gemeten) — geweigerde download/WISSEN door een therapeut op /v2/gegevens niet
+  in Activiteit en zonder naam.** 403 met goede zin, logregel `alles-wissen-geweigerd`/`download-geweigerd` alleen met "geen
+  beheerder" (server.js r. ~8824) en niet in de Activiteit-lijst (r. ~4697–4707). Ook zonder spoor: therapeut drukt op akkoord
+  (403, r. ~4372), vraagt Activiteit (r. ~4693) of het leeslog (r. ~7222) op.
 - **OPGELOST 2026-11-14 16u (security, PR volgt in deze run, test:gedeeldwerk) — nu schrijft een 403 op de teamroutes voor een
   collega zonder beheerdersrol `team-wijziging-geweigerd` met wie en wat (vaste omschrijving per route), het praktijkprofiel
   `profiel-wijzigen-geweigerd`, en de vier geweigerd-regels staan in Activiteit met een leesbare zin. Dezelfde poging van dezelfde
