@@ -390,6 +390,15 @@ try {
     assert.ok(per, "plafonds van het logboek gevonden");
     const rij = privacy.split("<tr><td>Accountactiviteit")[1].split("</tr>")[0];
     assert.match(rij, new RegExp("Per praktijk de laatste " + per[1] + " gebeurtenissen, plus de laatste " + per[2] + " mislukte"));
+    // legal 2026-11-14 17u (d): sinds #309/#317 ziet een beheerder onder Activiteit ook wat een collega
+    // probeerde maar niet mocht, op naam en met een teller. De rij noemde alleen "inloggen, wijzigingen".
+    // Fail-closed: staat er een `…-geweigerd` in de lijst die Activiteit toont, dan moet de rij het noemen.
+    const getoond = (serverBron.match(/const relevant = new Set\(\[([\s\S]*?)\]\);/) || [])[1] || "";
+    assert.ok(getoond.includes("rol-gewijzigd"), "lijst van Activiteit in server.js gevonden");
+    if (/"[a-z-]+-geweigerd"/.test(getoond)) {
+      assert.match(rij, /wat een collega probeerde maar niet mocht/, "/privacy noemt geweigerde pogingen van een collega");
+      assert.match(rij, /ziet de beheerder dat ook, met hoe vaak/, "/privacy noemt dat de beheerder ze op naam en met teller ziet");
+    }
     const kaartRij = privacy.split('id="praktijk"')[1].split("</tr>")[1];
     assert.match(kaartRij, /werknotitie, de behandelaar en een logboek van het contact/);
   }
