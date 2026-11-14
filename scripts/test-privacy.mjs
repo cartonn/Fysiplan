@@ -369,6 +369,18 @@ try {
     }
     // art. 5 beloofde "vrije tekst van de therapeut gaat niet naar AI-diensten", maar de
     // naam van een eigen oefening gaat mee naar de vertaling (zie de nagebootste AI-dienst hierboven)
+    // art. 28 lid 3 AVG (legal 2026-11-14): ook de categorieën betrokkenen. Fysiplan verwerkt in
+    // opdracht van de praktijk gegevens over haar medewerkers (leeslog, Activiteit, maker); die
+    // moeten als betrokkenen in art. 2 staan, met wie het ziet. Art. 10 noemt wanneer eigen
+    // video's weg gaan, met hetzelfde getal als OPNAME_BEWAAR_MS.
+    assert.match(art2, /<b>Betrokkenen:<\/b>[^<]*medewerkers van de praktijk/, "art. 2 noemt medewerkers als betrokkenen");
+    const medew = art2.split('id="medewerkers"')[1] || "";
+    assert.match(medew, /leeslog/, "art. 2 noemt het leeslog bij de medewerkers");
+    assert.match(medew, /Activiteit/, "art. 2 noemt Activiteit bij de medewerkers");
+    const art10 = vwo.split("<h2>10. ")[1].split("<h2>")[0];
+    const opnameUur = Number(serverBron.match(/OPNAME_BEWAAR_MS\) \|\| (\d+) \* 60 \* 60 \* 1000/)[1]);
+    assert.match(art10, new RegExp("op geen bewaarde kaart komt, wist Fysiplan na " + opnameUur + " uur"), "art. 10 noemt " + opnameUur + " uur (OPNAME_BEWAAR_MS)");
+    assert.match(art10, /eigen video of foto bij een oefening gaat weg met de kaart/);
     assert.doesNotMatch(vwo, /vrije tekst van de therapeut gaat niet naar/, "onjuiste AI-belofte is weg");
     assert.match(vwo, /Wel de namen van oefeningen, ook van eigen oefeningen van de praktijk/);
   }
