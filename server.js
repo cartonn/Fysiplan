@@ -17,7 +17,8 @@ import { mediaSoort, mediaLink, leesMediaLink } from "./lib/medialink.js";
 import { veiligeWebsite } from "./lib/website.js";
 import { plaatsenVan, merkPiek, volgendAantal, nieuwePeriode, kaartVol, KAARTEN_PROEF, KAARTEN_PER_LOGIN } from "./lib/plaatsen.js";
 import { maandBedrag, betaalBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN,
-  incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN } from "./lib/mollie.js";
+  incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN,
+  openMaand, zelfBetalenVerzoek, markeerZelfGestart, beoordeelZelf, markeerZelfBetaald } from "./lib/mollie.js";
 import { volgendFactuurNr, naarCent, factuurHtml, isFactuur, isKor, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
 import { backupInstellingen } from "./lib/backup-elders.js";
 import { runBackup } from "./lib/backup-runner.js";
@@ -1570,6 +1571,7 @@ const mollieBetaalIndex = new Map(); // tr_… -> proef-id: de webhook zoekt all
 for (const p of Object.values(proeven)) {
   if (p.betaling?.id) mollieBetaalIndex.set(p.betaling.id, p.id);
   if (p.abonnement?.incasso?.id) mollieBetaalIndex.set(p.abonnement.incasso.id, p.id);
+  if (p.abonnement?.incasso?.zelf?.id) mollieBetaalIndex.set(p.abonnement.incasso.zelf.id, p.id);
 }
 // Maandincasso na de eerste maand: pas aan met MOLLIE_INCASSO=aan (naast de sleutel), zodat
 // Ahmed het eerst met een testsleutel kan proberen (voorwaarden art. 4 beschrijven het). Alleen als mail werkt:
@@ -1659,7 +1661,13 @@ function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
     "Download v\u00f3\u00f3r die tijd wat je wilt bewaren op <a href=\"/v2/gegevens\">Mijn gegevens</a>. " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="intrekken"/>' +
     '<div class="knoppen"><button class="knop oranje" type="submit">Toch doorgaan</button></div></form>' + gegevens + "</div>";
-  return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement</h2>' +
+  // na een mislukte maandincasso: de praktijk kan de openstaande maand zelf betalen (iDEAL of kaart)
+  const open = mollieAan() ? openMaand(a) : null;
+  const openBlok = !open ? "" : '<form method="post" action="/v2/proef/maand-betalen" id="open-maand" class="alarm" style="margin:14px 0 4px">' +
+    "<p style=\"margin:0 0 8px\"><b>De automatische betaling voor de maand vanaf " + tot + " is niet gelukt.</b> Er is niets afgeschreven en je kunt gewoon verder. " +
+    "Betaal deze maand (EUR " + htmlEsc(bedragVan(open)) + ") nu zelf met iDEAL of je bankkaart, of wacht tot we je bellen.</p>" +
+    '<div class="knoppen"><button class="knop oranje" type="submit">Deze maand nu betalen</button></div></form>';
+  return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement</h2>' + openBlok +
     '<p class="klein" style="font-size:14.5px">Actief voor ' + therapeuten + ", betaald tot en met " + tot + "." + logins + incasso + " " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="opzeggen"/>' +
     '<label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, zeg mijn abonnement op per ' + tot + ".</span></label>" +
@@ -1675,6 +1683,7 @@ async function mollieVerwerk(id) {
   if (!p) return null;
   const betaling = await mollie("/payments/" + encodeURIComponent(id), { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS });
   if (p.abonnement?.incasso?.id === id) { await incassoVerwerk(p, betaling); return p; }
+  if (p.abonnement?.incasso?.zelf?.id === id) { await zelfVerwerk(p, betaling); return p; }
   const oordeel = beoordeelBetaling(betaling, p);
   if (oordeel === "betaald" && markeerBetaald(p, betaling)) {
     geefFactuurNr(p);
@@ -1705,7 +1714,28 @@ async function incassoVerwerk(p, betaling) {
     proefMeldAhmed("Maandincasso mislukt: " + naam, p, "De maandincasso is niet gelukt (Mollie: " + p.abonnement.incasso.mollieStatus +
       "). Fysiplan probeert het niet opnieuw en de praktijk kan gewoon verder. Neem contact op en spreek af hoe de praktijk betaalt.");
     proefMail(p.email, "Fysiplan: je maandbetaling is niet gelukt", "Hoi " + p.naam + ",\n\nDe automatische betaling voor je Fysiplan-abonnement is niet gelukt. " +
-      "Er is niets afgeschreven en je kunt gewoon verder. We nemen contact met je op om het te regelen.\n\nGroet,\nFysiplan");
+      "Er is niets afgeschreven en je kunt gewoon verder. Je kunt deze maand zelf betalen met iDEAL of je bankkaart via " +
+      "https://fysiplan.nl/v2/proef?mijn=1. Lukt dat niet, dan nemen we contact met je op om het te regelen.\n\nGroet,\nFysiplan");
+  }
+}
+// de praktijk betaalde de maand van een mislukte incasso zelf (iDEAL of kaart): telt als de
+// incasso, met een eigen factuur. Mislukt of afgebroken: alleen de status bijhouden, de
+// praktijk kan het opnieuw proberen.
+async function zelfVerwerk(p, betaling) {
+  const oordeel = beoordeelZelf(betaling, p);
+  const naam = p.praktijk || p.naam;
+  if (oordeel === "betaald" && markeerZelfBetaald(p)) {
+    geefFactuurNr(p);
+    await bewaarProeven();
+    const a = p.abonnement;
+    proefMeldAhmed("Openstaande maand zelf betaald: " + naam, p, "Na de mislukte maandincasso heeft de praktijk de maand zelf betaald (EUR " +
+      bedragVan(a.incasso) + "). Betaald tot en met " + datumNl(a.betaaldTot) + ". Bellen is niet meer nodig.");
+    proefMail(p.email, "Fysiplan: je betaling is gelukt", "Hoi " + p.naam + ",\n\nDank je wel, we hebben EUR " + bedragVan(a.incasso) +
+      " ontvangen voor je Fysiplan-abonnement. Je kunt Fysiplan gebruiken tot en met " + datumNl(a.betaaldTot) + ".\n" +
+      "Je factuur of betaalbewijs staat op https://fysiplan.nl/v2/proef?mijn=1\n\nGroet,\nFysiplan");
+  } else if (oordeel === "mislukt" && p.abonnement.incasso.zelf.status !== betaling.status) {
+    p.abonnement.incasso.zelf.status = betaling.status;
+    await bewaarProeven();
   }
 }
 // één incassostap per ronde: eerst vooraf mailen, INCASSO_VOORAF_DAGEN later afschrijven
@@ -8393,6 +8423,64 @@ async function afhandelen(request, response) {
       TEKST: mislukt ? "Er is niets afgeschreven. Probeer het opnieuw, of druk op 'Ja, ik wil doorgaan', dan bellen we je."
         : "Dat duurt meestal een paar seconden. Ververs deze pagina zo.",
       KNOP_HTML: mislukt ? '<a class="knop oranje" href="/v2/proef">Opnieuw proberen</a>' : '<a class="knop oranje" href="/v2/proef/betaald">Opnieuw kijken</a>' });
+    return;
+  }
+  // na een mislukte maandincasso: de openstaande maand zelf betalen (iDEAL of kaart). Alleen
+  // voor die ene maand en dat bedrag; elke poging is een nieuwe Mollie-betaling (een
+  // afgebroken iDEAL-poging is dan geen doodlopende weg). Zonder MOLLIE_API_KEY bestaat dit niet.
+  if (urlPath === "/v2/proef/maand-betalen" && request.method === "POST" && mollieAan()) {
+    response.setHeader("cache-control", "no-store");
+    if (kruisSite(request)) { await weigerKruis(response); return; }
+    try { await readBody(request, 1024); } catch {}
+    const p = proefVoorPagina(request);
+    const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Terug naar mijn abonnement</a>';
+    if (!p || !openMaand(p.abonnement)) { response.writeHead(303, { location: p ? "/v2/proef?mijn=1#abonnement" : "/v2/proef" }); response.end(); return; }
+    if (proefLimiet(request)) {
+      await serveerProef(request, response, "bericht", { TITEL: "Betalen", ETIKET: "Betalen", KOP: "Even te veel pogingen.",
+        TEKST: "Probeer het over een uur opnieuw. Er is niets afgeschreven.", KNOP_HTML: terug }, 429);
+      return;
+    }
+    const host = eigenHost(request), kaal = host.split(":")[0];
+    const lokaal = kaal === "localhost" || kaal === "127.0.0.1";
+    const basis = (lokaal ? "http://" : "https://") + host;
+    try {
+      const vorige = p.abonnement.incasso.zelf?.id;
+      const betaling = await mollie("/payments", { sleutel: MOLLIE_SLEUTEL, basis: MOLLIE_BASIS, methode: "POST",
+        body: zelfBetalenVerzoek(p, basis + "/v2/proef/maand-betaald", lokaal ? "" : basis + "/api/mollie/webhook") });
+      const checkout = String(betaling?._links?.checkout?.href || "");
+      if (!geldigBetaalId(betaling?.id) || !/^https?:\/\//.test(checkout)) throw new Error("mollie zonder checkout");
+      if (!markeerZelfGestart(p, betaling)) throw new Error("maand niet meer open");
+      if (vorige) mollieBetaalIndex.delete(vorige);
+      mollieBetaalIndex.set(betaling.id, p.id);
+      await bewaarProeven();
+      response.writeHead(303, { location: checkout }); response.end();
+    } catch (err) {
+      console.error("mollie maand zelf betalen mislukt:", err.message);
+      await serveerProef(request, response, "bericht", { TITEL: "Betalen", ETIKET: "Betalen", KOP: "Online betalen lukt op dit moment niet.",
+        TEKST: "Er is niets afgeschreven en je kunt gewoon verder. Probeer het later opnieuw, of wacht tot we je bellen.", KNOP_HTML: terug }, 502);
+    }
+    return;
+  }
+  // terug van Mollie na het zelf betalen van de openstaande maand: status zelf ophalen
+  if (urlPath === "/v2/proef/maand-betaald" && request.method === "GET" && mollieAan()) {
+    response.setHeader("cache-control", "no-store");
+    const p = proefVoorPagina(request);
+    const zelf = p?.abonnement?.incasso?.zelf;
+    if (!p || !zelf) { response.writeHead(303, { location: p ? "/v2/proef?mijn=1#abonnement" : "/v2/proef" }); response.end(); return; }
+    if (zelf.status !== "paid") { try { await mollieVerwerk(zelf.id); } catch (err) { console.error("mollie status:", err.message); } }
+    const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Naar mijn abonnement</a>';
+    if (zelf.status === "paid") {
+      await serveerProef(request, response, "bericht", { TITEL: "Betaald", ETIKET: "Betaald", KOP: "Dank je wel, de maand is betaald.",
+        TEKST: "Je kunt Fysiplan gebruiken tot en met " + datumNl(p.abonnement.betaaldTot) + ". De factuur staat bij je abonnement.",
+        KNOP_HTML: '<a class="knop oranje" href="/v2/app">Naar mijn kaarten</a> ' + terug });
+      return;
+    }
+    const mislukt = ["failed", "canceled", "expired"].includes(zelf.status);
+    await serveerProef(request, response, "bericht", { TITEL: "Betalen", ETIKET: "Betalen",
+      KOP: mislukt ? "De betaling is niet gelukt." : "We wachten nog op de bevestiging van je bank.",
+      TEKST: mislukt ? "Er is niets afgeschreven en je kunt gewoon verder. Probeer het opnieuw, of wacht tot we je bellen."
+        : "Dat duurt meestal een paar seconden. Ververs deze pagina zo.",
+      KNOP_HTML: mislukt ? terug : '<a class="knop oranje" href="/v2/proef/maand-betaald">Opnieuw kijken</a>' });
     return;
   }
   // factuur of betaalbewijs van de eigen online betaling: alleen met de proefcookie van
