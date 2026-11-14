@@ -74,12 +74,12 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 ## Open
 
 ### Sweep 2026-11-14 02u (vijf persona's lokaal met EIGEN_LOGIN_VERPLICHT=aan en PROEF_VERPLICHT=aan; geen 500's of pageerrors; alle beheergrenzen hielden, ook X ↔ Y; #298, #299, #300 bevestigd)
-- **OPGELOST 2026-11-14 PR #<PR> (test:eigenbibnaam) — MIDDEL (Mark, open sinds 13-11 22u) — eigen oefeningen onderling alleen op hoofdletters
+- **OPGELOST 2026-11-14 PR #305 (test:eigenbibnaam) — MIDDEL (Mark, open sinds 13-11 22u) — eigen oefeningen onderling alleen op hoofdletters
   vergeleken.** De server vergelijkt nu met normEx, net als de app ("Abroller-Testdal" naast "Abroller Testdal" → 409 met de bestaande naam).
   Een lijst of object als naam geeft 400 in plaats van "[object Object]" (LAAG van 22u).
-- **OPGELOST 2026-11-14 PR #<PR> (test:praktijktegels) — MIDDEL (Karin, open sinds 13-11 22u) — therapeut zag beheertegels zonder uitleg.**
+- **OPGELOST 2026-11-14 PR #305 (test:praktijktegels) — MIDDEL (Karin, open sinds 13-11 22u) — therapeut zag beheertegels zonder uitleg.**
   Team, Proef en Gegevens zeggen het nu vooraf; de gegevenstegel opent voor een collega niets.
-- **OPGELOST 2026-11-14 PR #<PR> (test:praktijktegels) — MIDDEL (Sanne, nieuw, rest van #299) — praktijkknop met naam maar zonder login
+- **OPGELOST 2026-11-14 PR #305 (test:praktijktegels) — MIDDEL (Sanne, nieuw, rest van #299) — praktijkknop met naam maar zonder login
   zette de focus in "Huidige kaart opslaan als".** Nu in het inlogveld (e-mail of wachtwoord).
 - **MIDDEL (Truus, nieuw) — melding na #300 niet op te volgen**: "Deze oefening staat niet meer op je kaart. Vernieuw de pagina." zonder
   knop; vanaf een beginschermicoon kan Truus niet vernieuwen. Bij "Te zwaar?" staat de zin in de uitgeschakelde knop (lijkt een link).
