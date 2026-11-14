@@ -223,6 +223,19 @@ versie, wanneer en wie (ook in de download van /v2/gegevens).
 3. Laat de jurist privacyverklaring, verwerkersovereenkomst en voorwaarden samen toetsen (staat al
    hieronder bij Algemene voorwaarden, punt 7).
 
+### Openstaande maand zelf betalen na een mislukte incasso (praktijk-routine, 2026-11-14)
+**Wat de code nu doet:** mislukt een maandincasso, dan ziet de praktijk op Mijn abonnement
+(fysiplan.nl/v2/proef?mijn=1) bovenaan "De automatische betaling … is niet gelukt" met de knop **Deze maand nu betalen**.
+Die maakt een eenmalige Mollie-betaling (iDEAL of bankkaart) voor precies het bedrag en de maand van de mislukte incasso.
+Gelukt: de maand telt als betaald, schuift op, krijgt een eigen factuur; de praktijk krijgt een bevestiging en jij een mail
+"Openstaande maand zelf betaald: …" (dan hoef je niet meer te bellen). Afgebroken: er staat niets afgeschreven en de praktijk
+kan het opnieuw proberen. De mail "je maandbetaling is niet gelukt" noemt de link nu ook. Alleen wat de server zelf bij
+Mollie ophaalt, van deze praktijk, deze maand en dit bedrag, telt. Code: `lib/mollie.js` (`openMaand`, `beoordeelZelf`),
+test `scripts/test-maand-zelf-betalen.mjs` (in `npm run test:abonnement`).
+**Env:** `MOLLIE_API_KEY`; een mislukte incasso bestaat alleen met `MOLLIE_INCASSO=aan`. Zonder: niets anders dan nu.
+**Wat jij moet doen:** niets extra; dit hoort bij het aanzetten van de maandincasso hieronder. De keuze wat er gebeurt als
+een praktijk ook zelf niet betaalt (bellen of na X dagen op slot) blijft open.
+
 ### Nette foutpagina op de V2-kant (praktijk-routine, 2026-11-13)
 **Wat de code nu doet:** wie in de browser een adres onder `/v2/` opent dat niet bestaat (tikfout, oude link),
 krijgt een 404-pagina in de huisstijl met "Naar de app" en "Naar de website". Tot nu toe kwam je dan op het

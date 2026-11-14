@@ -23,6 +23,11 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **LAAG — voorwaarden (c), van de praktijk-routine 2026-11-14: openstaande maand zelf betalen.** Na een mislukte
+  maandincasso kan de praktijk de maand nu zelf betalen met iDEAL of bankkaart op Mijn abonnement (eenmalige
+  Mollie-betaling, zelfde bedrag en maand). Art. 4 zegt bij een mislukte incasso alleen dat Fysiplan contact opneemt;
+  kijk of één zin over zelf betalen erbij moet. Privacy: geen nieuwe gegevens (Mollie stond er al).
+
 - **MIDDEL (nieuw, 2026-11-13 21u) — AI-verordening (g): een eigen bericht dat een agent met taalmodel zelf verstuurt, zei niet dat het
   met AI is geschreven.** Stand "automatisch" bij de support-agent: de agent schrijft onderwerp en kern, de server zet aanhef en
   "Groet, Fysiplan-support" erbij en verstuurt naar echte therapeuten en beheerders, die erop kunnen antwoorden. Niemand leest het vooraf.
