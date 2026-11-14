@@ -101,7 +101,7 @@ try {
   assert.match(kort(pag.privacy), new RegExp(NA_EINDE_WISSEN_DAGEN + " dagen na het einde van je abonnement, of " + proefBewaar + " dagen na de proef"));
   // gewone taal naast de juridische term
   assert.match(pag.privacy, /<b>Waarom dit mag\.<\/b> De wet noemt dit de grondslag\./);
-  assert.match(pag.privacy, /<b>bezwaar maken<\/b> als we gegevens gebruiken om de dienst veilig te houden/);
+  assert.match(pag.privacy, /<b>bezwaar maken<\/b> als we gegevens gebruiken omdat we daar zelf een goede reden voor hebben \(gerechtvaardigd belang\)/);
   assert.match(pag.verwerkersovereenkomst, /\(een datalek\)[\s\S]*uiterlijk binnen 48 uur/);
   assert.match(pag.verwerkersovereenkomst, new RegExp("wissen we alles binnen " + NA_EINDE_WISSEN_DAGEN + " dagen"));
   console.log("ok: juridische pagina's B1 en samenvattingen kloppen met de code");

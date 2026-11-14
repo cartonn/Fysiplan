@@ -4,6 +4,17 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Privacyverklaring 2026-11-14 en één vraag over een functionaris gegevensbescherming (legal, 2026-11-14 09u)
+
+/privacy is bijgewerkt naar versie 2026-11-14: eigen video's op een kaart hebben een eigen rij (waarvoor, hoe lang, tijdelijke
+link), bezwaar maken geldt voor alles wat op gerechtvaardigd belang rust, en Activiteit is voor een beheerder. Niets voor jou om te doen.
+
+**Vraag voor de jurist:** moet Fysiplan een functionaris gegevensbescherming (FG) aanwijzen? De AVG eist dat ook van een verwerker
+als zijn kernactiviteit bestaat uit grootschalige verwerking van gezondheidsgegevens (art. 37 lid 1 c). Nu zijn er geen betalende
+praktijken, dus "grootschalig" speelt nog niet; bij groei wel. Is het antwoord ja, dan komen naam en contact van de FG op /privacy
+(art. 13 lid 1 b) en meld je hem bij de Autoriteit Persoonsgegevens. Bron: https://eur-lex.europa.eu/eli/reg/2016/679/oj (art. 37–39) en de pagina over de FG op
+autoriteitpersoonsgegevens.nl.
+
 ### Voorwaarden 2026-11-14: zelf betalen en wijzigen (legal, 2026-11-14 05u)
 
 De voorwaarden zijn bijgewerkt naar versie 2026-11-14; een beheerder gaat in de app opnieuw akkoord (doorwerken kan gewoon).
