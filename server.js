@@ -1678,6 +1678,22 @@ function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
       '<input id="o_ww" name="wachtwoord" type="password" autocomplete="current-password" maxlength="200" required/></div>' : "") +
     '<div class="knoppen"><button class="knop omlijnd" type="submit">Abonnement opzeggen</button></div></form>' + gegevens + "</div>";
 }
+// Rem op het opvragen van een betaling bij Mollie. De terugkeerpagina's (/v2/proef/betaald,
+// /v2/proef/maand-betaald) en de webhook vroegen de status bij elk verzoek op; wie een eigen
+// betaling had (het id staat op de eigen factuur), kon met een lus de Mollie-sleutel van
+// Fysiplan laten remmen, en dan liepen ook de betalingen van andere praktijken vast.
+// Nu per betaling en per soort hooguit `max` keer per `ms`; daarboven toont een pagina de
+// bewaarde status en zegt de webhook 503 (Mollie probeert het dan later opnieuw).
+const mollieOpvraag = new Map();
+function mollieMagOpvragen(sleutel, max, ms, nu = Date.now()) {
+  if (mollieOpvraag.size > 5000) for (const [k, v] of mollieOpvraag) if (!v.some((t) => nu - t < ms)) mollieOpvraag.delete(k);
+  const lijst = (mollieOpvraag.get(sleutel) || []).filter((t) => nu - t < ms);
+  if (lijst.length >= max) { mollieOpvraag.set(sleutel, lijst); return false; }
+  lijst.push(nu);
+  mollieOpvraag.set(sleutel, lijst);
+  return true;
+}
+const MOLLIE_EIND = ["paid", "failed", "canceled", "expired"];
 // haal de betaling zelf op bij Mollie (de webhook is niet ondertekend) en verwerk hem
 async function mollieVerwerk(id) {
   const pid = mollieBetaalIndex.get(id);
@@ -8430,7 +8446,8 @@ async function afhandelen(request, response) {
   if (urlPath === "/v2/proef/betaald" && request.method === "GET" && mollieAan()) {
     response.setHeader("cache-control", "no-store");
     let p = proefVoorPagina(request);
-    if (p?.betaling?.id && !p.klant) { try { p = (await mollieVerwerk(p.betaling.id)) || p; } catch (err) { console.error("mollie status:", err.message); } }
+    if (p?.betaling?.id && !p.klant && !MOLLIE_EIND.includes(p.betaling.status) &&
+      mollieMagOpvragen("pagina:" + p.betaling.id, 1, 10000)) { try { p = (await mollieVerwerk(p.betaling.id)) || p; } catch (err) { console.error("mollie status:", err.message); } }
     if (!p) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     if (p.klant) {
       await serveerProef(request, response, "bericht", { TITEL: "Betaald", ETIKET: "Betaald", KOP: "Dank je wel, je abonnement is actief.",
@@ -8507,7 +8524,7 @@ async function afhandelen(request, response) {
     const p = proefVoorPagina(request);
     const zelf = p?.abonnement?.incasso?.zelf;
     if (!p || !zelf) { response.writeHead(303, { location: p ? "/v2/proef?mijn=1#abonnement" : "/v2/proef" }); response.end(); return; }
-    if (zelf.status !== "paid") { try { await mollieVerwerk(zelf.id); } catch (err) { console.error("mollie status:", err.message); } }
+    if (!MOLLIE_EIND.includes(zelf.status) && mollieMagOpvragen("pagina:" + zelf.id, 1, 10000)) { try { await mollieVerwerk(zelf.id); } catch (err) { console.error("mollie status:", err.message); } }
     const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Naar mijn abonnement</a>';
     if (zelf.status === "paid") {
       await serveerProef(request, response, "bericht", { TITEL: "Betaald", ETIKET: "Betaald", KOP: "Dank je wel, de maand is betaald.",
@@ -8553,6 +8570,7 @@ async function afhandelen(request, response) {
     let id = "";
     try { id = new URLSearchParams(await readBody(request, 1024)).get("id") || ""; } catch {}
     if (geldigBetaalId(id) && mollieBetaalIndex.has(id)) {
+      if (!mollieMagOpvragen("webhook:" + id, 10, 60000)) { await send(response, 503, "text/plain; charset=utf-8", "later"); return; }
       try { await mollieVerwerk(id); }
       catch (err) { console.error("mollie webhook:", err.message); await send(response, 503, "text/plain; charset=utf-8", "later"); return; }
     }
