@@ -104,12 +104,12 @@ const ADMIN_KEY = (() => {
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88" && process.env.ADMIN_KEY !== "account";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-14";
+const VWO_VERSIE = "2026-11-15";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
 const AV_VERSIE = "2026-11-15";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-15-2";
+const PRIVACY_VERSIE = "2026-11-15-3";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -137,7 +137,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-14", tekst: "Lukt een automatische betaling niet, dan kun je die maand zelf betalen met iDEAL of je bankkaart. Wijzigen: alleen iets in je nadeel melden we 30 dagen vooraf; een verduidelijking of iets in je voordeel gaat meteen in." },
   { stuk: "vwo", versie: "2026-11-14", tekst: "Gegevens: de overeenkomst noemt nu ook de medewerkers van je praktijk (wie een kaart maakte, opende of bewaarde, en Activiteit). Bewaartermijn: een eigen video of foto gaat weg met de kaart; een opname die op geen kaart komt, na 4 uur." },
   { stuk: "av", versie: "2026-11-14-2", tekst: "Verduidelijking: artikel 2 zegt welke delen van Fysiplan met AI zijn gemaakt of met AI werken (video's, stem, vertaling, zoekhulp). AI zet nooit zelf een oefening of dosering op een kaart; dat doe je zelf." },
-  { stuk: "av", versie: "2026-11-15", tekst: "Verduidelijking: akkoord geven, betalen, opzeggen en alle gegevens downloaden of wissen doet een beheerder van je praktijk. Probeert een collega zonder die rol het, dan zie je dat onder Activiteit." }
+  { stuk: "av", versie: "2026-11-15", tekst: "Verduidelijking: akkoord geven, betalen, opzeggen en alle gegevens downloaden of wissen doet een beheerder van je praktijk. Probeert een collega zonder die rol het, dan zie je dat onder Activiteit." },
+  { stuk: "vwo", versie: "2026-11-15", tekst: "Beveiliging: naast de eigen beheerlogins met een tweede stap staat op de server één noodsleutel zonder tweede stap, voor het eerste account en als niemand meer kan inloggen. Wat daarmee gebeurt, staat in het beheerlogboek als \"beheersleutel\", niet op naam." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {

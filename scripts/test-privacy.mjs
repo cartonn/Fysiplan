@@ -381,6 +381,17 @@ try {
     const opnameUur = Number(serverBron.match(/OPNAME_BEWAAR_MS\) \|\| (\d+) \* 60 \* 60 \* 1000/)[1]);
     assert.match(art10, new RegExp("op geen bewaarde kaart komt, wist Fysiplan na " + opnameUur + " uur"), "art. 10 noemt " + opnameUur + " uur (OPNAME_BEWAAR_MS)");
     assert.match(art10, /eigen video of foto bij een oefening gaat weg met de kaart/);
+    // legal 2026-11-15 21u (b): art. 4 zei alleen "elke medewerker heeft een eigen beheerlogin met
+    // een tweede stap", maar isAdmin laat ook de sleutel van de server binnen (geen tweede stap,
+    // in het beheerlogboek als "beheersleutel"). Fail-closed: zolang de code die weg kent, noemen
+    // art. 4 en /privacy#beheerlog hem.
+    if (/req\.beheerWie = "beheersleutel"/.test(serverBron)) {
+      const art4 = vwo.split("<h2>4. ")[1].split("<h2>")[0];
+      assert.match(art4, /id="noodsleutel"[^<]*noodsleutel, zonder tweede stap/, "VWO art. 4 noemt de noodsleutel zonder tweede stap");
+      assert.match(art4, /als &ldquo;beheersleutel&rdquo; en niet op naam/, "VWO art. 4 zegt dat de sleutel niet op naam gelogd wordt");
+      const blog = privacy.split('<tr id="beheerlog">')[1].split("</tr>")[0];
+      assert.match(blog, /noodsleutel/, "/privacy#beheerlog noemt de noodsleutel");
+    }
     assert.doesNotMatch(vwo, /vrije tekst van de therapeut gaat niet naar/, "onjuiste AI-belofte is weg");
     assert.match(vwo, /Wel de namen van oefeningen, ook van eigen oefeningen van de praktijk/);
   }
