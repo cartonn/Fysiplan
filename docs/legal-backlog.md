@@ -23,6 +23,10 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **LAAG (van de gebruikers-sweep, 2026-11-15 14u, Truus) — (e)/(a): "Mijn gegevens" op /k noemt bij "Wat je aantikt" pijnscores,
+  gedaan, te zwaar en seintjes, maar niet ervaren herstel (en de doelactiviteit-score), terwijl die wel worden bewaard en in de
+  download zitten.** Voorstel: opsomming in kaart.html gelijk trekken met `PATIENT_VELDEN` / /privacy#patient.
+
 - **OPGELOST 2026-11-15 13u (legal-PR van deze run) — LAAG (van security, 2026-11-15 12u) — (a)/(f): nieuw bestand `inlogrem.json` in de datamap.** De rem op foute
   wachtwoorden per praktijk en per e-mailadres overleeft nu een uitrol. Op schijf: alleen de SHA-256 van de praktijknaam of
   het e-mailadres, het begin van het kwartier en het aantal missers; weg na een kwartier of na een geslaagde login; niet in de
