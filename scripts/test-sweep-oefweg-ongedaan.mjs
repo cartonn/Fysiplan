@@ -18,7 +18,7 @@ assert.match(html, /function oefWeg\(n\)\{[\s\S]{0,1600}Ongedaan maken[\s\S]{0,9
   "× geeft een melding met Ongedaan maken die de oefening op dezelfde plek terugzet");
 assert.match(html, /if\(chosen!==lijst\|\|chosen\.indexOf\(weg\)>=0\)return;/, "niet terugzetten op een andere kaart");
 assert.doesNotMatch(html, /chosen\.splice\((n|rn),1\);render\(\)/, "elke × loopt via oefWeg");
-assert.match(html, /if\(TOEGEVOEGD\.id===id&&Date\.now\(\)-TOEGEVOEGD\.t<800\)return;\s*for\(var hi=0;hi<chosen\.length;hi\+\+\)\{if\(chosen\[hi\]\.o===id\)\{oefWeg\(hi\);return;\}\}/,
+assert.match(html, /if\(tik&&TOEGEVOEGD\.id===id&&Date\.now\(\)-TOEGEVOEGD\.t<800\)return;\s*for\(var hi=0;hi<chosen\.length;hi\+\+\)\{if\(chosen\[hi\]\.o===id\)\{oefWeg\(hi\);return;\}\}/,
   "bibliotheek: weghalen via oefWeg, dubbeltik op + telt één keer");
 
 let playwright = null;
@@ -85,7 +85,7 @@ try {
   assert.deepEqual(await namen(), voor, "Ongedaan maken zet hem op dezelfde plek terug, niet achteraan (" + knopNaam + ", " + midden + ")");
   const nieuw = page.locator("#list .row [data-add]:not(.on)").first();
   const nieuwId = await nieuw.getAttribute("data-add");
-  await page.evaluate((id) => { const b = document.querySelector("#list .row [data-add='" + id + "']"); b.click(); document.querySelector("#list .row [data-add='" + id + "']").click(); }, nieuwId);
+  await page.locator(`#list .row [data-add='${nieuwId}']`).dblclick();
   await page.waitForTimeout(200);
   assert.equal((await namen()).length, 4, "dubbeltik op + zet de oefening er één keer op");
   void rijId;

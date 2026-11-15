@@ -526,7 +526,7 @@ let BEWAARD = "";
 
 // -- de plekken in de schermcode die hierop leunen --
 for (const [wat, patroon] of [
-  ["een oefening aanklikken", /  function toggleExercise\(id\)\{\n    if\(kaartWachtNog\(\)\)return;\n/],
+  ["een oefening aanklikken", /  function toggleExercise\(id(,tik)?\)\{\n    if\(kaartWachtNog\(\)\)return;\n/],
   ["een standaardkaart kiezen", /  function pasSjabloonToe\(s,erbij\)\{\n    if\(!s\)return;\n    if\(kaartWachtNog\(\)\)return;\n/],
   ["de voorbeeldkaart van de proef (zonder melding)", /      if\(!BIB_KLAAR\|\|chosen\.length\|\|!Array\.isArray\(l\)\|\|!l\.length\)return;\n/],
   ["het voorstel van de zoekhulp", /    if\(e\.target\.id!=='ai_apply'\|\|!AI_VOORSTEL\)return;\n    if\(kaartWachtNog\(\)\)return;\n/],

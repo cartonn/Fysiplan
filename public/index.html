@@ -2153,15 +2153,15 @@ bridge2.jpg</div>
   function render(){updateChipCounts();renderList();renderA4();saveState();proefTeller();}
 
   var TOEGEVOEGD={id:null,t:0};
-  function toggleExercise(id){
+  function toggleExercise(id,tik){
     if(kaartWachtNog())return;
     var has=chosen.some(function(c){return c.o===id;});
     // een tik op een rij die al op de kaart staat haalde de oefening stil weg (op de iPad al bij een tik tijdens
     // het scrollen), en een dubbeltik op + zette hem erop en meteen weer af (gebruikers-sweep 2026-11-15 14u, Mark).
-    // Nu: een tweede tik binnen 0,8 s na het toevoegen telt niet, en weghalen loopt via oefWeg met Ongedaan maken,
+    // Nu: een tweede tik (muis/aanraking, niet Enter) binnen 0,8 s na het toevoegen telt niet, en weghalen loopt via oefWeg met Ongedaan maken,
     // dat de oefening op haar eigen plek terugzet.
     if(has){
-      if(TOEGEVOEGD.id===id&&Date.now()-TOEGEVOEGD.t<800)return;
+      if(tik&&TOEGEVOEGD.id===id&&Date.now()-TOEGEVOEGD.t<800)return;
       for(var hi=0;hi<chosen.length;hi++){if(chosen[hi].o===id){oefWeg(hi);return;}}
     }
     else{TOEGEVOEGD={id:id,t:Date.now()};if(chosen.length>=12){alert('Maximaal 12 plaatjes op één A4.');return;}chosen.push({o:id,i:0});var o=OEF[id];if(o){var key=exerciseKey(o);RECENT=[key].concat(RECENT.filter(function(x){return x!==key;})).slice(0,24);try{localStorage.setItem('fysiplan_recent',JSON.stringify(RECENT));}catch(e){}}}
@@ -2554,7 +2554,7 @@ bridge2.jpg</div>
     if(mv){moveExercise(+mv.dataset.cat);return;}
     var p=e.target.closest('.ren');
     if(p){renameExercise(+p.dataset.ren);return;}
-    var r=e.target.closest('.row');if(!r)return;toggleExercise(+r.dataset.id);
+    var r=e.target.closest('.row');if(!r)return;toggleExercise(+r.dataset.id,e.detail!==0);
     if(e.target.closest('[data-add]'))lijstFocusTerug("[data-add='"+r.dataset.id+"']");
   });
   document.getElementById('filters').addEventListener('click',function(e){

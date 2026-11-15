@@ -15,7 +15,7 @@ const root = process.cwd();
 const html = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(html, /function lijstFocusTerug\(sel\)\{/, "hulpfunctie voor de focus in de lijst");
 assert.match(html, /renderList\(\);lijstFocusTerug\("\[data-fav='"\+fav\.dataset\.fav\+"'\]"\);/, "na ★ terug op ★");
-assert.match(html, /toggleExercise\(\+r\.dataset\.id\);\s*if\(e\.target\.closest\('\[data-add\]'\)\)lijstFocusTerug\("\[data-add='"\+r\.dataset\.id\+"'\]"\);/, "na + terug op de knop");
+assert.match(html, /toggleExercise\(\+r\.dataset\.id(,e\.detail!==0)?\);\s*if\(e\.target\.closest\('\[data-add\]'\)\)lijstFocusTerug\("\[data-add='"\+r\.dataset\.id\+"'\]"\);/, "na + terug op de knop");
 
 let playwright = null;
 try { playwright = createRequire(import.meta.url)("playwright"); } catch {
