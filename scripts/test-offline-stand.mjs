@@ -75,8 +75,8 @@ if (pw) {
     await wacht(300);
 
     // offline: opnieuw tikken zet de dag zichtbaar uit, vinkjes mee
-    // (pas na de rustperiode van de dagknop: twee tikken binnen 0,45 s zijn één dubbeltik, test:dagvinkdubbel)
-    await wacht(500);
+    // (pas na de rustperiode van de dagknop: twee tikken binnen 0,8 s zijn één dubbeltik, test:dagvinkdubbel)
+    await wacht(900);
     await ctx.setOffline(true);
     await page.click("#gdaan");
     await page.waitForFunction(() => document.getElementById("gdaan").getAttribute("aria-pressed") === "false", null, { timeout: 5000 })
@@ -107,7 +107,7 @@ if (pw) {
     await pp.close();
 
     // offline aanzetten toont meteen aan (na de rustperiode van de dagknop)
-    await wacht(500);
+    await wacht(900);
     await ctx.setOffline(true);
     await page.click("#gdaan");
     await page.waitForFunction(() => document.getElementById("gdaan").getAttribute("aria-pressed") === "true", null, { timeout: 5000 });

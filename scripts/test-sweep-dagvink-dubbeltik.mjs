@@ -1,7 +1,7 @@
 // Regressietest gebruikers-sweep 2026-11-15 06u (/k, Truus op iPhone SE, Jayden op Pixel 7): een dubbeltik op
 // "Ik heb vandaag geoefend" zette de dag aan en meteen weer uit (lokaal is het antwoord er na een paar ms, dus het
 // bezig-slot hield de tweede tik niet tegen). Met vinkjes erger: na "vinkjes weg?" → OK zette de tweede tik de dag
-// weer aan, zonder de vinkjes. Nu telt een tweede echte tik binnen 0,45 s niet.
+// weer aan, zonder de vinkjes. Nu telt een tweede echte tik binnen 0,8 s niet (eerst 0,45 s; sweep 2026-11-15 10u: een oudere patiënt tikt 0,5–0,7 s na elkaar).
 // CI heeft geen Playwright: de statische controle draait altijd, het telefoondeel alleen waar Playwright staat.
 // `npm run test:dagvinkdubbel`
 import assert from "node:assert/strict";
@@ -17,7 +17,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(join(root, "public/kaart.html"), "utf8");
 const kb = html.indexOf("getElementById('gdaan').addEventListener('click'");
 const klik = html.slice(kb, html.indexOf("stuur('/api/kaart/gedaan'", kb));
-assert.match(klik, /nu-knop\._tik<450/, "tweede tik binnen 0,45 s telt niet");
+assert.match(klik, /nu-knop\._tik<800/, "tweede tik binnen 0,8 s telt niet");
 assert.match(klik, /e\.isTrusted/, "alleen echte tikken tellen voor de rustperiode");
 console.log("test-sweep-dagvink-dubbeltik (statisch): ok");
 
@@ -78,16 +78,27 @@ try {
   await wacht(300);
   assert.equal(await vandaagOpServer(), false, "losse tik zet de dag uit");
 
+  // 2b. tragere dubbeltik (0,6 s tussen de tikken, sweep 2026-11-15 10u, Truus): telt ook als één tik
+  await wacht(1000);
+  await p.tap("#gdaan"); await wacht(600); await p.tap("#gdaan");
+  await wacht(600);
+  assert.equal(await stand(), "true", "trage dubbeltik: dag staat aan");
+  assert.equal(await vandaagOpServer(), true, "trage dubbeltik: server heeft de dag");
+  await wacht(1000);
+  await p.tap("#gdaan");
+  await p.waitForFunction(() => document.getElementById("gdaan").getAttribute("aria-pressed") === "false");
+  await wacht(300);
+
   // 3. met vinkjes: dag aan, dan dubbeltik met OK op de vraag → dag uit en blijft uit
-  await wacht(800);
+  await wacht(1000);
   for (const i of [0, 1]) { await p.evaluate((i) => document.querySelector(".oefdone[data-idx='" + i + "']").click(), i); await wacht(760); }
-  if (await stand() !== "true") { await wacht(800); await p.tap("#gdaan"); }
+  if (await stand() !== "true") { await wacht(1000); await p.tap("#gdaan"); }
   await p.waitForFunction(() => document.getElementById("gdaan").getAttribute("aria-pressed") === "true" && !document.getElementById("gdaan").dataset.bezig);
-  await wacht(800);
+  await wacht(1000);
   let vragen = 0;
   p.on("dialog", (d) => { vragen++; d.accept(); });
   await p.tap("#gdaan"); await p.tap("#gdaan");
-  await wacht(800);
+  await wacht(1000);
   assert.equal(vragen, 1, "één vraag");
   assert.equal(await stand(), "false", "na OK blijft de dag uit (de tweede tik zette hem niet terug aan)");
   assert.equal(await vandaagOpServer(), false, "server: dag uit");

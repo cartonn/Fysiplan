@@ -4,6 +4,11 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Fysiplan-logootje in een paar avatarbeelden (gebruikers-sweep, 2026-11-15 10u)
+Sanne zag linksboven in het avatarbeeld van Dead bug, Bruggen beginner en twee Brug-varianten een klein "Fysiplan"-logo, op het
+scherm, de A4 met Avatar en in de PDF; bij de andere oefeningen niet. Beelden horen bij de videostroom die jij begeleidt, dus de
+routines raken ze niet aan. Kijk of dit zo bedoeld is.
+
 ### Voorwaarden 2026-11-15: wie namens de praktijk handelt (legal, 2026-11-15 01u)
 
 Art. 5 en 6 zeggen nu dat een beheerder van de praktijk akkoord geeft, betaalt, opzegt en alles downloadt of wist, zoals de

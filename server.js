@@ -1618,7 +1618,28 @@ function proefVars(p, extra = {}) {
     MIJN_LEAD_HTML: p.klant ? "Je account staat op " + htmlEsc(p.email) + "."
       : "Tot en met <b>" + htmlEsc(datumNl(p.verloopt)) + "</b> gebruik je Fysiplan gratis. Je proef staat op " + htmlEsc(p.email) + ".",
     AFREKENEN: betalenKan() ? "Liever meteen geregeld? Reken de eerste maand hieronder online af." : "Online afrekenen is niet nodig.",
-    BETAAL_HTML: betaalBlok(p), ...extra };
+    BETAAL_HTML: betaalBlok(p), ...wisTeksten(p), ...extra };
+}
+// "Je gegevens wissen" op Mijn proef: hangt er al een beveiligde praktijk aan de aanmelding, dan
+// wist /v2/proef/wissen niets meer (de proef hoort bij de praktijk); de weg is dan Mijn gegevens,
+// of vanzelf na de proef (gebruikers-sweep 2026-11-15, Karin)
+function wisTeksten(p) {
+  const gekoppeld = Object.values(praktijkAccounts).some((acc) => acc && acc.proef && String(acc.proef.id || "") === String(p.id));
+  if (!gekoppeld) return { WIS_UITLEG: "We bewaren je e-mailadres, naam, telefoonnummer en praktijknaam. Wis je ze, dan stopt je proef direct op dit apparaat. " +
+    "Kaarten die je al met patiënten deelde blijven werken, tot ze na de bewaartermijn vanzelf verdwijnen.",
+    WIS_FORM_HTML: '<form method="post" action="/v2/proef/wissen" style="margin-top:14px">' +
+      '<label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, wis mijn gegevens en stop mijn proef.</span></label>' +
+      '<div class="knoppen"><button class="knop omlijnd" type="submit">Gegevens wissen</button></div></form>',
+    VERLOPEN_WIS_HTML: '<form method="post" action="/v2/proef/wissen" style="margin-top:22px">' +
+      '<p class="klein">Liever niet? Dan hoef je niets te doen; we wissen je gegevens automatisch na ' + PROEF_BEWAAR_DAGEN + ' dagen.</p>' +
+      '<label class="vink" style="margin-top:8px"><input type="checkbox" name="zeker" value="1" required/><span>Ja, wis mijn gegevens nu meteen.</span></label>' +
+      '<div class="knoppen"><button class="knop stil" type="submit" style="min-height:44px">Nu meteen wissen</button></div></form>' };
+  return { WIS_UITLEG: "We bewaren je e-mailadres, naam, telefoonnummer en praktijknaam van de aanmelding. Je proef hoort nu bij je praktijk " +
+      "en loopt tot en met " + datumNl(p.verloopt) + " voor het hele team. Wil je stoppen? Op Mijn gegevens wis je alles van de praktijk, ook je aanmelding. " +
+      "Word je geen klant, dan wissen we alles " + PROEF_BEWAAR_DAGEN + " dagen na de proef vanzelf.",
+    WIS_FORM_HTML: '<div class="knoppen" style="margin-top:14px"><a class="knop omlijnd" href="/v2/gegevens">Naar Mijn gegevens</a></div>',
+    VERLOPEN_WIS_HTML: '<p class="klein" style="margin-top:22px">Liever niet? Dan hoef je niets te doen; we wissen alles van de praktijk automatisch ' +
+      PROEF_BEWAAR_DAGEN + ' dagen na de proef. Meteen wissen doet een beheerder op <a href="/v2/gegevens">Mijn gegevens</a>.</p>' };
 }
 
 // ---- abonnement: eerste maand online afrekenen via Mollie (alleen met MOLLIE_API_KEY) ----
@@ -8395,8 +8416,25 @@ async function afhandelen(request, response) {
     // Opzeggen (dan wist de server alles 30 dagen na het einde) of "Alles wissen" op
     // Mijn gegevens (met het praktijkwachtwoord of de eigen login van een beheerder; de pagina
     // zegt zelf wat ze vraagt) doen dit wel volledig.
-    if (p && p.abonnement && p.abonnement.eersteBetaling &&
-      Object.values(praktijkAccounts).some((acc) => String(acc?.proef?.id || "") === String(p.id))) {
+    // Hetzelfde voor een proef waaraan al een beveiligde praktijk hangt (gebruikers-sweep 2026-11-15,
+    // Karin): wissen haalde de aanmelding weg terwijl de praktijk doorliep tot de einddatum op het
+    // account. De pagina zei "je proef is gestopt", het team werkte gewoon door, er kwam niets in
+    // Activiteit, de beheerder kwam daarna op Mijn proef niet meer binnen ("regelt een beheerder"),
+    // en na de einddatum zat de praktijk op slot zonder weg naar doorgaan of betalen. De aanmelding
+    // gaat nu mee met "Alles wissen" op Mijn gegevens, of vanzelf 30 dagen na de proef.
+    const gekoppeld = p && Object.values(praktijkAccounts).some((acc) => String(acc?.proef?.id || "") === String(p.id));
+    if (gekoppeld && !p.klant && !(p.abonnement && p.abonnement.eersteBetaling)) {
+      await serveerProef(request, response, "bericht", { TITEL: "Gegevens wissen", ETIKET: "Gegevens",
+        KOP: "Je proef hoort nu bij je praktijk.",
+        TEKST: "Er is niets gewist. De praktijk" + (p.praktijk ? " " + p.praktijk : "") + " loopt door tot en met " + datumNl(p.verloopt) +
+          ". Wil je stoppen? Wis dan alles van de praktijk, ook je aanmelding, op Mijn gegevens. Doe je niets en word je geen klant, dan wissen we alles " +
+          PROEF_BEWAAR_DAGEN + " dagen na de proef vanzelf.",
+        KNOP_HTML: '<a class="knop oranje" href="/v2/gegevens">Naar Mijn gegevens</a> <a class="knop omlijnd" href="/v2/proef?mijn=1">Terug naar mijn proef</a>' }, 409);
+      return;
+    }
+    // ook een klant zonder online betaling (door beheer als klant gemerkt): wissen haalde het
+    // abonnement weg en zette de praktijk op slot
+    if (gekoppeld) {
       await serveerProef(request, response, "bericht", { TITEL: "Gegevens wissen", ETIKET: "Abonnement",
         KOP: "Bij een abonnement wis je je gegevens op een andere plek.",
         TEKST: "Er is niets gewist. Zeg je abonnement op; " + NA_EINDE_WISSEN_DAGEN + " dagen na het einde wissen we alles van je praktijk vanzelf. " +

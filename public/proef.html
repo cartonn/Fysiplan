@@ -218,11 +218,8 @@ __INHOUD__
     __BETAAL_HTML__
     <div class="blad" style="margin-top:34px">
       <h2>Je gegevens wissen</h2>
-      <p class="klein" style="font-size:14.5px">We bewaren je e-mailadres, naam, telefoonnummer en praktijknaam. Wis je ze, dan stopt je proef direct op dit apparaat. Kaarten die je al met pati&euml;nten deelde blijven werken, tot ze na de bewaartermijn vanzelf verdwijnen.</p>
-      <form method="post" action="/v2/proef/wissen" style="margin-top:14px">
-        <label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, wis mijn gegevens en stop mijn proef.</span></label>
-        <div class="knoppen"><button class="knop omlijnd" type="submit">Gegevens wissen</button></div>
-      </form>
+      <p class="klein" style="font-size:14.5px">__WIS_UITLEG__</p>
+      __WIS_FORM_HTML__
     </div>
   </div>
 </main>
@@ -255,12 +252,8 @@ __INHOUD__
       </form>
       __BETAAL_HTML__
     </div>
-    <form method="post" action="/v2/proef/wissen" style="margin-top:22px">
-      <!-- geen verborgen zeker=1: één tik wiste alles, ±70 px onder "Ja, ik wil doorgaan" (sweep 2026-11-09, Mark iPad) -->
-      <p class="klein">Liever niet? Dan hoef je niets te doen; we wissen je gegevens automatisch na __BEWAAR_DAGEN__ dagen.</p>
-      <label class="vink" style="margin-top:8px"><input type="checkbox" name="zeker" value="1" required/><span>Ja, wis mijn gegevens nu meteen.</span></label>
-      <div class="knoppen"><button class="knop stil" type="submit" style="min-height:44px">Nu meteen wissen</button></div>
-    </form>
+    <!-- geen verborgen zeker=1: één tik wiste alles, ±70 px onder "Ja, ik wil doorgaan" (sweep 2026-11-09, Mark iPad); formulier uit wisTeksten in server.js -->
+    __VERLOPEN_WIS_HTML__
   </div>
 </main>
 <!--/blok-->

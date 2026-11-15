@@ -139,6 +139,7 @@ jobs:
       - run: npm run test:praktijknaamlogin
       - run: npm run test:tegelknoppen
       - run: npm run test:dagvinkdubbel
+      - run: npm run test:kaartvers
       - run: npm run test:sessie200
       - run: npm run test:profielovername
       - run: npm run test:proefarchief
@@ -185,6 +186,7 @@ jobs:
       - run: npm run test:proeftweedeapparaat
       - run: npm run test:proefbeheer
       - run: npm run test:proefcookiebeheer
+      - run: npm run test:proefwispraktijk
       - run: npm run test:proefdag
       - run: npm run test:ipadkop
       - run: npm run test:praktijktegels
