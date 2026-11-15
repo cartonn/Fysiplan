@@ -38,6 +38,19 @@ const remPad = join(data, "inlogrem.json");
   await rem.opSchijf();
   assert.deepEqual(bewaard.at(-1).rem, {}, "schoon na een geslaagde login");
 
+  // /privacy#inloggen: een hash blijft hooguit een half uur staan. Een verlopen teller van een
+  // ander gaat weg bij de volgende misser, ook op schijf (legal 2026-11-15).
+  {
+    const nu0 = Date.now();
+    rem.tel("oude praktijk", nu0);
+    rem.tel("nieuwe praktijk", nu0 + REM_MS + 1000);
+    await rem.opSchijf();
+    assert.deepEqual(Object.keys(bewaard.at(-1).rem), [remSleutel("nieuwe praktijk")], "verlopen teller weg bij de volgende misser");
+    rem.ruimOp(nu0 + 2 * REM_MS + 2000);
+    await rem.opSchijf();
+    assert.deepEqual(bewaard.at(-1).rem, {}, "ruimOp haalt verlopen tellers weg, ook op schijf");
+  }
+
   // inlezen: alleen rijen die nog gelden
   const nu = Date.now();
   await writeFile(remPad, JSON.stringify({ v: 1, rem: {
