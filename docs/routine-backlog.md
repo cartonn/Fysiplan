@@ -285,7 +285,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - **LAAG (nieuw):** oefeningnamen NL onder lang=en zonder noot bij mislukte vertaling, `#printBtn` title NL, lightboxknoppen 40 px, tijd
   in Mijn gegevens zonder tijdzone, "1 days", oefendoel kiezen klapt Deel-paneel dicht, voorbeeldkaart-POST stille 409 per browser
   (Jayden); logo dat geen afbeelding is verdwijnt stil, logoknop 56×13, verwijderde collega ziet tot volgende actie oude gegevens,
-  /v2/proef/factuur kale "Not found" ook voor beheerder, "wissen " met kleine letters + spatie telt als WISSEN (Karin); /o bij verlopen
+  /v2/proef/factuur kale "Not found" ook voor beheerder (OPGELOST 2026-11-15 praktijk-routine), "wissen " met kleine letters + spatie telt als WISSEN (Karin); /o bij verlopen
   proef toont nog galerij/camera, seintjestekst "niet meer afhandelen" klopt niet, "Niet bewaard" dubbel, "Wil je doorgaan?" vraagt opnieuw
   inloggen, eigen-videoknop A4 13,9 px, foto > 600 kB geen lagere kwaliteit (Mark); focus body na prullenbakknoppen, lokale kaartnaam
   zonder maxlength (10.018 tekens) (Sanne); voortgangsbalk door de kop bij 200 % (Truus).
@@ -322,7 +322,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   proefeinde + 30, Jayden, server.js r. ~2216); teller "1 of 4" telt weggehaalde oefening tot herladen (Jayden); trage lijn: geen "Saving…"
   bij pijnschuif (Jayden); "0 days" voor vandaag uitgevinkt (Jayden); Nederlandse therapeuttekst onder lang=en (Jayden); kopbalk "Open
   Kaarten om in te loggen" met alleen fpsessie-cookie en lege localStorage, eigen oefeningen niet geladen (Karin, r. ~1586/~7223);
-  /v2/proef/factuur als therapeut kale "Not found" (Karin, server.js r. ~8397).
+  /v2/proef/factuur als therapeut kale "Not found" (Karin, server.js r. ~8397; OPGELOST 2026-11-15 praktijk-routine, test-eerste-betaling-mail).
 - **Bevestigd, nog open:** welkomstvenster Esc/Enter, focus body na Test de QR/reservecodes/CSV, Rapport/CSV 22 px (Sanne); offline
   voorlezen-melding, vraagseintje zonder tekst, pijnknoppen 26–34 px, "1 dagen" (Truus); Nederlandse bestandsnamen .ics/.txt (Jayden);
   sjabloonlinks 15 px, iPad-knoppen 32–36 px (Mark); × Team desktop 32×36, geen statusmelding na rol/verwijderen (Karin).
