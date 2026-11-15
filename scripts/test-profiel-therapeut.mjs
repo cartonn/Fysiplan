@@ -71,7 +71,7 @@ try {
         if (sessionStorage.getItem("klaar")) return; sessionStorage.setItem("klaar", "1");
         localStorage.setItem("fp_praksessie", s);
         localStorage.setItem("fysiplan_settings", JSON.stringify({ praktijk: "Fysio Collega" }));
-        localStorage.setItem("fysiplan_welkom_gezien", "1");
+        localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_wn_gezien", "9");
       }, [s]);
       const p = await c.newPage();
       p.fouten = []; p.on("pageerror", (e) => p.fouten.push(e.message));
