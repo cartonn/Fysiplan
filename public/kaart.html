@@ -1268,6 +1268,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     knop.dataset.bezig='1';
     var vrij=function(ms){setTimeout(function(){delete knop.dataset.bezig;},ms);};
     m.textContent='';
+    // zonder internet geen agenda-bestand: meteen de melding, niet eerst een browserfoutpagina
+    if(navigator.onLine===false){vrij(0);m.textContent=trag('fout');return;}
     fetch(url,{cache:'no-store'})
       .then(function(r){
         if(r.ok){location.href=url;vrij(1500);return;}

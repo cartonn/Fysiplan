@@ -3173,6 +3173,7 @@ bridge2.jpg</div>
   function upsertPraktijk(){
     var p={praktijk:SET.praktijk||'',adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||'',website:SET.website||''};
     if(!p.praktijk.trim()||!p.adres.trim())return;
+    if(document.getElementById('p_adres').readOnly)return;
     clearTimeout(prakSaveTimer);
     prakSaveTimer=setTimeout(function(){
       stuurPraktijk(p);
@@ -3227,6 +3228,27 @@ bridge2.jpg</div>
     // een therapeut kan het logo niet wijzigen (alleen een beheerder): dan geen knop
     var geenBeheer=!!(typeof PRAKSLOT!=='undefined'&&PRAKSLOT&&PRAKSLOT.ingelogd&&PRAKSLOT.akkoord&&PRAKSLOT.akkoord.beheer===false);
     if(btn){btn.style.display=IS_V2&&!geenBeheer?'':'none';btn.textContent=has?'logo wijzigen':'+ praktijklogo';}
+    profielAlleenLezen(IS_V2&&geenBeheer);
+  }
+  // Adres, plaats, telefoon, e-mail en website op de A4 horen bij het praktijkprofiel; alleen een
+  // beheerder past dat aan. Een therapeut kon ze typen: zonder adres ging er niets naar de server
+  // (geen 403, geen melding) en het getypte nummer kwam op de print (gebruikers-sweep 2026-11-15, Karin).
+  // Nu zijn de velden voor een therapeut alleen-lezen, met één zin wie het wel mag.
+  function profielAlleenLezen(aan){
+    var uitleg='Alleen een beheerder van de praktijk past de praktijkgegevens aan.';
+    ['p_adres','p_plaats','p_tel','p_email','p_website'].forEach(function(id){
+      var el=document.getElementById(id);if(!el)return;
+      el.readOnly=!!aan;
+      if(aan){el.title=uitleg;el.setAttribute('aria-describedby','p_alleenbeheer');}
+      else if(el.title===uitleg){el.removeAttribute('title');el.removeAttribute('aria-describedby');}
+    });
+    var m=document.getElementById('p_alleenbeheer');
+    if(aan&&!m){
+      var ad=document.querySelector('#a4 .prak .adres');
+      if(ad){m=document.createElement('div');m.id='p_alleenbeheer';m.className='no-print';
+        m.style.cssText='font-size:11px;color:var(--muted);margin-top:2px';m.textContent=uitleg;ad.appendChild(m);}
+    }
+    if(m)m.style.display=aan?'block':'none';
   }
   document.getElementById('logoBtn').addEventListener('click',function(){document.getElementById('logoFile').click();});
   document.getElementById('logoFile').addEventListener('change',function(e){

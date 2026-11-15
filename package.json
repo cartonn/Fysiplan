@@ -244,7 +244,8 @@
     "test:oefweg": "node scripts/test-sweep-kaart-oefweg.mjs",
     "test:praktijktegels": "node scripts/test-sweep-praktijktegels-rol.mjs",
     "test:proefwispraktijk": "node scripts/test-sweep-proefwis-praktijk.mjs",
-    "test:kaartvers": "node scripts/test-sweep-kaart-vers.mjs"
+    "test:kaartvers": "node scripts/test-sweep-kaart-vers.mjs",
+    "test:agendaoffline": "node scripts/test-sweep-agenda-offline.mjs"
   },
   "engines": {
     "node": ">=20"

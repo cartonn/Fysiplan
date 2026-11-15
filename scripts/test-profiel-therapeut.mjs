@@ -18,6 +18,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(html, /if\(d\.beheer(\|\|d\.website)?\)\{profielTerug\(d\.fout\);return;\}/, "een 403 van het praktijkprofiel wordt afgehandeld");
 assert.match(html, /PRAKSLOT\.akkoord\.beheer===false/, "de logoknop kijkt naar de rol");
+assert.match(html, /profielAlleenLezen\(IS_V2&&geenBeheer\);/, "profielvelden volgen de rol");
 assert.match(html, /if\(Date\.now\(\)-Number\(btn\.dataset\.zekerT\|\|0\)<700\)return;/, "bevestiging van verwijderen telt pas na een pauze");
 
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-profieltherapeut-"));
@@ -84,16 +85,25 @@ try {
     let zicht = true;
     for (let i = 0; i < 60 && (zicht = await p.isVisible("#logoBtn")); i++) await wacht(100);
     assert.equal(zicht, false, "therapeut ziet geen knop om het logo te wijzigen");
-    await p.fill("#p_tel", "06-99999999");
+    // sinds sweep 2026-11-15 (Karin): de profielvelden zijn voor een therapeut alleen-lezen, met één zin
+    // wie het wel mag (vroeger kon hij typen; zonder adres ging er niets naar de server en kwam het
+    // getypte nummer stil op de print)
+    for (const id of ["#p_adres", "#p_plaats", "#p_tel", "#p_email", "#p_website"]) {
+      assert.equal(await p.$eval(id, (e) => e.readOnly), true, id + " is alleen-lezen voor een therapeut");
+    }
+    assert.ok(await p.isVisible("#p_alleenbeheer"), "uitleg bij de velden is zichtbaar");
+    assert.match(await p.textContent("#p_alleenbeheer"), /Alleen een beheerder/, "uitleg zegt wie het wel mag");
+    assert.equal(await p.getAttribute("#p_tel", "aria-describedby"), "p_alleenbeheer", "schermlezer hoort de uitleg");
+    const fs = parseFloat(await p.$eval("#p_alleenbeheer", (e) => getComputedStyle(e).fontSize));
+    assert.ok(fs >= 11, "uitleg is leesbaar (" + fs + " px)");
+    await p.click("#p_tel");
+    await p.keyboard.type("99");
     await p.press("#p_tel", "Tab");
-    let terug = "";
-    for (let i = 0; i < 80 && (terug = await p.inputValue("#p_tel")) !== "030-7654321"; i++) await wacht(100);
-    assert.equal(terug, "030-7654321", "geweigerd nummer wordt teruggezet");
-    const msg = await p.textContent("#p_msg");
-    assert.match(msg, /Alleen een beheerder/, "melding zegt wie het wel mag");
-    assert.ok(await p.isVisible("#p_msg"), "melding is zichtbaar");
-    const fs = parseFloat(await p.$eval("#p_msg", (e) => getComputedStyle(e).fontSize));
-    assert.ok(fs >= 12, "melding is leesbaar (" + fs + " px)");
+    assert.equal(await p.inputValue("#p_tel"), "030-7654321", "typen verandert het nummer niet");
+    // de serverweigering blijft afgehandeld als er toch iets wordt verstuurd (oud tabblad, andere route)
+    await p.evaluate(() => window.fpProfielTerug("Alleen een beheerder van de praktijk kan het praktijkprofiel en het logo aanpassen."));
+    await p.waitForSelector("#p_msg", { state: "visible", timeout: 5000 });
+    assert.match(await p.textContent("#p_msg"), /Alleen een beheerder/, "melding zegt wie het wel mag");
     const lokaal = JSON.parse(await p.evaluate(() => localStorage.getItem("fysiplan_settings")));
     assert.equal(lokaal.tel, "030-7654321", "het geweigerde nummer blijft niet op dit apparaat staan");
     await p.reload({ waitUntil: "networkidle" });
@@ -106,6 +116,8 @@ try {
     let bz = false;
     for (let i = 0; i < 60 && !(bz = await b.isVisible("#logoBtn")); i++) await wacht(100);
     assert.equal(bz, true, "beheerder ziet de logoknop");
+    assert.equal(await b.$eval("#p_tel", (e) => e.readOnly), false, "beheerder kan de profielvelden wijzigen");
+    assert.equal(await b.isVisible("#p_alleenbeheer"), false, "beheerder krijgt de therapeut-uitleg niet");
     // Team: een dubbelklik op × verwijdert de collega niet meer meteen (gebruikers-sweep 2026-11-12 14u, Karin)
     await b.click("#kaartenBtn");
     await b.waitForSelector("#ps_team", { state: "visible", timeout: 8000 });
