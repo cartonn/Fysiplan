@@ -1383,7 +1383,37 @@ function proefVanBeheer(req) {
   const p = k && Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
   return p && !p.gewist ? p : null;
 }
-const proefVoorPagina = (req) => proefVan(req) || proefVanBeheer(req);
+// Security (2026-11-15): de proefcookie alleen gaf ook ná het beveiligen van de praktijk de hele
+// proef- en abonnementskant (Mijn proef met e-mail en telefoon, facturen, factuurgegevens, betalen,
+// wissen). Op een gedeelde praktijkcomputer waar de aanmelder ooit begon (de cookie leeft 44 dagen)
+// kon zo elke collega, ook met een eigen login als therapeut of helemaal niet ingelogd, wat de server
+// sinds #266/#323 alleen een beheerder geeft. Heeft de praktijk die aan de proef hangt een actieve
+// beheerder met een eigen login, dan telt alleen nog een sessie van een beheerder (proefVanBeheer).
+// Vóór het beveiligen (nog geen beheerder) blijft de proefcookie de enige sleutel, zoals altijd.
+function proefAlleenBeheer(p) {
+  const pk = proefPraktijkSleutel(p);
+  // alleen een beheerder die echt kan inloggen: moet de praktijk een tweede stap hebben en is die nog niet
+  // ingesteld (beveiligen onderbroken), dan is de proefcookie nog de weg terug voor de aanmelder
+  return !!pk && ledenVan(pk).some((l) => l && l.rol === "beheerder" && lidActief(l) && (heeftTweedeStap(l) || !stapVerplicht(pk)));
+}
+function proefVoorPagina(req) {
+  const p = proefVan(req);
+  if (p && !proefAlleenBeheer(p)) return p;
+  return proefVanBeheer(req);
+}
+// de proef die op dit apparaat speelt, ook als de pagina's erachter een beheerder vragen: alleen
+// voor wat iedereen op het apparaat al ziet (de verlopen-pagina, het overzicht na de proef met wachtwoord)
+const proefOpApparaat = (req) => proefVan(req) || proefVanBeheer(req);
+// de verlopen-pagina: zonder betaalknop als dit apparaat de abonnementskant niet mag zien
+function verlopenVars(req, p) {
+  const extra = { V_PRAKTIJK: p.praktijk || "" };
+  if (proefVoorPagina(req) !== p) {
+    extra.BETAAL_HTML = "";
+    extra.AFREKENEN = "Betalen en doorgaan regelt een beheerder van je praktijk: die logt in met een eigen login.";
+    extra.TEL = "het nummer van de aanmelding";
+  }
+  return proefVars(p, extra);
+}
 // Een collega zonder beheerdersrol die toch een proef- of abonnementsactie post (doorgaan,
 // betalen, opzeggen, factuurgegevens, wissen) krijgt geen proef en wordt teruggestuurd. Die
 // poging moet de beheerder in Activiteit zien, net als de andere geweigerde pogingen
@@ -4382,7 +4412,9 @@ async function afhandelen(request, response) {
       eigenLogin: EIGEN_LOGIN_VERPLICHT || undefined,
       // de voorzet voor die eigen login: naam en e-mail van de proefaanmelding op dit apparaat
       // (de proefpagina's tonen ze hier ook al), zodat niemand ze twee keer typt
-      voorstel: EIGEN_LOGIN_VERPLICHT && !ingelogd && proefVan(request)
+      // (niet meer als de praktijk van die proef al een beheerder met eigen login heeft: dan is er
+      // niets te beveiligen en hoort niemand anders op dit apparaat naam en e-mail te zien)
+      voorstel: EIGEN_LOGIN_VERPLICHT && !ingelogd && proefVan(request) && !proefAlleenBeheer(proefVan(request))
         ? { naam: proefVan(request).naam || "", email: proefVan(request).email || "" } : undefined,
       // de praktijk met deze naam is van de proefaanmelding op dit apparaat (zelfde e-mail): de app
       // vult het adres in en biedt geen "andere praktijk" aan; stapOpen: de tweede stap is nog niet af
@@ -8184,12 +8216,21 @@ async function afhandelen(request, response) {
     telBezoek(request, false);
     response.setHeader("cache-control", "no-store");
     const p = proefVoorPagina(request);
-    if (p && proefVerlopen(p)) { await serveerProef(request, response, "verlopen", proefVars(p, { V_PRAKTIJK: p.praktijk || "" })); return; }
+    const pApparaat = p || proefOpApparaat(request);
+    if (pApparaat && proefVerlopen(pApparaat)) { await serveerProef(request, response, "verlopen", verlopenVars(request, pApparaat)); return; }
     if (p && !new URL(request.url, "http://x").searchParams.has("mijn")) { response.writeHead(303, { location: "/v2/app" }); response.end(); return; }
     if (p) { await serveerProef(request, response, "mijn", proefVars(p, { TITEL: "Mijn proef" })); return; }
     // ingelogd als collega (geen beheerder) bij een praktijk die al een proef of abonnement heeft:
     // geen aanmeldformulier, wel zeggen wie dit regelt
     const sCollega = sessieVan(request);
+    // proefcookie van een praktijk die al een beheerder met eigen login heeft, zonder diens sessie
+    if (!sCollega && pApparaat) {
+      await serveerProef(request, response, "bericht", { TITEL: "Proef en abonnement", ETIKET: "Je praktijk",
+        KOP: "De proef en het abonnement regelt een beheerder van je praktijk.",
+        TEKST: "Je praktijk is beveiligd met een eigen login. Log in de app in als beheerder; daarna zie je hier de proef, betalen, facturen en opzeggen.",
+        KNOP_HTML: '<a class="knop oranje" href="/v2/app">Naar de app om in te loggen</a>' });
+      return;
+    }
     if (sCollega && praktijkAccounts[sCollega.pk]?.proef) {
       await serveerProef(request, response, "bericht", { TITEL: "Proef en abonnement", ETIKET: "Je praktijk",
         KOP: "De proef en het abonnement regelt een beheerder van je praktijk.",
@@ -8225,7 +8266,7 @@ async function afhandelen(request, response) {
     // cookie en verandert niets: er gaat een eenmalige inloglink naar dat adres.
     let p = Object.values(proeven).find((x) => x.email === w.email && !x.gewist);
     const nieuw = !p;
-    if (!nieuw && proefVan(request) !== p) {
+    if (!nieuw && proefVoorPagina(request) !== p) {
       const nu = Date.now();
       let gestuurd = false;
       if (mailIngesteld() && !mailOpSlot("proef:" + p.email)) {
@@ -8691,15 +8732,15 @@ async function afhandelen(request, response) {
     response.setHeader("cache-control", "no-store");
     if (schrijfLimiet(request, response)) return;
     if (kruisSite(request)) { await weigerKruis(response); return; }
-    const p = proefVoorPagina(request);
+    const p = proefOpApparaat(request);
     if (!p || !proefVerlopen(p)) { response.writeHead(303, { location: p ? "/v2/app" : "/v2/proef" }); response.end(); return; }
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
     const nk = cleanName(b.praktijk, 80).toLowerCase();
-    const opnieuw = async (fout, status) => serveerProef(request, response, "verlopen", proefVars(p, {
+    const opnieuw = async (fout, status) => serveerProef(request, response, "verlopen", { ...verlopenVars(request, p),
       V_PRAKTIJK: b.praktijk || p.praktijk || "",
       V_OV_EMAIL: cleanName(b.email, 120),
-      OVERZICHT_FOUT_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }), status);
+      OVERZICHT_FOUT_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }, status);
     if (nk && loginOpSlot(nk)) { await opnieuw("Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
     if (beheerOpRem(request)) { await opnieuw("Te veel foute pogingen vanaf deze verbinding; probeer het over een paar minuten opnieuw.", 429); return; }
     // met eigen login: e-mail + eigen wachtwoord van een actief lid (alleen lezen, dus elke
@@ -9029,7 +9070,7 @@ async function afhandelen(request, response) {
     const proef = proefVan(request);
     if (proef && proefVerlopen(proef)) {
       response.setHeader("cache-control", "no-store");
-      await serveerProef(request, response, "verlopen", proefVars(proef, { V_PRAKTIJK: proef.praktijk || "" }));
+      await serveerProef(request, response, "verlopen", verlopenVars(request, proef));
       return;
     }
     response.setHeader("x-frame-options", "DENY");
