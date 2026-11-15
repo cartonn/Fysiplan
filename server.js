@@ -107,7 +107,7 @@ const VWO_VERSIE = "2026-11-14";
 const AV_VERSIE = "2026-11-15";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-14-2";
+const PRIVACY_VERSIE = "2026-11-15";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -8996,7 +8996,10 @@ async function afhandelen(request, response) {
         // ideeënbox: wat de praktijk plaatste en waarop haar logins stemden (legal 2026-11-12 17u)
         ideeenbox: ideeenbox.vanPraktijk(pk, (lidId) => (ledenVan(pk).find((l) => l.id === lidId) || {}).email || ""),
         // wie welke kaart zag of wijzigde (lib/leeslog.js); `k` is het id van de kaart, leeg = alle kaarten
-        leeslog: leeslogRegels.vanPraktijk(leeslog, pk).map((r) => ({ ...r, t: new Date(r.t).toISOString(), tot: new Date(r.tot).toISOString() }))
+        leeslog: leeslogRegels.vanPraktijk(leeslog, pk).map((r) => ({ ...r, t: new Date(r.t).toISOString(), tot: new Date(r.tot).toISOString() })),
+        // wat Fysiplan-support over de praktijk bijhoudt (legal 2026-11-15 09u, art. 15/20 AVG): dezelfde
+        // regels die bij Alles wissen weggaan, zodat je kunt zien wat er weggaat
+        support: (() => { try { return beheerOmgeving.vanPraktijk(pk, weergaveNaam(pk) || pk, ledenVan(pk)); } catch { return null; } })()
       };
       const bestand = "fysiplan-" + (slug(pk) || "praktijk") + "-" + new Date().toISOString().slice(0, 10) + ".json";
       response.writeHead(200, { "content-type": "application/json; charset=utf-8",
