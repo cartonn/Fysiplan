@@ -66,6 +66,14 @@ await metServer(null, async (haal) => {
   }
   // de vraaghulp staat standaard uit: dan noemen de voorwaarden hem ook niet
   assert.doesNotMatch(av, /\(de vraaghulp\)/, "vraaghulp uit: niet in de voorwaarden");
+  // Legal 2026-11-15 01u (c): de server laat alleen een beheerder namens de praktijk akkoord geven,
+  // betalen, opzeggen en alles downloaden of wissen (#323 legt een poging van een collega vast in
+  // Activiteit). Art. 5 zei "Opzeggen doe je zelf in de app", alsof elke therapeut dat kan.
+  if (/"proef-geweigerd"/.test(serverBron) && /"akkoord-geweigerd"/.test(serverBron)) {
+    assert.match(av, /Opzeggen doet een beheerder van je praktijk/, "art. 5: alleen een beheerder zegt op");
+    assert.match(av, /Een beheerder van je praktijk regelt namens de praktijk[^.]*akkoord[^.]*betalen[^.]*opzeggen[^.]*downloaden of wissen/, "art. 6: wat alleen een beheerder doet");
+    assert.match(av, /onder Activiteit/, "art. 6: een poging van een collega staat in Activiteit");
+  }
   const akkoord = serverBron.match(/const AKKOORD_WIJZIGINGEN = \[[\s\S]*?\n\];/)[0];
   const avVersie = serverBron.match(/const AV_VERSIE = "([^"]+)"/)[1];
   assert.ok(akkoord.includes('stuk: "av", versie: "' + avVersie + '"'), "AKKOORD_WIJZIGINGEN noemt de huidige AV_VERSIE");

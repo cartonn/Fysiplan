@@ -4,6 +4,14 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Voorwaarden 2026-11-15: wie namens de praktijk handelt (legal, 2026-11-15 01u)
+
+Art. 5 en 6 zeggen nu dat een beheerder van de praktijk akkoord geeft, betaalt, opzegt en alles downloadt of wist, zoals de
+app al deed. Verduidelijking: beheerders zien de vraag om opnieuw akkoord, niet blokkerend. Niets voor jou om te doen.
+
+**Vraag voor de jurist:** is "een beheerder in de app" genoeg om de praktijk te binden (volmacht, art. 3:60 BW), of moet de
+aanmelder bevestigen dat hij bevoegd is de praktijk te vertegenwoordigen?
+
 ### AI-geletterdheid (art. 4 AI-verordening) en AI in de voorwaarden (legal, 2026-11-14 21u)
 
 De voorwaarden zeggen nu in artikel 2 welke delen van Fysiplan met AI zijn gemaakt of met AI werken, en dat AI nooit zelf
