@@ -91,6 +91,26 @@ try {
   await page.keyboard.press(" ");
   assert.equal((await namen()).length, 1, "spatie werkt ook");
   assert.deepEqual(fouten, [], "geen scriptfouten");
+
+  // iPad (geen aanwijzen): onzichtbare pijltjes zijn niet aantikbaar; een tik rechtsonder in een vak schuift niets op
+  // (hertest Sanne 2026-11-15 06u). × en Vragen staan op de iPad wel zichtbaar.
+  const tab = await browser.newContext({ ...playwright.devices["iPad (gen 7) landscape"] });
+  await tab.addInitScript(() => { try { localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_wn_gezien", "9"); } catch {} });
+  const tp = await tab.newPage();
+  await tp.goto(`http://127.0.0.1:${port}/v2/app`);
+  await tp.waitForSelector("#list .row [data-add]", { timeout: 15000 });
+  await tp.keyboard.press("Escape");
+  for (let i = 0; i < 3; i++) { await tp.locator("#list .row [data-add]").nth(i).click(); }
+  await tp.waitForFunction(() => document.querySelectorAll("#mon .pic .rm").length === 3);
+  const tVoor = await tp.evaluate(() => [...document.querySelectorAll("#mon .pic .rm")].map((x) => x.getAttribute("aria-label")));
+  const pe = await tp.evaluate(() => getComputedStyle(document.querySelector("#mon .pic .mvrij")).pointerEvents);
+  assert.equal(pe, "none", "onzichtbare pijltjes op de iPad zijn niet aantikbaar");
+  const box = await tp.locator("#mon [data-mvr='0']").boundingBox();
+  await tp.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
+  await tp.waitForTimeout(200);
+  const tNa = await tp.evaluate(() => [...document.querySelectorAll("#mon .pic .rm")].map((x) => x.getAttribute("aria-label")));
+  assert.deepEqual(tNa, tVoor, "tik op de plek van het onzichtbare pijltje verschuift niets");
+  await tab.close();
   console.log("PASS tegelknoppen: ×, eigen video, vragen en ‹ › met Tab bereikbaar en zichtbaar; focus blijft op de tegel");
 } finally {
   await browser.close();

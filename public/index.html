@@ -167,31 +167,32 @@
   #a4 table.mon tbody tr.xr{display:none}
   #emptyA4{position:absolute;top:170px;left:26px;right:26px;z-index:2;pointer-events:none}
   /* knopjes op het plaatje: binnen het vak (het vak snijdt alles erbuiten af), zichtbaar bij aanwijzen */
-  #a4 .pic .rm{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:#d92d20;color:#fff;font-size:15px;font-weight:700;line-height:21px;text-align:center;cursor:pointer;display:block;opacity:0;box-shadow:0 1px 5px rgba(16,24,40,.3)}
-  /* onzichtbaar met opacity, niet met display:none: zo blijven de knopjes met Tab bereikbaar en verschijnen ze bij focus */
-  #a4 .pic:hover .rm,#a4 .pic:focus-within .rm{opacity:1}
+  #a4 .pic .rm{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:#d92d20;color:#fff;font-size:15px;font-weight:700;line-height:21px;text-align:center;cursor:pointer;display:block;opacity:0;pointer-events:none;box-shadow:0 1px 5px rgba(16,24,40,.3)}
+  /* onzichtbaar met opacity, niet met display:none: zo blijven de knopjes met Tab bereikbaar en verschijnen ze bij focus.
+     Onzichtbaar = niet aantikbaar (pointer-events:none), anders schoof een tik op een tablet een oefening onzichtbaar op. */
+  #a4 .pic:hover .rm,#a4 .pic:focus-within .rm{opacity:1;pointer-events:auto}
   #a4 .pic .rm:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
   #a4 .pic .rm:hover{transform:scale(1.08)}
   /* v2: persoonlijke video per plaatje — verschijnt bij aanwijzen; blauw (= video aanwezig) blijft staan */
-  #a4 .pic .vid{position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #98a2b3;color:#475467;display:flex;opacity:0;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(16,24,40,.25)}
-  #a4 .pic:hover .vid{opacity:1}
+  #a4 .pic .vid{position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #98a2b3;color:#475467;display:flex;opacity:0;pointer-events:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(16,24,40,.25)}
+  #a4 .pic:hover .vid{opacity:1;pointer-events:auto}
   #a4 .pic .vid:hover{border-color:var(--brand);color:var(--brand);transform:scale(1.08)}
-  #a4 .pic .vid.aan{display:flex;opacity:1;background:var(--brand);border-color:var(--brand);color:#fff}
+  #a4 .pic .vid.aan{display:flex;opacity:1;pointer-events:auto;background:var(--brand);border-color:var(--brand);color:#fff}
   /* tablet en telefoon kennen geen aanwijzen: daar staan beide knopjes altijd zichtbaar en zijn
      ze groter, met een onzichtbaar tikvlak van 44 px; met het toetsenbord verschijnen ze bij focus */
-  #a4 .pic:focus-within .vid{opacity:1}
+  #a4 .pic:focus-within .vid{opacity:1;pointer-events:auto}
   /* v2: vaste vragen bij de oefening (lib/vaste-vragen.js); gevuld (= eigen vragen) blijft staan */
-  #a4 .pic .vv{position:absolute;top:4px;left:30px;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #98a2b3;color:#475467;display:flex;opacity:0;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(16,24,40,.25);font:700 12px/1 inherit}
-  #a4 .pic:hover .vv,#a4 .pic:focus-within .vv{opacity:1}
+  #a4 .pic .vv{position:absolute;top:4px;left:30px;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #98a2b3;color:#475467;display:flex;opacity:0;pointer-events:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(16,24,40,.25);font:700 12px/1 inherit}
+  #a4 .pic:hover .vv,#a4 .pic:focus-within .vv{opacity:1;pointer-events:auto}
   #a4 .pic .vv:hover{border-color:var(--brand);color:var(--brand);transform:scale(1.08)}
-  #a4 .pic .vv.aan{display:flex;opacity:1;background:var(--brand);border-color:var(--brand);color:#fff}
+  #a4 .pic .vv.aan{display:flex;opacity:1;pointer-events:auto;background:var(--brand);border-color:var(--brand);color:#fff}
   #a4 .pic .vv:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
   #a4 .pic .vid:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
   @media (hover:none){
-    #a4 .pic .vid{display:flex;opacity:1;width:30px;height:30px}
-    #a4 .pic .vv{display:flex;opacity:1;width:30px;height:30px;left:40px}
+    #a4 .pic .vid{display:flex;opacity:1;pointer-events:auto;width:30px;height:30px}
+    #a4 .pic .vv{display:flex;opacity:1;pointer-events:auto;width:30px;height:30px;left:40px}
     #a4 .pic .vv::after{content:'';position:absolute;inset:-7px}
-    #a4 .pic .rm{display:block;opacity:1;width:30px;height:30px;line-height:29px;font-size:18px}
+    #a4 .pic .rm{display:block;opacity:1;pointer-events:auto;width:30px;height:30px;line-height:29px;font-size:18px}
     #a4 .pic .vid::after,#a4 .pic .rm::after{content:'';position:absolute;inset:-7px}
   }
   /* Een catalogus-/praktijkvideo reist automatisch mee met de oefening naar de digitale kaart. */
