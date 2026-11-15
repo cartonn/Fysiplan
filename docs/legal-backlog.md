@@ -27,6 +27,12 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
   gedaan, te zwaar en seintjes, maar niet ervaren herstel (en de doelactiviteit-score), terwijl die wel worden bewaard en in de
   download zitten.** Voorstel: opsomming in kaart.html gelijk trekken met `PATIENT_VELDEN` / /privacy#patient.
 
+- **LAAG (van security, 2026-11-15 16u) — (e): oude supportregels zonder pk.** De download op /v2/gegevens (#331) nam
+  supportregels van vóór 2026-11-13 mee op de weergavenaam; een andere praktijk met dezelfde naam kreeg ze ook (security-PR
+  van 16u). Nu worden ze bij het laden aan de pk gekoppeld als precies één praktijk zo heet; een regel op een dubbele naam
+  staat in geen enkele download meer, maar Alles wissen haalt hem op naam nog wel weg. Kijk of /privacy#support of
+  /v2/gegevens ("wat bij wissen weggaat, zie je in de download") dit kleine verschil moet noemen; waarschijnlijk niet nodig.
+
 - **OPGELOST 2026-11-15 13u (legal-PR van deze run) — LAAG (van security, 2026-11-15 12u) — (a)/(f): nieuw bestand `inlogrem.json` in de datamap.** De rem op foute
   wachtwoorden per praktijk en per e-mailadres overleeft nu een uitrol. Op schijf: alleen de SHA-256 van de praktijknaam of
   het e-mailadres, het begin van het kwartier en het aantal missers; weg na een kwartier of na een geslaagde login; niet in de

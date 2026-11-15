@@ -3810,6 +3810,12 @@ const beheerOmgeving = maakBeheerOmgeving({
   beheerRechten, accounts: () => beheerAccounts, bewaarAccounts: () => saveJson(beheerAccountsPath, beheerAccounts), sleutelAan: () => ADMIN_KEY_EIGEN,
   // bestaat er een login met dit adres? Alleen daarvan telt beheer foute wachtwoorden.
   lidBekend: (em) => Object.keys(praktijkAccounts).some((pk) => ledenVan(pk).some((l) => l.email === em)),
+  // oude supportregels met alleen een naam: de pk alleen als precies één beveiligde praktijk zo heet
+  // (dezelfde naam als in beheerBronEcht), anders "" (security 2026-11-15 16u)
+  pkVoorNaam: (naam) => {
+    const zo = Object.keys(praktijkAccounts).filter((pk) => (weergaveNaam(pk) || pk) === naam);
+    return zo.length === 1 ? zo[0] : "";
+  },
   // hoeveel ideeën uit de ideeënbox op een besluit wachten (de ideeënbox wordt hieronder opgebouwd)
   ideeenWacht: () => ideeenbox.wacht()
 });

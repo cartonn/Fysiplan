@@ -143,6 +143,7 @@ jobs:
       - run: npm run test:agendaoffline
       - run: npm run test:oefwegongedaan
       - run: npm run test:afspraakuid
+      - run: npm run test:supportnaamlek
       - run: npm run test:sessie200
       - run: npm run test:profielovername
       - run: npm run test:proefarchief
