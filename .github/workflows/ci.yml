@@ -184,6 +184,7 @@ jobs:
       - run: npm run test:emojiinitialen
       - run: npm run test:proeftweedeapparaat
       - run: npm run test:proefbeheer
+      - run: npm run test:proefcookiebeheer
       - run: npm run test:proefdag
       - run: npm run test:ipadkop
       - run: npm run test:praktijktegels

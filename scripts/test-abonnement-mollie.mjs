@@ -93,13 +93,16 @@ await writeFile(join(dataDir, "proef-aanmeldingen.json"), JSON.stringify({
 }));
 // de btw-keuze is gemaakt (zie lib/prijs.js en scripts/test-prijs.mjs): 9,99 inclusief btw. Zonder keuze start afrekenen niet.
 await writeFile(join(dataDir, "finance-instellingen.json"), JSON.stringify({ kor: "nee", prijsBtw: "inclusief" }));
+const PIET = ["piet", "oud.invalid"].join("@");
 const WW = "beheer-wachtwoord-1", zout = randomBytes(16); // opzeggen vraagt het wachtwoord van een beheerder
 const wwHash = "scrypt$" + zout.toString("hex") + "$" + scryptSync(WW, zout, 32).toString("hex");
 // De praktijk heeft twee logins en één uitnodiging die nog niet is aangenomen. Het aantal therapeuten
 // komt daaruit, niet uit het formulier (lib/plaatsen.js en scripts/test-plaatsen.mjs).
 await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify({ oudpk0001: { naam: "Fysio Oud", proef: { id: "oud0000000000001" }, leden: [
-  { id: "l1", naam: "Piet Oud", rol: "beheerder", hash: wwHash }, { id: "l2", naam: "Collega", rol: "therapeut", hash: "x" }, { id: "l3", naam: "Genodigd", rol: "therapeut" }] } }));
-const cookie = "fpproef=" + token;
+  { id: "l1", naam: "Piet Oud", rol: "beheerder", email: PIET, hash: wwHash }, { id: "l2", naam: "Collega", rol: "therapeut", hash: "x" }, { id: "l3", naam: "Genodigd", rol: "therapeut" }] } }));
+// Sinds security 2026-11-15 geeft de proefcookie alleen de abonnementskant niet meer zodra de praktijk een
+// beheerder met eigen login heeft: Piet is ingelogd (sessiecookie naast de proefcookie, zie start()).
+let cookie = "fpproef=" + token;
 const leesProef = async () => JSON.parse(await readFile(join(dataDir, "proef-aanmeldingen.json"), "utf8")).oud0000000000001;
 
 async function start(extraEnv) {
@@ -115,6 +118,11 @@ async function start(extraEnv) {
   app.stderr.on("data", (c) => { app.uit += c; });
   const origin = "http://127.0.0.1:" + port;
   for (let i = 0; i < 200; i++) { try { if ((await fetch(origin + "/health")).ok) break; } catch {} await new Promise((r) => setTimeout(r, 50)); }
+  const r = await fetch(origin + "/api/praktijk/login", { method: "POST", headers: { "content-type": "application/json", "x-forwarded-for": "10.7.1.1" },
+    body: JSON.stringify({ praktijk: "Fysio Oud", email: PIET, wachtwoord: WW }) });
+  const d = await r.json();
+  // na "Alles wissen" (laatste deel) bestaat de praktijk niet meer: dan alleen de proefcookie
+  cookie = "fpproef=" + token + (r.status === 200 && d.sessie ? "; fpsessie=" + d.sessie : "");
   return { app, origin };
 }
 let ip = 0;

@@ -48,7 +48,8 @@ const get = (pad, extra) => fetch(origin + pad, { headers: kop(extra) });
 const formulier = (pad, velden, extra = {}) => fetch(origin + pad, { method: "POST", redirect: "manual",
   headers: { "content-type": "application/x-www-form-urlencoded", "x-forwarded-for": "10.62.1." + (ip++), ...extra },
   body: new URLSearchParams(velden).toString() });
-const opzeggen = (velden) => formulier("/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1", ...velden }, { cookie });
+let wie = { cookie };
+const opzeggen = (velden) => formulier("/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1", ...velden }, wie);
 const status = async () => JSON.parse(await readFile(join(dataDir, "proef-aanmeldingen.json"), "utf8")).opz.abonnement.status;
 const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
 const ses = (d) => ({ "x-praktijk-sessie": d.sessie });
@@ -75,12 +76,18 @@ try {
   assert.equal((await formulier("/v2/uitnodiging", { t, naam: "Tim Therapeut", wachtwoord: "tim-wachtwoord", regels: "1" })).status, 200);
 
   // 1. Mijn proef vraagt bij opzeggen om het wachtwoord van een beheerder
-  const mijn = await (await get("/v2/proef?mijn=1", { cookie })).text();
+  // sinds security 2026-11-15 telt de proefcookie alleen niet meer zodra er een beheerder met eigen
+  // login is: Mijn proef en opzeggen vragen dan ook de sessie van die beheerder
+  let r = await formulier("/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1", wachtwoord: "olga-wachtwoord" }, { cookie });
+  assert.equal(r.status, 303, "alleen de proefcookie: terug naar /v2/proef");
+  assert.equal(await status(), "actief", "en niets opgezegd, ook niet met het goede wachtwoord");
+  wie = { cookie, ...O };
+  const mijn = await (await get("/v2/proef?mijn=1", wie)).text();
   assert.match(mijn, /action="\/v2\/proef\/opzeggen"/);
   assert.match(mijn, /name="wachtwoord" type="password"/, "opzegformulier vraagt om een wachtwoord");
 
-  // 2. alleen de cookie (een collega aan de praktijkcomputer): geweigerd
-  let r = await opzeggen({});
+  // 2. zonder wachtwoord: geweigerd
+  r = await opzeggen({});
   assert.equal(r.status, 403, "opzeggen zonder wachtwoord moet 403 geven (was " + r.status + ")");
   assert.match(await r.text(), /beheerder/);
   assert.equal(await status(), "actief", "abonnement loopt door");
@@ -104,7 +111,7 @@ try {
   assert.ok(act.some((e) => e.actie === "opzeggen-mislukt"), "geweigerde poging staat in Activiteit");
 
   // 5. intrekken blijft zonder wachtwoord (beschermt de praktijk)
-  r = await formulier("/v2/proef/opzeggen", { actie: "intrekken" }, { cookie });
+  r = await formulier("/v2/proef/opzeggen", { actie: "intrekken" }, wie);
   assert.equal(r.status, 200);
   assert.equal(await status(), "actief", "opzegging ingetrokken");
 
@@ -124,7 +131,7 @@ try {
   assert.equal(await status(), "actief");
 
   // 8. rem: na 20 missers vanaf één verbinding 429, ook met het goede wachtwoord
-  const vast = { cookie, "x-forwarded-for": "10.62.9.9" };
+  const vast = { ...wie, "x-forwarded-for": "10.62.9.9" };
   for (let i = 0; i < 21; i++) await formulier("/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1", wachtwoord: "fout-" + i }, vast);
   r = await formulier("/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1", wachtwoord: "olga-wachtwoord" }, vast);
   assert.equal(r.status, 429, "rem na te veel missers");

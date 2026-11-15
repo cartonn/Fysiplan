@@ -14,7 +14,7 @@
 // Zonder browser en zonder internet. `npm run test:prijs`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { createHash, randomBytes } from "node:crypto";
+import { createHash, randomBytes, scryptSync } from "node:crypto";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
@@ -197,6 +197,8 @@ const sha = (t) => createHash("sha256").update(t).digest("hex");
 let nr = 0;
 
 // één praktijk waarvan de proef net voorbij is, op een eigen server met de gegeven keuze
+const BEHEER_ADRES = ["beheer", "oud.invalid"].join("@"), BEHEER_WW = "beheer-wachtwoord-1";
+const BEHEER_HASH = (() => { const z = randomBytes(16); return "scrypt$" + z.toString("hex") + "$" + scryptSync(BEHEER_WW, z, 32).toString("hex"); })();
 async function metKeuze(inst, doe, { zonderBtwId = false } = {}) {
   const dataDir = await mkdtemp(join(werkmap, "d" + ++nr + "-"));
   const token = randomBytes(24).toString("hex"), dag = 86400000;
@@ -204,10 +206,13 @@ async function metKeuze(inst, doe, { zonderBtwId = false } = {}) {
     tel: "+31201230000", praktijk: "Fysio Oud", gestart: Date.now() - 15 * dag, verloopt: Date.now() - dag, akkoord: "x", tokens: [sha(token)] } }));
   // drie logins: het aantal therapeuten telt de server zelf (lib/plaatsen.js)
   await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify({ oudpk0001: { naam: "Fysio Oud", proef: { id: "oud0000000000001" },
-    leden: [1, 2, 3].map((n) => ({ id: "l" + n, naam: "Login " + n, rol: n === 1 ? "beheerder" : "therapeut", hash: "x" })) } }));
+    leden: [1, 2, 3].map((n) => ({ id: "l" + n, naam: "Login " + n, rol: n === 1 ? "beheerder" : "therapeut", hash: n === 1 ? BEHEER_HASH : "x",
+      ...(n === 1 ? { email: BEHEER_ADRES } : {}) })) } }));
   const zetKeuze = (i) => (i ? writeFile(join(dataDir, "finance-instellingen.json"), JSON.stringify(i)) : null);
   await zetKeuze(inst);
-  const cookie = "fpproef=" + token;
+  // sinds security 2026-11-15 telt de proefcookie alleen niet meer zodra de praktijk een beheerder met
+  // eigen login heeft: de beheerder logt na elke start in en de sessiecookie gaat mee
+  let cookie = "fpproef=" + token;
   let app = null, origin = "";
   const start = async () => {
     const reserve = createServer();
@@ -223,6 +228,11 @@ async function metKeuze(inst, doe, { zonderBtwId = false } = {}) {
     app.stderr.on("data", (c) => { app.uit += c; });
     origin = "http://127.0.0.1:" + port;
     for (let i = 0; i < 200; i++) { try { if ((await fetch(origin + "/health")).ok) break; } catch {} await new Promise((r) => setTimeout(r, 50)); }
+    const r = await fetch(origin + "/api/praktijk/login", { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ praktijk: "Fysio Oud", email: BEHEER_ADRES, wachtwoord: BEHEER_WW }) });
+    const d = await r.json();
+    assert.equal(r.status, 200, "beheerder logt in: " + JSON.stringify(d));
+    cookie = "fpproef=" + token + "; fpsessie=" + d.sessie;
   };
   const stop = async () => { if (app && app.exitCode === null) { app.kill(); await new Promise((r) => app.once("exit", r)); } };
   await start();
