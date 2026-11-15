@@ -7583,13 +7583,17 @@ async function afhandelen(request, response) {
     const veiligeHost = eigenHost(request);
     const link = "https://" + veiligeHost + "/k/" + found.id;
     const ics = [
-      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN",
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
       "BEGIN:VTIMEZONE", "TZID:Europe/Amsterdam",
       "BEGIN:DAYLIGHT", "TZOFFSETFROM:+0100", "TZOFFSETTO:+0200", "TZNAME:CEST", "DTSTART:19700329T020000", "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU", "END:DAYLIGHT",
       "BEGIN:STANDARD", "TZOFFSETFROM:+0200", "TZOFFSETTO:+0100", "TZNAME:CET", "DTSTART:19701025T030000", "RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU", "END:STANDARD",
       "END:VTIMEZONE",
       "BEGIN:VEVENT",
-      "UID:fysiplan-afspraak-" + found.id + "-" + found.afspraak.t + "@fysiplan.nl",
+      // Eén vaste UID per kaart met een oplopend SEQUENCE: verplaatst de therapeut de afspraak en tikt de
+      // patiënt opnieuw op de knop, dan werkt de agenda de bestaande afspraak bij. Met de tijd in de UID
+      // kwam er een tweede afspraak bij en bleef de oude reeks met alarmen staan (sweep 2026-11-15, Jayden).
+      "UID:fysiplan-afspraak-" + found.id + "@fysiplan.nl",
+      "SEQUENCE:" + Math.max(0, Math.floor((Date.now() - Date.UTC(2026, 0, 1)) / 1000)),
       "DTSTAMP:" + stamp,
       "DTSTART;TZID=Europe/Amsterdam:" + dtStart,
       // wekelijkse behandelreeks: één agenda-tik zet alle vervolgafspraken mét

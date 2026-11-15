@@ -2152,11 +2152,19 @@ bridge2.jpg</div>
   }
   function render(){updateChipCounts();renderList();renderA4();saveState();proefTeller();}
 
-  function toggleExercise(id){
+  var TOEGEVOEGD={id:null,t:0};
+  function toggleExercise(id,tik){
     if(kaartWachtNog())return;
     var has=chosen.some(function(c){return c.o===id;});
-    if(has){chosen=chosen.filter(function(c){return c.o!==id;});}
-    else{if(chosen.length>=12){alert('Maximaal 12 plaatjes op één A4.');return;}chosen.push({o:id,i:0});var o=OEF[id];if(o){var key=exerciseKey(o);RECENT=[key].concat(RECENT.filter(function(x){return x!==key;})).slice(0,24);try{localStorage.setItem('fysiplan_recent',JSON.stringify(RECENT));}catch(e){}}}
+    // een tik op een rij die al op de kaart staat haalde de oefening stil weg (op de iPad al bij een tik tijdens
+    // het scrollen), en een dubbeltik op + zette hem erop en meteen weer af (gebruikers-sweep 2026-11-15 14u, Mark).
+    // Nu: een tweede tik (muis/aanraking, niet Enter) binnen 0,8 s na het toevoegen telt niet, en weghalen loopt via oefWeg met Ongedaan maken,
+    // dat de oefening op haar eigen plek terugzet.
+    if(has){
+      if(tik&&TOEGEVOEGD.id===id&&Date.now()-TOEGEVOEGD.t<800)return;
+      for(var hi=0;hi<chosen.length;hi++){if(chosen[hi].o===id){oefWeg(hi);return;}}
+    }
+    else{TOEGEVOEGD={id:id,t:Date.now()};if(chosen.length>=12){alert('Maximaal 12 plaatjes op één A4.');return;}chosen.push({o:id,i:0});var o=OEF[id];if(o){var key=exerciseKey(o);RECENT=[key].concat(RECENT.filter(function(x){return x!==key;})).slice(0,24);try{localStorage.setItem('fysiplan_recent',JSON.stringify(RECENT));}catch(e){}}}
     render();
   }
   // naam wijzigen: opgeslagen op de server, dus daarna voor iedereen zichtbaar
@@ -2546,7 +2554,7 @@ bridge2.jpg</div>
     if(mv){moveExercise(+mv.dataset.cat);return;}
     var p=e.target.closest('.ren');
     if(p){renameExercise(+p.dataset.ren);return;}
-    var r=e.target.closest('.row');if(!r)return;toggleExercise(+r.dataset.id);
+    var r=e.target.closest('.row');if(!r)return;toggleExercise(+r.dataset.id,e.detail!==0);
     if(e.target.closest('[data-add]'))lijstFocusTerug("[data-add='"+r.dataset.id+"']");
   });
   document.getElementById('filters').addEventListener('click',function(e){
@@ -3173,6 +3181,7 @@ bridge2.jpg</div>
   function upsertPraktijk(){
     var p={praktijk:SET.praktijk||'',adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||'',website:SET.website||''};
     if(!p.praktijk.trim()||!p.adres.trim())return;
+    if(document.getElementById('p_adres').readOnly)return;
     clearTimeout(prakSaveTimer);
     prakSaveTimer=setTimeout(function(){
       stuurPraktijk(p);
@@ -3227,6 +3236,27 @@ bridge2.jpg</div>
     // een therapeut kan het logo niet wijzigen (alleen een beheerder): dan geen knop
     var geenBeheer=!!(typeof PRAKSLOT!=='undefined'&&PRAKSLOT&&PRAKSLOT.ingelogd&&PRAKSLOT.akkoord&&PRAKSLOT.akkoord.beheer===false);
     if(btn){btn.style.display=IS_V2&&!geenBeheer?'':'none';btn.textContent=has?'logo wijzigen':'+ praktijklogo';}
+    profielAlleenLezen(IS_V2&&geenBeheer);
+  }
+  // Adres, plaats, telefoon, e-mail en website op de A4 horen bij het praktijkprofiel; alleen een
+  // beheerder past dat aan. Een therapeut kon ze typen: zonder adres ging er niets naar de server
+  // (geen 403, geen melding) en het getypte nummer kwam op de print (gebruikers-sweep 2026-11-15, Karin).
+  // Nu zijn de velden voor een therapeut alleen-lezen, met één zin wie het wel mag.
+  function profielAlleenLezen(aan){
+    var uitleg='Alleen een beheerder van de praktijk past de praktijkgegevens aan.';
+    ['p_adres','p_plaats','p_tel','p_email','p_website'].forEach(function(id){
+      var el=document.getElementById(id);if(!el)return;
+      el.readOnly=!!aan;
+      if(aan){el.title=uitleg;el.setAttribute('aria-describedby','p_alleenbeheer');}
+      else if(el.title===uitleg){el.removeAttribute('title');el.removeAttribute('aria-describedby');}
+    });
+    var m=document.getElementById('p_alleenbeheer');
+    if(aan&&!m){
+      var ad=document.querySelector('#a4 .prak .adres');
+      if(ad){m=document.createElement('div');m.id='p_alleenbeheer';m.className='no-print';
+        m.style.cssText='font-size:11px;color:var(--muted);margin-top:2px';m.textContent=uitleg;ad.appendChild(m);}
+    }
+    if(m)m.style.display=aan?'block':'none';
   }
   document.getElementById('logoBtn').addEventListener('click',function(){document.getElementById('logoFile').click();});
   document.getElementById('logoFile').addEventListener('change',function(e){
@@ -6680,8 +6710,36 @@ bridge2.jpg</div>
     var vq=e.target.closest('[data-vvid]');
     if(vq){var cq=chosen[+vq.dataset.vvid],oq=cq&&OEF[cq.o];if(oq)openVasteVragen(oq);return;}
     var rm=e.target.closest('.rm');if(!rm)return;
-    var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){chosen.splice(n,1);render();if(kb)tegelFocus(Math.min(n,chosen.length-1),'rm');}
+    var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){oefWeg(n);if(kb)tegelFocus(Math.min(n,chosen.length-1),'rm');}
   });
+  // × haalt de oefening weg, maar een tik ernaast (op de iPad beslaat het tikvlak bijna een kwart van het
+  // plaatje) of een verkeerde tik was niet terug te draaien: oefening, dosering en schema kwijt (gebruikers-sweep
+  // 2026-11-15, Mark, iPad). Nu een melding met "Ongedaan maken" die de oefening op dezelfde plek terugzet;
+  // de dosering hangt aan de oefening (GRID.cells per oefening), dus die komt mee terug.
+  var OEFWEG_T=null;
+  function oefWeg(n){
+    var lijst=chosen,weg=chosen.splice(n,1)[0];render();
+    if(!weg)return;
+    var o=OEF[weg.o],bar=document.getElementById('oefweg_bar');
+    if(!bar){
+      bar=document.createElement('div');bar.id='oefweg_bar';bar.className='no-print';bar.setAttribute('role','status');bar.setAttribute('aria-live','polite');
+      bar.style.cssText='position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:9000;display:none;align-items:center;gap:12px;max-width:calc(100vw - 32px);padding:8px 8px 8px 16px;border-radius:10px;background:#18343B;color:#fff;font-size:15px;box-shadow:0 6px 24px rgba(0,0,0,.25)';
+      bar.innerHTML="<span id='oefweg_tekst' style='overflow-wrap:anywhere'></span><button type='button' id='oefweg_terug' style='min-height:44px;min-width:44px;padding:0 14px;border:0;border-radius:8px;background:#B9E34B;color:#18343B;font:inherit;font-weight:700;cursor:pointer'>Ongedaan maken</button>";
+      document.body.appendChild(bar);
+    }
+    document.getElementById('oefweg_tekst').textContent=(o?o.naam:'Oefening')+' is van de kaart gehaald.';
+    var knop=document.getElementById('oefweg_terug');
+    knop.onclick=function(){
+      clearTimeout(OEFWEG_T);bar.style.display='none';
+      // intussen een andere kaart geopend of de kaart leeggemaakt: niets terugzetten op de verkeerde kaart
+      if(chosen!==lijst||chosen.indexOf(weg)>=0)return;
+      if(chosen.length>=12){alert('Er staan al 12 oefeningen op de kaart. Haal er eerst een weg.');return;}
+      chosen.splice(Math.min(n,chosen.length),0,weg);render();
+      var t=elMon.querySelector("[data-rm='"+Math.min(n,chosen.length-1)+"']");if(t)t.focus();
+    };
+    bar.style.display='flex';
+    clearTimeout(OEFWEG_T);OEFWEG_T=setTimeout(function(){bar.style.display='none';},10000);
+  }
   // focus na een herteken terug op een knopje van tegel n (× of pijltje); bestaat dat niet meer, dan het andere
   // pijltje of de × van die tegel. Geen tegel meer over: de zoekbalk van de bibliotheek.
   function tegelFocus(n,soort){
@@ -6694,7 +6752,7 @@ bridge2.jpg</div>
     if(e.key!=='Enter'&&e.key!==' ')return;
     // × is een span met role=button: Enter of spatie haalt de oefening van de kaart, de focus gaat naar de volgende
     var rmk=e.target.closest&&e.target.closest('.rm[data-rm]');
-    if(rmk){e.preventDefault();var rn=+rmk.dataset.rm;if(rn>=0&&rn<chosen.length){chosen.splice(rn,1);render();tegelFocus(Math.min(rn,chosen.length-1),'rm');}return;}
+    if(rmk){e.preventDefault();var rn=+rmk.dataset.rm;if(rn>=0&&rn<chosen.length){oefWeg(rn);tegelFocus(Math.min(rn,chosen.length-1),'rm');}return;}
     var ev=e.target.closest&&e.target.closest('[data-evid]'),vq=e.target.closest&&e.target.closest('[data-vvid]');if(!ev&&!vq)return;
     e.preventDefault();
     if(vq){var cq=chosen[+vq.dataset.vvid],oq=cq&&OEF[cq.o];if(oq)openVasteVragen(oq);return;}
