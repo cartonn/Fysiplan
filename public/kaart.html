@@ -1217,7 +1217,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // UIT_KOPIE: de verbinding hing en de kaart kwam uit de offline-kopie (laadKaartApi); dan dezelfde balk,
   // ook al zegt de browser dat hij online is (hertest Jayden 2026-11-14)
   var UIT_KOPIE=false;
-  function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(UIT_KOPIE||(typeof navigator.onLine==='boolean'&&!navigator.onLine))?'block':'none';}
+  function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;if(KAART_GEWIST){el.style.display='none';return;}el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(UIT_KOPIE||(typeof navigator.onLine==='boolean'&&!navigator.onLine))?'block':'none';}
   window.addEventListener('online',tekenOfflijn);window.addEventListener('offline',tekenOfflijn);
   var TAF={nl:'Je volgende afspraak',en:'Your next appointment',de:'Dein nächster Termin',fr:'Votre prochain rendez-vous',es:'Tu próxima cita',pl:'Twoja następna wizyta',tr:'Bir sonraki randevun',ar:'موعدك القادم',uk:'Твій наступний візит'};
   // afgeronde behandeling: eerlijk over de bewaartermijn. De kaart verdwijnt na een
@@ -1272,12 +1272,23 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(navigator.onLine===false){vrij(0);m.textContent=trag('fout');return;}
     fetch(url,{cache:'no-store'})
       .then(function(r){
-        if(r.ok){location.href=url;vrij(1500);return;}
+        if(r.ok){location.href=url;vrij(1500);if(afspraak)verversAfspraak();return;}
         vrij(0);
-        if(afspraak&&r.status===404){m.textContent=trag('weg');if(K&&K.kaart)K.kaart.afspraak=null;return;}
+        // afspraak weggehaald: geen oude datum en geen knop meer laten staan, alleen de melding (sweep 2026-11-15 18u, Jayden)
+        if(afspraak&&r.status===404){m.textContent=trag('weg');if(K&&K.kaart)K.kaart.afspraak=null;var at=document.getElementById('aftekst');if(at)at.textContent='';knop.style.display='none';return;}
         m.textContent=trag('fout');
       })
       .catch(function(){vrij(0);m.textContent=trag('fout');});
+  }
+  // de agenda kreeg de verplaatste afspraak, maar de open kaart toonde nog de oude tijd (sweep 2026-11-15 14u en 18u,
+  // Jayden): na een geslaagde download de afspraak van de server halen en het blok opnieuw tekenen
+  function verversAfspraak(){
+    if(!id||id==='demo')return;
+    fetch('/api/kaart?id='+encodeURIComponent(id),{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+      if(!d||!d.ok||!d.kaart||!K||!K.kaart)return;
+      K.kaart.afspraak=d.kaart.afspraak||null;
+      tekenAfspraak();
+    }).catch(function(){});
   }
   // enkelvoud voor "nog 1 keer" waar de taal dat vraagt (de rest gebruikt TAFHER)
   var TAFHER1={en:'weekly, 1 more time',es:'semanal, 1 vez más',pl:'co tydzień, jeszcze 1 raz',ar:'أسبوعيًا، مرة واحدة متبقية',uk:'щотижня, ще 1 раз'};
@@ -2560,6 +2571,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var klaar=function(){
       document.getElementById('wrap').style.display='none';
       var ab=document.getElementById('appbanner');if(ab)ab.classList.remove('aan');
+      // de offline-balk zei na het wissen nog "wat je aantikt bewaren we" (sweep 2026-11-15 14u, Truus)
+      var ob=document.getElementById('offlijn');if(ob)ob.style.display='none';
       var f=document.getElementById('fout');
       f.textContent='';var p=document.createElement('p');p.id='mg_weg';p.style.cssText='font:600 16px/1.5 var(--disp)';
       p.textContent=trmg('gewist');f.appendChild(p);f.style.display='block';
@@ -2972,6 +2985,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var weg=false;try{weg=localStorage.getItem('fp_app_weg')==='1';}catch(e){}
     var banner=document.getElementById('appbanner');
     function toonBanner(ios){
+      // wie binnen 2,5 s na een tik de kaart wist, kreeg de balk "Zet op beginscherm" alsnog (sweep 2026-11-15 14u, Truus)
+      if(KAART_GEWIST)return;
       document.getElementById('ab_tekst').textContent=ios?tr('instIos'):tr('inst');
       var doen=document.getElementById('ab_doen');
       doen.style.display=ios?'none':'';
