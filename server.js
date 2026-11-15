@@ -1383,6 +1383,16 @@ function proefVanBeheer(req) {
   return p && !p.gewist ? p : null;
 }
 const proefVoorPagina = (req) => proefVan(req) || proefVanBeheer(req);
+// Een collega zonder beheerdersrol die toch een proef- of abonnementsactie post (doorgaan,
+// betalen, opzeggen, factuurgegevens, wissen) krijgt geen proef en wordt teruggestuurd. Die
+// poging moet de beheerder in Activiteit zien, net als de andere geweigerde pogingen
+// (gebruikers-sweep 2026-11-14 22u, Karin; security-backlog MIDDEL).
+function proefCollegaGeweigerd(req, wat) {
+  const s = sessieVan(req);
+  if (!s || !s.lid || isBeheer(s) || !Object.hasOwn(praktijkAccounts, s.pk) || !praktijkAccounts[s.pk].proef) return;
+  const l = sessieLid(s);
+  auditGeweigerd(s.pk, "proef-geweigerd", req, (l ? (l.naam || l.email) : "collega") + " (" + wat + ", geen beheerder)");
+}
 // De proefbalk ("laatste dag, t/m …") hing alleen aan de proefcookie van het apparaat waarop de
 // aanmelding begon: op een tweede apparaat en bij collega's stond nergens dat de proef bijna
 // afliep, tot het schrijven ineens werd geweigerd (gebruikers-sweep, drie runs open sinds
@@ -4377,7 +4387,10 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     const s = sessieVan(request);
     if (!s || !praktijkAccounts[s.pk]) { await sendJson(response, 401, { ok: false, fout: "Log eerst in bij je praktijk.", login: true }); return; }
-    if (!isBeheer(s)) { await sendJson(response, 403, { ok: false, fout: "Alleen een beheerder kan namens de praktijk akkoord gaan." }); return; }
+    if (!isBeheer(s)) {
+      auditGeweigerd(s.pk, "akkoord-geweigerd", request);
+      await sendJson(response, 403, { ok: false, fout: "Alleen een beheerder kan namens de praktijk akkoord gaan." }); return;
+    }
     let b;
     try { b = JSON.parse(await readBody(request)); } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); return; }
     // security 2026-11-12: een body die geen object is ("null", [], "x", 5) gaf hier een 500 met een TypeError in het log
@@ -4713,7 +4726,10 @@ async function afhandelen(request, response) {
       "sjabloon-verwijderd", "oefening-verwijderd",
       // geweigerde pogingen van een collega zonder beheerdersrol (auditGeweigerd, met teller `n`)
       "oefening-verwijderen-geweigerd", "vragen-aanpassen-geweigerd", "sjabloon-verwijderen-geweigerd", "profiel-wijzigen-geweigerd",
-      "alles-wissen-geweigerd", "download-geweigerd"]);
+      "alles-wissen-geweigerd", "download-geweigerd", "akkoord-geweigerd", "kaart-verwijderen-geweigerd",
+      "kaart-herstellen-geweigerd", "kaart-definitief-geweigerd", "proef-geweigerd",
+      // een download van alle gegevens door een beheerder hoort in hetzelfde spoor als een geweigerde
+      "alles-gedownload"]);
     const lijst = praktijkAudit
       .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
       .slice(0, 15)
@@ -7038,6 +7054,7 @@ async function afhandelen(request, response) {
       }
       const kaart = kaarten[pk][kk];
       if (!magKaartVerwijderen(request, pk, kaart)) {
+        auditGeweigerd(pk, "kaart-verwijderen-geweigerd", request);
         await sendJson(response, 403, { ok: false, fout: "Alleen de maker of een beheerder kan deze kaart verwijderen." }); return;
       }
       if (b.id && b.id !== kaart.id) {
@@ -7079,6 +7096,7 @@ async function afhandelen(request, response) {
         await sendJson(response, 404, { ok: false, fout: "Geen herstelbare kaart gevonden." }); return;
       }
       if (!magKaartVerwijderen(request, pk, kaart)) {
+        auditGeweigerd(pk, "kaart-herstellen-geweigerd", request);
         await sendJson(response, 403, { ok: false, fout: "Alleen de maker of een beheerder kan deze kaart herstellen." }); return;
       }
       delete kaart.verwijderdOp; delete kaart.herstelTot;
@@ -7103,6 +7121,7 @@ async function afhandelen(request, response) {
       const kk = Object.keys(map).find((x) => map[x] && map[x].verwijderdOp && map[x].id === idTekst(b.id));
       if (!kk) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Geen kaart in de prullenbak gevonden." }); return; }
       if (!magKaartVerwijderen(request, pk, map[kk])) {
+        auditGeweigerd(pk, "kaart-definitief-geweigerd", request);
         await sendJson(response, 403, { ok: false, fout: "Alleen de maker of een beheerder kan deze kaart definitief verwijderen." }); return;
       }
       const wegVids = Object.values(map[kk].vids || {});
@@ -8287,6 +8306,7 @@ async function afhandelen(request, response) {
     // (gebruikers-sweep 2026-11-09, Mark iPad)
     if (wb.zeker !== "1") { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     const p = proefVoorPagina(request);
+    if (!p) proefCollegaGeweigerd(request, "proefgegevens wissen");
     // Security (2026-11-11): met een betaald abonnement en een gekoppelde praktijk wiste deze
     // route (alleen de proefcookie nodig, geen beheerdersrol) de aanmelding tot de fiscale rest
     // met klant: true. De incasso stopte, het abonnement liep nooit af en de praktijk bleef
@@ -8328,6 +8348,7 @@ async function afhandelen(request, response) {
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
     const p = proefVoorPagina(request);
+    if (!p) proefCollegaGeweigerd(request, "abonnement opzeggen");
     if (!p || !p.abonnement) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     const a = p.abonnement, naam = p.praktijk || p.naam, tot = datumNl(a.betaaldTot);
     const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Terug naar mijn abonnement</a>';
@@ -8404,6 +8425,7 @@ async function afhandelen(request, response) {
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
     const p = proefVoorPagina(request);
+    if (!p) proefCollegaGeweigerd(request, "factuurgegevens wijzigen");
     const a = p && p.abonnement;
     if (!a || !(a.status === "actief" || a.status === "opgezegd")) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#factuurgegevens">Terug naar mijn abonnement</a>';
@@ -8425,7 +8447,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try { await readBody(request, 2048); } catch {}
     const p = proefVoorPagina(request);
-    if (!p) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
+    if (!p) { proefCollegaGeweigerd(request, "doorgaan na de proef"); response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     if (!p.doorgaan) {
       p.doorgaan = Date.now();
       await bewaarProeven();
@@ -8445,6 +8467,7 @@ async function afhandelen(request, response) {
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
     const p = proefVoorPagina(request);
+    if (!p) proefCollegaGeweigerd(request, "eerste maand betalen");
     if (!p || p.klant) { response.writeHead(303, { location: p ? "/v2/app" : "/v2/proef" }); response.end(); return; }
     // het aantal komt niet uit het formulier: de server telt de logins van de praktijk
     const aantal = plaatsenVanProef(p);
@@ -8511,6 +8534,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try { await readBody(request, 1024); } catch {}
     const p = proefVoorPagina(request);
+    if (!p) proefCollegaGeweigerd(request, "openstaande maand betalen");
     const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Terug naar mijn abonnement</a>';
     if (!p || !openMaand(p.abonnement)) { response.writeHead(303, { location: p ? "/v2/proef?mijn=1#abonnement" : "/v2/proef" }); response.end(); return; }
     if (proefLimiet(request)) {
