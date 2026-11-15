@@ -104,7 +104,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-14";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-14-2";
+const AV_VERSIE = "2026-11-15";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-14-2";
@@ -134,7 +134,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-13", tekst: "Grens op kaarten: tijdens de proef hooguit 100 lopende kaarten, als klant 300 per login. Ideeën in de Ideeënbox mag Fysiplan gebruiken om Fysiplan beter te maken. De btw achter de prijs volgt wat Fysiplan rekent." },
   { stuk: "av", versie: "2026-11-14", tekst: "Lukt een automatische betaling niet, dan kun je die maand zelf betalen met iDEAL of je bankkaart. Wijzigen: alleen iets in je nadeel melden we 30 dagen vooraf; een verduidelijking of iets in je voordeel gaat meteen in." },
   { stuk: "vwo", versie: "2026-11-14", tekst: "Gegevens: de overeenkomst noemt nu ook de medewerkers van je praktijk (wie een kaart maakte, opende of bewaarde, en Activiteit). Bewaartermijn: een eigen video of foto gaat weg met de kaart; een opname die op geen kaart komt, na 4 uur." },
-  { stuk: "av", versie: "2026-11-14-2", tekst: "Verduidelijking: artikel 2 zegt welke delen van Fysiplan met AI zijn gemaakt of met AI werken (video's, stem, vertaling, zoekhulp). AI zet nooit zelf een oefening of dosering op een kaart; dat doe je zelf." }
+  { stuk: "av", versie: "2026-11-14-2", tekst: "Verduidelijking: artikel 2 zegt welke delen van Fysiplan met AI zijn gemaakt of met AI werken (video's, stem, vertaling, zoekhulp). AI zet nooit zelf een oefening of dosering op een kaart; dat doe je zelf." },
+  { stuk: "av", versie: "2026-11-15", tekst: "Verduidelijking: akkoord geven, betalen, opzeggen en alle gegevens downloaden of wissen doet een beheerder van je praktijk. Probeert een collega zonder die rol het, dan zie je dat onder Activiteit." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
