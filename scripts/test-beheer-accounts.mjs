@@ -226,7 +226,7 @@ const dataDir = join(tmp, "data");
   const kern = await readFile(join(root, "lib/beheer.js"), "utf8");
   assert.match(kern, /import \{ appendFile, mkdir, open, readFile \} from "node:fs\/promises";/);
   assert.match(server, /new BeheerSessies\(\(\) => beheerAccounts, undefined, beheerSessieTabel\)/, "de sessies van beheer staan in de tabel die zichzelf bewaart");
-  assert.match(server, /if \(praktijkSessies\.achter \|\| beheerSessieTabel\.achter\) \{/, "het antwoord wacht tot een sessiewijziging op schijf staat");
+  assert.match(server, /if \(praktijkSessies\.achter \|\| beheerSessieTabel\.achter( \|\| loginMisPraktijk\.achter)?\) \{/,"het antwoord wacht tot een sessiewijziging op schijf staat");
   assert.doesNotMatch(kern, /writeFile|truncate|unlink|rename|\brm\(/, "lib/beheer.js kan het logboek niet overschrijven of weghalen");
 }
 

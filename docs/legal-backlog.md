@@ -23,6 +23,12 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **LAAG (van security, 2026-11-15 12u) — (a)/(f): nieuw bestand `inlogrem.json` in de datamap.** De rem op foute
+  wachtwoorden per praktijk en per e-mailadres overleeft nu een uitrol. Op schijf: alleen de SHA-256 van de praktijknaam of
+  het e-mailadres, het begin van het kwartier en het aantal missers; weg na een kwartier of na een geslaagde login; niet in de
+  reservekopie. /privacy#inloggen noemt nu alleen "het aantal foute codes" (test:privacy koppelt het bestand daar voorlopig aan).
+  Voorstel: "Ook het aantal foute codes en foute wachtwoorden (een kwartier, alleen als hash)".
+
 - **LAAG (nieuw, 2026-11-15 09u) — rechten (e): berichten van de agents aan een praktijk (concepten in `beheer-loket.json`:
   onderwerp, tekst, stand) staan niet in de download op /v2/gegevens, wel weg bij Alles wissen.** Kleinste stap: `vanPraktijk(pk)`
   in `lib/beheer-loket-routes.js` naast `wisPraktijk`, en in `beheerOmgeving.vanPraktijk` meenemen. Niet nu: open PR #273 (Codex)

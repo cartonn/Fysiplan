@@ -198,6 +198,7 @@ jobs:
       - run: npm run test:printgroot
       - run: npm run test:vuleersterij
       - run: npm run test:inlogrem
+      - run: npm run test:inlogremherstart
       - run: npm run test:wachtwoordrem
       - run: npm run test:auditspoor
       - run: npm run test:profielbeheer

@@ -24,6 +24,7 @@ import { backupInstellingen } from "./lib/backup-elders.js";
 import { runBackup } from "./lib/backup-runner.js";
 import { gegevensRuimte } from "./lib/backup-snapshots.js";
 import { SESSIE_MS, SessieTabel, laadSessies, sessieSleutel, wachtwoordAfdruk } from "./lib/sessie-opslag.js";
+import { InlogRem, laadRem } from "./lib/inlogrem.js";
 import { kiesInpak, inpakbaar, pakIn, etagKomtOvereen } from "./lib/inpakken.js";
 import { kleinPadVoor, kleinMap } from "./lib/klein-beeld.js";
 import { nieuwGeheim, controleer, otpauth, nieuweReservecode, reservecodeNormaal } from "./lib/totp.js";
@@ -336,19 +337,12 @@ function checkHash(wachtwoord, opgeslagen) {
 // per-praktijk inlogrem: naast de rem-per-IP (denied) knijpt dit een gerichte,
 // over veel IP's verdeelde aanval op één praktijkwachtwoord af. Tien missers per
 // praktijk binnen een kwartier -> tijdelijk op slot, ongeacht het IP.
-const loginMisPraktijk = new Map(); // pk -> { start, n }
-function loginOpSlot(pk) {
-  const nu = Date.now();
-  if (loginMisPraktijk.size > 5000) for (const [k, v] of loginMisPraktijk) if (nu - v.start > 15 * 60000) loginMisPraktijk.delete(k);
-  const t = loginMisPraktijk.get(pk);
-  return !!t && nu - t.start <= 15 * 60000 && t.n >= 10;
-}
-function loginMisTel(pk) {
-  const nu = Date.now();
-  const t = loginMisPraktijk.get(pk);
-  if (!t || nu - t.start > 15 * 60000) loginMisPraktijk.set(pk, { start: nu, n: 1 });
-  else t.n++;
-}
+// De teller staat ook in inlogrem.json (alleen gehashte sleutels, lib/inlogrem.js): een
+// uitrol gaf anders elke keer tien nieuwe pogingen, ook midden in een slot (security 2026-11-15 12u).
+const inlogRemPath = join(dataDir, "inlogrem.json");
+const loginMisPraktijk = new InlogRem((inhoud) => saveJson(inlogRemPath, inhoud)).vul(await laadRem(inlogRemPath)); // pk of "mail:…" -> { start, n }
+const loginOpSlot = (pk) => loginMisPraktijk.opSlot(pk);
+const loginMisTel = (pk) => loginMisPraktijk.tel(pk);
 // nieuwe sessie aanmaken met opruiming: verlopen sessies (>30 dagen) weghalen en
 // het totaal begrenzen, zodat de sessietabel niet ongelimiteerd kan groeien
 function nieuweSessie(pk, lid) {
@@ -3536,8 +3530,8 @@ async function send(res, status, type, body) {
   }
   // Een sessiewijziging (inloggen, uitloggen, intrekken) staat op schijf vóór het antwoord
   // vertrekt. Meestal is er niets om op te wachten en loopt dit antwoord de oude weg.
-  if (praktijkSessies.achter || beheerSessieTabel.achter) {
-    await Promise.all([praktijkSessies.bijgewerkt(), beheerSessieTabel.bijgewerkt()]);
+  if (praktijkSessies.achter || beheerSessieTabel.achter || loginMisPraktijk.achter) {
+    await Promise.all([praktijkSessies.bijgewerkt(), beheerSessieTabel.bijgewerkt(), loginMisPraktijk.bijgewerkt()]);
     if (res.headersSent || res.destroyed || res.writableEnded) return;
   }
   // een testomgeving: het lint en "[TEST]" op elke pagina, en geen link naar productie
@@ -9454,6 +9448,7 @@ async function netjesStoppen(signaal) {
   clearInterval(veeg);
   try { await praktijkSessies.opSchijf(); } catch {}
   try { await beheerSessieTabel.opSchijf(); } catch {}
+  try { await loginMisPraktijk.opSchijf(); } catch {}
   try { await leeslogRij; } catch {}
   // de database even laten bijschrijven; wat niet lukt, haalt de eerste ronde na de start in
   if (meeschrijver) { try { await meeschrijver.stop(2500); await meeschrijverDb.sluit(); } catch {} }
