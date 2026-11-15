@@ -314,6 +314,39 @@ try {
   await wacht(200);
   n = mails.length; // de uitnodiging aan de collega is ook een mail
 
+  // ---- 2j2. wachtwoord zelf wijzigen maakt een openstaande link ongeldig (security 2026-11-15) ----
+  // Wie ingelogd het wachtwoord wijzigt (bv. omdat hij denkt dat iemand meekijkt), wil niet dat een
+  // link in de mailbox het daarna nog overschrijft: niet de eigen aanvraag van een uur, en niet de
+  // herstelmail van beheer van 48 uur die ook de tweede stap wist.
+  const PW = "Fysio Wijzig", WIM = "wim@wijzig.invalid";
+  const { S: W1 } = await praktijkMet(PW, WIM, "Wim Wijzig", "wim-wachtwoord");
+  r = await vergeten(PW, WIM);
+  assert.deepEqual(await r.json(), UNIFORM);
+  await wachtOpMails(n + 1);
+  const tWim = tokenUit(mails[n]);
+  assert.equal((await pagina(tWim)).status, 200, "de link werkt vóór het wijzigen");
+  await wacht(150); // de server bewaart de link na het versturen
+  r = await post("/api/praktijk/wachtwoord", { praktijk: PW, huidig: "wim-wachtwoord", nieuw: "wim-tweede-wachtwoord" }, W1);
+  assert.equal(r.status, 200, await r.clone().text());
+  const W2 = ses(await r.json());
+  assert.equal((await lidVan(WIM))[0].uitnodiging, undefined, "de link staat niet meer klaar");
+  assert.equal((await pagina(tWim)).status, 404, "de zelf aangevraagde link werkt niet meer na het wijzigen");
+  assert.equal((await kiesWachtwoord(tWim, "via-de-oude-link")).status, 404);
+  assert.equal((await login({ praktijk: PW, email: WIM, wachtwoord: "via-de-oude-link" })).status, 403);
+  assert.equal((await login({ praktijk: PW, email: WIM, wachtwoord: "wim-tweede-wachtwoord" })).status, 200, "het gewijzigde wachtwoord werkt");
+  n = mails.length;
+  r = await post("/api/beheer/praktijk-herstel", { praktijk: PW, reden: "Praktijk belde: wachtwoord kwijt", tweedeStap: true }, A);
+  assert.equal(r.status, 200, await r.clone().text());
+  await wachtOpMails(n + 1);
+  const tWimBeheer = tokenUit(mails[n]);
+  assert.equal((await pagina(tWimBeheer)).status, 200);
+  r = await post("/api/praktijk/wachtwoord", { praktijk: PW, huidig: "wim-tweede-wachtwoord", nieuw: "wim-derde-wachtwoord" }, W2);
+  assert.equal(r.status, 200, await r.clone().text());
+  assert.equal((await pagina(tWimBeheer)).status, 404, "ook de herstelmail van beheer vervalt na het wijzigen");
+  assert.equal((await formulier("/v2/uitnodiging", { t: tWimBeheer, naam: "Wim Wijzig", wachtwoord: "via-beheerlink", regels: "1" })).status, 404);
+  assert.equal((await login({ praktijk: PW, email: WIM, wachtwoord: "wim-derde-wachtwoord" })).status, 200);
+  n = mails.length;
+
   // ---- 2k. rem per verbinding: de zevende aanvraag binnen het uur krijgt 429 ----
   const vast = { "x-forwarded-for": "10.92.0.7" };
   for (let i = 0; i < 6; i++) assert.equal((await vergeten(P, "niemand-" + i + "@elders.invalid", vast)).status, 200);

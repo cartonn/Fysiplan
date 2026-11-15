@@ -5176,11 +5176,17 @@ async function afhandelen(request, response) {
         if (nieuwLid.length < 8) { await sendJson(response, 400, { ok: false, fout: "Kies een nieuw wachtwoord van minstens 8 tekens." }); return; }
         mijnLid.hash = maakHash(nieuwLid);
         mijnLid.gewijzigd = Date.now();
+        // een openstaande link voor een nieuw wachtwoord (zelf aangevraagd, een uur, of de herstelmail
+        // van beheer, 48 uur en soms met "tweede stap vervalt") vervalt nu: wie zijn wachtwoord wijzigt
+        // omdat hij denkt dat iemand meekijkt, wil niet dat een link in zijn mailbox het nog overschrijft
+        // (zoals het praktijkwachtwoord hieronder ook herstelMail weghaalt; security 2026-11-15 04u)
+        const hadLink = !!(mijnLid.uitnodiging && mijnLid.uitnodiging.herstel);
+        if (hadLink) delete mijnLid.uitnodiging;
         await saveJson(accountsPath, praktijkAccounts);
         trekSessiesIn(pk, mijnLid.id);
         loginMisPraktijk.delete(remSleutel);
         const tok = nieuweSessie(pk, mijnLid.id);
-        auditLog(pk, "wachtwoord-gewijzigd", request, mijnLid.naam || mijnLid.email);
+        auditLog(pk, "wachtwoord-gewijzigd", request, (mijnLid.naam || mijnLid.email) + (hadLink ? " (open link voor een nieuw wachtwoord vervallen)" : ""));
         await sendJson(response, 200, { ok: true, sessie: sessieUit(request, response, tok) });
         return;
       }
