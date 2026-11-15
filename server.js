@@ -7520,7 +7520,10 @@ async function afhandelen(request, response) {
       "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsTekst(taalT.alarm2), "TRIGGER:-PT2H", "END:VALARM",
       "END:VEVENT", "END:VCALENDAR", ""
     ].join("\r\n");
-    response.setHeader("content-disposition", 'attachment; filename="afspraak.ics"');
+    // bestandsnaam in de taal van de kaart (een Engelse kaart gaf "afspraak.ics"; sweep 2026-11-15, Jayden)
+    const ICS_NAAM = { en: "appointment", de: "termin", fr: "rendez-vous", es: "cita", pl: "wizyta", tr: "randevu", uk: "vizyt", ar: "mawid" };
+    const icsNaam = (Object.hasOwn(ICS_NAAM, taalQ) && ICS_NAAM[taalQ]) || "afspraak";
+    response.setHeader("content-disposition", 'attachment; filename="' + icsNaam + '.ics"');
     response.setHeader("x-robots-tag", "noindex, noarchive");
     await send(response, 200, "text/calendar; charset=utf-8", ics);
     return;

@@ -135,6 +135,8 @@ jobs:
       - run: npm run test:landingprint
       - run: npm run test:offlinestand
       - run: npm run test:lightbox
+      - run: npm run test:afspraakproef
+      - run: npm run test:sessie200
       - run: npm run test:profielovername
       - run: npm run test:proefarchief
       - run: npm run test:vensterterug

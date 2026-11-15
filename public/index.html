@@ -3232,6 +3232,8 @@ bridge2.jpg</div>
     var rd=new FileReader();
     rd.onload=function(){
       resizeDataUrl(rd.result,320,function(durl){
+        // geen leesbaar plaatje: zeggen, niet stil een ongewijzigd profiel bewaren (sweep 2026-11-15, Karin)
+        if(!durl){alert("Dit bestand is geen plaatje dat Fysiplan kan lezen. Kies een JPEG of PNG.");return;}
         var p={praktijk:SET.praktijk,adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||'',website:SET.website||'',logo:durl};
         fetch('api/praktijken',{method:'POST',headers:PJSON(),body:JSON.stringify(p)})
           .then(function(r){return r.json().catch(function(){return {ok:false};});})
@@ -3468,7 +3470,9 @@ bridge2.jpg</div>
       // onder de rij van de knop, niet erin: de rijen met een invoerveld wrappen niet en
       // het veld werd dan 18 px smal
       var rij=anker.parentNode,na=rij.nextElementSibling;
-      if(!(na&&na.classList.contains('proef-voorbij-ov')))rij.parentNode.insertBefore(maakPV(),rij.nextSibling);
+      if(!(na&&na.classList.contains('proef-voorbij-ov'))){na=maakPV();rij.parentNode.insertBefore(na,rij.nextSibling);}
+      // in beeld brengen: onder de knoprij viel de melding buiten het venster (gebruikers-sweep 2026-11-15)
+      if(na.scrollIntoView)na.scrollIntoView({block:'nearest'});
       return;
     }
     Array.prototype.forEach.call(document.querySelectorAll('.ov.on .modal'),function(m){
@@ -5966,7 +5970,7 @@ bridge2.jpg</div>
             otr+zw+
             "<small style='color:var(--muted);display:block;margin-top:10px'>Voor het EPD-dossier (Intramed, FysioRoadmap, Incura, …):</small>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px'>"+
-              "<button class='btn' data-sdossier='"+esc(c.id)+"' title='Kopieer een platte-tekstsamenvatting (cliënt, doel, oefeningen met dosering, kaartlink) om in het dossier te plakken'>Kopieer samenvatting voor dossier</button>"+
+              "<button class='btn' data-sdossier='"+esc(c.id)+"' aria-label='Dossier — kaart "+esc(c.naam)+"' title='Kopieer een platte-tekstsamenvatting (cliënt, doel, oefeningen met dosering, kaartlink) om in het dossier te plakken'>Kopieer samenvatting voor dossier</button>"+
             "</div>"+
             "<small style='color:var(--muted);display:block;margin-top:10px'>Of stuur een vriendelijke herinnering als iemand stil is gevallen:</small>"+
             "<div style='display:flex;flex-wrap:wrap;gap:6px;margin-top:7px'>"+
@@ -5989,19 +5993,19 @@ bridge2.jpg</div>
             var vrlp=c.verloopt?new Date(c.verloopt).toLocaleDateString('nl-NL',{day:'numeric',month:'short'}):'';
             return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line);opacity:.72'>"+
               avRond(c.naam,'srv-av')+"<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b> <small style='color:var(--muted)'>&middot; afgerond"+(vrlp?", verdwijnt "+esc(vrlp):"")+"</small><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+"</small></div>"+
-              "<button class='btn' data-sdossier='"+esc(c.id)+"' title='Kopieer de eindsamenvatting (cliënt, oefeningen, pijnverloop, PSK, oefentrouw) om bij het afronden in het EPD-dossier te plakken'>Dossier</button>"+
-              "<button class='btn' data-sherstel='"+esc(c.id)+"' title='Terug naar het actuele overzicht'>Terughalen</button>"+
-              "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
-              (c.magLog===true?"<button class='btn' data-slog='"+esc(c.id)+"' aria-expanded='false' title='Wie deze kaart heeft geopend of bewaard. Alleen een beheerder ziet dit.'>Inzage</button>":"")+
-              (c.magWeg===true?"<button class='btn' data-sdel='"+esc(c.naam)+"' data-sdelid='"+esc(c.id)+"' title='Naar prullenbak' aria-label='Naar prullenbak'>×</button>":"")+"</div>";
+              "<button class='btn' data-sdossier='"+esc(c.id)+"' aria-label='Dossier — kaart "+esc(c.naam)+"' title='Kopieer de eindsamenvatting (cliënt, oefeningen, pijnverloop, PSK, oefentrouw) om bij het afronden in het EPD-dossier te plakken'>Dossier</button>"+
+              "<button class='btn' data-sherstel='"+esc(c.id)+"' aria-label='Terughalen — kaart "+esc(c.naam)+"' title='Terug naar het actuele overzicht'>Terughalen</button>"+
+              "<button class='btn' data-sopen='"+esc(c.id)+"' aria-label='Openen — kaart "+esc(c.naam)+"'>Openen</button>"+
+              (c.magLog===true?"<button class='btn' data-slog='"+esc(c.id)+"' aria-label='Inzage — kaart "+esc(c.naam)+"' aria-expanded='false' title='Wie deze kaart heeft geopend of bewaard. Alleen een beheerder ziet dit.'>Inzage</button>":"")+
+              (c.magWeg===true?"<button class='btn' data-sdel='"+esc(c.naam)+"' data-sdelid='"+esc(c.id)+"' title='Naar prullenbak' aria-label='Naar prullenbak — kaart "+esc(c.naam)+"'>×</button>":"")+"</div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
             avRond(c.naam,'srv-av')+"<div style='flex:1;min-width:120px'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, nog "+va.rest+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" ×"+va.rest:"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+zwChip+verloopChip+vg+hsChip+
-            "<button class='btn' data-sdeel='"+esc(c.id)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
-            "<button class='btn' data-sopen='"+esc(c.id)+"'>Openen</button>"+
-            "<button class='btn' data-skopie='"+esc(c.id)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
-            (c.magLog===true?"<button class='btn' data-slog='"+esc(c.id)+"' aria-expanded='false' title='Wie deze kaart heeft geopend of bewaard. Alleen een beheerder ziet dit.'>Inzage</button>":"")+
-            (c.magWeg===true?"<button class='btn' data-sdel='"+esc(c.naam)+"' data-sdelid='"+esc(c.id)+"' title='Naar prullenbak' aria-label='Naar prullenbak'>×</button>":"")+"</div>"+vgBlok+deelBlok;
+            "<button class='btn' data-sdeel='"+esc(c.id)+"' aria-label='Deel — kaart "+esc(c.naam)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
+            "<button class='btn' data-sopen='"+esc(c.id)+"' aria-label='Openen — kaart "+esc(c.naam)+"'>Openen</button>"+
+            "<button class='btn' data-skopie='"+esc(c.id)+"' aria-label='Kopie — kaart "+esc(c.naam)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
+            (c.magLog===true?"<button class='btn' data-slog='"+esc(c.id)+"' aria-label='Inzage — kaart "+esc(c.naam)+"' aria-expanded='false' title='Wie deze kaart heeft geopend of bewaard. Alleen een beheerder ziet dit.'>Inzage</button>":"")+
+            (c.magWeg===true?"<button class='btn' data-sdel='"+esc(c.naam)+"' data-sdelid='"+esc(c.id)+"' title='Naar prullenbak' aria-label='Naar prullenbak — kaart "+esc(c.naam)+"'>×</button>":"")+"</div>"+vgBlok+deelBlok;
         };
         var toonLijst=function(items){
           el.innerHTML=items.length?items.map(rendRij).join(""):"<div class='hint'>Geen kaart gevonden voor deze zoekterm.</div>";
@@ -6436,7 +6440,12 @@ bridge2.jpg</div>
       var herhaalA=herhaalSel?Number(herhaalSel.value)||0:0;
       fetch('api/kaart/afspraak',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:af.dataset.safspraakopslaan,t:tA,herhaal:herhaalA})})
         .then(function(r){return r.json();})
-        .then(function(d){delete af.dataset.bezig;if(d.ok)toonA('Bewaard ✓');else if(d.proefVerlopen){af.textContent=oudA;toonProefVoorbij(af);}else toonA(d.fout||'Mislukt');})
+        .then(function(d){delete af.dataset.bezig;if(d.ok)toonA('Bewaard ✓');else if(d.proefVerlopen){af.textContent=oudA;
+          // niet bewaard: veld en herhaling terug naar wat echt op de kaart staat
+          // (het veld hield de nieuwe datum en leek bewaard; gebruikers-sweep 2026-11-15)
+          veldA.value=veldA.defaultValue;
+          if(herhaalSel)Array.prototype.forEach.call(herhaalSel.options,function(o){o.selected=o.defaultSelected;});
+          toonProefVoorbij(af);}else toonA(d.fout||'Mislukt');})
         .catch(function(){delete af.dataset.bezig;toonA('Geen verbinding');});
       return;
     }
