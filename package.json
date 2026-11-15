@@ -246,7 +246,8 @@
     "test:proefwispraktijk": "node scripts/test-sweep-proefwis-praktijk.mjs",
     "test:kaartvers": "node scripts/test-sweep-kaart-vers.mjs",
     "test:agendaoffline": "node scripts/test-sweep-agenda-offline.mjs",
-    "test:oefwegongedaan": "node scripts/test-sweep-oefweg-ongedaan.mjs"
+    "test:oefwegongedaan": "node scripts/test-sweep-oefweg-ongedaan.mjs",
+    "test:afspraakuid": "node scripts/test-sweep-afspraak-uid.mjs"
   },
   "engines": {
     "node": ">=20"
