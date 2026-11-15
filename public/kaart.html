@@ -190,7 +190,8 @@
   .oefdone:focus-visible{outline:3px solid var(--blauw);outline-offset:-4px;border-radius:12px}
 
   /* oefenstand: alleen de open oefening, de rest van de kaart wacht */
-  body.sessie .wrap{padding-top:0;padding-bottom:calc(132px + env(safe-area-inset-bottom))}
+  /* minstens de echte hoogte van de onderbalk: bij 200 % tekst is die ~206 px en viel de pijnregel eronder (sweep 2026-11-15, Truus) */
+  body.sessie .wrap{padding-top:0;padding-bottom:max(calc(132px + env(safe-area-inset-bottom)),calc(var(--sbalk-h,0px) + 24px))}
   body.sessie .wrap>*:not(#b_oef),body.sessie #b_oef>*:not(#oefs):not(#veilig),body.sessie .oef:not(.actief){display:none !important}
   body.sessie .blok{border-top:0;padding-top:0;padding-bottom:0}
   body.sessie #oefs{margin-top:0}
@@ -3303,6 +3304,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     for(var k=1;k<=n;k++){var i=(van+k)%n;if(st.done.indexOf(i)===-1)return i;}
     return -1;
   }
+  // hoogte van de vaste onderbalk als CSS-variabele, zodat de pagina erboven altijd ruimte houdt (groeit mee met tekstgrootte)
+  var SBALK_RO=null;
+  function volgSessiebalk(){
+    var sb=document.getElementById('sessiebalk');if(!sb)return;
+    var zet=function(){try{document.documentElement.style.setProperty('--sbalk-h',(sb.hidden?0:sb.offsetHeight)+'px');}catch(e){}};
+    if(!SBALK_RO&&window.ResizeObserver){SBALK_RO=new ResizeObserver(zet);SBALK_RO.observe(sb);}
+    zet();
+  }
   function tekenSessie(){
     var rijen=oefRijen(),n=rijen.length;
     if(SESSIE>=n)SESSIE=-1;
@@ -3324,6 +3333,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     }
     document.getElementById('sessiekop').hidden=!open;
     document.getElementById('sessiebalk').hidden=!open;
+    volgSessiebalk();
     if(open){
       var daan=st.done.indexOf(SESSIE)>-1;
       document.getElementById('stel').textContent=trse('nvan').replace('{n}',SESSIE+1).replace('{t}',n);
