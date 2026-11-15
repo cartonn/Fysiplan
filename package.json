@@ -252,7 +252,8 @@
     "test:agendaoffline": "node scripts/test-sweep-agenda-offline.mjs",
     "test:oefwegongedaan": "node scripts/test-sweep-oefweg-ongedaan.mjs",
     "test:afspraakuid": "node scripts/test-sweep-afspraak-uid.mjs",
-    "test:supportnaamlek": "node scripts/test-support-naamlek.mjs"
+    "test:supportnaamlek": "node scripts/test-support-naamlek.mjs",
+    "test:qrcachegrens": "node scripts/test-qr-cache-grens.mjs"
   },
   "engines": {
     "node": ">=20"

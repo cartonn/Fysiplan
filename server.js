@@ -25,6 +25,7 @@ import { runBackup } from "./lib/backup-runner.js";
 import { gegevensRuimte } from "./lib/backup-snapshots.js";
 import { SESSIE_MS, SessieTabel, laadSessies, sessieSleutel, wachtwoordAfdruk } from "./lib/sessie-opslag.js";
 import { InlogRem, laadRem, REM_MS } from "./lib/inlogrem.js";
+import { maakQrCache } from "./lib/qr-cache.js";
 import { kiesInpak, inpakbaar, pakIn, etagKomtOvereen } from "./lib/inpakken.js";
 import { kleinPadVoor, kleinMap } from "./lib/klein-beeld.js";
 import { nieuwGeheim, controleer, otpauth, nieuweReservecode, reservecodeNormaal } from "./lib/totp.js";
@@ -1248,7 +1249,8 @@ async function verbruikInstelToken(token) {
 // het adres van die omgeving, en valt al het andere daarop terug: nooit op productie.
 function eigenHost(request) {
   const rawHost = String(request.headers.host || "");
-  const netjes = /^[a-z0-9.-]+(:\d+)?$/i.test(rawHost) ? rawHost : "";
+  // een echte host is hooguit 253 tekens en een poort hooguit 5 cijfers (security 2026-11-15 20u)
+  const netjes = rawHost.length <= 259 && /^[a-z0-9.-]{1,253}(:\d{1,5})?$/i.test(rawHost) ? rawHost : "";
   const kaal = netjes.split(":")[0].toLowerCase();
   const lokaal = kaal === "localhost" || kaal === "127.0.0.1";
   if (TEST) return netjes.toLowerCase() === TEST.host || lokaal ? netjes : TEST.host;
@@ -3475,15 +3477,8 @@ async function laadFysiqr() {
   catch { _fysiqr = null; }
   return _fysiqr;
 }
-const _qrCache = new Map();
-async function qrSvgVoor(url, px) {
-  const sleutel = px + "|" + url;
-  if (_qrCache.has(sleutel)) return _qrCache.get(sleutel);
-  let svg = "";
-  try { const q = await laadFysiqr(); if (q) svg = q.svg(url, px) || ""; } catch {}
-  _qrCache.set(sleutel, svg);
-  return svg;
-}
+// begrensd: elke andere Host-kop gaf vroeger een blijvende regel in het geheugen (lib/qr-cache.js)
+const qrSvgVoor = maakQrCache(async (url, px) => { const q = await laadFysiqr(); return q ? q.svg(url, px) : ""; });
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
