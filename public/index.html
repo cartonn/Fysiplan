@@ -4799,6 +4799,16 @@ bridge2.jpg</div>
   function psIngelogd(d,beveiligd){
     var ww=document.getElementById('ps_ww');
     psGeenMist();setPrakSes(d.sessie);if(ww)ww.value='';psCodeWeg();document.getElementById('ps_msg').style.display='none';
+    // Ingelogd met "fysio duinrand": de server kent de naam zoals de praktijk hem schreef. Die komt in
+    // het veld, de kop en op het A4, anders stonden daar de kleine letters (gebruikers-sweep 2026-11-14, Mark).
+    // Alleen bij dezelfde naam op hoofdletters na (of een leeg veld): een andere naam blijft van de gebruiker.
+    var srvNaam=typeof d.praktijk==='string'?d.praktijk.trim().slice(0,80):'',eigenNaam=(SET.praktijk||'').trim();
+    if(srvNaam&&srvNaam!==eigenNaam&&(!eigenNaam||srvNaam.toLowerCase()===eigenNaam.toLowerCase())){
+      SET.praktijk=srvNaam;saveSettings();
+      var epN=document.getElementById('praktijk');if(epN)epN.value=srvNaam;
+      if(!PRAKSLOT.pr||String(PRAKSLOT.pr).trim().toLowerCase()===srvNaam.toLowerCase())PRAKSLOT.pr=srvNaam;
+      try{applySettings();}catch(e){}
+    }
     PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;PRAKSLOT.nieuw=false;rendPrakSlot();toonPrakSlot(PRAKSLOT.pr);toonSrvKaarten();reloadLibraryKeepingCard();
     if(d.herstelcode)toonHerstelcode(d.herstelcode);
     // ingelogd met een reservecode: zeggen hoeveel er nog zijn (elke code werkt één keer)
