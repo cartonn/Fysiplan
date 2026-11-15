@@ -3684,16 +3684,26 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           }})
         .then(verder,verder);
     }
-    document.getElementById('gdaan').addEventListener('click',function(){
+    document.getElementById('gdaan').addEventListener('click',function(e){
       dagWissel();
-      var knop=this;if(knop.dataset.bezig)return;knop.dataset.bezig='1';
+      // Een dubbeltik is één bedoeling: de tweede tik binnen 0,45 s telt niet. Lokaal is het antwoord er al na een paar
+      // ms, dus 'bezig' alleen hield hem niet tegen: de dag ging aan en meteen weer uit. En na de vraag "vinkjes weg?"
+      // zette de tweede tik (die tijdens de vraag al gedaan was) de dag terug aan, zonder de vinkjes
+      // (gebruikers-sweep 2026-11-15, Truus en Jayden). De rustperiode telt vanaf het einde van de vorige tik (na de
+      // vraag), zodat een tik die tijdens de vraag al gedaan was ook niet telt. Alleen echte tikken (isTrusted) tellen.
+      var knop=this,echt=!!(e&&e.isTrusted),nu=Date.now(),tikDag=dagStr(nu);
+      // een tik op een nieuwe dag is altijd een nieuwe bedoeling
+      if(knop.dataset.bezig||(echt&&knop._tik!=null&&knop._tikDag===tikDag&&nu>=knop._tik&&nu-knop._tik<450))return;
+      var rust=function(){if(echt){knop._tik=Date.now();knop._tikDag=tikDag;}};
+      knop.dataset.bezig='1';
       // expliciet aan of uit (wat de patiënt nu ziet), geen blinde aan/uit-tik op de server;
       // ook een tik uit de wachtrij (offline) zet zo de juiste stand
       var wil=knop.getAttribute('aria-pressed')!=='true';
       // uitzetten haalt ook de vinkjes per oefening van vandaag weg: eerst vragen, anders is
       // één tik te veel al het afvinkwerk van vandaag kwijt (gebruikers-sweep 2026-11-11 14u)
       if(!wil){var nDaan=leesOefDaan().done.length;
-        if(nDaan>0&&!window.confirm(trg('uitvraag').replace('{n}',nDaan))){delete knop.dataset.bezig;return;}}
+        if(nDaan>0&&!window.confirm(trg('uitvraag').replace('{n}',nDaan))){delete knop.dataset.bezig;knop._tik=null;return;}}
+      rust();
       stuur('/api/kaart/gedaan',{id:id,aan:wil})
         .then(function(d){
           if(d.ok){

@@ -167,29 +167,32 @@
   #a4 table.mon tbody tr.xr{display:none}
   #emptyA4{position:absolute;top:170px;left:26px;right:26px;z-index:2;pointer-events:none}
   /* knopjes op het plaatje: binnen het vak (het vak snijdt alles erbuiten af), zichtbaar bij aanwijzen */
-  #a4 .pic .rm{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:#d92d20;color:#fff;font-size:15px;font-weight:700;line-height:21px;text-align:center;cursor:pointer;display:none;box-shadow:0 1px 5px rgba(16,24,40,.3)}
-  #a4 .pic:hover .rm{display:block}
+  #a4 .pic .rm{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:#d92d20;color:#fff;font-size:15px;font-weight:700;line-height:21px;text-align:center;cursor:pointer;display:block;opacity:0;pointer-events:none;box-shadow:0 1px 5px rgba(16,24,40,.3)}
+  /* onzichtbaar met opacity, niet met display:none: zo blijven de knopjes met Tab bereikbaar en verschijnen ze bij focus.
+     Onzichtbaar = niet aantikbaar (pointer-events:none), anders schoof een tik op een tablet een oefening onzichtbaar op. */
+  #a4 .pic:hover .rm,#a4 .pic:focus-within .rm{opacity:1;pointer-events:auto}
+  #a4 .pic .rm:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
   #a4 .pic .rm:hover{transform:scale(1.08)}
   /* v2: persoonlijke video per plaatje — verschijnt bij aanwijzen; blauw (= video aanwezig) blijft staan */
-  #a4 .pic .vid{position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #98a2b3;color:#475467;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(16,24,40,.25)}
-  #a4 .pic:hover .vid{display:flex}
+  #a4 .pic .vid{position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #98a2b3;color:#475467;display:flex;opacity:0;pointer-events:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(16,24,40,.25)}
+  #a4 .pic:hover .vid{opacity:1;pointer-events:auto}
   #a4 .pic .vid:hover{border-color:var(--brand);color:var(--brand);transform:scale(1.08)}
-  #a4 .pic .vid.aan{display:flex;background:var(--brand);border-color:var(--brand);color:#fff}
+  #a4 .pic .vid.aan{display:flex;opacity:1;pointer-events:auto;background:var(--brand);border-color:var(--brand);color:#fff}
   /* tablet en telefoon kennen geen aanwijzen: daar staan beide knopjes altijd zichtbaar en zijn
      ze groter, met een onzichtbaar tikvlak van 44 px; met het toetsenbord verschijnen ze bij focus */
-  #a4 .pic:focus-within .vid{display:flex}
+  #a4 .pic:focus-within .vid{opacity:1;pointer-events:auto}
   /* v2: vaste vragen bij de oefening (lib/vaste-vragen.js); gevuld (= eigen vragen) blijft staan */
-  #a4 .pic .vv{position:absolute;top:4px;left:30px;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #98a2b3;color:#475467;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(16,24,40,.25);font:700 12px/1 inherit}
-  #a4 .pic:hover .vv,#a4 .pic:focus-within .vv{display:flex}
+  #a4 .pic .vv{position:absolute;top:4px;left:30px;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #98a2b3;color:#475467;display:flex;opacity:0;pointer-events:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 5px rgba(16,24,40,.25);font:700 12px/1 inherit}
+  #a4 .pic:hover .vv,#a4 .pic:focus-within .vv{opacity:1;pointer-events:auto}
   #a4 .pic .vv:hover{border-color:var(--brand);color:var(--brand);transform:scale(1.08)}
-  #a4 .pic .vv.aan{display:flex;background:var(--brand);border-color:var(--brand);color:#fff}
+  #a4 .pic .vv.aan{display:flex;opacity:1;pointer-events:auto;background:var(--brand);border-color:var(--brand);color:#fff}
   #a4 .pic .vv:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
   #a4 .pic .vid:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
   @media (hover:none){
-    #a4 .pic .vid{display:flex;width:30px;height:30px}
-    #a4 .pic .vv{display:flex;width:30px;height:30px;left:40px}
+    #a4 .pic .vid{display:flex;opacity:1;pointer-events:auto;width:30px;height:30px}
+    #a4 .pic .vv{display:flex;opacity:1;pointer-events:auto;width:30px;height:30px;left:40px}
     #a4 .pic .vv::after{content:'';position:absolute;inset:-7px}
-    #a4 .pic .rm{display:block;width:30px;height:30px;line-height:29px;font-size:18px}
+    #a4 .pic .rm{display:block;opacity:1;pointer-events:auto;width:30px;height:30px;line-height:29px;font-size:18px}
     #a4 .pic .vid::after,#a4 .pic .rm::after{content:'';position:absolute;inset:-7px}
   }
   /* Een catalogus-/praktijkvideo reist automatisch mee met de oefening naar de digitale kaart. */
@@ -2049,7 +2052,7 @@ bridge2.jpg</div>
       var inner='';
       if(n<chosen.length){
         var c=chosen[n],o=OEF[c.o],im=o&&o.imgs[c.i];
-        inner="<span class='rm no-print' data-rm='"+n+"' title='verwijderen'>×</span>"+(im?imgRender(im,90):'');
+        inner="<span class='rm no-print' role='button' tabindex='0' data-rm='"+n+"' title='verwijderen' aria-label='"+esc('Verwijder '+(o?o.naam:'oefening')+' van de kaart')+"'>×</span>"+(im?imgRender(im,90):'');
         // v2: de instructievideo zit automatisch bij de oefening (bibliotheekvideo's)
         if(IS_V2&&o){
           // eigen instructievideo voor deze kaart: opnemen met de telefoon of een YouTube-link
@@ -4799,6 +4802,16 @@ bridge2.jpg</div>
   function psIngelogd(d,beveiligd){
     var ww=document.getElementById('ps_ww');
     psGeenMist();setPrakSes(d.sessie);if(ww)ww.value='';psCodeWeg();document.getElementById('ps_msg').style.display='none';
+    // Ingelogd met "fysio duinrand": de server kent de naam zoals de praktijk hem schreef. Die komt in
+    // het veld, de kop en op het A4, anders stonden daar de kleine letters (gebruikers-sweep 2026-11-14, Mark).
+    // Alleen bij dezelfde naam op hoofdletters na (of een leeg veld): een andere naam blijft van de gebruiker.
+    var srvNaam=typeof d.praktijk==='string'?d.praktijk.trim().slice(0,80):'',eigenNaam=(SET.praktijk||'').trim();
+    if(srvNaam&&srvNaam!==eigenNaam&&(!eigenNaam||srvNaam.toLowerCase()===eigenNaam.toLowerCase())){
+      SET.praktijk=srvNaam;saveSettings();
+      var epN=document.getElementById('praktijk');if(epN)epN.value=srvNaam;
+      if(!PRAKSLOT.pr||String(PRAKSLOT.pr).trim().toLowerCase()===srvNaam.toLowerCase())PRAKSLOT.pr=srvNaam;
+      try{applySettings();}catch(e){}
+    }
     PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;PRAKSLOT.nieuw=false;rendPrakSlot();toonPrakSlot(PRAKSLOT.pr);toonSrvKaarten();reloadLibraryKeepingCard();
     if(d.herstelcode)toonHerstelcode(d.herstelcode);
     // ingelogd met een reservecode: zeggen hoeveel er nog zijn (elke code werkt één keer)
@@ -6657,18 +6670,31 @@ bridge2.jpg</div>
   elMon.addEventListener('click',function(e){
     // v2: oefening een kolom naar links/rechts verplaatsen (herordenen)
     var ml=e.target.closest('[data-mvl]'),mr=e.target.closest('[data-mvr]');
-    if(ml){var i=+ml.dataset.mvl;if(i>0&&i<chosen.length){var t=chosen[i];chosen[i]=chosen[i-1];chosen[i-1]=t;render();}return;}
-    if(mr){var j=+mr.dataset.mvr;if(j>=0&&j<chosen.length-1){var u=chosen[j];chosen[j]=chosen[j+1];chosen[j+1]=u;render();}return;}
+    // met het toetsenbord (Enter/spatie, e.detail 0) houdt het pijltje de focus op de oefening die verschuift:
+    // render() bouwt de tegels opnieuw, anders viel de focus terug op de pagina
+    var kb=e.detail===0;
+    if(ml){var i=+ml.dataset.mvl;if(i>0&&i<chosen.length){var t=chosen[i];chosen[i]=chosen[i-1];chosen[i-1]=t;render();if(kb)tegelFocus(i-1,'mvl');}return;}
+    if(mr){var j=+mr.dataset.mvr;if(j>=0&&j<chosen.length-1){var u=chosen[j];chosen[j]=chosen[j+1];chosen[j+1]=u;render();if(kb)tegelFocus(j+1,'mvr');}return;}
     var ev=e.target.closest('[data-evid]');
     if(ev){var c=chosen[+ev.dataset.evid],eo=c&&OEF[c.o];if(eo)openEigenVideo(eo);return;}
     var vq=e.target.closest('[data-vvid]');
     if(vq){var cq=chosen[+vq.dataset.vvid],oq=cq&&OEF[cq.o];if(oq)openVasteVragen(oq);return;}
     var rm=e.target.closest('.rm');if(!rm)return;
-    var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){chosen.splice(n,1);render();}
+    var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){chosen.splice(n,1);render();if(kb)tegelFocus(Math.min(n,chosen.length-1),'rm');}
   });
+  // focus na een herteken terug op een knopje van tegel n (× of pijltje); bestaat dat niet meer, dan het andere
+  // pijltje of de × van die tegel. Geen tegel meer over: de zoekbalk van de bibliotheek.
+  function tegelFocus(n,soort){
+    var q=function(s){return elMon.querySelector(s);};
+    var el=q('[data-'+soort+"='"+n+"']")||q("[data-mvl='"+n+"']")||q("[data-mvr='"+n+"']")||q("[data-rm='"+n+"']")||document.getElementById('search');
+    if(el)el.focus();
+  }
   // eigen-videoknopje op het plaatje ook met Enter of spatie (het is een span met role=button)
   elMon.addEventListener('keydown',function(e){
     if(e.key!=='Enter'&&e.key!==' ')return;
+    // × is een span met role=button: Enter of spatie haalt de oefening van de kaart, de focus gaat naar de volgende
+    var rmk=e.target.closest&&e.target.closest('.rm[data-rm]');
+    if(rmk){e.preventDefault();var rn=+rmk.dataset.rm;if(rn>=0&&rn<chosen.length){chosen.splice(rn,1);render();tegelFocus(Math.min(rn,chosen.length-1),'rm');}return;}
     var ev=e.target.closest&&e.target.closest('[data-evid]'),vq=e.target.closest&&e.target.closest('[data-vvid]');if(!ev&&!vq)return;
     e.preventDefault();
     if(vq){var cq=chosen[+vq.dataset.vvid],oq=cq&&OEF[cq.o];if(oq)openVasteVragen(oq);return;}
