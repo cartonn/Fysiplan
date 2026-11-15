@@ -4,6 +4,7 @@
 // op dezelfde plek terugzet, met haar dosering; op een andere kaart zet de knop niets terug.
 // CI heeft geen Playwright: de broncontrole draait altijd, de browserstap alleen waar Playwright staat.
 // `npm run test:oefwegongedaan`
+import { readFileSync } from "node:fs";
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { mkdtemp, readFile, rm } from "node:fs/promises";
@@ -37,7 +38,9 @@ const browser = await playwright.chromium.launch();
 try {
   for (let i = 0; i < 200; i++) { try { if ((await fetch(`http://127.0.0.1:${port}/health`)).ok) break; } catch {} await new Promise((r) => setTimeout(r, 50)); }
   const ctx = await browser.newContext({ ...playwright.devices["iPad (gen 7)"] });
-  await ctx.addInitScript(() => { try { localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_wn_gezien", "9"); } catch {} });
+  // het venster "Nieuw in Fysiplan" ving anders de tikken (sweep 2026-11-15 18u): de huidige versie als gezien markeren
+  const rnVersie = (readFileSync(new URL("../public/release-notes.js", import.meta.url), "utf8").match(/version='([^']+)'/) || [])[1] || "";
+  await ctx.addInitScript((v) => { try { localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_wn_gezien", "9"); localStorage.setItem("fysiplan_release_seen", v); } catch {} }, rnVersie);
   const page = await ctx.newPage();
   const fouten = []; page.on("pageerror", (e) => fouten.push(e.message));
   await page.goto(`http://127.0.0.1:${port}/v2/app`);

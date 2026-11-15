@@ -1901,10 +1901,21 @@ bridge2.jpg</div>
     bevalling:['bekkenbodem','postpartum'],
     rugpijn:['rug'],nekpijn:['nek'],
     werk:['tillen','ergonomische','handelingen'],
-    ergonomie:['tillen','ergonomische']
+    ergonomie:['tillen','ergonomische'],
+    // gangbare woorden die niet in de oefennamen staan (sweep 2026-11-15 18u, Sanne)
+    theraband:['elastiek'],weerstandsband:['elastiek'],hurken:['squat'],bridge:['brug'],bridging:['brug']
   });
   function searchWords(value){
-    var words=normEx(value).match(/[a-z0-9]+/g)||[];
+    // eerst splitsen op spaties en leestekens, dan pas normaliseren: anders wordt
+    // "rug/nek" of "knie-oefening" één woord ("rugnek") dat nergens in staat
+    var words=String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').match(/[a-z0-9]+/g)||[];
+    // losse letters/cijfers ("3 x 10") matchen bijna alles: alleen meetellen als er niets anders is
+    if(words.some(function(w){return w.length>1;}))words=words.filter(function(w){return w.length>1;});
+    // meervoud: "enkels" vindt ook "enkel", "knieen" ook "knie"
+    words.slice().forEach(function(w){
+      if(w.length>4&&/s$/.test(w))words.push(w.slice(0,-1));
+      if(w.length>5&&/en$/.test(w))words.push(w.slice(0,-2));
+    });
     Object.keys(SEARCH_SYNONYMS).forEach(function(key){
       if(words.indexOf(normEx(key))>-1)SEARCH_SYNONYMS[key].forEach(function(word){words.push(normEx(word));});
     });
@@ -2746,6 +2757,28 @@ bridge2.jpg</div>
         knoppen.map(function(k){return "<a href='#' data-qract='"+esc(k.act)+"' style='color:var(--brand,#2456a6);text-decoration:underline'>"+esc(k.label)+"</a>";}).join('')+"</span>":'');
     b.style.display='flex';
   }
+  // Kaart intussen op een ander apparaat gewijzigd (409): de keuze stond alleen als klein tekstje met links van 9 px in
+  // het QR-vak van de verkleinde A4, op de iPad haast niet te lezen of aan te tikken (sweep 2026-11-15 18u, Mark).
+  // Nu ook een balk bovenin beeld met twee knoppen van minstens 44 px.
+  function toonConflictBalk(tekst,knoppen){
+    var bar=document.getElementById('conflict_bar');
+    if(!bar){
+      bar=document.createElement('div');bar.id='conflict_bar';bar.className='no-print';bar.setAttribute('role','alert');
+      bar.style.cssText='position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:9001;display:none;flex-wrap:wrap;align-items:center;gap:10px;width:min(640px,calc(100vw - 32px));box-sizing:border-box;padding:12px 12px 12px 16px;border-radius:10px;background:#18343B;color:#fff;font-size:15px;line-height:1.4;box-shadow:0 6px 24px rgba(0,0,0,.25)';
+      bar.addEventListener('click',function(e){
+        var k=e.target.closest('[data-cfact]');if(!k)return;
+        if(k.dataset.cfact==='sluit'){bar.style.display='none';return;}
+        qrActie(k.dataset.cfact);
+      });
+      document.body.appendChild(bar);
+    }
+    var knop="min-height:44px;min-width:44px;padding:0 14px;border-radius:8px;font:inherit;font-weight:700;cursor:pointer;";
+    bar.innerHTML="<span style='flex:1 1 260px;overflow-wrap:anywhere'>"+esc(tekst)+"</span>"+
+      (knoppen||[]).map(function(k,i){return "<button type='button' data-cfact='"+esc(k.act)+"' style='"+knop+(i===0?"border:0;background:#B9E34B;color:#18343B":"border:1px solid #fff;background:transparent;color:#fff")+"'>"+esc(k.label)+"</button>";}).join('')+
+      "<button type='button' data-cfact='sluit' aria-label='Melding sluiten' style='"+knop+"border:0;background:transparent;color:#fff;font-size:20px'>\u00d7</button>";
+    // geen focus erheen: wie nog aan het typen is, typt anders in de balk; role=alert leest hem wel voor
+    bar.style.display='flex';
+  }
   // ---- pakket A: alleen een roepnaam op de gedeelde kaart ----
   // "Jan de Vries" -> "Jan V.", "Vries, Jan de" -> "Jan V." (EPD's leveren vaak de
   // achternaam eerst). Zo blijft de praktijk de kaart herkennen zonder dat de
@@ -2833,8 +2866,10 @@ bridge2.jpg</div>
         if(!OPNAME_GEMELD)try{OPNAME_GEMELD=true;alert('Je nieuwe video is nog niet op de kaart bewaard: deze kaart is intussen op een ander apparaat gewijzigd.\n\nKies rechtsboven op de kaart \u201cOpen de nieuwste versie\u201d. Je video gaat dan mee.');}catch(e){}
         return true;
       }
-      toonQrHint((KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen (en eigen video\u2019s) verloren.',
-        [{act:'nieuwste',label:'Open de nieuwste versie'},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);
+      var vTekst=(KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen (en eigen video\u2019s) verloren.',
+        vKnoppen=[{act:'nieuwste',label:'Open de nieuwste versie'},{act:'overschrijf',label:'Toch mijn versie bewaren'}];
+      toonQrHint(vTekst,vKnoppen);
+      toonConflictBalk(vTekst,vKnoppen);
       return true;
     }
     if(d.login){toonQrHint('De praktijknaam \u201c'+pr+'\u201d is beveiligd en je bent niet ingelogd. Log in via Kaarten.'+andereNaamZin(),[{act:'beveilig',label:'Inloggen'}]);return true;}
@@ -2890,6 +2925,8 @@ bridge2.jpg</div>
     return FYSIQR.svg(kaartUrl(id),px)||FYSIQR.svg(location.origin+'/k/'+id,px);
   }
   function toonQr(id){
+    // kaart weer bewaard: een oude conflictmelding hoort er niet meer te staan
+    var cfb=document.getElementById('conflict_bar');if(cfb)cfb.style.display='none';
     // met de gekozen patiënttaal (?taal=..), net als de WhatsApp-link: de geprinte QR
     // opent zo meteen in de taal van de patiënt
     var url=kaartUrl(id);
@@ -3031,7 +3068,16 @@ bridge2.jpg</div>
     var act=e.target.closest('[data-qract]');
     if(act){
       e.preventDefault();
-      var a=act.dataset.qract,cnA=document.getElementById('c_naam');
+      qrActie(act.dataset.qract);
+      return;
+    }
+    if(e.target.id!=='qrx')return;
+    QR_UIT_VOOR=huidigeKaartNaam().toLowerCase();
+    verbergQr();
+  });
+  function qrActie(a){
+    var cnA=document.getElementById('c_naam');
+    var cb=document.getElementById('conflict_bar');if(cb)cb.style.display='none';
       if(a==='beveilig')openBeveiligen(function(){laatsteDeel='';deelNu();});
       else if(a==='nieuwste')openNieuwsteVersie();
       else if(a==='overschrijf'){OVERSCHRIJF=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
@@ -3043,12 +3089,7 @@ bridge2.jpg</div>
       // prullenbak) verloor anders de markering, en dan maakte Test de QR na Definitief verwijderen
       // stil een nieuwe kaart (sweep 2026-11-14 10u, Sanne)
       else if(a==='opnieuwdelen'){OPNIEUW_DELEN=KAART_ID;laatsteDeel='';deelNu();}
-      return;
-    }
-    if(e.target.id!=='qrx')return;
-    QR_UIT_VOOR=huidigeKaartNaam().toLowerCase();
-    verbergQr();
-  });
+  }
   // Het printvenster blijft open tot er echt geprint wordt. Kan de QR-code er niet op
   // (praktijk niet beveiligd, roepnaam bestaat al, niet ingelogd, oudere versie), dan
   // staat de reden hier in het venster met een knop om het op te lossen en altijd

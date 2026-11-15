@@ -50,6 +50,10 @@ jobs:
       - run: npm run test:offline
       - run: npm run test:tablet
       - run: npm run test:zoekpijl
+      - run: npm run test:zoekleestekens
+      - run: npm run test:wisbalk
+      - run: npm run test:afspraakververs
+      - run: npm run test:conflictbalk
       - run: npm run test:beveiligingfeedback
       - run: npm run test:praktijkslot
       - run: npm run test:tezwaar
