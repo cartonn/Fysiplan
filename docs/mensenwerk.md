@@ -4,6 +4,16 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Verwerkersovereenkomst 2026-11-15: de noodsleutel van de server (legal, 2026-11-15 21u)
+De overeenkomst zei dat elke medewerker van Fysiplan een eigen beheerlogin met een tweede stap heeft en dat Fysiplan vastlegt
+wie wat deed. Maar `ADMIN_KEY` op Railway laat ook binnen, zonder tweede stap, en het beheerlogboek noemt dan alleen
+"beheersleutel". Art. 4 en /privacy zeggen dat nu eerlijk (nieuwe VWO-versie: beheerders van praktijken krijgen opnieuw de
+akkoordvraag). Jouw keuze: (1) zo laten, (2) advies: zet `ADMIN_KEY` alleen op Railway als je hem nodig hebt (eerste account,
+niemand kan meer inloggen) en haal hem daarna weg; dan geldt art. 4 voor alle beheer. Kijk eerst of iets anders hem nog gebruikt (bijvoorbeeld
+`/api/beheer/backup-status`, of een script op je Mac). Bij (2) blijft de tekst kloppen, want die
+zegt "voor als niemand meer kan inloggen". Voor de jurist: is een noodtoegang zonder tweede stap en zonder naam in het logboek
+"passend" (art. 32 AVG) voor een verwerker van gezondheidsgegevens?
+
 ### Fysiplan-logootje in een paar avatarbeelden (gebruikers-sweep, 2026-11-15 10u)
 Sanne zag linksboven in het avatarbeeld van Dead bug, Bruggen beginner en twee Brug-varianten een klein "Fysiplan"-logo, op het
 scherm, de A4 met Avatar en in de PDF; bij de andere oefeningen niet. Beelden horen bij de videostroom die jij begeleidt, dus de
