@@ -21,7 +21,8 @@ import { createRequire } from "node:module";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(join(root, "public/kaart.html"), "utf8");
-assert.match(html, /visibilitychange',function\(\)\{if\(document\.hidden\)\{[^}]*\}else dagWissel\(\);\}/, "terug naar de kaart tekent opnieuw bij een nieuwe dag");
+assert.match(html, /function terugGekomen\(\)\{dagWissel\(\);/, "terugkomen roept dagWissel aan");
+assert.match(html, /visibilitychange',function\(\)\{if\(document\.hidden\)\{[^}]*\}else terugGekomen\(\);\}/, "terug naar de kaart tekent opnieuw bij een nieuwe dag");
 assert.match(html, /setInterval\(dagWissel,/, "ook een kaart die open blijft merkt de nieuwe dag");
 assert.match(html, /getElementById\('gdaan'\)\.addEventListener\('click',function\(e?\)\{\s*dagWissel\(\);/, "de oefendag-knop kijkt eerst naar de datum van vandaag");
 assert.match(html, /function alles\(\)\{getekendDag=dagStr\(Date\.now\(\)\);/, "alles() onthoudt de getekende dag");

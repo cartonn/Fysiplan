@@ -351,12 +351,13 @@ try {
   const dash = await (await fetch(origin + "/api/dashboard", { headers: { "x-admin-sleutel": "admin88" } })).json();
   assert.deepEqual([dash.proef.totaal, dash.proef.actief, dash.proef.klant], [2, 1, 1]);
 
-  // zelf wissen: gegevens weg, cookie weg
+  // zelf wissen: deze proef hangt al aan een beveiligde praktijk, dus sinds de gebruikers-sweep van 2026-11-15
+  // wist /v2/proef/wissen niets (409) en wijst naar Mijn gegevens; een losse proef wissen: test:proefwissen
   const wis = await fetch(origin + "/v2/proef/wissen", { method: "POST", headers: { cookie, "content-type": "application/x-www-form-urlencoded" }, body: "zeker=1" });
-  assert.match(await wis.text(), /Je gegevens zijn gewist/);
-  assert.match(wis.headers.get("set-cookie"), /Max-Age=0/);
+  assert.equal(wis.status, 409);
+  assert.match(await wis.text(), /Er is niets gewist/);
   const opSchijf = JSON.parse(await readFile(join(dataDir, "proef-aanmeldingen.json"), "utf8"));
-  assert.equal(Object.values(opSchijf).some((p) => p.email === "sanne@gmail.com"), false);
+  assert.equal(Object.values(opSchijf).some((p) => p.email === "sanne@gmail.com"), true);
 
   // de landing verwijst naar de proef en noemt de 14 dagen
   const landing = await (await fetch(origin + "/v2")).text();

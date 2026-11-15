@@ -10,7 +10,8 @@ import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-const html = await readFile(join(process.cwd(), "public/proef.html"), "utf8");
+// het formulier op Mijn proef bouwt de server (wisTeksten in server.js), dat op de verlopen-pagina staat in proef.html
+const html = (await readFile(join(process.cwd(), "public/proef.html"), "utf8")) + (await readFile(join(process.cwd(), "server.js"), "utf8")).replace(/' \+\s*'/g, "");
 const forms = html.match(/<form method="post" action="\/v2\/proef\/wissen"[\s\S]*?<\/form>/g) || [];
 assert.ok(forms.length >= 2, "twee wisformulieren");
 for (const f of forms) {

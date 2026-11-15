@@ -2573,7 +2573,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // nieuwe dag terwijl de kaart open blijft (telefoon op tafel, tabblad op de achtergrond): opnieuw tekenen,
   // anders bleef "Ik heb vandaag geoefend" aan van gisteren en zette de eerste tik van vandaag hem juist uit.
   var getekendDag=null;
-  function dagWissel(){try{if(K&&Date.now()-LINKS_T>LINKS_OUD)verversLinks();if(K&&getekendDag&&dagStr(Date.now())!==getekendDag)alles();}catch(e){}}
+  function dagWissel(){try{if(K&&Date.now()-LINKS_T>LINKS_OUD)verversLinks();if(K&&getekendDag&&dagStr(Date.now())!==getekendDag){alles();inhoudCheck();}}catch(e){}}
   // Eigen video's en foto's van de praktijk komen via een tijdelijke link die 12 tot 24 uur geldt
   // (#249). Een kaart die langer openstaat (tabblad, beginscherm-app) hield de oude link: de video
   // meldde "neem contact op met je praktijk" en de foto werd een kapot plaatje, en "Opnieuw proberen"
@@ -2595,6 +2595,44 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       if(JSON.stringify([K.kaart.vids||null,K.kaart.eigenOef||null])!==oud)alles();
     }).catch(function(){linksBezig=false;});
   }
+  // Wat de therapeut aanpast (oefeningen, dosering, doel, afspraak, antwoord op een vraag) kwam op een
+  // open kaart nooit binnen: alleen herladen hielp, en na tien uur nam verversLinks alleen de video's
+  // over, zodat een nieuwe video bij een oude dosering stond en "x van 3" bleef terwijl er 4 waren.
+  // Een antwoord op "Ik heb een vraag" bleef zo onzichtbaar (gebruikers-sweep 2026-11-15, Truus).
+  // Nu kijkt de kaart bij terugkomen (tabblad, beginscherm-app, nieuwe dag) hooguit eens per 30 s of de
+  // inhoud van de therapeut veranderde, en laadt dan opnieuw: dezelfde weg als zelf herladen, met de
+  // wachtrij, de vertaling en de keuring. Niet midden in een oefening, met een open foto of met tekst
+  // in een veld: dan bij de volgende keer terugkomen.
+  var INHOUD_SIG=null,inhoudLaatst=0,inhoudBezig=false;
+  function inhoudSig(k){
+    if(!k)return '';
+    var o={};
+    ['chosen','rows','cells','doel','pskDoel','afspraak','antwoord','client','gearchiveerd'].forEach(function(f){o[f]=k[f]===undefined?null:k[f];});
+    o.vids=Object.keys(k.vids||{}).sort();
+    o.eigen=(Array.isArray(k.eigenOef)?k.eigenOef:[]).map(function(e){var c={};for(var x in e)if(x!=='img'&&x!=='video'&&x!=='src')c[x]=e[x];return c;});
+    return JSON.stringify(o);
+  }
+  function magHerladen(){
+    if(SESSIE>-1)return false;
+    var lb=document.getElementById('lightbox');if(lb&&lb.classList.contains('open'))return false;
+    var velden=document.querySelectorAll('textarea,input[type=text]');
+    for(var i=0;i<velden.length;i++)if(String(velden[i].value||'').trim())return false;
+    return true;
+  }
+  function inhoudCheck(){
+    if(!K||!K.kaart||!id||id==='demo'||inhoudBezig||UIT_KOPIE||INHOUD_SIG===null)return;
+    if(typeof navigator!=='undefined'&&navigator.onLine===false)return;
+    if(Date.now()-inhoudLaatst<30000)return;
+    inhoudBezig=true;inhoudLaatst=Date.now();
+    fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+      inhoudBezig=false;
+      if(!d||!d.ok||!d.kaart)return;
+      if(inhoudSig(d.kaart)===INHOUD_SIG)return;
+      if(!magHerladen()){inhoudLaatst=0;return;}
+      location.reload();
+    }).catch(function(){inhoudBezig=false;});
+  }
+  function terugGekomen(){dagWissel();inhoudCheck();}
   // een foto van een eigen oefening die niet laadt: misschien is de link verlopen
   document.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&/\/uploads\/oef-/.test(t.currentSrc||t.src||''))verversLinks();},true);
   function alles(){getekendDag=dagStr(Date.now());tekenStatisch();tekenKaart();tekenVasteVragen();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenSein();tekenHerstel();tekenPsk();tekenAfspraak();tekenOfflijn();tekenAfgerond();tekenPrivacy();tekenSpoed();tekenMijnGegevens();tekenWacht();clearTimeout(alles.bl);alles.bl=setTimeout(bewaarBeeldenLijst,2500);}
@@ -3686,14 +3724,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     }
     document.getElementById('gdaan').addEventListener('click',function(e){
       dagWissel();
-      // Een dubbeltik is één bedoeling: de tweede tik binnen 0,45 s telt niet. Lokaal is het antwoord er al na een paar
+      // Een dubbeltik is één bedoeling: de tweede tik binnen 0,8 s telt niet (0,45 s ving de tragere dubbeltik van een oudere patiënt niet: 0,5–0,7 s, sweep 2026-11-15 10u). Lokaal is het antwoord er al na een paar
       // ms, dus 'bezig' alleen hield hem niet tegen: de dag ging aan en meteen weer uit. En na de vraag "vinkjes weg?"
       // zette de tweede tik (die tijdens de vraag al gedaan was) de dag terug aan, zonder de vinkjes
       // (gebruikers-sweep 2026-11-15, Truus en Jayden). De rustperiode telt vanaf het einde van de vorige tik (na de
       // vraag), zodat een tik die tijdens de vraag al gedaan was ook niet telt. Alleen echte tikken (isTrusted) tellen.
       var knop=this,echt=!!(e&&e.isTrusted),nu=Date.now(),tikDag=dagStr(nu);
       // een tik op een nieuwe dag is altijd een nieuwe bedoeling
-      if(knop.dataset.bezig||(echt&&knop._tik!=null&&knop._tikDag===tikDag&&nu>=knop._tik&&nu-knop._tik<450))return;
+      if(knop.dataset.bezig||(echt&&knop._tik!=null&&knop._tikDag===tikDag&&nu>=knop._tik&&nu-knop._tik<800))return;
       var rust=function(){if(echt){knop._tik=Date.now();knop._tikDag=tikDag;}};
       knop.dataset.bezig='1';
       // expliciet aan of uit (wat de patiënt nu ziet), geen blinde aan/uit-tik op de server;
@@ -3808,7 +3846,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       fetch('/api/kaart/antwoord/gezien',{method:'POST',headers:{'content-type':'application/json'},
         body:JSON.stringify({id:id})})
         .then(function(r){return r.json();})
-        .then(function(d){delete knop.dataset.bezig;if(d&&d.ok){if(K&&K.kaart)K.kaart.antwoord=null;tekenAntwoord();}})
+        .then(function(d){delete knop.dataset.bezig;if(d&&d.ok){if(K&&K.kaart){K.kaart.antwoord=null;if(INHOUD_SIG!==null)INHOUD_SIG=inhoudSig(K.kaart);}tekenAntwoord();}})
         .catch(function(){delete knop.dataset.bezig;});
     });
     document.getElementById('mg_dl').addEventListener('click',downloadMijnGegevens);
@@ -3911,8 +3949,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(document.readyState==='complete')setTimeout(bewaarBeeldenLijst,0);else window.addEventListener('load',function(){setTimeout(bewaarBeeldenLijst,0);});
     // ook de demonstratie stoppen: anders blijft de klok tikken en praat de
     // toestelstem door terwijl de telefoon in de zak zit
-    document.addEventListener('visibilitychange',function(){if(document.hidden){stopLezen();stopVideos();demoStop();}else dagWissel();});
-    window.addEventListener('pageshow',dagWissel);window.addEventListener('focus',dagWissel);setInterval(dagWissel,60000);
+    document.addEventListener('visibilitychange',function(){if(document.hidden){stopLezen();stopVideos();demoStop();}else terugGekomen();});
+    window.addEventListener('pageshow',terugGekomen);window.addEventListener('focus',terugGekomen);setInterval(dagWissel,60000);
     var sel=document.getElementById('taalsel');
     sel.value=TAAL;
     sel.addEventListener('change',function(){
@@ -4059,6 +4097,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404){toonNietGevonden();vergeetKaartWeg();}else toonStoring(res[0]&&res[0].status);return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai,dag:typeof res[0].dag==='string'?res[0].dag:''};
       pasWachtToe();
+      INHOUD_SIG=UIT_KOPIE?null:inhoudSig(res[0].kaart);
       // Komt het stemmanifest pas na het tekenen binnen, dan zetten we alleen de wachtende
       // luisterregels om (herstelNoorKnoppen), dezelfde weg als een latere geslaagde poging.
       // De hele kaart hertekenen brak een video af die de patiënt intussen had geopend.
