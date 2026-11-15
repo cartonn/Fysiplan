@@ -18,6 +18,8 @@ assert.match(html, /function oefWeg\(n\)\{[\s\S]{0,1600}Ongedaan maken[\s\S]{0,9
   "× geeft een melding met Ongedaan maken die de oefening op dezelfde plek terugzet");
 assert.match(html, /if\(chosen!==lijst\|\|chosen\.indexOf\(weg\)>=0\)return;/, "niet terugzetten op een andere kaart");
 assert.doesNotMatch(html, /chosen\.splice\((n|rn),1\);render\(\)/, "elke × loopt via oefWeg");
+assert.match(html, /if\(TOEGEVOEGD\.id===id&&Date\.now\(\)-TOEGEVOEGD\.t<800\)return;\s*for\(var hi=0;hi<chosen\.length;hi\+\+\)\{if\(chosen\[hi\]\.o===id\)\{oefWeg\(hi\);return;\}\}/,
+  "bibliotheek: weghalen via oefWeg, dubbeltik op + telt één keer");
 
 let playwright = null;
 try { playwright = createRequire(import.meta.url)("playwright"); } catch {
@@ -68,7 +70,28 @@ try {
   // tweede keer weghalen, dan de kaart leegmaken: Ongedaan maken zet niets terug op de nieuwe kaart
   await page.locator("#mon [data-rm='0']").tap();
   await page.waitForSelector("#oefweg_bar", { state: "visible" });
+  // bibliotheek (Mark, sweep 2026-11-15 14u): een tik op een rij die al op de kaart staat haalt de oefening weg met
+  // Ongedaan maken (terug op de eigen plek); een dubbeltik op + zet de oefening er wel op
+  await page.locator("#oefweg_terug").tap();
+  assert.deepEqual(await namen(), voor, "weer drie oefeningen");
+  const rijId = await page.locator("#mon [data-rm='1']").evaluate(() => null);
+  const midden = (await namen())[1];
+  const knop = page.locator("#list .row [data-add].on").nth(1);
+  const knopNaam = await knop.getAttribute("aria-label");
+  await knop.tap();
+  await page.waitForSelector("#oefweg_bar", { state: "visible" });
+  assert.equal((await namen()).length, 2, "tik op een rij op de kaart haalt de oefening weg");
+  await page.locator("#oefweg_terug").tap();
+  assert.deepEqual(await namen(), voor, "Ongedaan maken zet hem op dezelfde plek terug, niet achteraan (" + knopNaam + ", " + midden + ")");
+  const nieuw = page.locator("#list .row [data-add]:not(.on)").first();
+  const nieuwId = await nieuw.getAttribute("data-add");
+  await page.evaluate((id) => { const b = document.querySelector("#list .row [data-add='" + id + "']"); b.click(); document.querySelector("#list .row [data-add='" + id + "']").click(); }, nieuwId);
+  await page.waitForTimeout(200);
+  assert.equal((await namen()).length, 4, "dubbeltik op + zet de oefening er één keer op");
+  void rijId;
   // "Wis alles" (zelfde functie als een nieuwe kaart beginnen) maakt een nieuwe lijst
+  await page.locator("#mon [data-rm='0']").tap();
+  await page.waitForSelector("#oefweg_bar", { state: "visible" });
   await page.evaluate(() => document.getElementById("wis_alles").click());
   await page.waitForFunction(() => document.querySelectorAll("#mon .pic .rm").length === 0, null, { timeout: 5000 });
   assert.ok(await page.isVisible("#oefweg_bar"), "melding staat nog");
