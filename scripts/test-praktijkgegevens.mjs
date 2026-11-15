@@ -191,6 +191,15 @@ try {
   assert.equal(pakket.ideeenbox.ingediend.find((i) => i.id === "i-aaaaaaaaaaa1").tekst, "Graag een donkere stand.");
   assert.deepEqual(pakket.ideeenbox.stemmen.map((v) => v.idee + ":" + v.stem).sort(), ["i-aaaaaaaaaaa1:omhoog", "i-bbbbbbbbbbb1:omlaag"], "eigen stemmen in de download");
   assert.doesNotMatch(tekst, /Geheim van Blijf|fysio blijf:/, "geen toelichting of stem van een andere praktijk");
+  // support (legal 2026-11-15 09u, art. 15/20 AVG): wat bij Alles wissen weggaat, staat ook in de download
+  assert.ok(pakket.support, "blok support in de download");
+  assert.deepEqual(pakket.support.logboek.map((r) => r.onderwerp || r.tekst).sort(), ["Hulp voor Wis", "Oude regel zonder pk"], "eigen supportregels, ook oude op naam");
+  assert.equal(pakket.support.logboek.find((r) => r.onderwerp === "Hulp voor Wis").door, "support-agent");
+  assert.deepEqual(pakket.support.open.map((z) => z.soort), ["stil"], "eigen open zaak");
+  assert.deepEqual(pakket.support.verstuurd.map((z) => z.soort), ["stil"], "eigen verstuurde mail");
+  assert.ok(pakket.support.gebruik.actieveLoginsPerDag.some((d) => d.n >= 1), "actieve logins per dag");
+  assert.ok(pakket.support.logboek.every((r) => !("pk" in r) && !("wie" in r)), "geen interne sleutel of medewerker");
+  assert.doesNotMatch(JSON.stringify(pakket.support), /Hulp voor Blijf|fysio blijf/, "niets van support over een andere praktijk");
 
   // ---- wissen vraagt een getypte bevestiging ----
   const zonderZeker = await formulier("/v2/gegevens/wissen", { praktijk: "Fysio Wis", wachtwoord: "wis-wachtwoord-1", zeker: "ja" });
