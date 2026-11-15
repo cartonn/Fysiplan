@@ -194,6 +194,7 @@
     "test:storingtaal": "node scripts/test-sweep-storing-taal.mjs",
     "test:vuleersterij": "node scripts/test-sweep-vul-eerste-rij.mjs",
     "test:inlogrem": "node scripts/test-inlogrem-ip.mjs",
+    "test:inlogremherstart": "node scripts/test-inlogrem-herstart.mjs",
     "test:annulerenhernoem": "node scripts/test-kaart-annuleren-hernoem.mjs",
     "test:zwaaroffline": "node scripts/test-kaart-zwaar-offline.mjs",
     "test:proefwissenklant": "node scripts/test-proef-wissen-klant.mjs",
