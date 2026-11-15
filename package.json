@@ -247,7 +247,8 @@
     "test:kaartvers": "node scripts/test-sweep-kaart-vers.mjs",
     "test:agendaoffline": "node scripts/test-sweep-agenda-offline.mjs",
     "test:oefwegongedaan": "node scripts/test-sweep-oefweg-ongedaan.mjs",
-    "test:afspraakuid": "node scripts/test-sweep-afspraak-uid.mjs"
+    "test:afspraakuid": "node scripts/test-sweep-afspraak-uid.mjs",
+    "test:supportnaamlek": "node scripts/test-support-naamlek.mjs"
   },
   "engines": {
     "node": ">=20"
