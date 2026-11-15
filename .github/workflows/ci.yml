@@ -137,6 +137,7 @@ jobs:
       - run: npm run test:lightbox
       - run: npm run test:afspraakproef
       - run: npm run test:praktijknaamlogin
+      - run: npm run test:tegelknoppen
       - run: npm run test:sessie200
       - run: npm run test:profielovername
       - run: npm run test:proefarchief

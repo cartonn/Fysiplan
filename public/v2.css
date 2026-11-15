@@ -39,8 +39,9 @@ html.v2 #a4wrap{background:transparent}
 
 /* v2: pijltjes om oefeningen op de kaart te herordenen (verschijnen bij hover,
    nooit in print). Alleen in de v2-app; v1 laadt deze stylesheet niet. */
-html.v2 #a4 .pic .mvrij{position:absolute;bottom:4px;right:4px;display:none;gap:4px;z-index:2}
-html.v2 #a4 .pic:hover .mvrij{display:flex}
+html.v2 #a4 .pic .mvrij{position:absolute;bottom:4px;right:4px;display:flex;opacity:0;gap:4px;z-index:2}
+/* opacity in plaats van display:none: de pijltjes blijven met Tab bereikbaar en verschijnen bij focus */
+html.v2 #a4 .pic:hover .mvrij,html.v2 #a4 .pic:focus-within .mvrij{opacity:1}
 html.v2 #a4 .pic .mvknop{width:22px;height:22px;border-radius:50%;border:1.5px solid #98a2b3;
   background:#fff;color:#475467;font-size:15px;font-weight:800;line-height:1;cursor:pointer;
   display:flex;align-items:center;justify-content:center;box-shadow:0 1px 5px rgba(16,24,40,.25);padding:0}
