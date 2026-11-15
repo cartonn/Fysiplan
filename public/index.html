@@ -5171,6 +5171,8 @@ bridge2.jpg</div>
     // uit de prullenbak gekopieerd (WGBO): het dossier moet weten dat de digitale kaart niet meer werkt
     if(kaart.inPrullenbak)r.push('Status: kaart verwijderd, de patiëntlink werkt niet meer'+(kaart.verloopt?' (definitief weg op '+new Date(kaart.verloopt).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})+')':'')+'.');
     else if(kaart.gearchiveerd)r.push('Status: behandeling afgerond'+(kaart.verloopt?' (de digitale kaart verdwijnt op '+new Date(kaart.verloopt).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit',year:'numeric'})+')':'')+'.');
+    // wie de patiënt behandelt (KNGF-richtlijn verslaglegging): het EPD noemt alleen wie de tekst plakt
+    if(kaart.behandelaar)r.push('Behandelaar: '+kaart.behandelaar);
     if(cl.c_doel)r.push('Doel: '+cl.c_doel);
     if(cl.c_cave)r.push('Casus/let op: '+cl.c_cave);
     if(cl.c_opm)r.push('Opmerking: '+cl.c_opm);

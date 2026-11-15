@@ -27,7 +27,9 @@ await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify({
 }));
 await writeFile(join(dataDir, "kaarten.json"), JSON.stringify({
   "fysio dossier": { truus: { id: ID, praktijk: "Fysio Dossier", naam: "Truus", ts: nu,
-    chosen: [{ n: "Squat", i: 0 }], rows: {}, cells: {}, vids: {}, client: { c_naam: "Truus" } } }
+    chosen: [{ n: "Squat", i: 0 }], rows: {}, cells: {}, vids: {}, client: { c_naam: "Truus" },
+    // legal 2026-11-15: een volle PSK-rij (120 dagen); de eerste score is het beginpunt
+    pskDoel: "Traplopen", psk: Array.from({ length: 120 }, (_, i) => ({ t: nu - (130 - i) * 86400000, s: i === 0 ? 8 : 6 })) } }
 }));
 
 const reserve = createServer();
@@ -124,6 +126,20 @@ try {
   await new Promise((r) => setTimeout(r, 5));
   assert.equal((await post("/api/kaart/antwoord", { praktijk: "Fysio Dossier", id: ID, tekst: "Morgen rustig aan." }, S)).status, 200);
   assert.equal((await lijstKaart()).inDossier, false, "bericht aan de patiënt na het label: weer niet bijgewerkt");
+
+  // legal 2026-11-15 (WGBO art. 7:454 BW, KNGF-richtlijn verslaglegging): de dossiertekst noemt de
+  // behandelaar, en een volle scorerij schuift het beginpunt niet weg ("eerste" moet de eerste zijn)
+  assert.equal((await post("/api/kaart/behandelaar", { praktijk: "Fysio Dossier", id: ID, naam: "Mark de Vries" }, S)).status, 200);
+  assert.equal((await post("/api/kaart/psk", { id: ID, score: 3 })).status, 200);
+  const pr4 = await (await fetch(origin + "/api/praktijk/kaart?praktijk=fysio%20dossier&id=" + ID, { headers: kop(S) })).json();
+  assert.equal(pr4.kaart.psk.length, 120, "de rij blijft begrensd");
+  assert.equal(pr4.kaart.psk[0].s, 8, "de eerste score blijft staan");
+  assert.equal(pr4.kaart.psk[1].s, 6, "de tweede oudste schuift weg");
+  const tekst4 = ctx.dossierTekst(pr4.kaart);
+  assert.match(tekst4, /\nBehandelaar: Mark de Vries\n/);
+  assert.match(tekst4, /PSK \("Traplopen", 0-10, app-vrij aangetikt\): eerste 8, laatst 3/);
+  const pat4 = await (await fetch(origin + "/api/kaart?id=" + ID, { headers: kop() })).json();
+  assert.doesNotMatch(JSON.stringify(pat4.kaart), /Mark de Vries/, "de behandelaar blijft van de patiëntroute af");
 
   // plafond: het logboek groeit niet onbeperkt
   for (let i = 0; i < 60; i++) await post("/api/kaart/seintje", { id: ID, soort: "goed" });
