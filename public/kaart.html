@@ -1256,7 +1256,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   };
   // wekelijkse behandelreeks: "{n}" wordt het aantal nog komende afspraken
   // agenda-knoppen: melding op de kaart als het agenda-bestand niet komt (geen kale foutpagina)
-  var TAGF={nl:{weg:'Deze afspraak is gewijzigd. Vraag je praktijk naar de nieuwe datum.',fout:'Dat lukte nu niet. Probeer het zo nog eens.'},en:{weg:'This appointment has changed. Ask your practice for the new date.',fout:'That did not work right now. Please try again in a moment.'},de:{weg:'Dieser Termin wurde geändert. Frag deine Praxis nach dem neuen Datum.',fout:'Das hat gerade nicht geklappt. Versuch es gleich noch einmal.'},fr:{weg:'Ce rendez-vous a changé. Demandez la nouvelle date à votre cabinet.',fout:'Cela n\'a pas fonctionné. Réessayez dans un instant.'},es:{weg:'Esta cita ha cambiado. Pide la nueva fecha a tu consulta.',fout:'No ha funcionado. Inténtalo de nuevo en un momento.'},pl:{weg:'Ta wizyta się zmieniła. Zapytaj gabinet o nowy termin.',fout:'Nie udało się. Spróbuj ponownie za chwilę.'},tr:{weg:'Bu randevu değişti. Yeni tarihi kliniğine sor.',fout:'Şu anda olmadı. Birazdan tekrar dene.'},ar:{weg:'تغيّر هذا الموعد. اسأل عيادتك عن الموعد الجديد.',fout:'لم ينجح ذلك الآن. حاول مرة أخرى بعد قليل.'},uk:{weg:'Цей візит змінився. Запитай у своєї практики нову дату.',fout:'Зараз не вдалося. Спробуй ще раз за хвилину.'}};
+  var TAGF={nl:{bezig:'Even geduld, je agenda-bestand wordt opgehaald…',weg:'Deze afspraak is gewijzigd. Vraag je praktijk naar de nieuwe datum.',fout:'Dat lukte nu niet. Probeer het zo nog eens.'},en:{bezig:'One moment, getting your calendar file…',weg:'This appointment has changed. Ask your practice for the new date.',fout:'That did not work right now. Please try again in a moment.'},de:{bezig:'Einen Moment, die Kalenderdatei wird geladen…',weg:'Dieser Termin wurde geändert. Frag deine Praxis nach dem neuen Datum.',fout:'Das hat gerade nicht geklappt. Versuch es gleich noch einmal.'},fr:{bezig:'Un instant, le fichier d\'agenda arrive…',weg:'Ce rendez-vous a changé. Demandez la nouvelle date à votre cabinet.',fout:'Cela n\'a pas fonctionné. Réessayez dans un instant.'},es:{bezig:'Un momento, se está descargando el archivo de calendario…',weg:'Esta cita ha cambiado. Pide la nueva fecha a tu consulta.',fout:'No ha funcionado. Inténtalo de nuevo en un momento.'},pl:{bezig:'Chwileczkę, pobieramy plik kalendarza…',weg:'Ta wizyta się zmieniła. Zapytaj gabinet o nowy termin.',fout:'Nie udało się. Spróbuj ponownie za chwilę.'},tr:{bezig:'Bir saniye, takvim dosyası alınıyor…',weg:'Bu randevu değişti. Yeni tarihi kliniğine sor.',fout:'Şu anda olmadı. Birazdan tekrar dene.'},ar:{bezig:'لحظة، جارٍ تنزيل ملف التقويم…',weg:'تغيّر هذا الموعد. اسأل عيادتك عن الموعد الجديد.',fout:'لم ينجح ذلك الآن. حاول مرة أخرى بعد قليل.'},uk:{bezig:'Хвилинку, завантажуємо файл календаря…',weg:'Цей візит змінився. Запитай у своєї практики нову дату.',fout:'Зараз не вдалося. Спробуй ще раз за хвилину.'}};
   function trag(k){return (TAGF[TAAL]||TAGF.nl)[k];}
   // eerst vragen of het agenda-bestand er is; pas dan openen. Anders een melding onder de knop.
   function naarAgenda(url,knop,afspraak){
@@ -1270,15 +1270,21 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     m.textContent='';
     // zonder internet geen agenda-bestand: meteen de melding, niet eerst een browserfoutpagina
     if(navigator.onLine===false){vrij(0);m.textContent=trag('fout');return;}
+    // trage lijn: na een halve seconde zeggen dat het bezig is, anders lijkt de knop dood (sweep 2026-11-15 18u, Jayden)
+    var tBezig=setTimeout(function(){m.textContent=trag('bezig');knop.setAttribute('aria-busy','true');knop.style.opacity='.7';},500);
+    // gelukt: de download zelf is nog een verzoek, dus de melding blijft nog even staan (hertest Jayden)
+    var klaar=function(houd){clearTimeout(tBezig);knop.removeAttribute('aria-busy');knop.style.opacity='';
+      var weg=function(){if(m.textContent===trag('bezig'))m.textContent='';};if(houd)setTimeout(weg,4000);else weg();};
     fetch(url,{cache:'no-store'})
       .then(function(r){
+        klaar(r.ok);
         if(r.ok){location.href=url;vrij(1500);if(afspraak)verversAfspraak();return;}
         vrij(0);
         // afspraak weggehaald: geen oude datum en geen knop meer laten staan, alleen de melding (sweep 2026-11-15 18u, Jayden)
         if(afspraak&&r.status===404){m.textContent=trag('weg');if(K&&K.kaart)K.kaart.afspraak=null;var at=document.getElementById('aftekst');if(at)at.textContent='';knop.style.display='none';return;}
         m.textContent=trag('fout');
       })
-      .catch(function(){vrij(0);m.textContent=trag('fout');});
+      .catch(function(){klaar();vrij(0);m.textContent=trag('fout');});
   }
   // de agenda kreeg de verplaatste afspraak, maar de open kaart toonde nog de oude tijd (sweep 2026-11-15 14u en 18u,
   // Jayden): na een geslaagde download de afspraak van de server halen en het blok opnieuw tekenen

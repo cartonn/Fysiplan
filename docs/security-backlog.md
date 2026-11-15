@@ -495,6 +495,14 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 
 ## Open
 
+- **MIDDEL (gebruikers-sweep 2026-11-15 22u, Sanne) — de rem op gegokte kaart-id's houdt doorraden niet tegen.** Vanaf één IP
+  35× `/api/kaart?id=<gok>`: na 30 missers 429, maar het échte id geeft daarna nog 200 met de hele kaart. 429 betekent dus "mis"
+  en 200 "raak". `kaartMisLimiet` wordt pas ná `vindKaart` aangeroepen (server.js ~6825, ~2889; lib/patient-routes.js ~68).
+  Praktisch risico klein door 48-bit id's. Lokaal gemeten, niet in productie.
+- **MIDDEL (gebruikers-sweep 2026-11-15 22u, Karin) — Activiteit toont maar 15 regels (server.js ~4817 `.slice(0, 15)`), zonder
+  "meer".** Een gewone therapeut kan met ±25 geweigerde beheerpogingen via de API de echte gebeurtenissen ("collega uitgenodigd",
+  "collega verwijderd") uit beeld drukken. Voorstel: meer regels/pagineren, of geweigerde pogingen per actie samenvoegen.
+
 - **OPGELOST 2026-11-15 08u (deze PR, test:proefcookiebeheer) — LAAG (security 2026-11-15 08u) — `GET /api/praktijk/status` geeft niet-ingelogd met een proefcookie `voorstel` (naam en
   e-mail van de aanmelder)**, ook als de praktijk al een beheerder met eigen login heeft. Bedoeld als voorzet bij het beveiligen.
   Repro: proefcookie van een beveiligde praktijk, zonder sessie `GET /api/praktijk/status?praktijk=x` → `voorstel.email`.

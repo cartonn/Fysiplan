@@ -55,6 +55,7 @@
     "test:zoekleestekens": "node scripts/test-sweep-zoek-leestekens.mjs",
     "test:wisbalk": "node scripts/test-sweep-wis-balk.mjs",
     "test:afspraakververs": "node scripts/test-sweep-afspraak-ververs.mjs",
+    "test:agendatraag": "node scripts/test-sweep-agenda-traag.mjs",
     "test:conflictbalk": "node scripts/test-sweep-conflict-balk.mjs",
     "test:praktijkslot": "node scripts/test-kaarten-praktijkslot.mjs",
     "test:tezwaar": "node scripts/test-kaart-tezwaar.mjs",

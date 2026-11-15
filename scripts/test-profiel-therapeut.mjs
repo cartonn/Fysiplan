@@ -19,6 +19,7 @@ const html = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(html, /if\(d\.beheer(\|\|d\.website)?\)\{profielTerug\(d\.fout\);return;\}/, "een 403 van het praktijkprofiel wordt afgehandeld");
 assert.match(html, /PRAKSLOT\.akkoord\.beheer===false/, "de logoknop kijkt naar de rol");
 assert.match(html, /profielAlleenLezen\(IS_V2&&geenBeheer\);/, "profielvelden volgen de rol");
+assert.match(html, /\['praktijk','p_adres','p_plaats','p_tel','p_email','p_website'\]\.forEach/, "ook de praktijknaam is alleen-lezen voor een therapeut");
 assert.match(html, /if\(Date\.now\(\)-Number\(btn\.dataset\.zekerT\|\|0\)<700\)return;/, "bevestiging van verwijderen telt pas na een pauze");
 
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-profieltherapeut-"));
@@ -88,7 +89,7 @@ try {
     // sinds sweep 2026-11-15 (Karin): de profielvelden zijn voor een therapeut alleen-lezen, met één zin
     // wie het wel mag (vroeger kon hij typen; zonder adres ging er niets naar de server en kwam het
     // getypte nummer stil op de print)
-    for (const id of ["#p_adres", "#p_plaats", "#p_tel", "#p_email", "#p_website"]) {
+    for (const id of ["#praktijk", "#p_adres", "#p_plaats", "#p_tel", "#p_email", "#p_website"]) {
       assert.equal(await p.$eval(id, (e) => e.readOnly), true, id + " is alleen-lezen voor een therapeut");
     }
     assert.ok(await p.isVisible("#p_alleenbeheer"), "uitleg bij de velden is zichtbaar");
@@ -117,6 +118,7 @@ try {
     for (let i = 0; i < 60 && !(bz = await b.isVisible("#logoBtn")); i++) await wacht(100);
     assert.equal(bz, true, "beheerder ziet de logoknop");
     assert.equal(await b.$eval("#p_tel", (e) => e.readOnly), false, "beheerder kan de profielvelden wijzigen");
+    assert.equal(await b.$eval("#praktijk", (e) => e.readOnly), false, "beheerder kan de praktijknaam op de A4 wijzigen");
     assert.equal(await b.isVisible("#p_alleenbeheer"), false, "beheerder krijgt de therapeut-uitleg niet");
     // Team: een dubbelklik op × verwijdert de collega niet meer meteen (gebruikers-sweep 2026-11-12 14u, Karin)
     await b.click("#kaartenBtn");
