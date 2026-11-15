@@ -3285,7 +3285,9 @@ bridge2.jpg</div>
   // Nu zijn de velden voor een therapeut alleen-lezen, met één zin wie het wel mag.
   function profielAlleenLezen(aan){
     var uitleg='Alleen een beheerder van de praktijk past de praktijkgegevens aan.';
-    ['p_adres','p_plaats','p_tel','p_email','p_website'].forEach(function(id){
+    // ook de praktijknaam: een therapeut kon die op de A4 overtypen, zonder melding; bovenbalk en print toonden dan een
+    // andere naam dan de praktijk (gebruikers-sweep 2026-11-15 22u, Karin)
+    ['praktijk','p_adres','p_plaats','p_tel','p_email','p_website'].forEach(function(id){
       var el=document.getElementById(id);if(!el)return;
       el.readOnly=!!aan;
       if(aan){el.title=uitleg;el.setAttribute('aria-describedby','p_alleenbeheer');}
