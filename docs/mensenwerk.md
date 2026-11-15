@@ -274,6 +274,18 @@ versie, wanneer en wie (ook in de download van /v2/gegevens).
 3. Laat de jurist privacyverklaring, verwerkersovereenkomst en voorwaarden samen toetsen (staat al
    hieronder bij Algemene voorwaarden, punt 7).
 
+### Bevestiging van de eerste betaling aan de praktijk (praktijk-routine, 2026-11-15)
+**Wat de code nu doet:** na de eerste online betaling kreeg alleen jij een mail ("Betaald: …"); de praktijk zelf hoorde
+niets. Nu krijgt de aanmelder ook "Fysiplan: je eerste betaling is gelukt": het bedrag, het aantal therapeuten, tot en met
+wanneer de praktijk Fysiplan kan gebruiken, de link naar Mijn abonnement voor de factuur, een vraag om naam en adres in te
+vullen als die nog ontbreken, en dat opzeggen elke dag kan. Alleen met `MOLLIE_INCASSO=aan` staat erbij dat de volgende
+maanden automatisch worden afgeschreven met 5 dagen vooraf een mail. Eén mail per betaling, ook bij een tweede webhook.
+Daarnaast geeft /v2/proef/factuur zonder factuur (niet ingelogd, collega, nog niet betaald, onbekend nummer) een nette
+uitleg met de weg terug in plaats van een kale "Not found" (gebruikers-sweep 14-11, Karin). Test
+`scripts/test-eerste-betaling-mail.mjs` (in `npm run test:abonnement`).
+**Env:** `MOLLIE_API_KEY` en de mail (`MAIL_API_SLEUTEL`, `MAIL_AFZENDER`). Zonder: geen betaling, dus ook geen mail.
+**Wat jij moet doen:** niets extra; dit hoort bij het aanzetten van Mollie (zie Maandincasso en Factuur hieronder).
+
 ### Openstaande maand zelf betalen na een mislukte incasso (praktijk-routine, 2026-11-14)
 **Wat de code nu doet:** mislukt een maandincasso, dan ziet de praktijk op Mijn abonnement
 (fysiplan.nl/v2/proef?mijn=1) bovenaan "De automatische betaling … is niet gelukt" met de knop **Deze maand nu betalen**.

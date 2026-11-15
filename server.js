@@ -1747,11 +1747,27 @@ async function mollieVerwerk(id) {
     await bewaarProeven();
     proefMeldAhmed("Betaald: " + (p.praktijk || p.naam), p, "Deze praktijk heeft de eerste maand online betaald (" +
       p.abonnement.aantal + " therapeut(en), EUR " + p.abonnement.bedrag + "). De proef is nu een klant.");
+    // de praktijk zelf hoort het ook, met de factuur en wat er de volgende maand gebeurt
+    // (markeerBetaald is idempotent, dus een tweede webhook stuurt geen tweede mail)
+    proefMail(p.email, "Fysiplan: je eerste betaling is gelukt", eersteBetalingMail(p));
   } else if (oordeel === "mislukt" && p.betaling.status !== betaling.status) {
     p.betaling.status = betaling.status;
     await bewaarProeven();
   }
   return p;
+}
+// bevestiging van de eerste online betaling aan de praktijk: bedrag, tot wanneer, waar de
+// factuur staat, en alleen als de maandincasso aan staat dat die vooraf wordt aangekondigd
+function eersteBetalingMail(p) {
+  const a = p.abonnement;
+  const voornaam = String(p.naam || "").split(" ")[0];
+  return "Hoi" + (voornaam ? " " + voornaam : "") + ",\n\nDank je wel, we hebben EUR " + a.bedrag + " ontvangen voor de eerste maand van je Fysiplan-abonnement (" +
+    a.aantal + (a.aantal === 1 ? " therapeut" : " therapeuten") + "). Je praktijk is nu klant en kan Fysiplan gebruiken tot en met " + datumNl(a.betaaldTot) + ".\n\n" +
+    "Je factuur of betaalbewijs staat onder Mijn abonnement: https://fysiplan.nl/v2/proef?mijn=1" +
+    (a.afnemer && a.afnemer.naam ? "" : "\nVul daar ook de naam en het adres van je praktijk in, dan staan die op je volgende facturen.") + "\n\n" +
+    (incassoAan() ? "De volgende maanden schrijven we automatisch af met de machtiging van deze betaling. Je krijgt " + INCASSO_VOORAF_DAGEN +
+      " dagen vooraf een mail met het bedrag. " : "") +
+    "Opzeggen kan elke dag op dezelfde pagina; het abonnement stopt dan aan het einde van de betaalde maand.\n\nGroet,\nFysiplan";
 }
 // een maandincasso komt binnen (webhook): betaald schuift de betaalde maand op en krijgt een
 // eigen factuurnummer; mislukt meldt het aan Ahmed en de praktijk, er volgt geen nieuwe poging
@@ -1849,6 +1865,20 @@ function geefFactuurNr(p) {
     if (b && !b.factuurNr) { b.factuurNr = volgendFactuurNr(Object.values(proeven), jaarVan(b.betaald || b.sinds)); if (vast) b.afnemer = vast; nieuw = true; }
   }
   return nieuw;
+}
+// /v2/proef/factuur die hier niet te zien is: een uitleg in plaats van een kale "Not found"
+// (gebruikers-sweep 2026-11-14, Karin). Verraadt niets: geen factuurnummers of bedragen.
+async function factuurNietTeZien(request, response, p) {
+  const s = sessieVan(request);
+  const collega = !p && s && Object.hasOwn(praktijkAccounts, s.pk) && praktijkAccounts[s.pk].proef;
+  const tekst = p
+    ? (p.abonnement?.eersteBetaling ? "Deze factuur hoort niet bij je praktijk of bestaat niet. Je facturen staan onder Mijn abonnement."
+      : "Je praktijk heeft nog niet online betaald, dus er is nog geen factuur. Na de eerste betaling staat hij onder Mijn abonnement.")
+    : collega ? "Je bent ingelogd bij " + weergaveNaam(s.pk) + ". Alleen een beheerder met een eigen login ziet de facturen, onder Mijn abonnement. Vraag het aan een beheerder van je praktijk."
+      : "Log in met de eigen login van een beheerder van je praktijk. De facturen staan daarna onder Mijn abonnement.";
+  const knop = p ? '<a class="knop oranje" href="/v2/proef?mijn=1">Naar Mijn abonnement</a>' : '<a class="knop omlijnd" href="/v2/app">Naar de app</a>';
+  response.setHeader("x-robots-tag", "noindex");
+  await serveerProef(request, response, "bericht", { TITEL: "Factuur", ETIKET: "Facturen", KOP: "Deze factuur is hier niet te zien.", TEKST: tekst, KNOP_HTML: knop }, 404);
 }
 // het aanmeldformulier, eventueel opnieuw met de ingevulde waarden en per veld de fout
 async function proefFormVars(request, w, fouten, suggestie = "", akkoord = false, alarm = "") {
@@ -8613,7 +8643,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/v2/proef/factuur" && request.method === "GET") {
     response.setHeader("cache-control", "no-store");
     const p = proefVoorPagina(request);
-    if (!p || !p.abonnement?.eersteBetaling) { await send(response, 404, "text/plain; charset=utf-8", "Not found"); return; }
+    if (!p || !p.abonnement?.eersteBetaling) { await factuurNietTeZien(request, response, p); return; }
     if (geefFactuurNr(p)) await bewaarProeven();
     response.setHeader("x-frame-options", "DENY");
     response.setHeader("x-robots-tag", "noindex");
@@ -8623,7 +8653,7 @@ async function afhandelen(request, response) {
     let stuk = p.abonnement, vast = p.abonnement.factuurAfnemer;
     if (nr && nr !== p.abonnement.factuurNr) {
       const b = (Array.isArray(p.abonnement.betalingen) ? p.abonnement.betalingen : []).find((x) => x && x.factuurNr === nr);
-      if (!b) { await send(response, 404, "text/plain; charset=utf-8", "Not found"); return; }
+      if (!b) { await factuurNietTeZien(request, response, p); return; }
       stuk = { ...b, betaalId: b.id }; vast = b.afnemer;
     }
     // vastgelegd bij het uitgeven van het nummer; anders (oudere factuur) de huidige gegevens
