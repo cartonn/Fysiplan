@@ -64,9 +64,8 @@ try {
     auditPath: [tabelTekst, /Accountactiviteit/],
     leeslogPath: [rij("leeslog"), /Leeslog per kaart/],
     sessiesPath: [rij("inloggen"), /op welke apparaten je bent ingelogd/],
-    // foute wachtwoorden per praktijk of e-mailadres (alleen als hash, een kwartier); de tekst
-    // noemt nu "het aantal foute codes", precieze zin staat in docs/legal-backlog.md
-    inlogRemPath: [rij("inloggen"), /het aantal foute codes/],
+    // foute wachtwoorden per praktijk of e-mailadres (lib/inlogrem.js: alleen als hash, opgeruimd na een kwartier)
+    inlogRemPath: [rij("inloggen"), /foute wachtwoorden per praktijk of e-mailadres \(alleen als hash[\s\S]*Foute wachtwoorden: hooguit een half uur/],
     beheerLogPath: [rij("beheerlog"), /beheerlogboek/],
     proefPath: [tabelTekst, /Proefaanmelding: e-mail, naam, telefoon/],
     praktijkSjablonenPath: [inhoud, /sjablonen voor het team/],

@@ -24,7 +24,7 @@ import { backupInstellingen } from "./lib/backup-elders.js";
 import { runBackup } from "./lib/backup-runner.js";
 import { gegevensRuimte } from "./lib/backup-snapshots.js";
 import { SESSIE_MS, SessieTabel, laadSessies, sessieSleutel, wachtwoordAfdruk } from "./lib/sessie-opslag.js";
-import { InlogRem, laadRem } from "./lib/inlogrem.js";
+import { InlogRem, laadRem, REM_MS } from "./lib/inlogrem.js";
 import { kiesInpak, inpakbaar, pakIn, etagKomtOvereen } from "./lib/inpakken.js";
 import { kleinPadVoor, kleinMap } from "./lib/klein-beeld.js";
 import { nieuwGeheim, controleer, otpauth, nieuweReservecode, reservecodeNormaal } from "./lib/totp.js";
@@ -108,7 +108,7 @@ const VWO_VERSIE = "2026-11-14";
 const AV_VERSIE = "2026-11-15";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-15";
+const PRIVACY_VERSIE = "2026-11-15-2";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -341,6 +341,8 @@ function checkHash(wachtwoord, opgeslagen) {
 // uitrol gaf anders elke keer tien nieuwe pogingen, ook midden in een slot (security 2026-11-15 12u).
 const inlogRemPath = join(dataDir, "inlogrem.json");
 const loginMisPraktijk = new InlogRem((inhoud) => saveJson(inlogRemPath, inhoud)).vul(await laadRem(inlogRemPath)); // pk of "mail:…" -> { start, n }
+// verlopen tellers ook zonder nieuwe missers weg: /privacy#inloggen zegt hooguit een half uur
+setInterval(() => loginMisPraktijk.ruimOp(), REM_MS).unref();
 const loginOpSlot = (pk) => loginMisPraktijk.opSlot(pk);
 const loginMisTel = (pk) => loginMisPraktijk.tel(pk);
 // nieuwe sessie aanmaken met opruiming: verlopen sessies (>30 dagen) weghalen en
