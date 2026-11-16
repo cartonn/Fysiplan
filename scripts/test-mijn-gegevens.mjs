@@ -73,7 +73,8 @@ assert.match(leeg, /== Mijn oefeningen ==\n- niets/);
 assert.doesNotMatch(leeg, /undefined|NaN/);
 
 // de pagina gebruikt mgTekst voor de download, als tekstbestand
-assert.match(html, /a\.download='fysiplan-mijn-gegevens\.txt'/);
+assert.match(html, /a\.download=mgBestand\(mt\);/);
+assert.match(html, /\{nl:'mijn-gegevens',en:'my-data'/, "bestandsnaam per taal (nl blijft fysiplan-mijn-gegevens.txt)");
 assert.match(html, /var tekst=mgTekst\(K\.kaart/);
 // sweep 2026-11-08 (Truus): direct na twee vinkjes en een seintje zei de download "0 dagen" en
 // "seintjes: niets"; pas na herladen klopte het. De lokale bijwerking volgt nu de serverregel.
