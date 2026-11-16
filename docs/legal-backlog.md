@@ -23,6 +23,12 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **LAAG (van security, 2026-11-16 04u) — (d) code tegen tekst: /privacy, rij Accountactiviteit.** De tekst zegt "de laatste
+  __AUDIT_PER__ gebeurtenissen, plus de laatste __AUDIT_RUIS__ mislukte pogingen om binnen te komen". Sinds de security-PR van
+  2026-11-16 04u (`lib/audit-keuze.js`) vallen ook de geweigerde pogingen van een collega (alles op `-geweigerd`) onder die 50,
+  zodat ze het echte spoor niet meer wegduwen. De bewaring wordt korter, niet langer. Voorstel: "plus de laatste 50 mislukte of
+  geweigerde pogingen" en de privacyversie ophogen.
+
 - **OPGELOST 2026-11-15 17u (legal-PR van deze run) — LAAG (van de gebruikers-sweep, 2026-11-15 14u, Truus) — (e)/(a): "Mijn gegevens" op /k noemt bij "Wat je aantikt" pijnscores,
   gedaan, te zwaar en seintjes, maar niet ervaren herstel (en de doelactiviteit-score), terwijl die wel worden bewaard en in de
   download zitten.** Voorstel: opsomming in kaart.html gelijk trekken met `PATIENT_VELDEN` / /privacy#patient.

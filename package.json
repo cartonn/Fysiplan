@@ -257,7 +257,8 @@
     "test:afspraakuid": "node scripts/test-sweep-afspraak-uid.mjs",
     "test:supportnaamlek": "node scripts/test-support-naamlek.mjs",
     "test:qrcachegrens": "node scripts/test-qr-cache-grens.mjs",
-    "test:ipsleutel": "node scripts/test-ip-sleutel.mjs"
+    "test:ipsleutel": "node scripts/test-ip-sleutel.mjs",
+    "test:activiteitoverspoeld": "node scripts/test-activiteit-overspoeld.mjs"
   },
   "engines": {
     "node": ">=20"

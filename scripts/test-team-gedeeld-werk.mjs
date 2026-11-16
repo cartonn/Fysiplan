@@ -186,7 +186,9 @@ try {
   const mailSanne = ["sanne", "rollen.nl"].join("@");
   for (let i = 0; i < 16; i++) assert.equal((await post("/api/praktijk/login", { email: mailSanne, wachtwoord: "sanne-wachtwoord" })).status, 200);
   a2 = await activiteit();
-  assert.equal(rij(a2, "profiel-wijzigen-geweigerd", "Mark").length, 0, "de oude poging is uit de 15 geduwd");
+  // sinds security 2026-11-16 (lib/audit-keuze.js) houden geweigerde pogingen eigen plekken naast de 15 echte
+  // gebeurtenissen: 16 logins duwen de oude poging er niet meer uit
+  assert.equal(rij(a2, "profiel-wijzigen-geweigerd", "Mark").length, 1, "de oude poging blijft zichtbaar naast 15 logins");
   const voor = Date.now();
   assert.equal((await post("/api/praktijken", { praktijk: P, adres: "Straat 2" }, M)).status, 403);
   a2 = await activiteit();

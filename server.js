@@ -7,6 +7,7 @@ import { join, extname, normalize, sep } from "node:path";
 import { exerciseId } from "./lib/exercise-id.js";
 import { byteRange } from "./lib/byte-range.js";
 import { ipSleutel as ipSleutelVan } from "./lib/ip-sleutel.js";
+import { isAuditRuis, kiesActiviteit } from "./lib/audit-keuze.js";
 import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver, geldigEmail } from "./lib/proef.js";
@@ -789,7 +790,7 @@ function auditLog(pk, actie, req, wieExpliciet) {
   let wie = wieExpliciet || "";
   if (!wie && req) { const l = sessieLid(sessieVan(req)); if (l) wie = l.naam || l.email; }
   praktijkAudit.unshift({ t: new Date().toISOString(), praktijk: pk, actie, ip: req ? maskIp(clientIp(req)) : "", ...(wie ? { wie } : {}) });
-  auditSnoei(pk, AUDIT_RUIS.has(actie));
+  auditSnoei(pk, isAuditRuis(actie, AUDIT_RUIS));
   saveJson(auditPath, praktijkAudit).catch(() => {});
 }
 // Een geweigerde beheerpoging van een collega (403 op team, profiel, werk van een ander). Die
@@ -829,11 +830,11 @@ function auditSnoei(pk, ruis) {
   let n = 0;
   for (let i = 0; i < praktijkAudit.length; i++) {
     const a = praktijkAudit[i];
-    if (a && a.praktijk === pk && AUDIT_RUIS.has(a.actie) === ruis && ++n > max) { praktijkAudit.splice(i, 1); break; }
+    if (a && a.praktijk === pk && isAuditRuis(a.actie, AUDIT_RUIS) === ruis && ++n > max) { praktijkAudit.splice(i, 1); break; }
   }
   while (praktijkAudit.length > AUDIT_TOTAAL) {
     let j = -1;
-    for (let i = praktijkAudit.length - 1; i >= 0; i--) if (!praktijkAudit[i] || AUDIT_RUIS.has(praktijkAudit[i].actie)) { j = i; break; }
+    for (let i = praktijkAudit.length - 1; i >= 0; i--) if (!praktijkAudit[i] || isAuditRuis(praktijkAudit[i].actie, AUDIT_RUIS)) { j = i; break; }
     if (j < 0) j = praktijkAudit.length - 1;
     praktijkAudit.splice(j, 1);
   }
@@ -4866,9 +4867,10 @@ async function afhandelen(request, response) {
       "kaart-herstellen-geweigerd", "kaart-definitief-geweigerd", "proef-geweigerd",
       // een download van alle gegevens door een beheerder hoort in hetzelfde spoor als een geweigerde
       "alles-gedownload"]);
-    const lijst = praktijkAudit
-      .filter((e) => e && e.praktijk === pk && relevant.has(e.actie))
-      .slice(0, 15)
+    // 15 echte gebeurtenissen plus hooguit 5 geweigerde of mislukte pogingen: een collega die blijft
+    // proberen, duwt "collega verwijderd" of "kaart naar de prullenbak" niet meer uit beeld (lib/audit-keuze.js)
+    const lijst = kiesActiviteit(praktijkAudit.filter((e) => e && e.praktijk === pk && relevant.has(e.actie)),
+      (a) => isAuditRuis(a, AUDIT_RUIS))
       .map((e) => ({ t: e.t, actie: e.actie, ip: e.ip, ...(e.wie ? { wie: e.wie } : {}), ...(Number(e.n) > 1 ? { n: Number(e.n) } : {}) }));
     await sendJson(response, 200, { ok: true, activiteit: lijst });
     return;
