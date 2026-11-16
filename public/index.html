@@ -2596,7 +2596,10 @@ bridge2.jpg</div>
   document.addEventListener('keydown',function(e){
     var search=document.getElementById('search');
     if(e.key==='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();search.focus();search.select();return;}
-    if(document.activeElement!==search)return;
+    // alleen toetsen die IN het zoekveld vallen: Enter op de × van de laatste oefening zette de focus naar
+    // het zoekveld en kwam daarna hier ook nog langs, zodat de eerste bibliotheekoefening stil op de kaart kwam
+    // (gebruikers-sweep 2026-11-16, toetsenbord)
+    if(document.activeElement!==search||e.target!==search)return;
     if(e.key==='ArrowDown'||e.key==='ArrowUp'){
       e.preventDefault();if(!visibleExercises.length)return;
       keyboardIndex=e.key==='ArrowDown'?Math.min(visibleExercises.length-1,keyboardIndex+1):Math.max(0,keyboardIndex-1);
@@ -4368,6 +4371,7 @@ bridge2.jpg</div>
     "<li>Fysiplan is geen alarmknop. Berichten lees je op werkdagen; spoed loopt via telefoon.</li>"+
     "<li>Het dossier blijft in het EPD van de praktijk.</li>"+
     "<li>Werk op een apparaat met schermslot en log uit op een gedeelde computer.</li></ul>";
+  var TEAM_LAATSTE_KNOP='';
   function laadTeam(na){
     var el=document.getElementById('tm_inhoud');
     fetch('api/praktijk/team',PGET()).then(function(r){return r.json();}).then(function(d){
@@ -4475,7 +4479,11 @@ bridge2.jpg</div>
       var fSel=!fWas||!el.contains(fa)?'':fa.id?'#'+fa.id:['data-tmweg','data-tmrol','data-tm2wis'].map(function(a){return fa.getAttribute(a)?'['+a+'="'+fa.getAttribute(a)+'"]':'';}).join('');
       el.innerHTML=h;
       if(fWas){var fn=null;try{fn=fSel&&el.querySelector(fSel);}catch(e){}
-        if(!fn)fn=el.querySelector('button:not([disabled]),select,input:not([type=hidden]),a[href]');
+        // nooit terugvallen op een knop die iets wist of verwijdert: na "Nodig uit" stond de focus op "wissen" bij
+        // een collega en wisten twee keer Enter diens tweede stap (gebruikers-sweep 2026-11-16, Karin)
+        if(!fn&&fa===document.body&&TEAM_LAATSTE_KNOP){try{fn=el.querySelector('#'+TEAM_LAATSTE_KNOP);}catch(e){}}
+        if(!fn)fn=Array.prototype.filter.call(el.querySelectorAll('button:not([disabled]),select,input:not([type=hidden]),a[href]'),function(x){
+          return !x.hasAttribute('data-tm2wis')&&!x.hasAttribute('data-tmweg')&&!/wis|verwijder/i.test(x.textContent||'');})[0]||null;
         if(fn){try{fn.focus();}catch(e){}}}
       var msg=function(t){var m=document.getElementById('tm_msg');if(m)m.textContent=t||'';};
       var sm=document.getElementById('tm_seinmail');
@@ -4649,6 +4657,7 @@ bridge2.jpg</div>
       });
       var uDo=document.getElementById('tm_udo');
       if(uDo)uDo.addEventListener('click',function(){
+        TEAM_LAATSTE_KNOP='tm_udo';
         uDo.disabled=true;
         // de link van een vorige uitnodiging weg: bij een weigering stond die anders onder de
         // fout en kon hij naar de verkeerde collega gaan (gebruikers-sweep 2026-11-10, Mark)
@@ -4656,18 +4665,20 @@ bridge2.jpg</div>
         teamPost('uitnodigen',{naam:document.getElementById('tm_unaam').value,email:document.getElementById('tm_uemail').value,rol:document.getElementById('tm_urol').value})
           .then(function(r){
             uDo.disabled=false;
-            if(!r.ok){msg(r.fout||'Uitnodigen lukte niet.');return;}
+            if(!r.ok){msg(r.fout||'Uitnodigen lukte niet.');try{uDo.focus();}catch(e){}return;}
             laadTeam(function(){
               var lk=document.getElementById('tm_link');if(!lk)return;
               lk.innerHTML="<div style='margin-top:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px'>"+(r.gemaild?'Uitnodiging gemaild. ':r.mailLimiet?'Vandaag mailen we geen uitnodigingen meer namens je praktijk. ':'')+
                 "Stuur je collega deze link (7 dagen geldig):<div style='font:12px/1.5 ui-monospace,monospace;word-break:break-all;user-select:all;margin:4px 0'>"+esc(r.link)+"</div>"+
                 "<button class='btn' id='tm_kopie' type='button'>Kopieer link</button></div>";
+              // de volgende stap na uitnodigen is de link doorsturen: focus daarheen
+              try{document.getElementById('tm_kopie').focus();}catch(e){}
               document.getElementById('tm_kopie').addEventListener('click',function(){
                 var b=this;try{navigator.clipboard.writeText(r.link).then(function(){b.textContent='Gekopieerd';},function(){b.textContent='Selecteer en kopieer';});}catch(e){b.textContent='Selecteer en kopieer';}
               });
             });
           })
-          .catch(function(){uDo.disabled=false;msg('Geen verbinding.');});
+          .catch(function(){uDo.disabled=false;msg('Geen verbinding.');try{uDo.focus();}catch(e){}});
       });
       el.querySelectorAll('[data-tmrol]').forEach(function(sel){
         // de rol pas wijzigen na een bevestiging: één pijltoets op de rolkeuze (waar de focus kan

@@ -1091,3 +1091,12 @@ html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
   html.v2 .fp-ideeknop{order:5}
   html.v2 header.topbar #printBtn{order:6}
 }
+
+/* iPad en andere aanraakschermen: "Delen met de praktijk" en "Verwijderen" bij een behandelkaart waren
+   tekstlinkjes van 15 px hoog en de knoppen erboven 38 px; met een vinger mis je die (sweep 2026-11-16). */
+@media screen and (pointer:coarse){
+  html.v2 .sjb-vb-klein{gap:6px;flex-wrap:wrap;margin:4px 0 0}
+  html.v2 .sjb-link{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;border-radius:9px}
+  html.v2 .sjb-link:first-child{margin-left:-10px}
+  html.v2 .sjb-vb-acties .btn{height:44px}
+}
