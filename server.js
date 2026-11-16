@@ -1415,7 +1415,10 @@ function proefVanBeheer(req) {
 // beheerder met een eigen login, dan telt alleen nog een sessie van een beheerder (proefVanBeheer).
 // Vóór het beveiligen (nog geen beheerder) blijft de proefcookie de enige sleutel, zoals altijd.
 function proefAlleenBeheer(p) {
-  const pk = proefPraktijkSleutel(p);
+  // ook de proef achter een V2-pilot van een bestaande praktijk (V2_BESTAANDE_PILOT): die hangt
+  // niet als `proef` op het account, dus proefPraktijkSleutel vond hem niet en de proefcookie gaf
+  // daar ook naast een beheerder met eigen login Mijn proef (e-mail, telefoon) en betalen (security 2026-11-16)
+  const pk = proefPraktijkSleutel(p) || pilotPkVanProef(p);
   // alleen een beheerder die echt kan inloggen: moet de praktijk een tweede stap hebben en is die nog niet
   // ingesteld (beveiligen onderbroken), dan is de proefcookie nog de weg terug voor de aanmelder
   return !!pk && ledenVan(pk).some((l) => l && l.rol === "beheerder" && lidActief(l) && (heeftTweedeStap(l) || !stapVerplicht(pk)));
@@ -1463,6 +1466,11 @@ function pilotVan(pk) {
   const acc = praktijkAccounts[pk];
   if (acc.proef || acc.gemaakt !== bestaandePilot.gemaakt) return null;
   return bestaandePilot;
+}
+// de bestaande praktijk achter deze proefaanmelding als die de V2-pilot is (of null)
+function pilotPkVanProef(p) {
+  if (!p || !bestaandePilot || String(p.id) !== String(bestaandePilot.id)) return null;
+  return pilotVan(bestaandePilot.pk) ? bestaandePilot.pk : null;
 }
 function proefVanPraktijk(req) {
   const s = sessieVan(req);
