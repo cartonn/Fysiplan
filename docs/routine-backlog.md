@@ -73,6 +73,8 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+- **LAAG (van legal, 2026-11-16 01u) — `npm run test:spronglinks` faalt lokaal met Chromium ook op schone main (416f98a):** een sprongkoppeling in de therapeut-app is 38 px hoog, de test eist 44 px. In CI zonder browser loopt alleen het statische deel. Niet door legal aangeraakt.
+
 ### Sweep 2026-11-15 22u (vijf persona's lokaal met EIGEN_LOGIN_VERPLICHT=aan en PROEF_VERPLICHT=aan; geen 500's of pageerrors; alle beheergrenzen hielden, ook X ↔ Y, elke beheeractie als therapeut 403 met zin; /k op iPad bij 200 % voor het eerst getest: ok)
 - **OPGELOST 2026-11-15 deze run (test:agendatraag) — MIDDEL (Jayden, Pixel 7) — "Add to my calendar" op een trage lijn ±5 s
   zonder feedback.** Na 0,5 s nu "One moment, getting your calendar file…" onder de knop (role=status, 9 talen) en de knop

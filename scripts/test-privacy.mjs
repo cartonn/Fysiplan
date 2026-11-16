@@ -62,6 +62,17 @@ await writeFile(join(dataDir, "vertalingen.json"), JSON.stringify({
   en: { [sha16("Jan de Vries heeft een hernia")]: "Jan de Vries has a herniated disc", [sha16("Squat")]: "Squat" }
 }));
 
+// statistieken van vóór 2026-11-16: een unieke bezoeker als sha256(IP|browser|datum) zonder geheim,
+// en een geweigerd verzoek van 40 dagen geleden
+const statDag = new Date(nu - 3 * dag).toISOString().slice(0, 10);
+const oudeUniek = createHash("sha256").update("10.7.7.7|Testbrowser|" + statDag).digest("hex").slice(0, 12);
+await writeFile(join(dataDir, "statistieken.json"), JSON.stringify({
+  dagen: { [statDag]: { bezoek: 1, admin: 0, uniek: [oudeUniek], print: 0, kaartOpgeslagen: 0, kaartVerwijderd: 0 } },
+  security: { geweigerd: 2, laatste: [
+    { t: new Date(nu - 1 * dag).toISOString(), ip: "10.1.x.x", pad: "kaart-raden" },
+    { t: new Date(nu - 40 * dag).toISOString(), ip: "10.2.x.x", pad: "/api/dashboard" }] }
+}));
+
 // ---- server ----
 const reserve = createServer();
 await new Promise((resolve) => reserve.listen(0, "127.0.0.1", resolve));
@@ -118,6 +129,29 @@ try {
     await wacht(50);
   }
   assert.equal(cache[sha16("Jan de Vries heeft een hernia")], undefined, "vrije tekst uit de vertaalcache");
+
+  // Legal 2026-11-16 (code tegen tekst): /privacy zegt bij de dagtellingen "alleen aantallen", dus
+  // een bewaarde bezoekerscode mag niet per IP-adres na te rekenen zijn; geweigerde verzoeken hooguit 30 dagen
+  {
+    const vandaag = new Date().toISOString().slice(0, 10);
+    await fetch(origin + "/v2", { headers: { "x-forwarded-for": "10.7.7.7", "user-agent": "Testbrowser" } });
+    let st = {};
+    for (let i = 0; i < 100; i++) {
+      try { st = await leesJson("statistieken.json"); } catch {}
+      if (st.uniekGezouten && st.dagen[vandaag] && st.dagen[vandaag].uniek.length) break;
+      await wacht(100);
+    }
+    assert.equal(st.uniekGezouten, true, "oude bezoekerscodes zijn overgehasht");
+    assert.equal(st.dagen[statDag].uniek.length, 1, "het aantal unieke bezoekers blijft");
+    assert.notEqual(st.dagen[statDag].uniek[0], oudeUniek, "oude code is niet meer per IP na te rekenen");
+    const zonderGeheim = createHash("sha256").update("10.7.7.7|Testbrowser|" + vandaag).digest("hex").slice(0, 12);
+    assert.equal(st.dagen[vandaag].uniek.length, 1);
+    assert.notEqual(st.dagen[vandaag].uniek[0], zonderGeheim, "nieuwe code gebruikt een geheim zout");
+    assert.deepEqual(st.security.laatste.map((r) => r.pad), ["kaart-raden"], "geweigerd verzoek ouder dan 30 dagen is weg");
+    const priv = await (await fetch(origin + "/privacy")).text();
+    assert.match(priv, /id="geweigerd"[\s\S]*?hooguit 30 dagen/, "/privacy noemt de geweigerde verzoeken en de termijn");
+    assert.match(priv, /geheim dat de volgende dag weg is/);
+  }
   assert.equal(cache[sha16("Squat")], "Squat", "bibliotheekvertaling blijft");
   const audit = await leesJson("praktijk-audit.json");
   assert.ok(audit.some((a) => a.actie === "kaart-verlopen" && a.praktijk === "fysio oud"), "auditregel bij verlopen");
@@ -288,7 +322,7 @@ try {
   assert.match(privacy, /binnen een maand antwoord/);
   assert.match(privacy, /alleen door een computer/);
   assert.match(privacy, /zonder die gegevens kunnen we de proef niet starten/);
-  assert.match(privacy, /Versie 15 november 2026/);
+  assert.match(privacy, /Versie 16 november 2026/);
   assert.match(privacy, /hoe vaak, hoeveel of hoe zwaar je oefent/, "privacyverklaring noemt dat doseringsvragen niet naar de AI-dienst gaan");
   assert.match(privacy, /Foutlog/);
   // code tegen tekst (legal 2026-11-10 17u): alles wat de patiëntroute /api/kaart laat

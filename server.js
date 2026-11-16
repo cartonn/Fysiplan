@@ -110,7 +110,7 @@ const VWO_VERSIE = "2026-11-15";
 const AV_VERSIE = "2026-11-15";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-15-3";
+const PRIVACY_VERSIE = "2026-11-16";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -2756,6 +2756,30 @@ try {
 const statsPath = join(dataDir, "statistieken.json");
 let stats = { dagen: {}, security: { geweigerd: 0, laatste: [] } };
 try { stats = { ...stats, ...JSON.parse(await readFile(statsPath, "utf8")) }; } catch {}
+// Legal 2026-11-16 (code tegen tekst): /privacy zegt "alleen aantallen, geen profielen", maar een
+// unieke bezoeker werd bewaard als sha256(IP|browser|datum) zonder geheim. Wie het bestand heeft,
+// kan dan per IP-adres narekenen of iemand die dag kwam: dat is een gepseudonimiseerd gegeven,
+// geen aantal (overweging 26 AVG). Nu telt een geheim zout per dag mee dat de volgende dag weg
+// is; oude codes worden één keer met een weggegooid zout overgehasht, zodat het aantal blijft.
+if (!stats.uniekGezouten) {
+  const weg = randomBytes(16).toString("hex");
+  for (const d of Object.values(stats.dagen || {})) {
+    if (d && Array.isArray(d.uniek)) d.uniek = d.uniek.map((h) => createHash("sha256").update(weg + "|" + h).digest("hex").slice(0, 12));
+  }
+  stats.uniekGezouten = true;
+}
+// geweigerde verzoeken (tijd, gemaskeerd IP, pad) voor het eigenaarsdashboard: hooguit 30 dagen,
+// zoals /privacy#geweigerd zegt; anders bleef een oude regel staan zolang niets nieuws werd geweigerd
+const GEWEIGERD_BEWAAR_MS = 30 * 86400000;
+function snoeiGeweigerd(nu = Date.now()) {
+  const l = Array.isArray(stats.security && stats.security.laatste) ? stats.security.laatste : [];
+  stats.security.laatste = l.filter((r) => r && nu - Date.parse(r.t) <= GEWEIGERD_BEWAAR_MS).slice(0, 20);
+}
+snoeiGeweigerd();
+function dagZout(dag) {
+  if (!stats.zout || stats.zout.dag !== dag) stats.zout = { dag, waarde: randomBytes(16).toString("hex") };
+  return stats.zout.waarde;
+}
 // anonieme gebruiksteller per oefening (hoe vaak op een gedeelde kaart): stuurt de
 // videoproductie zodat het budget eerst naar de meest gebruikte oefeningen gaat
 stats.oefeningGebruik = stats.oefeningGebruik || {};
@@ -2796,8 +2820,8 @@ function telBezoek(req, isAdminPagina) {
   if (String(req.headers["user-agent"] || "").startsWith("fysiplan-bewaker")) return;
   const d = dagStats(vandaagKey());
   if (isAdminPagina) d.admin++; else d.bezoek++;
-  // unieke bezoekers: dag-gebonden hash van IP+browser — geen herleidbare gegevens opgeslagen
-  const h = createHash("sha256").update(clientIp(req) + "|" + (req.headers["user-agent"] || "") + "|" + vandaagKey()).digest("hex").slice(0, 12);
+  // unieke bezoekers: hash van IP+browser met een geheim zout dat alleen vandaag bestaat (dagZout)
+  const h = createHash("sha256").update(dagZout(vandaagKey()) + "|" + clientIp(req) + "|" + (req.headers["user-agent"] || "")).digest("hex").slice(0, 12);
   if (!d.uniek.includes(h) && d.uniek.length < 5000) d.uniek.push(h);
   bewaarStats();
 }
@@ -2808,7 +2832,7 @@ function maskIp(ip) {
 function logGeweigerd(req, pad) {
   stats.security.geweigerd++;
   stats.security.laatste.unshift({ t: new Date().toISOString(), ip: maskIp(clientIp(req)), pad });
-  stats.security.laatste = stats.security.laatste.slice(0, 20);
+  snoeiGeweigerd();
   bewaarStats();
 }
 
@@ -3131,6 +3155,7 @@ async function maakBackup() {
     // statistiekenbestand blijven klein, het dashboard toont toch maar 14 dagen
     const statDagen = Object.keys(stats.dagen).sort();
     for (const d of statDagen.slice(0, Math.max(0, statDagen.length - 120))) delete stats.dagen[d];
+    snoeiGeweigerd();
     bewaarStats();
   } catch {}
   await maakBackupElders();
