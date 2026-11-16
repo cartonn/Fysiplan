@@ -1454,22 +1454,34 @@ function proefCollegaGeweigerd(req, wat) {
 // 2026-11-12). Nu krijgt elke ingelogde sessie van de praktijk de einddatum mee; zonder naam,
 // e-mail of telefoon van wie de proef aanmeldde. beheer: alleen een beheerder krijgt de link
 // naar de proef- en betaalpagina (zie proefVanBeheer).
+// Een bestaande praktijk kan V2 testen zonder dat de proef eigenaar van het account
+// en de kaarten wordt. De serverconfiguratie verwijst ook naar de aanmaakdatum:
+// een later, gelijknamig account krijgt deze pilot niet. Geen inlog- of betaalrecht.
+const bestaandePilot = process.env.V2_BESTAANDE_PILOT ? JSON.parse(process.env.V2_BESTAANDE_PILOT) : null;
+function pilotVan(pk) {
+  if (!bestaandePilot || pk !== bestaandePilot.pk || !Object.hasOwn(praktijkAccounts, pk)) return null;
+  const acc = praktijkAccounts[pk];
+  if (acc.proef || acc.gemaakt !== bestaandePilot.gemaakt) return null;
+  return bestaandePilot;
+}
 function proefVanPraktijk(req) {
   const s = sessieVan(req);
   if (!s || !Object.hasOwn(praktijkAccounts, s.pk) || !praktijkGeclaimd(s.pk)) return null;
-  const k = praktijkAccounts[s.pk].proef;
+  const k = praktijkAccounts[s.pk].proef || pilotVan(s.pk);
   if (!k) return null;
   const p = Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
   if (p && (p.klant || p.gewist)) return null;
   const verloopt = Number((p && p.verloopt) || k.verloopt || 0);
   if (!verloopt || Date.now() >= verloopt) return null;
-  return { verloopt, praktijk: weergaveNaam(s.pk) || "", beheer: !!isBeheer(s) };
+  return { verloopt, praktijk: weergaveNaam(s.pk) || "", beheer: !pilotVan(s.pk) && !!isBeheer(s) };
 }
 // De proef hangt niet alleen aan het apparaat (cookie) maar ook aan het praktijkaccount
 // dat tijdens de proef werd beveiligd: anders maakte dezelfde praktijksessie op een
 // ander apparaat (of met gewiste cookies) gewoon verder kaarten. Op het account staan
 // id én einddatum, zodat het slot blijft staan als de proefgegevens gewist zijn.
-function proefKoppel(acc, p) {
+function proefKoppel(pk, p) {
+  if (pilotVan(pk)) return false;
+  const acc = praktijkAccounts[pk];
   if (!acc || !p || acc.proef) return false;
   acc.proef = { id: p.id, verloopt: p.verloopt };
   return true;
@@ -1481,7 +1493,7 @@ function praktijkIsKlant(pk) {
   return !!(p && p.klant && !p.gewist);
 }
 function praktijkProefVerlopen(pk) {
-  const k = pk && Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk].proef : null;
+  const k = pk && Object.hasOwn(praktijkAccounts, pk) ? (praktijkAccounts[pk].proef || pilotVan(pk)) : null;
   if (!k) return false;
   const p = Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
   // een aanmelding die al is teruggebracht tot de fiscale bewaarplicht (gewist) draagt geen
@@ -4632,7 +4644,7 @@ async function afhandelen(request, response) {
           gemaakt: nu, regels: { versie: WERKREGELS_VERSIE, t: new Date(nu).toISOString() } };
         praktijkAccounts[pk] = { naam, hash: maakHash(randomBytes(32).toString("hex")), gedeeldUit: true, gemaakt: nu,
           vwo: { versie: VWO_VERSIE, t: new Date(nu).toISOString() }, akkoord: nieuwAkkoord(eigen.naam), leden: [l] };
-        proefKoppel(praktijkAccounts[pk], proefVan(request));
+        proefKoppel(pk, proefVan(request));
         await saveJson(accountsPath, praktijkAccounts);
         auditLog(pk, "geclaimd", request, eigen.naam);
         auditLog(pk, "eigen-login-gemaakt", request, eigen.naam);
@@ -4646,7 +4658,7 @@ async function afhandelen(request, response) {
       const herstelcode = maakHerstelcode();
       praktijkAccounts[pk] = { naam, hash: maakHash(ww), herstel: maakHash(herstelcode), gemaakt: Date.now(),
         vwo: { versie: VWO_VERSIE, t: new Date().toISOString() }, akkoord: nieuwAkkoord() };
-      proefKoppel(praktijkAccounts[pk], proefVan(request));
+      proefKoppel(pk, proefVan(request));
       await saveJson(accountsPath, praktijkAccounts);
       auditLog(pk, "geclaimd", request);
       const token = nieuweSessie(pk);
@@ -4807,7 +4819,7 @@ async function afhandelen(request, response) {
       // op dit apparaat mag een gewone praktijk niet aan een verlopen proef hangen, want dan
       // gaat die op slot en wist de proefronde 30 dagen later alles, ook de patiëntkaarten
       if (pr && !pr.klant && Number(acc.gemaakt) >= Number(pr.gestart) && Number(acc.gemaakt) <= Number(pr.verloopt) &&
-        proefKoppel(acc, pr)) await saveJson(accountsPath, praktijkAccounts);
+        proefKoppel(pk, pr)) await saveJson(accountsPath, praktijkAccounts);
       // De overstap (EIGEN_LOGIN_VERPLICHT): dit account is van vóór de regel en heeft nog geen
       // beheerder met een eigen login, anders was het praktijkwachtwoord hierboven al geweigerd.
       // Het praktijkwachtwoord geeft dan geen sessie meer. Wie het kent (tot nu toe de eigenaar)

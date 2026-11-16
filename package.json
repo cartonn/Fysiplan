@@ -36,7 +36,7 @@
     "test:video-recovery": "node scripts/test-mobile-video-recovery.mjs",
     "categories:coverage": "node scripts/category-coverage.mjs",
     "test:ahmed-notities": "node scripts/test-ahmed-notities.mjs",
-    "test:proef": "node scripts/test-proef.mjs && node scripts/test-proef-poort.mjs",
+    "test:proef": "node scripts/test-proef.mjs && node scripts/test-proef-poort.mjs && node scripts/test-bestaande-pilot.mjs",
     "test:proefpoort": "node scripts/test-proef-poort.mjs",
     "test:proefverplicht": "node scripts/test-proef-verplicht.mjs",
     "test:wisvooraf": "node scripts/test-wis-vooraf-mail.mjs",
