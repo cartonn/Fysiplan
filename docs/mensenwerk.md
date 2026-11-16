@@ -4,6 +4,12 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Mails en bellen tijdens de proef (legal, 2026-11-16 09u)
+/privacy zei dat Fysiplan iemand met een proef "één keer" benadert. In werkelijkheid komt er een herinnering voor het einde, met
+`PROEF_STARTTIP=aan` ook een starttip op dag 3, en kun jij bellen. De tekst zegt dat nu eerlijk. Voor de jurist: zijn de mails over
+doorgaan "eigen dienst aan een bestaande klant" (art. 11.7 Telecommunicatiewet), en moet er dan een afmeldregel onder? Niets voor jou
+om nu te doen.
+
 ### Verwerkersovereenkomst 2026-11-15: de noodsleutel van de server (legal, 2026-11-15 21u)
 De overeenkomst zei dat elke medewerker van Fysiplan een eigen beheerlogin met een tweede stap heeft en dat Fysiplan vastlegt
 wie wat deed. Maar `ADMIN_KEY` op Railway laat ook binnen, zonder tweede stap, en het beheerlogboek noemt dan alleen

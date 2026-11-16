@@ -71,6 +71,20 @@ try {
   // patiëntdeel: korte zinnen (hooguit 30 woorden)
   const patient = pag.privacy.split('id="patient"')[1].split("<h2")[0];
   for (const z of zinnen(patient)) assert.ok(woorden(z) <= 30, "patiëntdeel: zin van " + woorden(z) + " woorden: " + z.slice(0, 120));
+  // legal 2026-11-16 09u (i), van de gebruikers-sweep (Truus, 72): het patiëntdeel gebruikte vaktaal zonder uitleg.
+  // Een vakwoord mag, maar dan met een korte uitleg in dezelfde regel.
+  assert.doesNotMatch(patient, /analysedienst|volgcookie/i, "patiëntdeel: geen vaktaal als analysediensten of volgcookies");
+  const uitgelegd = { "IP-adres": /nummer van je internetverbinding/, "reservekopie": /kopie voor noodgevallen/,
+    "Cloudflare": /bedrijf dat video/, "doelactiviteit": /activiteit die je weer wilt kunnen/ };
+  for (const [woord, uitleg] of Object.entries(uitgelegd)) {
+    if (!patient.includes(woord)) continue;
+    assert.match(patient, uitleg, "patiëntdeel: " + woord + " staat er zonder uitleg");
+  }
+  // (a) de proefaanmelding: de server mailt tijdens de proef (starttip #345, herinnering voor het einde) en
+  // beheer kan bellen; "je één keer benaderen over je ervaring" was te weinig.
+  const proefRij = pag.privacy.split("Proefaanmelding: e-mail")[1].split("</tr>")[0];
+  assert.doesNotMatch(proefRij, /&eacute;&eacute;n keer benaderen|één keer benaderen/, "privacy: proefrij noemt meer dan één contact");
+  assert.match(proefRij, /mailen we je[\s\S]*bellen/, "privacy: proefrij noemt mails tijdens de proef en bellen");
   // legal 2026-11-16 05u (i): de blokken die de server alleen toont als een schakelaar aan staat
   // (<!--vraaghulp-->, <!--ideeenai-->, <!--database-->) zag deze test nooit, want hier staan ze uit.
   // Meet ze daarom in de bron, met dezelfde grenzen; in het patiëntdeel 30 woorden.
