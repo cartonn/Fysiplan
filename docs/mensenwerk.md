@@ -289,6 +289,17 @@ versie, wanneer en wie (ook in de download van /v2/gegevens).
 3. Laat de jurist privacyverklaring, verwerkersovereenkomst en voorwaarden samen toetsen (staat al
    hieronder bij Algemene voorwaarden, punt 7).
 
+### Starttip op dag 3 voor een proef zonder kaart (praktijk-routine, 2026-11-16)
+**Wat de code nu doet:** niets, tot jij hem aanzet. Met `PROEF_STARTTIP=aan` krijgt een proef die na 3 dagen nog geen
+enkele kaart met een patiënt deelde één mail "Je eerste Fysiplan-kaart in een paar minuten": drie stappen (app openen,
+categorie kiezen of een kaart die klaarstaat, A4 printen met QR) en het aanbod "antwoord op deze mail, dan maken we samen
+je eerste kaart". Jij (`PROEF_MELDING_AAN`) krijgt "Proef zonder kaart: …", het moment om te bellen. Niet aan wie al een
+kaart deelde, klant is of "doorgaan" koos; alleen op dag 3 en 4, zodat proeven die al verder zijn bij het aanzetten geen
+inhaalmail krijgen. Eén keer per proef (`startTip` in proef-aanmeldingen.json). Test `npm run test:starttip`.
+**Env:** `PROEF_STARTTIP=aan` op Railway, naast de mail die er al staat (`MAIL_API_SLEUTEL`, `MAIL_AFZENDER`).
+**Wat jij moet doen:** lees de tekst in `startTipTekst` in server.js (of laat je hem doorsturen); bevalt hij, zet dan
+`PROEF_STARTTIP=aan` op Railway. Je belooft er een belletje in, dus zet hem pas aan als jij of iemand anders dat kan doen.
+
 ### Bevestiging van de eerste betaling aan de praktijk (praktijk-routine, 2026-11-15)
 **Wat de code nu doet:** na de eerste online betaling kreeg alleen jij een mail ("Betaald: …"); de praktijk zelf hoorde
 niets. Nu krijgt de aanmelder ook "Fysiplan: je eerste betaling is gelukt": het bedrag, het aantal therapeuten, tot en met
