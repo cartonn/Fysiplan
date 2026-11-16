@@ -71,6 +71,20 @@ try {
   // patiëntdeel: korte zinnen (hooguit 30 woorden)
   const patient = pag.privacy.split('id="patient"')[1].split("<h2")[0];
   for (const z of zinnen(patient)) assert.ok(woorden(z) <= 30, "patiëntdeel: zin van " + woorden(z) + " woorden: " + z.slice(0, 120));
+  // legal 2026-11-16 05u (i): de blokken die de server alleen toont als een schakelaar aan staat
+  // (<!--vraaghulp-->, <!--ideeenai-->, <!--database-->) zag deze test nooit, want hier staan ze uit.
+  // Meet ze daarom in de bron, met dezelfde grenzen; in het patiëntdeel 30 woorden.
+  const patientStart = bron.indexOf('id="patient"');
+  const patientEind = bron.indexOf("<h2", patientStart);
+  let geschakeld = 0;
+  for (const m of bron.matchAll(/<!--([a-z]+)-->([\s\S]*?)<!--\/\1-->/g)) {
+    geschakeld++;
+    const inPatient = m.index > patientStart && m.index < patientEind;
+    const grens = inPatient ? 30 : 40;
+    for (const z of zinnen(m[2].replace(/__[A-Z_]+__/g, "N")))
+      assert.ok(woorden(z) <= grens, "blok " + m[1] + (inPatient ? " (patiëntdeel)" : "") + ": zin van " + woorden(z) + " woorden: " + z.slice(0, 120));
+  }
+  assert.ok(geschakeld >= 3, "geschakelde blokken in juridisch.html gevonden");
 
   // /v2/gegevens: korte zinnen, en de uitleg over een losse kaart klopt met de prullenbak
   const gegevens = await (await fetch(origin + "/v2/gegevens")).text();
