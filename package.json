@@ -254,7 +254,8 @@
     "test:oefwegongedaan": "node scripts/test-sweep-oefweg-ongedaan.mjs",
     "test:afspraakuid": "node scripts/test-sweep-afspraak-uid.mjs",
     "test:supportnaamlek": "node scripts/test-support-naamlek.mjs",
-    "test:qrcachegrens": "node scripts/test-qr-cache-grens.mjs"
+    "test:qrcachegrens": "node scripts/test-qr-cache-grens.mjs",
+    "test:ipsleutel": "node scripts/test-ip-sleutel.mjs"
   },
   "engines": {
     "node": ">=20"
