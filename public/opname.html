@@ -91,6 +91,10 @@
   .geencam input{position:absolute;width:1px;height:1px;opacity:0}
   .geencam button{background:var(--vlak);border:1px solid var(--lijn);color:var(--inkt)}
   .geencam .gcmsg{min-height:1.4em;color:var(--grijs);font-size:15px}
+  /* naast een werkende camera is de galerij de tweede keus: rustige knop onder de uitleg */
+  .geencam.galerij{width:100%;max-width:430px;margin-top:0;gap:4px}
+  .geencam.galerij label{background:var(--vlak);color:var(--inkt);border:1px solid var(--lijn);min-height:48px}
+  .geencam.galerij .gcmsg{text-align:center}
   button:focus-visible{outline:3px solid rgba(36,86,166,.4);outline-offset:2px}
 </style>
 </head>
@@ -138,15 +142,14 @@
   }
   // geen camera (geweigerd, geen camera op het apparaat of een browser zonder opname):
   // niet doodlopen, maar opnieuw laten proberen of een bestaande video laten kiezen
-  function geenCamera(msg){
-    toon("<div class='klaarblok'><b>Geen camera</b><p>"+esc(msg)+"</p>"+
-      "<div class='geencam'><label id='kieslabel'><input type='file' id='kies' accept='video/mp4,video/webm,video/quicktime,video/*'/>"+
-      "<span id='kiestekst'>Kies een video uit je galerij</span></label>"+
-      (kanOpnemen?"<button type='button' id='nogmaals'>Camera opnieuw proberen</button>":"")+
-      "<p class='gcmsg' id='gcmsg' role='status' aria-live='polite'></p></div></div>");
-    var kies=document.getElementById('kies'),tekst=document.getElementById('kiestekst'),meld=document.getElementById('gcmsg');
-    var nog=document.getElementById('nogmaals');
-    if(nog)nog.addEventListener('click',function(){location.reload();});
+  // video kiezen uit de galerij: bij geen camera als hoofdknop, naast een werkende camera als tweede keus
+  // (een therapeut heeft de oefening soms al gefilmd). Zelfde controle en upload als de opname.
+  function galerijHTML(tekst){
+    return "<label id='kieslabel'><input type='file' id='kies' accept='video/mp4,video/webm,video/quicktime,video/*'/>"+
+      "<span id='kiestekst'>"+esc(tekst)+"</span></label>";
+  }
+  function bindGalerij(tekst,start,herstel,klaar){
+    var kies=document.getElementById('kies'),label=document.getElementById('kiestekst'),meld=document.getElementById('gcmsg');
     kies.addEventListener('change',function(){
       var f=kies.files&&kies.files[0];
       if(!f)return;
@@ -155,9 +158,21 @@
       var ct=(t==='video/webm'||/\.webm$/.test(naam))?'video/webm':(t==='video/mp4'||t==='video/quicktime'||/\.(mp4|m4v|mov)$/.test(naam))?'video/mp4':null;
       if(!ct){meld.textContent='Kies een video (mp4, mov of webm).';kies.value='';return;}
       if(f.size>60*1024*1024){meld.textContent='Deze video is te groot (max. 60 MB). Kies een kortere video.';kies.value='';return;}
-      meld.textContent='';kies.disabled=true;tekst.textContent='Versturen… 0%';
-      verstuur(f,ct,tekst,function(m){kies.disabled=false;kies.value='';tekst.textContent='Kies een video uit je galerij';meld.textContent=m||'';});
+      meld.textContent='';kies.disabled=true;label.textContent='Versturen… 0%';
+      if(start)start();
+      verstuur(f,ct,label,function(m){kies.disabled=false;kies.value='';label.textContent=tekst;meld.textContent=m||'';if(herstel)herstel();},klaar);
     });
+  }
+  // geen camera (geweigerd, geen camera op het apparaat of een browser zonder opname):
+  // niet doodlopen, maar opnieuw laten proberen of een bestaande video laten kiezen
+  function geenCamera(msg){
+    toon("<div class='klaarblok'><b>Geen camera</b><p>"+esc(msg)+"</p>"+
+      "<div class='geencam'>"+galerijHTML('Kies een video uit je galerij')+
+      (kanOpnemen?"<button type='button' id='nogmaals'>Camera opnieuw proberen</button>":"")+
+      "<p class='gcmsg' id='gcmsg' role='status' aria-live='polite'></p></div></div>");
+    var nog=document.getElementById('nogmaals');
+    if(nog)nog.addEventListener('click',function(){location.reload();});
+    bindGalerij('Kies een video uit je galerij');
   }
 
   fetch('/api/opname/status?token='+token).then(function(r){return r.json();}).then(function(d){
@@ -206,10 +221,17 @@
         "<svg class='ring' id='ringsvg' viewBox='0 0 94 94'><circle class='rbg' cx='47' cy='47' r='45'/><circle class='rfg' id='ring' cx='47' cy='47' r='45'/></svg>"+
         "<button class='opknop' id='knop' aria-label='opname starten of stoppen'><i></i></button></span>"+
         "<button class='flip' id='flip' aria-label='wissel tussen voor- en achtercamera'><svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M20 8h-3l-2-3H9L7 8H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z'/><path d='M15.5 13.5a3.5 3.5 0 1 1-1-2.4'/><path d='M15.5 9.5v2h-2'/></svg></button></div></div>"+
-        "<div class='uitleg'>Richt de camera, tik op de rode knop en doe de oefening voor (max. 1 minuut). Tik nogmaals om te stoppen.</div>");
+        "<div class='uitleg'>Richt de camera, tik op de rode knop en doe de oefening voor (max. 1 minuut). Tik nogmaals om te stoppen.</div>"+
+        "<div class='geencam galerij' id='galerij'>"+galerijHTML('Of kies een video die je al hebt')+
+        "<p class='gcmsg' id='gcmsg' role='status' aria-live='polite'></p></div>");
       toonStream();
       document.getElementById('knop').addEventListener('click',wissel);
       document.getElementById('flip').addEventListener('click',wisselCamera);
+      // tijdens het versturen van een gekozen video niet ook nog opnemen; klaar = camera uit
+      bindGalerij('Of kies een video die je al hebt',
+        function(){document.getElementById('knop').disabled=true;},
+        function(){document.getElementById('knop').disabled=false;},
+        function(){if(stream)stream.getTracks().forEach(function(t){t.stop();});});
     }
     function wissel(){
       var b=document.getElementById('knop');
@@ -221,6 +243,7 @@
       rec.start();
       b.classList.add('bezig');
       var fl=document.getElementById('flip');if(fl)fl.style.visibility='hidden';
+      var gl=document.getElementById('galerij');if(gl)gl.style.display='none';
       document.getElementById('tijd').style.display='flex';
       // aflopende tijdring rond de knop: in één oogopslag zien hoeveel opnametijd er nog is
       var OMTREK=2*Math.PI*45;

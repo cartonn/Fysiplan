@@ -195,6 +195,17 @@ try {
       assert.match(await page.textContent("#tm_link"), /\/v2\/uitnodiging\?t=[a-f0-9]{48}/);
       assert.match(await page.textContent("#tm_inhoud"), /Joris Bakker[\s\S]*uitgenodigd/);
       await shot(page, "team-2-uitgenodigd.png");
+      // alleen toetsenbord: Enter op "Nodig uit" zet de focus op "Kopieer link", nooit op een wis- of verwijderknop
+      // van een collega (na "Nodig uit" + 2x Enter was de tweede stap van een collega gewist; sweep 2026-11-16, Karin)
+      await page.fill("#tm_unaam", "Eva Smit");
+      await page.fill("#tm_uemail", "eva@brug.nl");
+      await page.focus("#tm_udo");
+      await page.keyboard.press("Enter");
+      await page.waitForFunction(() => /Eva Smit/.test(document.getElementById("tm_inhoud").textContent) && document.getElementById("tm_kopie"), null, { timeout: 5000 });
+      await page.waitForTimeout(200);
+      const focusNa = await page.evaluate(() => { const a = document.activeElement; return { id: a && a.id, wis: !!(a && (a.hasAttribute("data-tm2wis") || a.hasAttribute("data-tmweg"))) }; });
+      assert.equal(focusNa.wis, false, "focus na uitnodigen niet op wissen/verwijderen");
+      assert.equal(focusNa.id, "tm_kopie", "focus na uitnodigen op Kopieer link: " + JSON.stringify(focusNa));
       await page.click("#tm_sluit");
       await page.waitForFunction(() => /ingelogd als Sanne de Wit/.test(document.getElementById("ps_status").textContent), null, { timeout: 5000 });
       // uitloggen en weer inloggen met e-mail

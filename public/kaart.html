@@ -2652,10 +2652,26 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
       inhoudBezig=false;
       if(!d||!d.ok||!d.kaart)return;
-      if(inhoudSig(d.kaart)===INHOUD_SIG)return;
+      if(inhoudSig(d.kaart)===INHOUD_SIG){neemPatientDeelOver(d);return;}
       if(!magHerladen()){inhoudLaatst=0;return;}
       location.reload();
     }).catch(function(){inhoudBezig=false;});
+  }
+  // Wat de patiënt op een tweede telefoon (of een huisgenoot op de tablet) afvinkte of invulde, kwam op
+  // een open kaart niet binnen: de ene telefoon zei "alles gedaan", de andere "3 van 4", en een tik op de
+  // oude stand zette een vinkje uit dat elders aan stond (gebruikers-sweep 2026-11-16, Truus). Nu neemt
+  // de kaart bij terugkomen het patiëntdeel van de server over en tekent alleen opnieuw als het verschilt.
+  // Niet als hier nog tikken wachten (die gaan eerst mee) of midden in een oefening, foto of half getypt veld.
+  var PATIENT_DEEL=['gedaan','oefTrouw','metingen','ervaring','seinOpen'];
+  function neemPatientDeelOver(d){
+    if(!K||!K.kaart||!magHerladen())return;
+    if(Object.keys(leesWacht()).length)return;
+    var oud=JSON.stringify(PATIENT_DEEL.map(function(f){return K.kaart[f]===undefined?null:K.kaart[f];}));
+    var nieuw=JSON.stringify(PATIENT_DEEL.map(function(f){return d.kaart[f]===undefined?null:d.kaart[f];}));
+    if(oud===nieuw&&!(typeof d.dag==='string'&&d.dag&&d.dag!==K.dag))return;
+    PATIENT_DEEL.forEach(function(f){K.kaart[f]=d.kaart[f];});
+    if(typeof d.dag==='string'&&d.dag)K.dag=d.dag;
+    alles();
   }
   function terugGekomen(){dagWissel();inhoudCheck();}
   // een foto van een eigen oefening die niet laadt: misschien is de link verlopen

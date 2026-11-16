@@ -580,6 +580,8 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
   `/api/praktijk/inbox/afgehandeld`, `/api/kaart/seintje/gezien` en `/api/kaart/dossier` staan niet in `PROEF_SCHRIJFROUTES`
   (server.js r. ~1420–1423), terwijl de app "niet meer beantwoorden of afhandelen" belooft (index.html r. ~6740) en
   /v2/proef/overzicht "niets wijzigen" zegt. Keuze: routes toevoegen, of de tekst aanpassen als afhandelen bewust mag blijven.
+  Bevestigd 2026-11-16 14u (gebruikers-sweep, Mark, eigen server): `/api/kaart/archief`, `/api/kaart/dossier` en
+  `/api/praktijk/team/sein-mail` geven 200 na een verlopen proef, terwijl de balk "iets wijzigen kan niet meer" zegt; de andere 16 schrijfroutes 403.
 - **OPGELOST 2026-11-14 20u (security, PR volgt in deze run, test:gedeeldwerk) — `auditGeweigerd` zet bij een herhaling ook de
   tijd en het IP op die van de laatste poging en haalt de regel naar boven. /v2/gegevens schrijft een geweigerde download of
   wissen van een collega met eigen login als `download-geweigerd`/`alles-wissen-geweigerd` met zijn naam op zijn eigen praktijk

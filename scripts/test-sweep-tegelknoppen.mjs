@@ -90,6 +90,14 @@ try {
   assert.equal(f, "0", "focus op de × die nu op plek 1 staat");
   await page.keyboard.press(" ");
   assert.equal((await namen()).length, 1, "spatie werkt ook");
+  // Enter op de × van de LAATSTE oefening: de kaart is leeg en de focus staat in het zoekveld. Eerst kwam
+  // dezelfde Enter daarna ook bij het zoekveld langs en zette de eerste bibliotheekoefening stil op de kaart
+  // (gebruikers-sweep 2026-11-16, toetsenbord).
+  await page.locator("#mon [data-rm='0']").focus();
+  await page.keyboard.press("Enter");
+  await page.waitForTimeout(150);
+  assert.equal((await namen()).length, 0, "Enter op de laatste × laat een lege kaart achter");
+  assert.equal(await page.evaluate(() => document.activeElement && document.activeElement.id), "search", "focus in het zoekveld");
   assert.deepEqual(fouten, [], "geen scriptfouten");
 
   // iPad (geen aanwijzen): onzichtbare pijltjes zijn niet aantikbaar; een tik rechtsonder in een vak schuift niets op
