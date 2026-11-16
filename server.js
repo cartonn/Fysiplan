@@ -1981,6 +1981,29 @@ function proefDoorgaanRegel() {
       ", maandelijks opzegbaar). Liever eerst overleggen? Antwoord op deze mail, dan bellen we je."
     : "Wil je doorgaan? Antwoord op deze mail, dan bellen we je om het abonnement af te spreken.";
 }
+// Starttip (praktijk-routine 2026-11-16): wie na een paar dagen proef nog geen enkele kaart met een
+// patiënt deelde, betaalt bijna nooit. Op dag 3 krijgt de aanmelder één mail met de eerste stappen en
+// het aanbod om samen te kijken, en beheer een seintje om te bellen. Alleen met PROEF_STARTTIP=aan
+// (en mail); zonder blijft alles zoals het was. Alleen binnen twee dagen na dag 3, zodat proeven die
+// al verder zijn bij het aanzetten geen inhaalmail krijgen, en nooit vlak voor de herinnering.
+const PROEF_START_TIP_DAGEN = 3;
+function startTipAan() { return /^(aan|ja|1|true)$/i.test(String(process.env.PROEF_STARTTIP || "").trim()); }
+function startTipNodig(p, nu) {
+  if (!startTipAan() || !mailIngesteld()) return false;
+  if (p.klant || p.doorgaan || p.startTip || p.gewist || Number(p.kaarten || 0) > 0) return false;
+  const vanaf = Number(p.gestart || 0) + PROEF_START_TIP_DAGEN * 86400000;
+  return !!p.gestart && nu >= vanaf && nu - vanaf < 2 * 86400000 && p.verloopt - nu > 2 * 86400000;
+}
+function startTipTekst(p) {
+  return "Hoi " + String(p.naam || "").split(/\s+/)[0] + ",\n\n" +
+    "Je proeft Fysiplan nu " + PROEF_START_TIP_DAGEN + " dagen, maar er is nog geen kaart met een patiënt gedeeld. " +
+    "Zo heb je de eerste in een paar minuten:\n\n" +
+    "1. Open de app: " + APP_BASIS + "/v2/app\n" +
+    "2. Kies een categorie (bijvoorbeeld Knie of Schouder) en klik de oefeningen aan, of begin met een kaart die er al klaarstaat.\n" +
+    "3. Print de A4. De patiënt scant de QR-code en ziet thuis de oefeningen op de telefoon.\n\n" +
+    "Je proef loopt tot en met " + datumNl(p.verloopt) + ". Liever even samen kijken? Antwoord op deze mail, dan bellen we je " +
+    "en maken we in tien minuten samen je eerste kaart.\n\nGroet,\nFysiplan";
+}
 const WIS_VOORAF_DAGEN = 7; // zoveel dagen voor het wissen krijgt de praktijk een mail
 let proefRondeBezig = false;
 async function proefRonde() {
@@ -2057,6 +2080,12 @@ async function proefRondeEen() {
       else proefNaPraktijkWissen(p.id);
       gewijzigd = true;
       continue;
+    }
+    if (startTipNodig(p, nu)) {
+      p.startTip = nu; gewijzigd = true;
+      proefMail(p.email, "Je eerste Fysiplan-kaart in een paar minuten", startTipTekst(p));
+      proefMeldAhmed("Proef zonder kaart: " + (p.praktijk || p.naam), p, "Deze proef loopt " + PROEF_START_TIP_DAGEN +
+        " dagen en er is nog geen kaart met een patiënt gedeeld. De praktijk kreeg net een mail met de eerste stappen. Goed moment om even te bellen.");
     }
     if (!p.klant && !p.herinnerd && nu < p.verloopt && p.verloopt - nu <= 2 * 86400000) {
       p.herinnerd = nu; gewijzigd = true;

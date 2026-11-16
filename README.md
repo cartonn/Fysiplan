@@ -246,7 +246,8 @@ telefoon**. De pagina's zijn scriptloos; de logica staat in `lib/proef.js` en `s
   nieuwe kaarten voor dat apparaat. Gedeelde patiëntkaarten (`/k/<id>`) blijven werken.
 - Meldingen (alleen als mail is ingesteld): nieuwe aanmelding, "wil doorgaan" en twee dagen voor het einde
   naar `PROEF_MELDING_AAN` (komma-gescheiden; standaard `ACCOUNT_BEHEER_EMAILS`); welkomstmail met een
-  persoonlijke link voor een tweede apparaat en een herinnering naar de aanmelder.
+  persoonlijke link voor een tweede apparaat en een herinnering naar de aanmelder. Met `PROEF_STARTTIP=aan`
+  ook een starttip op dag 3 als de proef nog geen kaart deelde (plus seintje aan het meldadres).
 - Overzicht met CSV-export, "klant geworden", "+7 dagen" en wissen op **/aanmeldingen**, alleen voor
   ingelogde `ACCOUNT_BEHEER_EMAILS` (niet met admin88). `/dashboard88` toont alleen aantallen.
 - AVG: geen IP-adres opgeslagen, aanmelder kan zelf wissen, automatisch gewist 30 dagen na afloop
