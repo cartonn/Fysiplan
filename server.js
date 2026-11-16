@@ -6,6 +6,7 @@ import { createHash, randomBytes, timingSafeEqual, scryptSync } from "node:crypt
 import { join, extname, normalize, sep } from "node:path";
 import { exerciseId } from "./lib/exercise-id.js";
 import { byteRange } from "./lib/byte-range.js";
+import { ipSleutel as ipSleutelVan } from "./lib/ip-sleutel.js";
 import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver, geldigEmail } from "./lib/proef.js";
@@ -2784,12 +2785,11 @@ function clientIp(req) {
 // een vers adres gebruiken; wie per los adres telt geeft zo'n aanvaller een
 // gratis omzeiling van elke rem én onbegrensde groei van de tellertabellen.
 // Alleen de remsleutel bucket; audit, maskering en bezoekersstatistiek blijven
-// het volledige adres gebruiken. (Wisselende schrijfwijzen van hetzelfde adres
-// kunnen hooguit een handvol extra buckets opleveren — geen rotatieruimte.)
+// het volledige adres gebruiken. Het /64-blok komt uit het volledig uitgeschreven
+// adres (lib/ip-sleutel.js): een ingekort adres met "::" gaf vroeger per adres een
+// eigen bucket (security 2026-11-16).
 function ipSleutel(req) {
-  const ip = clientIp(req);
-  if (!ip.includes(":")) return ip;
-  return ip.split(":").slice(0, 4).join(":") + "::/64";
+  return ipSleutelVan(clientIp(req));
 }
 function telBezoek(req, isAdminPagina) {
   // de bewaker van buitenaf vraagt de pagina's elke paar minuten op: dat is geen bezoek
