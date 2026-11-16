@@ -516,6 +516,11 @@ zelf op bij Mollie en controleert id, proef en bedrag; hernoemen zoekt het kaart
 - **MIDDEL (gebruikers-sweep 2026-11-15 22u, Karin) — Activiteit toont maar 15 regels (server.js ~4817 `.slice(0, 15)`), zonder
   "meer".** Een gewone therapeut kan met ±25 geweigerde beheerpogingen via de API de echte gebeurtenissen ("collega uitgenodigd",
   "collega verwijderd") uit beeld drukken. Voorstel: meer regels/pagineren, of geweigerde pogingen per actie samenvoegen.
+  **Bevestigd 2026-11-16 02u (Karin, desktop):** twee therapeuten met elk 11 geweigerde beheeracties (22× 403) → alle 15 regels
+  "…geweigerd"; `profiel-gewijzigd`, `sjabloon-verwijderd`, `oefening-verwijderd`, `kaart-verwijderd` weg. Het samenvoegen in
+  `auditGeweigerd` (server.js ~799–820) werkt per actie én `wie`, maar bij `team-wijziging-geweigerd` zit de soort in `wie`
+  ("(uitnodigen, geen beheerder)", ~4991), dus alleen team geeft al 7 regels per collega. Ook zonder misbruik vallen `geclaimd`
+  en `eigen-login-gemaakt` er bij een nieuw team binnen minuten uit. UI `toonPrakActiviteit` (index.html ~4724) kan niet bladeren.
 
 - **OPGELOST 2026-11-15 08u (deze PR, test:proefcookiebeheer) — LAAG (security 2026-11-15 08u) — `GET /api/praktijk/status` geeft niet-ingelogd met een proefcookie `voorstel` (naam en
   e-mail van de aanmelder)**, ook als de praktijk al een beheerder met eigen login heeft. Bedoeld als voorzet bij het beveiligen.

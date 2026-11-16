@@ -3730,6 +3730,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           var nudge=document.getElementById('mnudge');
           if(!d.ok){zetDank(dank,(TAAL==='nl'&&d.fout)?d.fout:tr('mfout'),'fout');if(nudge)nudge.style.display='none';return;}
           K.kaart.metingen=d.metingen||[];
+          // er wacht al een nieuwere tik: niet terugspringen naar deze score en nog geen "Bewaard"
+          if(MSCORE_NA&&MSCORE_NA.dataset.score!==b.dataset.score)return;
           tekenMeting();
           zetDank(dank,tr('mdank'));
           // hoge pijn (7-10): rustige, MDR-veilige nudge — alleen aandacht + de praktijk
@@ -3819,7 +3821,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       function ga(v){
         bezig=true;
         var klaar=function(){bezig=false;var n=na;na=null;if(n!==null&&n!==v)ga(n);};
-        verstuur(v).then(klaar,klaar);
+        // nogEen(): er wacht al een nieuwere tik. Dan het antwoord van deze niet tekenen en geen
+        // "Bewaard" tonen: anders sprong de keuze op een trage lijn seconden terug naar de vorige
+        // tik, met "Bewaard" erbij, terwijl de laatste tik nog niet verstuurd was (sweep 2026-11-16, Jayden)
+        verstuur(v,function(){return na!==null&&na!==v;}).then(klaar,klaar);
       }
       return function(v){if(bezig){na=v;return;}ga(v);};
     }
@@ -3827,14 +3832,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     function vandaagLokaal(lijst,s){var vd=dagStr(Date.now());
       return (lijst||[]).filter(function(x){return dagStr(x.t)!==vd;}).concat([{t:Date.now(),s:s}]);}
     // PSK-score: één tik, de server telt één score per dag
-    var pskStuur=laatsteTikWint(function(score){
+    var pskStuur=laatsteTikWint(function(score,nogEen){
       var pschaal=document.getElementById('pskschaal');
       pschaal.dataset.bezig='1';pschaal.setAttribute('aria-busy','true');
       var pklaar=function(){delete pschaal.dataset.bezig;pschaal.removeAttribute('aria-busy');
         pschaal.querySelectorAll('.bezig').forEach(function(x){x.classList.remove('bezig');});};
       return stuur('/api/kaart/psk',{id:id,score:score})
         .then(function(d){pklaar();var dank=document.getElementById('pskdank');
-          if(d&&d.ok){K.kaart.psk=d.psk||[];tekenPsk();zetDank(dank,trpsk('dank'));}
+          if(d&&d.ok){K.kaart.psk=d.psk||[];if(!nogEen()){tekenPsk();zetDank(dank,trpsk('dank'));}}
           else zetDank(dank,(TAAL==='nl'&&d&&d.fout)?d.fout:trpsk('fout'),'fout');})
         .catch(function(e){pklaar();zetDank(document.getElementById('pskdank'),e&&e.wacht?trw('een'):trpsk('fout'),e&&e.wacht?'wacht':'fout');
           if(e&&e.wacht){K.kaart.psk=vandaagLokaal(K.kaart.psk,score);tekenPsk();}});
@@ -3845,11 +3850,11 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       pb.classList.add('bezig');
       pskStuur(Number(pb.dataset.psk));
     });
-    var hsStuur=laatsteTikWint(function(score){
+    var hsStuur=laatsteTikWint(function(score,nogEen){
       var dank=document.getElementById('hsdank');
       return stuur('/api/kaart/ervaring',{id:id,score:score})
         .then(function(d){
-          if(d&&d.ok){K.kaart.ervaring=d.ervaring||[];tekenHerstel();zetDank(dank,trh('dank'));}
+          if(d&&d.ok){K.kaart.ervaring=d.ervaring||[];if(!nogEen()){tekenHerstel();zetDank(dank,trh('dank'));}}
           else{tekenHerstel();zetDank(dank,trh('fout'),'fout');}
         })
         .catch(function(e){zetDank(dank,e&&e.wacht?trw('een'):trh('fout'),e&&e.wacht?'wacht':'fout');
