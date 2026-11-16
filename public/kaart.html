@@ -2059,11 +2059,13 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(at<Date.now()-2*3600000){blok.style.display='none';return;}
     document.getElementById('afkop').textContent=TAF[TAAL]||TAF.nl;
     var d=new Date(at);
-    var tekst=d.toLocaleString(SPRAAK[TAAL]||'nl-NL',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});
+    // altijd de tijd van de praktijk (Nederland), net als in de agenda en Mijn gegevens: een telefoon
+    // op een andere tijdzone toonde anders een uur verschil (sweep 16-11, Jayden)
+    var tekst=d.toLocaleString(SPRAAK[TAAL]||'nl-NL',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:'Europe/Amsterdam'});
     // vandaag of morgen? dan het accentwoord ervoor, zodat de dag zelf opvalt
     var rel=TAFREL[TAAL]||TAFREL.nl;
-    var vandaagD=new Date();var morgenD=new Date(Date.now()+864e5);
-    var relW=d.toDateString()===vandaagD.toDateString()?rel.v:(d.toDateString()===morgenD.toDateString()?rel.m:'');
+    var dagNL=function(x){return new Date(x).toLocaleDateString('en-CA',{timeZone:'Europe/Amsterdam'});};
+    var relW=dagNL(at)===dagNL(Date.now())?rel.v:(dagNL(at)===dagNL(Date.now()+864e5)?rel.m:'');
     var el=document.getElementById('aftekst');
     el.textContent='';
     if(relW){var b=document.createElement('b');b.textContent=relW+' — ';el.appendChild(b);}

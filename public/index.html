@@ -4468,8 +4468,15 @@ bridge2.jpg</div>
             ?"Heeft de kaart geen behandelaar of maker met een eigen login, dan gaat de mail naar "+esc(d.seinMail.naar.join(', '))+"."
             :"Dat werkt alleen voor wie een eigen login heeft.")+"</div></div>";
       }
-      h+="<div id='tm_msg' style='margin-top:8px;color:var(--fout,#b4372f)'></div>";
+      h+="<div id='tm_msg' role='status' aria-live='polite' style='margin-top:8px;color:var(--fout,#b4372f)'></div>";
+      // opnieuw tekenen haalde de focus weg (naar body) na uitnodigen, rolwissel of verwijderen:
+      // zet hem terug op dezelfde knop, of op de eerste knop in het venster als die er niet meer is
+      var fa=document.activeElement,fWas=fa&&(el.contains(fa)||fa===document.body)&&document.getElementById('ovTeam')&&document.getElementById('ovTeam').classList.contains('on');
+      var fSel=!fWas||!el.contains(fa)?'':fa.id?'#'+fa.id:['data-tmweg','data-tmrol','data-tm2wis'].map(function(a){return fa.getAttribute(a)?'['+a+'="'+fa.getAttribute(a)+'"]':'';}).join('');
       el.innerHTML=h;
+      if(fWas){var fn=null;try{fn=fSel&&el.querySelector(fSel);}catch(e){}
+        if(!fn)fn=el.querySelector('button:not([disabled]),select,input:not([type=hidden]),a[href]');
+        if(fn){try{fn.focus();}catch(e){}}}
       var msg=function(t){var m=document.getElementById('tm_msg');if(m)m.textContent=t||'';};
       var sm=document.getElementById('tm_seinmail');
       if(sm)sm.addEventListener('change',function(){
@@ -4673,7 +4680,7 @@ bridge2.jpg</div>
             :wie+' weer gewone therapeut maken? Beheerrechten vervallen dan meteen.';
           if(!confirm(vraag)){sel.value=oudeRol;return;}
           oudeRol=sel.value;
-          teamPost('rol',{id:sel.getAttribute('data-tmrol'),rol:sel.value}).then(function(r){if(!r.ok)msg(r.fout||'Dat lukte niet.');laadTeam();});
+          teamPost('rol',{id:sel.getAttribute('data-tmrol'),rol:sel.value}).then(function(r){laadTeam(function(){if(!r.ok)msg(r.fout||'Dat lukte niet.');});});
         });
       });
       el.querySelectorAll('[data-tmweg]').forEach(function(btn){
@@ -4701,7 +4708,8 @@ bridge2.jpg</div>
               });
               return;
             }
-            if(!r.ok)msg(r.fout||'Dat lukte niet.');laadTeam();
+            // de weigering na het opnieuw tekenen tonen; anders wiste laadTeam hem meteen (sweep 16-11, Karin)
+            laadTeam(function(){if(!r.ok)msg(r.fout||'Dat lukte niet.');});
           });
         });
       });
@@ -4709,7 +4717,7 @@ bridge2.jpg</div>
       if(gd)gd.addEventListener('click',function(e){
         e.preventDefault();
         if(gd.getAttribute('data-uit')==='1'){
-          teamPost('gedeeld-uit',{uit:true}).then(function(r){if(!r.ok)msg(r.fout||'Dat lukte niet.');laadTeam();});
+          teamPost('gedeeld-uit',{uit:true}).then(function(r){laadTeam(function(){if(!r.ok)msg(r.fout||'Dat lukte niet.');});});
           return;
         }
         // weer aanzetten kan alleen met een nieuw wachtwoord: het oude kende ook wie al weg is
@@ -7297,6 +7305,11 @@ bridge2.jpg</div>
       if(alsScherm(ov)){stapel=stapel.filter(function(s){return s.ov!==ov;});return;}
       stapel=stapel.filter(function(s){return s.ov!==ov;});
       var terug=document.activeElement;
+      // knop die zichzelf uitzet vóór het openen (Test de QR, CSV) laat de focus op body vallen:
+      // dan de laatst gefocuste knop; en wie uit een net gesloten venster komt (reservecodes na
+      // inloggen) gaat straks terug naar waar dat venster vandaan kwam (sweep 16-11)
+      if(!terug||terug===document.body)terug=laatst;
+      if(terug&&(!document.contains(terug)||terug.closest&&terug.closest('.ov:not(.on)')))terug=vorigeTerug;
       stapel.push({ov:ov,terug:(terug&&terug!==document.body&&!ov.contains(terug))?terug:null});
       // na de eigen code van het venster (die soms zelf een veld focust)
       setTimeout(function(){
@@ -7310,10 +7323,22 @@ bridge2.jpg</div>
     function gesloten(ov){
       var s=null;stapel=stapel.filter(function(x){if(x.ov===ov){s=x;return false;}return true;});
       if(!s||!s.terug)return;
-      var a=document.activeElement;
-      if(a&&a!==document.body&&!ov.contains(a))return; // de code focuste al iets anders
-      if(document.contains(s.terug)&&zichtbaar(s.terug)){try{s.terug.focus();}catch(e){}}
+      vorigeTerug=s.terug;
+      var poging=0;
+      (function zetTerug(){
+        var a=document.activeElement;
+        if(a&&a!==document.body&&!ov.contains(a))return; // de code focuste al iets anders
+        if(ov.classList.contains('on'))return;
+        var t=s.terug;
+        // opnieuw getekend (Team na uitnodigen of verwijderen): dezelfde knop op id
+        if(!document.contains(t)&&t.id)t=document.getElementById(t.id)||t;
+        if(document.contains(t)&&zichtbaar(t)&&!t.disabled){try{t.focus();}catch(e){}return;}
+        // knop nog even uit of het scherm wordt nog opnieuw getekend: kort opnieuw proberen
+        if(++poging<10)setTimeout(zetTerug,150);
+      })();
     }
+    var laatst=null,vorigeTerug=null;
+    document.addEventListener('focusin',function(e){if(e.target&&e.target!==document.body)laatst=e.target;},true);
     var obs=new MutationObserver(function(lijst){
       lijst.forEach(function(mu){
         if(mu.type==='attributes'){

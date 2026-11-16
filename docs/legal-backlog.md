@@ -23,6 +23,12 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **LAAG (van de gebruikers-sweep, 2026-11-16 06u, Truus 72 jaar, iPhone SE) — B1-taal op wat een patiënt vanaf /k leest:**
+  /privacy noemt zonder uitleg "IP-adres", "Cloudflare", "analysediensten", "volgcookies" en "reservekopie"; "Mijn gegevens" en /privacy
+  zeggen "doelactiviteit"; bij de video "algemene uitleg … uit de bibliotheek". Voorstel: in het patiëntdeel (#patient) een korte uitleg
+  tussen haakjes of een eenvoudiger woord ("de plek waar je internet vandaan komt", "een kopie voor noodgevallen"). De sweep maakte
+  /privacy, /verwerkersovereenkomst en /voorwaarden wel schaalbaar op 200 % (alleen CSS in juridisch.html, geen tekstwijziging, geen
+  nieuwe versie nodig). Ook: de Engelse demokaart (/k/demo?taal=en) toont doel en doelactiviteit in het Nederlands zonder melding.
 - **OPGELOST 2026-11-16 05u (legal-PR van deze run) — LAAG (van security, 2026-11-16 04u) — (d) code tegen tekst: /privacy, rij Accountactiviteit.** Termijnkolom noemt nu ook "geweigerde pogingen van een collega", `PRIVACY_VERSIE` 2026-11-16-2, fail-closed test in `test-privacy.mjs` (zolang `lib/audit-keuze.js` `-geweigerd` als ruis telt). De tekst zegt "de laatste
   __AUDIT_PER__ gebeurtenissen, plus de laatste __AUDIT_RUIS__ mislukte pogingen om binnen te komen". Sinds de security-PR van
   2026-11-16 04u (`lib/audit-keuze.js`) vallen ook de geweigerde pogingen van een collega (alles op `-geweigerd`) onder die 50,
