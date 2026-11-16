@@ -444,6 +444,13 @@ try {
       assert.match(rij, /wat een collega probeerde maar niet mocht/, "/privacy noemt geweigerde pogingen van een collega");
       assert.match(rij, /ziet de beheerder dat ook, met hoe vaak/, "/privacy noemt dat de beheerder ze op naam en met teller ziet");
     }
+    // legal 2026-11-16 05u (d): sinds lib/audit-keuze.js vallen geweigerde pogingen van een collega
+    // onder het kleine plafond (AUDIT_RUIS_PER_PRAKTIJK); de termijnkolom noemde alleen mislukte inlogpogingen.
+    const ruisBron = await readFile(join(root, "lib", "audit-keuze.js"), "utf8");
+    if (/-geweigerd/.test(ruisBron)) {
+      assert.match(rij, new RegExp("de laatste " + per[2] + " mislukte pogingen om binnen te komen of geweigerde pogingen van een collega"),
+        "/privacy: geweigerde pogingen van een collega vallen onder het kleine plafond");
+    }
     const kaartRij = privacy.split('id="praktijk"')[1].split("</tr>")[1];
     assert.match(kaartRij, /werknotitie, de behandelaar en een logboek van het contact/);
   }
