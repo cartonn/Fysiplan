@@ -328,6 +328,9 @@ function maakHash(wachtwoord) {
   const hash = scryptSync(String(wachtwoord), salt, 32);
   return "scrypt$" + salt.toString("hex") + "$" + hash.toString("hex");
 }
+// een hash die bij geen enkel wachtwoord hoort: voor een vergelijking die even lang duurt als een echte,
+// zodat de duur van een antwoord niet verraadt of er een login (of praktijk) achter zit
+const NEP_HASH = maakHash(randomBytes(16).toString("hex"));
 function checkHash(wachtwoord, opgeslagen) {
   const d = String(opgeslagen || "").split("$");
   if (d.length !== 3 || d[0] !== "scrypt") return false;
@@ -434,8 +437,28 @@ function weergaveNaam(pk) {
 // inloggen op naam + wachtwoord: het account met deze naam waarvan het wachtwoord klopt
 function accountVoorLogin(naam, ww, veld = "hash") {
   // een praktijk waar het gedeelde wachtwoord niet meer meedoet, logt alleen nog per persoon in
-  for (const k of accountsMetNaam(naam)) if (!(veld === "hash" && gedeeldStaatUit(k)) && checkHash(ww, praktijkAccounts[k][veld])) return k;
+  let vergeleken = 0;
+  for (const k of accountsMetNaam(naam)) {
+    if (veld === "hash" && gedeeldStaatUit(k)) continue;
+    vergeleken++;
+    if (checkHash(ww, praktijkAccounts[k][veld])) return k;
+  }
+  // een onbekende naam duurt even lang als een bekende met een fout wachtwoord (zie NEP_HASH)
+  if (!vergeleken) checkHash(ww, NEP_HASH);
   return null;
+}
+// De actieve leden van praktijken met naam nk waarvan e-mail em en wachtwoord ww kloppen, als [{ pk, l }].
+// Altijd minstens één vergelijking, ook als niemand dit adres heeft (zie NEP_HASH).
+function ledenMetWachtwoord(nk, em, ww) {
+  const uit = [];
+  let vergeleken = 0;
+  for (const k of accountsMetNaam(nk)) for (const l of ledenVan(k)) {
+    if (l.email !== em || !lidActief(l)) continue;
+    vergeleken++;
+    if (checkHash(String(ww || ""), l.hash)) uit.push({ pk: k, l });
+  }
+  if (!vergeleken) checkHash(String(ww || ""), NEP_HASH);
+  return uit;
 }
 // ---- team: eigen login per therapeut ----
 // Elke therapeut logt in met eigen e-mail en wachtwoord (lid van de praktijk), zodat
@@ -4649,10 +4672,14 @@ async function afhandelen(request, response) {
           await send429(response, 900, { ok: false, fout: "Te veel inlogpogingen met dit e-mailadres; probeer het over een kwartier opnieuw." });
           return;
         }
-        let treffers = [];
+        let treffers = [], vergeleken = 0;
         for (const pk of Object.keys(praktijkAccounts)) {
-          for (const l of ledenVan(pk)) if (l.email === em && lidActief(l) && checkHash(ww, l.hash)) treffers.push({ pk, l });
+          for (const l of ledenVan(pk)) if (l.email === em && lidActief(l)) { vergeleken++; if (checkHash(ww, l.hash)) treffers.push({ pk, l }); }
         }
+        // Een onbekend adres kostte geen scrypt en kwam tientallen milliseconden sneller terug dan een
+        // bekend adres met een fout wachtwoord: aan de duur was te zien of een adres een login heeft
+        // (security 2026-11-16 08u). Nu kost elk antwoord minstens één vergelijking.
+        if (!vergeleken) checkHash(ww, NEP_HASH);
         const nkKeuze = cleanName(b.praktijk, 80).toLowerCase();
         const pastBij = (x) => x.pk === nkKeuze || accountNaam(x.pk) === nkKeuze;
         // Eén treffer bij een andere praktijk dan die op het scherm: niet stil daar inloggen. Anders kwam een
@@ -8845,10 +8872,8 @@ async function afhandelen(request, response) {
     let pk = null, lid = null;
     if (nk && !verbodenSleutel.test(nk)) {
       if (em) {
-        for (const k of accountsMetNaam(nk)) {
-          lid = ledenVan(k).find((l) => l.email === em && lidActief(l) && checkHash(String(b.wachtwoord || ""), l.hash)) || null;
-          if (lid) { pk = k; break; }
-        }
+        const t = ledenMetWachtwoord(nk, em, b.wachtwoord)[0];
+        if (t) { pk = t.pk; lid = t.l; }
       } else pk = accountVoorLogin(nk, String(b.wachtwoord || ""));
     }
     if (!pk) {
@@ -9020,10 +9045,13 @@ async function afhandelen(request, response) {
     let pk = null, lid = null, geenBeheerder = null;
     if (nk && !verbodenSleutel.test(nk)) {
       if (em) {
-        for (const k of accountsMetNaam(nk)) {
-          const l = ledenVan(k).find((x) => x.email === em && lidActief(x) && checkHash(String(b.wachtwoord || ""), x.hash)) || null;
-          if (l && l.rol === "beheerder") { lid = l; pk = k; break; }
-          if (l && !geenBeheerder) geenBeheerder = { pk: k, lid: l };
+        // per praktijk het eerste lid dat klopt, net als voorheen
+        const gezien = new Set();
+        for (const { pk: k, l } of ledenMetWachtwoord(nk, em, b.wachtwoord)) {
+          if (gezien.has(k)) continue;
+          gezien.add(k);
+          if (l.rol === "beheerder") { lid = l; pk = k; break; }
+          if (!geenBeheerder) geenBeheerder = { pk: k, lid: l };
         }
       } else pk = accountVoorLogin(nk, String(b.wachtwoord || ""));
     }
