@@ -2817,6 +2817,23 @@ bridge2.jpg</div>
     return l.length>=3&&!/\.$/.test(l);
   }
   var NAAM_OK='',OVERSCHRIJF='',HERNOEM_VOOR='',ROEP_VOOR='',NA_BEVEILIG=null;
+  // naam van de kaart op de server bij een 409 'verouderd' (bv. elders hernoemd)
+  var VEROUDERD_NAAM='';
+  // "Toch mijn versie bewaren" na een hernoeming op een ander apparaat: de nieuwe naam overnemen.
+  // Met de oude naam vroeg de server daarna "andere patiënt?" en maakte de eerste keuze een
+  // tweede kaart met een eigen QR, terwijl de patiënt de oude bleef zien (sweep 2026-11-16, Sanne)
+  function neemServerNaamOver(){
+    var nw=String(VEROUDERD_NAAM||'').trim();VEROUDERD_NAAM='';
+    var cn=document.getElementById('c_naam');
+    if(!KAART_ID||!nw||!cn||cn.value.trim().toLowerCase()===nw.toLowerCase())return;
+    // de naam is al op de server afgestemd: geen roepnaamvraag ("lijkt een volledige naam") meer
+    NAAM_OK=nw.toLowerCase();
+    cn.value=nw;cn.dispatchEvent(new Event('input',{bubbles:true}));
+  }
+  function naamEldersZin(d,naam){
+    var nw=String((d&&d.naam)||'').trim();
+    return nw&&nw.toLowerCase()!==String(naam||'').trim().toLowerCase()?' Daar heet de kaart nu \u201c'+nw+'\u201d; die naam blijft ook als je je eigen versie bewaart.':'';
+  }
   // wat er naar de server gaat: zonder leeftijd en Casus (die blijven op papier en in
   // deze browser) en in v2 met het id van de kaart die deze editor bewerkt
   function serverKaart(naam){
@@ -2843,6 +2860,7 @@ bridge2.jpg</div>
   // de hint bij een serverweigering: beveiligen, botsende naam of andermans praktijk
   function toonDeelWeigering(d,naam){
     var pr=(SET.praktijk||'').trim();
+    if(d.verouderd)VEROUDERD_NAAM=String(d.naam||'');
     if(d.beveilig){
       toonQrHint(PRAKSLOT.eigenLogin?'Beveilig eerst je praktijk met je eigen login; daarna komt de QR-code er vanzelf op. Een onbeveiligde praktijk deelt geen pati\u00ebntkaarten.'
         :'Zet eerst een wachtwoord op je praktijk; daarna komt de QR-code er vanzelf op. Zonder wachtwoord deelt Fysiplan geen pati\u00ebntkaarten.',[{act:'beveilig',label:'Beveilig mijn praktijk'}]);
@@ -2866,7 +2884,7 @@ bridge2.jpg</div>
         if(!OPNAME_GEMELD)try{OPNAME_GEMELD=true;alert('Je nieuwe video is nog niet op de kaart bewaard: deze kaart is intussen op een ander apparaat gewijzigd.\n\nKies rechtsboven op de kaart \u201cOpen de nieuwste versie\u201d. Je video gaat dan mee.');}catch(e){}
         return true;
       }
-      var vTekst=(KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen (en eigen video\u2019s) verloren.',
+      var vTekst=(KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen (en eigen video\u2019s) verloren.'+naamEldersZin(d,naam),
         vKnoppen=[{act:'nieuwste',label:'Open de nieuwste versie'},{act:'overschrijf',label:'Toch mijn versie bewaren'}];
       toonQrHint(vTekst,vKnoppen);
       toonConflictBalk(vTekst,vKnoppen);
@@ -3080,7 +3098,7 @@ bridge2.jpg</div>
     var cb=document.getElementById('conflict_bar');if(cb)cb.style.display='none';
       if(a==='beveilig')openBeveiligen(function(){laatsteDeel='';deelNu();});
       else if(a==='nieuwste')openNieuwsteVersie();
-      else if(a==='overschrijf'){OVERSCHRIJF=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
+      else if(a==='overschrijf'){neemServerNaamOver();OVERSCHRIJF=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
       else if(a==='roepnaam'&&cnA)roepnaamToepassen();
       else if(a==='naamok'){NAAM_OK=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
       else if(a==='hernoem'){HERNOEM_VOOR=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
@@ -3120,7 +3138,7 @@ bridge2.jpg</div>
       var cn=document.getElementById('c_naam');cn.value=v;cn.dispatchEvent(new Event('input',{bubbles:true}));
       prMelding(null);printMetQr();return;
     }
-    if(a==='overschrijf'){OVERSCHRIJF=huidigeKaartNaam().toLowerCase();prMelding(null);printMetQr();return;}
+    if(a==='overschrijf'){neemServerNaamOver();OVERSCHRIJF=huidigeKaartNaam().toLowerCase();prMelding(null);printMetQr();return;}
     if(a==='beveilig'){closeOv('ovPrint');openBeveiligen(function(){document.getElementById('printBtn').click();});return;}
     if(a==='nieuwste'){closeOv('ovPrint');openNieuwsteVersie();return;}
   });
@@ -3171,7 +3189,8 @@ bridge2.jpg</div>
         // QR-code", in plaats van stil naar Beveiligen te springen (nieuwe proefgebruiker)
         if(IS_V2&&d.beveilig){prMelding('Voor de QR-code moet je praktijk eerst beveiligd zijn'+(PRAKSLOT.eigenLogin?'':' met een wachtwoord')+', zodat alleen jullie de kaarten zien. Je kunt ook meteen printen, alleen zonder QR-code.',[{act:'beveilig',label:'Beveiligen',hoofd:true}]);return;}
         if(IS_V2&&d.bestaat){prMelding('Er is al een kaart \u201c'+(d.naam||naam)+'\u201d in je praktijk. Is dit dezelfde pati\u00ebnt? Anders: geef deze kaart een andere roepnaam, bijvoorbeeld met een initiaal.',[{act:'overschrijf',label:'Ja, die kaart bijwerken',hoofd:true}]);return;}
-        if(IS_V2&&d.verouderd){prMelding((KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen verloren.',[{act:'nieuwste',label:'Open de nieuwste versie',hoofd:true},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);return;}
+        if(IS_V2&&d.verouderd)VEROUDERD_NAAM=String(d.naam||'');
+        if(IS_V2&&d.verouderd){prMelding((KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen verloren.'+naamEldersZin(d,huidigeKaartNaam()),[{act:'nieuwste',label:'Open de nieuwste versie',hoofd:true},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);return;}
         if(IS_V2&&d.login){prMelding('De praktijk \u201c'+(SET.praktijk||'').trim()+'\u201d is beveiligd en je bent niet ingelogd. Log eerst in.',[{act:'beveilig',label:'Inloggen',hoofd:true}]);return;}
         if(IS_V2){prMelding(d.fout||'De kaart bewaren voor de QR-code is niet gelukt.');return;}
         alert(d.fout||'De kaart bewaren voor de QR-code is niet gelukt.');return;

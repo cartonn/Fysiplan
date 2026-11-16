@@ -19,6 +19,12 @@ assert.match(k, /function laatsteTikWint\(verstuur\)\{/, "hulpfunctie: één ver
 assert.match(k, /var hsStuur=laatsteTikWint\(/, "herstel gebruikt hem");
 assert.match(k, /var pskStuur=laatsteTikWint\(/, "PSK gebruikt hem");
 assert.match(k, /K\.kaart\.ervaring=vandaagLokaal\(K\.kaart\.ervaring,score\);tekenHerstel\(\);/, "herstel offline: nieuwe keuze zichtbaar");
+// sweep 2026-11-16 (Jayden): het antwoord op de eerste tik tekende de oude keuze terug met "Saved" erbij,
+// terwijl de laatste tik nog wachtte. Nu tekent alleen het antwoord op de laatste tik.
+assert.match(k, /verstuur\(v,function\(\)\{return na!==null&&na!==v;\}\)/, "verstuur weet of er een nieuwere tik wacht");
+assert.match(k, /if\(!nogEen\(\)\)\{tekenHerstel\(\);zetDank\(dank,trh\('dank'\)\);\}/, "herstel: geen terugsprong");
+assert.match(k, /if\(!nogEen\(\)\)\{tekenPsk\(\);zetDank\(dank,trpsk\('dank'\)\);\}/, "PSK: geen terugsprong");
+assert.match(k, /if\(MSCORE_NA&&MSCORE_NA\.dataset\.score!==b\.dataset\.score\)return;\s*tekenMeting\(\);/, "pijnscore: geen terugsprong");
 assert.doesNotMatch(k, /var b=e\.target\.closest\('\.sbtn'\);if\(!b\|\|b\.dataset\.bezig\)return;\s*var score=Number\(b\.dataset\.hs\)/, "geen bezig-slot per herstelknop meer");
 
 let pw = null;
@@ -71,6 +77,11 @@ try {
   await wacht(300);
   await p.$eval('#hsknoppen .sbtn[data-hs="2"]', (b) => b.click());
   assert.equal(await p.$eval('#hsknoppen .sbtn[data-hs="2"]', (b) => b.getAttribute("aria-pressed")), "true", "gekozen knop meteen zichtbaar");
+  // het antwoord op -2 komt binnen terwijl +2 nog wacht: +2 blijft gekozen, nog geen "Saved"
+  await p.waitForResponse((r) => r.url().endsWith("/api/kaart/ervaring"), { timeout: 8000 });
+  await wacht(60);
+  assert.equal(await p.$eval('#hsknoppen .sbtn.aan', (b) => b.dataset.hs), "2", "geen terugsprong naar -2 terwijl +2 nog wacht");
+  assert.doesNotMatch(await p.$eval("#hsdank", (d) => d.textContent || ""), /Saved/i, "nog geen 'Saved' voor de laatste tik");
   let srv = null;
   for (let i = 0; i < 120; i++) { srv = laatste(((await lees()).kaart || {}).ervaring); if (srv === 2 && herstel >= 2) break; await wacht(50); }
   await wacht(400);

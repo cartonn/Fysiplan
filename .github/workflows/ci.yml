@@ -55,6 +55,7 @@ jobs:
       - run: npm run test:afspraakververs
       - run: npm run test:agendatraag
       - run: npm run test:conflictbalk
+      - run: npm run test:hernoemconflict
       - run: npm run test:beveiligingfeedback
       - run: npm run test:praktijkslot
       - run: npm run test:tezwaar
