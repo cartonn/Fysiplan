@@ -1454,22 +1454,34 @@ function proefCollegaGeweigerd(req, wat) {
 // 2026-11-12). Nu krijgt elke ingelogde sessie van de praktijk de einddatum mee; zonder naam,
 // e-mail of telefoon van wie de proef aanmeldde. beheer: alleen een beheerder krijgt de link
 // naar de proef- en betaalpagina (zie proefVanBeheer).
+// Een bestaande praktijk kan V2 testen zonder dat de proef eigenaar van het account
+// en de kaarten wordt. De serverconfiguratie verwijst ook naar de aanmaakdatum:
+// een later, gelijknamig account krijgt deze pilot niet. Geen inlog- of betaalrecht.
+const bestaandePilot = process.env.V2_BESTAANDE_PILOT ? JSON.parse(process.env.V2_BESTAANDE_PILOT) : null;
+function pilotVan(pk) {
+  if (!bestaandePilot || pk !== bestaandePilot.pk || !Object.hasOwn(praktijkAccounts, pk)) return null;
+  const acc = praktijkAccounts[pk];
+  if (acc.proef || acc.gemaakt !== bestaandePilot.gemaakt) return null;
+  return bestaandePilot;
+}
 function proefVanPraktijk(req) {
   const s = sessieVan(req);
   if (!s || !Object.hasOwn(praktijkAccounts, s.pk) || !praktijkGeclaimd(s.pk)) return null;
-  const k = praktijkAccounts[s.pk].proef;
+  const k = praktijkAccounts[s.pk].proef || pilotVan(s.pk);
   if (!k) return null;
   const p = Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
   if (p && (p.klant || p.gewist)) return null;
   const verloopt = Number((p && p.verloopt) || k.verloopt || 0);
   if (!verloopt || Date.now() >= verloopt) return null;
-  return { verloopt, praktijk: weergaveNaam(s.pk) || "", beheer: !!isBeheer(s) };
+  return { verloopt, praktijk: weergaveNaam(s.pk) || "", beheer: !pilotVan(s.pk) && !!isBeheer(s) };
 }
 // De proef hangt niet alleen aan het apparaat (cookie) maar ook aan het praktijkaccount
 // dat tijdens de proef werd beveiligd: anders maakte dezelfde praktijksessie op een
 // ander apparaat (of met gewiste cookies) gewoon verder kaarten. Op het account staan
 // id én einddatum, zodat het slot blijft staan als de proefgegevens gewist zijn.
-function proefKoppel(acc, p) {
+function proefKoppel(pk, p) {
+  if (pilotVan(pk)) return false;
+  const acc = praktijkAccounts[pk];
   if (!acc || !p || acc.proef) return false;
   acc.proef = { id: p.id, verloopt: p.verloopt };
   return true;
@@ -1480,8 +1492,21 @@ function praktijkIsKlant(pk) {
   const p = k && Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
   return !!(p && p.klant && !p.gewist);
 }
-function praktijkProefVerlopen(pk) {
-  const k = pk && Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk].proef : null;
+// Beide apps delen de kaart-API. Bij twee gelijktijdige sessies blijft een ingelogde
+// V1-medewerker van deze praktijk op de V1-pagina de bestaande rechten houden.
+// De verwijzer kiest enkel de interface; zonder bijbehorend V1-account telt hij niet.
+function v1BijPilot(req, pk) {
+  if (!req || !pilotVan(pk)) return false;
+  const email = v1SessieVan(req);
+  if (!email || String(v1Accounts[email].praktijk || V1_PRAKTIJK).toLowerCase() !== pk) return false;
+  try {
+    const u = new URL(req.headers.referer);
+    return u.origin === instelBasis(req) && (u.pathname === "/" || u.pathname === "/index.html");
+  } catch { return false; }
+}
+function praktijkProefVerlopen(pk, req) {
+  if (v1BijPilot(req, pk)) return false;
+  const k = pk && Object.hasOwn(praktijkAccounts, pk) ? (praktijkAccounts[pk].proef || pilotVan(pk)) : null;
   if (!k) return false;
   const p = Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
   // een aanmelding die al is teruggebracht tot de fiscale bewaarplicht (gewist) draagt geen
@@ -1497,7 +1522,7 @@ const PROEF_SCHRIJFROUTES = new Set(["/api/kaarten", "/api/praktijk/oefeningen",
 function proefSlotVoor(req, urlPath) {
   if (req.method !== "POST" || !PROEF_SCHRIJFROUTES.has(urlPath)) return false;
   if (beheerEigen(req)) return false;
-  return proefVerlopen(proefVan(req)) || praktijkProefVerlopen(praktijkSessieVan(req));
+  return proefVerlopen(proefVan(req)) || praktijkProefVerlopen(praktijkSessieVan(req), req);
 }
 // Een nieuwe praktijk beveiligen (en daarmee kaarten delen) kan alleen vanuit een lopende
 // proef of als klant. Zonder deze poort kon iedereen /v2/app openen, een nieuwe praktijknaam
@@ -4528,7 +4553,7 @@ async function afhandelen(request, response) {
       akkoord: ingelogd ? { ...akkoordStatus(praktijkAccounts[eigen]), beheer: isBeheer(sessieVan(request)) } : undefined,
       // verlopen proef (dit apparaat of de ingelogde praktijk): de app toont het meteen bij
       // het laden, niet pas na de eerste geweigerde opslag (gebruikers-sweep, tweede apparaat)
-      proefVerlopen: proefVerlopen(proefVan(request)) || (ingelogd && praktijkProefVerlopen(eigen)) || undefined,
+      proefVerlopen: proefVerlopen(proefVan(request)) || (ingelogd && praktijkProefVerlopen(eigen, request)) || undefined,
       // lopende proef van de ingelogde praktijk (zelfde velden als /v2/app meegeeft aan een tweede
       // apparaat of collega): na het inloggen toont de app de proefbalk meteen, niet pas na herladen
       // (gebruikers-sweep 2026-11-13, Mark). Alleen einddatum en praktijknaam, geen aanmeldgegevens.
@@ -4632,7 +4657,7 @@ async function afhandelen(request, response) {
           gemaakt: nu, regels: { versie: WERKREGELS_VERSIE, t: new Date(nu).toISOString() } };
         praktijkAccounts[pk] = { naam, hash: maakHash(randomBytes(32).toString("hex")), gedeeldUit: true, gemaakt: nu,
           vwo: { versie: VWO_VERSIE, t: new Date(nu).toISOString() }, akkoord: nieuwAkkoord(eigen.naam), leden: [l] };
-        proefKoppel(praktijkAccounts[pk], proefVan(request));
+        proefKoppel(pk, proefVan(request));
         await saveJson(accountsPath, praktijkAccounts);
         auditLog(pk, "geclaimd", request, eigen.naam);
         auditLog(pk, "eigen-login-gemaakt", request, eigen.naam);
@@ -4646,7 +4671,7 @@ async function afhandelen(request, response) {
       const herstelcode = maakHerstelcode();
       praktijkAccounts[pk] = { naam, hash: maakHash(ww), herstel: maakHash(herstelcode), gemaakt: Date.now(),
         vwo: { versie: VWO_VERSIE, t: new Date().toISOString() }, akkoord: nieuwAkkoord() };
-      proefKoppel(praktijkAccounts[pk], proefVan(request));
+      proefKoppel(pk, proefVan(request));
       await saveJson(accountsPath, praktijkAccounts);
       auditLog(pk, "geclaimd", request);
       const token = nieuweSessie(pk);
@@ -4807,7 +4832,7 @@ async function afhandelen(request, response) {
       // op dit apparaat mag een gewone praktijk niet aan een verlopen proef hangen, want dan
       // gaat die op slot en wist de proefronde 30 dagen later alles, ook de patiëntkaarten
       if (pr && !pr.klant && Number(acc.gemaakt) >= Number(pr.gestart) && Number(acc.gemaakt) <= Number(pr.verloopt) &&
-        proefKoppel(acc, pr)) await saveJson(accountsPath, praktijkAccounts);
+        proefKoppel(pk, pr)) await saveJson(accountsPath, praktijkAccounts);
       // De overstap (EIGEN_LOGIN_VERPLICHT): dit account is van vóór de regel en heeft nog geen
       // beheerder met een eigen login, anders was het praktijkwachtwoord hierboven al geweigerd.
       // Het praktijkwachtwoord geeft dan geen sessie meer. Wie het kent (tot nu toe de eigenaar)
@@ -6706,7 +6731,7 @@ async function afhandelen(request, response) {
       // praktijk: van wie deze opname is. Alleen díé praktijk mag het pad daarna op een
       // eigen kaart zetten (zie eigenVideoPad bij POST /api/kaarten)
       opnames.set(token, { doel, naam: doel === "oefening" ? b.naam : null, made: Date.now(), video: null,
-        praktijk: praktijkSessie || null, proef: proefVan(request)?.id || null });
+        praktijk: praktijkSessie || null, pilotV1: v1BijPilot(request, praktijkSessie), proef: proefVan(request)?.id || null });
       await sendJson(response, 200, { ok: true, token });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
@@ -6777,7 +6802,7 @@ async function afhandelen(request, response) {
     // praktijk het is. Verloopt die proef terwijl de QR nog openstaat, dan schrijft ook
     // deze route niets meer weg (zelfde slot als PROEF_SCHRIJFROUTES).
     const opnameProef = o.proef && Object.hasOwn(proeven, o.proef) ? proeven[o.proef] : null;
-    if (proefVerlopen(opnameProef) || praktijkProefVerlopen(o.praktijk)) {
+    if (proefVerlopen(opnameProef) || (!o.pilotV1 && praktijkProefVerlopen(o.praktijk))) {
       opnames.delete(token);
       await sendJson(response, 403, { ok: false, proefVerlopen: true, fout: "De gratis proef van deze praktijk is voorbij. Opnemen kan niet meer." });
       return;
@@ -7781,7 +7806,7 @@ async function afhandelen(request, response) {
         kaart.gearchiveerd = true;
       } else { delete kaart.gearchiveerd; delete kaart.gearchiveerdOp; }
       const proefVoorbij = !beheerEigen(request) &&
-        (proefVerlopen(proefVan(request)) || praktijkProefVerlopen(pk));
+        (proefVerlopen(proefVan(request)) || praktijkProefVerlopen(pk, request));
       if (proefVoorbij && verlooptOp(kaart) > verlooptVoor) {
         for (const [veld, waarde] of Object.entries(voorArchief)) { if (waarde === undefined) delete kaart[veld]; else kaart[veld] = waarde; }
         await sendJson(response, 403, { ok: false, proefVerlopen: true,
