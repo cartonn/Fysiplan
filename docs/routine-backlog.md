@@ -73,6 +73,11 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+- **LAAG (van legal, 2026-11-16 17u, niet nagespeeld in de browser) — inbox: een kaart opnieuw opslaan met een echte wijziging wist `inboxGezien`.**
+  `/api/kaarten` (POST) bouwt de kaart opnieuw op met een vaste lijst velden; `inboxGezien` staat daar niet in (`dossier` wel sinds
+  de legal-PR van deze run). Gevolg vermoedelijk: wat de therapeut in de inbox al als gezien had, telt na het bewaren van een
+  nieuwe dosering weer als "nieuw". Kleinste fix: `inboxGezien` meenemen zoals `notitieT`, met een test in `test-inbox.mjs`.
+
 ### Sweep 2026-11-16 14u (vijf persona's lokaal met EIGEN_LOGIN_VERPLICHT=aan en PROEF_VERPLICHT=aan; geen 500's of pageerrors; alle beheergrenzen hielden, ook X ↔ Y, elke beheeractie als therapeut 403 met zin; verwijderde collega: sessie 401, login 403; offline wachtrij en 409 bij weggehaalde oefening ok; Mark: tweede apparaat via UI, eigen oefening met foto, afspraak en seintje via UI eindelijk getest: ok)
 - **OPGELOST 2026-11-16 deze run (test:team) — HOOG (Karin, desktop + iPad, toetsenbord) — na "Nodig uit" stond de focus op "wissen"
   bij een collega; nog twee keer Enter wiste diens tweede stap.** Na uitnodigen nu focus op "Kopieer link", bij een fout terug op

@@ -2410,9 +2410,18 @@ function laatstePatientInvoer(k) {
 // en de werknotitie. Een kaart met het label "In dossier" waarvan daarna zo'n regel
 // bijkwam, telt weer als "nog niet bijgewerkt", anders verdwijnt die regel met de
 // bewaartermijn zonder waarschuwing (legal 2026-11-08).
+// Ook het behandelplan zelf staat in de dossiertekst (WGBO art. 7:454 lid 1 BW): oefeningen,
+// dosering, doel en naam (`ts`, alleen bij een echte wijziging), behandelaar, PSK-activiteit
+// en weekdoel (`planT`) en het afronden (`gearchiveerdOp`). Veranderde dat na het label,
+// dan bleef "In dossier" staan en verdween de nieuwe versie zonder waarschuwing (legal 2026-11-16).
 function laatsteDossierInvoer(k) {
   const bericht = (k.contact || []).filter((c) => c && c.van === "praktijk" && c.tekst).reduce((m, c) => Math.max(m, Number(c.t) || 0), 0);
-  return Math.max(laatstePatientInvoer(k), bericht, Number(k.notitieT) || 0);
+  return Math.max(laatstePatientInvoer(k), bericht, Number(k.notitieT) || 0,
+    Number(k.ts) || 0, Number(k.planT) || 0, Number(k.gearchiveerdOp) || 0);
+}
+// een losse planwijziging (behandelaar, PSK-activiteit, weekdoel) die in de dossiertekst staat
+function merkPlanWijziging(kaart, oud, nieuw) {
+  if ((oud || null) !== (nieuw || null)) kaart.planT = Date.now();
 }
 // staat alles al in het dossier (label gezet ná de laatste invoer)?
 const inDossierBij = (k) => !!(k && k.dossier && Number(k.dossier.t) >= laatsteDossierInvoer(k));
@@ -7224,8 +7233,13 @@ async function afhandelen(request, response) {
         contact: map[kk] ? map[kk].contact || [] : [],
         doel: map[kk] ? Number(map[kk].doel) || 0 : 0,
         gearchiveerd: map[kk] ? !!map[kk].gearchiveerd : false,
-        gearchiveerdOp: map[kk] ? Number(map[kk].gearchiveerdOp) || null : null };
+        gearchiveerdOp: map[kk] ? Number(map[kk].gearchiveerdOp) || null : null,
+        planT: map[kk] ? Number(map[kk].planT) || null : null,
+        // het label "In dossier" blijft met wie en wanneer; inDossierBij vergelijkt het met `ts`
+        dossier: map[kk] ? map[kk].dossier || null : null };
       if (!map[kk].gearchiveerdOp) delete map[kk].gearchiveerdOp;
+      if (!map[kk].planT) delete map[kk].planT;
+      if (!map[kk].dossier) delete map[kk].dossier;
       await saveJson(kaartenPath, kaarten);
       await ruimKaartVideosOp(oudeVids.filter((p) => !Object.values(vids).includes(p)));
       // gebruiksranglijst: alleen namen uit de echte bibliotheek tellen mee, anders
@@ -7603,6 +7617,7 @@ async function afhandelen(request, response) {
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       // besturingstekens eruit en kort begrensd; als platte tekst getoond in de app
       const naam = String(b.naam || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 40);
+      merkPlanWijziging(kaart, kaart.behandelaar, naam);
       kaart.behandelaar = naam || null;
       if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
@@ -7628,6 +7643,7 @@ async function afhandelen(request, response) {
       const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const tekst = cleanName(b.activiteit, 80);
+      merkPlanWijziging(kaart, kaart.pskDoel, tekst);
       kaart.pskDoel = tekst || null;
       if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
@@ -7791,6 +7807,7 @@ async function afhandelen(request, response) {
       const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const doel = Math.max(0, Math.min(7, Math.round(Number(b.doel) || 0)));
+      merkPlanWijziging(kaart, Number(kaart.doel) || 0, doel);
       if (doel) kaart.doel = doel; else delete kaart.doel;
       if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);

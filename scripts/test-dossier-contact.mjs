@@ -127,6 +127,46 @@ try {
   assert.equal((await post("/api/kaart/antwoord", { praktijk: "Fysio Dossier", id: ID, tekst: "Morgen rustig aan." }, S)).status, 200);
   assert.equal((await lijstKaart()).inDossier, false, "bericht aan de patiënt na het label: weer niet bijgewerkt");
 
+  // legal 2026-11-16 (WGBO art. 7:454 lid 1 BW): ook het behandelplan staat in de dossiertekst.
+  // Een wijziging van oefeningen of dosering, behandelaar, PSK-activiteit, weekdoel of het afronden
+  // na het label maakt de kaart weer "nog niet bijgewerkt"; ongewijzigd opslaan niet.
+  const label = async () => {
+    assert.equal((await post("/api/kaart/dossier", { praktijk: "Fysio Dossier", id: ID }, S)).status, 200);
+    assert.equal((await lijstKaart()).inDossier, true, "net in het dossier gezet");
+    await new Promise((r) => setTimeout(r, 5));
+  };
+  const opslaanMet = (cells) => post("/api/kaarten", { praktijk: "Fysio Dossier", naam: "Truus", client: { c_naam: "Truus" },
+    chosen: [{ n: "Squat", i: 0 }], rows: {}, cells }, S);
+  await label();
+  assert.equal((await opslaanMet({})).status, 200);
+  assert.equal((await lijstKaart()).inDossier, true, "ongewijzigd opslaan (alleen openen) laat het label staan");
+  assert.equal((await opslaanMet({ "nsquat.0|r0|S": "3", "nsquat.0|r0|H": "10" })).status, 200);
+  const naDosering = await lijstKaart();
+  assert.equal(naDosering.inDossier, false, "nieuwe dosering na het label: weer niet bijgewerkt");
+  assert.ok(naDosering.dossier && naDosering.dossier.t, "opslaan wist het label niet: de praktijk ziet nog wanneer het in het dossier ging");
+  await label();
+  assert.equal((await post("/api/kaart/behandelaar", { praktijk: "Fysio Dossier", id: ID, naam: "Ilse" }, S)).status, 200);
+  assert.equal((await lijstKaart()).inDossier, false, "andere behandelaar na het label");
+  await label();
+  assert.equal((await post("/api/kaart/behandelaar", { praktijk: "Fysio Dossier", id: ID, naam: "Ilse" }, S)).status, 200);
+  assert.equal((await lijstKaart()).inDossier, true, "zelfde behandelaar laat het label staan");
+  assert.equal((await post("/api/kaart/doel", { praktijk: "Fysio Dossier", id: ID, doel: 3 }, S)).status, 200);
+  assert.equal((await lijstKaart()).inDossier, false, "nieuw weekdoel na het label");
+  await label();
+  assert.equal((await post("/api/kaart/psk-doel", { praktijk: "Fysio Dossier", id: ID, activiteit: "Fietsen" }, S)).status, 200);
+  assert.equal((await lijstKaart()).inDossier, false, "andere PSK-activiteit na het label");
+  assert.equal((await post("/api/kaart/psk-doel", { praktijk: "Fysio Dossier", id: ID, activiteit: "Traplopen" }, S)).status, 200);
+  await label();
+  assert.equal((await post("/api/kaart/archief", { praktijk: "Fysio Dossier", id: ID, archief: true }, S)).status, 200);
+  assert.equal((await lijstKaart()).inDossier, false, "afgerond na het label: de eindstatus staat nog niet in het dossier");
+  assert.equal((await post("/api/kaart/archief", { praktijk: "Fysio Dossier", id: ID, archief: false }, S)).status, 200);
+  const opslagPlan = JSON.parse(await readFile(join(dataDir, "kaarten.json"), "utf8"))["fysio dossier"].truus;
+  assert.ok(Number(opslagPlan.planT) > 0, "planT staat op de kaart");
+  assert.equal((await opslaanMet({ "nsquat.0|r0|S": "3", "nsquat.0|r0|H": "10" })).status, 200);
+  assert.equal(JSON.parse(await readFile(join(dataDir, "kaarten.json"), "utf8"))["fysio dossier"].truus.planT, opslagPlan.planT, "opslaan bewaart planT");
+  const patPlan = await (await fetch(origin + "/api/kaart?id=" + ID, { headers: kop() })).json();
+  assert.equal("planT" in patPlan.kaart, false, "planT blijft van de patiëntroute af");
+
   // legal 2026-11-15 (WGBO art. 7:454 BW, KNGF-richtlijn verslaglegging): de dossiertekst noemt de
   // behandelaar, en een volle scorerij schuift het beginpunt niet weg ("eerste" moet de eerste zijn)
   assert.equal((await post("/api/kaart/behandelaar", { praktijk: "Fysio Dossier", id: ID, naam: "Mark de Vries" }, S)).status, 200);
