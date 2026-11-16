@@ -1492,7 +1492,20 @@ function praktijkIsKlant(pk) {
   const p = k && Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
   return !!(p && p.klant && !p.gewist);
 }
-function praktijkProefVerlopen(pk) {
+// Beide apps delen de kaart-API. Bij twee gelijktijdige sessies blijft een ingelogde
+// V1-medewerker van deze praktijk op de V1-pagina de bestaande rechten houden.
+// De verwijzer kiest enkel de interface; zonder bijbehorend V1-account telt hij niet.
+function v1BijPilot(req, pk) {
+  if (!req || !pilotVan(pk)) return false;
+  const email = v1SessieVan(req);
+  if (!email || String(v1Accounts[email].praktijk || V1_PRAKTIJK).toLowerCase() !== pk) return false;
+  try {
+    const u = new URL(req.headers.referer);
+    return u.origin === instelBasis(req) && (u.pathname === "/" || u.pathname === "/index.html");
+  } catch { return false; }
+}
+function praktijkProefVerlopen(pk, req) {
+  if (v1BijPilot(req, pk)) return false;
   const k = pk && Object.hasOwn(praktijkAccounts, pk) ? (praktijkAccounts[pk].proef || pilotVan(pk)) : null;
   if (!k) return false;
   const p = Object.hasOwn(proeven, String(k.id)) ? proeven[String(k.id)] : null;
@@ -1509,7 +1522,7 @@ const PROEF_SCHRIJFROUTES = new Set(["/api/kaarten", "/api/praktijk/oefeningen",
 function proefSlotVoor(req, urlPath) {
   if (req.method !== "POST" || !PROEF_SCHRIJFROUTES.has(urlPath)) return false;
   if (beheerEigen(req)) return false;
-  return proefVerlopen(proefVan(req)) || praktijkProefVerlopen(praktijkSessieVan(req));
+  return proefVerlopen(proefVan(req)) || praktijkProefVerlopen(praktijkSessieVan(req), req);
 }
 // Een nieuwe praktijk beveiligen (en daarmee kaarten delen) kan alleen vanuit een lopende
 // proef of als klant. Zonder deze poort kon iedereen /v2/app openen, een nieuwe praktijknaam
@@ -4540,7 +4553,7 @@ async function afhandelen(request, response) {
       akkoord: ingelogd ? { ...akkoordStatus(praktijkAccounts[eigen]), beheer: isBeheer(sessieVan(request)) } : undefined,
       // verlopen proef (dit apparaat of de ingelogde praktijk): de app toont het meteen bij
       // het laden, niet pas na de eerste geweigerde opslag (gebruikers-sweep, tweede apparaat)
-      proefVerlopen: proefVerlopen(proefVan(request)) || (ingelogd && praktijkProefVerlopen(eigen)) || undefined,
+      proefVerlopen: proefVerlopen(proefVan(request)) || (ingelogd && praktijkProefVerlopen(eigen, request)) || undefined,
       // lopende proef van de ingelogde praktijk (zelfde velden als /v2/app meegeeft aan een tweede
       // apparaat of collega): na het inloggen toont de app de proefbalk meteen, niet pas na herladen
       // (gebruikers-sweep 2026-11-13, Mark). Alleen einddatum en praktijknaam, geen aanmeldgegevens.
@@ -6718,7 +6731,7 @@ async function afhandelen(request, response) {
       // praktijk: van wie deze opname is. Alleen díé praktijk mag het pad daarna op een
       // eigen kaart zetten (zie eigenVideoPad bij POST /api/kaarten)
       opnames.set(token, { doel, naam: doel === "oefening" ? b.naam : null, made: Date.now(), video: null,
-        praktijk: praktijkSessie || null, proef: proefVan(request)?.id || null });
+        praktijk: praktijkSessie || null, pilotV1: v1BijPilot(request, praktijkSessie), proef: proefVan(request)?.id || null });
       await sendJson(response, 200, { ok: true, token });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." });
@@ -6789,7 +6802,7 @@ async function afhandelen(request, response) {
     // praktijk het is. Verloopt die proef terwijl de QR nog openstaat, dan schrijft ook
     // deze route niets meer weg (zelfde slot als PROEF_SCHRIJFROUTES).
     const opnameProef = o.proef && Object.hasOwn(proeven, o.proef) ? proeven[o.proef] : null;
-    if (proefVerlopen(opnameProef) || praktijkProefVerlopen(o.praktijk)) {
+    if (proefVerlopen(opnameProef) || (!o.pilotV1 && praktijkProefVerlopen(o.praktijk))) {
       opnames.delete(token);
       await sendJson(response, 403, { ok: false, proefVerlopen: true, fout: "De gratis proef van deze praktijk is voorbij. Opnemen kan niet meer." });
       return;
@@ -7793,7 +7806,7 @@ async function afhandelen(request, response) {
         kaart.gearchiveerd = true;
       } else { delete kaart.gearchiveerd; delete kaart.gearchiveerdOp; }
       const proefVoorbij = !beheerEigen(request) &&
-        (proefVerlopen(proefVan(request)) || praktijkProefVerlopen(pk));
+        (proefVerlopen(proefVan(request)) || praktijkProefVerlopen(pk, request));
       if (proefVoorbij && verlooptOp(kaart) > verlooptVoor) {
         for (const [veld, waarde] of Object.entries(voorArchief)) { if (waarde === undefined) delete kaart[veld]; else kaart[veld] = waarde; }
         await sendJson(response, 403, { ok: false, proefVerlopen: true,

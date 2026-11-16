@@ -29,9 +29,10 @@ try {
     try {
       for(let i=0;i<150;i++){if(await fetch(url+"/health").then(r=>r.ok,()=>false))break;await wacht(100);}
       if(verlopen){for(let i=0;i<100&&(await lees("proef-aanmeldingen"))[id];i++)await wacht(100);assert.ok(!(await lees("proef-aanmeldingen"))[id]);}
+      let sessieV2;
       for(let i=0;i<2;i++){
         const login=await post("/api/praktijk/login",{praktijk:"FysioTotaal",wachtwoord},i?{}:{cookie:"fpproef="+token});
-        assert.equal(login.status,200);const {sessie}=await login.json();assert.ok(sessie);
+        assert.equal(login.status,200);const {sessie}=await login.json();assert.ok(sessie); sessieV2=sessie;
         const headers={"x-praktijk-sessie":sessie};
         const status=await (await fetch(url+"/api/praktijk/status?praktijk=FysioTotaal",{headers})).json();
         const schrijven=await post("/api/praktijk/sjablonen",{praktijk:"FysioTotaal",naam:"Pilottest "+i,oefeningen:[{n:"Pendel"}]},headers);
@@ -40,6 +41,14 @@ try {
       }
       const login1=await post("/api/v1/login",{email,wachtwoord});assert.equal(login1.status,200);
       const page=await fetch(url+"/",{headers:{cookie:login1.headers.get("set-cookie").split(";")[0]}});
+      const gemengd={"x-praktijk-sessie":sessieV2,cookie:login1.headers.get("set-cookie").split(";")[0]};
+      const sjabloon={praktijk:"FysioTotaal",naam:"V1 samen "+verlopen,oefeningen:[{n:"Pendel"}]};
+      const schrijvenV1=await post("/api/praktijk/sjablonen",sjabloon,{...gemengd,referer:url+"/"});
+      assert.equal(schrijvenV1.status,200,await schrijvenV1.clone().text());
+      if(verlopen){
+        const v2=await post("/api/praktijk/sjablonen",sjabloon,{...gemengd,referer:url+"/v2/app"});
+        assert.equal(v2.status,403);assert.equal((await v2.json()).proefVerlopen,true);
+      }
       assert.ok(page.ok);assert.doesNotMatch(await page.text(),/<title>Fysiplan — inloggen/);
       assert.deepEqual((await lees("kaarten"))[pk],kaarten);assert.deepEqual((await lees("praktijk-accounts"))[pk],account);assert.deepEqual(await lees("v1-accounts"),v1);
     }finally{app.kill();await exit;}
