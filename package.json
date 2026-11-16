@@ -189,6 +189,7 @@
     "test:houdingengroot": "node scripts/test-kaart-houdingen-groot.mjs",
     "test:spronglinks": "node scripts/test-app-sprong-links.mjs",
     "test:loginanderepraktijk": "node scripts/test-login-andere-praktijk.mjs",
+    "test:logintijd": "node scripts/test-login-tijd.mjs",
     "test:opnamegeencamera": "node scripts/test-opname-geen-camera.mjs",
     "test:agendadubbel": "node scripts/test-kaart-agenda-dubbel.mjs",
     "test:proeftweedeapparaat": "node scripts/test-sweep-proef-tweede-apparaat.mjs",

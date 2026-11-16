@@ -47,6 +47,7 @@ jobs:
       - run: npm run test:houdingengroot
       - run: npm run test:spronglinks
       - run: npm run test:loginanderepraktijk
+      - run: npm run test:logintijd
       - run: npm run test:agendadubbel
       - run: npm run test:offline
       - run: npm run test:tablet
