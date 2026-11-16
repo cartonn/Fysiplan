@@ -3015,6 +3015,15 @@ function kaartMisLimiet(req, res) {
   }
   return false;
 }
+// Wie de rem al raakte, krijgt ook bij een bestaand id een 429: anders betekent 429 "mis"
+// en 200 "raak", en houdt de rem doorraden niet tegen (gebruikers-sweep 2026-11-15 22u).
+// Alleen voor routes waar het id de enige sleutel is; de teller zelf loopt hier niet op.
+function kaartRadenGeblokt(req, res) {
+  const t = kaartMisTeller.get(ipSleutel(req));
+  if (!t || Date.now() - t.start > 5 * 60 * 1000 || t.n <= 30) return false;
+  send429(res, 300, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
+  return true;
+}
 
 // ---- AI-hulp (v2): zoekhulp, vraaghulp en vertalingen via de Claude-API ----
 // Werkt alleen als de eigenaar ANTHROPIC_API_KEY op de server heeft ingesteld;
@@ -3951,7 +3960,7 @@ ideeenbox.start();
 // de patiëntkant (lib/patient-routes.js); pas bij het eerste verzoek gemaakt, als alles hierboven bestaat
 let patientkant = null;
 const patientkantVan = () => patientkant || (patientkant = maakPatientkant({
-  sendJson, readBody, schrijfLimiet, kruisSite, weigerKruis, vindKaart, idTekst, kaartMisLimiet, verbodenSleutel,
+  sendJson, readBody, schrijfLimiet, kruisSite, weigerKruis, vindKaart, idTekst, kaartMisLimiet, kaartRadenGeblokt, verbodenSleutel,
   zetDagWaarde, tikMoment, tikBuitenBereik, tikVeld, nlDag, logContact, zetSeintje, seinVoorPatient, seinOpen, SEIN_GEWICHT, seinMailKan, kaartSleutel, seinMailRonde,
   bewaarKaarten: () => saveJson(kaartenPath, kaarten),
   telDag: (naam) => { const x = dagStats(vandaagKey()); x[naam] = (x[naam] || 0) + 1; bewaarStats(); }
@@ -7346,6 +7355,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/kaart" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    if (kaartRadenGeblokt(request, response)) return;
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const fpk = kaartSleutel(found);
@@ -7673,6 +7683,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/kaart/afspraak.ics" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    if (kaartRadenGeblokt(request, response)) return;
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     if (!found.afspraak || !found.afspraak.t) { await sendJson(response, 404, { ok: false, fout: "Er staat geen afspraak op deze kaart." }); return; }
@@ -7874,6 +7885,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/kaart/agenda" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    if (kaartRadenGeblokt(request, response)) return;
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const volgorde = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
@@ -8003,6 +8015,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/kaart/vertaal" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    if (kaartRadenGeblokt(request, response)) return;
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const TALEN = VERTAAL_TALEN;
@@ -8086,6 +8099,7 @@ async function afhandelen(request, response) {
     try { b = JSON.parse(await readBody(request)); } catch { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); return; }
     if (!b || typeof b !== "object" || Array.isArray(b)) { await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek." }); return; }
     try {
+      if (kaartRadenGeblokt(request, response)) return;
       const found = vindKaart(idTekst(b.id));
       if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
       const vraag = String(b.vraag || "").trim().slice(0, 300);
@@ -8142,6 +8156,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/kaart/manifest" && request.method === "GET") {
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
+    if (kaartRadenGeblokt(request, response)) return;
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     response.setHeader("x-robots-tag", "noindex, noarchive");

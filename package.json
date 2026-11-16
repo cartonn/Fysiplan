@@ -191,6 +191,7 @@
     "test:spronglinks": "node scripts/test-app-sprong-links.mjs",
     "test:loginanderepraktijk": "node scripts/test-login-andere-praktijk.mjs",
     "test:logintijd": "node scripts/test-login-tijd.mjs",
+    "test:kaartraden": "node scripts/test-kaart-raden.mjs",
     "test:opnamegeencamera": "node scripts/test-opname-geen-camera.mjs",
     "test:opnamegalerij": "node scripts/test-opname-galerij-camera.mjs",
     "test:sjabloonipad": "node scripts/test-sjabloon-ipad.mjs",
