@@ -108,7 +108,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-15";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-15";
+const AV_VERSIE = "2026-11-16";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-16-3";
@@ -140,7 +140,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-14", tekst: "Gegevens: de overeenkomst noemt nu ook de medewerkers van je praktijk (wie een kaart maakte, opende of bewaarde, en Activiteit). Bewaartermijn: een eigen video of foto gaat weg met de kaart; een opname die op geen kaart komt, na 4 uur." },
   { stuk: "av", versie: "2026-11-14-2", tekst: "Verduidelijking: artikel 2 zegt welke delen van Fysiplan met AI zijn gemaakt of met AI werken (video's, stem, vertaling, zoekhulp). AI zet nooit zelf een oefening of dosering op een kaart; dat doe je zelf." },
   { stuk: "av", versie: "2026-11-15", tekst: "Verduidelijking: akkoord geven, betalen, opzeggen en alle gegevens downloaden of wissen doet een beheerder van je praktijk. Probeert een collega zonder die rol het, dan zie je dat onder Activiteit." },
-  { stuk: "vwo", versie: "2026-11-15", tekst: "Beveiliging: naast de eigen beheerlogins met een tweede stap staat op de server één noodsleutel zonder tweede stap, voor het eerste account en als niemand meer kan inloggen. Wat daarmee gebeurt, staat in het beheerlogboek als \"beheersleutel\", niet op naam." }
+  { stuk: "vwo", versie: "2026-11-15", tekst: "Beveiliging: naast de eigen beheerlogins met een tweede stap staat op de server één noodsleutel zonder tweede stap, voor het eerste account en als niemand meer kan inloggen. Wat daarmee gebeurt, staat in het beheerlogboek als \"beheersleutel\", niet op naam." },
+  { stuk: "av", versie: "2026-11-16", tekst: "Verduidelijking: een nieuwe maand is voor het aantal logins van dat moment, of voor het hoogste aantal in de maand daarvoor als dat hoger was. Tijdens een maand rekenen we niets bij en geven we niets terug." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {

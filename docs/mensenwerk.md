@@ -4,6 +4,14 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Voorwaarden 2026-11-16: hoe het aantal therapeuten telt, en de V2-pilot (legal, 2026-11-16 13u)
+Art. 4 zegt nu wat de server al deed: een nieuwe maand is voor de logins van dat moment, of voor het hoogste aantal in de
+maand ervoor als dat hoger was; tussentijds wordt niets verrekend. Een beheerder ziet dit bij het volgende akkoord in de app.
+Er zijn nog geen betalende praktijken, dus niemand gaat er nu op achteruit. Iets anders om te weten: de V2-pilot van de
+bestaande V1-praktijk (`V2_BESTAANDE_PILOT`, #352) wordt na de proef niet gewist, terwijl art. 3 voor een proef zegt "word je
+geen klant, dan wissen we alles". Dat klopt alleen als je met die praktijk apart (bij voorkeur schriftelijk, in een mail) hebt
+afgesproken dat haar bestaande gegevens blijven. Wat moet je doen: bevestig dat die afspraak er is; anders laat het weten.
+
 ### Mails en bellen tijdens de proef (legal, 2026-11-16 09u)
 /privacy zei dat Fysiplan iemand met een proef "één keer" benadert. In werkelijkheid komt er een herinnering voor het einde, met
 `PROEF_STARTTIP=aan` ook een starttip op dag 3, en kun jij bellen. De tekst zegt dat nu eerlijk. Voor de jurist: zijn de mails over

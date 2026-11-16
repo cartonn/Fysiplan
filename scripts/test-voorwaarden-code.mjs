@@ -16,6 +16,7 @@ import { join } from "node:path";
 import { KAARTEN_PROEF, KAARTEN_PER_LOGIN } from "../lib/plaatsen.js";
 import { readFileSync } from "node:fs";
 const serverBron = readFileSync(new URL("../server.js", import.meta.url), "utf8");
+const plaatsenBron = readFileSync(new URL("../lib/plaatsen.js", import.meta.url), "utf8");
 
 const tekst = (html) => html.replace(/<style[\s\S]*?<\/style>|<head[\s\S]*?<\/head>/g, "").replace(/<[^>]+>/g, " ")
   .replace(/&euml;/g, "ë").replace(/&[a-z]+;/g, " ").replace(/\s+/g, " ");
@@ -73,6 +74,14 @@ await metServer(null, async (haal) => {
     assert.match(av, /Opzeggen doet een beheerder van je praktijk/, "art. 5: alleen een beheerder zegt op");
     assert.match(av, /Een beheerder van je praktijk regelt namens de praktijk[^.]*akkoord[^.]*betalen[^.]*opzeggen[^.]*downloaden of wissen/, "art. 6: wat alleen een beheerder doet");
     assert.match(av, /onder Activiteit/, "art. 6: een poging van een collega staat in Activiteit");
+  }
+  // Legal 2026-11-16 13u (c): sinds #245 is een nieuwe maand voor het hoogste aantal logins van de
+  // maand ervoor (lib/plaatsen.js, piek; de server kijkt elk uur), en tussentijds wordt niets
+  // bijgeschreven of teruggegeven. Art. 4 zei alleen "elke login telt als één therapeut".
+  if (/export function merkPiek/.test(plaatsenBron)) {
+    assert.match(av, /Een uitnodiging die nog niet is aangenomen, telt niet/, "art. 4: open uitnodiging telt niet");
+    assert.match(av, /of voor het hoogste aantal in de maand daarvoor als dat hoger was/, "art. 4 noemt de piek van de maand ervoor");
+    assert.match(av, /Tijdens een maand rekenen we niets bij en geven we niets terug/, "art. 4: niets tussentijds");
   }
   const akkoord = serverBron.match(/const AKKOORD_WIJZIGINGEN = \[[\s\S]*?\n\];/)[0];
   const avVersie = serverBron.match(/const AV_VERSIE = "([^"]+)"/)[1];
