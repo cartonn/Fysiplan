@@ -147,6 +147,7 @@ jobs:
       - run: npm run test:afspraaktijdzone
       - run: npm run test:teamweigering
       - run: npm run test:focusterugvenster
+      - run: npm run test:naamenbestand
       - run: npm run test:lightbox
       - run: npm run test:afspraakproef
       - run: npm run test:praktijknaamlogin

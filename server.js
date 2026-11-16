@@ -7898,7 +7898,10 @@ async function afhandelen(request, response) {
       "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsTekst(taalT.alarm), "TRIGGER:-PT0M", "END:VALARM",
       "END:VEVENT", "END:VCALENDAR", ""
     ].join("\r\n");
-    response.setHeader("content-disposition", 'attachment; filename="oefenmomenten.ics"');
+    // bestandsnaam in de taal van de kaart, net als afspraak.ics (een Engelse kaart gaf "oefenmomenten.ics"; sweep 2026-11-16, Jayden)
+    const OEFEN_ICS_NAAM = { en: "exercise-reminders", de: "uebungszeiten", fr: "rappels-exercices", es: "recordatorios-ejercicios", pl: "przypomnienia-cwiczen", tr: "egzersiz-hatirlatici", uk: "nahaduvannia-vpravy", ar: "tamarin" };
+    const oefenIcsNaam = (Object.hasOwn(OEFEN_ICS_NAAM, taalQ) && OEFEN_ICS_NAAM[taalQ]) || "oefenmomenten";
+    response.setHeader("content-disposition", 'attachment; filename="' + oefenIcsNaam + '.ics"');
     response.setHeader("x-robots-tag", "noindex, noarchive");
     await send(response, 200, "text/calendar; charset=utf-8", ics);
     return;

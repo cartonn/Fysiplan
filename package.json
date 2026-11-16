@@ -133,6 +133,7 @@
     "test:afspraaktijdzone": "node scripts/test-sweep-afspraak-tijdzone.mjs",
     "test:teamweigering": "node scripts/test-sweep-team-weigering.mjs",
     "test:focusterugvenster": "node scripts/test-sweep-focus-terug-venster.mjs",
+    "test:naamenbestand": "node scripts/test-sweep-naam-en-bestand.mjs",
     "test:lightbox": "node scripts/test-sweep-lightbox-proefvenster.mjs",
     "test:afspraakproef": "node scripts/test-sweep-afspraak-proef-voorbij.mjs",
     "test:praktijknaamlogin": "node scripts/test-sweep-praktijknaam-login.mjs",

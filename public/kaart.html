@@ -2478,6 +2478,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function downloadMijnGegevens(){
     var lokaal={done:leesOefDaan().done,zwaar:leesZwaar().idx,wacht:leesWacht()};
     var mt=TMGD[TAAL]?TAAL:'en';
+    // bestandsnaam in de taal van de download (sweep 2026-11-16, Jayden: een Engelse kaart gaf "fysiplan-mijn-gegevens.txt")
+    function mgBestand(t){return 'fysiplan-'+({nl:'mijn-gegevens',en:'my-data',de:'meine-daten',fr:'mes-donnees',es:'mis-datos',pl:'moje-dane',tr:'verilerim',uk:'moi-dani',ar:'my-data'}[t]||'my-data')+'.txt';}
     var loc={nl:'nl-NL',de:'de-DE',fr:'fr-FR',es:'es-ES',pl:'pl-PL',tr:'tr-TR',ar:'ar-u-nu-latn',uk:'uk-UA'}[mt]||'en-GB';
     var tekst=mgTekst(K.kaart,(K.praktijk&&K.praktijk.praktijk)||K.kaart.praktijk||'',lokaal,mt,{
       datum:function(t){return new Date(t).toLocaleDateString(loc,{day:'numeric',month:'long',year:'numeric',timeZone:'Europe/Amsterdam'});},
@@ -2485,7 +2487,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       naam:function(x){return TAAL==='nl'?String(x.n||''):vt(x.n);},
       sleutel:function(x){return cellPrefix(x)+'.'+(x.i||0);}});
     var blob=new Blob(['﻿'+tekst],{type:'text/plain;charset=utf-8'});
-    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='fysiplan-mijn-gegevens.txt';
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=mgBestand(mt);
     document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);
   }
   // Legal 2026-11-07: "Wis deze kaart van mijn telefoon" wist alles wat bij deze kaart
@@ -3913,7 +3915,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     document.getElementById('agbtn').addEventListener('click',function(){
       var gekozen=[];
       document.querySelectorAll('#agdagen button.aan').forEach(function(b){gekozen.push(b.dataset.dag);});
-      if(!gekozen.length){alert(tr('agleeg'));return;}
+      // een oude foutmelding ("lukte nu niet") hoort niet te blijven staan naast de nieuwe uitleg (sweep 2026-11-16, Jayden)
+      if(!gekozen.length){var oudM=this.parentNode.querySelector('.agmelding');if(oudM)oudM.remove();alert(tr('agleeg'));return;}
       var tijd=document.getElementById('agtijd').value||'09:00';
       naarAgenda('/api/kaart/agenda?id='+encodeURIComponent(id)+'&dagen='+gekozen.join(',')+'&tijd='+encodeURIComponent(tijd)+'&taal='+encodeURIComponent(TAAL),this,false);
     });
