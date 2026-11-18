@@ -303,6 +303,16 @@ versie, wanneer en wie (ook in de download van /v2/gegevens).
 3. Laat de jurist privacyverklaring, verwerkersovereenkomst en voorwaarden samen toetsen (staat al
    hieronder bij Algemene voorwaarden, punt 7).
 
+### Factuuroverzicht op Mijn abonnement (praktijk-routine, 2026-11-18)
+**Wat de code nu doet:** Mijn abonnement (fysiplan.nl/v2/proef?mijn=1) toonde de facturen als één link plus een rij losse
+nummers ("Latere maanden: FP-…, FP-…"). Nu staat er een tabel "Facturen" (of "Betaalbewijzen" zolang de btw-gegevens van
+Fysiplan ontbreken): per betaling het nummer met link, de betaaldatum, de periode, het aantal therapeuten en het bedrag,
+nieuwste bovenaan. Zo pakt een praktijkhouder of boekhouder in één keer de juiste factuur. Een betaling waarvoor nog geen
+nummer is uitgegeven toont "volgt". Code: `factuurRegels` en `factuurOverzichtHtml` in `lib/factuur.js`, test
+`scripts/test-factuuroverzicht.mjs` (in `npm run test:abonnement`).
+**Env:** geen eigen schakelaar; het overzicht verschijnt alleen bij een praktijk die online betaalde, dus pas met `MOLLIE_API_KEY`.
+**Wat jij moet doen:** niets extra; dit hoort bij het aanzetten van Mollie (zie Factuur per online betaling hieronder).
+
 ### Starttip op dag 3 voor een proef zonder kaart (praktijk-routine, 2026-11-16)
 **Wat de code nu doet:** niets, tot jij hem aanzet. Met `PROEF_STARTTIP=aan` krijgt een proef die na 3 dagen nog geen
 enkele kaart met een patiënt deelde één mail "Je eerste Fysiplan-kaart in een paar minuten": drie stappen (app openen,
