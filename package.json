@@ -124,6 +124,7 @@
     "test:hernoemvolledig": "node scripts/test-sweep-hernoem-volledig.mjs",
     "test:opnamedubbel": "node scripts/test-sweep-opname-dubbelklik.mjs",
     "test:offlinescore": "node scripts/test-sweep-offline-score.mjs",
+    "test:offlinekopie": "node scripts/test-sweep-offline-kopie.mjs",
     "test:teamrolbevestig": "node scripts/test-sweep-team-rol-bevestig.mjs",
     "test:dubbeltik": "node scripts/test-sweep-dubbeltik-breedte.mjs",
     "test:kaartroutes": "node scripts/test-kaart-praktijkroutes.mjs",
