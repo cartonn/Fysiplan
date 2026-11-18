@@ -17,6 +17,10 @@ Er zijn nog geen betalende praktijken, dus niemand gaat er nu op achteruit. Iets
 bestaande V1-praktijk (`V2_BESTAANDE_PILOT`, #352) wordt na de proef niet gewist, terwijl art. 3 voor een proef zegt "word je
 geen klant, dan wissen we alles". Dat klopt alleen als je met die praktijk apart (bij voorkeur schriftelijk, in een mail) hebt
 afgesproken dat haar bestaande gegevens blijven. Wat moet je doen: bevestig dat die afspraak er is; anders laat het weten.
+**Update legal 2026-11-18 21u:** voorwaarden art. 3, verwerkersovereenkomst art. 10 en /privacy#einde noemen deze uitzondering nu
+zelf (een bestaande praktijk die de nieuwe app als pilot probeert: alleen de proefaanmelding gaat weg). De tekst klopt dus met de
+code. De vraag hierboven blijft: is die afspraak met de praktijk er? Zo niet, dan moet de code de pilot wél wissen of moet je het
+alsnog met haar afspreken.
 
 ### Mails en bellen tijdens de proef (legal, 2026-11-16 09u)
 /privacy zei dat Fysiplan iemand met een proef "één keer" benadert. In werkelijkheid komt er een herinnering voor het einde, met
