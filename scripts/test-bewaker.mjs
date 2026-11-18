@@ -559,7 +559,8 @@ try {
 
   // de server hangt de tellers aan elk antwoord en telt ook wat niemand opving
   const bron = await readFile(join(root, "server.js"), "utf8");
-  assert.match(bron, /const server = createServer\(\(request, response\) => \{\n\s*\/\/[^\n]*\n\s*telAntwoord\(response, \{ server: serverFouten, buiten: buitenFouten \}\);/, "elk antwoord gaat langs de tellers");
+  // createServer kan opties meekrijgen (koptimeout tegen slowloris); de handler telt nog altijd elk antwoord
+  assert.match(bron, /const server = createServer\([\s\S]*?\(request, response\) => \{\n\s*\/\/[^\n]*\n\s*telAntwoord\(response, \{ server: serverFouten, buiten: buitenFouten \}\);/, "elk antwoord gaat langs de tellers");
   assert.match(bron, /if \(response\.statusCode !== 500\) serverFouten\.tel\(\);/, "een verzoek dat na het antwoord stukloopt, telt ook");
   assert.match(bron, /process\.on\("uncaughtException", \(err\) => \{ serverFouten\.tel\(\);/);
   assert.match(bron, /process\.on\("unhandledRejection", \(err\) => \{ serverFouten\.tel\(\);/);
