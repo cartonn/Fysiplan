@@ -1629,6 +1629,15 @@ async function praktijkAllesWissen(pk) {
   // profiel onder die naam dat niemand anders geclaimd heeft
   const eigenProfiel = ([k, p]) => k === pk || (!isPraktijkCode(pk) && !praktijkGeclaimd(k) && String(p && p.praktijk || "").toLowerCase() === pk);
   const wegVids = Object.values(kaarten[pk] || {}).flatMap((k) => Object.values(k.vids || {}));
+  // Opnames van de praktijk die nog op geen kaart staan (tot 4 uur in `opnames`): het token gaat
+  // weg en de video mee. Zonder dit bleef zo'n opname (er kan een patiënt op staan) na "Alles
+  // wissen" nog uren op de schijf, en kon een telefoon met de QR nog een video naar een gewiste
+  // praktijk sturen (security 2026-11-18 20u). Een upload die nu loopt, ruimt zichzelf op.
+  for (const [t, o] of opnames) {
+    if (o.praktijk !== pk) continue;
+    opnames.delete(t);
+    if (o.video) wegVids.push(o.video);
+  }
   const aantalKaarten = Object.keys(kaarten[pk] || {}).length;
   delete kaarten[pk];
   await saveJson(kaartenPath, kaarten);
@@ -6946,6 +6955,13 @@ async function afhandelen(request, response) {
       // die gaan er vóór het bewaren uit (lib/video-locatie.js, /privacy#opnames)
       if (o.doel === "kaart" && ext === ".mp4") wisVideoLocatie(buf);
       await writeFile(join(dataDir, pad), buf);
+      // de praktijk is tijdens het uploaden gewist (praktijkAllesWissen haalde het token weg):
+      // de net geschreven video hoort bij niemand meer
+      if (opnames.get(token) !== o) {
+        try { await unlink(join(dataDir, pad)); } catch {}
+        await sendJson(response, 404, { ok: false, fout: "Opname verlopen of al afgerond. Scan de QR-code opnieuw." });
+        return;
+      }
       videoOpslag.bytes += buf.length;
       if (o.doel === "oefening" && o.naam) {
         // de oefening kan sinds het starten van de opname anders heten, en haar video kan nog
