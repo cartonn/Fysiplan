@@ -792,6 +792,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   <p class="datum" id="vandaag"></p>
   <h2><span id="oefkop">Jouw oefeningen</span> <span class="tel" id="oeftel"></span></h2>
   <div class="client" id="clientblok" style="display:none"></div>
+  <p class="nietvertaald" id="deelsNl" role="note" hidden></p>
   <div class="oefvoortgang" id="oefvoortgang" style="display:none"><span class="ovbalk" aria-hidden="true"><i id="ovvul"></i></span><span class="ovtekst" id="ovtekst" role="status" tabindex="-1"></span></div>
   <button type="button" class="kn1" id="startknop" style="display:none"></button>
   <div class="leesrij">
@@ -1690,6 +1691,12 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // uitleg die in een andere taal dan Nederlands nog geen vertaling heeft
   function uitlegNietVertaald(s){return !!s&&TAAL!=='nl'&&vt(s)===s;}
   var NIET_VERTAALD={nl:'',en:'This explanation is not available in English yet, so it is shown in Dutch.',de:'Diese Anleitung gibt es noch nicht auf Deutsch, darum steht sie auf Niederländisch da.',fr:'Cette explication n’est pas encore traduite, elle est donc affichée en néerlandais.',es:'Esta explicación aún no está traducida, por eso aparece en neerlandés.',pl:'Ten opis nie jest jeszcze przetłumaczony, dlatego jest po niderlandzku.',tr:'Bu açıklama henüz çevrilmedi, bu yüzden Felemenkçe gösteriliyor.',ar:'هذا الشرح غير مترجم بعد، لذلك يظهر باللغة الهولندية.',uk:'Цей опис ще не перекладено, тому він показаний нідерландською.'};
+  // Mislukt de vertaling (geen dienst, storing), dan stond in het overzicht een Engelse kaart met
+  // Nederlandse oefennamen zonder enige uitleg (gebruikers-sweep 2026-11-18, Jayden). Eén melding
+  // bovenaan de oefeningen; de namen zelf krijgen lang="nl" voor de voorleesstem.
+  var DEELS_NL={nl:'',en:'Part of this card is not available in English yet, so it is shown in Dutch.',de:'Ein Teil dieser Karte ist noch nicht auf Deutsch verfügbar und steht darum auf Niederländisch da.',fr:'Une partie de cette carte n’est pas encore traduite, elle est donc affichée en néerlandais.',es:'Parte de esta tarjeta aún no está traducida, por eso aparece en neerlandés.',pl:'Część tej karty nie jest jeszcze przetłumaczona, dlatego jest po niderlandzku.',tr:'Bu kartın bir kısmı henüz çevrilmedi, bu yüzden Felemenkçe gösteriliyor.',ar:'جزء من هذه البطاقة غير مترجم بعد، لذلك يظهر باللغة الهولندية.',uk:'Частину цієї картки ще не перекладено, тому вона показана нідерландською.'};
+  function naamNietVertaald(s){var m=VERT[TAAL];return !!s&&TAAL!=='nl'&&!(m&&Object.prototype.hasOwnProperty.call(m,s));}
+  function nlAttr(s){return naamNietVertaald(s)?' lang="nl"':'';}
   function nietVertaaldNoot(){
     var n=document.createElement('div');n.className='nietvertaald';n.setAttribute('role','note');
     n.textContent=NIET_VERTAALD[TAAL]||NIET_VERTAALD.en;return n;
@@ -1722,9 +1729,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function oefUitlegBlok(o,gehouden){
     if(gehouden||!o||!o.uitleg)return '';
     var nl=uitlegNietVertaald(o.uitleg);
+    // de melding vóór de Nederlandse tekst: eronder viel hij op een telefoon onder de vouw (sweep 2026-11-18, Jayden)
     return '<div class="oefuitleg"><h3>'+esc(ZO_DOE[TAAL]||ZO_DOE.nl)+'</h3>'+
-      uitlegZinnen(vt(o.uitleg)).map(function(z){return '<p dir="auto"'+(nl?' lang="nl"':'')+'>'+esc(z)+'</p>';}).join('')+
       (nl?'<div class="nietvertaald" role="note">'+esc(NIET_VERTAALD[TAAL]||NIET_VERTAALD.en)+'</div>':'')+
+      uitlegZinnen(vt(o.uitleg)).map(function(z){return '<p dir="auto"'+(nl?' lang="nl"':'')+'>'+esc(z)+'</p>';}).join('')+
       vertaalNootHtml(o.uitleg)+'</div>';
   }
   // Uitwijklink onder een ingesloten YouTube-video. Dit herstelt de ingesloten speler niet:
@@ -1858,8 +1866,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         var re=new RegExp('^\\s*'+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*[:\u2013-]\\s*','i');
         var r=t.replace(re,'');if(r!==t&&r.trim())return r;}
       return t;};
-    if(cl.c_doel)regels.push('<div class="rij"><b>'+esc(tr('doel'))+'</b><span>'+esc(zonderLabel(vt(cl.c_doel),[tr('doel'),'Doel']))+'</span></div>');
-    if(cl.c_opm)regels.push('<div class="rij"><b>'+esc(tr('letop'))+'</b><span>'+esc(zonderLabel(vt(cl.c_opm),[tr('letop'),'Let op']))+'</span></div>');
+    if(cl.c_doel)regels.push('<div class="rij"><b>'+esc(tr('doel'))+'</b><span'+(TAAL!=='nl'?' lang="nl" dir="auto"':'')+'>'+esc(zonderLabel(vt(cl.c_doel),[tr('doel'),'Doel']))+'</span></div>');
+    if(cl.c_opm)regels.push('<div class="rij"><b>'+esc(tr('letop'))+'</b><span'+(TAAL!=='nl'?' lang="nl" dir="auto"':'')+'>'+esc(zonderLabel(vt(cl.c_opm),[tr('letop'),'Let op']))+'</span></div>');
     var cb=document.getElementById('clientblok');
     if(regels.length){cb.innerHTML=regels.join('');cb.style.display='flex';}else cb.style.display='none';
 
@@ -1867,6 +1875,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var vids=kaart.vids||{};
     var chosen=kaart.chosen||[];
     document.getElementById('oeftel').textContent=chosen.length;
+    var deelsNl=document.getElementById('deelsNl');
+    if(deelsNl){var nlDeel=chosen.some(function(x){return naamNietVertaald(x.n);});
+      deelsNl.textContent=nlDeel?(DEELS_NL[TAAL]||DEELS_NL.en):'';deelsNl.hidden=!nlDeel;}
     var html='',teControleren=[];
     chosen.forEach(function(x,idx){
       var nk=normEx(x.n);
@@ -1953,7 +1964,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         (o&&!hideMedia&&beeldpad?'<button type="button" class="fotoknop" aria-label="'+fotoLabel+'"><img src="'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
           '" data-h="'+esc(eersteH)+'" data-audio-naam="'+esc(o.naam)+'" data-oef-id="'+esc(o.exerciseId||'')+'" data-pose="'+esc(mediaKey(o))+'" data-uitleg="'+esc(holdExplanation?'':(o.uitleg||''))+'" data-heeft-video="'+(heeftVideo?'1':'0')+'"/>'+
           badge+'</button>':'<span class="geenfoto" aria-hidden="true"></span>')+
-        '<div class="oefinfo"><div class="naam" dir="auto">'+esc(vt(x.n))+'</div>'+
+        '<div class="oefinfo"><div class="naam" dir="auto"'+nlAttr(x.n)+'>'+esc(vt(x.n))+'</div>'+
         (chips?'<div class="dosis">'+kort+'</div><div class="chips">'+chips+'</div>':'')+'</div></div>'+
         knop+'<div class="vhouder"></div>'+
         (hideMedia?'<p class="vmeta">'+esc(tr('holdBeeld'))+'</p>':'')+
@@ -1981,7 +1992,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var schemaEl=document.getElementById('schema');
     if(gevuld.length){
       var t='<details class="rustblok schemablok"><summary><h2>'+esc(tr('schemakop'))+'</h2></summary><div class="schemakaart"><div class="schemawrap"><table><thead><tr><th class="dat">'+esc(tr('datum'))+'</th>';
-      chosen.forEach(function(x,idx){t+='<th colspan="3" dir="auto">'+(idx+1)+'. '+esc(vt(x.n))+'</th>';});
+      chosen.forEach(function(x,idx){t+='<th colspan="3" dir="auto"'+nlAttr(x.n)+'>'+(idx+1)+'. '+esc(vt(x.n))+'</th>';});
       t+='</tr><tr><th class="dat"></th>';
       chosen.forEach(function(){t+='<th>S</th><th>H</th><th>W</th>';});
       t+='</tr></thead><tbody>';
@@ -2249,7 +2260,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var n=Object.keys(leesWacht()).length;
     // alles verstuurd: de meldingen "Opgeslagen op je telefoon…" onder pijnscore en seintjes
     // kloppen dan niet meer (gebruikers-sweep 2026-11-10, Truus)
-    if(!n&&klaar)document.querySelectorAll('.mdank.wacht,.sdank.wacht').forEach(function(d){d.classList.remove('wacht');d.textContent='';d.style.display='none';});
+    // De uitkomst staat ook op de plek van de tik: bovenaan alleen viel hij bij 200 % tekst 7 tot 11 schermen
+    // boven de pijnschaal en de seintjes (gebruikers-sweep 2026-11-18, Truus); daar verdween alleen de melding.
+    if(!n&&klaar)wachtSlotten(trw('ok'),'');
     if(document.querySelector('#oefs .oefzwaar.wacht'))tekenZwaar();
     if(WACHT_OUD&&!n){el.className='wachtrij';el.textContent=trw('oud').replace('{n}',WACHT_OUD);el.style.display='block';return;}
     if(n){el.className='wachtrij';el.textContent=trw('n').replace('{n}',n);el.style.display='block';}
@@ -2325,9 +2338,13 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   var WACHT_VELD={'/api/kaart/meting':['metingen','meting'],'/api/kaart/gedaan':['gedaan','gedaan'],'/api/kaart/psk':['psk','psk'],'/api/kaart/ervaring':['ervaring','herstel']};
   var wachtBezig=false;
   // de tikken uit de wachtrij kwamen niet aan (kaart gestopt of veranderd): blijvende melding met de weg naar de praktijk
+  // de meldingsvakken bij pijnscore en seintjes die nog "Opgeslagen op je telefoon" zeiden
+  function wachtSlotten(tekst,soort){
+    document.querySelectorAll('.mdank.wacht,.sdank.wacht').forEach(function(d){zetDank(d,tekst,soort);});
+  }
   function toonWachtKwijt(){
     var el=document.getElementById('wachtrij');if(!el)return;
-    document.querySelectorAll('.mdank.wacht,.sdank.wacht').forEach(function(d){d.classList.remove('wacht');d.textContent='';d.style.display='none';});
+    wachtSlotten(trw('kwijt'),'fout');
     el.className='wachtrij fout';el.setAttribute('role','alert');el.textContent=trw('kwijt');el.style.display='block';
   }
   function verstuurWacht(){

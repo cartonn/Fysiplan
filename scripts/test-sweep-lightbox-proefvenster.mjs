@@ -26,8 +26,8 @@ assert.match(kaartHtml, /\.lightbox\{[^}]*justify-content:safe center/, "lightbo
 assert.doesNotMatch(kaartHtml, /\.lightbox \.lbnaam\{position:absolute/, "naam niet meer over de uitleg");
 assert.match(kaartHtml, /<button type="button" class="lbsluit" id="lbsluit" aria-label="Sluiten">/, "sluitknop");
 assert.match(kaartHtml, /\.lbsluit\{[^}]*width:44px;height:44px/, "sluitknop 44 px");
-assert.match(kaartHtml, /<div class="naam" dir="auto">/, "oefennaam met eigen leesrichting");
-assert.match(kaartHtml, /<th colspan="3" dir="auto">/, "schemakop met eigen leesrichting");
+assert.match(kaartHtml, /<div class="naam" dir="auto"'\+nlAttr\(x\.n\)\+'>/, "oefennaam met eigen leesrichting");
+assert.match(kaartHtml, /<th colspan="3" dir="auto"'\+nlAttr\(x\.n\)\+'>/, "schemakop met eigen leesrichting");
 assert.match(kaartHtml, /id="lbnaam" dir="auto"/, "lightboxnaam met eigen leesrichting");
 
 // 3: verlopen proef in het Kaarten-venster nooit stil
