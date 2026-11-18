@@ -2447,7 +2447,9 @@ function inboxItems(k) {
     if ((w === "vraag" || w === "pijn") && w !== k.seintje.soort) items.push({ soort: "seintje", wat: w, t: Number(k.seintje.t) || 0 });
   }
   for (const [oef, x] of Object.entries(k.oefZwaar || {})) if (x && x.t) items.push({ soort: "zwaar", oef, t: Number(x.t) });
-  const m = (k.metingen || []).filter((x) => x && ontvangen(x) > sinds && ontvangen(x) > (Number(k.ts) || 0) - 1);
+  // alleen `inboxGezien` (Afgehandeld) telt; een kaart opnieuw bewaren is geen afhandeling, anders
+  // viel een hoge pijnscore stil weg zodra een collega alleen de dosering aanpaste (sweep 2026-11-18)
+  const m = (k.metingen || []).filter((x) => x && ontvangen(x) > sinds);
   if (m.length) items.push({ soort: "pijn", s: m[m.length - 1].s, aantal: m.length, t: Number(m[m.length - 1].t) });
   const e = (k.ervaring || []).filter((x) => x && ontvangen(x) > sinds);
   if (e.length) items.push({ soort: "herstel", s: e[e.length - 1].s, t: Number(e[e.length - 1].t) });
