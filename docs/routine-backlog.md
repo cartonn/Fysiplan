@@ -103,6 +103,29 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - **Niet getest:** gedeeld wachtwoord → eigen logins (kan niet met EIGEN_LOGIN_VERPLICHT=aan), nieuwe VWO-versie, Mollie, echte video/vertaling,
   /o-opname met nep-camera tot op de kaart, iPad liggend voor Karin.
 - **Volgende run:** oefenmodus liggend 200 % (Truus), echtMp4 (Mark), print Groot (Sanne), focus na kaartacties, tijdzone-keuze voor de dagscore.
+### Sweep 2026-11-18 06u, run B (vijf persona's lokaal met EIGEN_LOGIN_VERPLICHT=aan en PROEF_VERPLICHT=aan; geen 500's of pageerrors; alle beheergrenzen hielden, ook X ↔ Y, 14 beheerroutes 403 met zin als therapeut; verwijderde collega: sessie 401, login 403; WISSEN: sessies 401, /k 404)
+- **OPGELOST 2026-11-18 deze run (test:offlinekopie) — MIDDEL (Truus, iPhone SE 100 % en 200 %) — online getikte pijnscore, herstel en dagvink
+  stonden na offline herladen weer op de stand van bij het laden** (de offline-kopie van /api/kaart werd alleen bij een GET ververst);
+  nu haalt /k na een geslaagde tik de kopie opnieuw op (`verversKopie`).
+- **OPGELOST 2026-11-18 deze run (test:kaartenfocus) — MIDDEL (Sanne + Mark, desktop, toetsenbord) — focus naar body na × naar prullenbak,
+  Rond af, Gearchiveerd/Terug naar actueel, Terughalen, Prullenbak openen, Herstellen, Definitief verwijderen en Beantwoorden bij een seintje.**
+  Nu `kaartFocusTerug()` na het hertekenen. Ook: losse "·" op een eigen regel voor de behandelaar in Kaarten.
+- Het inbox-punt (`inboxGezien`) is opgelost in #363; "(Dutch time)" op /k zit in #365 (parallelle runs).
+- **MIDDEL (Karin, iPad staand) — knoppen in het blok Praktijk 30 px** (Team, Wachtwoord wijzigen, Activiteit, Uitloggen en de rode
+  "Wis Fysiplan van dit apparaat"); `public/v2.css:347` `#prakslot .ps-acties a{height:30px}`.
+- **LAAG/MIDDEL (Karin, iPad) — werkregels-vinkje op /v2/uitnodiging 18×18 px**, label 21 px (`public/proef.html:52-53`).
+- **LAAG/MIDDEL (Karin) — na promotie tot beheerder** blijft in de open app de tegel "Gegevens" geblokkeerd met "Alleen een beheerder…",
+  Activiteit en logoknop ontbreken (aanvulling op "rechten lopen achter na rolwissel"; index.html ~1664/~1692).
+- **LAAG/MIDDEL (Mark) — conflict na opname via /o:** de alert belooft "Je video gaat dan mee", maar na herladen is `OPNAME_NIEUW`
+  (alleen geheugen, index.html ~2882) weg en de video hangt nergens aan.
+- **LAAG:** Truus: dagvink uit via `window.confirm` met "oefening(en)" (kaart.html ~3788/1336); Privacy-links op /k 17–20 px hoog
+  (`#privmeer`); kaart-id in hoofdletters "niet gevonden"; vraaghulp: lengte pas na de uit-controle. Jayden: herstel op een trage lijn
+  4 s zonder "Saving…" (`hsStuur`); My data noemt tijden zonder tijdzone. Sanne: 200 % doet niets op /v2/proef en in Kaarten (px-maten);
+  focus body na "Zelf ontdekken", inloggen met reservecode en "Ik heb ze bewaard". Mark: dubbelklik "Huidige kaart bewaren" (Sjablonen)
+  geeft twee prompts; foto < 100 bytes "te groot" (server.js ~5989), logo idem (~6452, Karin); tekst bij "Neem op met je telefoon"
+  zegt nog "zodra je praktijk een wachtwoord heeft" (index.html ~7171). Karin: `/v2/app?praktijk=` opent Kaarten over het welkom.
+- **Niet getest:** proef die bijna verloopt en verlopen proef (vraagt een eigen server met herstart), Mollie, mail, echte video's/vertaling.
+- **Volgende run:** tikvlakken Kaarten/Prullenbak en Praktijk-blok op de iPad, rechten na rolwissel zonder herladen, verlopen proef op een eigen server.
 
 ### Sweep 2026-11-18 06u (inhaalrun na een afgebroken run op 17-11; geen persona-agents gestart, alleen het open backlogpunt)
 - **OPGELOST 2026-11-18 deze run (test:inbox) — LAAG/MIDDEL (van legal) — inbox: een kaart opnieuw opslaan met een echte wijziging wiste `inboxGezien`.** Nagespeeld: herstel (ervaren herstel) dat de praktijk al had afgehandeld kwam na het bewaren van andere oefeningen opnieuw als "nieuw" in de inbox (pijnscores niet, die vallen al weg onder `ts`). POST /api/kaarten neemt `inboxGezien` nu mee.
