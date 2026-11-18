@@ -35,7 +35,12 @@ const bestaat = (pad) => access(join(dataDir, pad)).then(() => true, () => false
 const hash = (ww) => { const s = randomBytes(16); return "scrypt$" + s.toString("hex") + "$" + scryptSync(ww, s, 32).toString("hex"); };
 const account = (naam, ww) => ({ naam, hash: hash(ww), gemaakt: nu, vwo: { versie: "2026-11-01", t: new Date(nu).toISOString() } });
 await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify({
-  "fysio wis": account("Fysio Wis", "wis-wachtwoord-1"),
+  // een collega met eigen login (werkregels geaccepteerd, wachtwoord ooit hersteld) en een open uitnodiging
+  "fysio wis": { ...account("Fysio Wis", "wis-wachtwoord-1"), leden: [
+    { id: "l-aaaaaa000001", naam: "Tim Collega", email: "tim@wis.test", rol: "therapeut", hash: hash("tim-wachtwoord-1"),
+      gemaakt: nu - 86400000, regels: { versie: "2026-11-07", t: new Date(nu - 86400000).toISOString() }, gewijzigd: nu - 3600000 },
+    { id: "l-aaaaaa000002", naam: "Uitgenodigd", email: "nog@wis.test", rol: "therapeut", gemaakt: nu,
+      uitnodiging: { hash: "a".repeat(64), verloopt: nu + 7 * 86400000 } }] },
   "fysio blijf": account("Fysio Blijf", "blijf-wachtwoord-1")
 }));
 await mkdir(join(dataDir, "uploads", "videos"), { recursive: true });
@@ -145,6 +150,10 @@ try {
   assert.match(pagina.headers.get("content-security-policy"), /form-action 'self'/);
   assert.doesNotMatch(pagina.headers.get("content-security-policy"), /script-src/);
   assert.doesNotMatch(html, /<script/i);
+  assert.match(html, /Ook je team, met wanneer iemand de werkregels accepteerde\./, "de pagina noemt het team in de download");
+  const privacy = await (await fetch(origin + "/privacy")).text();
+  assert.match(privacy, /wanneer iemand de werkregels accepteerde \(welke versie\), wanneer een wachtwoord via een herstellink wijzigde/,
+    "/privacy noemt wat de server per login bewaart (art. 13 lid 1 c)");
   assert.match(html, /action="\/v2\/gegevens\/download"/);
   assert.match(html, /action="\/v2\/gegevens\/wissen"/);
   assert.doesNotMatch(html, /__[A-Z_]+__/, "geen open plekken in de pagina");
@@ -185,6 +194,17 @@ try {
   assert.equal(pakket.profiel[0].plaats, "Utrecht");
   assert.match(pakket.account.verwerkersovereenkomst.versie, /^\d{4}-\d{2}-\d{2}(-\d+)?$/);
   assert.ok(pakket.logboek.some((a) => a.actie === "alles-gedownload"));
+  // team (legal 2026-11-18, art. 15/20 en art. 28 lid 3 h AVG): wanneer een login ontstond, wie wanneer welke
+  // versie van de werkregels accepteerde, wanneer het wachtwoord wijzigde en tot wanneer een uitnodiging openstaat
+  const tim = pakket.team.find((l) => l.email === "tim@wis.test");
+  assert.ok(tim, "collega in de download");
+  assert.equal(tim.gemaakt, new Date(nu - 86400000).toISOString(), "wanneer de login ontstond");
+  assert.deepEqual(tim.werkregels, { versie: "2026-11-07", t: new Date(nu - 86400000).toISOString() }, "werkregels geaccepteerd: versie en tijd");
+  assert.equal(tim.wachtwoordGewijzigd, new Date(nu - 3600000).toISOString(), "wanneer het wachtwoord via herstel wijzigde");
+  const nog = pakket.team.find((l) => l.email === "nog@wis.test");
+  assert.deepEqual(nog.uitnodiging, { open: true, verloopt: new Date(nu + 7 * 86400000).toISOString() }, "open uitnodiging zonder code");
+  assert.equal(nog.werkregels, null, "nog geen werkregels");
+  assert.doesNotMatch(tekst, /"a{64}"/, "geen uitnodigingscode (hash) in de download");
   assert.doesNotMatch(tekst, /Cor|Eigen plank|Zeist|scrypt\$/, "geen andere praktijk en geen wachtwoordhash");
   // ideeënbox (art. 15/20 AVG): eigen ideeën en eigen stemmen, niet de tekst of stemmen van een ander
   assert.deepEqual(pakket.ideeenbox.ingediend.map((i) => i.titel).sort(), ["Besloten idee van Wis", "Idee van Wis"], "eigen ideeën in de download");

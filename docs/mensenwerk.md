@@ -318,8 +318,7 @@ nummer is uitgegeven toont "volgt". Code: `factuurRegels` en `factuurOverzichtHt
 op het tijdstip van aanmelden (om 07:12 aangemeld = 30 november om 07:12 dicht). Een nieuwe proef loopt nu die hele
 laatste dag door, tot 23:59 Nederlandse tijd; "verlengen" in het aanmeldingenoverzicht ook. Herinnering, mail op de
 einddag en wissen na 30 dagen rekenen vanaf dat nieuwe einde, dus hooguit een dag later dan voorheen. Proeven die al
-liepen houden hun oude tijdstip. Op de laatste dag zegt Mijn proef "je proef loopt nog tot en met vandaag" (was "nog
-vandaag nog"). Code: `proefEinde` in lib/proef.js; test in `npm run test:proef`.
+liepen houden hun oude tijdstip. Code: `proefEinde` in lib/proef.js; test in `npm run test:proef`.
 **Env:** geen; dit werkt meteen na de merge.
 **Wat jij moet doen:** niets.
 
