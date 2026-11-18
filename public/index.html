@@ -5710,6 +5710,9 @@ bridge2.jpg</div>
     },100);
   }
   function toonPrullenbak(blok,pr){
+    // twee overzichten die tegelijk laden (openen van Kaarten + status) zetten elk een knop neer:
+    // dan stond "Prullenbak" er twee keer, met dezelfde id (gebruikers-sweep 2026-11-18 10u, Karin)
+    document.querySelectorAll('#k_prullenbak').forEach(function(o){o.remove();});
     var box=document.createElement('div');box.id='k_prullenbak';
     box.innerHTML="<button class='btn' type='button'>Prullenbak</button><div class='hint' hidden></div>";
     blok.appendChild(box);

@@ -110,6 +110,7 @@ jobs:
       - run: npm run test:gedaansync
       - run: npm run test:oefnaam
       - run: npm run test:oefweg
+      - run: npm run test:naamemoji
       - run: npm run test:allesgedaan
       - run: npm run test:seintje
       - run: npm run test:sweepoverzicht

@@ -3570,7 +3570,10 @@ function slug(s) {
 // increment-route op de globale Object-constructor schrijven. Zo'n naam wordt
 // hier leeg gemaakt, waarna elke route hem als "geen naam opgegeven" weigert.
 const verbodenSleutel = /^(__proto__|constructor|prototype)$/i;
-const cleanName = (v, max) => { const s = String(v || "").trim().replace(/\s+/g, " ").slice(0, max); return verbodenSleutel.test(s) ? "" : s; };
+// Afkappen op `max` UTF-16-eenheden, maar nooit midden in een emoji: een losse helft (surrogaat)
+// werd "�" in Kaarten, de CSV en de bevestigvraag (gebruikers-sweep 2026-11-18 10u, Sanne).
+// De lengte blijft in eenheden, zodat bestaande praktijksleutels gelijk blijven.
+const cleanName = (v, max) => { const s = String(v || "").trim().replace(/\s+/g, " ").slice(0, max).replace(/[\uD800-\uDBFF]$/, ""); return verbodenSleutel.test(s) ? "" : s; };
 
 // Een te grote body: niet meer bewaren, de rest weglezen en pas daarna antwoorden.
 // Eerder deed de lezer meteen req.destroy(); dan ging de verbinding dicht vóór het
@@ -7772,7 +7775,9 @@ async function afhandelen(request, response) {
     const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
     const icsTekst = (s) => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/[\r\n]+/g, "\\n");
     const veiligeHost = eigenHost(request);
-    const link = "https://" + veiligeHost + "/k/" + found.id;
+    // de kaartlink in de agenda opent in de taal van de kaart; een agenda-app opent hem vaak in een
+    // andere browser zonder de gekozen taal (gebruikers-sweep 2026-11-18 10u, Jayden)
+    const link = "https://" + veiligeHost + "/k/" + found.id + (/^(en|de|fr|es|pl|tr|ar|uk)$/.test(taalQ) ? "?taal=" + taalQ : "");
     const ics = [
       "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
       "BEGIN:VTIMEZONE", "TZID:Europe/Amsterdam",
@@ -7991,7 +7996,9 @@ async function afhandelen(request, response) {
     // andere waarde valt terug op het canonieke fysiplan.nl, zodat de kaartlink nooit naar
     // een vreemd domein kan wijzen, wat er ook in de Host-header wordt meegestuurd.
     const veiligeHost = eigenHost(request);
-    const link = "https://" + veiligeHost + "/k/" + found.id;
+    // de kaartlink in de agenda opent in de taal van de kaart; een agenda-app opent hem vaak in een
+    // andere browser zonder de gekozen taal (gebruikers-sweep 2026-11-18 10u, Jayden)
+    const link = "https://" + veiligeHost + "/k/" + found.id + (/^(en|de|fr|es|pl|tr|ar|uk)$/.test(taalQ) ? "?taal=" + taalQ : "");
     const ics = [
       "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN",
       "BEGIN:VEVENT",

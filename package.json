@@ -265,6 +265,7 @@
     "test:foutpagina": "node scripts/test-foutpagina.mjs",
     "test:ipadkop": "node scripts/test-sweep-ipadkop.mjs",
     "test:oefweg": "node scripts/test-sweep-kaart-oefweg.mjs",
+    "test:naamemoji": "node scripts/test-sweep-naam-emoji.mjs",
     "test:praktijktegels": "node scripts/test-sweep-praktijktegels-rol.mjs",
     "test:proefwispraktijk": "node scripts/test-sweep-proefwis-praktijk.mjs",
     "test:kaartvers": "node scripts/test-sweep-kaart-vers.mjs",

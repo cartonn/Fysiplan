@@ -26,6 +26,9 @@ for (const t of ["nl", "en", "de", "fr", "es", "pl", "tr", "ar", "uk"]) {
 }
 assert.doesNotMatch(kaart, /weg:'[^']*(Vernieuw de pagina|reload the page)/, "geen opdracht om zelf de pagina te vernieuwen");
 assert.match(kaart, /if\(SESSIE>-1&&SESSIE!==idx\)openOef\(idx\)/, "stappenmodus gaat terug naar de weggehaalde oefening");
+assert.match(kaart, /else if\(r\.ok\)verstuurd\+\+;else if\(!weg\)kwijt\+\+/, "wachtrij telt alleen een geslaagde tik als verstuurd, de rest als niet aangekomen");
+for (const t of ["nl", "en", "de", "fr", "es", "pl", "tr", "ar", "uk"]) assert.match(kaart, new RegExp("\\b" + t + ":\\{kwijt:'[^']{20,}'"), "melding niet aangekomen in het " + t);
+assert.match(kaart, /if\(weg\)\{try\{oefWeg\(Number\(it\.body\.oef\),it\.body\.aan!==false\);\}/, "409 uit de wachtrij draait het vinkje terug met de melding");
 
 let playwright = null;
 for (const van of [import.meta.url, "/opt/node22/lib/node_modules/"]) {
@@ -117,6 +120,47 @@ try {
   assert.match(s1.stel, /1/, "teller staat op die oefening: " + s1.stel);
   assert.ok(s1.zicht, "herlaadknop zichtbaar in de stappenmodus");
   assert.equal(s1.focus, "oefweg", "focus op de melding");
+  // Sweep 2026-11-18 10u: zonder internet een vinkje gezet bij een oefening die de praktijk intussen weghaalde.
+  // Weer online gaf de server 409, maar de wachtrij meldde "Sent to your physiotherapist ✓" en het vinkje bleef staan.
+  await page.unroute("**/api/kaart/oefening");
+  let offline = true, wachtVinkjes = 0;
+  await page.route("**/api/kaart/oefening", (r) => {
+    if (offline) return r.abort("internetdisconnected");
+    wachtVinkjes++; r.fulfill({ status: 409, contentType: "application/json", body: JSON.stringify(weg) });
+  });
+  await page.goto(origin + "/k/" + ID + "?taal=en");
+  await page.waitForSelector('#oefs .oefdone[data-idx="1"]');
+  await page.evaluate(() => { document.querySelectorAll(".ov.on,.lb.on").forEach((o) => o.classList.remove("on")); document.body.classList.remove("sessie"); });
+  await page.evaluate(() => document.querySelector('#oefs .oefdone[data-idx="1"]').click());
+  await page.waitForFunction(() => { const w = document.getElementById("wachtrij"); return w && w.style.display === "block"; }, null, { timeout: 4000 });
+  offline = false;
+  await page.evaluate(() => window.dispatchEvent(new Event("online")));
+  await page.waitForSelector('#oefs .oef[data-oidx="1"] .oefweg', { timeout: 4000 });
+  await page.waitForTimeout(300);
+  const o1 = await page.evaluate(() => ({ w: document.getElementById("wachtrij").textContent, zicht: document.getElementById("wachtrij").style.display,
+    pressed: document.querySelector('#oefs .oefdone[data-idx="1"]').getAttribute("aria-pressed"),
+    wacht: Object.keys(localStorage).filter((k) => /wacht/i.test(k) && localStorage.getItem(k) !== "{}").length }));
+  assert.equal(wachtVinkjes, 1, "het vinkje uit de wachtrij ging één keer mee");
+  assert.ok(o1.zicht === "none" || !/✓|Sent to/.test(o1.w), "wachtrij meldt geen 'verstuurd' na een 409: " + o1.w);
+  assert.equal(o1.pressed, "false", "vinkje uit de wachtrij teruggedraaid");
+  assert.equal(o1.wacht, 0, "de geweigerde tik staat niet meer in de wachtrij");
+  // Zelfde run (Truus, iPhone SE): de kaart ging intussen in de prullenbak; de server gaf 404 en de wachtrij zei
+  // toch "Verstuurd ✓". Nu een blijvende melding dat het niet aankwam, met de weg naar de praktijk.
+  await page.unroute("**/api/kaart/oefening");
+  offline = true;
+  await page.route("**/api/kaart/oefening", (r) => offline ? r.abort("internetdisconnected")
+    : r.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ ok: false, fout: "Kaart niet gevonden." }) }));
+  await page.evaluate(() => document.querySelector('#oefs .oefdone[data-idx="2"]').click());
+  await page.waitForFunction(() => /opgeslagen|saved/i.test(document.getElementById("wachtrij").textContent), null, { timeout: 4000 });
+  offline = false;
+  await page.evaluate(() => window.dispatchEvent(new Event("online")));
+  await page.waitForFunction(() => document.getElementById("wachtrij").classList.contains("fout"), null, { timeout: 4000 });
+  const o2 = await page.evaluate(() => ({ t: document.getElementById("wachtrij").textContent, rol: document.getElementById("wachtrij").getAttribute("role") }));
+  assert.match(o2.t, /Not received.*call or email your practice/, "404 uit de wachtrij: niet aangekomen, bel de praktijk: " + o2.t);
+  assert.doesNotMatch(o2.t, /✓/);
+  assert.equal(o2.rol, "alert");
+  await page.waitForTimeout(6500);
+  assert.equal(await page.evaluate(() => document.getElementById("wachtrij").style.display), "block", "de melding blijft staan");
   assert.deepEqual(fouten, []);
   await ctx.close();
   console.log("PASS weggehaalde oefening op /k: vinkje terug, melding met herlaadknop, stappenmodus terug naar die oefening");
