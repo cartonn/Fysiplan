@@ -1681,7 +1681,7 @@ function proefVars(p, extra = {}) {
   const d = dagenOver(p.verloopt);
   return { NAAM: (p.naam || "").split(" ")[0], EMAIL: p.email, TEL: telefoonWeergave(p.tel), EINDDATUM: datumNl(p.verloopt),
     DAGEN_TEKST: d <= 1 ? "vandaag nog" : d + " dagen", TITEL: "Proef voorbij",
-    MIJN_KOP: p.klant ? "Hoi " + (p.naam || "").split(" ")[0] + ", fijn dat je Fysiplan gebruikt." : "Hoi " + (p.naam || "").split(" ")[0] + ", je proef loopt nog " + (d <= 1 ? "vandaag nog" : d + " dagen") + ".",
+    MIJN_KOP: p.klant ? "Hoi " + (p.naam || "").split(" ")[0] + ", fijn dat je Fysiplan gebruikt." : "Hoi " + (p.naam || "").split(" ")[0] + ", je proef loopt nog " + (d <= 1 ? "maar kort" : d + " dagen") + ".",
     MIJN_LEAD_HTML: p.klant ? "Je account staat op " + htmlEsc(p.email) + "."
       : "Tot en met <b>" + htmlEsc(datumNl(p.verloopt)) + "</b> gebruik je Fysiplan gratis. Je proef staat op " + htmlEsc(p.email) + ".",
     AFREKENEN: betalenKan() ? "Liever meteen geregeld? Reken de eerste maand hieronder online af." : "Online afrekenen is niet nodig.",
@@ -2917,6 +2917,8 @@ function clientIp(req) {
 // het volledige adres gebruiken. Het /64-blok komt uit het volledig uitgeschreven
 // adres (lib/ip-sleutel.js): een ingekort adres met "::" gaf vroeger per adres een
 // eigen bucket (security 2026-11-16).
+// wie net alles wiste (verbinding + naam → { t, pk, acc }), voor een dubbeltik op /v2/gegevens/wissen
+const wisNetGedaan = new Map();
 function ipSleutel(req) {
   return ipSleutelVan(clientIp(req));
 }
@@ -9115,8 +9117,25 @@ async function afhandelen(request, response) {
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
     const nk = cleanName(b.praktijk, 80).toLowerCase();
-    const opnieuw = (fout, status) => serveerProef(request, response, "gegevens", { TITEL: "Gegevens van je praktijk",
-      V_PRAKTIJK: cleanName(b.praktijk, 80), MELDING_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }, status);
+    // Dubbeltik op "Alles wissen": het eerste verzoek wist alles, het tweede viel op de al gebruikte
+    // code en de browser toonde "Die code klopt niet", alsof er niets gewist was (sweep 18-11, Karin
+    // op de iPad). Wiste dezelfde verbinding met dezelfde naam net alles, dan zegt de pagina dat.
+    let wisSleutel = "";
+    const opnieuw = async (fout, status) => {
+      if (wissen && wisSleutel) {
+        for (let i = 0; i < 15 && !wisNetGedaan.has(wisSleutel); i++) await new Promise((r) => setTimeout(r, 100));
+        const w = wisNetGedaan.get(wisSleutel);
+        // alleen voor dezelfde praktijk: is de naam intussen opnieuw in gebruik, dan de gewone melding
+        if (w && Date.now() - w.t < 10 * 60000 && (!Object.hasOwn(praktijkAccounts, w.pk) || praktijkAccounts[w.pk] === w.acc)) {
+          await serveerProef(request, response, "bericht", { TITEL: "Alles gewist", ETIKET: "Gewist", KOP: "Alles van je praktijk is al gewist.",
+            TEKST: "Je verstuurde het wissen twee keer. De eerste keer is alles gewist; daarna was er niets meer om te wissen.",
+            KNOP_HTML: '<a class="knop omlijnd" href="/v2">Naar de site</a>' });
+          return;
+        }
+      }
+      await serveerProef(request, response, "gegevens", { TITEL: "Gegevens van je praktijk",
+        V_PRAKTIJK: cleanName(b.praktijk, 80), MELDING_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }, status);
+    };
     // met eigen login: e-mail + wachtwoord van een beheerder van die praktijk. Zo blijft
     // downloaden en wissen mogelijk nadat het gedeelde praktijkwachtwoord uit staat.
     const em = normEmail(b.email);
@@ -9124,6 +9143,7 @@ async function afhandelen(request, response) {
     // app), anders per praktijknaam. Zo kan wie alleen de praktijknaam kent, met tien foute
     // pogingen de beheerder niet een kwartier buitensluiten (security 2026-11-12 16u).
     const remNaam = em ? "mail:" + em : nk;
+    if (remNaam) wisSleutel = ipSleutel(request) + "|" + remNaam;
     if (remNaam && loginOpSlot(remNaam)) { await opnieuw(em ? "Te veel pogingen met dit e-mailadres; probeer het over een kwartier opnieuw." : "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
     if (beheerOpRem(request)) { await opnieuw("Te veel foute pogingen vanaf deze verbinding; probeer het over een paar minuten opnieuw.", 429); return; }
     let pk = null, lid = null, geenBeheerder = null;
@@ -9215,6 +9235,10 @@ async function afhandelen(request, response) {
       response.end(JSON.stringify(pakket, null, 2));
       return;
     }
+    for (const [k, w] of wisNetGedaan) if (Date.now() - w.t > 10 * 60000) wisNetGedaan.delete(k);
+    // beide tikken kwamen tegelijk door de controle: de tweede wist niet nog eens (dan stond er "0 kaarten")
+    if (wisNetGedaan.has(wisSleutel) && wisNetGedaan.get(wisSleutel).acc === acc) { await opnieuw("", 200); return; }
+    wisNetGedaan.set(wisSleutel, { t: Date.now(), pk, acc });
     const { aantalKaarten, proefUitkomst } = await praktijkAllesWissen(pk);
     auditLog("(gewist)", "praktijk-alles-gewist", request);
     await serveerProef(request, response, "bericht", { TITEL: "Alles gewist", ETIKET: "Gewist", KOP: "Alles van je praktijk is gewist.",
