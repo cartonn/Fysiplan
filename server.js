@@ -4021,7 +4021,20 @@ const vertaalbeheer = maakVertaalbeheer({
   vertaal: (taal, teksten) => vraagClaude(AI_MODEL_VERTAAL, 8000, vertaalOpdracht(taal), JSON.stringify(teksten))
 });
 
-const server = createServer((request, response) => {
+const server = createServer({
+  // Security 2026-11-18 (i) — slowloris: Node laat een half-open verbinding (één byte per keer,
+  // of een kop die nooit afkomt) standaard 60 s open (headersTimeout) en veegt verlopen
+  // verbindingen maar elke 30 s op (connectionsCheckingInterval). Zonder verbindingsplafond in
+  // server.js kan een trage lijn zo sockets vasthouden. Met de koppen binnen 20 s en een veegbeurt
+  // elke 5 s snoeien we het slowloris-venster; 20 s is ruim voor alleen de koppen, dus een trage
+  // mobiele patiënt merkt er niets van. requestTimeout (de hele body, standaard 5 min) laten we
+  // staan: een video-upload van 60 MB op een langzame lijn mag niet afbreken. keepAliveTimeout iets
+  // ruimer dan de edge, zodat een hergebruikte verbinding niet net tijdens een volgend verzoek valt.
+  headersTimeout: 20000,
+  requestTimeout: 300000,
+  keepAliveTimeout: 10000,
+  connectionsCheckingInterval: 5000,
+}, (request, response) => {
   // de tellers voor /health: een antwoord 500 of 502 telt mee zodra het de deur uit is
   telAntwoord(response, { server: serverFouten, buiten: buitenFouten });
   // een testomgeving hoort in geen enkele zoekmachine
