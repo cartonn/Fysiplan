@@ -196,6 +196,9 @@ jobs:
       - run: npm run test:opnamewacht
       - run: npm run test:opnameplafond
       - run: npm run test:nietvertaald
+      - run: npm run test:deelsnl
+      - run: npm run test:wachtplek
+      - run: npm run test:uitteam
       - run: npm run test:vertaallaat
       - run: npm run test:kaartweg
       - run: npm run test:opnieuwdelen

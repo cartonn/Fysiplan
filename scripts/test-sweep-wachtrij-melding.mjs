@@ -14,7 +14,8 @@ import { createRequire } from "node:module";
 const root = process.cwd();
 const kaart = await readFile(join(root, "public/kaart.html"), "utf8");
 const teken = kaart.slice(kaart.indexOf("function tekenWacht(klaar){"), kaart.indexOf("var WACHT_REDEN="));
-assert.match(teken, /querySelectorAll\('\.mdank\.wacht,\.sdank\.wacht'\)/, "tekenWacht ruimt de wachtmeldingen op");
+// sinds 2026-11-18 18u (Truus, 200 %) wordt de wachtmelding bij de tik vervangen door "Verstuurd ✓" in plaats van leeggemaakt
+assert.match(teken, /wachtSlotten\(trw\('ok'\),''\)/, "tekenWacht vervangt de wachtmeldingen door verstuurd");
 
 let pw = null;
 try { pw = createRequire(import.meta.url)("playwright"); } catch {}
@@ -66,7 +67,7 @@ try {
     return { zicht: getComputedStyle(d).display, wacht: d.classList.contains("wacht"), tekst: d.textContent };
   });
   assert.equal(na.wacht, false, "geen wachtmelding meer na versturen");
-  assert.equal(na.zicht, "none", "melding onder de pijnscore weg na versturen: " + na.tekst);
+  assert.match(na.tekst, /Verstuurd naar je fysiotherapeut/, "onder de pijnscore staat nu verstuurd: " + na.tekst);
   const k = JSON.parse(await readFile(join(dataDir, "kaarten.json"), "utf8"));
   assert.equal((k["fysio wacht"].truus.metingen || []).length, 1, "pijnscore kwam echt aan");
   assert.deepEqual(fouten, []);

@@ -3999,10 +3999,15 @@ bridge2.jpg</div>
     PRAKSLOT.pr=pr;ROL_GEHAALD=Date.now();
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){if(!r.ok)throw r.status;return r.json();}).then(function(d){
+        // Uit het team gehaald (of elders uitgelogd) met de app nog open: de kaartenlijst van de praktijk
+        // bleef staan en "Exporteer (CSV)" gaf hem nog als bestand (gebruikers-sweep 2026-11-18 18u, Karin).
+        // Dan de lijst opnieuw opbouwen; de server weigert met 401 en de lijst maakt plaats voor de inlogvraag.
+        var uitgelogd=PRAKSLOT.bekend&&PRAKSLOT.ingelogd&&!d.ingelogd&&pr===(SET.praktijk||'').trim();
         PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;PRAKSLOT.naam=d.naam||'';PRAKSLOT.wie=d.wie||'';PRAKSLOT.perEmail=!!d.perEmail;PRAKSLOT.akkoord=d.akkoord||null;PRAKSLOT.tweedeStap=typeof d.tweedeStap==='boolean'?d.tweedeStap:null;
         PRAKSLOT.eigenLogin=!!d.eigenLogin;PRAKSLOT.voorstel=d.voorstel||null;PRAKSLOT.vanMij=!!d.vanMij;PRAKSLOT.stapOpen=!!d.stapOpen;PRAKSLOT.proefNodig=!!d.proefNodig;PRAKSLOT.bekend=true;
         if(pr!==PRAKSLOT.nieuwVoor)PRAKSLOT.nieuw=false;
         if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
+        if(uitgelogd){SRV_KAART={};SRV_SIGNALEN={};var sl=document.getElementById('k_srv_lijst');if(sl)sl.innerHTML='';toonSrvKaarten();}
         rendPrakSlot();
         if(document.getElementById('k_praktijk'))bouwPraktijkTegels();
         try{applyLogo();}catch(e){}
@@ -6415,9 +6420,11 @@ bridge2.jpg</div>
             // overzicht is bewaard, hoort er meteen in (de lijst l is van bij het openen)
             var xbTekst=xb.textContent;xb.disabled=true;xb.textContent='Bezig…';
             fetch('api/kaarten?praktijk='+encodeURIComponent(pr),PGET())
-              .then(function(r){return r.ok?r.json():null;})
+              // 401/403: niet meer ingelogd of uit het team; dan geen CSV uit de oude lijst in de app
+              .then(function(r){return (r.status===401||r.status===403)?{geweigerd:true}:r.ok?r.json():null;})
               .catch(function(){return null;})
               .then(function(vers){
+            if(vers&&vers.geweigerd){xb.disabled=false;xb.textContent=xbTekst;SRV_KAART={};toonSrvKaarten();return;}
             // de knop stond even uit, dan valt de focus naar body; zet hem terug (sweep 2026-11-16, Sanne toetsenbord)
             var xbFocus=document.activeElement===document.body||document.activeElement===xb;
             xb.disabled=false;xb.textContent=xbTekst;if(xbFocus&&document.contains(xb))try{xb.focus();}catch(e){}
