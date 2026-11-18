@@ -40,7 +40,7 @@ bundle.assets.line.relativePath='../outside.png';await save();await assert.rejec
 await save();await writeFile(join(temp,'line.png'),'corrupt');await assert.rejects(importDraft({bundlePath,cataloguePath,draftRoot}),/PNG/);
 await assert.rejects(loadDraft({draftRoot:root,id,catalogue:catalogue.map(r=>r.coreExerciseId===id?{...r,uitleg:'changed'}:r)}),/Source record changed/);
 assert.deepEqual(await readFile(cataloguePath),before);
-const server=await readFile('server.js','utf8');assert.ok(server.includes('!ADMIN_KEY_EIGEN || !isAdmin(request)'));
+const server=await readFile('server.js','utf8');assert.ok(server.includes('if (!beheerEigen(request)) { await denied(request, response, urlPath); return; }')&&server.includes('if (ADMIN_KEY_EIGEN && isAdminSleutel(req))'));
 assert.ok(server.includes('private, no-store'));
 const page=await readFile('public/draft-review.html','utf8');
 new Script(page.match(/<script type="module">([\s\S]*?)<\/script>/)[1]);

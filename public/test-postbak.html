@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="color-scheme" content="light"/>
+<title>Fysiplan: testpostbak</title>
+<style>
+  :root{color-scheme:only light;--petrol:#18343b;--limoen:#b9e34b;--grijs:#f2f5f3;--lijn:#d5dedb;--zacht:#5b6f6c}
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--grijs);color:var(--petrol)}
+  header{background:var(--petrol);color:#fff;padding:18px 24px 18px 40px}
+  header h1{margin:0;font-size:20px;letter-spacing:-.01em}
+  header p{margin:4px 0 0;color:#cfdcd9;max-width:70ch}
+  main{max-width:860px;margin:0 auto;padding:20px 24px 48px 40px}
+  .balk{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+  .balk span{color:var(--zacht);font-size:13.5px}
+  button{font:inherit;font-weight:600;color:var(--petrol);background:var(--limoen);border:0;border-radius:9px;padding:9px 14px;cursor:pointer}
+  button:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--limoen);outline-offset:2px}
+  .leeg,.fout{background:#fff;border:1px solid var(--lijn);border-radius:12px;padding:18px}
+  .fout{border-color:#b42318;color:#7a160f}
+  details{background:#fff;border:1px solid var(--lijn);border-radius:12px;margin-bottom:10px}
+  summary{cursor:pointer;padding:12px 16px;display:grid;grid-template-columns:1fr auto;gap:2px 14px;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  .onderwerp{font-weight:600;overflow-wrap:anywhere}
+  .naar{color:var(--zacht);font-size:13.5px;overflow-wrap:anywhere}
+  .wanneer{color:var(--zacht);font-size:13px;white-space:nowrap;text-align:right}
+  .echt{justify-self:end;font-size:12px;font-weight:600;background:var(--petrol);color:#fff;border-radius:999px;padding:1px 9px}
+  .tekst{margin:0;padding:14px 16px 16px;border-top:1px solid var(--lijn);white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .tekst a{color:#0b5c6b}
+  @media (max-width:560px){summary{grid-template-columns:1fr}.wanneer,.echt{text-align:left;justify-self:start}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Testpostbak</h1>
+  <p>Wat deze testomgeving had willen mailen. Er is niets verstuurd, behalve de berichten met het merk "echt verstuurd".</p>
+</header>
+<main>
+  <div class="balk"><button id="ververs" type="button">Vernieuwen</button><span id="stand" role="status"></span></div>
+  <div id="lijst"></div>
+</main>
+<script type="module">
+  const lijst = document.getElementById('lijst'), stand = document.getElementById('stand');
+  const el = (tag, klas, tekst) => { const e = document.createElement(tag); if (klas) e.className = klas; if (tekst != null) e.textContent = tekst; return e; };
+  const moment = (iso) => { const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleString('nl-NL', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); };
+  // de tekst van een bericht, met links naar deze omgeving aanklikbaar; al het andere blijft gewone tekst
+  function metLinks(tekst) {
+    const p = el('p', 'tekst');
+    let rest = String(tekst || '');
+    const re = /https?:\/\/[^\s<>"']+/;
+    for (let m = re.exec(rest); m; m = re.exec(rest)) {
+      const adres = m[0].replace(/[.,;:!?)]+$/, '');
+      p.append(rest.slice(0, m.index));
+      let eigen = false;
+      try { eigen = new URL(adres).origin === location.origin; } catch {}
+      if (eigen) { const a = el('a', '', adres); a.href = adres; a.rel = 'noopener'; p.append(a); } else p.append(adres);
+      rest = rest.slice(m.index + adres.length);
+    }
+    p.append(rest);
+    return p;
+  }
+  function toon(d) {
+    lijst.replaceChildren();
+    const berichten = Array.isArray(d.berichten) ? d.berichten : [];
+    stand.textContent = berichten.length + (berichten.length === 1 ? ' bericht' : ' berichten') +
+      (d.echtNaar && d.echtNaar.length ? '. Echt verstuurd wordt alleen naar: ' + d.echtNaar.join(', ') : '. Er wordt naar geen enkel adres echt verstuurd.');
+    if (!berichten.length) { lijst.append(el('div', 'leeg', 'Nog geen berichten. Vraag bijvoorbeeld een nieuw wachtwoord aan, of nodig een collega uit: het bericht komt dan hier te staan.')); return; }
+    berichten.forEach((b, i) => {
+      const blok = el('details');
+      if (i === 0) blok.open = true;
+      const kop = el('summary');
+      kop.append(el('span', 'onderwerp', b.onderwerp || '(geen onderwerp)'), el('span', 'wanneer', moment(b.t)), el('span', 'naar', 'Aan: ' + (b.naar || '')));
+      if (b.echt) kop.append(el('span', 'echt', 'echt verstuurd'));
+      blok.append(kop, metLinks(b.tekst));
+      lijst.append(blok);
+    });
+  }
+  let kop = '';
+  async function laad() {
+    stand.textContent = 'Laden…';
+    try {
+      const r = await fetch('/api/test/mail', { headers: { 'x-admin-sleutel': kop }, cache: 'no-store' });
+      if (r.status === 401 || r.status === 403) { try { sessionStorage.removeItem('fysiplan-beheersleutel'); } catch {} throw new Error('Je bent niet (meer) ingelogd als beheer. Herlaad de pagina en log opnieuw in.'); }
+      if (!r.ok) throw new Error('De testpostbak is niet te lezen (status ' + r.status + ').');
+      toon(await r.json());
+    } catch (e) {
+      stand.textContent = '';
+      lijst.replaceChildren(el('div', 'fout', e && e.message ? e.message : 'De testpostbak is niet te lezen.'));
+    }
+  }
+  kop = await (await import('/beheersleutel.js')).vraagBeheersleutel();
+  document.getElementById('ververs').addEventListener('click', laad);
+  if (kop) laad();
+  else lijst.replaceChildren(el('div', 'leeg', 'Log in als beheer om de testpostbak te lezen. Herlaad de pagina om het opnieuw te proberen.'));
+</script>
+</body>
+</html>

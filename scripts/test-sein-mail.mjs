@@ -94,7 +94,10 @@ const kaart = async (praktijk, S, naam) => {
 const sein = async (id, soort) => {
   const r = await post("/api/kaart/seintje", { id, soort });
   assert.equal(r.status, 200, "de patiënt krijgt altijd antwoord op een seintje: " + r.status);
-  assert.deepEqual(await r.json(), { ok: true });
+  // het antwoord noemt alleen de open stand (soort, ook), nooit of er gemaild wordt
+  const j = await r.json();
+  assert.equal(j.ok, true);
+  assert.deepEqual(Object.keys(j.open || {}).filter((x) => x !== "soort" && x !== "ook"), [], "geen interne velden in het antwoord");
 };
 const afgehandeld = async (praktijk, id, S) => assert.equal((await post("/api/praktijk/inbox/afgehandeld", { praktijk, id }, S)).status, 200);
 // de kaart zoals hij op schijf staat

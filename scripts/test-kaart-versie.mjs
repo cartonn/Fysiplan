@@ -108,7 +108,9 @@ try {
     const cs = info.find((x) => /chair squat/i.test(x.naam));
     assert.ok(cs, "Chair squat staat op de kaart: " + JSON.stringify(info));
     if (!cs.controle) console.log("test-kaart-versie: let op, Chair squat is niet (meer) in controle; check op eigen video blijft gelden");
-    assert.equal(cs.eigen, "/" + pad, "eigen video van de therapeut blijft zichtbaar: " + JSON.stringify(cs));
+    // de patiëntkaart krijgt de eigen video via een tijdelijke link (reviewlijst punt 9): het pad met ?k=&e=&s=
+    assert.equal(String(cs.eigen || "").split("?")[0], "/" + pad, "eigen video van de therapeut blijft zichtbaar: " + JSON.stringify(cs));
+    assert.match(String(cs.eigen), /\?k=[a-f0-9]+&e=\d{13}&s=[A-Za-z0-9_-]{32}$/, "eigen video via een tijdelijke link: " + JSON.stringify(cs));
     // de videoknop staat bij de oefening zelf: eerst de oefening openen vanuit het overzicht
     await page.locator(".oef", { has: page.locator(".vbtn.eigen") }).locator(".oefinfo").click();
     await page.click(".vbtn.eigen");

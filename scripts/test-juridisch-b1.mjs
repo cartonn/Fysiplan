@@ -71,6 +71,34 @@ try {
   // patiëntdeel: korte zinnen (hooguit 30 woorden)
   const patient = pag.privacy.split('id="patient"')[1].split("<h2")[0];
   for (const z of zinnen(patient)) assert.ok(woorden(z) <= 30, "patiëntdeel: zin van " + woorden(z) + " woorden: " + z.slice(0, 120));
+  // legal 2026-11-16 09u (i), van de gebruikers-sweep (Truus, 72): het patiëntdeel gebruikte vaktaal zonder uitleg.
+  // Een vakwoord mag, maar dan met een korte uitleg in dezelfde regel.
+  assert.doesNotMatch(patient, /analysedienst|volgcookie/i, "patiëntdeel: geen vaktaal als analysediensten of volgcookies");
+  const uitgelegd = { "IP-adres": /nummer van je internetverbinding/, "reservekopie": /kopie voor noodgevallen/,
+    "Cloudflare": /bedrijf dat video/, "doelactiviteit": /activiteit die je weer wilt kunnen/ };
+  for (const [woord, uitleg] of Object.entries(uitgelegd)) {
+    if (!patient.includes(woord)) continue;
+    assert.match(patient, uitleg, "patiëntdeel: " + woord + " staat er zonder uitleg");
+  }
+  // (a) de proefaanmelding: de server mailt tijdens de proef (starttip #345, herinnering voor het einde) en
+  // beheer kan bellen; "je één keer benaderen over je ervaring" was te weinig.
+  const proefRij = pag.privacy.split("Proefaanmelding: e-mail")[1].split("</tr>")[0];
+  assert.doesNotMatch(proefRij, /&eacute;&eacute;n keer benaderen|één keer benaderen/, "privacy: proefrij noemt meer dan één contact");
+  assert.match(proefRij, /mailen we je[\s\S]*bellen/, "privacy: proefrij noemt mails tijdens de proef en bellen");
+  // legal 2026-11-16 05u (i): de blokken die de server alleen toont als een schakelaar aan staat
+  // (<!--vraaghulp-->, <!--ideeenai-->, <!--database-->) zag deze test nooit, want hier staan ze uit.
+  // Meet ze daarom in de bron, met dezelfde grenzen; in het patiëntdeel 30 woorden.
+  const patientStart = bron.indexOf('id="patient"');
+  const patientEind = bron.indexOf("<h2", patientStart);
+  let geschakeld = 0;
+  for (const m of bron.matchAll(/<!--([a-z]+)-->([\s\S]*?)<!--\/\1-->/g)) {
+    geschakeld++;
+    const inPatient = m.index > patientStart && m.index < patientEind;
+    const grens = inPatient ? 30 : 40;
+    for (const z of zinnen(m[2].replace(/__[A-Z_]+__/g, "N")))
+      assert.ok(woorden(z) <= grens, "blok " + m[1] + (inPatient ? " (patiëntdeel)" : "") + ": zin van " + woorden(z) + " woorden: " + z.slice(0, 120));
+  }
+  assert.ok(geschakeld >= 3, "geschakelde blokken in juridisch.html gevonden");
 
   // /v2/gegevens: korte zinnen, en de uitleg over een losse kaart klopt met de prullenbak
   const gegevens = await (await fetch(origin + "/v2/gegevens")).text();
@@ -101,7 +129,7 @@ try {
   assert.match(kort(pag.privacy), new RegExp(NA_EINDE_WISSEN_DAGEN + " dagen na het einde van je abonnement, of " + proefBewaar + " dagen na de proef"));
   // gewone taal naast de juridische term
   assert.match(pag.privacy, /<b>Waarom dit mag\.<\/b> De wet noemt dit de grondslag\./);
-  assert.match(pag.privacy, /<b>bezwaar maken<\/b> als we gegevens gebruiken om de dienst veilig te houden/);
+  assert.match(pag.privacy, /<b>bezwaar maken<\/b> als we gegevens gebruiken omdat we daar zelf een goede reden voor hebben \(gerechtvaardigd belang\)/);
   assert.match(pag.verwerkersovereenkomst, /\(een datalek\)[\s\S]*uiterlijk binnen 48 uur/);
   assert.match(pag.verwerkersovereenkomst, new RegExp("wissen we alles binnen " + NA_EINDE_WISSEN_DAGEN + " dagen"));
   console.log("ok: juridische pagina's B1 en samenvattingen kloppen met de code");

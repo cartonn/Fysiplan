@@ -118,7 +118,9 @@ try {
   let live;
   for (let i = 0; i < 100 && !live; i++) { try { live = await haal('/v2/oefeningen.json'); } catch { await new Promise((r) => setTimeout(r, 100)); } }
   assert.ok(live, 'server start niet: ' + stderr.slice(0, 500));
-  const vind = (lijst, naam) => { const hits = lijst.filter((e) => e.naam === naam); assert.equal(hits.length, 1, naam); return hits[0]; };
+  // op de naam uit het bestand: een oefening met een Nederlandse naam (content/oefennamen-nl.json)
+  // levert die naam mee als `eerder`
+  const vind = (lijst, naam) => { const hits = lijst.filter((e) => e.naam === naam || (e.eerder || []).includes(naam)); assert.equal(hits.length, 1, naam); return hits[0]; };
   for (const [naam, o] of Object.entries({ ...productie, ...eigen })) {
     const e = vind(live, naam);
     assert.equal(e.groep, o.groep, `${naam}: groep uit de override`);

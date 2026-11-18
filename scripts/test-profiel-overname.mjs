@@ -73,7 +73,11 @@ try {
   // 4) een beveiligde, ingelogde praktijk bewaart gewoon haar eigen profiel en logo
   const c = await post("/api/praktijk/claim", { praktijk: "Fysio Nieuw", wachtwoord: "wachtwoord-nieuw", akkoord: true });
   assert.equal(c.status, 200);
-  const S = { "x-praktijk-sessie": (await c.json()).sessie };
+  // deze test stuurt de koppen van een browser mee, en een browser krijgt de sessie alleen
+  // in de cookie (HttpOnly): die gaat terug zoals de browser dat doet
+  assert.equal((await c.json()).sessie, "cookie");
+  const S = { cookie: (c.headers.getSetCookie().find((k) => k.startsWith("fpsessie=")) || "").split(";")[0] };
+  assert.match(S.cookie, /^fpsessie=[a-f0-9]{48}$/);
   r = await post("/api/praktijken", { praktijk: "Fysio Nieuw", adres: "Laan 2", tel: "010-1111111", logo: "data:image/png;base64," + png.toString("base64") }, S);
   assert.equal(r.status, 200, "ingelogde praktijk bewaart haar profiel");
   assert.ok((await r.json()).logo.startsWith("uploads/logo-"));

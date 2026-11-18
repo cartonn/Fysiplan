@@ -77,6 +77,12 @@ try {
   console.error(uit.slice(-2000));
   throw e;
 } finally {
-  app.kill();
-  await rm(dataDir, { recursive: true, force: true });
+  // eerst wachten tot de server echt weg is: bij het stoppen schrijft hij zijn bestanden nog weg,
+  // en een rm die daar tussendoor loopt, faalt met ENOTEMPTY (CI van PR #259)
+  if (app.exitCode === null && app.signalCode === null) {
+    const weg = new Promise((r) => app.once("exit", r));
+    app.kill();
+    await Promise.race([weg, new Promise((r) => setTimeout(r, 5000))]);
+  }
+  await rm(dataDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
 }

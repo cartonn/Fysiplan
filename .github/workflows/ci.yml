@@ -29,29 +29,47 @@ jobs:
       - run: npm run test:video-recovery
       - run: npm run test:drafts
       - run: npm run test:beheer
+      - run: npm run test:ideeenbox
       - run: npm run test:backup
       - run: npm run test:sessieherstart
       - run: npm run test:proefpoort
       - run: npm run test:proefverplicht
       - run: npm run test:wisvooraf
       - run: npm run test:proefeindemail
+      - run: npm run test:starttip
       - run: npm run test:oudeproef
       - run: npm run test:abonnement
       - run: npm run test:sweep
       - run: npm run test:patientmobiel
       - run: npm run test:grotelettersk
       - run: npm run test:opnamegeencamera
+      - run: npm run test:opnamegalerij
+      - run: npm run test:sjabloonipad
+      - run: npm run test:tweedetelefoonopen
       - run: npm run test:onderbalkgroot
       - run: npm run test:houdingengroot
       - run: npm run test:spronglinks
       - run: npm run test:loginanderepraktijk
+      - run: npm run test:logintijd
+      - run: npm run test:vergelijkgrens
+      - run: npm run test:slowloris
+      - run: npm run test:kaartraden
+      - run: npm run test:kaartomkeer
       - run: npm run test:agendadubbel
       - run: npm run test:offline
       - run: npm run test:tablet
+      - run: npm run test:zoekpijl
+      - run: npm run test:zoekleestekens
+      - run: npm run test:wisbalk
+      - run: npm run test:afspraakververs
+      - run: npm run test:agendatraag
+      - run: npm run test:conflictbalk
+      - run: npm run test:hernoemconflict
       - run: npm run test:beveiligingfeedback
       - run: npm run test:praktijkslot
       - run: npm run test:tezwaar
       - run: npm run test:opname-eigen
+      - run: npm run test:opnamewissen
       - run: npm run test:videoquotum
       - run: node scripts/test-vraaghulp-grens.mjs
       - run: npm run test:vraaghulpschakelaar
@@ -59,20 +77,29 @@ jobs:
       - run: node scripts/test-gegevens-proef.mjs
       - run: node scripts/test-kaart-weg.mjs
       - run: node scripts/test-kaart-wis-telefoon.mjs
+      - run: node scripts/test-kaart-mijn-gegevens-lijst.mjs
       - run: node scripts/test-mijn-gegevens.mjs
       - run: node scripts/test-dossier-contact.mjs
       - run: node scripts/test-wees-opnames.mjs
+      - run: node scripts/test-video-locatie.mjs
       - run: node scripts/test-proef-einde-wissen.mjs
       - run: node scripts/test-verdwijndatum-praktijk.mjs
       - run: node scripts/test-juridisch-b1.mjs
+      - run: node scripts/test-voorwaarden-code.mjs
       - run: node scripts/test-stem-ai-melding.mjs
       - run: node scripts/test-ai-melding-zoekhulp-vertaling.mjs
       - run: node scripts/test-privacy-inloggen.mjs
+      - run: node scripts/test-privacy-leeslog.mjs
+      - run: node scripts/test-privacy-support.mjs
+      - run: node scripts/test-privacy-inhoud.mjs
       - run: npm run test:kaartversie
       - run: npm run test:hernoem
       - run: npm run test:topbar
       - run: npm run test:tegroot
       - run: npm run test:kruissite
+      - run: npm run test:patientinvoer
+      - run: npm run test:oudetik
+      - run: npm run test:bodygeenobject
       - run: npm run test:praktijkcode
       - run: npm run test:team
       - run: npm run test:teamherstel
@@ -84,18 +111,42 @@ jobs:
       - run: npm run test:patientkant
       - run: npm run test:akkoord
       - run: npm run test:gedaansync
+      - run: npm run test:oefnaam
+      - run: npm run test:oefweg
+      - run: npm run test:naamemoji
+      - run: npm run test:allesgedaan
       - run: npm run test:seintje
       - run: npm run test:sweepoverzicht
       - run: npm run test:gedeeldwerk
+      - run: npm run test:geweigerdactiviteit
+      - run: npm run test:eigenbibnaam
+      - run: npm run test:gegevensrem
       - run: npm run test:sjabloondelen
       - run: npm run test:weekverder
       - run: npm run test:daguitvraag
       - run: npm run test:profielcollega
+      - run: npm run test:profieltherapeut
+      - run: npm run test:oefdagen
+      - run: npm run test:oefdoelweek
+      - run: npm run test:lijstfocus
+      - run: npm run test:kaartenfocus
+      - run: npm run test:dossierannuleren
       - run: npm run test:prullenbak
       - run: npm run test:wachtrijdagen
       - run: npm run test:agendamelding
       - run: npm run test:oefvinkje
+      - run: npm run test:offlineherladen
+      - run: npm run test:eigenoefproef
+      - run: npm run test:kaarthangt
+      - run: npm run test:hernoemvolledig
+      - run: npm run test:opnamedubbel
+      - run: npm run test:offlinescore
+      - run: npm run test:offlinekopie
+      - run: npm run test:teamrolbevestig
       - run: npm run test:seintjevoorrang
+      - run: npm run test:seintjestand
+      - run: npm run test:vertaaldeels
+      - run: npm run test:medialinkvers
       - run: npm run test:qrtaal
       - run: npm run test:eerstedeling
       - run: npm run test:printcompact
@@ -104,7 +155,28 @@ jobs:
       - run: npm run test:kaartroutes
       - run: npm run test:landingprint
       - run: npm run test:offlinestand
+      - run: npm run test:juridisch200
+      - run: npm run test:afspraaktijdzone
+      - run: npm run test:teamweigering
+      - run: npm run test:rolwissel
+      - run: npm run test:ipadtikvlak
+      - run: npm run test:letopdubbel
+      - run: npm run test:focusterugvenster
+      - run: npm run test:naamenbestand
       - run: npm run test:lightbox
+      - run: npm run test:afspraakproef
+      - run: npm run test:praktijknaamlogin
+      - run: npm run test:tegelknoppen
+      - run: npm run test:dagvinkdubbel
+      - run: npm run test:kaartvers
+      - run: npm run test:agendaoffline
+      - run: npm run test:oefwegongedaan
+      - run: npm run test:afspraakuid
+      - run: npm run test:supportnaamlek
+      - run: npm run test:qrcachegrens
+      - run: npm run test:ipsleutel
+      - run: npm run test:activiteitoverspoeld
+      - run: npm run test:sessie200
       - run: npm run test:profielovername
       - run: npm run test:proefarchief
       - run: npm run test:vensterterug
@@ -112,19 +184,31 @@ jobs:
       - run: npm run test:dubbelklikoverzicht
       - run: npm run test:kaart200taal
       - run: npm run test:roepnaamander
+      - run: npm run test:printroepnaam
       - run: npm run test:kaartladen
       - run: npm run test:noorstop
       - run: npm run test:kaartdruk
       - run: npm run test:nieuwekaartnaam
       - run: npm run test:proefwissen
+      - run: node scripts/test-pilot-proefcookie.mjs
       - run: npm run test:pijnscorebezig
+      - run: npm run test:herstellaatstetik
+      - run: npm run test:opnameverouderd
+      - run: npm run test:opnamewacht
+      - run: npm run test:opnameplafond
       - run: npm run test:nietvertaald
+      - run: npm run test:deelsnl
+      - run: npm run test:wachtplek
+      - run: npm run test:uitteam
       - run: npm run test:vertaallaat
       - run: npm run test:kaartweg
+      - run: npm run test:opnieuwdelen
       - run: npm run test:v2contrast
+      - run: npm run test:focusring
       - run: npm run test:seinvenster
       - run: npm run test:lichtladen
       - run: npm run test:beheerherstel
+      - run: npm run test:beheeromgeving
       - run: npm run test:seinmail
       - run: npm run test:tweedestap
       - run: npm run test:stapverplicht
@@ -140,19 +224,62 @@ jobs:
       - run: npm run test:wistweekaarten
       - run: npm run test:emojiinitialen
       - run: npm run test:proeftweedeapparaat
+      - run: npm run test:proefbeheer
+      - run: npm run test:proefcookiebeheer
+      - run: npm run test:proefwispraktijk
+      - run: npm run test:proefdag
+      - run: npm run test:ipadkop
+      - run: npm run test:praktijktegels
+      - run: npm run test:vandaagdatums
+      - run: npm run test:verloopsmal
+      - run: npm run test:vragennaastweg
+      - run: npm run test:akkoordvandaag
+      - run: npm run test:veiliggroot
       - run: npm run test:printgroot
       - run: npm run test:vuleersterij
       - run: npm run test:inlogrem
+      - run: npm run test:inlogremherstart
       - run: npm run test:wachtwoordrem
       - run: npm run test:auditspoor
       - run: npm run test:profielbeheer
+      - run: npm run test:websiteveilig
       - run: npm run test:opzeggenbeheer
       - run: npm run test:praktijknaambezet
       - run: npm run test:naamerftniets
       - run: npm run test:kaartpraktijknaam
       - run: npm run test:wachtwoordvergeten
+      - run: npm run test:tweedestaponderbroken
+      - run: npm run test:teamtikdoelen
+      - run: npm run test:kaartpakket
+      - run: npm run test:sessiecookie
+      - run: npm run test:beheeraccounts
+      - run: npm run test:oefennamen
+      - run: npm run test:openkaart
+      - run: npm run test:bewaker
+      - run: npm run test:omgeving
+      - run: npm run test:prijs
+      - run: npm run test:landingscherm
+      - run: npm run test:plaatsen
+      - run: npm run test:leeslog
+      # tegen een echte PostgreSQL: de test start er zelf een met initdb (staat op de runner)
+      - run: npm run test:database
+      - run: npm run test:healthdbfout
+      - run: npm run test:thuiskaart
+      - run: npm run test:medialink
+      - run: npm run test:patientonderdeel
+      - run: npm run test:vertalingen
+      - run: npm run test:vastevragen
+      - run: npm run test:vragenrollen
+      - run: npm run test:schermen
+      - run: npm run test:schermtoetsenbord
+      - run: npm run test:thuiskaartuitleg
+      - run: npm run test:schermknoppen
       - run: npm run test:zwaaroffline
       - run: npm run test:dagwisseltaal
       - run: npm run test:reekstitel
       - run: npm run test:annulerenhernoem
       - run: npm run test:welkomlink
+      - run: npm run test:proeftokenverloop
+      - run: npm run test:proefcookietermijn
+      - run: npm run test:foutpagina
+      - run: npm run test:wisdubbel

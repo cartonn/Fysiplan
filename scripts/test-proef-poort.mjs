@@ -94,9 +94,10 @@ try {
 
   // 4. proefgegevens wissen heft het slot niet op
   const wis = await fetch(origin + "/v2/proef/wissen", { method: "POST", headers: { cookie: oud, "content-type": "application/x-www-form-urlencoded" }, body: "zeker=1" });
-  assert.ok(wis.status < 500);
+  // sinds sweep 2026-11-15: hangt er een praktijk aan de proef, dan wist deze route niets (409, wissen gaat via Mijn gegevens)
+  assert.equal(wis.status, 409);
   const proeven = JSON.parse(await readFile(join(dataDir, "proef-aanmeldingen.json"), "utf8"));
-  assert.equal("oud0000000000001" in proeven, false, "proef is gewist");
+  assert.equal("oud0000000000001" in proeven, true, "proef met praktijk is niet gewist");
   await isProefSlot(await sjabloon("Fysio Oud", sAnder), "sjabloon na wissen proef");
 
   // 5. lopende proef: beveiligen koppelt het account, schrijven werkt gewoon

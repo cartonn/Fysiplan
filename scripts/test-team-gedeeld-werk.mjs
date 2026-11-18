@@ -126,6 +126,43 @@ try {
   assert.match(html, /alleen die collega of een beheerder van de praktijk verwijderen/, "app legt uit wie het wel mag");
   assert.equal((await post("/api/praktijk/oefeningen/verwijder", { praktijk: P, id: oJ }, J)).status, 200, "Joris verwijdert zijn eigen oefening");
   assert.equal((await post("/api/praktijk/oefeningen/verwijder", { praktijk: P, id: oS }, S)).status, 200, "beheerder verwijdert");
+  // gebruikers-sweep 2026-11-14 (Karin): werk van een collega verdween zonder spoor in Activiteit
+  const act = (await (await get("/api/praktijk/activiteit?praktijk=" + encodeURIComponent(P), S)).json()).activiteit || [];
+  const acties = act.map((e) => e.actie);
+  assert.equal(acties.filter((a) => a === "oefening-verwijderd").length, 2, "beide verwijderde eigen oefeningen staan in Activiteit: " + acties.join(","));
+  assert.ok(acties.includes("sjabloon-verwijderd"), "verwijderd teamsjabloon staat in Activiteit");
+  assert.ok(act.find((e) => e.actie === "oefening-verwijderd").wie, "met wie het deed");
+  assert.match(html, /'oefening-verwijderd':'[^']+'/, "app heeft een leesbare regel voor de oefening");
+  assert.match(html, /'sjabloon-verwijderd':'[^']+'/, "app heeft een leesbare regel voor het sjabloon");
+
+  // ---- gebruikers-sweep 2026-11-14 14u (Karin), security-backlog MIDDEL: geweigerde beheerpogingen van een
+  // collega stonden niet in Activiteit; de beheerder zag ze nooit ----
+  const rij = (a, actie, wie) => a.filter((e) => e.actie === actie && (!wie || (e.wie || "").includes(wie)));
+  const activiteit = async () => (await (await get("/api/praktijk/activiteit?praktijk=" + encodeURIComponent(P), S)).json()).activiteit || [];
+  // Mark probeerde hierboven twee sjablonen en twee oefeningen van anderen weg te halen
+  let a2 = await activiteit();
+  assert.equal(rij(a2, "sjabloon-verwijderen-geweigerd", "Mark").length, 1, "geweigerd sjabloon-verwijderen staat in Activiteit: " + a2.map((e) => e.actie).join(","));
+  assert.equal(rij(a2, "sjabloon-verwijderen-geweigerd", "Mark")[0].n, 2, "twee pogingen op één regel met teller");
+  assert.equal(rij(a2, "oefening-verwijderen-geweigerd", "Mark").length, 1, "geweigerd oefening-verwijderen staat in Activiteit");
+  // Mark maakt zichzelf beheerder of haalt de beheerder weg: 403, en het staat erin
+  const ledenNu = (await (await get("/api/praktijk/team", S)).json()).leden;
+  const idVan = (em) => ledenNu.find((l) => l.email === em).id;
+  assert.equal((await post("/api/praktijk/team/rol", { id: idVan("mark@rollen.nl"), rol: "beheerder" }, M)).status, 403);
+  assert.equal((await post("/api/praktijk/team/verwijder", { id: idVan("sanne@rollen.nl"), gedeeld: "laten" }, M)).status, 403);
+  // profiel van de praktijk aanpassen (telefoon op elke patiëntkaart)
+  assert.equal((await post("/api/praktijken", { praktijk: P, adres: "Straat 1", tel: "0612345678" }, M)).status, 403);
+  // een lus van dezelfde poging duwt de echte regels er niet uit
+  for (let i = 0; i < 20; i++) await post("/api/praktijk/team/rol", { id: idVan("mark@rollen.nl"), rol: "beheerder" }, M);
+  a2 = await activiteit();
+  assert.equal(rij(a2, "team-wijziging-geweigerd", "Mark (rol wijzigen").length, 1, "rol wijzigen door Mark: één regel");
+  assert.ok(rij(a2, "team-wijziging-geweigerd", "Mark (rol wijzigen")[0].n >= 15, "met teller voor de herhalingen");
+  assert.equal(rij(a2, "team-wijziging-geweigerd", "Mark (verwijderen").length, 1, "verwijderen van de beheerder door Mark staat erin");
+  assert.equal(rij(a2, "profiel-wijzigen-geweigerd", "Mark").length, 1, "profiel aanpassen door Mark staat erin");
+  assert.equal(rij(a2, "oefening-verwijderd").length, 2, "de echte regels staan er nog");
+  for (const actie of ["oefening-verwijderen-geweigerd", "vragen-aanpassen-geweigerd", "sjabloon-verwijderen-geweigerd", "profiel-wijzigen-geweigerd"]) {
+    assert.match(html, new RegExp("'" + actie + "':'[^']+'"), "app heeft een leesbare regel voor " + actie);
+  }
+  assert.match(html, /a\.n>1\?/, "app toont de teller");
 
   // ---- gebruikers-sweep 2026-11-12: het gedeelde wachtwoord wist niet de hele praktijk (met de eigenaar) ----
   const wisGedeeld = await formulier("/v2/gegevens/wissen", { praktijk: P, wachtwoord: "praktijk-wachtwoord", zeker: "WISSEN" });
@@ -133,6 +170,31 @@ try {
   assert.match(await wisGedeeld.text(), /beheerder met een eigen login/, "de pagina zegt wat wel kan");
   assert.equal((await post("/api/praktijk/login", { email: "sanne@rollen.nl", wachtwoord: "sanne-wachtwoord" })).status, 200, "de beheerder kan nog inloggen");
   assert.equal((await formulier("/v2/gegevens/download", { praktijk: P, wachtwoord: "praktijk-wachtwoord" })).status, 200, "downloaden met het gedeelde wachtwoord blijft werken");
+
+  // ---- gebruikers-sweep 2026-11-14 18u (Karin), security-backlog MIDDEL: een therapeut die op /v2/gegevens alles
+  // probeert te downloaden of te wissen kreeg 403, maar de beheerder zag het niet in Activiteit (en zonder naam) ----
+  const mailMark = ["mark", "rollen.nl"].join("@");
+  assert.equal((await formulier("/v2/gegevens/download", { praktijk: P, email: mailMark, wachtwoord: "mark-wachtwoord" })).status, 403);
+  assert.equal((await formulier("/v2/gegevens/wissen", { praktijk: P, email: mailMark, wachtwoord: "mark-wachtwoord", zeker: "WISSEN" })).status, 403);
+  a2 = await activiteit();
+  assert.equal(rij(a2, "download-geweigerd", "Mark").length, 1, "download door Mark staat in Activiteit met naam: " + a2.map((e) => e.actie + "/" + e.wie).join(","));
+  assert.equal(rij(a2, "alles-wissen-geweigerd", "Mark").length, 1, "wissen door Mark staat in Activiteit met naam");
+  for (const actie of ["download-geweigerd", "alles-wissen-geweigerd"]) assert.match(html, new RegExp("'" + actie + "':'[^']+'"), "leesbare regel voor " + actie);
+
+  // ---- gebruikers-sweep 2026-11-14 18u (Karin), security-backlog MIDDEL: dezelfde poging later opnieuw verhoogde
+  // alleen de teller op de oude regel; tijd en plek bleven oud en de regel was al uit de 15 geduwd ----
+  const mailSanne = ["sanne", "rollen.nl"].join("@");
+  for (let i = 0; i < 16; i++) assert.equal((await post("/api/praktijk/login", { email: mailSanne, wachtwoord: "sanne-wachtwoord" })).status, 200);
+  a2 = await activiteit();
+  // sinds security 2026-11-16 (lib/audit-keuze.js) houden geweigerde pogingen eigen plekken naast de 15 echte
+  // gebeurtenissen: 16 logins duwen de oude poging er niet meer uit
+  assert.equal(rij(a2, "profiel-wijzigen-geweigerd", "Mark").length, 1, "de oude poging blijft zichtbaar naast 15 logins");
+  const voor = Date.now();
+  assert.equal((await post("/api/praktijken", { praktijk: P, adres: "Straat 2" }, M)).status, 403);
+  a2 = await activiteit();
+  assert.equal(a2[0].actie, "profiel-wijzigen-geweigerd", "de herhaalde poging staat weer bovenaan: " + a2.slice(0, 3).map((e) => e.actie).join(","));
+  assert.equal(a2[0].n, 2, "met de teller van beide pogingen");
+  assert.ok(Date.parse(a2[0].t) >= voor - 1000, "met de tijd van de laatste poging");
 
   // ---- verlopen proef: geen nieuwe collega's of eigen logins meer ----
   app.kill(); await wacht(200);

@@ -10,7 +10,8 @@ import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-const html = await readFile(join(process.cwd(), "public/proef.html"), "utf8");
+// het formulier op Mijn proef bouwt de server (wisTeksten in server.js), dat op de verlopen-pagina staat in proef.html
+const html = (await readFile(join(process.cwd(), "public/proef.html"), "utf8")) + (await readFile(join(process.cwd(), "server.js"), "utf8")).replace(/' \+\s*'/g, "");
 const forms = html.match(/<form method="post" action="\/v2\/proef\/wissen"[\s\S]*?<\/form>/g) || [];
 assert.ok(forms.length >= 2, "twee wisformulieren");
 for (const f of forms) {
@@ -61,6 +62,17 @@ try {
   assert.equal(met.status, 200);
   assert.match(await met.text(), /Je gegevens zijn gewist\./);
   assert.ok(!(await bestaat()), "met vinkje gewist");
+
+  // zonder geldige proefcookie (al gewist, of een therapeut via de app): niet "gewist" zeggen
+  const nogEens = await wis("zeker=1");
+  assert.equal(nogEens.status, 409, "oude cookie: niets te wissen");
+  const tekst = await nogEens.text();
+  assert.match(tekst, /Er is niets gewist\./);
+  assert.doesNotMatch(tekst, /Je gegevens zijn gewist/);
+  const kaal = await fetch(origin + "/v2/proef/wissen", { method: "POST", redirect: "manual",
+    headers: { "content-type": "application/x-www-form-urlencoded", "x-forwarded-for": "10.9.8.3" }, body: "zeker=1" });
+  assert.equal(kaal.status, 409, "zonder cookie: niets te wissen");
+  assert.match(await kaal.text(), /Er is niets gewist\./);
   console.log("proef wissen met vinkje: ok");
 } catch (e) {
   console.error(uit.slice(-2000));

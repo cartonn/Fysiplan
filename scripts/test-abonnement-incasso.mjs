@@ -51,6 +51,10 @@ const klant = (id, aantal, status = "actief") => ({ id, email: id + "@praktijk.n
     eersteBetaling: "tr_eerste" + id, factuurNr: "FP-2026-000" + aantal, mollieKlant: "cst_" + id + "1234", mandaat: "mdt_" + id + "1234",
     ...(status === "opgezegd" ? { opgezegd: nu - dag } : {}) } });
 await writeFile(join(dataDir, "proef-aanmeldingen.json"), JSON.stringify({ goed: klant("goed", 2), mis: klant("mis", 1), weg: klant("weg", 3, "opgezegd") }));
+// de btw-keuze (lib/prijs.js): bij de aankondiging is de prijs exclusief btw. Vlak voor het afschrijven
+// kiest de eigenaar "inclusief": afgeschreven wordt toch wat er is aangekondigd.
+const zetBtwKeuze = (prijsBtw) => writeFile(join(dataDir, "finance-instellingen.json"), JSON.stringify({ kor: "nee", prijsBtw }));
+await zetBtwKeuze("exclusief");
 
 const mails = [], aangemaakt = [], betalingen = new Map();
 let teller = 0;
@@ -111,11 +115,15 @@ try {
   assert.match(onderwerpen("mis@praktijk.nl").join("|"), /aankondiging/);
   assert.equal(onderwerpen("weg@praktijk.nl").length, 0, "opgezegd: geen aankondiging");
   assert.equal(aangemaakt.length, 0, "nog niet afgeschreven");
+  const aankondiging = mails.find((m) => [].concat(m.to).join(",") === "goed@praktijk.nl" && /aankondiging/.test(m.subject));
+  assert.match(aankondiging.text, /schrijven we EUR 24\.18 af voor de volgende maand \(2 therapeuten\)/, "de aankondiging noemt 2 keer 9,99 plus btw");
+  assert.equal((await lees()).goed.abonnement.gemeldBedrag.bedrag, "24.18", "het aangekondigde bedrag ligt vast");
   const blok = await (await fetch(origin + "/v2/proef?mijn=1", { headers: { cookie: "fpproef=" + tokens.goed } })).text();
   assert.match(blok, /automatisch af via Mollie/);
   await stop(app);
 
-  // de tijd verspringt: maand voorbij en de aankondiging is 6 dagen oud
+  // de tijd verspringt: maand voorbij en de aankondiging is 6 dagen oud. Intussen is de btw-keuze veranderd.
+  await zetBtwKeuze("inclusief");
   const pr = await lees();
   for (const id of ["goed", "mis", "weg"]) {
     pr[id].abonnement.betaaldTot = nu - 3600e3;
@@ -132,7 +140,7 @@ try {
     assert.equal(b.webhookUrl, "https://fysiplan.nl/api/mollie/webhook");
   }
   const vanGoed = aangemaakt.find((b) => b.customerId === "cst_goed1234");
-  assert.deepEqual(vanGoed.amount, { currency: "EUR", value: "19.98" });
+  assert.deepEqual(vanGoed.amount, { currency: "EUR", value: "24.18" }, "afgeschreven wordt wat er is aangekondigd, niet het bedrag van de keuze van nu");
   assert.ok(await wacht(async () => (await lees()).mis?.abonnement?.incasso?.id), "incasso opgeslagen");
 
   // webhook: goed betaalt, mis mislukt
@@ -164,7 +172,9 @@ try {
   const f = await fetch(origin + "/v2/proef/factuur?nr=" + nr, { headers: { cookie: "fpproef=" + tokens.goed } });
   assert.equal(f.status, 200);
   const fh = await f.text();
-  assert.ok(fh.includes(nr) && fh.includes(idGoed) && fh.includes("€ 19,98"), "factuur van de incasso");
+  assert.ok(fh.includes(nr) && fh.includes(idGoed) && fh.includes("€ 24,18"), "factuur van de incasso: het afgeschreven bedrag");
+  assert.deepEqual([ag.betalingen[0].bedrag, ag.betalingen[0].btw], ["24.18", { keuze: "exclusief", tarief: 21, exclCent: 1998, btwCent: 420 }], "de betaling draagt het bedrag en de btw van de aankondiging");
+  assert.ok(onderwerpen("goed@praktijk.nl").length && mails.some((m) => /maandbetaling is gelukt/.test(m.subject) && /We hebben EUR 24\.18 afgeschreven/.test(m.text)), "de mail noemt het afgeschreven bedrag");
   assert.equal((await fetch(origin + "/v2/proef/factuur?nr=" + nr, { headers: { cookie: "fpproef=" + tokens.mis } })).status, 404, "andere praktijk ziet hem niet");
   const mijn = await (await fetch(origin + "/v2/proef?mijn=1", { headers: { cookie: "fpproef=" + tokens.goed } })).text();
   assert.ok(mijn.includes("/v2/proef/factuur?nr=" + nr), "Mijn proef linkt naar de nieuwe factuur");

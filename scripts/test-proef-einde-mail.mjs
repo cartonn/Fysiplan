@@ -22,7 +22,7 @@ const aanmeldingen = () => ({
   bijna: basis("bijna", { verloopt: nu + dag })                                  // over een dag: herinnering
 });
 
-async function ronde(mollie) {
+async function ronde(mollie, btwKeuze = { kor: "nee", prijsBtw: "exclusief" }) {
   const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-proefeinde-"));
   const mails = [];
   const nep = createServer((req, res) => {
@@ -32,6 +32,8 @@ async function ronde(mollie) {
   await new Promise((r) => nep.listen(0, "127.0.0.1", r));
   const nepUrl = "http://127.0.0.1:" + nep.address().port;
   await writeFile(join(dataDir, "proef-aanmeldingen.json"), JSON.stringify(aanmeldingen()));
+  // de btw-keuze is gemaakt (lib/prijs.js): zonder keuze biedt de mail online afrekenen niet aan
+  if (btwKeuze) await writeFile(join(dataDir, "finance-instellingen.json"), JSON.stringify(btwKeuze));
   const start = async () => {
     const reserve = createServer();
     await new Promise((r) => reserve.listen(0, "127.0.0.1", r));
@@ -94,5 +96,12 @@ const naar = (m) => [].concat(m.to).join(",");
   assert.match(einde.text, /9,99 euro per therapeut per maand, exclusief btw/);
   const herinner = mails.find((m) => naar(m) === "bijna@praktijk.nl");
   assert.match(herinner.text, /online af op https:\/\/fysiplan\.nl\/v2\/proef\?mijn=1/);
+}
+// met Mollie, maar de btw-keuze is nog niet gemaakt: de mail biedt online afrekenen niet aan en noemt geen prijs
+{
+  const { mails } = await ronde(true, null);
+  const einde = mails.find((m) => naar(m) === "net@praktijk.nl");
+  assert.match(einde.text, /Antwoord op deze mail, dan bellen we je om het abonnement af te spreken/);
+  assert.doesNotMatch(einde.text, /online af|9,99/);
 }
 console.log("Mail op de dag dat de proef afloopt, en de betaallink in de proefmails als Mollie aan staat: ok.");

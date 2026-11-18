@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="color-scheme" content="light"/>
+<title>Fysiplan Beheer · Vertalingen</title>
+<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin/>
+<style>
+  @font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-wght-normal.woff2') format('woff2')}
+  :root{--petrol:#18343B;--petrol2:#20464f;--limoen:#B9E34B;--grijs:#F2F5F3;--lijn:#d9e3df;--lijn2:#e7eeea;--tekst:#314d53;--zacht:#526b70;--fout:#b42318}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 Inter,system-ui,sans-serif;background:var(--grijs);color:var(--tekst)}
+  header{display:flex;align-items:center;gap:14px;padding:12px 28px;background:var(--petrol);color:#fff}
+  .merk{display:flex;align-items:center;gap:10px}
+  .merk b{font-weight:850;font-style:italic;letter-spacing:-.5px;color:var(--limoen)}
+  .merk small{display:block;font-size:11px;color:#bdcfca;margin-top:-2px}
+  header nav{margin-left:auto;display:flex;gap:4px}
+  header nav a{color:#dbe7e3;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:8px}
+  header nav a:hover,header nav a[aria-current]{background:#ffffff1c;color:#fff}
+  main{max-width:1080px;margin:0 auto;padding:26px 28px 60px}
+  .eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--zacht)}
+  h1{margin:4px 0 4px;font-size:28px;letter-spacing:-.03em;font-weight:800;color:var(--petrol)}
+  .lead{margin:0 0 18px;color:var(--zacht);max-width:70ch}
+  .status{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+  .pil{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:#fff;border:1px solid var(--lijn);font-size:12px;color:var(--zacht)}
+  .pil i{width:8px;height:8px;border-radius:50%;background:#9aaeb2}
+  .pil.aan i{background:#5f8f12}
+  h2{font-size:12px;font-weight:700;color:var(--zacht);letter-spacing:.08em;text-transform:uppercase;margin:30px 0 10px;display:flex;align-items:center;gap:8px}
+  h2 .n{background:var(--limoen);color:var(--petrol);border-radius:999px;padding:1px 8px;font-size:11px;letter-spacing:0}
+  .kaart{background:#fff;border:1px solid var(--lijn);border-radius:14px;box-shadow:0 1px 2px rgba(24,52,59,.05)}
+  .knop{font:inherit;font-size:13px;font-weight:650;border-radius:9px;border:1px solid var(--lijn);background:#fff;color:var(--petrol);padding:8px 12px;cursor:pointer}
+  .knop:hover{border-color:var(--petrol2)}
+  .knop.hoofd{background:var(--limoen);border-color:var(--limoen)}
+  .knop.hoofd:hover{background:#a9d33b}
+  .knop.klein{font-size:12px;padding:5px 9px}
+  .knop:focus-visible,textarea:focus-visible,input:focus-visible,select:focus-visible{outline:none;box-shadow:0 0 0 3px #668c1555}
+  .knop[disabled]{opacity:.5;cursor:default}
+  .fout{color:var(--fout);font-size:12.5px}
+  .leeg{padding:22px 20px;color:var(--zacht)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);font-weight:700;padding:10px 14px;border-bottom:1px solid var(--lijn)}
+  td{padding:10px 14px;border-bottom:1px solid var(--lijn2);vertical-align:middle}
+  tr:last-child td{border-bottom:0}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .balk{height:6px;border-radius:999px;background:var(--lijn2);overflow:hidden;min-width:80px}
+  .balk i{display:block;height:100%;background:var(--limoen)}
+  .ronde{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 20px;border-top:1px solid var(--lijn2)}
+  .ronde small{color:var(--zacht);flex:1;min-width:220px}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:14px 20px;border-bottom:1px solid var(--lijn2)}
+  .filters select,.filters input{font:inherit;font-size:13px;border:1px solid var(--lijn);border-radius:9px;padding:7px 10px;background:#fff;color:var(--petrol)}
+  .filters input{flex:1;min-width:160px}
+  .tekst{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px 20px;border-bottom:1px solid var(--lijn2)}
+  .tekst:last-child{border-bottom:0}
+  .tekst .oef{grid-column:1/-1;display:flex;gap:8px;align-items:center;font-size:12px;color:var(--zacht)}
+  .tekst .oef b{color:var(--petrol);font-size:13px}
+  .chip{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11px;font-weight:700;background:var(--lijn2);color:var(--petrol)}
+  .chip.ok{background:var(--limoen)}
+  .nl{white-space:pre-line;font-size:13.5px}
+  .tekst textarea{width:100%;font:inherit;font-size:13.5px;border:1px solid var(--lijn);border-radius:9px;padding:8px 10px;min-height:72px;resize:vertical}
+  .tekst .acties{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
+  .tekst .acties small{color:var(--zacht)}
+  .meer{padding:14px 20px;display:flex;gap:10px;align-items:center;color:var(--zacht)}
+  @media (max-width:760px){.tekst{grid-template-columns:1fr}header nav{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="merk">
+    <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#B9E34B"/><path d="M12.5 8h11l-1 4h-7l-.8 3.2h6l-1 4h-6L12.5 25h-4.5z" fill="#18343B"/></svg>
+    <span><b>FYSIPLAN</b><small>Beheer</small></span>
+  </div>
+  <nav aria-label="Beheer">
+    <a href="/dashboard88/omgeving">Beheeromgeving</a>
+    <a href="/dashboard88/ideeen">Ideeënbox</a>
+    <a href="/dashboard88/vertalingen" aria-current="page">Vertalingen</a>
+  </nav>
+</header>
+<main id="main">
+  <div class="eyebrow">Vertalingen</div>
+  <h1>Klopt de vertaling?</h1>
+  <p class="lead">De patiëntkaart toont de naam en de uitleg van elke oefening in de taal van de patiënt. Laat de bibliotheek hier vooraf vertalen, en laat per taal iemand die de taal goed kent elke tekst nalezen. Zolang een tekst niet is nagelezen, zegt de kaart dat hij automatisch is vertaald. De Nederlandse tekst staat er altijd bij.</p>
+  <div id="inhoud" aria-live="polite"><p class="leeg">Laden…</p></div>
+</main>
+<script type="module" src="/vertalingen-beheer.js?v=1"></script>
+</body>
+</html>

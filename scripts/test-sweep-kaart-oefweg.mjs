@@ -1,0 +1,174 @@
+// Gebruikers-sweep 2026-11-13 22u (Jayden, Pixel 7 en iPhone 14, hertest #291): haalt de praktijk een
+// oefening van de kaart terwijl /k open staat, dan weigert de server een vinkje of "te zwaar" bij die
+// oefening netjes (409). Maar de kaart las dat antwoord niet: het vinkje bleef groen ("1 of 4 done
+// today") en "Too hard?" zei eindeloos "Not sent. Tap to retry", alsof de verbinding het probleem was.
+// Nu draait de kaart het vinkje terug en zegt bij de oefening dat die niet meer op de kaart staat
+// (in de taal van de kaart). Het statische deel draait altijd (CI heeft geen browser); met Playwright
+// ook in een telefoon. `npm run test:oefweg`
+import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { createRequire } from "node:module";
+import { createServer } from "node:http";
+import { tmpdir } from "node:os";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const kaart = await readFile(join(root, "public/kaart.html"), "utf8");
+assert.match(kaart, /if\(r\.status===409&&j&&typeof j==='object'\)j\.weg=true/, "stuur() geeft een 409 door aan de kaart");
+assert.match(kaart, /\.then\(function\(d\)\{if\(d&&d\.weg\)oefWeg\(idx,p===-1\);\}\)/, "vinkje leest het antwoord");
+assert.match(kaart, /if\(st===409\)\{oefWeg\(zidx,false\);return;\}/, "te zwaar: bij 409 geen 'tik opnieuw' maar de melding met herlaadknop");
+// Sweep 2026-11-14 06u (Truus, iPhone SE): "Vernieuw de pagina" kon ze vanaf een beginschermicoon niet opvolgen.
+// Nu een echte knop "Kaart opnieuw laden", en in de stappenmodus gaat de kaart terug naar de weggehaalde oefening.
+for (const t of ["nl", "en", "de", "fr", "es", "pl", "tr", "ar", "uk"]) {
+  assert.match(kaart, new RegExp("    " + t + ":\\{weg:'[^']{10,}',herlaad:'[^']{5,}'"), "melding + knop in het " + t);
+}
+assert.doesNotMatch(kaart, /weg:'[^']*(Vernieuw de pagina|reload the page)/, "geen opdracht om zelf de pagina te vernieuwen");
+assert.match(kaart, /if\(SESSIE>-1&&SESSIE!==idx\)openOef\(idx\)/, "stappenmodus gaat terug naar de weggehaalde oefening");
+assert.match(kaart, /else if\(r\.ok\)verstuurd\+\+;else if\(!weg\)kwijt\+\+/, "wachtrij telt alleen een geslaagde tik als verstuurd, de rest als niet aangekomen");
+for (const t of ["nl", "en", "de", "fr", "es", "pl", "tr", "ar", "uk"]) assert.match(kaart, new RegExp("\\b" + t + ":\\{kwijt:'[^']{20,}'"), "melding niet aangekomen in het " + t);
+assert.match(kaart, /if\(weg\)\{try\{oefWeg\(Number\(it\.body\.oef\),it\.body\.aan!==false\);\}/, "409 uit de wachtrij draait het vinkje terug met de melding");
+
+let playwright = null;
+for (const van of [import.meta.url, "/opt/node22/lib/node_modules/"]) {
+  try { playwright = createRequire(van)("playwright"); break; } catch {}
+}
+if (!playwright) {
+  console.log("PASS weggehaalde oefening op /k (statisch; geen Playwright, browserdeel overgeslagen)");
+  process.exit(0);
+}
+
+const ID = "0e5a0e5a5678";
+const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-oefweg-"));
+await writeFile(join(dataDir, "kaarten.json"), JSON.stringify({ "fysio oefweg": { jayden: { id: ID, praktijk: "Fysio Oefweg", naam: "Jayden",
+  ts: Date.now(), taal: "en", chosen: [{ n: "Squat", id: "", i: 0 }, { n: "Lunges", id: "", i: 1 }, { n: "Brug", id: "", i: 2 }],
+  rows: {}, cells: {}, vids: {} } } }));
+const reserve = createServer();
+await new Promise((r) => reserve.listen(0, "127.0.0.1", r));
+const port = reserve.address().port;
+await new Promise((r) => reserve.close(r));
+const origin = `http://127.0.0.1:${port}`;
+const app = spawn(process.execPath, ["server.js"], {
+  cwd: root, env: { ...process.env, HOST: "127.0.0.1", PORT: String(port), DATA_DIR: dataDir, ADMIN_KEY: "", ANTHROPIC_API_KEY: "" },
+  stdio: ["ignore", "pipe", "pipe"]
+});
+let uit = "";
+app.stdout.on("data", (c) => { uit += c; });
+app.stderr.on("data", (c) => { uit += c; });
+const wacht = (ms) => new Promise((r) => setTimeout(r, ms));
+const { chromium, devices } = playwright;
+const browser = await chromium.launch();
+try {
+  for (let i = 0; i < 100; i++) { try { if ((await fetch(origin + "/health")).ok) break; } catch {} await wacht(50); }
+  const ctx = await browser.newContext({ ...devices["Pixel 7"], deviceScaleFactor: 1, extraHTTPHeaders: { "x-forwarded-for": "10.6.9.1" } });
+  const page = await ctx.newPage();
+  const fouten = [];
+  page.on("pageerror", (e) => fouten.push(String(e)));
+  // de praktijk haalde "Squat" intussen van de kaart: de server antwoordt zoals lib/patient-routes.js
+  const weg = { ok: false, fout: "Deze oefening staat niet meer op je kaart. Open je kaart opnieuw." };
+  let vinkjes = 0, zwaar = 0;
+  await page.route("**/api/kaart/oefening", (r) => { vinkjes++; r.fulfill({ status: 409, contentType: "application/json", body: JSON.stringify(weg) }); });
+  await page.route("**/api/kaart/oefzwaar", (r) => { zwaar++; r.fulfill({ status: 409, contentType: "application/json", body: JSON.stringify(weg) }); });
+  await page.goto(origin + "/k/" + ID + "?taal=en");
+  await page.waitForSelector('#oefs .oefdone[data-idx="0"]');
+  await page.evaluate(() => document.querySelectorAll(".ov.on,.lb.on").forEach((o) => o.classList.remove("on")));
+  await page.click('#oefs .oefdone[data-idx="0"]');
+  await page.waitForSelector(".oefweg", { timeout: 4000 });
+  const r1 = await page.evaluate(() => ({
+    pressed: document.querySelector('#oefs .oefdone[data-idx="0"]').getAttribute("aria-pressed"),
+    tekst: document.querySelector(".oefweg").textContent, rol: document.querySelector(".oefweg").getAttribute("role"),
+    bij: document.querySelector(".oefweg").closest(".oef").dataset.oidx,
+    focus: document.activeElement && document.activeElement.className }));
+  assert.equal(r1.focus, "oefweg", "ook in het overzicht focus op de melding (anders onder de vouw bij 200 %)");
+  assert.equal(vinkjes, 1);
+  assert.equal(r1.pressed, "false", "vinkje teruggedraaid");
+  assert.match(r1.tekst, /no longer on your card/, "melding in het Engels: " + r1.tekst);
+  assert.equal(r1.rol, "alert");
+  assert.equal(r1.bij, "0", "melding bij de juiste oefening");
+  // te zwaar: niet "Not sent. Tap to retry"
+  // de knop staat in de oefenstand; een klik via de DOM loopt door dezelfde handler
+  await page.evaluate(() => document.querySelector('#oefs .oefzwaar[data-zidx="0"]').click());
+  await page.waitForTimeout(600);
+  const zt = await page.evaluate(() => document.querySelector('#oefs .oefzwaar[data-zidx="0"]').textContent);
+  assert.equal(zwaar, 1, "te zwaar verstuurd");
+  assert.doesNotMatch(zt, /retry/i, "geen 'tik opnieuw' bij een weggehaalde oefening: " + zt);
+  const zh = await page.evaluate(() => document.querySelector('#oefs .oefzwaar[data-zidx="0"]').hidden);
+  assert.equal(zh, true, "te zwaar verdwijnt bij een weggehaalde oefening");
+  // een echte knop, minstens 44 px, die de kaart opnieuw laadt
+  const hk = await page.evaluate(() => { const b = document.querySelector('#oefs .oef[data-oidx="0"] .oefherlaad');
+    if (!b) return null; const r = b.getBoundingClientRect(); return { t: b.textContent, h: r.height, w: r.width, tag: b.tagName }; });
+  assert.ok(hk, "herlaadknop bij de oefening");
+  assert.equal(hk.tag, "BUTTON");
+  assert.equal(hk.t, "Reload card");
+  assert.ok(hk.h >= 44, "herlaadknop minstens 44 px hoog: " + hk.h);
+  await Promise.all([page.waitForEvent("load"), page.click('#oefs .oef[data-oidx="0"] .oefherlaad')]);
+  await page.waitForSelector('#oefs .oefdone[data-idx="0"]');
+  assert.equal(await page.locator(".oefweg").count(), 0, "na herladen is de melding weg");
+  // stappenmodus: "Done" op de weggehaalde oefening sprong door naar de volgende; de melding stond
+  // op een scherm dat de patiënt net verliet. Nu gaat de kaart terug naar die oefening.
+  await page.evaluate(() => document.querySelectorAll(".ov.on,.lb.on").forEach((o) => o.classList.remove("on")));
+  await page.click("#startknop");
+  await page.waitForSelector('body.sessie #oefs .oef.actief[data-oidx="0"]');
+  await page.click("#sklaar");
+  await page.waitForSelector("body.sessie #oefs .oef.actief .oefweg", { timeout: 4000 });
+  const s1 = await page.evaluate(() => { const a = document.querySelector("#oefs .oef.actief"); const b = a.querySelector(".oefherlaad");
+    const r = b.getBoundingClientRect();
+    return { oidx: a.dataset.oidx, stel: document.getElementById("stel").textContent, zicht: r.width > 0 && r.height >= 44,
+      focus: document.activeElement && document.activeElement.className }; });
+  assert.equal(s1.oidx, "0", "terug bij de weggehaalde oefening");
+  assert.match(s1.stel, /1/, "teller staat op die oefening: " + s1.stel);
+  assert.ok(s1.zicht, "herlaadknop zichtbaar in de stappenmodus");
+  assert.equal(s1.focus, "oefweg", "focus op de melding");
+  // Sweep 2026-11-18 10u: zonder internet een vinkje gezet bij een oefening die de praktijk intussen weghaalde.
+  // Weer online gaf de server 409, maar de wachtrij meldde "Sent to your physiotherapist ✓" en het vinkje bleef staan.
+  await page.unroute("**/api/kaart/oefening");
+  let offline = true, wachtVinkjes = 0;
+  await page.route("**/api/kaart/oefening", (r) => {
+    if (offline) return r.abort("internetdisconnected");
+    wachtVinkjes++; r.fulfill({ status: 409, contentType: "application/json", body: JSON.stringify(weg) });
+  });
+  await page.goto(origin + "/k/" + ID + "?taal=en");
+  await page.waitForSelector('#oefs .oefdone[data-idx="1"]');
+  await page.evaluate(() => { document.querySelectorAll(".ov.on,.lb.on").forEach((o) => o.classList.remove("on")); document.body.classList.remove("sessie"); });
+  await page.evaluate(() => document.querySelector('#oefs .oefdone[data-idx="1"]').click());
+  await page.waitForFunction(() => { const w = document.getElementById("wachtrij"); return w && w.style.display === "block"; }, null, { timeout: 4000 });
+  offline = false;
+  await page.evaluate(() => window.dispatchEvent(new Event("online")));
+  await page.waitForSelector('#oefs .oef[data-oidx="1"] .oefweg', { timeout: 4000 });
+  await page.waitForTimeout(300);
+  const o1 = await page.evaluate(() => ({ w: document.getElementById("wachtrij").textContent, zicht: document.getElementById("wachtrij").style.display,
+    pressed: document.querySelector('#oefs .oefdone[data-idx="1"]').getAttribute("aria-pressed"),
+    wacht: Object.keys(localStorage).filter((k) => /wacht/i.test(k) && localStorage.getItem(k) !== "{}").length }));
+  assert.equal(wachtVinkjes, 1, "het vinkje uit de wachtrij ging één keer mee");
+  assert.ok(o1.zicht === "none" || !/✓|Sent to/.test(o1.w), "wachtrij meldt geen 'verstuurd' na een 409: " + o1.w);
+  assert.equal(o1.pressed, "false", "vinkje uit de wachtrij teruggedraaid");
+  assert.equal(o1.wacht, 0, "de geweigerde tik staat niet meer in de wachtrij");
+  // Zelfde run (Truus, iPhone SE): de kaart ging intussen in de prullenbak; de server gaf 404 en de wachtrij zei
+  // toch "Verstuurd ✓". Nu een blijvende melding dat het niet aankwam, met de weg naar de praktijk.
+  await page.unroute("**/api/kaart/oefening");
+  offline = true;
+  await page.route("**/api/kaart/oefening", (r) => offline ? r.abort("internetdisconnected")
+    : r.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ ok: false, fout: "Kaart niet gevonden." }) }));
+  await page.evaluate(() => document.querySelector('#oefs .oefdone[data-idx="2"]').click());
+  await page.waitForFunction(() => /opgeslagen|saved/i.test(document.getElementById("wachtrij").textContent), null, { timeout: 4000 });
+  offline = false;
+  await page.evaluate(() => window.dispatchEvent(new Event("online")));
+  await page.waitForFunction(() => document.getElementById("wachtrij").classList.contains("fout"), null, { timeout: 4000 });
+  const o2 = await page.evaluate(() => ({ t: document.getElementById("wachtrij").textContent, rol: document.getElementById("wachtrij").getAttribute("role") }));
+  assert.match(o2.t, /Not received.*call or email your practice/, "404 uit de wachtrij: niet aangekomen, bel de praktijk: " + o2.t);
+  assert.doesNotMatch(o2.t, /✓/);
+  assert.equal(o2.rol, "alert");
+  await page.waitForTimeout(6500);
+  assert.equal(await page.evaluate(() => document.getElementById("wachtrij").style.display), "block", "de melding blijft staan");
+  assert.deepEqual(fouten, []);
+  await ctx.close();
+  console.log("PASS weggehaalde oefening op /k: vinkje terug, melding met herlaadknop, stappenmodus terug naar die oefening");
+} catch (e) {
+  console.error(uit.slice(-2000));
+  throw e;
+} finally {
+  await browser.close();
+  app.kill();
+  await rm(dataDir, { recursive: true, force: true });
+}

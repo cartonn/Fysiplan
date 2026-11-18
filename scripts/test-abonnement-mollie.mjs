@@ -4,7 +4,7 @@
 // alleen een betaling van déze proef met het juiste bedrag laten tellen. `npm run test:abonnement`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { createHash, randomBytes } from "node:crypto";
+import { createHash, randomBytes, scryptSync } from "node:crypto";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
@@ -91,7 +91,18 @@ await writeFile(join(dataDir, "proef-aanmeldingen.json"), JSON.stringify({
   oud0000000000001: { id: "oud0000000000001", email: "oud@praktijk.nl", naam: "Piet Oud", tel: "+31612340000",
     praktijk: "Fysio Oud", gestart: Date.now() - 15 * dag, verloopt: Date.now() - dag, akkoord: "x", tokens: [sha(token)] }
 }));
-const cookie = "fpproef=" + token;
+// de btw-keuze is gemaakt (zie lib/prijs.js en scripts/test-prijs.mjs): 9,99 inclusief btw. Zonder keuze start afrekenen niet.
+await writeFile(join(dataDir, "finance-instellingen.json"), JSON.stringify({ kor: "nee", prijsBtw: "inclusief" }));
+const PIET = ["piet", "oud.invalid"].join("@");
+const WW = "beheer-wachtwoord-1", zout = randomBytes(16); // opzeggen vraagt het wachtwoord van een beheerder
+const wwHash = "scrypt$" + zout.toString("hex") + "$" + scryptSync(WW, zout, 32).toString("hex");
+// De praktijk heeft twee logins en één uitnodiging die nog niet is aangenomen. Het aantal therapeuten
+// komt daaruit, niet uit het formulier (lib/plaatsen.js en scripts/test-plaatsen.mjs).
+await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify({ oudpk0001: { naam: "Fysio Oud", proef: { id: "oud0000000000001" }, leden: [
+  { id: "l1", naam: "Piet Oud", rol: "beheerder", email: PIET, hash: wwHash }, { id: "l2", naam: "Collega", rol: "therapeut", hash: "x" }, { id: "l3", naam: "Genodigd", rol: "therapeut" }] } }));
+// Sinds security 2026-11-15 geeft de proefcookie alleen de abonnementskant niet meer zodra de praktijk een
+// beheerder met eigen login heeft: Piet is ingelogd (sessiecookie naast de proefcookie, zie start()).
+let cookie = "fpproef=" + token;
 const leesProef = async () => JSON.parse(await readFile(join(dataDir, "proef-aanmeldingen.json"), "utf8")).oud0000000000001;
 
 async function start(extraEnv) {
@@ -107,6 +118,11 @@ async function start(extraEnv) {
   app.stderr.on("data", (c) => { app.uit += c; });
   const origin = "http://127.0.0.1:" + port;
   for (let i = 0; i < 200; i++) { try { if ((await fetch(origin + "/health")).ok) break; } catch {} await new Promise((r) => setTimeout(r, 50)); }
+  const r = await fetch(origin + "/api/praktijk/login", { method: "POST", headers: { "content-type": "application/json", "x-forwarded-for": "10.7.1.1" },
+    body: JSON.stringify({ praktijk: "Fysio Oud", email: PIET, wachtwoord: WW }) });
+  const d = await r.json();
+  // na "Alles wissen" (laatste deel) bestaat de praktijk niet meer: dan alleen de proefcookie
+  cookie = "fpproef=" + token + (r.status === 200 && d.sessie ? "; fpsessie=" + d.sessie : "");
   return { app, origin };
 }
 let ip = 0;
@@ -142,22 +158,29 @@ try {
   const privacy = await (await fetch(srv.origin + "/privacy")).text();
   assert.match(privacy, /id="betalen"/, "met sleutel: betaalregel in de tabel");
   assert.match(privacy, /Mollie B\.V\./, "met sleutel: Mollie als ontvanger genoemd");
+  // legal 2026-11-18: de factuurgegevens van Mijn abonnement (naam zoals bij de KvK en adres) worden
+  // bewaard, staan op elke factuur en blijven 7 jaar; de betaalregel en de proefregel moeten dat zeggen
+  const betaalRij = (privacy.match(/<tr id="betalen">[\s\S]*?<\/tr>/) || [""])[0];
+  assert.match(betaalRij, /factuurgegevens/i, "betaalregel noemt de factuurgegevens");
+  assert.match(betaalRij, /adres/, "betaalregel noemt het factuuradres");
+  assert.match(betaalRij, /met de factuurgegevens die erop staan, daarna 7 jaar/, "betaalregel: factuurgegevens blijven 7 jaar");
+  assert.match(privacy, /de betaling en de factuurgegevens 7 jaar bewaard/, "proefregel: factuurgegevens horen bij wat 7 jaar blijft");
   assert.doesNotMatch(privacy, /__[A-Z_]+__/, "met sleutel: geen open plekken");
   const voorwaarden = await (await fetch(srv.origin + "/voorwaarden")).text();
   assert.match(voorwaarden, /eerste maand vooraf, via Mollie/, "voorwaarden noemen de online betaling");
-  r = await form(srv.origin, "/v2/proef/betalen", { aantal: "0" }, { cookie });
-  assert.equal(r.status, 422, "aantal 0 geweigerd");
+  assert.doesNotMatch(html, /name="aantal"/, "het aantal therapeuten is geen invulveld meer");
+  assert.match(html, /Je praktijk heeft <b>2 logins<\/b>\. Elke login telt als één therapeut: je betaalt nu <b>€ 19,98<\/b>/, "het betaalblok telt de logins en noemt het bedrag");
   r = await form(srv.origin, "/v2/proef/betalen", { aantal: "2" }, { cookie, "sec-fetch-site": "cross-site" });
   assert.equal(r.status, 403, "kruissite geweigerd");
   r = await form(srv.origin, "/v2/proef/betalen", { aantal: "2" });
   assert.equal(r.headers.get("location"), "/v2/proef", "zonder proef: terug naar aanmelden");
   assert.equal(nep.verzoeken.length, 0, "nog niets naar Mollie");
 
-  r = await form(srv.origin, "/v2/proef/betalen", { aantal: "2" }, { cookie });
+  r = await form(srv.origin, "/v2/proef/betalen", { aantal: "1" }, { cookie }); // een meegestuurd aantal telt niet
   assert.equal(r.status, 303);
   assert.equal(r.headers.get("location"), "https://www.mollie.com/checkout/test", "door naar Mollie");
   const betaalVerzoek = nep.verzoeken.find((v) => v.pad === "/v2/payments").body;
-  assert.deepEqual(betaalVerzoek.amount, { currency: "EUR", value: "19.98" }, "2 x 9,99");
+  assert.deepEqual(betaalVerzoek.amount, { currency: "EUR", value: "19.98" }, "2 logins x 9,99, wat het formulier ook zegt");
   assert.equal(betaalVerzoek.sequenceType, "first");
   assert.equal(betaalVerzoek.customerId, "cst_test1");
   assert.equal(betaalVerzoek.metadata.proef, "oud0000000000001");
@@ -221,12 +244,12 @@ try {
   r = await form(srv.origin, "/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1" });
   assert.equal(r.headers.get("location"), "/v2/proef", "zonder cookie niets opgezegd");
   assert.equal((await leesProef()).abonnement.status, "actief", "nog steeds actief");
-  r = await form(srv.origin, "/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1" }, { cookie });
+  r = await form(srv.origin, "/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1", wachtwoord: WW }, { cookie });
   assert.equal(r.status, 200);
   assert.match(await r.text(), /Je abonnement is opgezegd/);
   const opg = (await leesProef()).abonnement;
   assert.equal(opg.status, "opgezegd"); assert.ok(opg.opgezegd > 0);
-  await form(srv.origin, "/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1" }, { cookie });
+  await form(srv.origin, "/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1", wachtwoord: WW }, { cookie });
   assert.equal((await leesProef()).abonnement.opgezegd, opg.opgezegd, "opzeggen is idempotent");
   html = await (await fetch(srv.origin + "/v2/proef?mijn=1", { headers: { cookie } })).text();
   assert.match(html, /abonnement is opgezegd/); assert.match(html, /Toch doorgaan/); assert.match(html, /href="\/v2\/proef\/factuur"/);
@@ -239,6 +262,8 @@ try {
   srv.app.kill(); await new Promise((r) => srv.app.once("exit", r));
 
   // 5. met btw-id en bedrijfsgegevens: een echte factuur, zelfde nummer
+  // (het stuk over wissen hieronder gaat over een aanmelding zonder beveiligde praktijk: met een praktijk wist de beheerder in de app)
+  await rm(join(dataDir, "praktijk-accounts.json"), { force: true });
   srv = await start({ MOLLIE_API_KEY: "test_sleutel", MOLLIE_API_BASIS: mollieBasis, FYSIPLAN_BTW_NUMMER: "NL000000000B01",
     FYSIPLAN_BEDRIJF: "Fysiplan B.V.", FYSIPLAN_KVK: "12345678", FYSIPLAN_ADRES: "Straat 1, Utrecht" });
   html = await (await fetch(srv.origin + "/v2/proef/factuur", { headers: { cookie } })).text();

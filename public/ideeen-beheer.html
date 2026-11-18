@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="color-scheme" content="light"/>
+<title>Fysiplan Beheer · Ideeënbox</title>
+<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin/>
+<style>
+  @font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/inter-latin-wght-normal.woff2') format('woff2')}
+  :root{--petrol:#18343B;--petrol2:#20464f;--limoen:#B9E34B;--grijs:#F2F5F3;--lijn:#d9e3df;--lijn2:#e7eeea;--tekst:#314d53;--zacht:#526b70;--fout:#b42318}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 Inter,system-ui,sans-serif;background:var(--grijs);color:var(--tekst)}
+  header{display:flex;align-items:center;gap:14px;padding:12px 28px;background:var(--petrol);color:#fff}
+  .merk{display:flex;align-items:center;gap:10px}
+  .merk b{font-weight:850;font-style:italic;letter-spacing:-.5px;color:var(--limoen)}
+  .merk small{display:block;font-size:11px;color:#bdcfca;margin-top:-2px}
+  header nav{margin-left:auto;display:flex;gap:4px}
+  header nav a{color:#dbe7e3;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:8px}
+  header nav a:hover,header nav a[aria-current]{background:#ffffff1c;color:#fff}
+  main{max-width:1080px;margin:0 auto;padding:26px 28px 60px}
+  .eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--zacht)}
+  h1{margin:4px 0 4px;font-size:28px;letter-spacing:-.03em;font-weight:800;color:var(--petrol)}
+  .lead{margin:0 0 18px;color:var(--zacht);max-width:70ch}
+  .status{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+  .pil{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:#fff;border:1px solid var(--lijn);font-size:12px;color:var(--zacht)}
+  .pil i{width:8px;height:8px;border-radius:50%;background:#9aaeb2}
+  .pil.aan i{background:#5f8f12}
+  h2{font-size:12px;font-weight:700;color:var(--zacht);letter-spacing:.08em;text-transform:uppercase;margin:30px 0 10px;display:flex;align-items:center;gap:8px}
+  h2 .n{background:var(--limoen);color:var(--petrol);border-radius:999px;padding:1px 8px;font-size:11px;letter-spacing:0}
+  .kaart{background:#fff;border:1px solid var(--lijn);border-radius:14px;box-shadow:0 1px 2px rgba(24,52,59,.05)}
+  .voorstel-kop{display:flex;align-items:baseline;gap:12px;padding:16px 20px;border-bottom:1px solid var(--lijn2)}
+  .voorstel-kop b{font-size:16px;color:var(--petrol)}
+  .voorstel-kop span{color:var(--zacht);font-size:12.5px}
+  .voorstel-kop .rechts{margin-left:auto}
+  .idee{display:grid;grid-template-columns:44px 1fr 240px;gap:16px;padding:18px 20px;border-bottom:1px solid var(--lijn2)}
+  .idee:last-child{border-bottom:0}
+  .plek{width:36px;height:36px;border-radius:10px;background:var(--petrol);color:var(--limoen);font-weight:800;font-size:17px;display:grid;place-items:center}
+  .titel{font-size:15.5px;font-weight:700;color:var(--petrol);line-height:1.35}
+  .tekst{margin-top:4px;font-size:13px;white-space:pre-line;color:var(--tekst)}
+  .cijfers{margin-top:6px;font-size:12px;color:var(--zacht);font-variant-numeric:tabular-nums}
+  .agent{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--grijs);font-size:13px}
+  .agent .kop{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--zacht);margin-bottom:4px}
+  .agent dl{margin:0;display:grid;grid-template-columns:90px 1fr;gap:3px 10px}
+  .agent dt{color:var(--zacht)}
+  .agent dd{margin:0;color:var(--petrol)}
+  .chip{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11px;font-weight:700;background:var(--lijn2);color:var(--petrol)}
+  .chip.bouwen,.chip.gepland,.chip.gebouwd{background:var(--limoen)}
+  .chip.afgewezen{background:#fde4df;color:#8a2a17}
+  .acties{display:flex;flex-direction:column;gap:6px;align-self:start}
+  .knop{font:inherit;font-size:13px;font-weight:650;border-radius:9px;border:1px solid var(--lijn);background:#fff;color:var(--petrol);padding:8px 12px;cursor:pointer;text-align:left}
+  .knop:hover{border-color:var(--petrol2)}
+  .knop.hoofd{background:var(--limoen);border-color:var(--limoen)}
+  .knop.hoofd:hover{background:#a9d33b}
+  .knop.klein{font-size:12px;padding:5px 9px}
+  .knop:focus-visible,textarea:focus-visible,input:focus-visible{outline:none;box-shadow:0 0 0 3px #668c1555}
+  .knop[disabled]{opacity:.5;cursor:default}
+  .reden textarea{width:100%;font:inherit;font-size:13px;border:1px solid var(--lijn);border-radius:9px;padding:8px 10px;min-height:64px;resize:vertical}
+  .reden small{display:block;color:var(--zacht);font-size:11.5px;margin:2px 0 6px}
+  .besloten{font-size:12.5px;color:var(--zacht)}
+  .besloten .chip{margin-bottom:4px}
+  .fout{color:var(--fout);font-size:12.5px}
+  .leeg{padding:22px 20px;color:var(--zacht)}
+  .ronde{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:1px solid var(--lijn2)}
+  .ronde div{padding:16px 20px;border-right:1px solid var(--lijn2)}
+  .ronde div:last-child{border-right:0}
+  .ronde b{display:block;font-size:24px;color:var(--petrol);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .ronde span{font-size:12px;color:var(--zacht)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);font-weight:700;padding:10px 14px;border-bottom:1px solid var(--lijn)}
+  td{padding:10px 14px;border-bottom:1px solid var(--lijn2);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  tr.verborgen td{opacity:.55}
+  .ronde-voet{display:flex;align-items:center;gap:12px;padding:12px 20px}
+  .ronde-voet small{color:var(--zacht);flex:1}
+  @media (max-width:860px){.idee{grid-template-columns:36px 1fr}.acties{grid-column:2;flex-direction:row;flex-wrap:wrap}.ronde{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="merk">
+    <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#B9E34B"/><path d="M12.5 8h11l-1 4h-7l-.8 3.2h6l-1 4h-6L12.5 25h-4.5z" fill="#18343B"/></svg>
+    <span><b>FYSIPLAN</b><small>Beheer</small></span>
+  </div>
+  <nav aria-label="Beheer">
+    <a href="/dashboard88/omgeving">Beheeromgeving</a>
+    <a href="/dashboard88/ideeen" aria-current="page">Ideeënbox</a>
+    <a href="/dashboard88">Bezoekcijfers en security</a>
+  </nav>
+</header>
+<main id="main" aria-live="polite">
+  <div class="eyebrow">Ideeënbox</div>
+  <h1>Wat gaan we bouwen?</h1>
+  <p class="lead">Therapeuten en beheerders van praktijken plaatsen ideeën en stemmen erop. Aan het eind van elke maand zet de agent de top 4 hier voor je klaar. Jij beslist; de therapeuten zien je besluit terug in de app.</p>
+  <div id="inhoud"><p class="leeg">Laden…</p></div>
+</main>
+<script type="module" src="/ideeen-beheer.js?v=1"></script>
+</body>
+</html>

@@ -119,6 +119,9 @@
   .veilig{display:flex;gap:10px;align-items:flex-start;margin:22px 0 0;padding:12px 14px;
     background:var(--veilig-bg);border-radius:10px;font:500 .9375rem/1.45 var(--disp);color:var(--veilig-tekst)}
   .veilig svg{flex:0 0 16px;margin-top:3px}
+  /* de veiligheidszin mag krimpen en afbreken: bij 200 % + "A A" viel "overleg met je fysiotherapeut."
+     rechts weg (gebruikers-sweep 2026-11-13 02u, Truus, iPhone SE) */
+  #veiligTxt{min-width:0;overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}
 
   /* voortgang van vandaag en de startknop */
   .oefvoortgang{display:flex;flex-wrap:wrap;flex-direction:column;gap:8px;margin:0 0 14px}
@@ -151,6 +154,9 @@
   /* zonder avatar geen leeg vlak: het volgnummer van de oefening staat erin */
   #oefs{counter-reset:oef}
   .oef{counter-increment:oef}
+  .oefweg{margin:6px 0 0;font-size:.94rem;line-height:1.35;color:#9b1c1c;font-weight:600}
+  .oefherlaad{min-height:44px;margin-top:8px;padding:8px 16px;border:2px solid #9b1c1c;border-radius:10px;background:#fff;
+    color:#9b1c1c;font-family:inherit;font-weight:600;font-size:1rem;line-height:1.2;cursor:pointer;max-width:100%;white-space:normal;text-align:center}
   .geenfoto{flex:0 0 64px;height:64px;border-radius:10px;background:var(--chip);display:flex;align-items:center;justify-content:center;
     font:600 1.25rem/1 var(--disp);color:var(--grijs)}
   .geenfoto::before{content:counter(oef)}
@@ -163,6 +169,9 @@
   .oefinfo{flex:1;min-width:0}
   .oefinfo[role=button]:focus-visible{outline:3px solid var(--blauw);outline-offset:4px;border-radius:6px}
   .naam{overflow-wrap:anywhere}
+  /* lange woorden bij 200 % tekst netjes afbreken ("fysiothera-peut") in plaats van midden in een
+     woord zonder streepje; alleen koppen en oefennamen, lopende tekst en knoppen niet */
+  h2,.naam{-webkit-hyphens:auto;hyphens:auto}
   .naam{font:600 1.0625rem/1.3 var(--disp);color:var(--inkt)}
   /* dosering: in de lijst één grijze regel, in de oefenstand grote cijfers */
   .dosis{margin-top:2px;font:400 .9375rem/1.4 var(--disp);color:var(--grijs);overflow-wrap:anywhere}
@@ -181,7 +190,8 @@
   .oefdone:focus-visible{outline:3px solid var(--blauw);outline-offset:-4px;border-radius:12px}
 
   /* oefenstand: alleen de open oefening, de rest van de kaart wacht */
-  body.sessie .wrap{padding-top:0;padding-bottom:calc(132px + env(safe-area-inset-bottom))}
+  /* minstens de echte hoogte van de onderbalk: bij 200 % tekst is die ~206 px en viel de pijnregel eronder (sweep 2026-11-15, Truus) */
+  body.sessie .wrap{padding-top:0;padding-bottom:max(calc(132px + env(safe-area-inset-bottom)),calc(var(--sbalk-h,0px) + 24px))}
   body.sessie .wrap>*:not(#b_oef),body.sessie #b_oef>*:not(#oefs):not(#veilig),body.sessie .oef:not(.actief){display:none !important}
   body.sessie .blok{border-top:0;padding-top:0;padding-bottom:0}
   body.sessie #oefs{margin-top:0}
@@ -220,6 +230,9 @@
   /* speelt de video met zijn eigen tekstblok, dan niet dezelfde uitleg er nog eens onder */
   .oef:has(.vhouder.open .vtekst)>.oefuitleg{display:none}
   .nietvertaald{margin-top:8px;font:italic 400 .875rem/1.45 var(--disp);color:var(--grijs)}
+  .nlorigineel{margin-top:6px;font:400 .875rem/1.45 var(--disp);color:var(--grijs)}
+  .nlorigineel summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--blauw);text-decoration:underline;text-underline-offset:3px}
+  .nlorigineel p{margin-top:4px;font-size:.9375rem;color:var(--tekst)}
   /* "te zwaar"-tik: de patiënt wijst de oefening aan die niet gaat, zonder bericht te typen */
   .oefzwaar{min-height:44px;margin-top:18px;padding:0 2px;border:0;background:none;
     font:600 .9375rem/1.2 var(--disp);color:var(--blauw);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
@@ -302,6 +315,8 @@
   .vhouder video.avatar{aspect-ratio:auto;height:auto;max-height:72vh;background:#fff}
   .vstatus{padding:10px var(--goot);font-size:.9375rem;line-height:1.4}
   .vstatus button{margin:8px 0 0;padding:8px 12px;min-height:44px;display:block}
+  /* video speelt niet (fout of geen internet): video weg, melding en "Opnieuw proberen" in de kolom */
+  .vhouder.vfout>video{display:none}
   .vhouder .ytextern{display:block;padding:10px var(--goot) 4px;text-align:center;font:600 .875rem/1.35 var(--disp);color:var(--grijs);text-decoration:underline}
   .vtekst{margin:0;padding:16px var(--goot) 4px;background:var(--bg)}
   .vtekst-label{margin-bottom:6px;font:700 1.125rem/1.3 var(--disp);color:var(--inkt)}
@@ -443,6 +458,7 @@
   .mbar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:0}
   .mbar .staaf{width:100%;max-width:34px;border-radius:4px 4px 0 0;min-height:6px}
   .mbar .mdat{font:500 .75rem/1 var(--disp);color:var(--grijs);white-space:nowrap;margin-top:3px}
+  .mbar .mdat.mdat-l{align-self:flex-start}.mbar .mdat.mdat-r{align-self:flex-end}
   .mbar .mval{font:700 .875rem/1 var(--disp);color:var(--inkt)}
   /* neutrale, feitelijke samenvatting van de scores; bewust geen kleuroordeel,
      de duiding blijft bij de fysiotherapeut */
@@ -451,6 +467,24 @@
   /* vergeleken-met-je-start: alleen zichtbaar bij een duidelijk lagere score */
   .mstart{color:var(--groen)}
   .mnoot{font:400 .875rem/1.5 var(--disp);color:var(--grijs);margin-top:14px}
+
+  /* vaste vragen (lib/vaste-vragen.js): nagekeken antwoorden, geen vrije vraag naar een AI-dienst */
+  #vvkop{margin-top:30px}
+  .vvlijst details{border-top:1px solid var(--rand)}
+  .vvlijst details:last-child{border-bottom:1px solid var(--rand)}
+  .vvlijst summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;min-height:52px;padding:10px 2px;
+    font:600 1.0625rem/1.4 var(--disp);color:var(--inkt)}
+  .vvlijst summary::-webkit-details-marker{display:none}
+  /* de vraag zelf mag krimpen en afbreken: bij 200 % + "A A" duwde een lang woord ("overgeslagen.")
+     de pagina 16 px breder en het "+" uit beeld (gebruikers-sweep 2026-11-13 02u, Truus, iPhone SE) */
+  .vvlijst summary>span{min-width:0;overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}
+  .vvlijst summary::after{content:"+";margin-left:auto;font:400 1.375rem/1 var(--disp);color:var(--grijs)}
+  .vvlijst details[open] summary::after{content:"\2212"}
+  .vvlijst details p{margin:0 0 14px;font:400 1.0625rem/1.6 var(--disp);color:var(--tekst);max-width:68ch}
+  .vvnoot{font:400 .875rem/1.5 var(--disp);color:var(--grijs);margin-top:10px}
+  .oefvragen{margin-top:22px}
+  .oefvragen:empty{display:none}
+  .oefvragen h3{font:700 1.125rem/1.3 var(--disp);color:var(--inkt);margin-bottom:4px}
 
   /* vraag het aan je kaart: korte AI-uitleg over de eigen oefeningen */
   #vraagkop{margin-top:30px}
@@ -472,6 +506,7 @@
   .privregel button{flex:0 0 auto;min-height:44px;max-width:100%;font:600 .9375rem/1 var(--disp);color:var(--inkt);background:var(--bg);border:1px solid var(--rand);border-radius:10px;padding:8px 14px;cursor:pointer}
   .wachtrij{font:600 .9375rem/1.5 var(--disp);color:#8a5a00;background:#fff7e6;border:1px solid #f2d999;border-radius:10px;padding:10px 13px;margin:0 0 16px}
   .wachtrij.klaar{color:#3e7a52;background:#eef6ef;border-color:#d7e8da}
+  .wachtrij.fout{color:#9b1c1c;background:#fdf0ef;border-color:#f1c9c4}
   /* antwoord van de therapeut op een seintje, en de volgende afspraak: vallen op, printen niet mee */
   .akaart{background:var(--blauw-05,#f0f5fd);border-radius:12px;padding:14px 16px;margin:0 0 20px}
   .akaart .akop{font:600 .875rem/1.3 var(--disp);color:var(--grijs);margin-bottom:4px}
@@ -600,7 +635,7 @@
     .wrap{padding:0;max-width:none}
     .blok,.voet{border-top:0;margin:0;padding:0}
     .kopacties,.leesrij,.skop,.sbalk,#startknop,.oefvoortgang,.ovalles,.oefdone,.oefzwaar,.vbtn,.vhouder,.vmeta,.demobadge,.infobadge,.geenfoto,
-    .mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#seinkop,#hskop,#pskkop,#meerkop,#offlijn,.belknop,.appbanner,
+    .mkaart,.agkaart,.vkaart,.skaart,.akaart,#metingkop,#agendakop,#vraagkop,#vvkop,.vvkaart,.oefvragen,#seinkop,#hskop,#pskkop,#meerkop,#offlijn,.belknop,.appbanner,
     .afgerondbanner,.privregel,.wachtrij,.voetacties,.datum,.lightbox{display:none !important}
     .oef{flex-wrap:wrap;break-inside:avoid;padding:6px 0}
     #oefs .oef>.oefuitleg{display:block !important;flex:1 1 100%;margin:0 0 8px 78px}
@@ -757,7 +792,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   <p class="datum" id="vandaag"></p>
   <h2><span id="oefkop">Jouw oefeningen</span> <span class="tel" id="oeftel"></span></h2>
   <div class="client" id="clientblok" style="display:none"></div>
-  <div class="oefvoortgang" id="oefvoortgang" style="display:none"><span class="ovbalk" aria-hidden="true"><i id="ovvul"></i></span><span class="ovtekst" id="ovtekst"></span></div>
+  <p class="nietvertaald" id="deelsNl" role="note" hidden></p>
+  <div class="oefvoortgang" id="oefvoortgang" style="display:none"><span class="ovbalk" aria-hidden="true"><i id="ovvul"></i></span><span class="ovtekst" id="ovtekst" role="status" tabindex="-1"></span></div>
   <button type="button" class="kn1" id="startknop" style="display:none"></button>
   <div class="leesrij">
     <button type="button" id="leesBtn" style="display:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg><span id="leesTxt">Lees voor</span></button>
@@ -767,6 +803,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   <div id="oefs"></div>
   <button type="button" class="ovalles" id="ovalles" style="display:none"></button>
   <div class="veilig" id="veilig"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 16px"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18.1a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span id="veiligTxt"></span></div>
+
+  <h2 id="vvkop" hidden>Vragen over je oefeningen</h2>
+  <div class="vvkaart" id="vvkaart" hidden></div>
 
   <h2 id="vraagkop" style="display:none">Vraag over je oefeningen (AI)</h2>
   <div class="vkaart" id="vraagkaart" style="display:none">
@@ -962,7 +1001,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // die tekst is algemeen en is nooit tegen deze beelden gelegd. We tonen hem nog steeds,
   // maar met een eigen kop en een regel die zegt waar elk deel vandaan komt.
   var VIDEO_TEKST_ALG={nl:'Algemene uitleg bij de oefening',en:'General instructions for this exercise',de:'Allgemeine Anleitung zur Übung',fr:'Instructions générales pour l’exercice',es:'Instrucciones generales del ejercicio',pl:'Ogólny opis ćwiczenia',tr:'Egzersiz için genel açıklama',ar:'شرح عام للتمرين',uk:'Загальний опис вправи'};
-  var VIDEO_BRON_PRAKTIJK={nl:'Deze video komt van je praktijk. De tekst hieronder is de algemene uitleg bij deze oefening uit de bibliotheek.',en:'This video comes from your practice. The text below is the general library instruction for this exercise.',de:'Dieses Video kommt von deiner Praxis. Der Text darunter ist die allgemeine Anleitung aus der Übungsbibliothek.',fr:'Cette vidéo vient de votre cabinet. Le texte ci-dessous est l’instruction générale de la bibliothèque.',es:'Este vídeo es de tu consulta. El texto siguiente es la instrucción general de la biblioteca.',pl:'Ten film pochodzi z twojego gabinetu. Poniższy tekst to ogólny opis z biblioteki ćwiczeń.',tr:'Bu video kliniğinden geliyor. Aşağıdaki metin egzersiz kütüphanesindeki genel açıklamadır.',ar:'هذا الفيديو من عيادتك. النص أدناه هو الشرح العام لهذا التمرين من المكتبة.',uk:'Це відео від твоєї практики. Текст нижче — загальний опис вправи з бібліотеки.'};
+  var VIDEO_BRON_PRAKTIJK={nl:'Deze video komt van je praktijk. De tekst hieronder is de vaste uitleg van Fysiplan bij deze oefening.',en:'This video comes from your practice. The text below is the general library instruction for this exercise.',de:'Dieses Video kommt von deiner Praxis. Der Text darunter ist die allgemeine Anleitung aus der Übungsbibliothek.',fr:'Cette vidéo vient de votre cabinet. Le texte ci-dessous est l’instruction générale de la bibliothèque.',es:'Este vídeo es de tu consulta. El texto siguiente es la instrucción general de la biblioteca.',pl:'Ten film pochodzi z twojego gabinetu. Poniższy tekst to ogólny opis z biblioteki ćwiczeń.',tr:'Bu video kliniğinden geliyor. Aşağıdaki metin egzersiz kütüphanesindeki genel açıklamadır.',ar:'هذا الفيديو من عيادتك. النص أدناه هو الشرح العام لهذا التمرين من المكتبة.',uk:'Це відео від твоєї практики. Текст нижче — загальний опис вправи з бібліотеки.'};
   var VIDEO_TEKST_LABEL={nl:'Uitleg bij de video',en:'Video instructions',de:'Anleitung zum Video',fr:'Instructions de la vidéo',es:'Instrucciones del vídeo',pl:'Instrukcja do filmu',tr:'Video açıklaması',ar:'شرح الفيديو',uk:'Пояснення до відео'};
   // Een eerder gekozen taal wint; anders de taal van de telefoon/browser van de
   // patiënt; anders Nederlands. Zo opent de kaart meteen in de taal van de patiënt,
@@ -996,12 +1035,15 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function neutraleTitel(){try{document.title=tr('eyebrow')+' — Fysiplan';document.documentElement.lang=TAAL;}catch(e){}}
   neutraleTitel();
   var VERT={};
+  // per taal de Nederlandse teksten waarvan een lezer de vertaling heeft nagelezen (/api/kaart/vertaal)
+  var NAGEL={};
   var K=null;
   var mediaReviewReady=false,blockedMedia={},explanationHolds=[],poseKeuring={},merkDek={},bronGecontroleerd={},hercontroleGedaan={};
   function mediaSource(o){return String(o&&(o.kaartImg||o.img)||'').replace(/^\/+/, '').replace(/^v2\//,'');}
   function mediaKey(o){return String(o&&o.exerciseId||'')+'|'+mediaSource(o);}
   function mediaWithheld(o){return !mediaReviewReady||!!blockedMedia[mediaKey(o)];}
-  function explanationWithheld(o){return !mediaReviewReady||!o||explanationHolds.some(function(h){return (h.exerciseId&&h.exerciseId===o.exerciseId)||h.name===o.naam;});}
+  // een houd geldt op vast id en op naam; ook op de naam die de oefening eerder had
+  function explanationWithheld(o){return !mediaReviewReady||!o||explanationHolds.some(function(h){return (h.exerciseId&&h.exerciseId===o.exerciseId)||h.name===o.naam||(o.eerder||[]).indexOf(h.name)>-1;});}
   // Uitsnede-eisen, woordelijk gelijk aan lib/pose-frames.js. scripts/test-mobile-pose-layout.mjs
   // draait beide implementaties op dezelfde invoer en vergelijkt de uitkomst.
   function geldigeUitsnede(c,w,h){
@@ -1069,10 +1111,19 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       if(img.complete&&img.naturalWidth)dekMiniatuur(img);
     });
   }
-  async function loadMobileReview(){
-    var responses=await Promise.all([fetch('/mobile-media-review.json',{cache:'no-cache'}),fetch('/mobile-narration-review.json',{cache:'no-cache'})]);
-    if(responses.some(function(r){return !r.ok;}))throw Error('Review unavailable');
-    var data=await Promise.all(responses.map(function(r){return r.json();}));
+  // De server stuurt met de kaart mee wat bij haar eigen oefeningen hoort (eigen: de regels
+  // uit beide keuringsbestanden, onbewerkt). Zonder dat pakket haalt de kaart de hele
+  // bestanden op, zoals altijd. De controles hieronder zijn voor beide wegen dezelfde.
+  async function loadMobileReview(eigen){
+    var data;
+    if(eigen){
+      if(!eigen.media||!eigen.narration)throw Error('Invalid review');
+      data=[eigen.media,eigen.narration];
+    }else{
+      var responses=await Promise.all([fetch('/mobile-media-review.json',{cache:'no-cache'}),fetch('/mobile-narration-review.json',{cache:'no-cache'})]);
+      if(responses.some(function(r){return !r.ok;}))throw Error('Review unavailable');
+      data=await Promise.all(responses.map(function(r){return r.json();}));
+    }
     if(!Array.isArray(data[0].entries)||!Array.isArray(data[1].holds))throw Error('Invalid review');
     // Twee beoordelingsbestanden uit verschillende generaties mogen nooit samen gelden:
     // offline kan de ene uit de cache komen en de andere van het netwerk, en dan belandt
@@ -1137,15 +1188,15 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function tr(k){var d=T[TAAL]||T.nl;return d[k]!=null?d[k]:T.nl[k];}
   // teksten voor het seintje naar de praktijk (apart blokje; valt terug op Nederlands)
   var TSN={
-    nl:{seinkop:'Je fysiotherapeut iets laten weten',sintro:'Eén tik en je seintje staat bij deze kaart. Je fysiotherapeut ziet het pas bij het inloggen, dus niet altijd dezelfde dag.',vraag:'Ik heb een vraag',akop:'Bericht van je fysiotherapeut',adank:'Weggehaald.',aweg:'Begrepen, haal weg',pijn:'Het doet te veel pijn',goed:'Het gaat goed',dank:'Verstuurd. Je fysiotherapeut ziet je seintje pas bij het inloggen, dus niet altijd dezelfde dag.',fout:'Versturen lukte even niet; probeer het zo opnieuw.'},
-    en:{seinkop:'Let your physiotherapist know',sintro:'One tap and your signal is on this card. Your physiotherapist only sees it when they next log in, so not always the same day.',vraag:'I have a question',akop:'Message from your physiotherapist',adank:'Dismissed.',aweg:'Got it, dismiss',pijn:'It hurts too much',goed:'It’s going well',dank:'Sent. Your physiotherapist only sees your signal when they next log in, so not always the same day.',fout:'Sending did not work; please try again in a moment.'},
-    de:{seinkop:'Deinem Physiotherapeuten Bescheid geben',sintro:'Einmal tippen und dein Signal steht auf dieser Karte. Dein Physiotherapeut sieht es erst beim nächsten Einloggen, also nicht immer am selben Tag.',vraag:'Ich habe eine Frage',akop:'Nachricht von deinem Physiotherapeuten',adank:'Entfernt.',aweg:'Verstanden, entfernen',pijn:'Es tut zu weh',goed:'Es läuft gut',dank:'Gesendet. Dein Physiotherapeut sieht dein Signal erst beim nächsten Einloggen, also nicht immer am selben Tag.',fout:'Das Senden hat nicht geklappt; versuch es gleich noch einmal.'},
-    fr:{seinkop:'Prévenir votre kinésithérapeute',sintro:'Un geste et votre signal apparaît sur cette carte. Votre kinésithérapeute ne le voit qu’à sa prochaine connexion, donc pas toujours le jour même.',vraag:'J’ai une question',akop:'Message de votre kinésithérapeute',adank:'Retiré.',aweg:'Compris, retirer',pijn:'J’ai trop mal',goed:'Ça va bien',dank:'Envoyé. Votre kinésithérapeute ne verra votre signal qu’à sa prochaine connexion, donc pas toujours le jour même.',fout:'L’envoi n’a pas fonctionné ; réessayez dans un instant.'},
-    es:{seinkop:'Avisar a tu fisioterapeuta',sintro:'Un toque y tu señal queda en esta tarjeta. Tu fisioterapeuta solo la ve cuando vuelve a iniciar sesión, así que no siempre el mismo día.',vraag:'Tengo una pregunta',akop:'Mensaje de tu fisioterapeuta',adank:'Quitado.',aweg:'Entendido, quitar',pijn:'Me duele demasiado',goed:'Va bien',dank:'Enviado. Tu fisioterapeuta solo verá tu señal cuando vuelva a iniciar sesión, así que no siempre el mismo día.',fout:'El envío no ha funcionado; inténtalo de nuevo en un momento.'},
-    pl:{seinkop:'Daj znać fizjoterapeucie',sintro:'Jedno dotknięcie i Twój sygnał pojawi się przy tej karcie. Fizjoterapeuta zobaczy go dopiero po zalogowaniu, więc nie zawsze tego samego dnia.',vraag:'Mam pytanie',akop:'Wiadomość od fizjoterapeuty',adank:'Usunięto.',aweg:'Rozumiem, usuń',pijn:'Za bardzo boli',goed:'Idzie dobrze',dank:'Wysłano. Fizjoterapeuta zobaczy Twój sygnał dopiero po zalogowaniu, więc nie zawsze tego samego dnia.',fout:'Wysłanie się nie powiodło; spróbuj ponownie za chwilę.'},
-    tr:{seinkop:'Fizyoterapistine haber ver',sintro:'Tek dokunuşla işaretin bu karta eklenir. Fizyoterapistin onu ancak giriş yaptığında görür, yani her zaman aynı gün değil.',vraag:'Bir sorum var',akop:'Fizyoterapistinden mesaj',adank:'Kaldırıldı.',aweg:'Anladım, kaldır',pijn:'Çok acıyor',goed:'İyi gidiyor',dank:'Gönderildi. Fizyoterapistin işaretini ancak giriş yaptığında görür, yani her zaman aynı gün değil.',fout:'Gönderme çalışmadı; birazdan tekrar dene.'},
-    ar:{seinkop:'أخبر أخصائي العلاج الطبيعي',sintro:'نقرة واحدة وتظهر إشارتك على هذه البطاقة. لا يراها أخصائي العلاج الطبيعي إلا عند تسجيل دخوله التالي، وليس دائمًا في اليوم نفسه.',vraag:'لديّ سؤال',akop:'رسالة من أخصائي العلاج الطبيعي',adank:'أُزيلت.',aweg:'فهمت، أزل الرسالة',pijn:'الألم شديد جدًا',goed:'الأمور تسير جيدًا',dank:'تم الإرسال. لن يرى أخصائي العلاج الطبيعي إشارتك إلا عند تسجيل دخوله التالي، وليس دائمًا في اليوم نفسه.',fout:'تعذّر الإرسال؛ حاول مرة أخرى بعد قليل.'},
-    uk:{seinkop:'Повідомити фізіотерапевта',sintro:'Один дотик — і твій сигнал з’явиться на цій картці. Фізіотерапевт побачить його лише тоді, коли наступного разу увійде в систему, тож не завжди того ж дня.',vraag:'У мене є запитання',akop:'Повідомлення від фізіотерапевта',adank:'Прибрано.',aweg:'Зрозуміло, прибрати',pijn:'Надто болить',goed:'Все йде добре',dank:'Надіслано. Фізіотерапевт побачить твій сигнал лише тоді, коли наступного разу увійде в систему, тож не завжди того ж дня.',fout:'Не вдалося надіслати; спробуй ще раз за мить.'}
+    nl:{seinkop:'Je fysiotherapeut iets laten weten',sintro:'Eén tik en je seintje staat bij deze kaart. Je fysiotherapeut ziet het pas bij het inloggen, dus niet altijd dezelfde dag.',vraag:'Ik heb een vraag',akop:'Bericht van je fysiotherapeut',adank:'Weggehaald.',aweg:'Begrepen, haal weg',pijn:'Het doet te veel pijn',goed:'Het gaat goed',dank:'Verstuurd. Je fysiotherapeut ziet je seintje pas bij het inloggen, dus niet altijd dezelfde dag.',fout:'Versturen lukte even niet; probeer het zo opnieuw.',blijft:'Je eerdere seintje blijft ook openstaan tot je fysiotherapeut het heeft gezien.'},
+    en:{seinkop:'Let your physiotherapist know',sintro:'One tap and your signal is on this card. Your physiotherapist only sees it when they next log in, so not always the same day.',vraag:'I have a question',akop:'Message from your physiotherapist',adank:'Dismissed.',aweg:'Got it, dismiss',pijn:'It hurts too much',goed:'It’s going well',dank:'Sent. Your physiotherapist only sees your signal when they next log in, so not always the same day.',fout:'Sending did not work; please try again in a moment.',blijft:'Your earlier message also stays open until your physiotherapist has seen it.'},
+    de:{seinkop:'Deinem Physiotherapeuten Bescheid geben',sintro:'Einmal tippen und dein Signal steht auf dieser Karte. Dein Physiotherapeut sieht es erst beim nächsten Einloggen, also nicht immer am selben Tag.',vraag:'Ich habe eine Frage',akop:'Nachricht von deinem Physiotherapeuten',adank:'Entfernt.',aweg:'Verstanden, entfernen',pijn:'Es tut zu weh',goed:'Es läuft gut',dank:'Gesendet. Dein Physiotherapeut sieht dein Signal erst beim nächsten Einloggen, also nicht immer am selben Tag.',fout:'Das Senden hat nicht geklappt; versuch es gleich noch einmal.',blijft:'Dein früheres Signal bleibt auch offen, bis dein Physiotherapeut es gesehen hat.'},
+    fr:{seinkop:'Prévenir votre kinésithérapeute',sintro:'Un geste et votre signal apparaît sur cette carte. Votre kinésithérapeute ne le voit qu’à sa prochaine connexion, donc pas toujours le jour même.',vraag:'J’ai une question',akop:'Message de votre kinésithérapeute',adank:'Retiré.',aweg:'Compris, retirer',pijn:'J’ai trop mal',goed:'Ça va bien',dank:'Envoyé. Votre kinésithérapeute ne verra votre signal qu’à sa prochaine connexion, donc pas toujours le jour même.',fout:'L’envoi n’a pas fonctionné ; réessayez dans un instant.',blijft:'Votre signal précédent reste aussi ouvert jusqu’à ce que votre kinésithérapeute l’ait vu.'},
+    es:{seinkop:'Avisar a tu fisioterapeuta',sintro:'Un toque y tu señal queda en esta tarjeta. Tu fisioterapeuta solo la ve cuando vuelve a iniciar sesión, así que no siempre el mismo día.',vraag:'Tengo una pregunta',akop:'Mensaje de tu fisioterapeuta',adank:'Quitado.',aweg:'Entendido, quitar',pijn:'Me duele demasiado',goed:'Va bien',dank:'Enviado. Tu fisioterapeuta solo verá tu señal cuando vuelva a iniciar sesión, así que no siempre el mismo día.',fout:'El envío no ha funcionado; inténtalo de nuevo en un momento.',blijft:'Tu señal anterior también sigue abierta hasta que tu fisioterapeuta la haya visto.'},
+    pl:{seinkop:'Daj znać fizjoterapeucie',sintro:'Jedno dotknięcie i Twój sygnał pojawi się przy tej karcie. Fizjoterapeuta zobaczy go dopiero po zalogowaniu, więc nie zawsze tego samego dnia.',vraag:'Mam pytanie',akop:'Wiadomość od fizjoterapeuty',adank:'Usunięto.',aweg:'Rozumiem, usuń',pijn:'Za bardzo boli',goed:'Idzie dobrze',dank:'Wysłano. Fizjoterapeuta zobaczy Twój sygnał dopiero po zalogowaniu, więc nie zawsze tego samego dnia.',fout:'Wysłanie się nie powiodło; spróbuj ponownie za chwilę.',blijft:'Twój wcześniejszy sygnał też pozostaje otwarty, dopóki fizjoterapeuta go nie zobaczy.'},
+    tr:{seinkop:'Fizyoterapistine haber ver',sintro:'Tek dokunuşla işaretin bu karta eklenir. Fizyoterapistin onu ancak giriş yaptığında görür, yani her zaman aynı gün değil.',vraag:'Bir sorum var',akop:'Fizyoterapistinden mesaj',adank:'Kaldırıldı.',aweg:'Anladım, kaldır',pijn:'Çok acıyor',goed:'İyi gidiyor',dank:'Gönderildi. Fizyoterapistin işaretini ancak giriş yaptığında görür, yani her zaman aynı gün değil.',fout:'Gönderme çalışmadı; birazdan tekrar dene.',blijft:'Önceki bildirimin de fizyoterapistin görene kadar açık kalır.'},
+    ar:{seinkop:'أخبر أخصائي العلاج الطبيعي',sintro:'نقرة واحدة وتظهر إشارتك على هذه البطاقة. لا يراها أخصائي العلاج الطبيعي إلا عند تسجيل دخوله التالي، وليس دائمًا في اليوم نفسه.',vraag:'لديّ سؤال',akop:'رسالة من أخصائي العلاج الطبيعي',adank:'أُزيلت.',aweg:'فهمت، أزل الرسالة',pijn:'الألم شديد جدًا',goed:'الأمور تسير جيدًا',dank:'تم الإرسال. لن يرى أخصائي العلاج الطبيعي إشارتك إلا عند تسجيل دخوله التالي، وليس دائمًا في اليوم نفسه.',fout:'تعذّر الإرسال؛ حاول مرة أخرى بعد قليل.',blijft:'تبقى رسالتك السابقة مفتوحة أيضًا حتى يراها أخصائي العلاج الطبيعي.'},
+    uk:{seinkop:'Повідомити фізіотерапевта',sintro:'Один дотик — і твій сигнал з’явиться на цій картці. Фізіотерапевт побачить його лише тоді, коли наступного разу увійде в систему, тож не завжди того ж дня.',vraag:'У мене є запитання',akop:'Повідомлення від фізіотерапевта',adank:'Прибрано.',aweg:'Зрозуміло, прибрати',pijn:'Надто болить',goed:'Все йде добре',dank:'Надіслано. Фізіотерапевт побачить твій сигнал лише тоді, коли наступного разу увійде в систему, тож не завжди того ж дня.',fout:'Не вдалося надіслати; спробуй ще раз за мить.',blijft:'Твій попередній сигнал теж залишається відкритим, доки фізіотерапевт його не побачить.'}
   };
   function trs(k){var d=TSN[TAAL]||TSN.nl;return d[k]!=null?d[k]:TSN.nl[k];}
   // teksten voor het ervaren herstel (GROC-achtig; apart blokje, valt terug op Nederlands)
@@ -1165,7 +1216,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // offline-banner: de kaart werkt offline (service worker), maar dat hoort de
   // patiënt ook te wéten — anders voelt een mislukte tik als een kapotte kaart
   var TOFF={nl:'Geen verbinding. Je ziet je laatst geladen kaart. Wat je aantikt, bewaren we op je telefoon tot je weer internet hebt.',en:'No connection. You see your last loaded card. What you tap is kept on your phone until you are online again.',de:'Keine Verbindung. Du siehst deine zuletzt geladene Karte. Was du antippst, bleibt auf deinem Handy, bis du wieder online bist.',fr:'Pas de connexion. Vous voyez votre dernière carte chargée. Ce que vous indiquez reste sur votre téléphone jusqu’au retour d’internet.',es:'Sin conexión. Ves tu última tarjeta cargada. Lo que marcas se guarda en tu teléfono hasta que vuelvas a tener internet.',pl:'Brak połączenia. Widzisz ostatnio wczytaną kartę. To, co zaznaczysz, zostaje w telefonie, aż znów będziesz mieć internet.',tr:'Bağlantı yok. Son yüklenen kartını görüyorsun. İşaretlediklerin, internet gelene kadar telefonunda saklanır.',ar:'لا يوجد اتصال. ترى آخر بطاقة تم تحميلها. ما تضغط عليه يُحفظ على هاتفك حتى يعود الإنترنت.',uk:'Немає з’єднання. Ти бачиш останню завантажену картку. Те, що ти позначаєш, зберігається на телефоні, доки не з’явиться інтернет.'};
-  function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(typeof navigator.onLine==='boolean'&&!navigator.onLine)?'block':'none';}
+  // UIT_KOPIE: de verbinding hing en de kaart kwam uit de offline-kopie (laadKaartApi); dan dezelfde balk,
+  // ook al zegt de browser dat hij online is (hertest Jayden 2026-11-14)
+  var UIT_KOPIE=false;
+  function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;if(KAART_GEWIST){el.style.display='none';return;}el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(UIT_KOPIE||(typeof navigator.onLine==='boolean'&&!navigator.onLine))?'block':'none';}
   window.addEventListener('online',tekenOfflijn);window.addEventListener('offline',tekenOfflijn);
   var TAF={nl:'Je volgende afspraak',en:'Your next appointment',de:'Dein nächster Termin',fr:'Votre prochain rendez-vous',es:'Tu próxima cita',pl:'Twoja następna wizyta',tr:'Bir sonraki randevun',ar:'موعدك القادم',uk:'Твій наступний візит'};
   // afgeronde behandeling: eerlijk over de bewaartermijn. De kaart verdwijnt na een
@@ -1186,8 +1240,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // spoedregel onder de seintjes, wachtrij zonder internet en "Mijn gegevens"
   var TSPOED_ZONDER={nl:'Wacht niet op een antwoord. Bel je huisarts. Bij nood: 112.',en:'Do not wait for a reply. Call your GP. In an emergency: 112.',de:'Warte nicht auf eine Antwort. Ruf deinen Hausarzt an. Im Notfall: 112.',fr:'N’attendez pas de réponse. Appelez votre médecin. En cas d’urgence : 112.',es:'No esperes una respuesta. Llama a tu médico de cabecera. En caso de emergencia: 112.',pl:'Nie czekaj na odpowiedź. Zadzwoń do lekarza rodzinnego. W nagłym wypadku: 112.',tr:'Cevap bekleme. Aile hekimini ara. Acil durumda: 112.',ar:'لا تنتظر ردًا. اتصل بطبيبك العام. في حالة الطوارئ: 112.',uk:'Не чекай на відповідь. Зателефонуй своєму сімейному лікарю. У надзвичайній ситуації: 112.'};
   var TSPOED={nl:['Spoed?','Wacht niet op een antwoord. Bel de praktijk of je huisarts. Bij nood: 112.'],en:['Urgent?','Do not wait for a reply. Call the practice or your GP. In an emergency: 112.'],de:['Dringend?','Warte nicht auf eine Antwort. Ruf die Praxis oder deinen Hausarzt an. Im Notfall: 112.'],fr:['Urgent ?','N’attendez pas de réponse. Appelez le cabinet ou votre médecin. En cas d’urgence : 112.'],es:['¿Urgente?','No esperes una respuesta. Llama a la consulta o a tu médico de cabecera. En caso de emergencia: 112.'],pl:['Pilne?','Nie czekaj na odpowiedź. Zadzwoń do gabinetu lub do lekarza rodzinnego. W nagłym wypadku: 112.'],tr:['Acil mi?','Cevap bekleme. Kliniği veya aile hekimini ara. Acil durumda: 112.'],ar:['حالة عاجلة؟','لا تنتظر ردًا. اتصل بالعيادة أو بطبيبك العام. في حالة الطوارئ: 112.'],uk:['Терміново?','Не чекай на відповідь. Зателефонуй у практику або своєму сімейному лікарю. У надзвичайній ситуації: 112.']};
-  var TWACHT={nl:{druk:'Opgeslagen op je telefoon. Het is even druk; dit gaat over een paar minuten vanzelf mee.',drukN:'Nog niet verstuurd: {n} keer opgeslagen op je telefoon. Het is even druk; dit gaat over een paar minuten vanzelf mee.',een:'Opgeslagen op je telefoon. Gaat vanzelf mee zodra je internet hebt.',n:'Nog niet verstuurd: {n} keer opgeslagen op je telefoon. Gaat vanzelf mee zodra je internet hebt.',ok:'Verstuurd naar je fysiotherapeut ✓'},en:{druk:'Saved on your phone. It is busy right now; this will be sent automatically in a few minutes.',drukN:'Not sent yet: {n} saved on your phone. It is busy right now; they will be sent automatically in a few minutes.',een:'Saved on your phone. It will be sent once you are online.',n:'Not sent yet: {n} saved on your phone. They will be sent once you are online.',ok:'Sent to your physiotherapist ✓'},de:{druk:'Auf deinem Handy gespeichert. Gerade ist viel los; es wird in ein paar Minuten automatisch gesendet.',drukN:'Noch nicht gesendet: {n} auf deinem Handy gespeichert. Gerade ist viel los; es wird in ein paar Minuten automatisch gesendet.',een:'Auf deinem Handy gespeichert. Wird gesendet, sobald du online bist.',n:'Noch nicht gesendet: {n} auf deinem Handy gespeichert. Wird gesendet, sobald du online bist.',ok:'An deinen Physiotherapeuten gesendet ✓'},fr:{druk:'Enregistré sur votre téléphone. Le service est chargé ; envoi automatique dans quelques minutes.',drukN:'Pas encore envoyé : {n} enregistré(s) sur votre téléphone. Le service est chargé ; envoi automatique dans quelques minutes.',een:'Enregistré sur votre téléphone. Sera envoyé dès que vous serez en ligne.',n:'Pas encore envoyé : {n} enregistré(s) sur votre téléphone. Envoi dès que vous serez en ligne.',ok:'Envoyé à votre kinésithérapeute ✓'},es:{druk:'Guardado en tu teléfono. Ahora hay mucha carga; se enviará automáticamente en unos minutos.',drukN:'Aún no enviado: {n} guardado(s) en tu teléfono. Ahora hay mucha carga; se enviará automáticamente en unos minutos.',een:'Guardado en tu teléfono. Se enviará cuando tengas internet.',n:'Aún no enviado: {n} guardado(s) en tu teléfono. Se enviará cuando tengas internet.',ok:'Enviado a tu fisioterapeuta ✓'},pl:{druk:'Zapisano w telefonie. Teraz jest duży ruch; zostanie wysłane automatycznie za kilka minut.',drukN:'Jeszcze nie wysłano: {n} zapisano w telefonie. Teraz jest duży ruch; zostanie wysłane automatycznie za kilka minut.',een:'Zapisano w telefonie. Zostanie wysłane, gdy będziesz mieć internet.',n:'Jeszcze nie wysłano: {n} zapisano w telefonie. Zostanie wysłane, gdy będziesz mieć internet.',ok:'Wysłano do twojego fizjoterapeuty ✓'},tr:{druk:'Telefonuna kaydedildi. Şu an yoğunluk var; birkaç dakika içinde otomatik gönderilir.',drukN:'Henüz gönderilmedi: telefonunda {n} kayıt var. Şu an yoğunluk var; birkaç dakika içinde otomatik gönderilir.',een:'Telefonuna kaydedildi. İnternet gelince gönderilir.',n:'Henüz gönderilmedi: telefonunda {n} kayıt var. İnternet gelince gönderilir.',ok:'Fizyoterapistine gönderildi ✓'},ar:{druk:'تم الحفظ على هاتفك. هناك ضغط الآن؛ سيُرسل تلقائيًا خلال بضع دقائق.',drukN:'لم يُرسل بعد: {n} محفوظ على هاتفك. هناك ضغط الآن؛ سيُرسل تلقائيًا خلال بضع دقائق.',een:'تم الحفظ على هاتفك. سيُرسل عند اتصالك بالإنترنت.',n:'لم يُرسل بعد: {n} محفوظ على هاتفك. سيُرسل عند اتصالك بالإنترنت.',ok:'أُرسل إلى أخصائي العلاج الطبيعي ✓'},uk:{druk:'Збережено на телефоні. Зараз велике навантаження; надішлеться автоматично за кілька хвилин.',drukN:'Ще не надіслано: {n} збережено на телефоні. Зараз велике навантаження; надішлеться автоматично за кілька хвилин.',een:'Збережено на телефоні. Надішлеться, щойно з’явиться інтернет.',n:'Ще не надіслано: {n} збережено на телефоні. Надішлеться, щойно з’явиться інтернет.',ok:'Надіслано твоєму фізіотерапевту ✓'}};
-  var TMG={nl:{kop:'Mijn gegevens',wat:'Wat staat er op deze kaart?',l1:'Je roepnaam, je oefeningen en wat je fysiotherapeut erbij schreef.',l2:'Wat je aantikt: pijnscores, gedaan, te zwaar en seintjes.',l3:'Je achternaam en je dossier staan niet op deze kaart.',hoelang:'Hoe lang?',tot:'Blijft bewaard tot minstens {d}. Blijf je oefenen, dan schuift dit op. Daarna wordt de kaart gewist.',waar:'Waar?',dos:'Je dossier staat bij je praktijk. Je fysiotherapeut zet daar wat nodig is. Vragen over je gegevens? Stel ze aan je praktijk.',dl:'Download mijn gegevens',wis:'Wis deze kaart van mijn telefoon',zeker:'Weet je het zeker? De kaart verdwijnt van deze telefoon. Bij je praktijk blijft hij bestaan.',gewist:'Gewist van deze telefoon. Bij je praktijk bestaat de kaart nog: scan de QR-code opnieuw om hem te openen. Staat de kaart als icoon op je beginscherm? Haal dat icoon dan ook weg.',wacht:'Let op: {n} keer aangetikt zonder internet is nog niet verstuurd naar je praktijk. Dat gaat dan verloren.'},en:{kop:'My data',wat:'What is on this card?',l1:'Your first name, your exercises and what your physiotherapist wrote with them.',l2:'What you tap: pain scores, done, too hard and messages.',l3:'Your surname and your medical record are not on this card.',hoelang:'How long?',tot:'Kept until at least {d}. If you keep exercising, this moves later. After that the card is deleted.',waar:'Where?',dos:'Your medical record is at your practice. Your physiotherapist adds what is needed there. Questions about your data? Ask your practice.',dl:'Download my data',wis:'Remove this card from my phone',zeker:'Are you sure? The card disappears from this phone. It stays at your practice.',gewist:'Removed from this phone. The card still exists at your practice: scan the QR code again to open it. Did you add the card as an icon to your home screen? Remove that icon too.',wacht:'Note: {n} taps made without internet have not been sent to your practice yet. They will be lost.'},de:{kop:'Meine Daten',wat:'Was steht auf dieser Karte?',l1:'Dein Vorname, deine Übungen und was dein Physiotherapeut dazu geschrieben hat.',l2:'Was du antippst: Schmerzwerte, erledigt, zu schwer und Nachrichten.',l3:'Dein Nachname und deine Akte stehen nicht auf dieser Karte.',hoelang:'Wie lange?',tot:'Gespeichert bis mindestens {d}. Wenn du weiter übst, verschiebt sich das. Danach wird die Karte gelöscht.',waar:'Wo?',dos:'Deine Akte liegt bei deiner Praxis. Dein Physiotherapeut trägt dort ein, was nötig ist. Fragen zu deinen Daten? Wende dich an deine Praxis.',dl:'Meine Daten herunterladen',wis:'Diese Karte von meinem Handy löschen',zeker:'Bist du sicher? Die Karte verschwindet von diesem Handy. Bei deiner Praxis bleibt sie bestehen.',gewist:'Von diesem Handy gelöscht. Bei deiner Praxis gibt es die Karte noch: Scanne den QR-Code erneut, um sie zu öffnen. Hast du die Karte als Symbol auf deinen Startbildschirm gelegt? Entferne auch dieses Symbol.',wacht:'Achtung: {n} Eingaben ohne Internet wurden noch nicht an deine Praxis gesendet. Sie gehen dann verloren.'},fr:{kop:'Mes données',wat:'Que contient cette carte ?',l1:'Votre prénom, vos exercices et ce que votre kinésithérapeute y a ajouté.',l2:'Ce que vous indiquez : scores de douleur, fait, trop difficile et messages.',l3:'Votre nom de famille et votre dossier ne sont pas sur cette carte.',hoelang:'Combien de temps ?',tot:'Conservée au moins jusqu’au {d}. Si vous continuez à vous exercer, cette date recule. Ensuite la carte est supprimée.',waar:'Où ?',dos:'Votre dossier est au cabinet. Votre kinésithérapeute y ajoute ce qui est nécessaire. Des questions sur vos données ? Adressez-vous au cabinet.',dl:'Télécharger mes données',wis:'Effacer cette carte de mon téléphone',zeker:'Vous êtes sûr ? La carte disparaît de ce téléphone. Elle reste au cabinet.',gewist:'Effacée de ce téléphone. La carte existe toujours au cabinet : scannez à nouveau le code QR pour l’ouvrir. Vous avez ajouté la carte en icône sur l’écran d’accueil ? Supprimez aussi cette icône.',wacht:'Attention : {n} saisies faites sans internet n’ont pas encore été envoyées au cabinet. Elles seront perdues.'},es:{kop:'Mis datos',wat:'¿Qué hay en esta tarjeta?',l1:'Tu nombre, tus ejercicios y lo que tu fisioterapeuta escribió con ellos.',l2:'Lo que marcas: dolor, hecho, demasiado difícil y avisos.',l3:'Tu apellido y tu historial no están en esta tarjeta.',hoelang:'¿Cuánto tiempo?',tot:'Se guarda al menos hasta el {d}. Si sigues haciendo ejercicio, se alarga. Después la tarjeta se borra.',waar:'¿Dónde?',dos:'Tu historial está en tu consulta. Tu fisioterapeuta anota allí lo necesario. ¿Preguntas sobre tus datos? Pregunta en tu consulta.',dl:'Descargar mis datos',wis:'Borrar esta tarjeta de mi teléfono',zeker:'¿Seguro? La tarjeta desaparece de este teléfono. En tu consulta sigue existiendo.',gewist:'Borrada de este teléfono. En tu consulta la tarjeta sigue existiendo: escanea de nuevo el código QR para abrirla. ¿Añadiste la tarjeta como icono a tu pantalla de inicio? Quita también ese icono.',wacht:'Atención: {n} marcas hechas sin internet aún no se han enviado a tu consulta. Se perderán.'},pl:{kop:'Moje dane',wat:'Co jest na tej karcie?',l1:'Twoje imię, ćwiczenia i to, co dopisał fizjoterapeuta.',l2:'To, co zaznaczasz: ból, zrobione, za trudne i wiadomości.',l3:'Twojego nazwiska i dokumentacji nie ma na tej karcie.',hoelang:'Jak długo?',tot:'Przechowywana co najmniej do {d}. Jeśli ćwiczysz dalej, termin się przesuwa. Potem karta zostaje usunięta.',waar:'Gdzie?',dos:'Twoja dokumentacja jest w gabinecie. Fizjoterapeuta wpisuje tam to, co potrzebne. Pytania o dane? Zapytaj w gabinecie.',dl:'Pobierz moje dane',wis:'Usuń tę kartę z mojego telefonu',zeker:'Na pewno? Karta zniknie z tego telefonu. W gabinecie zostaje.',gewist:'Usunięto z tego telefonu. W gabinecie karta nadal istnieje: zeskanuj kod QR ponownie, aby ją otworzyć. Masz kartę jako ikonę na ekranie głównym? Usuń też tę ikonę.',wacht:'Uwaga: {n} zaznaczeń bez internetu nie wysłano jeszcze do gabinetu. Przepadną.'},tr:{kop:'Verilerim',wat:'Bu kartta ne var?',l1:'Adın, egzersizlerin ve fizyoterapistinin bunlara eklediği notlar.',l2:'İşaretlediklerin: ağrı puanları, yapıldı, çok zor ve mesajlar.',l3:'Soyadın ve dosyan bu kartta yer almaz.',hoelang:'Ne kadar süre?',tot:'En az {d} tarihine kadar saklanır. Egzersize devam edersen bu tarih ileri kayar. Sonra kart silinir.',waar:'Nerede?',dos:'Dosyan kliniğinde durur. Fizyoterapistin gerekeni oraya yazar. Verilerinle ilgili soruların için kliniğine sor.',dl:'Verilerimi indir',wis:'Bu kartı telefonumdan sil',zeker:'Emin misin? Kart bu telefondan kaybolur. Klinikte kalmaya devam eder.',gewist:'Bu telefondan silindi. Kart kliniğinde hâlâ duruyor: açmak için QR kodunu yeniden tara. Kartı ana ekranına simge olarak eklediysen o simgeyi de kaldır.',wacht:'Dikkat: internetsiz yapılan {n} işaret henüz kliniğine gönderilmedi. Bunlar kaybolur.'},ar:{kop:'بياناتي',wat:'ماذا يوجد في هذه البطاقة؟',l1:'اسمك الأول وتمارينك وما كتبه أخصائي العلاج الطبيعي معها.',l2:'ما تضغط عليه: درجات الألم، تم، صعب جدًا والرسائل.',l3:'اسم عائلتك وملفك الطبي ليسا على هذه البطاقة.',hoelang:'إلى متى؟',tot:'تُحفظ حتى {d} على الأقل. إذا واصلت التمرين يتأخر هذا الموعد. بعد ذلك تُحذف البطاقة.',waar:'أين؟',dos:'ملفك الطبي موجود في عيادتك. يضيف أخصائي العلاج الطبيعي هناك ما يلزم. أسئلة عن بياناتك؟ اسأل عيادتك.',dl:'تنزيل بياناتي',wis:'احذف هذه البطاقة من هاتفي',zeker:'هل أنت متأكد؟ ستختفي البطاقة من هذا الهاتف. تبقى موجودة في عيادتك.',gewist:'حُذفت من هذا الهاتف. البطاقة ما زالت موجودة في عيادتك: امسح رمز QR مرة أخرى لفتحها. هل أضفت البطاقة كأيقونة على الشاشة الرئيسية؟ احذف تلك الأيقونة أيضًا.',wacht:'انتبه: {n} من الضغطات بدون إنترنت لم تُرسل بعد إلى عيادتك. ستضيع.'},uk:{kop:'Мої дані',wat:'Що є на цій картці?',l1:'Твоє ім’я, твої вправи та те, що до них дописав фізіотерапевт.',l2:'Те, що ти позначаєш: біль, виконано, заважко та повідомлення.',l3:'Твого прізвища та медичної картки на цій картці немає.',hoelang:'Як довго?',tot:'Зберігається щонайменше до {d}. Якщо продовжуєш вправи, термін зсувається. Потім картку буде видалено.',waar:'Де?',dos:'Твоя медична картка — у твоїй практиці. Фізіотерапевт вносить туди потрібне. Питання щодо даних? Звернися до практики.',dl:'Завантажити мої дані',wis:'Видалити цю картку з мого телефона',zeker:'Ти впевнений? Картка зникне з цього телефона. У практиці вона залишиться.',gewist:'Видалено з цього телефона. У практиці картка ще є: відскануй QR-код ще раз, щоб відкрити її. Додавав картку як значок на головний екран? Прибери і цей значок.',wacht:'Увага: {n} позначок без інтернету ще не надіслано до практики. Вони пропадуть.'}};
+  var TWACHT={nl:{kwijt:'Niet aangekomen bij je fysiotherapeut: deze kaart is intussen veranderd of gestopt. Bel of mail je praktijk.',druk:'Opgeslagen op je telefoon. Het is even druk; dit gaat over een paar minuten vanzelf mee.',drukN:'Nog niet verstuurd: {n} keer opgeslagen op je telefoon. Het is even druk; dit gaat over een paar minuten vanzelf mee.',een:'Opgeslagen op je telefoon. Gaat vanzelf mee zodra je internet hebt.',n:'Nog niet verstuurd: {n} keer opgeslagen op je telefoon. Gaat vanzelf mee zodra je internet hebt.',ok:'Verstuurd naar je fysiotherapeut ✓',oud:'Niet verstuurd: {n} tik(ken) van meer dan 14 dagen geleden tellen niet meer mee. Heb je klachten? Neem contact op met je fysiotherapeut.'},en:{kwijt:'Not received by your physiotherapist: this card has changed or stopped in the meantime. Please call or email your practice.',druk:'Saved on your phone. It is busy right now; this will be sent automatically in a few minutes.',drukN:'Not sent yet: {n} saved on your phone. It is busy right now; they will be sent automatically in a few minutes.',een:'Saved on your phone. It will be sent once you are online.',n:'Not sent yet: {n} saved on your phone. They will be sent once you are online.',ok:'Sent to your physiotherapist ✓',oud:'Not sent: {n} tap(s) saved more than 14 days ago no longer count. Having problems? Contact your physiotherapist.'},de:{kwijt:'Nicht bei deinem Physiotherapeuten angekommen: diese Karte wurde inzwischen geändert oder beendet. Ruf deine Praxis an oder schreib ihr.',druk:'Auf deinem Handy gespeichert. Gerade ist viel los; es wird in ein paar Minuten automatisch gesendet.',drukN:'Noch nicht gesendet: {n} auf deinem Handy gespeichert. Gerade ist viel los; es wird in ein paar Minuten automatisch gesendet.',een:'Auf deinem Handy gespeichert. Wird gesendet, sobald du online bist.',n:'Noch nicht gesendet: {n} auf deinem Handy gespeichert. Wird gesendet, sobald du online bist.',ok:'An deinen Physiotherapeuten gesendet ✓',oud:'{n} vor mehr als 14 Tagen gespeichert, wurde nicht mehr gesendet. Hast du Beschwerden? Melde dich bei deinem Physiotherapeuten.'},fr:{kwijt:'Pas reçu par votre kiné : cette carte a été modifiée ou arrêtée entre-temps. Appelez ou écrivez à votre cabinet.',druk:'Enregistré sur votre téléphone. Le service est chargé ; envoi automatique dans quelques minutes.',drukN:'Pas encore envoyé : {n} enregistré(s) sur votre téléphone. Le service est chargé ; envoi automatique dans quelques minutes.',een:'Enregistré sur votre téléphone. Sera envoyé dès que vous serez en ligne.',n:'Pas encore envoyé : {n} enregistré(s) sur votre téléphone. Envoi dès que vous serez en ligne.',ok:'Envoyé à votre kinésithérapeute ✓',oud:'{n} enregistré(s) il y a plus de 14 jours n’a/n’ont plus été envoyé(s). Des douleurs ? Contactez votre kinésithérapeute.'},es:{kwijt:'Tu fisioterapeuta no lo ha recibido: esta tarjeta ha cambiado o se ha detenido. Llama o escribe a tu consulta.',druk:'Guardado en tu teléfono. Ahora hay mucha carga; se enviará automáticamente en unos minutos.',drukN:'Aún no enviado: {n} guardado(s) en tu teléfono. Ahora hay mucha carga; se enviará automáticamente en unos minutos.',een:'Guardado en tu teléfono. Se enviará cuando tengas internet.',n:'Aún no enviado: {n} guardado(s) en tu teléfono. Se enviará cuando tengas internet.',ok:'Enviado a tu fisioterapeuta ✓',oud:'{n} guardado(s) hace más de 14 días ya no se envió/enviaron. ¿Tienes molestias? Contacta con tu fisioterapeuta.'},pl:{kwijt:'Nie dotarło do fizjoterapeuty: ta karta została w międzyczasie zmieniona lub zakończona. Zadzwoń lub napisz do gabinetu.',druk:'Zapisano w telefonie. Teraz jest duży ruch; zostanie wysłane automatycznie za kilka minut.',drukN:'Jeszcze nie wysłano: {n} zapisano w telefonie. Teraz jest duży ruch; zostanie wysłane automatycznie za kilka minut.',een:'Zapisano w telefonie. Zostanie wysłane, gdy będziesz mieć internet.',n:'Jeszcze nie wysłano: {n} zapisano w telefonie. Zostanie wysłane, gdy będziesz mieć internet.',ok:'Wysłano do twojego fizjoterapeuty ✓',oud:'{n} zapisano ponad 14 dni temu i nie zostało już wysłane. Masz dolegliwości? Skontaktuj się z fizjoterapeutą.'},tr:{kwijt:'Fizyoterapistine ulaşmadı: bu kart bu arada değişti veya durduruldu. Lütfen kliniğini ara ya da e-posta gönder.',druk:'Telefonuna kaydedildi. Şu an yoğunluk var; birkaç dakika içinde otomatik gönderilir.',drukN:'Henüz gönderilmedi: telefonunda {n} kayıt var. Şu an yoğunluk var; birkaç dakika içinde otomatik gönderilir.',een:'Telefonuna kaydedildi. İnternet gelince gönderilir.',n:'Henüz gönderilmedi: telefonunda {n} kayıt var. İnternet gelince gönderilir.',ok:'Fizyoterapistine gönderildi ✓',oud:'14 günden eski {n} kayıt artık gönderilmedi. Şikayetin mi var? Fizyoterapistinle iletişime geç.'},ar:{kwijt:'لم يصل إلى أخصائي العلاج الطبيعي: تغيّرت هذه البطاقة أو توقفت. اتصل بعيادتك أو راسلها.',druk:'تم الحفظ على هاتفك. هناك ضغط الآن؛ سيُرسل تلقائيًا خلال بضع دقائق.',drukN:'لم يُرسل بعد: {n} محفوظ على هاتفك. هناك ضغط الآن؛ سيُرسل تلقائيًا خلال بضع دقائق.',een:'تم الحفظ على هاتفك. سيُرسل عند اتصالك بالإنترنت.',n:'لم يُرسل بعد: {n} محفوظ على هاتفك. سيُرسل عند اتصالك بالإنترنت.',ok:'أُرسل إلى أخصائي العلاج الطبيعي ✓',oud:'لم يعد بالإمكان إرسال {n} محفوظ منذ أكثر من 14 يومًا. هل لديك شكوى؟ تواصل مع أخصائي العلاج الطبيعي.'},uk:{kwijt:'Не дійшло до фізіотерапевта: цю картку тим часом змінили або зупинили. Зателефонуй або напиши у свою практику.',druk:'Збережено на телефоні. Зараз велике навантаження; надішлеться автоматично за кілька хвилин.',drukN:'Ще не надіслано: {n} збережено на телефоні. Зараз велике навантаження; надішлеться автоматично за кілька хвилин.',een:'Збережено на телефоні. Надішлеться, щойно з’явиться інтернет.',n:'Ще не надіслано: {n} збережено на телефоні. Надішлеться, щойно з’явиться інтернет.',ok:'Надіслано твоєму фізіотерапевту ✓',oud:'{n} збережено понад 14 днів тому і більше не надіслано. Маєш скарги? Звернися до свого фізіотерапевта.'}};
+  var TMG={nl:{kop:'Mijn gegevens',wat:'Wat staat er op deze kaart?',l1:'Je roepnaam, je oefeningen en wat je fysiotherapeut erbij schreef.',l2:'Wat je aantikt: pijnscores, hoe het gaat sinds de start, hoe je doelactiviteit gaat, gedaan, te zwaar en seintjes.',l3:'Je achternaam en je dossier staan niet op deze kaart.',hoelang:'Hoe lang?',tot:'Blijft bewaard tot minstens {d}. Blijf je oefenen, dan schuift dit op. Daarna wordt de kaart gewist.',waar:'Waar?',dos:'Je dossier staat bij je praktijk. Je fysiotherapeut zet daar wat nodig is. Vragen over je gegevens? Stel ze aan je praktijk.',dl:'Download mijn gegevens',wis:'Wis deze kaart van mijn telefoon',zeker:'Weet je het zeker? De kaart verdwijnt van deze telefoon. Bij je praktijk blijft hij bestaan.',gewist:'Gewist van deze telefoon. Bij je praktijk bestaat de kaart nog: scan de QR-code opnieuw om hem te openen. Staat de kaart als icoon op je beginscherm? Haal dat icoon dan ook weg.',wacht:'Let op: {n} keer aangetikt zonder internet is nog niet verstuurd naar je praktijk. Dat gaat dan verloren.'},en:{kop:'My data',wat:'What is on this card?',l1:'Your first name, your exercises and what your physiotherapist wrote with them.',l2:'What you tap: pain scores, how you are doing since the start, how your goal activity is going, done, too hard and messages.',l3:'Your surname and your medical record are not on this card.',hoelang:'How long?',tot:'Kept until at least {d}. If you keep exercising, this moves later. After that the card is deleted.',waar:'Where?',dos:'Your medical record is at your practice. Your physiotherapist adds what is needed there. Questions about your data? Ask your practice.',dl:'Download my data',wis:'Remove this card from my phone',zeker:'Are you sure? The card disappears from this phone. It stays at your practice.',gewist:'Removed from this phone. The card still exists at your practice: scan the QR code again to open it. Did you add the card as an icon to your home screen? Remove that icon too.',wacht:'Note: {n} taps made without internet have not been sent to your practice yet. They will be lost.'},de:{kop:'Meine Daten',wat:'Was steht auf dieser Karte?',l1:'Dein Vorname, deine Übungen und was dein Physiotherapeut dazu geschrieben hat.',l2:'Was du antippst: Schmerzwerte, wie es dir seit dem Start geht, wie deine Zielaktivität klappt, erledigt, zu schwer und Nachrichten.',l3:'Dein Nachname und deine Akte stehen nicht auf dieser Karte.',hoelang:'Wie lange?',tot:'Gespeichert bis mindestens {d}. Wenn du weiter übst, verschiebt sich das. Danach wird die Karte gelöscht.',waar:'Wo?',dos:'Deine Akte liegt bei deiner Praxis. Dein Physiotherapeut trägt dort ein, was nötig ist. Fragen zu deinen Daten? Wende dich an deine Praxis.',dl:'Meine Daten herunterladen',wis:'Diese Karte von meinem Handy löschen',zeker:'Bist du sicher? Die Karte verschwindet von diesem Handy. Bei deiner Praxis bleibt sie bestehen.',gewist:'Von diesem Handy gelöscht. Bei deiner Praxis gibt es die Karte noch: Scanne den QR-Code erneut, um sie zu öffnen. Hast du die Karte als Symbol auf deinen Startbildschirm gelegt? Entferne auch dieses Symbol.',wacht:'Achtung: {n} Eingaben ohne Internet wurden noch nicht an deine Praxis gesendet. Sie gehen dann verloren.'},fr:{kop:'Mes données',wat:'Que contient cette carte ?',l1:'Votre prénom, vos exercices et ce que votre kinésithérapeute y a ajouté.',l2:'Ce que vous indiquez : scores de douleur, comment ça va depuis le début, comment se passe votre activité cible, fait, trop difficile et messages.',l3:'Votre nom de famille et votre dossier ne sont pas sur cette carte.',hoelang:'Combien de temps ?',tot:'Conservée au moins jusqu’au {d}. Si vous continuez à vous exercer, cette date recule. Ensuite la carte est supprimée.',waar:'Où ?',dos:'Votre dossier est au cabinet. Votre kinésithérapeute y ajoute ce qui est nécessaire. Des questions sur vos données ? Adressez-vous au cabinet.',dl:'Télécharger mes données',wis:'Effacer cette carte de mon téléphone',zeker:'Vous êtes sûr ? La carte disparaît de ce téléphone. Elle reste au cabinet.',gewist:'Effacée de ce téléphone. La carte existe toujours au cabinet : scannez à nouveau le code QR pour l’ouvrir. Vous avez ajouté la carte en icône sur l’écran d’accueil ? Supprimez aussi cette icône.',wacht:'Attention : {n} saisies faites sans internet n’ont pas encore été envoyées au cabinet. Elles seront perdues.'},es:{kop:'Mis datos',wat:'¿Qué hay en esta tarjeta?',l1:'Tu nombre, tus ejercicios y lo que tu fisioterapeuta escribió con ellos.',l2:'Lo que marcas: dolor, cómo vas desde el inicio, cómo va tu actividad objetivo, hecho, demasiado difícil y avisos.',l3:'Tu apellido y tu historial no están en esta tarjeta.',hoelang:'¿Cuánto tiempo?',tot:'Se guarda al menos hasta el {d}. Si sigues haciendo ejercicio, se alarga. Después la tarjeta se borra.',waar:'¿Dónde?',dos:'Tu historial está en tu consulta. Tu fisioterapeuta anota allí lo necesario. ¿Preguntas sobre tus datos? Pregunta en tu consulta.',dl:'Descargar mis datos',wis:'Borrar esta tarjeta de mi teléfono',zeker:'¿Seguro? La tarjeta desaparece de este teléfono. En tu consulta sigue existiendo.',gewist:'Borrada de este teléfono. En tu consulta la tarjeta sigue existiendo: escanea de nuevo el código QR para abrirla. ¿Añadiste la tarjeta como icono a tu pantalla de inicio? Quita también ese icono.',wacht:'Atención: {n} marcas hechas sin internet aún no se han enviado a tu consulta. Se perderán.'},pl:{kop:'Moje dane',wat:'Co jest na tej karcie?',l1:'Twoje imię, ćwiczenia i to, co dopisał fizjoterapeuta.',l2:'To, co zaznaczasz: ból, jak się czujesz od początku, jak idzie twoja aktywność docelowa, zrobione, za trudne i wiadomości.',l3:'Twojego nazwiska i dokumentacji nie ma na tej karcie.',hoelang:'Jak długo?',tot:'Przechowywana co najmniej do {d}. Jeśli ćwiczysz dalej, termin się przesuwa. Potem karta zostaje usunięta.',waar:'Gdzie?',dos:'Twoja dokumentacja jest w gabinecie. Fizjoterapeuta wpisuje tam to, co potrzebne. Pytania o dane? Zapytaj w gabinecie.',dl:'Pobierz moje dane',wis:'Usuń tę kartę z mojego telefonu',zeker:'Na pewno? Karta zniknie z tego telefonu. W gabinecie zostaje.',gewist:'Usunięto z tego telefonu. W gabinecie karta nadal istnieje: zeskanuj kod QR ponownie, aby ją otworzyć. Masz kartę jako ikonę na ekranie głównym? Usuń też tę ikonę.',wacht:'Uwaga: {n} zaznaczeń bez internetu nie wysłano jeszcze do gabinetu. Przepadną.'},tr:{kop:'Verilerim',wat:'Bu kartta ne var?',l1:'Adın, egzersizlerin ve fizyoterapistinin bunlara eklediği notlar.',l2:'İşaretlediklerin: ağrı puanları, başlangıçtan beri nasılsın, hedef etkinliğin nasıl gidiyor, yapıldı, çok zor ve mesajlar.',l3:'Soyadın ve dosyan bu kartta yer almaz.',hoelang:'Ne kadar süre?',tot:'En az {d} tarihine kadar saklanır. Egzersize devam edersen bu tarih ileri kayar. Sonra kart silinir.',waar:'Nerede?',dos:'Dosyan kliniğinde durur. Fizyoterapistin gerekeni oraya yazar. Verilerinle ilgili soruların için kliniğine sor.',dl:'Verilerimi indir',wis:'Bu kartı telefonumdan sil',zeker:'Emin misin? Kart bu telefondan kaybolur. Klinikte kalmaya devam eder.',gewist:'Bu telefondan silindi. Kart kliniğinde hâlâ duruyor: açmak için QR kodunu yeniden tara. Kartı ana ekranına simge olarak eklediysen o simgeyi de kaldır.',wacht:'Dikkat: internetsiz yapılan {n} işaret henüz kliniğine gönderilmedi. Bunlar kaybolur.'},ar:{kop:'بياناتي',wat:'ماذا يوجد في هذه البطاقة؟',l1:'اسمك الأول وتمارينك وما كتبه أخصائي العلاج الطبيعي معها.',l2:'ما تضغط عليه: درجات الألم، كيف حالك منذ البداية، كيف يسير نشاطك المستهدف، تم، صعب جدًا والرسائل.',l3:'اسم عائلتك وملفك الطبي ليسا على هذه البطاقة.',hoelang:'إلى متى؟',tot:'تُحفظ حتى {d} على الأقل. إذا واصلت التمرين يتأخر هذا الموعد. بعد ذلك تُحذف البطاقة.',waar:'أين؟',dos:'ملفك الطبي موجود في عيادتك. يضيف أخصائي العلاج الطبيعي هناك ما يلزم. أسئلة عن بياناتك؟ اسأل عيادتك.',dl:'تنزيل بياناتي',wis:'احذف هذه البطاقة من هاتفي',zeker:'هل أنت متأكد؟ ستختفي البطاقة من هذا الهاتف. تبقى موجودة في عيادتك.',gewist:'حُذفت من هذا الهاتف. البطاقة ما زالت موجودة في عيادتك: امسح رمز QR مرة أخرى لفتحها. هل أضفت البطاقة كأيقونة على الشاشة الرئيسية؟ احذف تلك الأيقونة أيضًا.',wacht:'انتبه: {n} من الضغطات بدون إنترنت لم تُرسل بعد إلى عيادتك. ستضيع.'},uk:{kop:'Мої дані',wat:'Що є на цій картці?',l1:'Твоє ім’я, твої вправи та те, що до них дописав фізіотерапевт.',l2:'Те, що ти позначаєш: біль, як ти почуваєшся від початку, як іде твоя цільова активність, виконано, заважко та повідомлення.',l3:'Твого прізвища та медичної картки на цій картці немає.',hoelang:'Як довго?',tot:'Зберігається щонайменше до {d}. Якщо продовжуєш вправи, термін зсувається. Потім картку буде видалено.',waar:'Де?',dos:'Твоя медична картка — у твоїй практиці. Фізіотерапевт вносить туди потрібне. Питання щодо даних? Звернися до практики.',dl:'Завантажити мої дані',wis:'Видалити цю картку з мого телефона',zeker:'Ти впевнений? Картка зникне з цього телефона. У практиці вона залишиться.',gewist:'Видалено з цього телефона. У практиці картка ще є: відскануй QR-код ще раз, щоб відкрити її. Додавав картку як значок на головний екран? Прибери і цей значок.',wacht:'Увага: {n} позначок без інтернету ще не надіслано до практики. Вони пропадуть.'}};
   // bij "even te druk" is er wél internet: dan niet "zodra je internet hebt" zeggen
   function trw(k){var d=TWACHT[TAAL]||TWACHT.nl;if(WACHT_REDEN==='druk'&&(k==='een'||k==='n'))k=k==='een'?'druk':'drukN';return d[k];}
   function trmg(k){var d=TMG[TAAL]||TMG.nl;return d[k];}
@@ -1204,7 +1258,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   };
   // wekelijkse behandelreeks: "{n}" wordt het aantal nog komende afspraken
   // agenda-knoppen: melding op de kaart als het agenda-bestand niet komt (geen kale foutpagina)
-  var TAGF={nl:{weg:'Deze afspraak is gewijzigd. Vraag je praktijk naar de nieuwe datum.',fout:'Dat lukte nu niet. Probeer het zo nog eens.'},en:{weg:'This appointment has changed. Ask your practice for the new date.',fout:'That did not work right now. Please try again in a moment.'},de:{weg:'Dieser Termin wurde geändert. Frag deine Praxis nach dem neuen Datum.',fout:'Das hat gerade nicht geklappt. Versuch es gleich noch einmal.'},fr:{weg:'Ce rendez-vous a changé. Demandez la nouvelle date à votre cabinet.',fout:'Cela n\'a pas fonctionné. Réessayez dans un instant.'},es:{weg:'Esta cita ha cambiado. Pide la nueva fecha a tu consulta.',fout:'No ha funcionado. Inténtalo de nuevo en un momento.'},pl:{weg:'Ta wizyta się zmieniła. Zapytaj gabinet o nowy termin.',fout:'Nie udało się. Spróbuj ponownie za chwilę.'},tr:{weg:'Bu randevu değişti. Yeni tarihi kliniğine sor.',fout:'Şu anda olmadı. Birazdan tekrar dene.'},ar:{weg:'تغيّر هذا الموعد. اسأل عيادتك عن الموعد الجديد.',fout:'لم ينجح ذلك الآن. حاول مرة أخرى بعد قليل.'},uk:{weg:'Цей візит змінився. Запитай у своєї практики нову дату.',fout:'Зараз не вдалося. Спробуй ще раз за хвилину.'}};
+  var TAGF={nl:{bezig:'Even geduld, je agenda-bestand wordt opgehaald…',weg:'Deze afspraak is gewijzigd. Vraag je praktijk naar de nieuwe datum.',fout:'Dat lukte nu niet. Probeer het zo nog eens.'},en:{bezig:'One moment, getting your calendar file…',weg:'This appointment has changed. Ask your practice for the new date.',fout:'That did not work right now. Please try again in a moment.'},de:{bezig:'Einen Moment, die Kalenderdatei wird geladen…',weg:'Dieser Termin wurde geändert. Frag deine Praxis nach dem neuen Datum.',fout:'Das hat gerade nicht geklappt. Versuch es gleich noch einmal.'},fr:{bezig:'Un instant, le fichier d\'agenda arrive…',weg:'Ce rendez-vous a changé. Demandez la nouvelle date à votre cabinet.',fout:'Cela n\'a pas fonctionné. Réessayez dans un instant.'},es:{bezig:'Un momento, se está descargando el archivo de calendario…',weg:'Esta cita ha cambiado. Pide la nueva fecha a tu consulta.',fout:'No ha funcionado. Inténtalo de nuevo en un momento.'},pl:{bezig:'Chwileczkę, pobieramy plik kalendarza…',weg:'Ta wizyta się zmieniła. Zapytaj gabinet o nowy termin.',fout:'Nie udało się. Spróbuj ponownie za chwilę.'},tr:{bezig:'Bir saniye, takvim dosyası alınıyor…',weg:'Bu randevu değişti. Yeni tarihi kliniğine sor.',fout:'Şu anda olmadı. Birazdan tekrar dene.'},ar:{bezig:'لحظة، جارٍ تنزيل ملف التقويم…',weg:'تغيّر هذا الموعد. اسأل عيادتك عن الموعد الجديد.',fout:'لم ينجح ذلك الآن. حاول مرة أخرى بعد قليل.'},uk:{bezig:'Хвилинку, завантажуємо файл календаря…',weg:'Цей візит змінився. Запитай у своєї практики нову дату.',fout:'Зараз не вдалося. Спробуй ще раз за хвилину.'}};
   function trag(k){return (TAGF[TAAL]||TAGF.nl)[k];}
   // eerst vragen of het agenda-bestand er is; pas dan openen. Anders een melding onder de knop.
   function naarAgenda(url,knop,afspraak){
@@ -1216,14 +1270,33 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     knop.dataset.bezig='1';
     var vrij=function(ms){setTimeout(function(){delete knop.dataset.bezig;},ms);};
     m.textContent='';
+    // zonder internet geen agenda-bestand: meteen de melding, niet eerst een browserfoutpagina
+    if(navigator.onLine===false){vrij(0);m.textContent=trag('fout');return;}
+    // trage lijn: na een halve seconde zeggen dat het bezig is, anders lijkt de knop dood (sweep 2026-11-15 18u, Jayden)
+    var tBezig=setTimeout(function(){m.textContent=trag('bezig');knop.setAttribute('aria-busy','true');knop.style.opacity='.7';},500);
+    // gelukt: de download zelf is nog een verzoek, dus de melding blijft nog even staan (hertest Jayden)
+    var klaar=function(houd){clearTimeout(tBezig);knop.removeAttribute('aria-busy');knop.style.opacity='';
+      var weg=function(){if(m.textContent===trag('bezig'))m.textContent='';};if(houd)setTimeout(weg,4000);else weg();};
     fetch(url,{cache:'no-store'})
       .then(function(r){
-        if(r.ok){location.href=url;vrij(1500);return;}
+        klaar(r.ok);
+        if(r.ok){location.href=url;vrij(1500);if(afspraak)verversAfspraak();return;}
         vrij(0);
-        if(afspraak&&r.status===404){m.textContent=trag('weg');if(K&&K.kaart)K.kaart.afspraak=null;return;}
+        // afspraak weggehaald: geen oude datum en geen knop meer laten staan, alleen de melding (sweep 2026-11-15 18u, Jayden)
+        if(afspraak&&r.status===404){m.textContent=trag('weg');if(K&&K.kaart)K.kaart.afspraak=null;var at=document.getElementById('aftekst');if(at)at.textContent='';knop.style.display='none';return;}
         m.textContent=trag('fout');
       })
-      .catch(function(){vrij(0);m.textContent=trag('fout');});
+      .catch(function(){klaar();vrij(0);m.textContent=trag('fout');});
+  }
+  // de agenda kreeg de verplaatste afspraak, maar de open kaart toonde nog de oude tijd (sweep 2026-11-15 14u en 18u,
+  // Jayden): na een geslaagde download de afspraak van de server halen en het blok opnieuw tekenen
+  function verversAfspraak(){
+    if(!id||id==='demo')return;
+    fetch('/api/kaart?id='+encodeURIComponent(id),{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+      if(!d||!d.ok||!d.kaart||!K||!K.kaart)return;
+      K.kaart.afspraak=d.kaart.afspraak||null;
+      tekenAfspraak();
+    }).catch(function(){});
   }
   // enkelvoud voor "nog 1 keer" waar de taal dat vraagt (de rest gebruikt TAFHER)
   var TAFHER1={en:'weekly, 1 more time',es:'semanal, 1 vez más',pl:'co tydzień, jeszcze 1 raz',ar:'أسبوعيًا، مرة واحدة متبقية',uk:'щотижня, ще 1 раз'};
@@ -1244,6 +1317,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function trpsk(k){var d=TPSK[TAAL]||TPSK.nl;return d[k]!=null?d[k]:TPSK.nl[k];}
   // "vandaag"/"morgen"-accent op de afspraakregel: op de dag zelf moet de
   // herinnering opvallen, niet opgaan in een datumregel
+  // staat de telefoon op een andere tijdzone, dan zegt de kaart erbij dat de tijd Nederlands is:
+  // de agenda (.ics met TZID Europe/Amsterdam) zet hem in de eigen tijd (sweep 18-11, Jayden in Londen)
+  var TAFNL={nl:'Nederlandse tijd',en:'Dutch time',de:'niederländische Zeit',fr:'heure néerlandaise',es:'hora de los Países Bajos',pl:'czasu holenderskiego',tr:'Hollanda saati',ar:'بتوقيت هولندا',uk:'за нідерландським часом'};
+  function andereZone(t){try{var f=function(z){return new Date(t).toLocaleString('en-CA',{timeZone:z,hourCycle:'h23'});};return f('Europe/Amsterdam')!==f(Intl.DateTimeFormat().resolvedOptions().timeZone);}catch(e){return false;}}
   var TAFREL={nl:{v:'Vandaag',m:'Morgen'},en:{v:'Today',m:'Tomorrow'},de:{v:'Heute',m:'Morgen'},fr:{v:'Aujourd’hui',m:'Demain'},es:{v:'Hoy',m:'Mañana'},pl:{v:'Dzisiaj',m:'Jutro'},tr:{v:'Bugün',m:'Yarın'},ar:{v:'اليوم',m:'غدًا'},uk:{v:'Сьогодні',m:'Завтра'}};
   // teksten voor "vraag het aan je kaart" (apart blokje; valt terug op Nederlands)
   // AI-verordening art. 50: de patiënt weet dat het antwoord van een AI-programma komt.
@@ -1262,15 +1339,15 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function trq(k){var d=TQ[TAAL]||TQ.nl;return d[k]!=null?d[k]:TQ.nl[k];}
   // teksten voor het oefenvinkje en de oefenweek
   var TG={
-    nl:{uitvraag:'Je hebt vandaag {n} oefening(en) afgevinkt. Als je dit uitzet, gaan die vinkjes ook weg. Doorgaan?',vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek',som0:'Nog geen keer deze week — pak je ritme weer op, één keer is genoeg om te beginnen.',som1:'Goed bezig — je oefende op {n} van de 7 dagen.',som3:'Sterk! Je oefende op {n} van de 7 dagen. Zo houd je het vol.',groter:'Grotere letters',print:'Print',oefdaan:'Gedaan',oefvoor:'{n} van {t} vandaag gedaan',oefklaar:'Alle oefeningen vandaag gedaan — sterk!',doel:'Je oefendoel: {d}× per week — deze week {n}× gedaan.',doelklaar:'Je haalde je oefendoel van {d}× deze week — sterk!',alles:'Alles gedaan',zwaar:'Te zwaar?',zwaardank:'Doorgegeven ✓',zwaarbezig:'Versturen…',zwaarmis:'Niet verstuurd. Tik opnieuw',reeks:'Al {n} weken op rij bezig'},
-    en:{uitvraag:'You ticked off {n} exercise(s) today. Turning this off removes those ticks too. Continue?',vdaan:'I did my exercises today',vweek:'Your exercise week',som0:'Not yet this week — pick your rhythm back up, once is enough to start.',som1:'Well done — you practised on {n} of the last 7 days.',som3:'Strong! You practised on {n} of the last 7 days. That’s how you keep it up.',groter:'Larger text',print:'Print',oefdaan:'Done',oefvoor:'{n} of {t} done today',oefklaar:'All exercises done today — strong!',doel:'Your goal: {d}× per week — done {n}× this week.',doelklaar:'You reached your goal of {d}× this week — strong!',alles:'All done',zwaar:'Too hard?',zwaardank:'Shared ✓',zwaarbezig:'Sending…',zwaarmis:'Not sent. Tap to retry',reeks:'{n} weeks in a row now'},
-    de:{uitvraag:'Du hast heute {n} Übung(en) abgehakt. Wenn du das ausschaltest, verschwinden diese Häkchen auch. Weiter?',vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche',som0:'Diese Woche noch nicht — nimm deinen Rhythmus wieder auf, einmal genügt zum Start.',som1:'Gut gemacht — du hast an {n} von 7 Tagen geübt.',som3:'Stark! Du hast an {n} von 7 Tagen geübt. So bleibst du dran.',groter:'Größere Schrift',print:'Drucken',oefdaan:'Erledigt',oefvoor:'{n} von {t} heute erledigt',oefklaar:'Alle Übungen heute erledigt — stark!',doel:'Dein Ziel: {d}× pro Woche — diese Woche {n}× geschafft.',doelklaar:'Du hast dein Ziel von {d}× diese Woche erreicht — stark!',alles:'Alles erledigt',zwaar:'Zu schwer?',zwaardank:'Weitergegeben ✓',zwaarbezig:'Wird gesendet…',zwaarmis:'Nicht gesendet. Erneut tippen',reeks:'Schon {n} Wochen in Folge dran'},
-    fr:{uitvraag:'Vous avez coché {n} exercice(s) aujourd’hui. Si vous désactivez ceci, ces coches disparaissent aussi. Continuer ?',zwaarbezig:'Envoi…',zwaarmis:'Non envoyé. Touchez pour réessayer',vdaan:'J’ai fait mes exercices aujourd’hui',vweek:'Votre semaine d’exercices',som0:'Pas encore cette semaine — reprenez votre rythme, une fois suffit pour commencer.',som1:'Bravo — vous avez fait vos exercices {n} des 7 derniers jours.',som3:'Superbe ! Vous avez fait vos exercices {n} des 7 derniers jours. C’est comme ça qu’on tient.',groter:'Texte plus grand',print:'Imprimer',oefdaan:'Fait',oefvoor:'{n} sur {t} fait aujourd’hui',oefklaar:'Tous les exercices faits aujourd’hui — bravo !',doel:'Ton objectif : {d}× par semaine — {n}× cette semaine.',doelklaar:'Tu as atteint ton objectif de {d}× cette semaine — bravo !',alles:'Tout est fait',zwaar:'Trop dur ?',zwaardank:'Transmis ✓',reeks:'{n} semaines d’affilée'},
-    es:{uitvraag:'Hoy has marcado {n} ejercicio(s). Si desactivas esto, esas marcas también se borran. ¿Continuar?',zwaarbezig:'Enviando…',zwaarmis:'No enviado. Toca para reintentar',vdaan:'Hoy he hecho mis ejercicios',vweek:'Tu semana de ejercicios',som0:'Aún no esta semana — retoma tu ritmo, una vez basta para empezar.',som1:'Bien hecho — hiciste ejercicio {n} de los últimos 7 días.',som3:'¡Genial! Hiciste ejercicio {n} de los últimos 7 días. Así se mantiene.',groter:'Texto más grande',print:'Imprimir',oefdaan:'Hecho',oefvoor:'{n} de {t} hechos hoy',oefklaar:'Todos los ejercicios hechos hoy — ¡genial!',doel:'Tu meta: {d}× por semana — {n}× esta semana.',doelklaar:'¡Alcanzaste tu meta de {d}× esta semana — genial!',alles:'Todo hecho',zwaar:'¿Demasiado duro?',zwaardank:'Enviado ✓',reeks:'{n} semanas seguidas'},
-    pl:{uitvraag:'Dziś odhaczono {n} ćwiczenie(-a). Jeśli to wyłączysz, te znaczniki też znikną. Kontynuować?',zwaarbezig:'Wysyłanie…',zwaarmis:'Nie wysłano. Dotknij, aby spróbować ponownie',vdaan:'Ćwiczyłem(-am) dzisiaj',vweek:'Twój tydzień ćwiczeń',som0:'Jeszcze nie w tym tygodniu — wróć do rytmu, jeden raz wystarczy na początek.',som1:'Dobra robota — ćwiczyłeś(-aś) przez {n} z 7 dni.',som3:'Świetnie! Ćwiczyłeś(-aś) przez {n} z 7 dni. Tak się utrzymuje formę.',groter:'Większy tekst',print:'Drukuj',oefdaan:'Zrobione',oefvoor:'{n} z {t} zrobione dzisiaj',oefklaar:'Wszystkie ćwiczenia dziś zrobione — świetnie!',doel:'Twój cel: {d}× w tygodniu — w tym tygodniu {n}×.',doelklaar:'Osiągnąłeś(-aś) swój cel {d}× w tym tygodniu — świetnie!',alles:'Wszystko zrobione',zwaar:'Za trudne?',zwaardank:'Przekazano ✓',reeks:'Już {n} tygodni z rzędu'},
-    tr:{uitvraag:'Bugün {n} egzersizi işaretledin. Bunu kapatırsan bu işaretler de silinir. Devam edilsin mi?',zwaarbezig:'Gönderiliyor…',zwaarmis:'Gönderilmedi. Tekrar dokunun',vdaan:'Bugün egzersiz yaptım',vweek:'Egzersiz haftan',som0:'Bu hafta henüz yok — ritmini yeniden yakala, başlamak için bir kez yeter.',som1:'Aferin — son 7 günün {n} gününde egzersiz yaptın.',som3:'Harika! Son 7 günün {n} gününde egzersiz yaptın. Böyle devam.',groter:'Daha büyük yazı',print:'Yazdır',oefdaan:'Yapıldı',oefvoor:'Bugün {t} egzersizden {n} tanesi yapıldı',oefklaar:'Bugün tüm egzersizler yapıldı — harika!',doel:'Hedefin: haftada {d}× — bu hafta {n}×.',doelklaar:'Bu hafta {d}× hedefine ulaştın — harika!',alles:'Hepsi tamam',zwaar:'Çok mu zor?',zwaardank:'İletildi ✓',reeks:'{n} hafta üst üste'},
-    ar:{uitvraag:'لقد أشرت اليوم إلى {n} من التمارين. إذا ألغيت هذا، ستُحذف هذه العلامات أيضًا. هل تريد المتابعة؟',zwaarbezig:'جارٍ الإرسال…',zwaarmis:'لم يُرسل. اضغط للمحاولة مرة أخرى',vdaan:'تمرّنت اليوم',vweek:'أسبوع تمارينك',som0:'لم تتمرّن بعد هذا الأسبوع — استعد إيقاعك، مرّة واحدة تكفي للبدء.',som1:'أحسنت — تمرّنت في {n} من آخر 7 أيام.',som3:'رائع! تمرّنت في {n} من آخر 7 أيام. هكذا تحافظ على استمرارك.',groter:'خط أكبر',print:'طباعة',oefdaan:'تمّ',oefvoor:'{n} من {t} اليوم',oefklaar:'أنجزت كل التمارين اليوم — رائع!',doel:'هدفك: {d}× في الأسبوع — هذا الأسبوع {n}×.',doelklaar:'حققت هدفك {d}× هذا الأسبوع — رائع!',alles:'تم إنجاز الكل',zwaar:'صعب جدًا؟',zwaardank:'تم الإبلاغ ✓',reeks:'{n} أسابيع متتالية'},
-    uk:{uitvraag:'Сьогодні ви позначили {n} вправ(и). Якщо вимкнути це, ці позначки теж зникнуть. Продовжити?',zwaarbezig:'Надсилання…',zwaarmis:'Не надіслано. Торкніться, щоб повторити',vdaan:'Сьогодні я тренувався(-лась)',vweek:'Твій тиждень вправ',som0:'Цього тижня ще ні — поверни свій ритм, одного разу досить, щоб почати.',som1:'Молодець — ти займався(-лась) {n} із 7 днів.',som3:'Чудово! Ти займався(-лась) {n} із 7 днів. Так і тримай.',groter:'Більший текст',print:'Друк',oefdaan:'Готово',oefvoor:'{n} з {t} сьогодні',oefklaar:'Усі вправи сьогодні виконано — чудово!',doel:'Твоя ціль: {d}× на тиждень — цього тижня {n}×.',doelklaar:'Ти досяг(ла) своєї цілі {d}× цього тижня — чудово!',alles:'Усе зроблено',zwaar:'Занадто важко?',zwaardank:'Передано ✓',reeks:'Уже {n} тижнів поспіль'}
+    nl:{weg:'Deze oefening staat niet meer op je kaart.',herlaad:'Kaart opnieuw laden',uitvraag:'Je hebt vandaag {n} oefening(en) afgevinkt. Als je dit uitzet, gaan die vinkjes ook weg. Doorgaan?',vdaan:'Ik heb vandaag geoefend',vweek:'Jouw oefenweek',som0:'Nog geen keer deze week — pak je ritme weer op, één keer is genoeg om te beginnen.',som1:'Goed bezig — je oefende op {n} van de 7 dagen.',som3:'Sterk! Je oefende op {n} van de 7 dagen. Zo houd je het vol.',groter:'Grotere letters',print:'Print',oefdaan:'Gedaan',oefvoor:'{n} van {t} vandaag gedaan',oefklaar:'Alle oefeningen vandaag gedaan — sterk!',doel:'Je oefendoel: {d}× per week — deze week {n}× gedaan.',doelklaar:'Je haalde je oefendoel van {d}× deze week — sterk!',alles:'Alles gedaan',zwaar:'Te zwaar?',zwaardank:'Doorgegeven ✓',zwaarbezig:'Versturen…',zwaarmis:'Niet verstuurd. Tik opnieuw',reeks:'Al {n} weken op rij bezig'},
+    en:{weg:'This exercise is no longer on your card.',herlaad:'Reload card',uitvraag:'You ticked off {n} exercise(s) today. Turning this off removes those ticks too. Continue?',vdaan:'I did my exercises today',vweek:'Your exercise week',som0:'Not yet this week — pick your rhythm back up, once is enough to start.',som1:'Well done — you practised on {n} of the last 7 days.',som3:'Strong! You practised on {n} of the last 7 days. That’s how you keep it up.',groter:'Larger text',print:'Print',oefdaan:'Done',oefvoor:'{n} of {t} done today',oefklaar:'All exercises done today — strong!',doel:'Your goal: {d}× per week — done {n}× this week.',doelklaar:'You reached your goal of {d}× this week — strong!',alles:'All done',zwaar:'Too hard?',zwaardank:'Shared ✓',zwaarbezig:'Sending…',zwaarmis:'Not sent. Tap to retry',reeks:'{n} weeks in a row now'},
+    de:{weg:'Diese Übung steht nicht mehr auf deiner Karte.',herlaad:'Karte neu laden',uitvraag:'Du hast heute {n} Übung(en) abgehakt. Wenn du das ausschaltest, verschwinden diese Häkchen auch. Weiter?',vdaan:'Ich habe heute geübt',vweek:'Deine Übungswoche',som0:'Diese Woche noch nicht — nimm deinen Rhythmus wieder auf, einmal genügt zum Start.',som1:'Gut gemacht — du hast an {n} von 7 Tagen geübt.',som3:'Stark! Du hast an {n} von 7 Tagen geübt. So bleibst du dran.',groter:'Größere Schrift',print:'Drucken',oefdaan:'Erledigt',oefvoor:'{n} von {t} heute erledigt',oefklaar:'Alle Übungen heute erledigt — stark!',doel:'Dein Ziel: {d}× pro Woche — diese Woche {n}× geschafft.',doelklaar:'Du hast dein Ziel von {d}× diese Woche erreicht — stark!',alles:'Alles erledigt',zwaar:'Zu schwer?',zwaardank:'Weitergegeben ✓',zwaarbezig:'Wird gesendet…',zwaarmis:'Nicht gesendet. Erneut tippen',reeks:'Schon {n} Wochen in Folge dran'},
+    fr:{weg:'Cet exercice n’est plus sur votre carte.',herlaad:'Recharger la carte',uitvraag:'Vous avez coché {n} exercice(s) aujourd’hui. Si vous désactivez ceci, ces coches disparaissent aussi. Continuer ?',zwaarbezig:'Envoi…',zwaarmis:'Non envoyé. Touchez pour réessayer',vdaan:'J’ai fait mes exercices aujourd’hui',vweek:'Votre semaine d’exercices',som0:'Pas encore cette semaine — reprenez votre rythme, une fois suffit pour commencer.',som1:'Bravo — vous avez fait vos exercices {n} des 7 derniers jours.',som3:'Superbe ! Vous avez fait vos exercices {n} des 7 derniers jours. C’est comme ça qu’on tient.',groter:'Texte plus grand',print:'Imprimer',oefdaan:'Fait',oefvoor:'{n} sur {t} fait aujourd’hui',oefklaar:'Tous les exercices faits aujourd’hui — bravo !',doel:'Ton objectif : {d}× par semaine — {n}× cette semaine.',doelklaar:'Tu as atteint ton objectif de {d}× cette semaine — bravo !',alles:'Tout est fait',zwaar:'Trop dur ?',zwaardank:'Transmis ✓',reeks:'{n} semaines d’affilée'},
+    es:{weg:'Este ejercicio ya no está en tu tarjeta.',herlaad:'Recargar la tarjeta',uitvraag:'Hoy has marcado {n} ejercicio(s). Si desactivas esto, esas marcas también se borran. ¿Continuar?',zwaarbezig:'Enviando…',zwaarmis:'No enviado. Toca para reintentar',vdaan:'Hoy he hecho mis ejercicios',vweek:'Tu semana de ejercicios',som0:'Aún no esta semana — retoma tu ritmo, una vez basta para empezar.',som1:'Bien hecho — hiciste ejercicio {n} de los últimos 7 días.',som3:'¡Genial! Hiciste ejercicio {n} de los últimos 7 días. Así se mantiene.',groter:'Texto más grande',print:'Imprimir',oefdaan:'Hecho',oefvoor:'{n} de {t} hechos hoy',oefklaar:'Todos los ejercicios hechos hoy — ¡genial!',doel:'Tu meta: {d}× por semana — {n}× esta semana.',doelklaar:'¡Alcanzaste tu meta de {d}× esta semana — genial!',alles:'Todo hecho',zwaar:'¿Demasiado duro?',zwaardank:'Enviado ✓',reeks:'{n} semanas seguidas'},
+    pl:{weg:'Tego ćwiczenia nie ma już na Twojej karcie.',herlaad:'Wczytaj kartę ponownie',uitvraag:'Dziś odhaczono {n} ćwiczenie(-a). Jeśli to wyłączysz, te znaczniki też znikną. Kontynuować?',zwaarbezig:'Wysyłanie…',zwaarmis:'Nie wysłano. Dotknij, aby spróbować ponownie',vdaan:'Ćwiczyłem(-am) dzisiaj',vweek:'Twój tydzień ćwiczeń',som0:'Jeszcze nie w tym tygodniu — wróć do rytmu, jeden raz wystarczy na początek.',som1:'Dobra robota — ćwiczyłeś(-aś) przez {n} z 7 dni.',som3:'Świetnie! Ćwiczyłeś(-aś) przez {n} z 7 dni. Tak się utrzymuje formę.',groter:'Większy tekst',print:'Drukuj',oefdaan:'Zrobione',oefvoor:'{n} z {t} zrobione dzisiaj',oefklaar:'Wszystkie ćwiczenia dziś zrobione — świetnie!',doel:'Twój cel: {d}× w tygodniu — w tym tygodniu {n}×.',doelklaar:'Osiągnąłeś(-aś) swój cel {d}× w tym tygodniu — świetnie!',alles:'Wszystko zrobione',zwaar:'Za trudne?',zwaardank:'Przekazano ✓',reeks:'Już {n} tygodni z rzędu'},
+    tr:{weg:'Bu egzersiz artık kartında değil.',herlaad:'Kartı yeniden yükle',uitvraag:'Bugün {n} egzersizi işaretledin. Bunu kapatırsan bu işaretler de silinir. Devam edilsin mi?',zwaarbezig:'Gönderiliyor…',zwaarmis:'Gönderilmedi. Tekrar dokunun',vdaan:'Bugün egzersiz yaptım',vweek:'Egzersiz haftan',som0:'Bu hafta henüz yok — ritmini yeniden yakala, başlamak için bir kez yeter.',som1:'Aferin — son 7 günün {n} gününde egzersiz yaptın.',som3:'Harika! Son 7 günün {n} gününde egzersiz yaptın. Böyle devam.',groter:'Daha büyük yazı',print:'Yazdır',oefdaan:'Yapıldı',oefvoor:'Bugün {t} egzersizden {n} tanesi yapıldı',oefklaar:'Bugün tüm egzersizler yapıldı — harika!',doel:'Hedefin: haftada {d}× — bu hafta {n}×.',doelklaar:'Bu hafta {d}× hedefine ulaştın — harika!',alles:'Hepsi tamam',zwaar:'Çok mu zor?',zwaardank:'İletildi ✓',reeks:'{n} hafta üst üste'},
+    ar:{weg:'هذا التمرين لم يعد على بطاقتك.',herlaad:'أعد تحميل البطاقة',uitvraag:'لقد أشرت اليوم إلى {n} من التمارين. إذا ألغيت هذا، ستُحذف هذه العلامات أيضًا. هل تريد المتابعة؟',zwaarbezig:'جارٍ الإرسال…',zwaarmis:'لم يُرسل. اضغط للمحاولة مرة أخرى',vdaan:'تمرّنت اليوم',vweek:'أسبوع تمارينك',som0:'لم تتمرّن بعد هذا الأسبوع — استعد إيقاعك، مرّة واحدة تكفي للبدء.',som1:'أحسنت — تمرّنت في {n} من آخر 7 أيام.',som3:'رائع! تمرّنت في {n} من آخر 7 أيام. هكذا تحافظ على استمرارك.',groter:'خط أكبر',print:'طباعة',oefdaan:'تمّ',oefvoor:'{n} من {t} اليوم',oefklaar:'أنجزت كل التمارين اليوم — رائع!',doel:'هدفك: {d}× في الأسبوع — هذا الأسبوع {n}×.',doelklaar:'حققت هدفك {d}× هذا الأسبوع — رائع!',alles:'تم إنجاز الكل',zwaar:'صعب جدًا؟',zwaardank:'تم الإبلاغ ✓',reeks:'{n} أسابيع متتالية'},
+    uk:{weg:'Цієї вправи вже немає на вашій картці.',herlaad:'Оновити картку',uitvraag:'Сьогодні ви позначили {n} вправ(и). Якщо вимкнути це, ці позначки теж зникнуть. Продовжити?',zwaarbezig:'Надсилання…',zwaarmis:'Не надіслано. Торкніться, щоб повторити',vdaan:'Сьогодні я тренувався(-лась)',vweek:'Твій тиждень вправ',som0:'Цього тижня ще ні — поверни свій ритм, одного разу досить, щоб почати.',som1:'Молодець — ти займався(-лась) {n} із 7 днів.',som3:'Чудово! Ти займався(-лась) {n} із 7 днів. Так і тримай.',groter:'Більший текст',print:'Друк',oefdaan:'Готово',oefvoor:'{n} з {t} сьогодні',oefklaar:'Усі вправи сьогодні виконано — чудово!',doel:'Твоя ціль: {d}× на тиждень — цього тижня {n}×.',doelklaar:'Ти досяг(ла) своєї цілі {d}× цього тижня — чудово!',alles:'Усе зроблено',zwaar:'Занадто важко?',zwaardank:'Передано ✓',reeks:'Уже {n} тижнів поспіль'}
   };
   function trg(k){var d=TG[TAAL]||TG.nl;return d[k]!=null?d[k]:TG.nl[k];}
   // oefenvinkje + oefenweek tekenen (alleen registreren en tonen, geen oordeel)
@@ -1285,10 +1362,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var week=document.getElementById('gweek');
     // toon de oefenweek zodra er historie is, óf zodra de therapeut een oefendoel
     // heeft gezet (dan zie je je doel meteen, ook vóór de eerste keer oefenen)
-    if(!g.length&&!(Number(K.kaart.doel)>0)){week.style.display='none';return;}
+    // een oefendag is de dagvink óf een dag met minstens één afgevinkte oefening (keuze Ahmed 2026-11-12,
+    // zoals de app telt); eerder telde de kaart alleen de dagvink en zag wie alleen losse oefeningen
+    // afvinkte "0× deze week" (gebruikers-sweep 2026-11-14 14u, Jayden)
+    var tdagen=mgTrouwDagen(K.kaart.oefTrouw);
+    if(!g.length&&!tdagen.length&&!(Number(K.kaart.doel)>0)){week.style.display='none';return;}
     week.style.display='flex';
     document.getElementById('gweekTitel').textContent=trg('vweek');
-    var set={};g.forEach(function(x){set[dagStr(x.t)]=1;});
+    var set={};g.forEach(function(x){set[dagStr(x.t)]=1;});tdagen.forEach(function(d){set[d]=1;});
     var h='',nweek=0;
     for(var i=6;i>=0;i--){
       var d=new Date(Date.now()-i*864e5);
@@ -1397,6 +1478,32 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var x=(K.kaart.chosen||[])[idx];var naam=oefTrouwSleutel(x);if(!naam)return;
     K.kaart.oefTrouw=mgTrouwTik(K.kaart.oefTrouw,naam,K.dag,aan);
   }
+  // Wat nog in de wachtrij staat (getikt zonder internet), hoort over de kaart van de server heen.
+  // Zonder internet komt die kaart uit de cache van vóór de tik: een uitgevinkte oefening en een
+  // uitgezette dagvink stonden na herladen weer aan, en na het versturen bleef die oude stand in
+  // het geheugen hangen (gebruikers-sweep 2026-11-14, Truus).
+  var WACHT_SCORE={'/api/kaart/meting':'metingen','/api/kaart/psk':'psk','/api/kaart/ervaring':'ervaring'};
+  function pasWachtToe(){
+    if(!K||!K.kaart)return;
+    var w=leesWacht();
+    Object.keys(w).sort(function(a,b){return (Number(w[a]&&w[a].t)||0)-(Number(w[b]&&w[b].t)||0);}).forEach(function(k){
+      var it=w[k];if(!it||!it.body)return;
+      var t=Number(it.body.wanneer)||Number(it.t)||0;if(!t)return;
+      if(it.pad==='/api/kaart/oefening'&&typeof it.body.n==='string'&&it.body.n)
+        K.kaart.oefTrouw=mgTrouwTik(K.kaart.oefTrouw,it.body.n,dagStr(t),it.body.aan!==false);
+      else if(it.pad==='/api/kaart/gedaan'){
+        var dag=dagStr(t),g=(K.kaart.gedaan||[]).filter(function(x){return dagStr(x.t)!==dag;});
+        if(it.body.aan!==false)g.push({t:t});
+        K.kaart.gedaan=g;
+      }
+      // pijnscore, doelactiviteit en herstel: één score per dag, de tik uit de wachtrij vervangt
+      // die dag (offline 4 → 7 en herladen toonde weer 4; gebruikers-sweep 2026-11-14 22u, Truus)
+      else if(WACHT_SCORE[it.pad]&&isFinite(Number(it.body.score))){
+        var veld=WACHT_SCORE[it.pad],sd=dagStr(t);
+        K.kaart[veld]=(K.kaart[veld]||[]).filter(function(x){return dagStr(x.t)!==sd;}).concat([{t:t,s:Number(it.body.score)}]);
+      }
+    });
+  }
   function bewaarOefDaan(st){try{localStorage.setItem(oefDaanSleutel(),JSON.stringify({d:st.d,done:st.done,n:oefNamen(st.done)}));}catch(e){}}
   function tekenOefDaan(){
     var st=leesOefDaan();
@@ -1408,6 +1515,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       b.classList.toggle('aan',aan);
       b.setAttribute('aria-pressed',aan?'true':'false');
       var t=b.querySelector('.odt');if(t)t.textContent=trg('oefdaan');
+      // de schermlezer hoorde zes keer alleen "Gedaan": noem de oefening erbij
+      // (gebruikers-sweep 2026-11-13, Truus)
+      var nm=b.closest('.oef');nm=nm&&nm.querySelector('.naam');
+      if(nm&&nm.textContent)b.setAttribute('aria-label',nm.textContent+': '+trg('oefdaan'));
     });
     tekenZwaar();
     if(typeof tekenSessie==='function')tekenSessie();
@@ -1447,6 +1558,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var st=leesOefDaan();
     var totaal=document.querySelectorAll('#oefs .oefdone').length;
     for(var i=0;i<totaal;i++)if(st.done.indexOf(i)===-1)toggleOefDaan(i);
+    // de knop verdwijnt na de tik: zet de focus op de bevestiging erboven, anders viel
+    // hij op de pagina en zag of hoorde de patiënt niets (gebruikers-sweep 2026-11-13, Truus)
+    var ov=document.getElementById('ovtekst');
+    if(ov&&ov.offsetParent){try{ov.scrollIntoView({block:'center'});}catch(e){}try{ov.focus({preventScroll:true});}catch(e){ov.focus();}}
   }
   (function(){var b=document.getElementById('ovalles');if(b)b.addEventListener('click',doeAllesDaan);})();
   var OEF_SLOT={};
@@ -1457,15 +1572,45 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     zetOefTrouwLokaal(idx,p===-1);
     bewaarOefDaan(st);
     tekenOefDaan();
+    // de oefenweek telt afgevinkte oefeningen mee: de stip van vandaag meteen bijwerken (hertest Jayden 2026-11-14)
+    tekenGedaan();
     // telling per oefening naar de praktijk (best effort, alleen aantallen):
     // zo ziet de therapeut welke oefening blijft liggen — zonder patiënt-app
     if(id&&id!=='demo'){
       // via stuur(): zonder internet gaat het vinkje in de wachtrij en later alsnog mee
-      try{stuur('/api/kaart/oefening',{id:id,oef:idx,aan:p===-1}).catch(function(){});}catch(e){}
+      // 409: de praktijk haalde deze oefening intussen van de kaart. Dan het vinkje terugdraaien en
+      // zeggen wat er aan de hand is; eerst bleef het stil groen staan (gebruikers-sweep 2026-11-13 22u, Jayden)
+      try{stuur('/api/kaart/oefening',{id:id,oef:idx,n:oefNamen([idx])[0],aan:p===-1})
+        .then(function(d){if(d&&d.weg)oefWeg(idx,p===-1);}).catch(function(){});}catch(e){}
     }
     // alle oefeningen af -> bevestig de dag-teller (idempotent; server telt één keer per dag)
     var totaal=document.querySelectorAll('#oefs .oefdone').length;
     if(totaal>0&&st.done.filter(function(i){return i<totaal;}).length>=totaal)bevestigGedaan();
+  }
+  // de oefening staat niet meer op de kaart (server 409): vinkje terug en een melding bij de oefening
+  function oefWeg(idx,wasAan){
+    var st=leesOefDaan(),p=st.done.indexOf(idx);
+    if(wasAan&&p>-1){st.done.splice(p,1);zetOefTrouwLokaal(idx,false);bewaarOefDaan(st);tekenOefDaan();}
+    var knop=document.querySelector('#oefs .oefdone[data-idx="'+idx+'"]');
+    var oef=knop&&knop.closest('.oef');if(!oef)return;
+    var info=oef.querySelector('.oefinfo')||oef,m=oef.querySelector('.oefweg');
+    if(!m){m=document.createElement('p');m.className='oefweg';m.setAttribute('role','alert');info.appendChild(m);}
+    m.textContent=trg('weg');
+    // "Vernieuw de pagina" kon Truus niet opvolgen vanaf een beginschermicoon (geen adresbalk):
+    // daarom een echte knop die de kaart opnieuw laadt (gebruikers-sweep 2026-11-14 02u, Truus)
+    var hk=oef.querySelector('.oefherlaad');
+    if(!hk){hk=document.createElement('button');hk.type='button';hk.className='oefherlaad';
+      hk.addEventListener('click',function(ev){ev.stopPropagation();try{location.reload();}catch(e){}});
+      m.insertAdjacentElement('afterend',hk);}
+    hk.textContent=trg('herlaad');
+    // "te zwaar" bij deze oefening heeft geen zin meer; niet als uitgeschakelde knop met de melding erin laten staan
+    var zk=oef.querySelector('.oefzwaar');if(zk)zk.hidden=true;
+    // stappenmodus: "Gedaan" sprong al door naar de volgende oefening, zodat de melding op een scherm stond
+    // dat Truus net verliet. Ga terug naar deze oefening, zodat ze ziet wat er aan de hand is.
+    if(SESSIE>-1&&SESSIE!==idx)openOef(idx);
+    // ook in het overzicht (na een vinkje, "Alles gedaan" of een stappenmodus die al dicht ging): de melding in
+    // beeld en de focus erop, anders stond hij bij 200 % tekst onder de vouw (hertest Truus 2026-11-14 06u)
+    try{m.setAttribute('tabindex','-1');m.focus({preventScroll:true});m.scrollIntoView({block:'center'});}catch(e){}
   }
   // dag-teller bevestigen; slaat over als vandaag al geregistreerd is
   // de voorbeeldkaart bewaart niets op de server: de dag staat dan alleen op het scherm,
@@ -1488,6 +1633,48 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       .then(function(d){if(d&&d.ok){K.kaart.gedaan=d.gedaan||[];tekenGedaan();}if(knop)delete knop.dataset.bezig;})
       .catch(function(){if(knop)delete knop.dataset.bezig;});
   }
+  // Vaste vragen in plaats van de vraaghulp (lib/vaste-vragen.js). De standaardvragen staan in
+  // de taal van de kaart; de eigen vragen van de praktijk staan bij de oefening, zoals de
+  // praktijk ze schreef (in het Nederlands). Er gaat geen vrije tekst van de patiënt naar een
+  // AI-dienst: wie een andere vraag heeft, tikt op "Ik heb een vraag".
+  var VVT={
+    nl:{kop:'Vragen over je oefeningen',eigen:'Vragen van je praktijk',nl:'',anders:'Staat je vraag er niet bij? Tik hieronder op \u201cIk heb een vraag\u201d of bel je praktijk.'},
+    en:{kop:'Questions about your exercises',eigen:'Questions from your practice',nl:'Your practice wrote this in Dutch.',anders:'Is your question not listed? Tap \u201cI have a question\u201d below or call your practice.'},
+    de:{kop:'Fragen zu deinen Übungen',eigen:'Fragen von deiner Praxis',nl:'Deine Praxis hat dies auf Niederländisch geschrieben.',anders:'Deine Frage ist nicht dabei? Tippe unten auf \u201eIch habe eine Frage\u201c oder ruf deine Praxis an.'},
+    fr:{kop:'Questions sur tes exercices',eigen:'Questions de ton cabinet',nl:'Ton cabinet a écrit ceci en néerlandais.',anders:'Ta question n’y est pas ? Touche \u00ab J’ai une question \u00bb ci-dessous ou appelle ton cabinet.'},
+    es:{kop:'Preguntas sobre tus ejercicios',eigen:'Preguntas de tu consulta',nl:'Tu consulta escribió esto en neerlandés.',anders:'¿No aparece tu pregunta? Toca \u00abTengo una pregunta\u00bb abajo o llama a tu consulta.'},
+    pl:{kop:'Pytania o twoje ćwiczenia',eigen:'Pytania od twojej przychodni',nl:'Twoja przychodnia napisała to po niderlandzku.',anders:'Nie ma twojego pytania? Dotknij poniżej \u201eMam pytanie\u201d lub zadzwoń do przychodni.'},
+    tr:{kop:'Egzersizlerinle ilgili sorular',eigen:'Kliniğinden sorular',nl:'Kliniğin bunu Felemenkçe yazdı.',anders:'Sorun burada yok mu? Aşağıdaki \u201cBir sorum var\u201d düğmesine dokun veya kliniğini ara.'},
+    ar:{kop:'أسئلة عن تمارينك',eigen:'أسئلة من عيادتك',nl:'كتبت عيادتك هذا باللغة الهولندية.',anders:'سؤالك غير موجود؟ اضغط على \u00abلديّ سؤال\u00bb في الأسفل أو اتصل بعيادتك.'},
+    uk:{kop:'Запитання про твої вправи',eigen:'Запитання від твоєї практики',nl:'Твоя практика написала це нідерландською.',anders:'Немає твого запитання? Натисни нижче \u00abУ мене є запитання\u00bb або зателефонуй до своєї практики.'}
+  };
+  function vvt(s){var m=VVT[TAAL]||VVT.nl;return m[s]||VVT.nl[s];}
+  function vvLijstHtml(lijst,alsNl){
+    return '<div class="vvlijst">'+lijst.map(function(x){
+      var l=alsNl?' lang="nl" dir="ltr"':' dir="auto"';
+      return '<details><summary'+l+'><span>'+esc(x.v)+'</span></summary><p'+l+'>'+esc(x.a)+'</p></details>';
+    }).join('')+'</div>';
+  }
+  function tekenVasteVragen(){
+    var vv=K&&K.kaart&&K.kaart.vasteVragen;
+    var kop=document.getElementById('vvkop'),kaart=document.getElementById('vvkaart');
+    if(!kop||!kaart)return;
+    var std=(vv&&Array.isArray(vv.standaard))?vv.standaard:[];
+    var lijst=std.map(function(s){return {v:(s.v&&(s.v[TAAL]||s.v.nl))||'',a:(s.a&&(s.a[TAAL]||s.a.nl))||''};}).filter(function(x){return x.v&&x.a;});
+    if(!lijst.length){kop.hidden=true;kaart.hidden=true;}
+    else{
+      kop.hidden=false;kaart.hidden=false;kop.textContent=vvt('kop');
+      kaart.innerHTML=vvLijstHtml(lijst,false)+'<p class="vvnoot">'+esc(vvt('anders'))+'</p>';
+    }
+    var eigen=(vv&&vv.eigen)||{};
+    var rijen=(K&&K.kaart&&K.kaart.chosen)||[];
+    Array.prototype.forEach.call(document.querySelectorAll('#oefs .oefvragen[data-vvidx]'),function(el){
+      var x=rijen[+el.getAttribute('data-vvidx')];
+      var n=x&&String(x.n||'').replace(/\s+/g,' ').trim();
+      var e=n&&Object.prototype.hasOwnProperty.call(eigen,n)&&Array.isArray(eigen[n])?eigen[n].filter(function(q){return q&&q.v&&q.a;}):[];
+      el.innerHTML=e.length?'<h3>'+esc(vvt('eigen'))+'</h3>'+vvLijstHtml(e,true)+(TAAL!=='nl'?'<p class="vvnoot">'+esc(vvt('nl'))+'</p>':''):'';
+    });
+  }
   // de vraaghulp verschijnt alleen als de server een AI-sleutel heeft (K.ai)
   function tekenVraag(){
     if(!K||!K.ai)return;
@@ -1504,6 +1691,12 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // uitleg die in een andere taal dan Nederlands nog geen vertaling heeft
   function uitlegNietVertaald(s){return !!s&&TAAL!=='nl'&&vt(s)===s;}
   var NIET_VERTAALD={nl:'',en:'This explanation is not available in English yet, so it is shown in Dutch.',de:'Diese Anleitung gibt es noch nicht auf Deutsch, darum steht sie auf Niederländisch da.',fr:'Cette explication n’est pas encore traduite, elle est donc affichée en néerlandais.',es:'Esta explicación aún no está traducida, por eso aparece en neerlandés.',pl:'Ten opis nie jest jeszcze przetłumaczony, dlatego jest po niderlandzku.',tr:'Bu açıklama henüz çevrilmedi, bu yüzden Felemenkçe gösteriliyor.',ar:'هذا الشرح غير مترجم بعد، لذلك يظهر باللغة الهولندية.',uk:'Цей опис ще не перекладено, тому він показаний нідерландською.'};
+  // Mislukt de vertaling (geen dienst, storing), dan stond in het overzicht een Engelse kaart met
+  // Nederlandse oefennamen zonder enige uitleg (gebruikers-sweep 2026-11-18, Jayden). Eén melding
+  // bovenaan de oefeningen; de namen zelf krijgen lang="nl" voor de voorleesstem.
+  var DEELS_NL={nl:'',en:'Part of this card is not available in English yet, so it is shown in Dutch.',de:'Ein Teil dieser Karte ist noch nicht auf Deutsch verfügbar und steht darum auf Niederländisch da.',fr:'Une partie de cette carte n’est pas encore traduite, elle est donc affichée en néerlandais.',es:'Parte de esta tarjeta aún no está traducida, por eso aparece en neerlandés.',pl:'Część tej karty nie jest jeszcze przetłumaczona, dlatego jest po niderlandzku.',tr:'Bu kartın bir kısmı henüz çevrilmedi, bu yüzden Felemenkçe gösteriliyor.',ar:'جزء من هذه البطاقة غير مترجم بعد، لذلك يظهر باللغة الهولندية.',uk:'Частину цієї картки ще не перекладено, тому вона показана нідерландською.'};
+  function naamNietVertaald(s){var m=VERT[TAAL];return !!s&&TAAL!=='nl'&&!(m&&Object.prototype.hasOwnProperty.call(m,s));}
+  function nlAttr(s){return naamNietVertaald(s)?' lang="nl"':'';}
   function nietVertaaldNoot(){
     var n=document.createElement('div');n.className='nietvertaald';n.setAttribute('role','note');
     n.textContent=NIET_VERTAALD[TAAL]||NIET_VERTAALD.en;return n;
@@ -1517,17 +1710,30 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // fout in een vertaalde uitvoeringsinstructie kan de patiënt verkeerd laten oefenen; daarom
   // staat eronder dat het een automatische vertaling is en wat te doen bij twijfel.
   var AUTO_VERTAALD={nl:'',en:'Translated automatically from Dutch. In doubt? Ask your physiotherapist.',de:'Automatisch aus dem Niederländischen übersetzt. Unsicher? Frag deine Physiotherapeutin oder deinen Physiotherapeuten.',fr:'Traduit automatiquement du néerlandais. Un doute ? Demandez à votre kinésithérapeute.',es:'Traducido automáticamente del neerlandés. ¿Dudas? Pregunta a tu fisioterapeuta.',pl:'Przetłumaczono automatycznie z niderlandzkiego. Masz wątpliwości? Zapytaj swojego fizjoterapeutę.',tr:'Felemenkçeden otomatik olarak çevrildi. Emin değil misin? Fizyoterapistine sor.',ar:'تُرجم تلقائيًا من الهولندية. هل لديك شك؟ اسأل أخصائي العلاج الطبيعي.',uk:'Автоматично перекладено з нідерландської. Сумніваєшся? Запитай свого фізіотерапевта.'};
-  function uitlegAutoVertaald(s){return !!s&&TAAL!=='nl'&&vt(s)!==s;}
+  function uitlegVertaald(s){return !!s&&TAAL!=='nl'&&vt(s)!==s;}
+  function nagelezen(s){var l=NAGEL[TAAL];return !!(l&&l.indexOf(s)!==-1);}
+  // nagelezen door een lezer van Fysiplan: dan geen melding "automatisch vertaald"
+  function uitlegAutoVertaald(s){return uitlegVertaald(s)&&!nagelezen(s);}
+  // Bij elke vertaalde uitleg staat de Nederlandse tekst eronder, ingeklapt: wie twijfelt, kan het
+  // origineel laten zien aan iemand die Nederlands leest, of aan de fysiotherapeut.
+  var NL_ORIGINEEL={nl:'',en:'Show the original Dutch text',de:'Den niederländischen Originaltext zeigen',fr:'Afficher le texte original en néerlandais',es:'Ver el texto original en neerlandés',pl:'Pokaż oryginalny tekst po niderlandzku',tr:'Orijinal Felemenkçe metni göster',ar:'عرض النص الأصلي باللغة الهولندية',uk:'Показати оригінальний текст нідерландською'};
+  function vertaalNootHtml(s){
+    if(!uitlegVertaald(s))return '';
+    return (uitlegAutoVertaald(s)?'<div class="nietvertaald autovertaald" role="note">'+esc(AUTO_VERTAALD[TAAL]||AUTO_VERTAALD.en)+'</div>':'')+
+      '<details class="nlorigineel"><summary>'+esc(NL_ORIGINEEL[TAAL]||NL_ORIGINEEL.en)+'</summary><p lang="nl" dir="ltr">'+esc(s)+'</p></details>';
+  }
+  function vertaalNoot(s){var d=document.createElement('div');d.className='vertaalnoot';d.innerHTML=vertaalNootHtml(s);return d;}
   function uitlegZinnen(t){
     return String(t||'').replace(/([.!?…])\s+(?=[A-ZÀ-ÖØ-ÞĄ-Ž\u0400-\u042F¿¡])/g,'$1\n').split('\n').map(function(z){return z.trim();}).filter(Boolean);
   }
   function oefUitlegBlok(o,gehouden){
     if(gehouden||!o||!o.uitleg)return '';
     var nl=uitlegNietVertaald(o.uitleg);
+    // de melding vóór de Nederlandse tekst: eronder viel hij op een telefoon onder de vouw (sweep 2026-11-18, Jayden)
     return '<div class="oefuitleg"><h3>'+esc(ZO_DOE[TAAL]||ZO_DOE.nl)+'</h3>'+
-      uitlegZinnen(vt(o.uitleg)).map(function(z){return '<p dir="auto"'+(nl?' lang="nl"':'')+'>'+esc(z)+'</p>';}).join('')+
       (nl?'<div class="nietvertaald" role="note">'+esc(NIET_VERTAALD[TAAL]||NIET_VERTAALD.en)+'</div>':'')+
-      (uitlegAutoVertaald(o.uitleg)?'<div class="nietvertaald autovertaald" role="note">'+esc(AUTO_VERTAALD[TAAL]||AUTO_VERTAALD.en)+'</div>':'')+'</div>';
+      uitlegZinnen(vt(o.uitleg)).map(function(z){return '<p dir="auto"'+(nl?' lang="nl"':'')+'>'+esc(z)+'</p>';}).join('')+
+      vertaalNootHtml(o.uitleg)+'</div>';
   }
   // Uitwijklink onder een ingesloten YouTube-video. Dit herstelt de ingesloten speler niet:
   // YouTube verwacht een Referer en de kaart stuurt bewust geen (referrer-policy same-origin;
@@ -1548,9 +1754,13 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // achteraan), bij voorlezen de eerste (de bibliotheekoefening). Een eigen oefening met
   // dezelfde naam als een bibliotheekoefening toonde dan de ene en liet de opname van de
   // andere horen. Eerst het stabiele id, daarna de naam, en bij gelijke naam de laatste.
+  // Een oefening die anders is gaan heten, neemt de naam die ze eerder had mee (`eerder`): een
+  // kaart van voor die wijziging zonder vast id bij de oefening vindt haar zo terug. Een
+  // oefening die nu zo heet gaat voor.
   function oefeningIndex(lib,kaart){
-    var byNorm={},byStable={};
-    metEigen(lib,kaart).forEach(function(o){byNorm[normEx(o.naam)]=o;if(o.exerciseId)byStable[o.exerciseId]=o;});
+    var byNorm={},byStable={},alle=metEigen(lib,kaart);
+    alle.forEach(function(o){byNorm[normEx(o.naam)]=o;if(o.exerciseId)byStable[o.exerciseId]=o;});
+    alle.forEach(function(o){(o.eerder||[]).forEach(function(e){var k=normEx(e);if(k&&!byNorm[k])byNorm[k]=o;});});
     return {byNorm:byNorm,byStable:byStable};
   }
   function zoekOefening(index,x){
@@ -1650,8 +1860,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var cl=kaart.client||{};
     var regels=[];
     if(cl.c_naam)regels.push('<div class="rij"><b>'+esc(tr('voor'))+'</b><span>'+esc(cl.c_naam)+'</span></div>');
-    if(cl.c_doel)regels.push('<div class="rij"><b>'+esc(tr('doel'))+'</b><span>'+esc(vt(cl.c_doel))+'</span></div>');
-    if(cl.c_opm)regels.push('<div class="rij"><b>'+esc(tr('letop'))+'</b><span>'+esc(vt(cl.c_opm))+'</span></div>');
+    // begint de therapeut zelf met "Let op:" of "Doel:", dan stond het label er twee keer (gebruikers-sweep 2026-11-18, Truus)
+    var zonderLabel=function(t,labels){t=String(t);
+      for(var i=0;i<labels.length;i++){var k=String(labels[i]||'').replace(/[:\s]+$/,'');if(!k)continue;
+        var re=new RegExp('^\\s*'+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*[:\u2013-]\\s*','i');
+        var r=t.replace(re,'');if(r!==t&&r.trim())return r;}
+      return t;};
+    if(cl.c_doel)regels.push('<div class="rij"><b>'+esc(tr('doel'))+'</b><span'+(TAAL!=='nl'?' lang="nl" dir="auto"':'')+'>'+esc(zonderLabel(vt(cl.c_doel),[tr('doel'),'Doel']))+'</span></div>');
+    if(cl.c_opm)regels.push('<div class="rij"><b>'+esc(tr('letop'))+'</b><span'+(TAAL!=='nl'?' lang="nl" dir="auto"':'')+'>'+esc(zonderLabel(vt(cl.c_opm),[tr('letop'),'Let op']))+'</span></div>');
     var cb=document.getElementById('clientblok');
     if(regels.length){cb.innerHTML=regels.join('');cb.style.display='flex';}else cb.style.display='none';
 
@@ -1659,6 +1875,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var vids=kaart.vids||{};
     var chosen=kaart.chosen||[];
     document.getElementById('oeftel').textContent=chosen.length;
+    var deelsNl=document.getElementById('deelsNl');
+    if(deelsNl){var nlDeel=chosen.some(function(x){return naamNietVertaald(x.n);});
+      deelsNl.textContent=nlDeel?(DEELS_NL[TAAL]||DEELS_NL.en):'';deelsNl.hidden=!nlDeel;}
     var html='',teControleren=[];
     chosen.forEach(function(x,idx){
       var nk=normEx(x.n);
@@ -1745,7 +1964,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         (o&&!hideMedia&&beeldpad?'<button type="button" class="fotoknop" aria-label="'+fotoLabel+'"><img src="'+esc(beeldpad)+'" alt="" loading="lazy" data-s="'+esc(eersteS)+
           '" data-h="'+esc(eersteH)+'" data-audio-naam="'+esc(o.naam)+'" data-oef-id="'+esc(o.exerciseId||'')+'" data-pose="'+esc(mediaKey(o))+'" data-uitleg="'+esc(holdExplanation?'':(o.uitleg||''))+'" data-heeft-video="'+(heeftVideo?'1':'0')+'"/>'+
           badge+'</button>':'<span class="geenfoto" aria-hidden="true"></span>')+
-        '<div class="oefinfo"><div class="naam" dir="auto">'+esc(vt(x.n))+'</div>'+
+        '<div class="oefinfo"><div class="naam" dir="auto"'+nlAttr(x.n)+'>'+esc(vt(x.n))+'</div>'+
         (chips?'<div class="dosis">'+kort+'</div><div class="chips">'+chips+'</div>':'')+'</div></div>'+
         knop+'<div class="vhouder"></div>'+
         (hideMedia?'<p class="vmeta">'+esc(tr('holdBeeld'))+'</p>':'')+
@@ -1754,6 +1973,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           // dezelfde oefening half wel en half niet presenteren is misleidend.
           (hideMedia?'':stemRegel))+
         oefUitlegBlok(o,hideMedia||holdExplanation)+
+        '<div class="oefvragen" data-vvidx="'+idx+'"></div>'+
         '<button type="button" class="oefzwaar" data-zidx="'+idx+'"></button>'+
         '<button type="button" class="oefdone" data-idx="'+idx+'" aria-pressed="false"><span class="odv" aria-hidden="true"></span><span class="odt"></span></button></div>';
     });
@@ -1772,7 +1992,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var schemaEl=document.getElementById('schema');
     if(gevuld.length){
       var t='<details class="rustblok schemablok"><summary><h2>'+esc(tr('schemakop'))+'</h2></summary><div class="schemakaart"><div class="schemawrap"><table><thead><tr><th class="dat">'+esc(tr('datum'))+'</th>';
-      chosen.forEach(function(x,idx){t+='<th colspan="3" dir="auto">'+(idx+1)+'. '+esc(vt(x.n))+'</th>';});
+      chosen.forEach(function(x,idx){t+='<th colspan="3" dir="auto"'+nlAttr(x.n)+'>'+(idx+1)+'. '+esc(vt(x.n))+'</th>';});
       t+='</tr><tr><th class="dat"></th>';
       chosen.forEach(function(){t+='<th>S</th><th>H</th><th>W</th>';});
       t+='</tr></thead><tbody>';
@@ -1810,12 +2030,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var laatste=m.slice(-14);
     if(laatste.length){
       document.getElementById('mhist').style.display='block';
-      document.getElementById('mbars').innerHTML=laatste.map(function(x){
-        var d=new Date(x.t);
-        return '<div class="mbar"><span class="mval">'+x.s+'</span>'+
-          '<span class="staaf" style="height:'+(6+x.s*3.6)+'px;background:'+staafKleur(x.s)+'"></span>'+
-          '<span class="mdat">'+('0'+d.getDate()).slice(-2)+'-'+('0'+(d.getMonth()+1)).slice(-2)+'</span></div>';
-      }).join('');
+      tekenVerloop(laatste);
     }
     // feitelijke samenvatting: laatste score t.o.v. het gemiddelde van de eerdere.
     // puur beschrijvend (lager/gelijk/hoger), geen oordeel; vanaf drie metingen
@@ -1866,15 +2081,17 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(at<Date.now()-2*3600000){blok.style.display='none';return;}
     document.getElementById('afkop').textContent=TAF[TAAL]||TAF.nl;
     var d=new Date(at);
-    var tekst=d.toLocaleString(SPRAAK[TAAL]||'nl-NL',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});
+    // altijd de tijd van de praktijk (Nederland), net als in de agenda en Mijn gegevens: een telefoon
+    // op een andere tijdzone toonde anders een uur verschil (sweep 16-11, Jayden)
+    var tekst=d.toLocaleString(SPRAAK[TAAL]||'nl-NL',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:'Europe/Amsterdam'});
     // vandaag of morgen? dan het accentwoord ervoor, zodat de dag zelf opvalt
     var rel=TAFREL[TAAL]||TAFREL.nl;
-    var vandaagD=new Date();var morgenD=new Date(Date.now()+864e5);
-    var relW=d.toDateString()===vandaagD.toDateString()?rel.v:(d.toDateString()===morgenD.toDateString()?rel.m:'');
+    var dagNL=function(x){return new Date(x).toLocaleDateString('en-CA',{timeZone:'Europe/Amsterdam'});};
+    var relW=dagNL(at)===dagNL(Date.now())?rel.v:(dagNL(at)===dagNL(Date.now()+864e5)?rel.m:'');
     var el=document.getElementById('aftekst');
     el.textContent='';
     if(relW){var b=document.createElement('b');b.textContent=relW+' — ';el.appendChild(b);}
-    el.appendChild(document.createTextNode(tekst));
+    el.appendChild(document.createTextNode(tekst+(andereZone(at)?' ('+(TAFNL[TAAL]||TAFNL.en)+')':'')));
     // de reeks erbij: "wekelijks, nog N keer" ná de getoonde datum. `rest` telt de getoonde
     // afspraak zelf mee (COUNT in de agenda); "nog 4 keer" bij een reeks van 4 las als vijf (sweep 2026-11-10 22u, Mark)
     var nogN=rest-1;
@@ -1944,13 +2161,56 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(!a||!a.tekst){blok.style.display='none';return;}
     document.getElementById('atekst').textContent=a.tekst;
     var d=new Date(a.t||Date.now());
-    document.getElementById('adatum').textContent=d.toLocaleDateString(TAAL==='nl'?'nl-NL':TAAL,{day:'numeric',month:'long',year:'numeric'});
+    document.getElementById('adatum').textContent=d.toLocaleDateString(datumLocale(),{day:'numeric',month:'long',year:'numeric'});
     blok.style.display='block';
   }
 
+  // datums in dezelfde notatie als de rest van de kaart: Engels is en-GB ("27 December 2026"),
+  // niet en-US ("December 27, 2026") (gebruikers-sweep 2026-11-13 02u, Jayden). Andere talen
+  // houden hun eigen taalcode (ar-SA zou een andere kalender geven).
+  // "Jouw verloop": op een smal scherm of met grote letters passen veertien staven met elk een
+  // datum niet (gebruikers-sweep 2026-11-13, Truus, iPhone SE: "01-1102-1003-10…", bij 200 % + A A
+  // werd de pagina breder dan het scherm). Nu: zoveel staven als er passen (de nieuwste), en een
+  // datum alleen onder de staven waar hij past, gerekend vanaf vandaag; datums in de taal van de kaart.
+  var VERLOOP=null,VERLOOP_RO=null;
+  function tekenVerloop(lijst){
+    var el=document.getElementById('mbars');if(!el)return;
+    VERLOOP=lijst;
+    var cs=getComputedStyle(el),gap=parseFloat(cs.columnGap||cs.gap)||8,breed=el.clientWidth;
+    var fs=parseFloat(getComputedStyle(document.body).fontSize)||16;
+    // een staaf moet minstens het getal "10" kunnen dragen
+    var minSlot=Math.max(14,fs*.875*1.5);
+    var past=breed>0?Math.max(3,Math.floor((breed+gap)/(minSlot+gap))):lijst.length;
+    var toon=lijst.slice(-Math.min(lijst.length,past));
+    el.innerHTML=toon.map(function(x){
+      var d=new Date(x.t),dat='';
+      try{dat=d.toLocaleDateString(datumLocale(),{day:'numeric',month:'numeric'});}catch(e){dat=d.getDate()+'-'+(d.getMonth()+1);}
+      return '<div class="mbar"><span class="mval">'+x.s+'</span>'+
+        '<span class="staaf" style="height:'+(6+x.s*3.6)+'px;background:'+staafKleur(x.s)+'"></span>'+
+        '<span class="mdat" data-dat="'+esc(dat)+'">'+esc(dat)+'</span></div>';
+    }).join('');
+    var lab=[].slice.call(el.querySelectorAll('.mdat')),n=lab.length;
+    if(n){
+      var w=0;lab.forEach(function(l){w=Math.max(w,l.scrollWidth);});
+      var slot=(el.firstChild.getBoundingClientRect().width||minSlot)+gap;
+      var k=Math.max(1,Math.ceil((1.5*w+6)/slot));
+      lab.forEach(function(l,i){
+        var aan=(n-1-i)%k===0;
+        if(!aan){l.textContent=' ';l.setAttribute('aria-hidden','true');}
+        if(i===0&&aan&&n>1)l.classList.add('mdat-l');
+        if(i===n-1&&n>1)l.classList.add('mdat-r');
+      });
+    }
+    if(!VERLOOP_RO&&window.ResizeObserver){
+      var bw=breed;
+      VERLOOP_RO=new ResizeObserver(function(){var nb=el.clientWidth;if(VERLOOP&&nb&&Math.abs(nb-bw)>2){bw=nb;tekenVerloop(VERLOOP);}});
+      VERLOOP_RO.observe(el);
+    }
+  }
+  function datumLocale(){return TAAL==='nl'?'nl-NL':TAAL==='en'?'en-GB':TAAL;}
   // afgeronde behandeling: tot wanneer de kaart blijft, en hoe je hem bewaart
   // (niet op de demokaart)
-  function datumLang(t){try{return new Date(t).toLocaleDateString(TAAL==='nl'?'nl-NL':TAAL,{day:'numeric',month:'long',year:'numeric'});}catch(e){return new Date(t).toLocaleDateString();}}
+  function datumLang(t){try{return new Date(t).toLocaleDateString(datumLocale(),{day:'numeric',month:'long',year:'numeric'});}catch(e){return new Date(t).toLocaleDateString();}}
   function tekenAfgerond(){
     var el=document.getElementById('afgerond');if(!el)return;
     var aan=!!(K&&K.kaart&&K.kaart.gearchiveerd)&&id!=='demo';
@@ -1986,13 +2246,25 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var mee={};for(var k in body)mee[k]=body[k];if(!mee.wanneer)mee.wanneer=nu;
     w[sleutel]={pad:pad,body:mee,t:nu};bewaarWacht(w);tekenWacht();
   }
+  // wat langer dan 14 dagen op de telefoon wachtte, telt de praktijk niet meer mee (de server
+  // weigert het ook); weg uit de wachtrij, zodat het niet als vandaag binnenkomt (sweep 2026-11-14, Jayden)
+  var WACHT_MAX_DAGEN=14,WACHT_OUD=0;
+  function wachtOpruimen(w,nu){
+    var uit={};for(var k in w){var it=w[k];if(!it||typeof it!=='object')continue;
+      var t=Number(it.body&&it.body.wanneer)||Number(it.t)||0;
+      if(t>=nu-WACHT_MAX_DAGEN*86400000&&t<=nu+86400000)uit[k]=it;}
+    return uit;
+  }
   function tekenWacht(klaar){
     var el=document.getElementById('wachtrij');if(!el)return;
     var n=Object.keys(leesWacht()).length;
     // alles verstuurd: de meldingen "Opgeslagen op je telefoon…" onder pijnscore en seintjes
     // kloppen dan niet meer (gebruikers-sweep 2026-11-10, Truus)
-    if(!n&&klaar)document.querySelectorAll('.mdank.wacht,.sdank.wacht').forEach(function(d){d.classList.remove('wacht');d.textContent='';d.style.display='none';});
+    // De uitkomst staat ook op de plek van de tik: bovenaan alleen viel hij bij 200 % tekst 7 tot 11 schermen
+    // boven de pijnschaal en de seintjes (gebruikers-sweep 2026-11-18, Truus); daar verdween alleen de melding.
+    if(!n&&klaar)wachtSlotten(trw('ok'),'');
     if(document.querySelector('#oefs .oefzwaar.wacht'))tekenZwaar();
+    if(WACHT_OUD&&!n){el.className='wachtrij';el.textContent=trw('oud').replace('{n}',WACHT_OUD);el.style.display='block';return;}
     if(n){el.className='wachtrij';el.textContent=trw('n').replace('{n}',n);el.style.display='block';}
     else if(klaar){el.className='wachtrij klaar';el.textContent=trw('ok');el.style.display='block';setTimeout(function(){if(!Object.keys(leesWacht()).length)el.style.display='none';},6000);}
     else el.style.display='none';
@@ -2013,6 +2285,42 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(!el)return;el.textContent=tekst;el.style.display='block';
     el.classList.toggle('fout',soort==='fout');el.classList.toggle('wacht',soort==='wacht');
   }
+  // Seintjes: de knoppen tonen wat er bij de praktijk openstaat, niet de laatste tik. De server
+  // houdt het zwaarste open seintje vast (pijn > vraag > goed) en zet een lichter seintje dat
+  // daarna komt ernaast (`ook`); "het gaat goed" vervangt dus geen pijn. Zonder dit stond groen
+  // "Het gaat goed" aan terwijl de praktijk "te veel pijn" zag (gebruikers-sweep 2026-11-12, Jayden).
+  var SEIN_W={goed:1,vraag:2,pijn:3};
+  function seinLokaal(open,soort){
+    var telt=function(x){return x==='vraag'||x==='pijn';};
+    if(!open||!SEIN_W[open.soort])return {soort:soort};
+    var ook=(open.ook||[]).filter(telt);
+    if(SEIN_W[soort]>=SEIN_W[open.soort]){
+      if(telt(open.soort)&&ook.indexOf(open.soort)<0)ook.push(open.soort);
+      ook=ook.filter(function(x){return x!==soort;});
+      return ook.length?{soort:soort,ook:ook}:{soort:soort};
+    }
+    if(telt(soort)&&ook.indexOf(soort)<0)ook=ook.concat([soort]);
+    return ook.length?{soort:open.soort,ook:ook}:{soort:open.soort};
+  }
+  function seinStaatOpen(soort){var o=K&&K.kaart&&K.kaart.seinOpen;return !!o&&(o.soort===soort||(o.ook||[]).indexOf(soort)>=0);}
+  function zetSeinOpen(open){if(K&&K.kaart)K.kaart.seinOpen=open||null;tekenSein();}
+  function tekenSein(){
+    document.querySelectorAll('#sknoppen .sbtn').forEach(function(k){
+      var aan=seinStaatOpen(k.dataset.soort);k.classList.toggle('aan',aan);k.setAttribute('aria-pressed',aan?'true':'false');});
+  }
+  // "verstuurd", en als het getikte seintje niet het open seintje werd: dat het eerdere blijft staan
+  function seinDankTekst(soort){var o=K&&K.kaart&&K.kaart.seinOpen;return trs('dank')+(o&&o.soort!==soort?' '+trs('blijft'):'');}
+  // Na een geslaagde tik de offline-kopie van de kaart verversen (via de service worker, die elk
+  // 200-antwoord bewaart). Anders toonde de kaart zonder internet na herladen de stand van bij het
+  // laden, terwijl de praktijk de tik al had (gebruikers-sweep 2026-11-18, Truus). Eén keer per reeks tikken.
+  var KOPIE_KLOK=0;
+  function verversKopie(){
+    try{
+      if(!navigator.serviceWorker||!navigator.serviceWorker.controller)return;
+      clearTimeout(KOPIE_KLOK);
+      KOPIE_KLOK=setTimeout(function(){fetch('/api/kaart?id='+id,{cache:'no-cache'}).catch(function(){});},800);
+    }catch(e){}
+  }
   function stuur(pad,body){
     return fetch(pad,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)})
       .catch(function(){WACHT_REDEN='net';zetInWacht(pad,body);var e=new Error('wacht');e.wacht=true;throw e;})
@@ -2022,27 +2330,54 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           var e=new Error('wacht');e.wacht=true;e.druk=true;throw e;
         }
         WACHT_REDEN='net';
-        return r.json();
+        if(r.ok)verversKopie();
+        // 409 = de oefening staat niet meer op de kaart (#291): dat moet de kaart kunnen zien
+        return r.json().then(function(j){if(r.status===409&&j&&typeof j==='object')j.weg=true;return j;});
       });
   }
   var WACHT_VELD={'/api/kaart/meting':['metingen','meting'],'/api/kaart/gedaan':['gedaan','gedaan'],'/api/kaart/psk':['psk','psk'],'/api/kaart/ervaring':['ervaring','herstel']};
   var wachtBezig=false;
+  // de tikken uit de wachtrij kwamen niet aan (kaart gestopt of veranderd): blijvende melding met de weg naar de praktijk
+  // de meldingsvakken bij pijnscore en seintjes die nog "Opgeslagen op je telefoon" zeiden
+  function wachtSlotten(tekst,soort){
+    document.querySelectorAll('.mdank.wacht,.sdank.wacht').forEach(function(d){zetDank(d,tekst,soort);});
+  }
+  function toonWachtKwijt(){
+    var el=document.getElementById('wachtrij');if(!el)return;
+    wachtSlotten(trw('kwijt'),'fout');
+    el.className='wachtrij fout';el.setAttribute('role','alert');el.textContent=trw('kwijt');el.style.display='block';
+  }
   function verstuurWacht(){
     if(wachtBezig||!id||id==='demo')return;
-    var w=leesWacht(),sleutels=Object.keys(w);if(!sleutels.length){tekenWacht();return;}
-    wachtBezig=true;var verstuurd=0;
+    var ruw=leesWacht(),w=wachtOpruimen(ruw,Date.now());bewaarWacht(w);var sleutels=Object.keys(w);
+    WACHT_OUD+=Object.keys(ruw).length-sleutels.length;if(!sleutels.length){tekenWacht();return;}
+    wachtBezig=true;var verstuurd=0,kwijt=0;
     (function volgende(i){
-      if(i>=sleutels.length){wachtBezig=false;tekenWacht(verstuurd>0);return;}
+      if(i>=sleutels.length){wachtBezig=false;tekenWacht(verstuurd>0&&!kwijt);if(kwijt)toonWachtKwijt();return;}
       var it=w[sleutels[i]];
       fetch(it.pad,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(it.body)})
         .then(function(r){
           // druk of serverfout: later nog eens; een afwijzing (4xx) heeft geen zin om te herhalen
           if(r.status===429||r.status>=500){wachtBezig=false;WACHT_REDEN='druk';later(r.headers.get('retry-after'));tekenWacht();throw 'druk';}
-          var nu=leesWacht();delete nu[sleutels[i]];bewaarWacht(nu);verstuurd++;
+          // 400 op een oude tik (server: te lang geleden): niet herhalen, wel aan de patiënt zeggen
+          // Alleen een geslaagde tik telt als "Verstuurd ✓". Een 409 op een vinkje = de praktijk haalde de
+          // oefening intussen van de kaart: dan het vinkje terug en de melding bij de oefening, net als
+          // bij een tik met internet. Eerder meldde de wachtrij "Verstuurd ✓" terwijl de server weigerde
+          // (gebruikers-sweep 2026-11-18).
+          var weg=r.status===409&&it.pad==='/api/kaart/oefening'&&it.body;
+          // Elke andere weigering (404: kaart in de prullenbak of gestopt) is niet aangekomen: dat zeggen we
+          // met een vaste melding, anders gingen pijnscore en vraag stil verloren.
+          if(r.status===400&&Number(it.body&&it.body.wanneer)<Date.now()-WACHT_MAX_DAGEN*86400000)WACHT_OUD++;else if(r.ok)verstuurd++;else if(!weg)kwijt++;
+          var nu=leesWacht();delete nu[sleutels[i]];bewaarWacht(nu);
+          if(weg){try{oefWeg(Number(it.body.oef),it.body.aan!==false);}catch(e){}}
           return r.json().catch(function(){return null;});
         })
         .then(function(d){
           var v=WACHT_VELD[it.pad];
+          // een seintje uit de wachtrij hoort daarna ook in "Download mijn gegevens" (art. 15
+          // AVG); eerder pas na herladen (gebruikers-sweep 2026-11-12 06u, Truus)
+          if(d&&d.ok&&it.pad==='/api/kaart/seintje'&&it.body)mgSeintjeErbij(K&&K.kaart,it.body.soort,Number(it.body.wanneer)||it.t||Date.now());
+          if(d&&d.ok&&it.pad==='/api/kaart/seintje'&&'open' in d)zetSeinOpen(d.open);
           if(d&&d.ok&&v&&K&&K.kaart&&d[v[0]]){K.kaart[v[0]]=d[v[0]];
             try{({meting:tekenMeting,gedaan:tekenGedaan,psk:tekenPsk,herstel:tekenHerstel})[v[1]]();}catch(e){}}
           volgende(i+1);
@@ -2131,8 +2466,13 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     kop(L.herst);rij(k.ervaring,function(x){var s=Number(x.s);return (s>0?'+':'')+s+' ('+(L.herstW[s+2]||'')+')';});
     if(k.pskDoel){kop(L.act+': '+k.pskDoel);r.push(L.actS+':');rij(k.psk,function(x){return String(x.s);});}
     kop(L.ged);
-    var g=(Array.isArray(k.gedaan)?k.gedaan:[]).filter(function(x){return x&&x.t;});
-    r.push(g.length?'- '+g.map(function(x){return h.datum(x.t);}).join(', '):'- '+L.geen);
+    // de dagvink én elke dag met een afgevinkte oefening (oefTrouw.d), één keer per dag; anders stond hier
+    // "niets" terwijl de kaart "2 van 10 vandaag gedaan" toonde (gebruikers-sweep 2026-11-12 14u, Truus)
+    var gdag={};
+    (Array.isArray(k.gedaan)?k.gedaan:[]).forEach(function(x){if(x&&x.t)gdag[h.datum(x.t)]=x.t;});
+    mgTrouwDagen(k.oefTrouw).forEach(function(d){var t=Date.parse(d+'T12:00:00Z');if(t&&!gdag[h.datum(t)])gdag[h.datum(t)]=t;});
+    var g=Object.keys(gdag).map(function(x){return gdag[x];}).sort(function(a,b){return a-b;});
+    r.push(g.length?'- '+g.map(function(t){return h.datum(t);}).join(', '):'- '+L.geen);
     kop(L.trouw);
     var tr=k.oefTrouw||{},tn=Object.keys(tr);
     if(!tn.length)r.push('- '+L.geen);
@@ -2162,12 +2502,26 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // De telling per oefening en de eigen seintjes lokaal bijwerken zoals de server ze
   // bijwerkt, zodat "Download mijn gegevens" direct na een tik klopt (inzage, art. 15 AVG)
   // en niet pas na herladen. Zelfde regel als /api/kaart/oefening: één dag telt één keer.
+  // zelfde regel als trouwTik in lib/patient-routes.js: per oefening de afvinkdagen zelf (ds, de laatste 60)
   function mgTrouwTik(tr,naam,dag,aan){
     tr=tr||{};
     var rec=Object.prototype.hasOwnProperty.call(tr,naam)?tr[naam]:(tr[naam]={n:0,d:''});
-    if(aan){if(rec.d!==dag){rec.n=Math.min(9999,(Number(rec.n)||0)+1);rec.d=dag;}}
-    else if(rec.d===dag){rec.n=Math.max(0,(Number(rec.n)||0)-1);rec.d='';}
+    var ds=mgTrouwDs(rec),i=ds.indexOf(dag);
+    if(aan&&i===-1){ds.push(dag);ds.sort();while(ds.length>60)ds.shift();rec.n=Math.min(9999,(Number(rec.n)||0)+1);}
+    else if(!aan&&i>-1){ds.splice(i,1);rec.n=Math.max(0,(Number(rec.n)||0)-1);}
+    rec.ds=ds;rec.d=ds.length?ds[ds.length-1]:'';
     return tr;
+  }
+  function mgTrouwDs(rec){
+    var ok=function(x){return typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x);};
+    if(!rec)return [];
+    return Array.isArray(rec.ds)?rec.ds.filter(ok):(ok(rec.d)?[rec.d]:[]);
+  }
+  // alle dagen (JJJJ-MM-DD, Amsterdam) waarop de patiënt minstens één oefening afvinkte
+  function mgTrouwDagen(tr){
+    var per={};tr=tr||{};
+    Object.keys(tr).forEach(function(n){mgTrouwDs(tr[n]).forEach(function(d){per[d]=1;});});
+    return Object.keys(per).sort();
   }
   function mgSeintjeErbij(k,soort,t){
     if(!k||['vraag','pijn','goed'].indexOf(soort)===-1)return;
@@ -2178,6 +2532,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function downloadMijnGegevens(){
     var lokaal={done:leesOefDaan().done,zwaar:leesZwaar().idx,wacht:leesWacht()};
     var mt=TMGD[TAAL]?TAAL:'en';
+    // bestandsnaam in de taal van de download (sweep 2026-11-16, Jayden: een Engelse kaart gaf "fysiplan-mijn-gegevens.txt")
+    function mgBestand(t){return 'fysiplan-'+({nl:'mijn-gegevens',en:'my-data',de:'meine-daten',fr:'mes-donnees',es:'mis-datos',pl:'moje-dane',tr:'verilerim',uk:'moi-dani',ar:'my-data'}[t]||'my-data')+'.txt';}
     var loc={nl:'nl-NL',de:'de-DE',fr:'fr-FR',es:'es-ES',pl:'pl-PL',tr:'tr-TR',ar:'ar-u-nu-latn',uk:'uk-UA'}[mt]||'en-GB';
     var tekst=mgTekst(K.kaart,(K.praktijk&&K.praktijk.praktijk)||K.kaart.praktijk||'',lokaal,mt,{
       datum:function(t){return new Date(t).toLocaleDateString(loc,{day:'numeric',month:'long',year:'numeric',timeZone:'Europe/Amsterdam'});},
@@ -2185,7 +2541,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       naam:function(x){return TAAL==='nl'?String(x.n||''):vt(x.n);},
       sleutel:function(x){return cellPrefix(x)+'.'+(x.i||0);}});
     var blob=new Blob(['﻿'+tekst],{type:'text/plain;charset=utf-8'});
-    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='fysiplan-mijn-gegevens.txt';
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=mgBestand(mt);
     document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);
   }
   // Legal 2026-11-07: "Wis deze kaart van mijn telefoon" wist alles wat bij deze kaart
@@ -2279,6 +2635,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var klaar=function(){
       document.getElementById('wrap').style.display='none';
       var ab=document.getElementById('appbanner');if(ab)ab.classList.remove('aan');
+      // de offline-balk zei na het wissen nog "wat je aantikt bewaren we" (sweep 2026-11-15 14u, Truus)
+      var ob=document.getElementById('offlijn');if(ob)ob.style.display='none';
       var f=document.getElementById('fout');
       f.textContent='';var p=document.createElement('p');p.id='mg_weg';p.style.cssText='font:600 16px/1.5 var(--disp)';
       p.textContent=trmg('gewist');f.appendChild(p);f.style.display='block';
@@ -2294,8 +2652,85 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // nieuwe dag terwijl de kaart open blijft (telefoon op tafel, tabblad op de achtergrond): opnieuw tekenen,
   // anders bleef "Ik heb vandaag geoefend" aan van gisteren en zette de eerste tik van vandaag hem juist uit.
   var getekendDag=null;
-  function dagWissel(){try{if(K&&getekendDag&&dagStr(Date.now())!==getekendDag)alles();}catch(e){}}
-  function alles(){getekendDag=dagStr(Date.now());tekenStatisch();tekenKaart();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenHerstel();tekenPsk();tekenAfspraak();tekenOfflijn();tekenAfgerond();tekenPrivacy();tekenSpoed();tekenMijnGegevens();tekenWacht();clearTimeout(alles.bl);alles.bl=setTimeout(bewaarBeeldenLijst,2500);}
+  function dagWissel(){try{if(K&&Date.now()-LINKS_T>LINKS_OUD)verversLinks();if(K&&getekendDag&&dagStr(Date.now())!==getekendDag){alles();inhoudCheck();}}catch(e){}}
+  // Eigen video's en foto's van de praktijk komen via een tijdelijke link die 12 tot 24 uur geldt
+  // (#249). Een kaart die langer openstaat (tabblad, beginscherm-app) hield de oude link: de video
+  // meldde "neem contact op met je praktijk" en de foto werd een kapot plaatje, en "Opnieuw proberen"
+  // probeerde dezelfde verlopen link (gebruikers-sweep 2026-11-12 22u, Truus). Nu haalt de kaart
+  // nieuwe links op bij terugkomen na tien uur en bij een fout van zo'n video of foto, en tekent
+  // alleen opnieuw als de links echt veranderden. Hooguit één keer per minuut.
+  var LINKS_T=Date.now(),LINKS_OUD=10*3600000,linksBezig=false,linksLaatst=0;
+  function verversLinks(){
+    if(!K||!K.kaart||!id||id==='demo'||linksBezig)return;
+    if(typeof navigator!=='undefined'&&navigator.onLine===false)return;
+    if(Date.now()-linksLaatst<60000)return;
+    linksBezig=true;linksLaatst=Date.now();
+    fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+      linksBezig=false;
+      if(!d||!d.ok||!d.kaart||!K||!K.kaart)return;
+      LINKS_T=Date.now();
+      var oud=JSON.stringify([K.kaart.vids||null,K.kaart.eigenOef||null]);
+      K.kaart.vids=d.kaart.vids;K.kaart.eigenOef=d.kaart.eigenOef;
+      if(JSON.stringify([K.kaart.vids||null,K.kaart.eigenOef||null])!==oud)alles();
+    }).catch(function(){linksBezig=false;});
+  }
+  // Wat de therapeut aanpast (oefeningen, dosering, doel, afspraak, antwoord op een vraag) kwam op een
+  // open kaart nooit binnen: alleen herladen hielp, en na tien uur nam verversLinks alleen de video's
+  // over, zodat een nieuwe video bij een oude dosering stond en "x van 3" bleef terwijl er 4 waren.
+  // Een antwoord op "Ik heb een vraag" bleef zo onzichtbaar (gebruikers-sweep 2026-11-15, Truus).
+  // Nu kijkt de kaart bij terugkomen (tabblad, beginscherm-app, nieuwe dag) hooguit eens per 30 s of de
+  // inhoud van de therapeut veranderde, en laadt dan opnieuw: dezelfde weg als zelf herladen, met de
+  // wachtrij, de vertaling en de keuring. Niet midden in een oefening, met een open foto of met tekst
+  // in een veld: dan bij de volgende keer terugkomen.
+  var INHOUD_SIG=null,inhoudLaatst=0,inhoudBezig=false;
+  function inhoudSig(k){
+    if(!k)return '';
+    var o={};
+    ['chosen','rows','cells','doel','pskDoel','afspraak','antwoord','client','gearchiveerd'].forEach(function(f){o[f]=k[f]===undefined?null:k[f];});
+    o.vids=Object.keys(k.vids||{}).sort();
+    o.eigen=(Array.isArray(k.eigenOef)?k.eigenOef:[]).map(function(e){var c={};for(var x in e)if(x!=='img'&&x!=='video'&&x!=='src')c[x]=e[x];return c;});
+    return JSON.stringify(o);
+  }
+  function magHerladen(){
+    if(SESSIE>-1)return false;
+    var lb=document.getElementById('lightbox');if(lb&&lb.classList.contains('open'))return false;
+    var velden=document.querySelectorAll('textarea,input[type=text]');
+    for(var i=0;i<velden.length;i++)if(String(velden[i].value||'').trim())return false;
+    return true;
+  }
+  function inhoudCheck(){
+    if(!K||!K.kaart||!id||id==='demo'||inhoudBezig||UIT_KOPIE||INHOUD_SIG===null)return;
+    if(typeof navigator!=='undefined'&&navigator.onLine===false)return;
+    if(Date.now()-inhoudLaatst<30000)return;
+    inhoudBezig=true;inhoudLaatst=Date.now();
+    fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+      inhoudBezig=false;
+      if(!d||!d.ok||!d.kaart)return;
+      if(inhoudSig(d.kaart)===INHOUD_SIG){neemPatientDeelOver(d);return;}
+      if(!magHerladen()){inhoudLaatst=0;return;}
+      location.reload();
+    }).catch(function(){inhoudBezig=false;});
+  }
+  // Wat de patiënt op een tweede telefoon (of een huisgenoot op de tablet) afvinkte of invulde, kwam op
+  // een open kaart niet binnen: de ene telefoon zei "alles gedaan", de andere "3 van 4", en een tik op de
+  // oude stand zette een vinkje uit dat elders aan stond (gebruikers-sweep 2026-11-16, Truus). Nu neemt
+  // de kaart bij terugkomen het patiëntdeel van de server over en tekent alleen opnieuw als het verschilt.
+  // Niet als hier nog tikken wachten (die gaan eerst mee) of midden in een oefening, foto of half getypt veld.
+  var PATIENT_DEEL=['gedaan','oefTrouw','metingen','ervaring','seinOpen'];
+  function neemPatientDeelOver(d){
+    if(!K||!K.kaart||!magHerladen())return;
+    if(Object.keys(leesWacht()).length)return;
+    var oud=JSON.stringify(PATIENT_DEEL.map(function(f){return K.kaart[f]===undefined?null:K.kaart[f];}));
+    var nieuw=JSON.stringify(PATIENT_DEEL.map(function(f){return d.kaart[f]===undefined?null:d.kaart[f];}));
+    if(oud===nieuw&&!(typeof d.dag==='string'&&d.dag&&d.dag!==K.dag))return;
+    PATIENT_DEEL.forEach(function(f){K.kaart[f]=d.kaart[f];});
+    if(typeof d.dag==='string'&&d.dag)K.dag=d.dag;
+    alles();
+  }
+  function terugGekomen(){dagWissel();inhoudCheck();}
+  // een foto van een eigen oefening die niet laadt: misschien is de link verlopen
+  document.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&/\/uploads\/oef-/.test(t.currentSrc||t.src||''))verversLinks();},true);
+  function alles(){getekendDag=dagStr(Date.now());tekenStatisch();tekenKaart();tekenVasteVragen();tekenVraag();tekenGedaan();tekenOefDaan();tekenAntwoord();tekenSein();tekenHerstel();tekenPsk();tekenAfspraak();tekenOfflijn();tekenAfgerond();tekenPrivacy();tekenSpoed();tekenMijnGegevens();tekenWacht();clearTimeout(alles.bl);alles.bl=setTimeout(bewaarBeeldenLijst,2500);}
 
   // ---- taal wisselen: vaste teksten direct, kaartinhoud via de server (eenmalig per taal) ----
   // klaar: pas na het tekenen in de nieuwe taal (bij het openen blijft tot dan het
@@ -2325,7 +2760,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       setTimeout(function(){af(null);},VERTAAL_WACHT);
       fetch('/api/kaart/vertaal?id='+id+'&taal='+TAAL,{cache:'no-cache'})
         .then(function(r){return r.json();})
-        .then(function(d){var tk=(d&&d.ok&&d.teksten)||null;if(gedaan&&tk){VERT[taal]=tk;laatVertaald(taal);}else af(tk);})
+        .then(function(d){var tk=(d&&d.ok&&d.teksten)||null;if(tk)NAGEL[taal]=Array.isArray(d.nagelezen)?d.nagelezen:[];if(gedaan&&tk){VERT[taal]=tk;laatVertaald(taal);}else af(tk);})
         .catch(function(){af(null);});
     }else af(null);
   }
@@ -2366,12 +2801,29 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // tegengehouden (afgekeurd of tijdelijke hold), dan bieden we de uitleg erbij ook niet
   // aan, net als bij de knop per oefening. De tekst en de opname blijven gewoon bestaan.
   function noorItem(o,x){
-    return {name:o?o.naam:x.n,text:o?o.uitleg||'':'',id:(o&&o.exerciseId)||x.id||'',beeldGehouden:!!(o&&mediaWithheld(o))};
+    return {name:o?o.naam:x.n,text:o?o.uitleg||'':'',id:(o&&o.exerciseId)||x.id||'',eerder:(o&&o.eerder)||[],beeldGehouden:!!(o&&mediaWithheld(o))};
   }
-  // Zelfde regel als explanationWithheld: een houd geldt op stabiel id én op naam.
-  // Alleen op naam vergelijken laat een hernoemde oefening door de controle glippen.
+  // De Noor-opnames staan op de naam die de oefening had toen ze zijn gemaakt, en beginnen met
+  // die naam. Heet de oefening intussen anders, dan hoort de opname onder de eerdere naam er nog
+  // bij (de stem noemt dan die naam). Geeft de naam waaronder de opname staat, of '' als er
+  // geen is. Werkt pas als het stemmanifest geladen is.
+  function noorClipNaam(item){
+    if(!window.NoorAudio||!item)return '';
+    var tekst=item.text||'';
+    if(NoorAudio.match(item.name,tekst))return item.name;
+    var uit='';
+    (item.eerder||[]).forEach(function(e){if(!uit&&NoorAudio.match(e,tekst))uit=e;});
+    return uit;
+  }
+  function noorClip(item){return {name:noorClipNaam(item),text:item.text||''};}
+  function eerderVan(exerciseId){
+    var o=exerciseId&&K?oefeningIndex(K.lib,K.kaart).byStable[exerciseId]:null;
+    return (o&&o.eerder)||[];
+  }
+  // Zelfde regel als explanationWithheld: een houd geldt op stabiel id én op naam, ook de naam
+  // van eerder. Alleen op naam vergelijken laat een hernoemde oefening door de controle glippen.
   function uitlegGehouden(item){
-    return explanationHolds.some(function(h){return (h.exerciseId&&item.id&&h.exerciseId===item.id)||h.name===item.name;});
+    return explanationHolds.some(function(h){return (h.exerciseId&&item.id&&h.exerciseId===item.id)||h.name===item.name||(item.eerder||[]).indexOf(h.name)>-1;});
   }
   // De AI-zin bij de stem als de knop per oefening (met zijn eigen zin) niet in beeld is.
   function toonStemNoot(aan){
@@ -2400,6 +2852,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     // horen hóé de oefening gaat, niet alleen hoe hij heet
     var uitlegVan={},uitlegStabiel={};
     metEigen(K.lib,K.kaart).forEach(function(o){if(o&&o.uitleg){uitlegVan[normEx(o.naam)]=o.uitleg;if(o.exerciseId)uitlegStabiel[o.exerciseId]=o.uitleg;}});
+    metEigen(K.lib,K.kaart).forEach(function(o){if(o&&o.uitleg)(o.eerder||[]).forEach(function(e){var k=normEx(e);if(k&&!uitlegVan[k])uitlegVan[k]=o.uitleg;});});
     var uitlegWacht=[],beeldWacht=[],voorgelezen=0;
     (K.kaart.chosen||[]).forEach(function(x,idx){
       var bron=vindOefening(x),item=noorItem(bron,x);
@@ -2458,8 +2911,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // video openen roept stopLezen() aan en stopt daarmee ook deze stem.
   function speelNoorBijVideo(item){
     if(!window.NoorAudio||!mediaReviewReady||uitlegGehouden(item)||item.beeldGehouden)return;
-    if(!NoorAudio.match(item.name,item.text))return;
-    NoorAudio.play([item],null,function(){});
+    if(!noorClipNaam(item))return;
+    NoorAudio.play([noorClip(item)],null,function(){});
   }
   async function speelNoor(items,bron){
     bron=typeof bron==='number'?bron:-1;
@@ -2497,14 +2950,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         // Zelfde regel als de knop per oefening: getoond beeld tegengehouden, dan niet voorlezen.
         // Nooit een toestelstem als vervanging: die oefening wordt gewoon overgeslagen en genoemd.
         else if(x.beeldGehouden)beeldWacht.push(x.name);
-        else if(!NoorAudio.match(x.name,x.text))missing.push(x.name);
+        else if(!noorClipNaam(x))missing.push(x.name);
         else available.push(x);
       });
       if(!available.length){stopLezen();meldOntbrekend(held,missing,0,beeldWacht,bron);return;}
       if(request!==noorRequest)return;
       // Eerst afspelen, daarna pas melden: een alert() blokkeert de pagina zo lang dat de
       // toestemming die bij de tik hoort verloopt, en dan start het geluid helemaal niet.
-      NoorAudio.play(available,stopLezen,function(message){stopLezen();noorMeld(message,bron);});
+      NoorAudio.play(available.map(noorClip),stopLezen,function(message){stopLezen();noorMeld(message,bron);});
       meldOntbrekend(held,missing,available.length,beeldWacht,bron);
     }catch(error){if(request!==noorRequest)return;stopLezen();noorMeld('De natuurlijke stem kon niet laden. Probeer opnieuw of lees de beschikbare uitleg.',bron);}
   }
@@ -2557,7 +3010,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function noorRegel(o,idx,metAiVideo){
     // tekent de kaart opnieuw terwijl Noor bij deze oefening praat, dan blijft het een stopknop
     var aan=bezigLezen&&noorBron===idx;
-    if(window.NoorAudio&&NoorAudio.match(o.naam,o.uitleg))return '<button type="button" class="vbtn" data-noor="'+idx+'"'+(aan?' aria-pressed="true"':'')+'>'+(aan?tr('stop'):NOOR_LABEL)+'</button>'+
+    if(noorClipNaam({name:o.naam,text:o.uitleg,eerder:o.eerder}))return '<button type="button" class="vbtn" data-noor="'+idx+'"'+(aan?' aria-pressed="true"':'')+'>'+(aan?tr('stop'):NOOR_LABEL)+'</button>'+
       // De opname bevat de algemene uitvoering, niet de dosering of de opmerkingen
       // van de behandelaar. Dat hoort de patiënt te weten voordat hij luistert.
       '<div class="vmeta">'+(metAiVideo?STEM_VIDEO_NOOT:STEM_NOOT)+'</div>';
@@ -2578,7 +3031,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       var idx=Number(regel.dataset.noorWacht),x=chosen[idx],o=x?zoekOefening(index,x):null;
       // zelfde voorwaarden als bij het tekenen: een tegengehouden beeld of tegengehouden
       // uitleg krijgt nooit een knop, en zonder actuele opname blijft de regel staan
-      if(!o||!o.uitleg||mediaWithheld(o)||explanationWithheld(o)||!NoorAudio.match(o.naam,o.uitleg))return;
+      if(!o||!o.uitleg||mediaWithheld(o)||explanationWithheld(o)||!noorClipNaam({name:o.naam,text:o.uitleg,eerder:o.eerder}))return;
       // stond de losse videozin er nog (de opname was er bij het tekenen nog niet), dan neemt de stemzin hem over
       var oefEl=regel.closest?regel.closest('.oef'):null,ai=oefEl?oefEl.querySelector('.vmeta[data-ai]'):null;
       regel.outerHTML=noorRegel(o,idx,!!ai);
@@ -2612,6 +3065,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var weg=false;try{weg=localStorage.getItem('fp_app_weg')==='1';}catch(e){}
     var banner=document.getElementById('appbanner');
     function toonBanner(ios){
+      // wie binnen 2,5 s na een tik de kaart wist, kreeg de balk "Zet op beginscherm" alsnog (sweep 2026-11-15 14u, Truus)
+      if(KAART_GEWIST)return;
       document.getElementById('ab_tekst').textContent=ios?tr('instIos'):tr('inst');
       var doen=document.getElementById('ab_doen');
       doen.style.display=ios?'none':'';
@@ -2886,7 +3341,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(uitlegNl){
       var uitlegP=document.createElement('span');uitlegP.lang='nl';uitlegP.dir='ltr';uitlegP.textContent=uitlegTekst;
       uitlegEl.appendChild(uitlegP);uitlegEl.appendChild(nietVertaaldNoot());
-    }else uitlegEl.textContent=uitlegTekst;
+    }else{uitlegEl.textContent=uitlegTekst;if(uitlegVertaald(eigenUitleg))uitlegEl.appendChild(vertaalNoot(eigenUitleg));}
     // een niet-vertaalde Nederlandse uitleg niet met een stem in een andere taal voorlezen
     demo.introTekst=document.getElementById('lbnaam').textContent+'. '+(uitlegNl?(voorschrift?voorschrift+'.':''):uitlegTekst);
     // eerlijk over wat dit is: twee uitsnedes uit dezelfde foto, geen oefentempo en
@@ -2904,7 +3359,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     knop.textContent=tr('demoUit');knop.setAttribute('aria-pressed','true');
     // de geluidknop alleen tonen als er voor déze oefening ook echt iets te horen is
     var geluidKnop=document.getElementById('lbgeluid');
-    if(TAAL==='nl')geluidKnop.hidden=!window.NoorAudio||!NoorAudio.match(d.name||'',d.uitleg||'');
+    if(TAAL==='nl')geluidKnop.hidden=!noorClipNaam({name:d.name||'',text:d.uitleg||'',eerder:d.eerder});
     else if(window.speechSynthesis){geluidKnop.hidden=false;demoGeluidKnop();}
     else geluidKnop.hidden=true;
     // In het Nederlands begint een opname alleen na een tik: automatisch starten wordt
@@ -2926,27 +3381,35 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function bewaakVideo(v,houder){
     var tekst=TAAL==='nl'?{
       fout:'De video kan niet worden afgespeeld. Probeer opnieuw of neem contact op met je praktijk.',
-      laden:'Video laden…',pauze:'Tik op afspelen in de video om te starten.',opnieuw:'Opnieuw proberen'
-    }:{fout:'The video could not play. Retry or contact your practice.',laden:'Loading video…',pauze:'Tap play in the video to start.',opnieuw:'Try again'};
+      laden:'Video laden…',pauze:'Tik op afspelen in de video om te starten.',opnieuw:'Opnieuw proberen',
+      offline:'Deze video heeft internet nodig.'
+    }:{fout:'The video could not play. Retry or contact your practice.',laden:'Loading video…',pauze:'Tap play in the video to start.',opnieuw:'Try again',
+      offline:'This video needs internet.'};
+    // Zonder internet is "neem contact op met je praktijk" de verkeerde raad: de video zelf is in orde.
+    // Een video die niet speelt, verdwijnt (vfout); anders lag de melding bij 200 % tekst over de video en
+    // viel "Opnieuw proberen" onder de onderbalk (gebruikers-sweep 2026-11-12 18u, Truus).
+    function foutTekst(){return (typeof navigator!=='undefined'&&navigator.onLine===false)?tekst.offline:tekst.fout;}
+    function zetFout(aan){if(houder.classList&&houder.classList.toggle)houder.classList.toggle('vfout',!!aan);}
     var status=document.createElement('div');status.className='vstatus';status.setAttribute('role','status');
     houder.appendChild(status);
     var beurt=0;
     function actief(){return v.isConnected&&houder.contains(v);}
     function meld(bericht,retry){
       if(!actief())return;
+      zetFout(retry);
       status.textContent=bericht;status.hidden=!bericht;
       if(retry){var knop=document.createElement('button');knop.type='button';knop.textContent=tekst.opnieuw;
         knop.addEventListener('click',function(){if(!actief())return;var n=++beurt;meld(tekst.laden,false);
-          try{v.load();var p=v.play();if(p&&p.catch)p.catch(function(e){if(n!==beurt||!actief())return;meld(e&&e.name==='NotAllowedError'?tekst.pauze:tekst.fout,e&&e.name!=='NotAllowedError');});}
-          catch(e){meld(tekst.fout,true);}
+          try{v.load();var p=v.play();if(p&&p.catch)p.catch(function(e){if(n!==beurt||!actief())return;meld(e&&e.name==='NotAllowedError'?tekst.pauze:foutTekst(),e&&e.name!=='NotAllowedError');});}
+          catch(e){meld(foutTekst(),true);}
         });status.appendChild(knop);}
     }
-    v.addEventListener('error',function(){beurt++;meld(tekst.fout,true);});
+    v.addEventListener('error',function(){beurt++;meld(foutTekst(),true);if(/\/uploads\//.test(v.currentSrc||v.src||''))verversLinks();});
     v.addEventListener('playing',function(){beurt++;meld('',false);});
     v.addEventListener('waiting',function(){meld(tekst.laden,false);});
     v.addEventListener('canplay',function(){if(v.paused)meld(tekst.pauze,false);});
     meld(tekst.laden,false);
-    if(v.error)meld(tekst.fout,true);
+    if(v.error)meld(foutTekst(),true);
   }
 
   // ---- oefenstand: één oefening per scherm (herontwerp 2026-11-10) ----
@@ -2976,6 +3439,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     for(var k=1;k<=n;k++){var i=(van+k)%n;if(st.done.indexOf(i)===-1)return i;}
     return -1;
   }
+  // hoogte van de vaste onderbalk als CSS-variabele, zodat de pagina erboven altijd ruimte houdt (groeit mee met tekstgrootte)
+  var SBALK_RO=null;
+  function volgSessiebalk(){
+    var sb=document.getElementById('sessiebalk');if(!sb)return;
+    var zet=function(){try{document.documentElement.style.setProperty('--sbalk-h',(sb.hidden?0:sb.offsetHeight)+'px');}catch(e){}};
+    if(!SBALK_RO&&window.ResizeObserver){SBALK_RO=new ResizeObserver(zet);SBALK_RO.observe(sb);}
+    zet();
+  }
   function tekenSessie(){
     var rijen=oefRijen(),n=rijen.length;
     if(SESSIE>=n)SESSIE=-1;
@@ -2997,6 +3468,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     }
     document.getElementById('sessiekop').hidden=!open;
     document.getElementById('sessiebalk').hidden=!open;
+    volgSessiebalk();
     if(open){
       var daan=st.done.indexOf(SESSIE)>-1;
       document.getElementById('stel').textContent=trse('nvan').replace('{n}',SESSIE+1).replace('{t}',n);
@@ -3082,6 +3554,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     });
     document.getElementById('oefs').addEventListener('keydown',function(e){
       if(SESSIE>-1||(e.key!=='Enter'&&e.key!==' '))return;
+      // de herlaadknop bij een weggehaalde oefening staat in de naamregel: Enter is dan die knop, niet 'oefening openen'
+      if(e.target.closest&&e.target.closest('.oefherlaad'))return;
       var info=e.target.closest&&e.target.closest('.oefinfo[role=button]');
       if(!info)return;
       e.preventDefault();openOef(Number(info.closest('.oef').dataset.oidx));
@@ -3189,12 +3663,15 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         // pas "Doorgegeven" tonen als de server de melding echt heeft: offline, 429
         // of 5xx gaf eerst stil "Doorgegeven ✓" terwijl de therapeut niets kreeg
         oz.dataset.bezig='1';oz.disabled=true;oz.textContent=trg('zwaarbezig');
-        fetch('/api/kaart/oefzwaar',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id,oef:zidx})})
+        var zn=oefNamen([zidx])[0];
+        fetch('/api/kaart/oefzwaar',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:id,oef:zidx,n:zn})})
           // zonder internet: in de wachtrij en dat ook zeggen ("Opgeslagen op je telefoon…"),
           // niet "Doorgegeven ✓" terwijl de therapeut nog niets heeft (sweep 2026-11-10 22u, Truus en Jayden)
-          .catch(function(){WACHT_REDEN='net';zetInWacht('/api/kaart/oefzwaar',{id:id,oef:zidx});return {ok:true,wacht:true};})
+          .catch(function(){WACHT_REDEN='net';zetInWacht('/api/kaart/oefzwaar',{id:id,oef:zidx,n:zn});return {ok:true,wacht:true};})
           .then(function(r){if(!r.ok)throw r.status;delete oz.dataset.bezig;zetZwaar();})
-          .catch(function(){delete oz.dataset.bezig;oz.disabled=false;oz.textContent=trg('zwaarmis');});
+          // 409: de oefening staat niet meer op de kaart; opnieuw tikken helpt dan niet (gebruikers-sweep
+          // 2026-11-13 22u, Jayden: eindeloos "Niet verstuurd. Tik opnieuw")
+          .catch(function(st){delete oz.dataset.bezig;if(st===409){oefWeg(zidx,false);return;}oz.disabled=false;oz.textContent=trg('zwaarmis');});
         return;
       }
       // tik (of Enter/Space, want de fotoknop is een echte knop) op de foto
@@ -3211,7 +3688,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         demoStop();
         stopVideos();
         demo.info={name:foto.dataset.audioNaam||'',id:foto.dataset.oefId||'',s:foto.dataset.s||'',h:foto.dataset.h||'',
-          uitleg:foto.dataset.uitleg||'',poseMetadata:poseKeuring[foto.dataset.pose||'']||null};
+          uitleg:foto.dataset.uitleg||'',eerder:eerderVan(foto.dataset.oefId||''),poseMetadata:poseKeuring[foto.dataset.pose||'']||null};
         document.getElementById('lbimg').src=foto.src;
         merkLightbox(foto.dataset.pose);
         var oefEl=foto.closest('.oef').querySelector('.naam');
@@ -3226,6 +3703,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           var luNl=uitlegNietVertaald(foto.dataset.uitleg);
           lu.innerHTML='<div class="vtekst-label">'+esc(tr('uitlegKop'))+'</div><p'+(luNl?' lang="nl" dir="ltr"':'')+'>'+esc(luTekst)+'</p>';
           if(luNl)lu.appendChild(nietVertaaldNoot());
+          else if(uitlegVertaald(foto.dataset.uitleg))lu.appendChild(vertaalNoot(foto.dataset.uitleg));
           lu.hidden=false;
           document.getElementById('lbimg').style.maxHeight='calc(58vh - 44px)';
         }else{
@@ -3237,7 +3715,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         // terugknop van de telefoon sluit de foto in plaats van de kaart te verlaten
         try{if(!(history.state&&history.state.fplb))history.pushState({fplb:1},'');}catch(e){}
         var geluid=document.getElementById('lbgeluid');
-        geluid.hidden=TAAL!=='nl'||!window.NoorAudio||!NoorAudio.match(demo.info.name,demo.info.uitleg);
+        geluid.hidden=TAAL!=='nl'||!noorClipNaam({name:demo.info.name,text:demo.info.uitleg,eerder:demo.info.eerder});
         geluid.textContent='Luister naar uitleg';geluid.setAttribute('aria-pressed','false');
         if(TAAL==='nl'){
           lu.innerHTML+='<p class="vmeta">Volledige oefenafbeelding. De houdingen worden niet automatisch uitgesneden of afgespeeld.</p>';
@@ -3305,9 +3783,20 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       var b=e.target.closest('button[data-score]');if(!b)return;
       // bezig-stand: bij een trage lijn bleef de oude score seconden lang gemarkeerd en
       // werd elke volgende tik een extra verzoek (sweep 2026-11-09, Jayden)
-      var schaal=this;if(schaal.dataset.bezig)return;
+      var schaal=this;if(schaal.dataset.bezig){
+        // de laatste tik wint: een verbetering tijdens het opslaan (2 → 7 → 3) ging stil
+        // verloren en de server hield 2 (gebruikers-sweep 2026-11-12 10u, Jayden). Nu
+        // onthouden en na het antwoord als één verzoek nasturen.
+        if(MSCORE_NA)MSCORE_NA.classList.remove('bezig');
+        MSCORE_NA=b;b.classList.add('bezig');return;
+      }
+      verstuurScore(schaal,b);
+    });
+    var MSCORE_NA=null;
+    function verstuurScore(schaal,b){
       schaal.dataset.bezig='1';schaal.setAttribute('aria-busy','true');b.classList.add('bezig');
       var klaar=function(){delete schaal.dataset.bezig;schaal.removeAttribute('aria-busy');b.classList.remove('bezig');};
+      var verder=function(){var n=MSCORE_NA;MSCORE_NA=null;if(n){n.classList.remove('bezig');if(n.dataset.score!==b.dataset.score||!n.classList.contains('aan'))verstuurScore(schaal,n);}};
       var dank=document.getElementById('mdank');
       stuur('/api/kaart/meting',{id:id,score:Number(b.dataset.score)})
         .then(function(d){
@@ -3315,6 +3804,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           var nudge=document.getElementById('mnudge');
           if(!d.ok){zetDank(dank,(TAAL==='nl'&&d.fout)?d.fout:tr('mfout'),'fout');if(nudge)nudge.style.display='none';return;}
           K.kaart.metingen=d.metingen||[];
+          // er wacht al een nieuwere tik: niet terugspringen naar deze score en nog geen "Bewaard"
+          if(MSCORE_NA&&MSCORE_NA.dataset.score!==b.dataset.score)return;
           tekenMeting();
           zetDank(dank,tr('mdank'));
           // hoge pijn (7-10): rustige, MDR-veilige nudge — alleen aandacht + de praktijk
@@ -3327,18 +3818,29 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
             var vandaag=dagStr(Date.now());
             K.kaart.metingen=(K.kaart.metingen||[]).filter(function(x){return dagStr(x.t)!==vandaag;}).concat([{t:Date.now(),s:Number(b.dataset.score)}]);
             tekenMeting();toonPijnNudge(Number(b.dataset.score));
-          }});
-    });
-    document.getElementById('gdaan').addEventListener('click',function(){
+          }})
+        .then(verder,verder);
+    }
+    document.getElementById('gdaan').addEventListener('click',function(e){
       dagWissel();
-      var knop=this;if(knop.dataset.bezig)return;knop.dataset.bezig='1';
+      // Een dubbeltik is één bedoeling: de tweede tik binnen 0,8 s telt niet (0,45 s ving de tragere dubbeltik van een oudere patiënt niet: 0,5–0,7 s, sweep 2026-11-15 10u). Lokaal is het antwoord er al na een paar
+      // ms, dus 'bezig' alleen hield hem niet tegen: de dag ging aan en meteen weer uit. En na de vraag "vinkjes weg?"
+      // zette de tweede tik (die tijdens de vraag al gedaan was) de dag terug aan, zonder de vinkjes
+      // (gebruikers-sweep 2026-11-15, Truus en Jayden). De rustperiode telt vanaf het einde van de vorige tik (na de
+      // vraag), zodat een tik die tijdens de vraag al gedaan was ook niet telt. Alleen echte tikken (isTrusted) tellen.
+      var knop=this,echt=!!(e&&e.isTrusted),nu=Date.now(),tikDag=dagStr(nu);
+      // een tik op een nieuwe dag is altijd een nieuwe bedoeling
+      if(knop.dataset.bezig||(echt&&knop._tik!=null&&knop._tikDag===tikDag&&nu>=knop._tik&&nu-knop._tik<800))return;
+      var rust=function(){if(echt){knop._tik=Date.now();knop._tikDag=tikDag;}};
+      knop.dataset.bezig='1';
       // expliciet aan of uit (wat de patiënt nu ziet), geen blinde aan/uit-tik op de server;
       // ook een tik uit de wachtrij (offline) zet zo de juiste stand
       var wil=knop.getAttribute('aria-pressed')!=='true';
       // uitzetten haalt ook de vinkjes per oefening van vandaag weg: eerst vragen, anders is
       // één tik te veel al het afvinkwerk van vandaag kwijt (gebruikers-sweep 2026-11-11 14u)
       if(!wil){var nDaan=leesOefDaan().done.length;
-        if(nDaan>0&&!window.confirm(trg('uitvraag').replace('{n}',nDaan))){delete knop.dataset.bezig;return;}}
+        if(nDaan>0&&!window.confirm(trg('uitvraag').replace('{n}',nDaan))){delete knop.dataset.bezig;knop._tik=null;return;}}
+      rust();
       stuur('/api/kaart/gedaan',{id:id,aan:wil})
         .then(function(d){
           if(d.ok){
@@ -3362,43 +3864,83 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     });
     // seintje naar de praktijk: één tik stuurt een vaste soort, geen vrije tekst
     // een tweede tik op hetzelfde seintje binnen een halve minuut stuurt niets nieuws (anders twee regels in het dossier)
-    var SEIN_LAATST={};
+    var SEIN_LAATST={},seinKetting=Promise.resolve();
     document.getElementById('sknoppen').addEventListener('click',function(e){
       var b=e.target.closest('.sbtn');if(!b||b.dataset.bezig)return;
       var soort=b.dataset.soort,nu=Date.now();
-      if(SEIN_LAATST[soort]&&nu-SEIN_LAATST[soort]<30000){zetDank(document.getElementById('sdank'),trs('dank'),'');return;}
+      if(SEIN_LAATST[soort]&&nu-SEIN_LAATST[soort]<30000){zetDank(document.getElementById('sdank'),seinDankTekst(soort),'');return;}
       SEIN_LAATST[soort]=nu;b.dataset.bezig='1';
-      var knoppen=document.querySelectorAll('#sknoppen .sbtn');
-      knoppen.forEach(function(k){k.classList.toggle('aan',k===b);});
       var dank=document.getElementById('sdank');
-      stuur('/api/kaart/seintje',{id:id,soort:soort})
-        .then(function(d){zetDank(dank,d&&d.ok?trs('dank'):trs('fout'),d&&d.ok?'':'fout');if(d&&d.ok)mgSeintjeErbij(K&&K.kaart,soort,Date.now());if(!d||!d.ok){b.classList.remove('aan');delete SEIN_LAATST[soort];}delete b.dataset.bezig;})
-        .catch(function(e){delete b.dataset.bezig;if(e&&e.wacht){zetDank(dank,trw('een'),'wacht');return;}delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout');b.classList.remove('aan');});
+      var voor=K&&K.kaart?K.kaart.seinOpen||null:null;
+      // meteen de stand tonen die de server ervan maakt (zelfde zwaarteregel), daarna die van de server
+      zetSeinOpen(seinLokaal(voor,soort));
+      // één seintje tegelijk, op volgorde: dan is het laatste antwoord ook de laatste stand op de server
+      seinKetting=seinKetting.then(function(){return stuur('/api/kaart/seintje',{id:id,soort:soort});});
+      seinKetting.then(function(d){
+          if(d&&d.ok&&'open' in d)zetSeinOpen(d.open);
+          if(d&&d.ok)mgSeintjeErbij(K&&K.kaart,soort,Date.now());
+          if(d&&d.ok)zetDank(dank,seinDankTekst(soort),'');
+          else{zetSeinOpen(voor);delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout');}
+          delete b.dataset.bezig;})
+        .catch(function(e){delete b.dataset.bezig;if(e&&e.wacht){zetDank(dank,trw('een'),'wacht');return;}zetSeinOpen(voor);delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout');});
+      seinKetting=seinKetting.catch(function(){});
     });
     // ervaren herstel: één tik stuurt de score (-2..+2), vandaag opnieuw tikken wijzigt
+    // Eén verzoek tegelijk per schaal, en de laatste tik wint. Met elke knop een eigen "bezig" liepen
+    // herstel-verzoeken parallel en won het antwoord dat het laatst binnenkwam: "Much worse" en daarna
+    // "Much better" op een trage lijn bewaarde -2, ook in de inbox. Bij PSK werd een tweede tik stil
+    // genegeerd (gebruikers-sweep 2026-11-12 14u, Jayden). Nu zoals de pijnscore: onthouden en nasturen.
+    function laatsteTikWint(verstuur){
+      var bezig=false,na=null;
+      function ga(v){
+        bezig=true;
+        var klaar=function(){bezig=false;var n=na;na=null;if(n!==null&&n!==v)ga(n);};
+        // nogEen(): er wacht al een nieuwere tik. Dan het antwoord van deze niet tekenen en geen
+        // "Bewaard" tonen: anders sprong de keuze op een trage lijn seconden terug naar de vorige
+        // tik, met "Bewaard" erbij, terwijl de laatste tik nog niet verstuurd was (sweep 2026-11-16, Jayden)
+        verstuur(v,function(){return na!==null&&na!==v;}).then(klaar,klaar);
+      }
+      return function(v){if(bezig){na=v;return;}ga(v);};
+    }
+    // vandaag vervangen in een lijst {t,s} (zoals de server dat doet), voor de stand zonder internet
+    function vandaagLokaal(lijst,s){var vd=dagStr(Date.now());
+      return (lijst||[]).filter(function(x){return dagStr(x.t)!==vd;}).concat([{t:Date.now(),s:s}]);}
     // PSK-score: één tik, de server telt één score per dag
+    var pskStuur=laatsteTikWint(function(score,nogEen){
+      var pschaal=document.getElementById('pskschaal');
+      pschaal.dataset.bezig='1';pschaal.setAttribute('aria-busy','true');
+      var pklaar=function(){delete pschaal.dataset.bezig;pschaal.removeAttribute('aria-busy');
+        pschaal.querySelectorAll('.bezig').forEach(function(x){x.classList.remove('bezig');});};
+      return stuur('/api/kaart/psk',{id:id,score:score})
+        .then(function(d){pklaar();var dank=document.getElementById('pskdank');
+          if(d&&d.ok){K.kaart.psk=d.psk||[];if(!nogEen()){tekenPsk();zetDank(dank,trpsk('dank'));}}
+          else zetDank(dank,(TAAL==='nl'&&d&&d.fout)?d.fout:trpsk('fout'),'fout');})
+        .catch(function(e){pklaar();zetDank(document.getElementById('pskdank'),e&&e.wacht?trw('een'):trpsk('fout'),e&&e.wacht?'wacht':'fout');
+          if(e&&e.wacht){K.kaart.psk=vandaagLokaal(K.kaart.psk,score);tekenPsk();}});
+    });
     document.getElementById('pskschaal').addEventListener('click',function(e){
       var pb=e.target.closest('[data-psk]');if(!pb||!id)return;
-      var pschaal=this;if(pschaal.dataset.bezig)return;
-      pschaal.dataset.bezig='1';pschaal.setAttribute('aria-busy','true');pb.classList.add('bezig');
-      var pklaar=function(){delete pschaal.dataset.bezig;pschaal.removeAttribute('aria-busy');pb.classList.remove('bezig');};
-      stuur('/api/kaart/psk',{id:id,score:Number(pb.dataset.psk)})
-        .then(function(d){pklaar();var dank=document.getElementById('pskdank');
-          if(d&&d.ok){K.kaart.psk=d.psk||[];tekenPsk();zetDank(dank,trpsk('dank'));}
-          else zetDank(dank,(TAAL==='nl'&&d&&d.fout)?d.fout:trpsk('fout'),'fout');})
-        .catch(function(e){pklaar();zetDank(document.getElementById('pskdank'),e&&e.wacht?trw('een'):trpsk('fout'),e&&e.wacht?'wacht':'fout');});
+      this.querySelectorAll('.bezig').forEach(function(x){x.classList.remove('bezig');});
+      pb.classList.add('bezig');
+      pskStuur(Number(pb.dataset.psk));
+    });
+    var hsStuur=laatsteTikWint(function(score,nogEen){
+      var dank=document.getElementById('hsdank');
+      return stuur('/api/kaart/ervaring',{id:id,score:score})
+        .then(function(d){
+          if(d&&d.ok){K.kaart.ervaring=d.ervaring||[];if(!nogEen()){tekenHerstel();zetDank(dank,trh('dank'));}}
+          else{tekenHerstel();zetDank(dank,trh('fout'),'fout');}
+        })
+        .catch(function(e){zetDank(dank,e&&e.wacht?trw('een'):trh('fout'),e&&e.wacht?'wacht':'fout');
+          if(!(e&&e.wacht))tekenHerstel();
+          // zonder internet: de nieuwe keuze staat in de wachtrij, toon die (niet de oude)
+          if(e&&e.wacht){K.kaart.ervaring=vandaagLokaal(K.kaart.ervaring,score);tekenHerstel();}});
     });
     document.getElementById('hsknoppen').addEventListener('click',function(e){
-      var b=e.target.closest('.sbtn');if(!b||b.dataset.bezig)return;
-      var score=Number(b.dataset.hs);b.dataset.bezig='1';
-      var dank=document.getElementById('hsdank');
-      stuur('/api/kaart/ervaring',{id:id,score:score})
-        .then(function(d){
-          delete b.dataset.bezig;
-          if(d&&d.ok){K.kaart.ervaring=d.ervaring||[];tekenHerstel();zetDank(dank,trh('dank'));}
-          else zetDank(dank,trh('fout'),'fout');
-        })
-        .catch(function(e){delete b.dataset.bezig;zetDank(dank,e&&e.wacht?trw('een'):trh('fout'),e&&e.wacht?'wacht':'fout');});
+      var b=e.target.closest('.sbtn');if(!b)return;
+      // meteen de gekozen knop tonen (trage lijn); het antwoord van de server tekent daarna de echte stand
+      this.querySelectorAll('.sbtn').forEach(function(k){k.classList.toggle('aan',k===b);k.setAttribute('aria-pressed',k===b?'true':'false');});
+      hsStuur(Number(b.dataset.hs));
     });
     // het gelezen therapeut-antwoord wegtikken
     document.getElementById('aweg').addEventListener('click',function(){
@@ -3406,7 +3948,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       fetch('/api/kaart/antwoord/gezien',{method:'POST',headers:{'content-type':'application/json'},
         body:JSON.stringify({id:id})})
         .then(function(r){return r.json();})
-        .then(function(d){delete knop.dataset.bezig;if(d&&d.ok){if(K&&K.kaart)K.kaart.antwoord=null;tekenAntwoord();}})
+        .then(function(d){delete knop.dataset.bezig;if(d&&d.ok){if(K&&K.kaart){K.kaart.antwoord=null;if(INHOUD_SIG!==null)INHOUD_SIG=inhoudSig(K.kaart);}tekenAntwoord();}})
         .catch(function(){delete knop.dataset.bezig;});
     });
     document.getElementById('mg_dl').addEventListener('click',downloadMijnGegevens);
@@ -3443,7 +3985,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     document.getElementById('agbtn').addEventListener('click',function(){
       var gekozen=[];
       document.querySelectorAll('#agdagen button.aan').forEach(function(b){gekozen.push(b.dataset.dag);});
-      if(!gekozen.length){alert(tr('agleeg'));return;}
+      // een oude foutmelding ("lukte nu niet") hoort niet te blijven staan naast de nieuwe uitleg (sweep 2026-11-16, Jayden)
+      if(!gekozen.length){var oudM=this.parentNode.querySelector('.agmelding');if(oudM)oudM.remove();alert(tr('agleeg'));return;}
       var tijd=document.getElementById('agtijd').value||'09:00';
       naarAgenda('/api/kaart/agenda?id='+encodeURIComponent(id)+'&dagen='+gekozen.join(',')+'&tijd='+encodeURIComponent(tijd)+'&taal='+encodeURIComponent(TAAL),this,false);
     });
@@ -3458,7 +4001,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       if(e.target.closest('#lbgeluid')){
         if(TAAL==='nl'){
           if(bezigLezen)stopLezen();
-          else speelNoor([{name:(demo.info||{}).name||'',text:(demo.info||{}).uitleg||'',id:(demo.info||{}).id||''}]);
+          else speelNoor([{name:(demo.info||{}).name||'',text:(demo.info||{}).uitleg||'',id:(demo.info||{}).id||'',eerder:(demo.info||{}).eerder||[]}]);
           return;
         }
         demo.spraak=!demo.spraak;
@@ -3509,8 +4052,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(document.readyState==='complete')setTimeout(bewaarBeeldenLijst,0);else window.addEventListener('load',function(){setTimeout(bewaarBeeldenLijst,0);});
     // ook de demonstratie stoppen: anders blijft de klok tikken en praat de
     // toestelstem door terwijl de telefoon in de zak zit
-    document.addEventListener('visibilitychange',function(){if(document.hidden){stopLezen();stopVideos();demoStop();}else dagWissel();});
-    window.addEventListener('pageshow',dagWissel);window.addEventListener('focus',dagWissel);setInterval(dagWissel,60000);
+    document.addEventListener('visibilitychange',function(){if(document.hidden){stopLezen();stopVideos();demoStop();}else terugGekomen();});
+    window.addEventListener('pageshow',terugGekomen);window.addEventListener('focus',terugGekomen);setInterval(dagWissel,60000);
     var sel=document.getElementById('taalsel');
     sel.value=TAAL;
     sel.addEventListener('change',function(){
@@ -3522,6 +4065,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var gb=document.getElementById('grootBtn');
     var zetGroot=function(aan){
       document.documentElement.classList.toggle('groot',aan);
+      if(VERLOOP)try{tekenVerloop(VERLOOP);}catch(e){}
       gb.classList.toggle('aan',aan);
       gb.setAttribute('aria-pressed',aan?'true':'false');
       try{localStorage.setItem('fp_groot',aan?'1':'');}catch(e){}
@@ -3610,6 +4154,20 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     uk:{net:['Зараз немає з’єднання','Ваша картка нікуди не зникла, але зараз не завантажується. Спробуйте ще раз за хвилину.','Спробувати ще раз'],
       druk:['Зараз не працює','Ваша картка нікуди не зникла, але Fysiplan зараз не відповідає. Справа не у вашому інтернеті. Спробуйте ще раз за кілька хвилин.','Спробувати ще раз']}
   };
+  // De kaart ophalen met een grens: bleef de verbinding hangen (geen antwoord, geen fout), dan stond
+  // "Je kaart wordt geladen…" eindeloos zonder knop Opnieuw (gebruikers-sweep 2026-11-14, Jayden).
+  // Na KAART_WACHT_MS de laatst geladen kaart uit de offline-kopie, anders het storingsscherm.
+  var KAART_WACHT_MS=12000;
+  function laadKaartApi(){
+    var pad='/api/kaart?id='+id;
+    if(typeof AbortController!=='function')return fetch(pad,{cache:'no-cache'});
+    var ac=new AbortController(),klok=setTimeout(function(){ac.abort();},KAART_WACHT_MS);
+    return fetch(pad,{cache:'no-cache',signal:ac.signal}).then(function(r){clearTimeout(klok);return r;},function(e){
+      clearTimeout(klok);
+      if(!window.caches)throw e;
+      return caches.match(location.origin+pad).then(function(c){if(c){UIT_KOPIE=true;return c;}throw e;},function(){throw e;});
+    });
+  }
   function toonStoring(status){
     geenLaden();
     var soort=(status===429||status>=500)?'druk':'net';
@@ -3621,17 +4179,28 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   document.getElementById('storing_knop').addEventListener('click',function(){location.reload();});
   if(!id){var fo=document.getElementById('fout');if(/[?&]gewist=1/.test(location.search)){geenLaden();fo.textContent='';var pg=document.createElement('p');pg.id='mg_weg';pg.style.cssText='font:600 16px/1.5 var(--disp)';pg.textContent=trmg('gewist');fo.appendChild(pg);fo.style.display='block';}else toonNietGevonden();}
   else{
-    Promise.all([
-      fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){
-        return r.json().catch(function(){return {ok:false};}).then(function(d){if(d&&!d.ok)d.status=r.status;return d;});
-      }),
-      // De therapeut kan voor editor/PDF een lijntekening kiezen. De digitale
-      // patiëntkaart gebruikt bewust altijd het kleurenbeeld uit de v2-catalogus.
-      fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
-      ,loadMobileReview().catch(function(){mediaReviewReady=false;})
-    ]).then(function(res){
+    // Eerst de kaart zelf. De server stuurt daarbij mee wat bij haar oefeningen hoort uit de
+    // bibliotheek (lib) en uit de keuring (keuring), zodat de patiënt niet bij elk bezoek de
+    // hele bibliotheek en het hele keuringsbestand binnenhaalt. Ontbreekt dat pakket (een
+    // antwoord uit de offline-cache van een oudere versie), of klopt het niet, dan leest de
+    // kaart de hele bestanden zoals eerst. Een kaart die niet bestaat haalt verder niets op.
+    laadKaartApi().then(function(r){
+      return r.json().catch(function(){return {ok:false};}).then(function(d){if(d&&!d.ok)d.status=r.status;return d;});
+    }).then(function(d){
+      if(!d||!d.ok)return [d,[],null];
+      var eigen=Array.isArray(d.lib)&&d.keuring&&typeof d.keuring==='object';
+      return Promise.all([
+        d,
+        // De therapeut kan voor editor/PDF een lijntekening kiezen. De digitale
+        // patiëntkaart gebruikt bewust altijd het kleurenbeeld uit de v2-catalogus.
+        eigen?d.lib:fetch('/v2/oefeningen.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
+        ,(eigen?loadMobileReview(d.keuring).catch(function(){return loadMobileReview();}):loadMobileReview()).catch(function(){mediaReviewReady=false;})
+      ]);
+    }).then(function(res){
       if(!res[0]||!res[0].ok){if(res[0]&&res[0].status===404){toonNietGevonden();vergeetKaartWeg();}else toonStoring(res[0]&&res[0].status);return;}
       K={kaart:res[0].kaart,praktijk:res[0].praktijk||{},lib:res[1],ai:!!res[0].ai,dag:typeof res[0].dag==='string'?res[0].dag:''};
+      pasWachtToe();
+      INHOUD_SIG=UIT_KOPIE?null:inhoudSig(res[0].kaart);
       // Komt het stemmanifest pas na het tekenen binnen, dan zetten we alleen de wachtende
       // luisterregels om (herstelNoorKnoppen), dezelfde weg als een latere geslaagde poging.
       // De hele kaart hertekenen brak een video af die de patiënt intussen had geopend.

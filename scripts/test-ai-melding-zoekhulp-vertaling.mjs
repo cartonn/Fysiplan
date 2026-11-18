@@ -24,12 +24,16 @@ assert.match(pak(app, /<div class='ai-toel'>[^<]*<\/div>/, "uitkomstregel zoekhu
 const TALEN = ["en", "de", "fr", "es", "pl", "tr", "ar", "uk"];
 const code = [
   pak(kaart, /function esc\([^)]*\)\{[^\n]*\n/, "esc"),
-  "var TAAL='nl',VERT={};",
+  "var TAAL='nl',VERT={},NAGEL={};",
   pak(kaart, /function vt\(s\)\{[^\n]*\n/, "vt"),
   pak(kaart, /function uitlegNietVertaald\(s\)\{[^\n]*\n/, "uitlegNietVertaald"),
   pak(kaart, /var NIET_VERTAALD=\{[^\n]*\n/, "NIET_VERTAALD"),
   pak(kaart, /var AUTO_VERTAALD=\{[^\n]*\n/, "AUTO_VERTAALD"),
+  pak(kaart, /function uitlegVertaald\(s\)\{[^\n]*\n/, "uitlegVertaald"),
+  pak(kaart, /function nagelezen\(s\)\{[^\n]*\n/, "nagelezen"),
   pak(kaart, /function uitlegAutoVertaald\(s\)\{[^\n]*\n/, "uitlegAutoVertaald"),
+  pak(kaart, /var NL_ORIGINEEL=\{[^\n]*\n/, "NL_ORIGINEEL"),
+  pak(kaart, /function vertaalNootHtml\(s\)\{[\s\S]*?\n  \}\n/, "vertaalNootHtml"),
   pak(kaart, /var ZO_DOE=\{[^\n]*\n/, "ZO_DOE"),
   pak(kaart, /function uitlegZinnen\(t\)\{[\s\S]*?\n  \}\n/, "uitlegZinnen"),
   pak(kaart, /function oefUitlegBlok\(o,gehouden\)\{[\s\S]*?\n  \}\n/, "oefUitlegBlok"),
@@ -44,9 +48,16 @@ for (const t of TALEN) {
   vm.runInContext(`TAAL=${JSON.stringify(t)};VERT={};VERT[TAAL]={};VERT[TAAL][${JSON.stringify(uitleg)}]='vertaald: '+${JSON.stringify(t)};`, ctx);
   const html = vm.runInContext(`oefUitlegBlok({uitleg:${JSON.stringify(uitleg)}},false)`, ctx);
   assert.ok(html.includes("autovertaald") && html.includes(vm.runInContext("esc(AUTO_VERTAALD[TAAL])", ctx)), "vertaalde uitleg (" + t + ") draagt de regel: " + html);
+  // het Nederlands staat erbij, ingeklapt (reviewlijst punt 10)
+  assert.ok(html.includes('<details class="nlorigineel">') && html.includes('<p lang="nl" dir="ltr">' + uitleg + "</p>"), "Nederlandse tekst erbij (" + t + "): " + html);
+  // nagelezen door een lezer: geen regel "automatisch vertaald", het Nederlands blijft erbij
+  vm.runInContext(`NAGEL[TAAL]=[${JSON.stringify(uitleg)}];`, ctx);
+  const nagelezenHtml = vm.runInContext(`oefUitlegBlok({uitleg:${JSON.stringify(uitleg)}},false)`, ctx);
+  assert.ok(!nagelezenHtml.includes("autovertaald") && nagelezenHtml.includes("nlorigineel"), "nagelezen (" + t + "): " + nagelezenHtml);
+  vm.runInContext("NAGEL[TAAL]=[]", ctx);
   vm.runInContext("VERT[TAAL]={}", ctx);
   const nietVertaald = vm.runInContext(`oefUitlegBlok({uitleg:${JSON.stringify(uitleg)}},false)`, ctx);
-  assert.ok(!nietVertaald.includes("autovertaald"), "onvertaalde uitleg (" + t + ") zegt niet dat hij vertaald is");
+  assert.ok(!nietVertaald.includes("autovertaald") && !nietVertaald.includes("nlorigineel"), "onvertaalde uitleg (" + t + ") zegt niet dat hij vertaald is");
 }
 vm.runInContext("TAAL='nl'", ctx);
 assert.ok(!vm.runInContext(`oefUitlegBlok({uitleg:${JSON.stringify(uitleg)}},false)`, ctx).includes("autovertaald"), "Nederlandse kaart zonder vertaalregel");

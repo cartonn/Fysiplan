@@ -11,6 +11,19 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash, randomBytes, scryptSync } from "node:crypto";
 
+import { maakGebruik } from "../lib/beheer-omgeving.js";
+
+// foute wachtwoorden van de logins van een gewiste praktijk gaan meteen mee (zonder server)
+{
+  const g = maakGebruik();
+  g.loginMis("a@wis.nl", Date.now()); g.loginMis("b@blijf.nl", Date.now());
+  g.gezien("fysio wis", "l1", Date.now());
+  assert.ok(g.wisPraktijk("fysio wis", ["a@wis.nl"]) >= 2);
+  assert.equal(g.misSinds("a@wis.nl", 0, Date.now()), 0, "foute wachtwoorden van de gewiste login weg");
+  assert.equal(g.misSinds("b@blijf.nl", 0, Date.now()), 1, "andere login blijft");
+  assert.equal(g.laatst("fysio wis", "l1"), 0);
+}
+
 const root = process.cwd();
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-gegevens-"));
 const nu = Date.now();
@@ -22,7 +35,12 @@ const bestaat = (pad) => access(join(dataDir, pad)).then(() => true, () => false
 const hash = (ww) => { const s = randomBytes(16); return "scrypt$" + s.toString("hex") + "$" + scryptSync(ww, s, 32).toString("hex"); };
 const account = (naam, ww) => ({ naam, hash: hash(ww), gemaakt: nu, vwo: { versie: "2026-11-01", t: new Date(nu).toISOString() } });
 await writeFile(join(dataDir, "praktijk-accounts.json"), JSON.stringify({
-  "fysio wis": account("Fysio Wis", "wis-wachtwoord-1"),
+  // een collega met eigen login (werkregels geaccepteerd, wachtwoord ooit hersteld) en een open uitnodiging
+  "fysio wis": { ...account("Fysio Wis", "wis-wachtwoord-1"), leden: [
+    { id: "l-aaaaaa000001", naam: "Tim Collega", email: "tim@wis.test", rol: "therapeut", hash: hash("tim-wachtwoord-1"),
+      gemaakt: nu - 86400000, regels: { versie: "2026-11-07", t: new Date(nu - 86400000).toISOString() }, gewijzigd: nu - 3600000 },
+    { id: "l-aaaaaa000002", naam: "Uitgenodigd", email: "nog@wis.test", rol: "therapeut", gemaakt: nu,
+      uitnodiging: { hash: "a".repeat(64), verloopt: nu + 7 * 86400000 } }] },
   "fysio blijf": account("Fysio Blijf", "blijf-wachtwoord-1")
 }));
 await mkdir(join(dataDir, "uploads", "videos"), { recursive: true });
@@ -50,11 +68,42 @@ await writeFile(join(dataDir, "praktijken.json"), JSON.stringify({
   "fysio blijf": { praktijk: "Fysio Blijf", adres: "Straat 2", plaats: "Zeist", logo: "uploads/logo-fysio-blijf-1.png" }
 }));
 
+// ideeënbox (legal 2026-11-12 17u): een open idee van A, een idee van B waar A op stemde, en een
+// idee van A waar Fysiplan al over besliste. De download van A toont alleen wat van A is.
+await writeFile(join(dataDir, "ideeen.json"), JSON.stringify({ versie: 1, ronde: { nr: 1, start: nu, eind: nu + 864e5 }, voorstellen: [], ideeen: {
+  "i-aaaaaaaaaaa1": { id: "i-aaaaaaaaaaa1", titel: "Idee van Wis", tekst: "Graag een donkere stand.", pk: "fysio wis", lid: "", t: nu, stemmen: { "fysio wis:praktijk": 1 }, stand: "open" },
+  "i-aaaaaaaaaaa2": { id: "i-aaaaaaaaaaa2", titel: "Besloten idee van Wis", tekst: "", pk: "fysio wis", lid: "", t: nu, stemmen: { "fysio blijf:praktijk": 1 }, stand: "gepland" },
+  "i-bbbbbbbbbbb1": { id: "i-bbbbbbbbbbb1", titel: "Idee van Blijf", tekst: "Geheim van Blijf.", pk: "fysio blijf", lid: "", t: nu, stemmen: { "fysio wis:praktijk": -1, "fysio blijf:praktijk": 1 }, stand: "open" }
+} }));
+
 // vertaalcache: de namen van eigen oefeningen zijn vertaald (sleutel = hash van de Nederlandse naam)
 const vsleutel = (t) => createHash("sha256").update(t).digest("hex").slice(0, 16);
 await writeFile(join(dataDir, "vertalingen.json"), JSON.stringify({
   en: { [vsleutel("Eigen brug")]: "Own bridge", [vsleutel("Eigen plank")]: "Own plank" }
 }));
+
+// support-agent en agents met taalmodel (legal 2026-11-13 09u): logboekregels (nieuw met pk, oud alleen
+// met de naam), open zaken, verstuurd en een bericht aan de praktijk. Na Alles wissen is niets van A over.
+const t0 = new Date(nu).toISOString();
+await writeFile(join(dataDir, "beheer-agent.json"), JSON.stringify({ stand: {}, rondes: [], laatsteRonde: null,
+  verstuurd: { "stil|fysio wis|": nu, "stil|fysio blijf|": nu },
+  open: { "stil|fysio wis|": { praktijk: "Fysio Wis", tekst: "Stil", sinds: nu }, "stil|fysio blijf|": { praktijk: "Fysio Blijf", tekst: "Stil", sinds: nu } },
+  logboek: [
+    { t: t0, wat: "gemaild", pk: "fysio wis", praktijk: "Fysio Wis", tekst: "Stil", onderwerp: "Hulp voor Wis", aan: 1, wie: "agent" },
+    { t: t0, wat: "nieuw", praktijk: "Fysio Wis", tekst: "Oude regel zonder pk" },
+    { t: t0, wat: "gemaild", pk: "fysio blijf", praktijk: "Fysio Blijf", tekst: "Stil", onderwerp: "Hulp voor Blijf", aan: 1, wie: "agent" }
+  ] }));
+await writeFile(join(dataDir, "beheer-loket.json"), JSON.stringify({ zout: "", concepten: [
+  { id: "c1", t: t0, rol: "support", soort: "stil", pk: "fysio wis", praktijk: "Fysio Wis", onderwerp: "Bericht aan Wis", tekst: "Geheim voor Wis", stand: "verstuurd" },
+  { id: "c2", t: t0, rol: "support", soort: "stil", pk: "fysio blijf", praktijk: "Fysio Blijf", onderwerp: "Bericht aan Blijf", tekst: "Voor Blijf", stand: "verstuurd" }
+] }));
+
+// gebruiksmeting van beheer (sweep 2026-11-13 10u): laatst gezien per login, logins per dag, vandaag
+const dagNu = new Date(nu).toISOString().slice(0, 10);
+await writeFile(join(dataDir, "beheer-gebruik.json"), JSON.stringify({ sinds: nu - 86400e3,
+  gezien: { "fysio wis|lid-wis-1": nu, "fysio blijf|lid-blijf-1": nu }, mis: {},
+  dagen: { "2026-01-02": { "fysio wis": 1, "fysio blijf": 2 } },
+  vandaag: { datum: dagNu, pk: { "fysio wis": { "lid-wis-1": 1 }, "fysio blijf": { "lid-blijf-1": 1 } } } }));
 
 // ---- server ----
 const reserve = createServer();
@@ -101,6 +150,10 @@ try {
   assert.match(pagina.headers.get("content-security-policy"), /form-action 'self'/);
   assert.doesNotMatch(pagina.headers.get("content-security-policy"), /script-src/);
   assert.doesNotMatch(html, /<script/i);
+  assert.match(html, /Ook je team, met wanneer iemand de werkregels accepteerde\./, "de pagina noemt het team in de download");
+  const privacy = await (await fetch(origin + "/privacy")).text();
+  assert.match(privacy, /wanneer iemand de werkregels accepteerde \(welke versie\), wanneer een wachtwoord via een herstellink wijzigde/,
+    "/privacy noemt wat de server per login bewaart (art. 13 lid 1 c)");
   assert.match(html, /action="\/v2\/gegevens\/download"/);
   assert.match(html, /action="\/v2\/gegevens\/wissen"/);
   assert.doesNotMatch(html, /__[A-Z_]+__/, "geen open plekken in de pagina");
@@ -141,7 +194,35 @@ try {
   assert.equal(pakket.profiel[0].plaats, "Utrecht");
   assert.match(pakket.account.verwerkersovereenkomst.versie, /^\d{4}-\d{2}-\d{2}(-\d+)?$/);
   assert.ok(pakket.logboek.some((a) => a.actie === "alles-gedownload"));
+  // team (legal 2026-11-18, art. 15/20 en art. 28 lid 3 h AVG): wanneer een login ontstond, wie wanneer welke
+  // versie van de werkregels accepteerde, wanneer het wachtwoord wijzigde en tot wanneer een uitnodiging openstaat
+  const tim = pakket.team.find((l) => l.email === "tim@wis.test");
+  assert.ok(tim, "collega in de download");
+  assert.equal(tim.gemaakt, new Date(nu - 86400000).toISOString(), "wanneer de login ontstond");
+  assert.deepEqual(tim.werkregels, { versie: "2026-11-07", t: new Date(nu - 86400000).toISOString() }, "werkregels geaccepteerd: versie en tijd");
+  assert.equal(tim.wachtwoordGewijzigd, new Date(nu - 3600000).toISOString(), "wanneer het wachtwoord via herstel wijzigde");
+  const nog = pakket.team.find((l) => l.email === "nog@wis.test");
+  assert.deepEqual(nog.uitnodiging, { open: true, verloopt: new Date(nu + 7 * 86400000).toISOString() }, "open uitnodiging zonder code");
+  assert.equal(nog.werkregels, null, "nog geen werkregels");
+  assert.doesNotMatch(tekst, /"a{64}"/, "geen uitnodigingscode (hash) in de download");
   assert.doesNotMatch(tekst, /Cor|Eigen plank|Zeist|scrypt\$/, "geen andere praktijk en geen wachtwoordhash");
+  // ideeënbox (art. 15/20 AVG): eigen ideeën en eigen stemmen, niet de tekst of stemmen van een ander
+  assert.deepEqual(pakket.ideeenbox.ingediend.map((i) => i.titel).sort(), ["Besloten idee van Wis", "Idee van Wis"], "eigen ideeën in de download");
+  assert.equal(pakket.ideeenbox.ingediend.find((i) => i.id === "i-aaaaaaaaaaa1").tekst, "Graag een donkere stand.");
+  assert.deepEqual(pakket.ideeenbox.stemmen.map((v) => v.idee + ":" + v.stem).sort(), ["i-aaaaaaaaaaa1:omhoog", "i-bbbbbbbbbbb1:omlaag"], "eigen stemmen in de download");
+  assert.doesNotMatch(tekst, /Geheim van Blijf|fysio blijf:/, "geen toelichting of stem van een andere praktijk");
+  // support (legal 2026-11-15 09u, art. 15/20 AVG): wat bij Alles wissen weggaat, staat ook in de download
+  assert.ok(pakket.support, "blok support in de download");
+  assert.deepEqual(pakket.support.logboek.map((r) => r.onderwerp || r.tekst).sort(), ["Hulp voor Wis", "Oude regel zonder pk"], "eigen supportregels, ook oude op naam");
+  assert.equal(pakket.support.logboek.find((r) => r.onderwerp === "Hulp voor Wis").door, "support-agent");
+  assert.deepEqual(pakket.support.open.map((z) => z.soort), ["stil"], "eigen open zaak");
+  assert.deepEqual(pakket.support.verstuurd.map((z) => z.soort), ["stil"], "eigen verstuurde mail");
+  assert.ok(pakket.support.gebruik.actieveLoginsPerDag.some((d) => d.n >= 1), "actieve logins per dag");
+  assert.ok(pakket.support.logboek.every((r) => !("pk" in r) && !("wie" in r)), "geen interne sleutel of medewerker");
+  assert.doesNotMatch(JSON.stringify(pakket.support), /Hulp voor Blijf|Bericht aan Blijf|fysio blijf/, "niets van support over een andere praktijk");
+  // legal 2026-11-18 (art. 15/20): berichten van de agents aan de praktijk gaan bij Alles wissen weg, dus ook in de download
+  assert.deepEqual((pakket.support.berichtenVanAgents || []).map((b) => b.onderwerp + "|" + b.tekst + "|" + b.stand), ["Bericht aan Wis|Geheim voor Wis|verstuurd"], "eigen bericht van een agent in de download");
+  assert.ok(pakket.support.berichtenVanAgents.every((b) => !("pk" in b) && !("sleutel" in b) && !("door" in b)), "geen interne sleutel of medewerker bij de berichten");
 
   // ---- wissen vraagt een getypte bevestiging ----
   const zonderZeker = await formulier("/v2/gegevens/wissen", { praktijk: "Fysio Wis", wachtwoord: "wis-wachtwoord-1", zeker: "ja" });
@@ -165,7 +246,22 @@ try {
   assert.equal((await leesJson("praktijken.json"))["fysio wis"], undefined, "profiel weg");
   assert.equal((await leesJson("praktijk-accounts.json"))["fysio wis"], undefined, "account weg");
   assert.ok(!(await leesJson("praktijk-audit.json")).some((a) => a.praktijk === "fysio wis"), "logboek noemt de praktijk niet meer");
+  const ideeenNa = JSON.stringify(await leesJson("ideeen.json"));
+  assert.doesNotMatch(ideeenNa, /fysio wis|Idee van Wis"/, "open idee van de praktijk weg, besloten idee zonder herkomst");
+  assert.match(ideeenNa, /Besloten idee van Wis/, "besloten idee blijft, zoals /privacy#ideeen zegt");
   assert.ok((await leesJson("praktijk-audit.json")).some((a) => a.actie === "praktijk-alles-gewist"), "het wissen zelf is gelogd, zonder naam");
+  // legal 2026-11-13 09u: /privacy#support belooft dat de regels van support over de praktijk tegelijk weggaan
+  const agentNa = JSON.stringify(await leesJson("beheer-agent.json"));
+  assert.doesNotMatch(agentNa, /fysio wis|Fysio Wis|Hulp voor Wis|Oude regel zonder pk/i, "support-agent onthoudt niets meer van de gewiste praktijk");
+  assert.match(agentNa, /Hulp voor Blijf/, "logboek van de andere praktijk blijft");
+  assert.match(agentNa, /stil\|fysio blijf\|/, "open zaak van de andere praktijk blijft");
+  // legal 2026-11-13 13u: de gebruiksmeting van de praktijk ging pas bij de snoei van de volgende dag weg
+  const gebruikNa = JSON.stringify(await leesJson("beheer-gebruik.json"));
+  assert.doesNotMatch(gebruikNa, /fysio wis|lid-wis-1/, "gebruiksmeting van de gewiste praktijk is meteen weg");
+  assert.match(gebruikNa, /fysio blijf\|lid-blijf-1/, "gebruiksmeting van de andere praktijk blijft");
+  const loketNa = JSON.stringify(await leesJson("beheer-loket.json"));
+  assert.doesNotMatch(loketNa, /fysio wis|Geheim voor Wis/i, "berichten van agents aan de gewiste praktijk zijn weg");
+  assert.match(loketNa, /Voor Blijf/, "bericht aan de andere praktijk blijft");
   for (const f of ["uploads/videos/v-aa11.mp4", "uploads/oef-aaaaaaaaaaaa.jpg", "uploads/logo-fysio-wis-1.png"]) {
     assert.equal(await bestaat(f), false, f + " is van de schijf");
   }

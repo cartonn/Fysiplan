@@ -95,6 +95,50 @@ terug naar de gedeelde server-lijst.
   bewaard en krijgt een QR (eigen encoder, `public/qr.js`, geen dependencies) naar
   **/k/&lt;id&gt;** (`public/kaart.html`): een mobielvriendelijke, alleen-lezen weergave die de
   cliënt zonder app of account opent. Het id is onraadbaar (12 hex-tekens).
+- **Wat de patiëntkaart ophaalt:** `GET /api/kaart?id=` stuurt met de kaart mee wat bij haar eigen
+  oefeningen hoort: de regels uit de bibliotheek (`lib`) en uit beide keuringsbestanden (`keuring`),
+  onbewerkt. De pagina haalt de hele bibliotheek en de keuringsbestanden alleen nog op als dat
+  pakket ontbreekt of niet klopt, bijvoorbeeld bij een antwoord uit de offline-cache van een oudere
+  versie. Test: `npm run test:kaartpakket`.
+- **Nederlandse namen in de bibliotheek:** een deel van de oefeningen heet in
+  `public/oefeningen-v2.json` nog Engels ("Glute bridges", "Step up with knee raise"). Dat bestand
+  blijft zoals het is, want de videostroom werkt erin en de keuring van beeld en uitleg, de
+  voorleesopnames en de standaardkaarten verwijzen naar die namen. De naam die de app toont komt uit
+  een laag eroverheen: `content/oefennamen-nl.json` (links de naam in het bestand, rechts de
+  Nederlandse naam). Voorrang: wat beheer zelf hernoemde, dan de Nederlandse naam, dan de naam uit
+  het bestand. Een Nederlandse naam die al in gebruik is, wordt overgeslagen; twee oefeningen
+  krijgen nooit dezelfde naam. In de laag staan nu de 135 oefeningen die op een standaardkaart
+  voorkomen. Bij elke oefening die anders heet dan in het bestand stuurt `/v2/oefeningen.json` de
+  naam uit het bestand mee als `eerder`. Alles wat op de oude naam is bewaard, vindt de oefening
+  daarmee terug: kaarten zonder vast id, standaardkaarten, de video van beheer (`videolinks.json`),
+  een eigen video op een kaart, notities, de tellingen van de patiënt, de keuring van de uitleg en
+  de voorleesopnames (die de oefening nog bij haar oude naam noemen tot ze opnieuw zijn
+  ingesproken). Een kaart die al bij een patiënt is, houdt de naam waarmee ze is bewaard, zodat
+  scherm en afdruk gelijk blijven; bij opnieuw bewaren verhuizen de eigen video en de tellingen mee
+  naar de nieuwe naam. De volgorde van de lijst verandert niet door de laag. `/health` telt ze als
+  `nederlandseNamen`. Een naam toevoegen of verbeteren is één regel in het JSON-bestand; daarna
+  `npm run test:oefennamen`, dat ook naloopt of elke standaardkaart nog dezelfde oefeningen vindt.
+  De logica staat in `lib/oefennamen.js`.
+- **De open kaart in het werkscherm (v2):** de kaart die de therapeut open heeft staan, bewaart de
+  browser in `fysiplan_state`, en de editor deelt haar na elke wijziging stil met de praktijk. Die
+  kaart verwijst naar oefeningen uit de bibliotheek van de server en naar eigen oefeningen van de
+  praktijk, en die laatste zijn er alleen voor wie is ingelogd. Daarom twee regels. (1) De kaart
+  wordt bewaard met vaste verwijzingen (`vast`: het vaste id van de oefening, anders haar naam), en
+  niet alleen als plekken in de lijst: komt er in de bibliotheek een oefening bij, gaat er een af
+  of verandert de volgorde, dan staan er na herladen dezelfde oefeningen met dezelfde dosering. Zo
+  gaat de kaart ook naar de server (`vasteKaart` en `vanVasteKaart`). (2) De editor bewaart en
+  deelt pas als de open kaart is hersteld tegen een bibliotheek waarin alles van de kaart
+  voorkomt (`BIB_KLAAR`, `herstelOpenKaart`). Is de bibliotheek niet te halen, of staan er eigen
+  oefeningen op de kaart terwijl niemand is ingelogd, dan blijft de bewaarde kaart zoals ze is,
+  toont de editor een lege kaart met bovenaan de reden ("De oefeningen zijn niet geladen" met
+  "Opnieuw proberen", of "Log in om je kaart te zien") en gaat er niets naar de server. Zolang
+  de kaart wacht, komt er niets op en gaat er geen andere kaart open (`kaartWachtNog`): de
+  therapeut hoort meteen waarom. Na het inloggen staat de kaart er weer zoals ze bewaard is, met
+  haar eigen invulvelden. Kan de bibliotheek bij een later herladen niet worden
+  opgehaald, dan blijft de lijst staan die er stond. Aanleiding (gemeten op 2026-11-12): een
+  gedeelde kaart met een eigen oefening, de sessie verloopt, de pagina herlaadt, de therapeut logt
+  weer in, en de eigen oefening was van de kaart van de patiënt af. Test: `npm run test:openkaart`.
+  v1 (`/`) bewaart en herstelt zoals altijd.
 - **Oefenvideo's (zonder app):** iedere serveroefening heeft in `/admin88` een zichtbare
   **+ Video**. Daarmee kan beheer een gerenderde avatarvideo direct kiezen of slepen,
   vooraf bekijken, vervangen en verwijderen. Met `CLOUDFLARE_ACCOUNT_ID` plus
@@ -185,7 +229,8 @@ terug naar de gedeelde server-lijst.
     genoeg om in te loggen, zoals bij elke herstelmail.
     Het geheim staat leesbaar in `praktijk-accounts.json`, want de server moet de code kunnen
     narekenen; wie die schijf kan lezen, heeft ook de tweede stap. De login van V1 (`/`) en de
-    beheersleutel hebben geen tweede stap. `npm run test:tweedestap` dekt de rekenkern (testvectoren
+    beheersleutel hebben geen tweede stap; een beheeraccount heeft hem altijd (zie *Beheer via
+    /admin88*). `npm run test:tweedestap` dekt de rekenkern (testvectoren
     uit RFC 4226 en RFC 6238), de QR-code en de routes.
 
 ## Gratis proef van 14 dagen (/v2/proef)
@@ -201,7 +246,8 @@ telefoon**. De pagina's zijn scriptloos; de logica staat in `lib/proef.js` en `s
   nieuwe kaarten voor dat apparaat. Gedeelde patiëntkaarten (`/k/<id>`) blijven werken.
 - Meldingen (alleen als mail is ingesteld): nieuwe aanmelding, "wil doorgaan" en twee dagen voor het einde
   naar `PROEF_MELDING_AAN` (komma-gescheiden; standaard `ACCOUNT_BEHEER_EMAILS`); welkomstmail met een
-  persoonlijke link voor een tweede apparaat en een herinnering naar de aanmelder.
+  persoonlijke link voor een tweede apparaat en een herinnering naar de aanmelder. Met `PROEF_STARTTIP=aan`
+  ook een starttip op dag 3 als de proef nog geen kaart deelde (plus seintje aan het meldadres).
 - Overzicht met CSV-export, "klant geworden", "+7 dagen" en wissen op **/aanmeldingen**, alleen voor
   ingelogde `ACCOUNT_BEHEER_EMAILS` (niet met admin88). `/dashboard88` toont alleen aantallen.
 - AVG: geen IP-adres opgeslagen, aanmelder kan zelf wissen, automatisch gewist 30 dagen na afloop
@@ -220,7 +266,10 @@ De gewone URL is voor het maken en printen van kaarten. Bibliotheekbeheer gebeur
 - **Categorie toevoegen** via de `+ categorie`-knop naast de categoriefilters. Een lege categorie
   blijft server-side bewaard en kan daarna als eerste of extra categorie aan oefeningen worden
   gekoppeld. Bij meerdere categorieën toont de lijst ze met een `/` ertussen.
-- **Oefening hernoemen** (potloodje ✎) — `POST /api/hernoem` (`naam-wijzigingen.json`).
+- **Oefening hernoemen** (potloodje ✎) — `POST /api/hernoem` (`naam-wijzigingen.json`). In v2 gaat
+  de keuze van beheer voor de Nederlandse naam uit `content/oefennamen-nl.json`; zet beheer de naam
+  terug op die Nederlandse naam, dan vervalt de hernoeming. De naam van een andere oefening, nu of
+  eerder, wordt geweigerd.
 - **Categorie wijzigen** (pijltjes ⇄) — `POST /api/oefeningen/categorie`
   (`categorie-wijzigingen.json`): verplaats een oefening naar een andere categorie en/of toon hem
   op een 2e plek (het `ook`-veld).
@@ -232,15 +281,62 @@ De gewone URL is voor het maken en printen van kaarten. Bibliotheekbeheer gebeur
 
 Elke beheeractie is **direct server-side** en dus meteen live op beide URL's — er is geen
 synchronisatie, wachttijd of aparte deploy nodig. Het geserveerde `oefeningen.json` =
-basisbestand + hernoemingen − verwijderd + toegevoegd. `/health` toont de tellers
-(`hernoemd`, `toegevoegd`, `verwijderd`).
+basisbestand + hernoemingen − verwijderd + toegevoegd (in v2 ook met de Nederlandse namen).
+`/health` toont de tellers (`hernoemd`, `nederlandseNamen`, `toegevoegd`, `verwijderd`).
 
-De mutatie-API's eisen een sleutel-header (`x-admin-sleutel`). De beheerpagina's vragen de
-beheerder om die sleutel en bewaren hem alleen in het tabblad (sessionStorage); hij staat
-in geen enkel publiek bestand. Live (Railway of `NODE_ENV=production`) werkt alleen een eigen
-`ADMIN_KEY`: zonder die variabele blijft beheer dicht. Alleen lokaal is `admin88` de standaard.
-Met de standaardsleutel kan beheer **geen** kaartoverzicht of patiëntgegevens van een praktijk
-lezen; alleen met een eigen `ADMIN_KEY` op de server werkt die beheeringang.
+### Wie is beheer: een eigen account per beheerder
+
+Een beheerder logt in met een eigen account: e-mailadres, eigen wachtwoord (minstens 12 tekens)
+en een tweede stap met een code-app. De beheerpagina's (`/admin88`, `/dashboard88`,
+`/content1000`, `/draft-review.html`) vragen daar zelf om (`public/beheersleutel.js`) en tonen
+daarna linksonder wie er is ingelogd, met *Accounts en logboek* en *Uitloggen*.
+
+- **Het eerste account** maak je met de sleutel van de server: open een beheerpagina, kies
+  *Inloggen met de beheersleutel*, vul de `ADMIN_KEY` van Railway in, kies *Maak een eigen
+  account* en daarna *Dit is mijn eigen account: nu instellen*. Volgende accounts maakt een
+  beheerder onder *Accounts en logboek*. Er kunnen er hooguit twintig zijn.
+- **Een nieuw account** krijgt een startwachtwoord dat de maker één keer ziet en dat een week
+  geldig is. Bij de eerste keer inloggen kiest de eigenaar een eigen wachtwoord, scant de QR-code
+  en krijgt acht reservecodes; pas dan is er een sessie en werkt het startwachtwoord niet meer.
+- **De sessie** staat in een cookie die scripts niet kunnen lezen (`__Host-fpbeheer`, twaalf uur)
+  en telt alleen samen met de kop `x-admin-sleutel: account`. Die kop sturen alleen de
+  beheerpagina's mee: de gewone app in dezelfde browser werkt dus niet stil met beheerrechten, en
+  een andere website kan niets namens beheer doen. Inloggen blijft over een uitrol heen
+  (`beheer-sessies.json` in de datamap: alleen de SHA-256 van de sessiesleutel; het bestand gaat
+  niet mee in de reservekopie). Wil je alle beheerders opnieuw laten inloggen, verwijder dan dat
+  bestand en herstart.
+- **Kwijt** (telefoon, reservecodes of wachtwoord): een andere beheerder zet het account uit en
+  maakt het opnieuw; de eigenaar begint dan met een nieuw startwachtwoord. Is er geen andere
+  beheerder, dan gaat dat met de `ADMIN_KEY`. Uitzetten trekt alle sessies van dat account
+  meteen in. Het eigen wachtwoord wijzigen kan onder *Accounts en logboek*, met het huidige
+  wachtwoord en een code.
+- **Raden:** na tien foute wachtwoorden binnen een kwartier staat een adres op slot: het
+  antwoord zegt dan niet meer of een wachtwoord klopt. Wie het wachtwoord én een goede code
+  heeft, komt wel binnen; wie alleen het adres kent, kan de eigenaar zo niet buitensluiten.
+  Daarnaast geldt de rem per verbinding. Foute codes na een goed wachtwoord tellen op schijf:
+  na twintig op een dag werkt de code-app 24 uur niet (een reservecode wel) en krijgen de
+  beheerders een mail.
+- **Het beheerlogboek** (`beheer-log.jsonl` in de datamap, mee in de reservekopie) krijgt een
+  regel voor alles wat beheer wijzigt: wie, wat, wanneer, vanaf welk (gemaskeerd) adres en met
+  welk antwoord. Ook inloggen en uitloggen, een foute code na een goed wachtwoord, een account
+  erbij of eraf, de herstelmail aan een praktijk en het lezen van gegevens van een praktijk
+  zonder account (één regel per beheerder en praktijk per uur) staan erin. Er is geen route die
+  een regel wijzigt of weghaalt. Wie bij de schijf van de server kan, kan het bestand wel
+  aanpassen; daarom gaat bij een account erbij, opnieuw gemaakt of uitgezet ook een mail naar de
+  beheerders en naar het meldadres (`PROEF_MELDING_AAN`), als mail op de server aanstaat.
+- **De sleutel** (`ADMIN_KEY`, in de kop `x-admin-sleutel`) blijft werken zolang de variabele op
+  de server staat. Hij is van niemand persoonlijk en heet in het logboek "beheersleutel". De
+  uploadscripts gebruiken hem (`FYSIPLAN_ADMIN_KEY`). Heeft iedere beheerder een account, haal
+  `ADMIN_KEY` dan weg in Railway: beheer kan daarna alleen nog met een account, en het laatste
+  werkende account kan niet worden uitgezet. Zet de variabele tijdelijk terug voor een
+  uploadscript, of als niemand meer kan inloggen. Live (Railway of `NODE_ENV=production`) werkt
+  alleen een eigen `ADMIN_KEY`; alleen lokaal is `admin88` de standaard. Met die standaardsleutel
+  kan beheer **geen** accounts maken en **geen** kaartoverzicht of patiëntgegevens van een
+  praktijk lezen. Het woord `account` kan geen sleutel zijn.
+
+Ook met een account komt beheer niet bij de kaarten van een beveiligde praktijk.
+`npm run test:beheeraccounts` dekt de rekenkern (`lib/beheer.js`), de routes, de schermen en een
+herstart.
 
 **Een praktijk die er niet meer in komt.** Beheer kan het account van een praktijk niet wissen
 en komt met de sleutel niet bij de kaarten van een beveiligde praktijk (de oude
@@ -248,7 +344,8 @@ en komt met de sleutel niet bij de kaarten van een beveiligde praktijk (de oude
 wachtwoord kwijt is, vraagt zelf een link aan (zie *Wachtwoord vergeten*); beheer is pas nodig
 als dat niet kan, bijvoorbeeld omdat het adres niet klopt of omdat de enige beheerder ook de
 tweede stap kwijt is. Is een praktijk haar wachtwoord en herstelcode kwijt, dan laat beheer de
-server een herstelmail sturen:
+server een herstelmail sturen. Dat kan op een beheerpagina onder *Accounts en logboek*, bij
+*Een praktijk komt er niet meer in*, of met de sleutel:
 
 ```
 curl -X POST https://fysiplan.nl/api/beheer/praktijk-herstel \
@@ -265,7 +362,8 @@ verandert er niets: wachtwoorden en sessies blijven werken. Hooguit drie aanvrag
 per dag. Is er van de praktijk geen eigen adres bekend, of staat mail uit, dan kan het niet via
 deze weg (`npm run test:beheerherstel`). De beheersleutel alleen opent zo geen praktijk meer. Wie
 bij de server of bij de mailprovider kan (die bewaart verzonden mail), blijft technisch bij
-gegevens kunnen; daarom staan de reden en het moment in het logboek van de praktijk.
+gegevens kunnen; daarom staan de reden en het moment in het logboek van de praktijk, en staat in
+het beheerlogboek welke beheerder de mail liet sturen, voor welke praktijk, waarom en waarheen.
 
 Heeft een beheerder een tweede stap bij het inloggen en is ook die kwijt (telefoon én
 reservecodes), stuur dan `"tweedeStap": true` mee in hetzelfde verzoek. De mail zegt dan dat met de
@@ -330,10 +428,50 @@ eigenaars-dashboard, met automatische verversing per minuut en een donkere modus
   `POST /api/stats/event` — alleen aantallen, nooit inhoud).
 - **Bibliotheek:** oefeningen, categorieën en de beheer-tellers.
 - **Security:** geweigerde beheer-verzoeken (tijd, gemaskeerd IP, doel), of de opslag blijvend is
-  (Railway-volume) en of er een eigen `ADMIN_KEY` is ingesteld, plus versie en uptime.
+  (Railway-volume), hoeveel persoonlijke beheeraccounts er zijn en of de sleutel van de server
+  nog aanstaat, plus versie en uptime.
 
-De data komt uit `GET /api/dashboard` (beheer-sleutel vereist); tellers staan in
+De data komt uit `GET /api/dashboard` (alleen voor beheer); tellers staan in
 `statistieken.json` in de datamap.
+
+## De bewaker van buitenaf
+
+Om de vijf minuten kijkt een machine van GitHub of fysiplan.nl het doet (`.github/workflows/bewaker.yml`,
+`scripts/bewaker.mjs`). Bij een storing komt er een issue op naam van de eigenaar van de repository, met in gewone taal
+wat er mis is; zijn twee rondes achter elkaar weer goed, dan gaat het issue dicht. Hij draait niet op Railway, dus een
+server die omvalt neemt het alarm niet mee.
+
+- **Wat hij nakijkt:** `/health`, de landingspagina, het werkscherm en de oefenbibliotheek, en wat `/health` zegt over
+  de reservekopie, het volume en het aantal serverfouten. Wat niet antwoordt, krijgt twee herkansingen met een halve
+  minuut ertussen: een uitrol is geen storing.
+- **`/health` vertelt erbij:** `gestart` (sinds wanneer dit proces draait) en `fouten` (`uur`: antwoorden 500 en fouten
+  die niemand opving in het afgelopen uur; `buiten`: antwoorden 502, als een dienst van buiten niet meewerkte). Alleen
+  aantallen (`lib/uurteller.js`); na een herstart beginnen ze op nul.
+- **Geen bezoek:** verzoeken van de bewaker tellen niet mee in het dashboard.
+- **Instellen:** de variabele `BEWAKER` (`snel`, `zuinig` of `uit`), `BEWAKER_ADRES`, en het geheim `BEWAKER_WEBHOOK`
+  voor een bericht op een telefoon (ntfy of Slack). Een proefmelding stuur je vanuit het tabblad Actions.
+- **Grenzen:** op zijn vroegst om de vijf minuten en soms later, geen telefoontje, en in een besloten repository zet
+  hij zichzelf uit tot iemand ervoor kiest.
+
+Alles staat in gewone taal in [docs/bewaker.md](docs/bewaker.md). Test: `npm run test:bewaker`.
+
+
+## De testomgeving
+
+Dezelfde server op een eigen adres, met verzonnen praktijken en patiënten (`lib/omgeving.js`). De server beslist bij het
+starten zelf welke omgeving hij is: `OMGEVING=test` of `productie` wint; op Railway is de omgeving `production` productie
+en `test` een testomgeving, en met elke andere naam start hij niet. `/health` zegt het in het veld `omgeving`.
+
+In een testomgeving, ook als de sleutels van productie zijn meegekopieerd:
+
+- **Mail** komt in de testpostbak (`/test/postbak`, alleen beheer). Echt versturen alleen naar `TEST_MAIL_AAN`.
+- **Betalen** alleen met een Mollie-sleutel die met `test_` begint; **de reservekopie buiten Railway** en **Cloudflare** staan uit.
+- **Links** wijzen naar de testomgeving zelf; elke pagina draagt een lint en `noindex`.
+- **De datamap** krijgt het merk `omgeving.json`: een testomgeving start niet op gegevens zonder dat merk, productie niet op
+  gegevens met dat merk.
+
+Nepgegevens: `node scripts/nepgegevens.mjs <adres>` (alleen op een testomgeving of lokaal). Alles in gewone taal, met de
+stappen voor Railway, in [docs/testomgeving.md](docs/testomgeving.md). Test: `npm run test:omgeving`.
 
 ## Nieuwe plaatjes toevoegen (in de repo)
 
@@ -398,6 +536,18 @@ praktijk een eigen code en gaat daar niets van mee; v1 blijft bij de eigen kaart
   gaat niet mee in de reservekopie. Wil je iedereen opnieuw laten inloggen (bijvoorbeeld na het
   terugzetten van een reservekopie), verwijder dan dat bestand en herstart. Bij een uitrol
   (SIGTERM) maakt de server lopende verzoeken af voordat hij stopt.
+- **Waar de sessiesleutel in de browser staat:** in een cookie die scripts niet kunnen lezen
+  (`HttpOnly`, `SameSite=Strict`, dertig dagen, op https met `Secure`). Op https heet hij
+  `__Host-fpsessie`: met dat voorvoegsel kan een ander adres onder hetzelfde domein er geen
+  eigen sessie overheen zetten. Zonder https (lokaal) heet hij `fpsessie`. Een browser krijgt
+  de sleutel alleen in die cookie; in het antwoord op het inloggen staat dan `"sessie":"cookie"`.
+  De cookie telt niet bij een verzoek vanaf een andere website. Uitloggen haalt de sessie op de
+  server weg en maakt de cookie leeg; lukt dat niet (geen verbinding), dan zegt de app dat en
+  blijft het scherm ingelogd. Een eigen programma zonder browserkoppen (`Sec-Fetch-Site`,
+  `Origin`) krijgt de sleutel ook in het antwoord en stuurt hem mee in `x-praktijk-sessie`;
+  zo werken de tests. Tot 12 november 2026 bewaarde de app de sleutel in `localStorage`
+  (`fp_praksessie`): staat hij daar nog, dan ruilt de app hem één keer om via
+  `POST /api/praktijk/sessie-cookie` en haalt hem uit de opslag. `npm run test:sessiecookie`.
 - **Tweede stap bij het inloggen:** heeft een login een tweede stap, dan staan bij dat lid in
   `praktijk-accounts.json` het geheim van de code-app (leesbaar), de SHA-256 van de ongebruikte
   reservecodes, de laatst gebruikte tijdstap en de teller van foute codes. Ze gaan mee in de

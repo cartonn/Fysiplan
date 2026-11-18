@@ -67,6 +67,9 @@
   .alarm{font:500 14.5px/1.45 var(--disp);color:var(--fout);background:var(--fout-bg);border-radius:6px;padding:12px 14px}
   .oke{font:500 14.5px/1.45 var(--disp);color:var(--goed);background:var(--goed-bg);border-radius:6px;padding:12px 14px}
   .val{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .facturen th,.facturen td{padding:8px 10px 8px 0;border-top:1px solid var(--lijn-z);font:400 14px/1.4 var(--disp);color:var(--tekst);white-space:nowrap}
+  .facturen th{font-weight:600;color:var(--demp);border-top:0}
+  .facturen td.r{text-align:right}
   /* rechterkolom: wat je in de proef doet, als een dossierblad */
   .blad{background:var(--papier);border:1px solid var(--lijn);border-radius:4px;padding:28px 28px 24px;box-shadow:0 1px 0 rgba(35,32,25,.05),0 18px 40px -26px rgba(35,32,25,.35)}
   .blad h2{font:700 22px/1.25 var(--serif);color:var(--inkt);margin-bottom:14px}
@@ -218,11 +221,8 @@ __INHOUD__
     __BETAAL_HTML__
     <div class="blad" style="margin-top:34px">
       <h2>Je gegevens wissen</h2>
-      <p class="klein" style="font-size:14.5px">We bewaren je e-mailadres, naam, telefoonnummer en praktijknaam. Wis je ze, dan stopt je proef direct op dit apparaat. Kaarten die je al met pati&euml;nten deelde blijven werken, tot ze na de bewaartermijn vanzelf verdwijnen.</p>
-      <form method="post" action="/v2/proef/wissen" style="margin-top:14px">
-        <label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, wis mijn gegevens en stop mijn proef.</span></label>
-        <div class="knoppen"><button class="knop omlijnd" type="submit">Gegevens wissen</button></div>
-      </form>
+      <p class="klein" style="font-size:14.5px">__WIS_UITLEG__</p>
+      __WIS_FORM_HTML__
     </div>
   </div>
 </main>
@@ -255,12 +255,8 @@ __INHOUD__
       </form>
       __BETAAL_HTML__
     </div>
-    <form method="post" action="/v2/proef/wissen" style="margin-top:22px">
-      <!-- geen verborgen zeker=1: één tik wiste alles, ±70 px onder "Ja, ik wil doorgaan" (sweep 2026-11-09, Mark iPad) -->
-      <p class="klein">Liever niet? Dan hoef je niets te doen; we wissen je gegevens automatisch na __BEWAAR_DAGEN__ dagen.</p>
-      <label class="vink" style="margin-top:8px"><input type="checkbox" name="zeker" value="1" required/><span>Ja, wis mijn gegevens nu meteen.</span></label>
-      <div class="knoppen"><button class="knop stil" type="submit" style="min-height:44px">Nu meteen wissen</button></div>
-    </form>
+    <!-- geen verborgen zeker=1: één tik wiste alles, ±70 px onder "Ja, ik wil doorgaan" (sweep 2026-11-09, Mark iPad); formulier uit wisTeksten in server.js -->
+    __VERLOPEN_WIS_HTML__
   </div>
 </main>
 <!--/blok-->
@@ -286,7 +282,7 @@ __INHOUD__
     __MELDING__
     <div class="blad" style="margin-top:28px">
       <h2>Alles downloaden</h2>
-      <p class="klein" style="font-size:14.5px">Een bestand (JSON) met je kaarten en wat pati&euml;nten aantikten, je eigen oefeningen, sjablonen, praktijkgegevens, je proefaanmelding en het logboek van je account. Handig voor een inzageverzoek of v&oacute;&oacute;r je stopt. Bewaar het veilig: er staan gezondheidsgegevens in.</p>
+      <p class="klein" style="font-size:14.5px">Een bestand (JSON) met je kaarten en wat pati&euml;nten aantikten, je eigen oefeningen en je eigen vragen daarbij, sjablonen, praktijkgegevens en je proefaanmelding. Ook je team, met wanneer iemand de werkregels accepteerde. Ook het logboek van je account, het leeslog van je kaarten (wie welke kaart opende) en je idee&euml;n en stemmen in de idee&euml;nbox. En wat Fysiplan-support over je praktijk bijhoudt. Handig voor een inzageverzoek of v&oacute;&oacute;r je stopt. Bewaar het veilig: er staan gezondheidsgegevens in.</p>
       <form method="post" action="/v2/gegevens/download" style="margin-top:12px">
         <div class="veld"><label for="dl_praktijk">Praktijknaam</label><input id="dl_praktijk" name="praktijk" maxlength="80" autocomplete="organization" required value="__V_PRAKTIJK__"/></div>
         <div class="veld" style="margin-top:12px"><label for="dl_email">Je e-mail <span style="font-weight:400">(alleen als je met een eigen login werkt; je moet beheerder zijn)</span></label><input id="dl_email" name="email" type="email" maxlength="120" autocomplete="username"/></div>
@@ -300,10 +296,13 @@ __INHOUD__
       <p class="klein" style="font-size:14.5px">Dit wist meteen alles van je praktijk:</p>
       <ul class="klein" style="font-size:14.5px;margin:6px 0 0 18px">
         <li>alle kaarten, ook die in de prullenbak (de links werken daarna niet meer);</li>
-        <li>eigen oefeningen met foto&rsquo;s, eigen video&rsquo;s en sjablonen;</li>
+        <li>eigen oefeningen met foto&rsquo;s, eigen video&rsquo;s, je eigen vragen en sjablonen;</li>
         <li>je logo en praktijkgegevens;</li>
         <li>je proefaanmelding (naam, e-mail, telefoon);</li>
-        <li>het wachtwoord en het logboek.</li>
+        <li>het wachtwoord, de eigen logins van je team en het logboek;</li>
+        <li>het leeslog (wie welke kaart opende);</li>
+        <li>je open idee&euml;n in de idee&euml;nbox (besloten idee&euml;n en stemmen blijven, zonder je naam);</li>
+        <li>wat Fysiplan-support over je praktijk bijhoudt.</li>
       </ul>
       <p class="klein" style="font-size:14.5px">Dit kun je niet ongedaan maken. In de dagelijkse reservekopie staat het nog hooguit 7 dagen. Kopieer eerst naar je dossier wat je moet bewaren.</p>
       <form method="post" action="/v2/gegevens/wissen" style="margin-top:12px">

@@ -91,6 +91,10 @@ self.addEventListener('fetch', function (e) {
   var url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
   if (url.pathname.indexOf('/uploads/videos/') === 0) return;
+  // agenda-bestanden (.ics) nooit uit of in de cache: offline gaf een eerder bewaarde kopie
+  // groen licht aan de controle in naarAgenda(), waarna het openen zelf een browserfoutpagina
+  // werd; en na een gewijzigde afspraak kon een oude datum uit de cache komen (sweep 2026-11-15, Jayden)
+  if (/^\/api\/kaart\/(afspraak\.ics|agenda)$/.test(url.pathname)) return;
   e.respondWith(
     fetch(req).then(function (antwoord) {
       // de kaart bestaat niet meer (gewist, verlopen of nieuwe link): ook de offline

@@ -17,6 +17,7 @@ const AI = "met AI gemaakt";
 const code = [
   pak(/var STEM_NOOT='[^']+';/, "STEM_NOOT"),
   pak(/var STEM_VIDEO_NOOT='[^']+';/, "STEM_VIDEO_NOOT"),
+  pak(/function noorClipNaam\(item\)\{[\s\S]*?\n  \}\n/, "noorClipNaam"),
   pak(/function noorRegel\(o,idx,metAiVideo\)\{[\s\S]*?\n  \}\n/, "noorRegel"),
 ].join("\n");
 const NoorAudio = { match: () => true };

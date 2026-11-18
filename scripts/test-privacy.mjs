@@ -18,6 +18,10 @@ const dag = 86400000;
 const nu = Date.now();
 const sha16 = (t) => createHash("sha256").update(String(t).slice(0, 300)).digest("hex").slice(0, 16);
 
+// de bibliotheek toont Nederlandse namen (content/oefennamen-nl.json); de zoekhulp geeft die terug
+const NL_NAMEN = JSON.parse(await readFile(join(root, "content", "oefennamen-nl.json"), "utf8")).namen;
+const SQUAT_NU = NL_NAMEN["Squat"] || "Squat", LUNGES_NU = NL_NAMEN["Lunges"] || "Lunges";
+
 // ---- nagebootste AI-dienst: bewaart elke aanvraag ----
 const aiAanvragen = [];
 const ai = createServer(async (request, response) => {
@@ -27,8 +31,9 @@ const ai = createServer(async (request, response) => {
   aiAanvragen.push(b);
   const tekst = b.output_config && b.output_config.format
     ? JSON.stringify({ oefeningen: [
-      { naam: "Squat", traint: "Kracht van bovenbenen en billen." },
-      { naam: "squat", traint: "dubbel, valt weg" },
+      { naam: SQUAT_NU, traint: "Kracht van bovenbenen en billen." },
+      { naam: SQUAT_NU.toLowerCase(), traint: "dubbel, valt weg" },
+      { naam: "Squat", traint: "dezelfde oefening onder haar naam uit het bestand: ook dubbel, valt weg" },
       { naam: "Bestaat niet", traint: "geen bibliotheekoefening, valt weg" },
       { naam: "Lunges", traint: "Kracht en balans van de benen." }
     ] })
@@ -55,6 +60,17 @@ await writeFile(join(dataDir, "kaarten.json"), JSON.stringify({
 }));
 await writeFile(join(dataDir, "vertalingen.json"), JSON.stringify({
   en: { [sha16("Jan de Vries heeft een hernia")]: "Jan de Vries has a herniated disc", [sha16("Squat")]: "Squat" }
+}));
+
+// statistieken van vóór 2026-11-16: een unieke bezoeker als sha256(IP|browser|datum) zonder geheim,
+// en een geweigerd verzoek van 40 dagen geleden
+const statDag = new Date(nu - 3 * dag).toISOString().slice(0, 10);
+const oudeUniek = createHash("sha256").update("10.7.7.7|Testbrowser|" + statDag).digest("hex").slice(0, 12);
+await writeFile(join(dataDir, "statistieken.json"), JSON.stringify({
+  dagen: { [statDag]: { bezoek: 1, admin: 0, uniek: [oudeUniek], print: 0, kaartOpgeslagen: 0, kaartVerwijderd: 0 } },
+  security: { geweigerd: 2, laatste: [
+    { t: new Date(nu - 1 * dag).toISOString(), ip: "10.1.x.x", pad: "kaart-raden" },
+    { t: new Date(nu - 40 * dag).toISOString(), ip: "10.2.x.x", pad: "/api/dashboard" }] }
 }));
 
 // ---- server ----
@@ -113,6 +129,29 @@ try {
     await wacht(50);
   }
   assert.equal(cache[sha16("Jan de Vries heeft een hernia")], undefined, "vrije tekst uit de vertaalcache");
+
+  // Legal 2026-11-16 (code tegen tekst): /privacy zegt bij de dagtellingen "alleen aantallen", dus
+  // een bewaarde bezoekerscode mag niet per IP-adres na te rekenen zijn; geweigerde verzoeken hooguit 30 dagen
+  {
+    const vandaag = new Date().toISOString().slice(0, 10);
+    await fetch(origin + "/v2", { headers: { "x-forwarded-for": "10.7.7.7", "user-agent": "Testbrowser" } });
+    let st = {};
+    for (let i = 0; i < 100; i++) {
+      try { st = await leesJson("statistieken.json"); } catch {}
+      if (st.uniekGezouten && st.dagen[vandaag] && st.dagen[vandaag].uniek.length) break;
+      await wacht(100);
+    }
+    assert.equal(st.uniekGezouten, true, "oude bezoekerscodes zijn overgehasht");
+    assert.equal(st.dagen[statDag].uniek.length, 1, "het aantal unieke bezoekers blijft");
+    assert.notEqual(st.dagen[statDag].uniek[0], oudeUniek, "oude code is niet meer per IP na te rekenen");
+    const zonderGeheim = createHash("sha256").update("10.7.7.7|Testbrowser|" + vandaag).digest("hex").slice(0, 12);
+    assert.equal(st.dagen[vandaag].uniek.length, 1);
+    assert.notEqual(st.dagen[vandaag].uniek[0], zonderGeheim, "nieuwe code gebruikt een geheim zout");
+    assert.deepEqual(st.security.laatste.map((r) => r.pad), ["kaart-raden"], "geweigerd verzoek ouder dan 30 dagen is weg");
+    const priv = await (await fetch(origin + "/privacy")).text();
+    assert.match(priv, /id="geweigerd"[\s\S]*?hooguit 30 dagen/, "/privacy noemt de geweigerde verzoeken en de termijn");
+    assert.match(priv, /geheim dat de volgende dag weg is/);
+  }
   assert.equal(cache[sha16("Squat")], "Squat", "bibliotheekvertaling blijft");
   const audit = await leesJson("praktijk-audit.json");
   assert.ok(audit.some((a) => a.actie === "kaart-verlopen" && a.praktijk === "fysio oud"), "auditregel bij verlopen");
@@ -194,7 +233,9 @@ try {
   const zoek = await (await api("/api/assistent", { methode: "POST",
     body: { regio: "Knie", doel: "Maximale kracht", zoek: "zonder materiaal", klacht: "Jan de Vries, VKB-reconstructie" }, ip: ipZ })).json();
   assert.equal(zoek.ok, true);
-  assert.deepEqual(zoek.oefeningen.map((o) => o.naam), ["Squat", "Lunges"], "alleen echte bibliotheekoefeningen, geen dubbele");
+  // "Lunges" is de naam uit het bestand: de zoekhulp geeft de oefening terug onder de naam van nu
+  assert.deepEqual(zoek.oefeningen.map((o) => o.naam), [SQUAT_NU, LUNGES_NU], "alleen echte bibliotheekoefeningen onder hun naam van nu, geen dubbele");
+  assert.equal(zoek.oefeningen[1].traint, "Kracht en balans van de benen.");
   assert.equal(aiAanvragen.length, aiVoorZoek + 1);
   const zoekAanvraag = JSON.stringify(aiAanvragen[aiAanvragen.length - 1].messages);
   assert.match(zoekAanvraag, /<lichaamsdeel>Knie<\/lichaamsdeel>/);
@@ -281,7 +322,7 @@ try {
   assert.match(privacy, /binnen een maand antwoord/);
   assert.match(privacy, /alleen door een computer/);
   assert.match(privacy, /zonder die gegevens kunnen we de proef niet starten/);
-  assert.match(privacy, /Versie 12 november 2026/);
+  assert.match(privacy, /Versie 18 november 2026/);
   assert.match(privacy, /hoe vaak, hoeveel of hoe zwaar je oefent/, "privacyverklaring noemt dat doseringsvragen niet naar de AI-dienst gaan");
   assert.match(privacy, /Foutlog/);
   // code tegen tekst (legal 2026-11-10 17u): alles wat de patiëntroute /api/kaart laat
@@ -348,7 +389,7 @@ try {
     ]);
     const uitleg = {
       id: null, demo: null, praktijk: null, ts: null, chosen: null, rows: null, cells: null,
-      gearchiveerd: null, gearchiveerdOp: null, inboxGezien: null, notitieT: null, dossier: null,
+      gearchiveerd: null, gearchiveerdOp: null, inboxGezien: null, notitieT: null, dossier: null, planT: null,
       maker: /account-id van de maker/, verwijderdOp: /verwijdermoment/, herstelTot: /hersteldatum/,
       naam: /naam die de praktijk de kaart geeft/, vids: /eigen video of foto/, doel: /weekdoel/,
       afspraak: /afspraakmomenten/, antwoord: /berichten van de praktijk/, pskDoel: /doelactiviteit/,
@@ -362,6 +403,29 @@ try {
     }
     // art. 5 beloofde "vrije tekst van de therapeut gaat niet naar AI-diensten", maar de
     // naam van een eigen oefening gaat mee naar de vertaling (zie de nagebootste AI-dienst hierboven)
+    // art. 28 lid 3 AVG (legal 2026-11-14): ook de categorieën betrokkenen. Fysiplan verwerkt in
+    // opdracht van de praktijk gegevens over haar medewerkers (leeslog, Activiteit, maker); die
+    // moeten als betrokkenen in art. 2 staan, met wie het ziet. Art. 10 noemt wanneer eigen
+    // video's weg gaan, met hetzelfde getal als OPNAME_BEWAAR_MS.
+    assert.match(art2, /<b>Betrokkenen:<\/b>[^<]*medewerkers van de praktijk/, "art. 2 noemt medewerkers als betrokkenen");
+    const medew = art2.split('id="medewerkers"')[1] || "";
+    assert.match(medew, /leeslog/, "art. 2 noemt het leeslog bij de medewerkers");
+    assert.match(medew, /Activiteit/, "art. 2 noemt Activiteit bij de medewerkers");
+    const art10 = vwo.split("<h2>10. ")[1].split("<h2>")[0];
+    const opnameUur = Number(serverBron.match(/OPNAME_BEWAAR_MS\) \|\| (\d+) \* 60 \* 60 \* 1000/)[1]);
+    assert.match(art10, new RegExp("op geen bewaarde kaart komt, wist Fysiplan na " + opnameUur + " uur"), "art. 10 noemt " + opnameUur + " uur (OPNAME_BEWAAR_MS)");
+    assert.match(art10, /eigen video of foto bij een oefening gaat weg met de kaart/);
+    // legal 2026-11-15 21u (b): art. 4 zei alleen "elke medewerker heeft een eigen beheerlogin met
+    // een tweede stap", maar isAdmin laat ook de sleutel van de server binnen (geen tweede stap,
+    // in het beheerlogboek als "beheersleutel"). Fail-closed: zolang de code die weg kent, noemen
+    // art. 4 en /privacy#beheerlog hem.
+    if (/req\.beheerWie = "beheersleutel"/.test(serverBron)) {
+      const art4 = vwo.split("<h2>4. ")[1].split("<h2>")[0];
+      assert.match(art4, /id="noodsleutel"[^<]*noodsleutel, zonder tweede stap/, "VWO art. 4 noemt de noodsleutel zonder tweede stap");
+      assert.match(art4, /als &ldquo;beheersleutel&rdquo; en niet op naam/, "VWO art. 4 zegt dat de sleutel niet op naam gelogd wordt");
+      const blog = privacy.split('<tr id="beheerlog">')[1].split("</tr>")[0];
+      assert.match(blog, /noodsleutel/, "/privacy#beheerlog noemt de noodsleutel");
+    }
     assert.doesNotMatch(vwo, /vrije tekst van de therapeut gaat niet naar/, "onjuiste AI-belofte is weg");
     assert.match(vwo, /Wel de namen van oefeningen, ook van eigen oefeningen van de praktijk/);
   }
@@ -371,6 +435,22 @@ try {
     assert.ok(per, "plafonds van het logboek gevonden");
     const rij = privacy.split("<tr><td>Accountactiviteit")[1].split("</tr>")[0];
     assert.match(rij, new RegExp("Per praktijk de laatste " + per[1] + " gebeurtenissen, plus de laatste " + per[2] + " mislukte"));
+    // legal 2026-11-14 17u (d): sinds #309/#317 ziet een beheerder onder Activiteit ook wat een collega
+    // probeerde maar niet mocht, op naam en met een teller. De rij noemde alleen "inloggen, wijzigingen".
+    // Fail-closed: staat er een `…-geweigerd` in de lijst die Activiteit toont, dan moet de rij het noemen.
+    const getoond = (serverBron.match(/const relevant = new Set\(\[([\s\S]*?)\]\);/) || [])[1] || "";
+    assert.ok(getoond.includes("rol-gewijzigd"), "lijst van Activiteit in server.js gevonden");
+    if (/"[a-z-]+-geweigerd"/.test(getoond)) {
+      assert.match(rij, /wat een collega probeerde maar niet mocht/, "/privacy noemt geweigerde pogingen van een collega");
+      assert.match(rij, /ziet de beheerder dat ook, met hoe vaak/, "/privacy noemt dat de beheerder ze op naam en met teller ziet");
+    }
+    // legal 2026-11-16 05u (d): sinds lib/audit-keuze.js vallen geweigerde pogingen van een collega
+    // onder het kleine plafond (AUDIT_RUIS_PER_PRAKTIJK); de termijnkolom noemde alleen mislukte inlogpogingen.
+    const ruisBron = await readFile(join(root, "lib", "audit-keuze.js"), "utf8");
+    if (/-geweigerd/.test(ruisBron)) {
+      assert.match(rij, new RegExp("de laatste " + per[2] + " mislukte pogingen om binnen te komen of geweigerde pogingen van een collega"),
+        "/privacy: geweigerde pogingen van een collega vallen onder het kleine plafond");
+    }
     const kaartRij = privacy.split('id="praktijk"')[1].split("</tr>")[1];
     assert.match(kaartRij, /werknotitie, de behandelaar en een logboek van het contact/);
   }

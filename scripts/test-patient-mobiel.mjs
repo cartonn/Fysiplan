@@ -38,7 +38,7 @@ const blok = html.slice(html.indexOf("  var ZO_DOE="), html.indexOf("  // Uitwij
 assert.ok(blok.includes("function oefUitlegBlok(o,gehouden){"), "uitlegblok gevonden");
 const ctx = vm.createContext({ TAAL: "nl", NIET_VERTAALD: { en: "nog niet vertaald" },
   esc: (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"),
-  vt: (s) => s, uitlegNietVertaald: () => false });
+  vt: (s) => s, uitlegNietVertaald: () => false, uitlegVertaald: () => false });
 vm.runInContext(blok, ctx);
 const o = { uitleg: "Sta rechtop <en> zak door je knieën. Kom rustig weer omhoog; adem door." };
 const uit = ctx.oefUitlegBlok(o, false);
@@ -304,14 +304,23 @@ if (pw) {
       const pv = await cv.newPage();
       const vfouten = [];
       pv.on("pageerror", (e) => vfouten.push(e.message));
-      await pv.route("**/vidtest/*", (r) => r.fulfill({ status: 404, body: "" }));
+      // het videobestand ontbreekt (404), maar pas nadat de plek van de video is gemeten: een video die niet
+      // speelt verdwijnt sinds de sweep van 2026-11-12 18u (vfout), dan valt er niets meer te meten
+      const vidWacht = [];
+      await pv.route("**/vidtest/*", (r) => { vidWacht.push(r); });
+      const vid404 = async () => { while (vidWacht.length) await vidWacht.shift().fulfill({ status: 404, body: "" }).catch(() => {}); };
       // de eerste twee oefeningen van de demokaart krijgen een staande avatarvideo en een YouTube-video
       const namen = await (await fetch(origin + "/api/kaart?id=demo")).json().then((d) => d.kaart.chosen.slice(0, 2).map((x) => x.n));
-      await pv.route("**/v2/oefeningen.json", async (route) => {
+      // de kaart krijgt haar oefeningen met de kaart zelf mee (lib), niet meer uit de hele bibliotheek
+      await pv.route((u) => u.pathname === "/api/kaart", async (route) => {
         const r = await route.fetch(), d = await r.json();
-        for (const o of d) {
-          if (o.naam === namen[0]) o.video = { eigen: "vidtest/staand.webm", eigenMeta: { aiGenerated: true } };
-          if (o.naam === namen[1]) o.video = { yt: "aqz-KE-bpKQ" };
+        assert.ok(Array.isArray(d.lib), "de kaart krijgt haar eigen oefeningen mee");
+        for (const o of d.lib) {
+          // de kaart noemt de oefening zoals ze is bewaard; de bibliotheek kan haar intussen een
+          // Nederlandse naam geven en levert de naam van toen dan mee als `eerder`
+          const heet = (n) => o.naam === n || (o.eerder || []).includes(n);
+          if (heet(namen[0])) o.video = { eigen: "vidtest/staand.webm", eigenMeta: { aiGenerated: true } };
+          if (heet(namen[1])) o.video = { yt: "aqz-KE-bpKQ" };
         }
         await route.fulfill({ response: r, json: d });
       });
@@ -348,10 +357,12 @@ if (pw) {
       const gedaan = await vak("#sklaar");
       assert.ok(gedaan.y + gedaan.h <= pv.viewportSize().height, toestel + ": Gedaan blijft in beeld bij de video");
       assert.equal(await pv.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0, toestel + ": de video steekt niet opzij uit");
-      // het videobestand ontbreekt hier: de melding staat dan op de video, niet onder de vouw
+      // het videobestand ontbreekt hier: de video verdwijnt en de melding staat op zijn plek, niet onder de vouw
+      await vid404();
       await pv.waitForFunction(() => { const s = document.querySelector("#oefs .oef.actief .vstatus"); return s && !s.hidden && s.querySelector("button"); });
       const melding = await vak("#oefs .oef.actief .vstatus");
       assert.ok(melding.y >= foto.y - 2 && melding.y + melding.h <= naam.y + 2 && melding.x + melding.w <= sluit.x + 2, toestel + ": melding staat op de video, naast de sluitknop");
+      assert.equal(await vak("#oefs .oef.actief .vhouder.open video"), null, toestel + ": een video die niet speelt ligt niet onder de melding");
       // sluiten zet het beeld terug; de volgende oefening sluit een open video
       await pv.click("#oefs .oef.actief .vbtn[data-eigen]");
       await pv.waitForFunction(() => !document.querySelector("#oefs .vhouder.open"));

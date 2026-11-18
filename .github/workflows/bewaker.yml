@@ -1,0 +1,50 @@
+# De bewaker van buitenaf: kijkt om de vijf minuten of fysiplan.nl het doet, vanaf een machine
+# van GitHub. Valt de server op Railway om, dan valt dit alarm niet mee om. Bij een storing komt
+# er een issue op naam van de eigenaar van de repository; is ze voorbij, dan gaat het issue dicht.
+# Wat hij nakijkt, hoe je een bericht op je telefoon krijgt en hoe je hem uitzet: docs/bewaker.md.
+name: bewaker
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # snel: om de vijf minuten (de standaard)
+    - cron: "7,37 * * * *"  # zuinig: twee keer per uur (variabele BEWAKER=zuinig)
+  workflow_dispatch:
+    inputs:
+      proef:
+        description: "Proefmelding: stuur één keer een melding om te zien of het alarm je bereikt"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+  actions: write # alleen om zichzelf uit te zetten als de repository besloten wordt
+
+# nooit twee rondes tegelijk: de tweede wacht tot de eerste klaar is
+concurrency:
+  group: bewaker
+  cancel-in-progress: false
+
+jobs:
+  kijk:
+    # De variabele BEWAKER kiest het rooster: "uit" is nooit, "zuinig" is het tweede rooster,
+    # al het andere (ook niets) is het eerste. Met de hand starten kan altijd.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (vars.BEWAKER != 'uit' &&
+       ((github.event.schedule == '*/5 * * * *' && vars.BEWAKER != 'zuinig') ||
+        (github.event.schedule == '7,37 * * * *' && vars.BEWAKER == 'zuinig')))
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts/bewaker.mjs
+          sparse-checkout-cone-mode: false
+      - run: node scripts/bewaker.mjs "$ADRES" "$WAT"
+        env:
+          ADRES: ${{ vars.BEWAKER_ADRES || 'https://fysiplan.nl' }}
+          WAT: ${{ inputs.proef && '--proef' || '--meld' }}
+          GITHUB_TOKEN: ${{ github.token }}
+          BEWAKER: ${{ vars.BEWAKER }}
+          BEWAKER_WEBHOOK: ${{ secrets.BEWAKER_WEBHOOK }}

@@ -152,7 +152,10 @@ try {
   assert.equal(kaart.ok, true, 'de voorbeeldkaart laadt niet');
   const namen = (kaart.kaart.chosen || []).map(x => x.n);
   assert(namen.length > 0, 'de voorbeeldkaart heeft geen oefeningen');
+  // de kaart draagt de naam waarmee ze is bewaard; heet de oefening intussen anders, dan vindt de
+  // kaart haar via de eerdere naam (zoals kaart.html dat doet)
   const perNaam = new Map(lib.map(o => [o.naam, o]));
+  for (const o of lib) for (const e of o.eerder || []) if (!perNaam.has(e)) perNaam.set(e, o);
   for (const naam of namen) {
     const o = perNaam.get(naam);
     assert(o, 'oefening van de kaart ontbreekt in de bibliotheek: ' + naam);

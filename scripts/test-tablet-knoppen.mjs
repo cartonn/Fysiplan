@@ -21,8 +21,8 @@ assert.ok(media, "index.html heeft een @media (hover:none)-blok voor de knopjes"
 assert.match(media[1], /#a4 \.pic \.vid\{display:flex/, "eigen-videoknop altijd zichtbaar zonder aanwijzen");
 assert.match(media[1], /#a4 \.pic \.rm\{display:block/, "verwijderknop altijd zichtbaar zonder aanwijzen");
 assert.match(media[1], /::after\{content:'';position:absolute;inset:-7px\}/, "tikvlak van 44 px");
-assert.match(index, /#a4 \.pic:focus-within \.vid\{display:flex\}/, "zichtbaar bij toetsenbordfocus");
-assert.match(index, /elMon\.addEventListener\('keydown'[\s\S]{0,200}\[data-evid\]/, "Enter/spatie opent eigen video");
+assert.match(index, /#a4 \.pic:focus-within \.vid\{opacity:1;pointer-events:auto\}/, "zichtbaar bij toetsenbordfocus");
+assert.match(index, /elMon\.addEventListener\('keydown'[\s\S]{0,600}\[data-evid\]/, "Enter/spatie opent eigen video");
 assert.doesNotMatch(index, /proefVerlopen\)\{location\.reload/, "verlopen proef herlaadt de app niet (herlaadlus)");
 assert.match(index, /function toonProefVoorbij\(anker,stil\)/, "verlopen proef: melding in de app");
 

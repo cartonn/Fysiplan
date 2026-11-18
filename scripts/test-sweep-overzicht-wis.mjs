@@ -93,10 +93,11 @@ try {
   // ---- logout: alleen met ?apparaat=1 gaat de proefcookie weg ----
   const gewoon = await fetch(origin + "/api/praktijk/logout", { method: "POST", headers: kop({ ...M, cookie }) });
   assert.equal(gewoon.status, 200);
-  assert.equal(gewoon.headers.get("set-cookie"), null, "gewoon uitloggen laat de proef staan");
+  // (uitloggen maakt sinds 12 november 2026 wel de sessiecookie leeg; het gaat hier om de proefcookie)
+  assert.ok(!gewoon.headers.getSetCookie().some((c) => c.startsWith("fpproef=")), "gewoon uitloggen laat de proef staan");
   const wis = await fetch(origin + "/api/praktijk/logout?apparaat=1", { method: "POST", headers: kop({ cookie }) });
   assert.equal(wis.status, 200);
-  assert.match(wis.headers.get("set-cookie") || "", /^fpproef=;[^]*Max-Age=0/, "Wis van dit apparaat wist de proefcookie");
+  assert.match(wis.headers.getSetCookie().find((c) => c.startsWith("fpproef=")) || "", /^fpproef=;[^]*Max-Age=0/, "Wis van dit apparaat wist de proefcookie");
 
   console.log("test-sweep-overzicht-wis: ok");
 } catch (e) {

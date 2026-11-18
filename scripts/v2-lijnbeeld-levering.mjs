@@ -55,8 +55,12 @@ export function controleerGeleverdeLijnbeelden({ manifest, v1Manifest, arrows, o
   const fouten = [];
   const toegepast = [];
   for (const entry of manifest) {
-    const v1 = v1Img.get(entry.naam);
-    const nieuwe = nieuw.get(entry.naam);
+    // V1, de uitzonderingen en de pijlbeelden kennen een oefening bij haar naam uit het bestand.
+    // Toont V2 een Nederlandse naam (content/oefennamen-nl.json), dan levert de server die naam
+    // mee als `eerder`; zonder die naam blijft de vergelijking op de getoonde naam en faalt ze.
+    const basisNaam = (Array.isArray(entry.eerder) && entry.eerder[0]) || entry.naam;
+    const v1 = v1Img.get(basisNaam);
+    const nieuwe = nieuw.get(basisNaam);
     if (!v1 && nieuwe) {
       if (entry.img !== "/v2/" + nieuwe.img) fouten.push(`${entry.naam}: levert ${entry.img}, verwacht nieuwe lijntekening /v2/${nieuwe.img}`);
       continue;
@@ -65,12 +69,12 @@ export function controleerGeleverdeLijnbeelden({ manifest, v1Manifest, arrows, o
     const override = !entry.coreExerciseId && overrides.get(entry.exerciseId);
     if (override) {
       toegepast.push(entry.exerciseId);
-      if (override.name !== entry.naam) fouten.push(`${entry.naam}: uitzondering ${entry.exerciseId} hoort bij ${override.name}`);
+      if (override.name !== basisNaam) fouten.push(`${entry.naam}: uitzondering ${entry.exerciseId} hoort bij ${override.name}`);
       if (v1 !== override.v1LineImg) fouten.push(`${entry.naam}: V1-lijnbeeld ${v1} in plaats van ${override.v1LineImg}`);
     }
     const lijn = override ? override.lineImg : v1;
     const pijl = pijlBijLijn.get(lijn);
-    if (pijl && pijl.naam !== entry.naam) fouten.push(`${entry.naam}: pijlbeeld ${pijl.id} onder ${lijn} is getekend voor ${pijl.naam}`);
+    if (pijl && pijl.naam !== basisNaam) fouten.push(`${entry.naam}: pijlbeeld ${pijl.id} onder ${lijn} is getekend voor ${pijl.naam}`);
     const verwacht = "/v2/" + (pijl ? pijl.img : lijn);
     if (entry.img !== verwacht) {
       fouten.push(`${entry.naam}: levert ${entry.img}, verwacht ${verwacht} (${override ? "uitzondering" : "V1-lijnbeeld"} ${lijn})`);

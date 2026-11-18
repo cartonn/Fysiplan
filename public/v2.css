@@ -39,8 +39,15 @@ html.v2 #a4wrap{background:transparent}
 
 /* v2: pijltjes om oefeningen op de kaart te herordenen (verschijnen bij hover,
    nooit in print). Alleen in de v2-app; v1 laadt deze stylesheet niet. */
-html.v2 #a4 .pic .mvrij{position:absolute;bottom:4px;right:4px;display:none;gap:4px;z-index:2}
-html.v2 #a4 .pic:hover .mvrij{display:flex}
+html.v2 #a4 .pic .mvrij{position:absolute;bottom:4px;right:4px;display:flex;opacity:0;pointer-events:none;gap:4px;z-index:2}
+/* opacity in plaats van display:none: de pijltjes blijven met Tab bereikbaar en verschijnen bij focus */
+html.v2 #a4 .pic:hover .mvrij,html.v2 #a4 .pic:focus-within .mvrij{opacity:1;pointer-events:auto}
+/* tablet (geen aanwijzen): een tik geeft ook :hover, dus daar telt alleen de focus van het toetsenbord. Anders schoof een
+   tik rechtsonder in een vak de oefening onzichtbaar op (hertest gebruikers-sweep 2026-11-15, Sanne, iPad) */
+@media (hover:none){
+  html.v2 #a4 .pic:hover .mvrij{opacity:0;pointer-events:none}
+  html.v2 #a4 .pic:focus-within .mvrij{opacity:1;pointer-events:auto}
+}
 html.v2 #a4 .pic .mvknop{width:22px;height:22px;border-radius:50%;border:1.5px solid #98a2b3;
   background:#fff;color:#475467;font-size:15px;font-weight:800;line-height:1;cursor:pointer;
   display:flex;align-items:center;justify-content:center;box-shadow:0 1px 5px rgba(16,24,40,.25);padding:0}
@@ -354,13 +361,17 @@ html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
   html.v2 #ps_akkoord summary{cursor:pointer;font-weight:600;color:#92400e;width:max-content;max-width:100%}
   html.v2 #ps_akkoord ul{margin:6px 0 2px 18px!important;padding:0}
   html.v2 #ps_akkoord li{margin:3px 0}
+  /* het akkoordvinkje: niet de witte labelkleur van het donkere paneel (gebruikers-sweep 2026-11-13, Sanne: 1,04:1) */
+  html.v2 #ps_akkoord label{color:inherit}
+  html.v2 #ps_akkoord input[type=checkbox]{width:20px!important;height:20px!important}
+  html.v2 #ps_akkoord #ps_akdo{min-height:44px;padding-left:18px;padding-right:18px}
   html.v2 #ps_akkoord a{color:#92400e}
   html.v2 #ps_akkoord .ak-rij{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
 
   /* inbox: elke patiënt een kaartje; volgorde = binnenkomst, geen kleur voor ernst */
   html.v2 #k_inbox .ib-kop{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
   html.v2 #k_inbox .ib-kop>label{margin:22px 0 0!important;display:flex;align-items:center;gap:8px}
-  html.v2 #k_inbox .ib-tel{background:var(--ink);color:#fff;border-radius:99px;padding:1px 8px;font-size:11.5px;font-weight:650}
+  html.v2 #k_inbox .ib-tel,html.v2 #k_nietgeoefend .ib-tel{background:var(--ink);color:#fff;border-radius:99px;padding:1px 8px;font-size:11.5px;font-weight:650}
   html.v2 #k_inbox .ib-mijn{margin:22px 0 0!important;font-weight:500!important;font-size:12.5px!important;color:var(--muted)!important;display:flex;gap:6px;align-items:center}
   html.v2 #k_inbox .ib-lijst{display:flex;flex-direction:column;gap:8px;margin-top:10px}
   html.v2 #k_inbox .ib-item{display:flex;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:var(--sh-sm);flex-wrap:wrap}
@@ -417,6 +428,12 @@ html.v2 .topbar #beeldKeuze .beeldsegment button{padding:5px 9px;font-size:12px}
   html.v2 .tm-rol{font-size:12px;font-weight:600;color:var(--text);background:#f1f5f9;border-radius:99px;padding:3px 9px}
   html.v2 .tm-lid select{height:32px;border:1px solid var(--line);border-radius:8px;padding:0 8px;font:inherit;font-size:12.5px;background:#fff}
   html.v2 .tm-weg{width:32px;padding:0!important;color:var(--muted)}
+  html.v2 .tm-weg.tm-zeker{width:auto;padding:0 10px!important;color:#b4372f;white-space:nowrap}
+  /* aanraakscherm (iPad): alles in Team minstens 44 px hoog, ook de losse links (gebruikers-sweep 2026-11-12 18u, Karin) */
+  @media (pointer:coarse){html.v2 .tm-weg{min-width:44px;min-height:44px}
+    html.v2 #ovTeam .tm-lid select,html.v2 #ovTeam .tm-uitnodig input,html.v2 #ovTeam .tm-uitnodig select{height:44px!important}
+    html.v2 #ovTeam .modal .btn{height:44px}
+    html.v2 #tm_inhoud a[data-tm2wis],html.v2 #tm_inhoud a[data-stapact]{display:inline-flex;align-items:center;min-height:44px;padding:0 6px;white-space:nowrap}}
   html.v2 .tm-uitnodig{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#f8fafc}
   html.v2 .tm-uitnodig input,html.v2 .tm-uitnodig select{height:36px!important;border:1px solid var(--line);border-radius:8px;padding:0 10px;font:inherit;background:#fff}
 }
@@ -461,7 +478,7 @@ html.v2{
 @media screen{
   html.v2 header.topbar .mark{background:var(--brand)}
   html.v2 .chip.on,html.v2 .smart-filter.on{background:var(--brand);border-color:var(--brand)}
-  html.v2 #k_inbox .ib-tel{background:var(--brand)}
+  html.v2 #k_inbox .ib-tel,html.v2 #k_nietgeoefend .ib-tel{background:var(--brand)}
   html.v2 .row .add.on,html.v2 .row .add:hover{background:var(--brand);border-color:var(--brand)}
   html.v2 .card{box-shadow:0 1px 2px rgba(20,27,38,.04)}
   html.v2 .card .hd{font-size:13.5px}
@@ -490,6 +507,7 @@ html.v2{
   html.v2 .zb-ptekst small{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   /* Hulp-menu: Help, Wat is er nieuw en de juridische links */
   html.v2 .fp-hulp{order:5;position:relative;display:block}
+  html.v2 .fp-ideeknop{order:5}
   html.v2 .fp-hulpknop{height:34px;display:inline-flex;align-items:center;gap:6px;padding:0 10px;border:0;border-radius:9px;background:transparent;
     color:var(--text);font:inherit;font-size:13px;font-weight:550;cursor:pointer}
   html.v2 .fp-hulpknop:hover,html.v2 .fp-hulpknop[aria-expanded="true"]{background:#ecebe4;color:var(--ink)}
@@ -768,6 +786,18 @@ html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
   html.v2 #a4 .pic .vid,html.v2 #a4 .pic .rm{width:calc(24px / var(--a4z,1));height:calc(24px / var(--a4z,1))}
   html.v2 #a4 .pic .rm{line-height:calc(23px / var(--a4z,1));font-size:calc(15px / var(--a4z,1))}
   html.v2 #a4 .pic .vid::after,html.v2 #a4 .pic .rm::after{inset:calc(-10px / var(--a4z,1))}
+  /* Drie knopjes in een vakje van maar 48-57 px breed (gebruikers-sweep 2026-11-13, Mark): de "?" stond vast op
+     left:40px, schaalde niet mee en viel in het tikvlak van de ×, zodat een tik op de "?" de oefening weghaalde.
+     Nu elk knopje een eigen horizontale strook: × rechtsboven, "?" rechts in het midden, eigen video linksonder.
+     Hoogstens 30% van het vakje hoog, dus de stroken raken elkaar nooit; tikvlakken lopen alleen naar opzij
+     en naar de rand van het vakje uit, nooit over een ander knopje heen (zichtbaar 22-24 px, tikvlak 44 px breed). */
+  html.v2 #a4 .pic .vv,html.v2 #a4 .pic .vid,html.v2 #a4 .pic .rm{height:min(calc(24px / var(--a4z,1)),30%);width:auto;aspect-ratio:1/1}
+  html.v2 #a4 .pic .vv{display:flex;left:auto;right:calc(3px / var(--a4z,1));top:50%;transform:translateY(-50%);font-size:calc(12px / var(--a4z,1));border-width:calc(1.5px / var(--a4z,1))}
+  html.v2 #a4 .pic .vv:hover{transform:translateY(-50%)}
+  html.v2 #a4 .pic .rm{line-height:normal;display:flex;align-items:center;justify-content:center}
+  html.v2 #a4 .pic .rm::after{inset:calc(-10px / var(--a4z,1)) calc(-10px / var(--a4z,1)) 0}
+  html.v2 #a4 .pic .vv::after{content:'';position:absolute;inset:0 calc(-10px / var(--a4z,1))}
+  html.v2 #a4 .pic .vid::after{inset:0 calc(-10px / var(--a4z,1)) calc(-10px / var(--a4z,1))}
 }
 /* Laptop- en iPad-schermen (Ahmed, 2026-11-09): alles blijft goed zichtbaar.
    - Tablet liggend/kleine laptop (921-1099px): de toetsenbordhint paste niet in de
@@ -807,18 +837,28 @@ html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
  html.v2 .card .hd,html.v2 .row:hover{background:#edf2ef}
 }
 
+/* Licht werkvlak (Ahmed 2026-11-13): de donkere petrol vlakken bij Kaart maken en in de zijbalk waren
+   te zwaar. Werkvlak, panelen en vensters zijn nu licht met een zachte groene tint; het contrast blijft:
+   petrol tekst, limoen accenten en een donkere petrol kopbalk. Alleen op het scherm; de A4 blijft papier. */
 @media screen{
- html.v2{--bg:#18343b;--tray:#18343b;--panel:#20464f;--ink:#fff;--text:#e0eae7;--muted:#bdcfca;--soft:#abc2bc;--brand:#b9e34b;--brand-700:#d1ef88;--brand-50:#2b5054;--brand-100:#496766;--line:#416068;--line2:#34545c;--ring:0 0 0 3px #b9e34b44}
- html.v2 body,html.v2 .wrap,html.v2 #a4wrap,html.v2 .fp-kop{background:#18343b;color:#e0eae7}
- html.v2 .card,html.v2 .card .hd,html.v2 .modal,html.v2 .row:hover,html.v2 .sjb-kop,html.v2 .sjb-zoek,html.v2 .sjb-cats,html.v2 .sjb-lijst,html.v2 .sjb-rij,html.v2 .sjb-voorbeeld,html.v2 .sjb-vb-acties,html.v2 .sjb-voet,html.v2 .fp-hulpmenu{background:#20464f;color:#e0eae7}
- html.v2 .fp-kop h2,html.v2 .row .title{color:#fff}
- html.v2 input[type=text],html.v2 input.fld,html.v2 input[type=password],html.v2 input[type=email],html.v2 select,html.v2 textarea{background:#112c32;color:#fff;border-color:#658087}
- html.v2 input::placeholder,html.v2 textarea::placeholder{color:#abc2bc}
- html.v2 .btn,html.v2 .fp-kop .tb-acties .btn,html.v2 .zb-praktijk,html.v2 .chip{background:#2b5054;color:#fff;border-color:#658087}
- html.v2 .btn:hover,html.v2 .fp-kop .tb-acties .btn:hover{background:#365e64;color:#fff}
+ html.v2{--bg:#e9f0ec;--tray:#e1ebe5;--panel:#fff;--ink:#18343b;--text:#314d53;--muted:#526b70;--soft:#5d7478;--brand:#20464f;--brand-700:#18343b;--brand-50:#e3f1c9;--brand-100:#d4ebaa;--line:#d3dfda;--line2:#e3ebe7;--ring:0 0 0 3px #668c1544}
+ /* de kopbalk blijft donker petrol: daar gelden de lichte varianten van de kleuren */
+ html.v2 header.topbar{--ink:#fff;--text:#e0eae7;--muted:#c5d6d1;--soft:#abc2bc;--panel:#2b5054;--line:#416068;--line2:#20464f;--naamblok:#2b5054;--naamblok-rand:#496766}
+ html.v2 header.topbar .fp-hulpmenu{--ink:#18343b;--text:#314d53;--muted:#526b70;--panel:#fff;--line:#d3dfda;--line2:#e3ebe7}
+ html.v2 body,html.v2 .wrap,html.v2 .fp-kop{background:var(--bg);color:var(--text)}
+ html.v2 #a4wrap{background:var(--tray);color:var(--text)}
+ html.v2 .card,html.v2 .modal,html.v2 .sjb-kop,html.v2 .sjb-zoek,html.v2 .sjb-lijst,html.v2 .sjb-rij,html.v2 .sjb-voorbeeld,html.v2 .sjb-vb-acties,html.v2 .sjb-voet,html.v2 .fp-hulpmenu{background:#fff;color:#314d53}
+ html.v2 .card .hd,html.v2 .row:hover,html.v2 .sjb-cats{background:#f1f6f3;color:#314d53}
+ /* categoriekolom links: een lichte groene strook naast de witte oefenlijst */
+ html.v2 .fp-kop h2,html.v2 .row .title{color:#18343b}
+ html.v2 input[type=text],html.v2 input.fld,html.v2 input[type=password],html.v2 input[type=email],html.v2 select,html.v2 textarea{background:#fff;color:#18343b;border-color:#a9bcb6}
+ html.v2 input::placeholder,html.v2 textarea::placeholder{color:#5d7478}
+ html.v2 .btn,html.v2 .fp-kop .tb-acties .btn,html.v2 .chip{background:#fff;color:#18343b;border-color:#c3d3cd}
+ html.v2 .btn:hover,html.v2 .fp-kop .tb-acties .btn:hover{background:#eaf2ee;color:#18343b}
+ html.v2 .zb-praktijk{background:#2b5054;color:#fff;border-color:#658087}
  html.v2 .btn.primary,html.v2 #printBtn,html.v2 .chip.on,html.v2 .row .add.on{background:#b9e34b;color:#18343b;border-color:#b9e34b}
- html.v2 .fp-hulpmenu>button,html.v2 .fp-hulpvoet a{color:#fff}
- html.v2 .fp-hulpmenu>button:hover{background:#365e64}
+ html.v2 .fp-hulpmenu>button,html.v2 .fp-hulpvoet a{color:#18343b}
+ html.v2 .fp-hulpmenu>button:hover{background:#eaf2ee}
  html.v2 .topbar #beeldKeuze .beeldsegment{background:#2b5054;border-color:#658087}
  html.v2 .topbar #beeldKeuze .beeldsegment button{color:#dbe7e3}
  html.v2 .topbar #beeldKeuze .beeldsegment button.aan{background:#b9e34b;color:#18343b}
@@ -828,65 +868,64 @@ html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
  html.v2 #a4 input::placeholder,html.v2 #a4 textarea::placeholder{color:#61777b}
 }
 @media screen{
- html.v2 #search,html.v2 #search:focus,html.v2 input[type=search]{background-color:#112c32;color:#fff;border-color:#658087}
- html.v2 .smart-filters button,html.v2 .row .add{background:#2b5054;color:#fff;border-color:#658087}
+ html.v2 #search,html.v2 #search:focus,html.v2 input[type=search]{background-color:#fff;color:#18343b;border-color:#a9bcb6}
+ html.v2 .smart-filters button,html.v2 .row .add{background:#fff;color:#18343b;border-color:#a9bcb6}
  html.v2 .smart-filters button.on,html.v2 .row .add:hover,html.v2 .row .add.on{background:#b9e34b;color:#18343b;border-color:#b9e34b}
 }
-/* Donker thema: vlakken die nog licht waren terwijl de tekst wit werd (sweep 2026-11-11 18u,
-   Karin en Mark: Team-venster en Kaarten-paneel ±1,1:1). Alleen op het scherm; de A4 blijft papier. */
-@media screen{
- html.v2{--naamblok:#2b5054;--naamblok-rand:#496766;--chip:#2b5054}
- html.v2 .fp-av{box-shadow:0 0 0 2px #20464f}
- html.v2 #ovKaarten .modal>h3,html.v2 #ovKaarten .modal>.acts{background:rgba(32,70,79,.96);color:#fff}
- html.v2 #prakslot .ps-acties a,html.v2 #prakslot .ps-acties a#ps_wis{background:#20464f;color:#fff;border-color:#658087}
- html.v2 #prakslot .ps-acties a:hover{background:#365e64;color:#fff;border-color:#8aa3a8}
- html.v2 #prakslot .ps-acties a#ps_team{background:#b9e34b;border-color:#b9e34b;color:#18343b}
- html.v2 #prakslot .ps-acties a#ps_wis{color:#ffb4a8}
- html.v2 #k_inbox .ib-tel{background:#b9e34b;color:#18343b}
- html.v2 #k_inbox .ib-av{background:#20464f;color:#fff}
- html.v2 .tm-lid.uitgenodigd .tm-av{background:#20464f;color:#e0eae7;border-color:#658087}
- html.v2 .tm-rol{background:#18343b;color:#fff}
- html.v2 .tm-lid select,html.v2 .tm-uitnodig input,html.v2 .tm-uitnodig select{background:#112c32;color:#fff;border-color:#658087}
- html.v2 .tm-uitnodig{background:#20464f}
- html.v2 #k_srv_rap,html.v2 #k_srv_csv{color:#fff}
+/* categoriekolom als eigen strook alleen in de brede opstelling (vanaf 1100 px) */
+@media screen and (min-width:1100px){
+ html.v2 #filters{background:#f1f6f3;border-radius:10px;padding:6px 4px 12px 4px}
 }
-/* Donker thema, elke toestand nagelopen (platformreview 2026-11-11): in rust, onder de muis en met
-   focus, in elk venster. Onderstaande vlakken bleven licht terwijl de tekst licht werd (1,0 tot
-   1,9:1): de rij onder de muis en de groepskop in de sjabloonkiezer, het hele hulpvenster, velden
-   zonder type-attribuut (praktijknaam bij welkom, eigen login, eigen oefening), de categorie en de
-   beeldkeuze onder de muis, de actieve sorteerknop. Alleen op het scherm; de A4 blijft papier. */
+/* Naamblokken, Team-venster en Kaarten-paneel op het lichte werkvlak (eerder donker, sweep 2026-11-11). */
 @media screen{
- /* tekst op een vlak in de merkkleur: wit op petrol (licht en op de A4), petrol op limoen (donker) */
- html.v2{--op-merk:#18343b;--fout:#ffb4a8;--goed:#9fe3b3}
+ html.v2{--naamblok:#f1f6f3;--naamblok-rand:#d3dfda;--chip:#eaf2ee}
+ html.v2 .fp-av{box-shadow:0 0 0 2px #fff}
+ html.v2 #ovKaarten .modal>h3,html.v2 #ovKaarten .modal>.acts{background:rgba(255,255,255,.96);color:#18343b}
+ html.v2 #prakslot .ps-acties a,html.v2 #prakslot .ps-acties a#ps_wis{background:#fff;color:#18343b;border-color:#c3d3cd}
+ html.v2 #prakslot .ps-acties a:hover{background:#eaf2ee;color:#18343b;border-color:#a9bcb6}
+ html.v2 #prakslot .ps-acties a#ps_team{background:#b9e34b;border-color:#b9e34b;color:#18343b}
+ html.v2 #prakslot .ps-acties a#ps_wis{color:#b42318}
+ html.v2 #k_inbox .ib-tel,html.v2 #k_nietgeoefend .ib-tel{background:#b9e34b;color:#18343b}
+ html.v2 #k_inbox .ib-av{background:#20464f;color:#fff}
+ html.v2 .tm-lid.uitgenodigd .tm-av{background:#fff;color:#314d53;border-color:#a9bcb6}
+ html.v2 .tm-rol{background:#18343b;color:#fff}
+ html.v2 .tm-lid select,html.v2 .tm-uitnodig input,html.v2 .tm-uitnodig select{background:#fff;color:#18343b;border-color:#a9bcb6}
+ html.v2 .tm-uitnodig{background:#f1f6f3}
+ html.v2 #k_srv_rap,html.v2 #k_srv_csv{color:#18343b}
+}
+/* Elke toestand op het lichte werkvlak: in rust, onder de muis en met focus, in elk venster
+   (platformreview 2026-11-11, toen nog donker). Alleen op het scherm; de A4 blijft papier. */
+@media screen{
+ /* tekst op een vlak in de merkkleur: wit op petrol */
+ html.v2{--op-merk:#ffffff;--fout:#b42318;--goed:#287a4b}
  html.v2 #a4{--op-merk:#fff;--fout:#b42318;--goed:#287a4b}
  html.v2 .step,html.v2 .row .video-manage:hover,html.v2 .video-drop .video-plus,html.v2 #ps_status .ps-av{color:var(--op-merk)}
- html.v2 input:where(:not([type]),[type=search],[type=tel],[type=url],[type=number],[type=date],[type=time],[type=datetime-local],[type=month],[type=week]){background-color:#112c32;color:#fff;border-color:#658087}
- /* datum en tijd: ook het kalenderknopje en de lege invulvorm van de browser licht op donker */
- html.v2 input:where([type=date],[type=time],[type=datetime-local],[type=month],[type=week]){color-scheme:dark}
- html.v2 #a4 input:where([type=date],[type=time],[type=datetime-local],[type=month],[type=week]){color-scheme:light}
- html.v2 .sjb-groep{background:#20464f}
- html.v2 .sjb-rij:hover{background:#28525b;border-color:#416068}
- html.v2 .sjb-rij.aan{background:var(--brand-50);border-color:#7f9d5a}
- html.v2 .sjb-cat:hover,html.v2 .sjb-dicht:hover{background:#2b5054;color:#fff}
+ html.v2 input:where(:not([type]),[type=search],[type=tel],[type=url],[type=number],[type=date],[type=time],[type=datetime-local],[type=month],[type=week]){background-color:#fff;color:#18343b;border-color:#a9bcb6}
+ html.v2 input:where([type=date],[type=time],[type=datetime-local],[type=month],[type=week]){color-scheme:light}
+ html.v2 .sjb-groep{background:#f1f6f3;color:#18343b}
+ html.v2 .sjb-rij:hover{background:#eaf2ee;border-color:#d3dfda}
+ html.v2 .sjb-rij.aan{background:var(--brand-50);border-color:#9cc054}
+ html.v2 .sjb-cat:hover,html.v2 .sjb-dicht:hover{background:#e3ece7;color:#18343b}
  html.v2 .sjb-cat.aan,html.v2 .sjb-cat.aan:hover{background:var(--brand-50);color:var(--brand-700)}
- html.v2 .helpsection,html.v2 .uphelp,html.v2 .up-voorbeeld,html.v2 .video-preview .video-empty{background:#1b3a42;border-color:#34545c;color:var(--muted)}
- html.v2 .uphelp code{background:#112c32;border-color:#416068;color:#fff}
- html.v2 .video-drop{border-color:#658087}
- html.v2 .video-drop:hover,html.v2 .video-drop.drag{background:#30575d;border-color:#b9e34b}
- html.v2 #filters .chip:hover{background:#2b5054;color:#fff}
- html.v2 #filters .chip.on,html.v2 #filters .chip.on:hover{background:var(--brand-50);color:var(--brand)}
- html.v2 .row .fav:hover{background:#365e64;color:#ffd34d}
+ html.v2 .helpsection,html.v2 .uphelp,html.v2 .up-voorbeeld,html.v2 .video-preview .video-empty{background:#f4f8f6;border-color:#e3ebe7;color:#526b70}
+ html.v2 .uphelp code{background:#eaf2ee;border-color:#d3dfda;color:#18343b}
+ html.v2 .video-drop{border-color:#a9bcb6}
+ html.v2 .video-drop:hover,html.v2 .video-drop.drag{background:#f3f9e6;border-color:#8fb52e}
+ html.v2 #filters .chip:hover{background:#e3ece7;color:#18343b}
+ html.v2 #filters .chip.on,html.v2 #filters .chip.on:hover{background:#b9e34b;color:#18343b}
+ html.v2 .row .fav:not(.on){color:#7f958f}
+ html.v2 .row .fav:hover{background:#eaf2ee;color:#a15c07}
  html.v2 header.topbar .menu .mi:hover{background:#ffffff20;color:#fff}
- /* foutrood dat direct op het donkere vlak staat */
+ /* foutrood op het lichte vlak */
  html.v2 #prakslot label.mist{color:var(--fout)!important}
  html.v2 .sjb-link.rood{color:var(--fout)}
  html.v2 .topbar #beeldKeuze .beeldsegment button:hover{background:#365e64;color:#fff}
  html.v2 .topbar #beeldKeuze .beeldsegment button.aan,html.v2 .topbar #beeldKeuze .beeldsegment button.aan:hover{background:#b9e34b;color:#18343b}
- /* "Nieuw in Fysiplan": was een wit venster met een bijna doorzichtige achtergrond */
- html.v2 dialog.fp-nieuw{box-sizing:border-box;width:min(480px,calc(100vw - 32px));max-width:none;margin:auto;border:1px solid #416068;border-radius:16px;
-   padding:24px 26px;background:#20464f;color:#e0eae7;box-shadow:0 24px 60px rgba(8,22,26,.5)}
+ /* "Nieuw in Fysiplan" */
+ html.v2 dialog.fp-nieuw{box-sizing:border-box;width:min(480px,calc(100vw - 32px));max-width:none;margin:auto;border:1px solid #d3dfda;border-radius:16px;
+   padding:24px 26px;background:#fff;color:#314d53;box-shadow:0 24px 60px rgba(8,22,26,.28)}
  html.v2 dialog.fp-nieuw::backdrop{background:rgba(15,23,42,.42);backdrop-filter:blur(3px)}
- html.v2 dialog.fp-nieuw h2{margin:0 0 10px;font-size:18px;letter-spacing:-.02em;color:#fff}
+ html.v2 dialog.fp-nieuw h2{margin:0 0 10px;font-size:18px;letter-spacing:-.02em;color:#18343b}
  html.v2 dialog.fp-nieuw p{margin:0 0 10px;font-size:14px;line-height:1.55}
  html.v2 dialog.fp-nieuw .btn{margin-top:6px;height:38px;padding:0 16px}
 }
@@ -911,3 +950,168 @@ html.v2 .spronglinks a{position:absolute;left:-10000px;top:0;padding:12px 16px;m
 html.v2 .spronglinks a:focus{position:static;outline:3px solid #B9E34B;outline-offset:2px}
 html.v2 #a4wrap:focus{outline:none}
 html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
+
+/* ---- de app in vier schermen (reviewlijst punt 14): Vandaag, Patiënten, Kaart maken, Praktijk ----
+   Vandaag, Patiënten en Praktijk tonen het Kaarten-paneel als scherm (geen zijpaneel), elk met
+   zijn eigen deel; de editor staat dan uit beeld. Alleen het scherm: de print blijft de kaart. */
+.fp-schermen{display:none}
+@media screen{
+  html.v2 .fp-schermen{order:1;display:flex;gap:2px;margin-left:14px;padding:3px;border-radius:11px;background:var(--line2);border:1px solid var(--line)}
+  html.v2 .fp-schermen button{position:relative;height:30px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:var(--muted);
+    font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+  html.v2 .fp-schermen button:hover{color:var(--ink)}
+  html.v2 .fp-schermen button[aria-pressed="true"]{background:var(--panel,#fff);color:var(--ink);box-shadow:0 1px 3px rgba(16,24,40,.12)}
+  html.v2 .fp-schermen button:focus-visible{outline:none;box-shadow:var(--ring)}
+  html.v2 .fp-schermen .fs-tel{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#c2410c;color:#fff;font-size:11px;font-weight:700;
+    display:inline-flex;align-items:center;justify-content:center}
+  html.v2 .fp-schermen .fs-tel[hidden]{display:none}
+
+  html.v2[data-scherm="vandaag"] .wrap,html.v2[data-scherm="patienten"] .wrap,html.v2[data-scherm="praktijk"] .wrap,
+  html.v2[data-scherm="vandaag"] #fpKop,html.v2[data-scherm="patienten"] #fpKop,html.v2[data-scherm="praktijk"] #fpKop{display:none!important}
+  html.v2[data-scherm="vandaag"] #ovKaarten.on,html.v2[data-scherm="patienten"] #ovKaarten.on,html.v2[data-scherm="praktijk"] #ovKaarten.on{
+    position:static;display:block;background:none;backdrop-filter:none;padding:24px 16px 48px;z-index:auto}
+  html.v2[data-scherm="vandaag"] #ovKaarten .modal,html.v2[data-scherm="patienten"] #ovKaarten .modal,html.v2[data-scherm="praktijk"] #ovKaarten .modal{
+    width:min(980px,100%);max-width:none;height:auto;max-height:none;margin:0 auto;border-radius:18px;animation:none;overflow:visible}
+  html.v2[data-scherm="vandaag"] #ovKaarten .modal>h3,html.v2[data-scherm="patienten"] #ovKaarten .modal>h3,html.v2[data-scherm="praktijk"] #ovKaarten .modal>h3{
+    position:static;font-size:22px;letter-spacing:-.02em}
+  html.v2[data-scherm="vandaag"] #ovKaarten .modal>.acts,html.v2[data-scherm="patienten"] #ovKaarten .modal>.acts,html.v2[data-scherm="praktijk"] #ovKaarten .modal>.acts{display:none}
+  /* ingelogd: het login- en accountblok hoort bij Praktijk */
+  html.v2.ps-in[data-scherm="vandaag"] #prakslot,html.v2.ps-in[data-scherm="patienten"] #prakslot{display:none}
+  /* Vandaag: seintjes, wie niet oefende en de weekbrief */
+  html.v2[data-scherm="vandaag"] #ovKaarten .k-eigen,
+  html.v2[data-scherm="vandaag"] #k_srv>label,html.v2[data-scherm="vandaag"] #k_srv>div:not([id]),
+  html.v2[data-scherm="vandaag"] #k_srv_sam,html.v2[data-scherm="vandaag"] #k_srv_zoek,html.v2[data-scherm="vandaag"] #k_srv_sort,
+  html.v2[data-scherm="vandaag"] #k_srv_lijst,html.v2[data-scherm="vandaag"] #k_prullenbak,html.v2[data-scherm="vandaag"] #k_praktijk{display:none!important}
+  /* Patiënten: de kaarten van de praktijk en op dit apparaat */
+  html.v2[data-scherm="patienten"] #k_inbox,html.v2[data-scherm="patienten"] #k_nietgeoefend,
+  html.v2[data-scherm="patienten"] #weekbrief,html.v2[data-scherm="patienten"] #k_praktijk{display:none!important}
+  /* Praktijk: login, account en team, en de tegels */
+  html.v2[data-scherm="praktijk"] #ovKaarten .k-eigen,
+  html.v2[data-scherm="praktijk"] #k_srv>*:not(#prakslot):not(#k_praktijk):not(#k_pr_vraag){display:none!important}
+  /* buiten de schermen hoort "niet geoefend" en de tegels niet in het zijpaneel */
+  html.v2[data-scherm="maken"] #k_nietgeoefend,html.v2[data-scherm="maken"] #k_praktijk{display:none}
+  /* nieuwe voorwaarden: melding op Vandaag en Patiënten voor een beheerder (op Praktijk staat het blok zelf) */
+  html.v2 #k_akwijs{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 10px;padding:10px 12px;border:1px solid #f2d999;
+    background:#fff7e6;color:#5a4300;border-radius:8px;font-size:13px;line-height:1.45}
+  html.v2 #k_akwijs>span{flex:1 1 260px;min-width:0}
+  html.v2 #k_akwijs .btn{min-height:44px;flex:0 0 auto}
+  html.v2[data-scherm="maken"] #k_akwijs,html.v2[data-scherm="praktijk"] #k_akwijs{display:none}
+  html.v2 #k_nietgeoefend{margin:18px 0 6px}
+  html.v2 #k_nietgeoefend>label{font-size:15px!important;font-weight:650}
+  html.v2 #k_nietgeoefend .ib-item{background:var(--naamblok);border:1px solid var(--naamblok-rand);border-radius:12px;display:flex;align-items:center;gap:10px;padding:9px 12px;margin-top:6px}
+  html.v2 #k_nietgeoefend .ib-tekst{flex:1;min-width:0}
+  html.v2 #k_nietgeoefend .ib-wat{font-size:12.5px;color:var(--muted)}
+  html.v2 #k_nietgeoefend .ib-noot,html.v2 #k_nietgeoefend .ib-leeg{font-size:12px;color:var(--muted);margin-top:6px}
+  html.v2 .kp-tegels{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:14px}
+  html.v2 .kp-tegel{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--panel,#fff);
+    color:var(--ink);text-align:left;text-decoration:none;font:inherit;cursor:pointer}
+  html.v2 .kp-tegel:hover{border-color:var(--brand)}
+  html.v2 .kp-tegel[aria-disabled="true"]{cursor:default;background:var(--bg,#F2F5F3)}
+  html.v2 .kp-tegel[aria-disabled="true"]:hover{border-color:var(--line)}
+  html.v2 .kp-tegel:focus-visible{outline:none;box-shadow:var(--ring)}
+  html.v2 .kp-tegel b{font-size:14.5px;color:var(--ink)}
+  html.v2[data-scherm="vandaag"] .topbar #beeldKeuze,html.v2[data-scherm="patienten"] .topbar #beeldKeuze,html.v2[data-scherm="praktijk"] .topbar #beeldKeuze{visibility:hidden}
+  html.v2 .kp-tegel span{font-size:12.5px;color:var(--muted);line-height:1.45}
+}
+/* Onder 1100 px krijgen de schermknoppen een eigen rij over de hele breedte. Eerst gebeurde dat
+   pas onder 920 px: op een liggende iPad (1080 breed) liep het menu dan van het scherm en raakte
+   een tik op Praktijk Kaart maken (gebruikers-sweep 2026-11-12, Mark). */
+@media screen and (max-width:1099px){
+  html.v2 .fp-schermen{order:8;flex-basis:100%;margin:4px 0 0;overflow-x:auto}
+  html.v2 .fp-schermen button{flex:1}
+}
+@media screen and (min-width:921px) and (max-width:1099px){
+  html.v2 header.topbar{height:auto;flex-wrap:wrap;row-gap:6px;padding-top:8px;padding-bottom:8px}
+}
+/* 1100–1279 px: Ideeën en Hulp als icoon (de naam blijft voor schermlezers en als tooltip),
+   anders paste de bovenbalk op 1100 breed niet */
+@media screen and (min-width:1100px) and (max-width:1279px){
+  html.v2 .fp-hulpknop{gap:0}
+  html.v2 .fp-hulpknop>span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+}
+/* aanraakscherm: schermknoppen van minstens 44 px hoog */
+@media screen and (pointer:coarse){
+  html.v2 .fp-schermen button{min-height:44px}
+}
+@media screen{
+  /* zonder dit werd de bovenbalk op 1280 zes px te breed zodra Vandaag een getal toont:
+     het praktijkvak mag smaller worden (de naam krijgt dan ... ) */
+  html.v2 .zb-praktijk{flex:0 1 auto;min-width:0}
+  /* de knop Ideeën onder 1100 px: dezelfde opmaak als Hulp, niet de grijze standaardknop */
+  html.v2 .fp-ideeknop{height:34px;display:inline-flex;align-items:center;gap:6px;padding:0 10px;border:0;border-radius:9px;background:transparent;color:#fff;
+    font:inherit;font-size:13px;font-weight:550;cursor:pointer}
+  html.v2 .fp-ideeknop:hover{background:#ffffff20;color:#fff}
+  html.v2 .fp-ideeknop:focus-visible{outline:none;box-shadow:var(--ring)}
+}
+
+/* Zichtbare focus (gebruikers-sweep 2026-11-13 14u, Sanne, desktop met toetsenbord): op gewone knoppen
+   (.btn) won `html.v2 .btn{box-shadow:…}` van `.btn:focus-visible{box-shadow:var(--ring)}` in de app, dus
+   "Eigen oefening", "Printen", "Test de QR" en Deel/Openen kregen geen enkele ring. De ring zelf (--ring
+   limoen op 27 % dekking) haalde op het lichte werkvlak en in de kopbalk ±1,4:1; WCAG 2.2 vraagt 3:1.
+   Nu een ondoorzichtige ring als outline (wint niet van, maar staat naast elke box-shadow): donker petrol
+   op het lichte werkvlak, limoen in de donkere kopbalk. Het zoekveld houdt bij focus een donkere rand. */
+@media screen{
+ html.v2{--focus:#20464f;--ring:0 0 0 3px #20464f}
+ html.v2 header.topbar{--focus:#b9e34b;--ring:0 0 0 3px #b9e34b}
+ html.v2 header.topbar .fp-hulpmenu{--focus:#20464f;--ring:0 0 0 3px #20464f}
+ html.v2 :is(button,a,input,select,textarea,summary,[tabindex],[role=button]):focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+ html.v2 #search:focus{border-color:#20464f}
+ html.v2 #a4wrap:focus-visible{outline:3px solid #20464f;outline-offset:4px}
+ /* invulvelden op de A4 (roepnaam, schema): de app zette daar outline:none met alleen een lichte achtergrond; 4 px omdat de A4 op het scherm verkleind staat (zoom ±0,5) */
+ html.v2 #a4 :is(input,textarea,select,[contenteditable]):focus-visible{outline:4px solid var(--focus);outline-offset:1px}
+}
+
+/* Kopbalk onder 1100 px (iPad staand 810, liggend 1080): het praktijkvak stond alleen vanaf 1100 px,
+   dus op een iPad stond nergens bij welke praktijk en als wie je was ingelogd; staand stond Ideeën links
+   van het logo (gebruikers-sweep 2026-11-13 18u, Karin). Nu: logo, praktijk, dan Ideeën en Printen;
+   het praktijkvak compact (naam en status ingekort), op aanraakschermen 44 px hoog. */
+@media screen and (max-width:1099px){
+  html.v2 .zb-praktijk{order:2;display:flex;align-items:center;gap:8px;max-width:240px;height:40px;padding:0 10px 0 5px;
+    border:1px solid #658087;border-radius:10px;cursor:pointer;text-align:left;font:inherit}
+  html.v2 .zb-pav{width:28px;height:28px;border-radius:8px;background:#b9e34b;color:#18343b;display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:750;flex:0 0 28px}
+  html.v2 .zb-ptekst{min-width:0;display:flex;flex-direction:column;line-height:1.2}
+  html.v2 .zb-ptekst b{font-size:12.5px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  html.v2 .zb-ptekst small{font-size:11px;color:#dbe7e3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  html.v2 .fp-ideeknop{order:3}
+}
+@media screen and (max-width:1099px) and (pointer:coarse){
+  html.v2 .zb-praktijk,html.v2 .fp-ideeknop{min-height:44px}
+}
+@media screen and (max-width:920px){
+  html.v2 header.topbar .brand{margin-right:0}
+  html.v2 .zb-praktijk{margin-right:auto;max-width:200px}
+  html.v2 header.topbar #printBtn{order:4}
+  html.v2 header.topbar .menu{order:5}
+}
+@media screen and (min-width:921px) and (max-width:1099px){
+  html.v2 header.topbar .brand{order:1}
+  html.v2 header.topbar .menu{order:3}
+  html.v2 header.topbar .spacer{order:4}
+  html.v2 .fp-ideeknop{order:5}
+  html.v2 header.topbar #printBtn{order:6}
+}
+
+/* iPad en andere aanraakschermen: "Delen met de praktijk" en "Verwijderen" bij een behandelkaart waren
+   tekstlinkjes van 15 px hoog en de knoppen erboven 38 px; met een vinger mis je die (sweep 2026-11-16). */
+@media screen and (pointer:coarse){
+  html.v2 .sjb-vb-klein{gap:6px;flex-wrap:wrap;margin:4px 0 0}
+  html.v2 .sjb-link{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;border-radius:9px}
+  html.v2 .sjb-link:first-child{margin-left:-10px}
+  html.v2 .sjb-vb-acties .btn{height:44px}
+}
+/* Tikvlakken in Praktijk, Kaarten en Sjablonen op een aanraakscherm (gebruikers-sweep 2026-11-18 14u,
+   Mark en Karin op iPad): het Praktijk-blok was 30 px, de knoppen in Kaarten en het Deel-paneel 32,
+   Rapport/CSV en de samenvattingsknoppen 22, "alleen mijn patiënten" 19, het kruisje van Sjablonen 30.
+   Met muis en toetsenbord blijft alles even rustig als het was. */
+@media screen and (pointer:coarse){
+  html.v2 #prakslot .ps-acties a{height:44px;padding:0 14px}
+  html.v2 #ovKaarten .btn,html.v2 #ovKaarten .btn.primary{height:auto;min-height:44px}
+  html.v2 #ovKaarten #k_srv_rap,html.v2 #ovKaarten #k_srv_csv,html.v2 #ovKaarten #k_srv_sam_sein,html.v2 #ovKaarten #k_srv_sam_aand{
+    min-height:44px!important;padding:0 14px!important}
+  html.v2 .ib-mijn{min-height:44px}
+  html.v2 #ib_mijn{width:22px!important;height:22px!important}
+  html.v2 .sjb-dicht{min-width:44px;min-height:44px}
+  html.v2 .sjb-cat{min-height:44px}
+  html.v2 #ovKaarten [data-szwaarklaar]{min-width:44px;min-height:44px;padding:0!important}
+}

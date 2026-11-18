@@ -20,7 +20,7 @@ const html = await readFile(join(root, "public/kaart.html"), "utf8");
 const fn = html.match(/function naarAgenda\(url,knop,afspraak\)\{([\s\S]*?)\n  \}/);
 assert.ok(fn, "naarAgenda bestaat");
 assert.match(fn[1], /if\(knop\.dataset\.bezig\)return;/, "naarAgenda neemt één tik tegelijk aan");
-assert.match(html, /toLocaleString\(SPRAAK\[TAAL\]\|\|'nl-NL',\{[^}]*hourCycle:'h23'\}/, "afspraaktijd met 24-uursklok in de taal van de kaart");
+assert.match(html, /toLocaleString\(SPRAAK\[TAAL\]\|\|'nl-NL',\{[^}]*hourCycle:'h23'[^}]*\}/, "afspraaktijd met 24-uursklok in de taal van de kaart");
 assert.doesNotMatch(html, /toLocaleString\(TAAL==='nl'\?'nl-NL':TAAL/, "geen kale taalcode (en = Amerikaans formaat)");
 // zelfde formaat als de JS hieronder: Engels met en-GB en 24 uur
 const voorbeeld = new Date(2026, 10, 13, 14, 25).toLocaleString("en-GB", { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
