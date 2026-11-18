@@ -4,6 +4,12 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Voor de praktijk-routine: factuur eerste maand toont de huidige factuurgegevens (legal, 2026-11-18 13u)
+`/v2/proef/factuur` zonder `?nr=` (de eerste maand) gebruikt `p.abonnement.afnemer` van nu: wijzigt de praktijk later naam of
+adres bij Factuurgegevens, dan verandert ook die al uitgegeven factuur. Latere facturen leggen `b.afnemer` vast bij het
+uitgeven van het nummer. Voorstel: bij de eerste betaling `abonnement.afnemerEerste` vastleggen en die gebruiken. Geen
+privacygat (alleen gegevens van de praktijk zelf), wel een boekhoudpunt. **Wat jij moet doen:** niets; de praktijk-routine pakt het op.
+
 ### Voorwaarden 2026-11-16: hoe het aantal therapeuten telt, en de V2-pilot (legal, 2026-11-16 13u)
 Art. 4 zegt nu wat de server al deed: een nieuwe maand is voor de logins van dat moment, of voor het hoogste aantal in de
 maand ervoor als dat hoger was; tussentijds wordt niets verrekend. Een beheerder ziet dit bij het volgende akkoord in de app.
