@@ -4100,7 +4100,7 @@ bridge2.jpg</div>
   // mail heeft) en kan het gedeelde praktijkwachtwoord uitzetten.
   function teamPost(pad,lijf){
     return fetch('api/praktijk/team/'+pad,{method:'POST',headers:PJSON(),body:JSON.stringify(lijf||{})})
-      .then(function(r){return r.json().catch(function(){return{ok:false};});});
+      .then(function(r){return r.json().catch(function(){return{ok:false};}).then(function(d){if(d&&typeof d==='object')d._status=r.status;return d;});});
   }
   // ---- tweede stap: wat het Team-venster en het inloggen delen ----
   // Het instelvak: de QR (in de browser getekend), de sleutel om over te typen en het veld voor
@@ -4483,13 +4483,17 @@ bridge2.jpg</div>
         // een collega en wisten twee keer Enter diens tweede stap (gebruikers-sweep 2026-11-16, Karin)
         if(!fn&&fa===document.body&&TEAM_LAATSTE_KNOP){try{fn=el.querySelector('#'+TEAM_LAATSTE_KNOP);}catch(e){}}
         if(!fn)fn=Array.prototype.filter.call(el.querySelectorAll('button:not([disabled]),select,input:not([type=hidden]),a[href]'),function(x){
-          return !x.hasAttribute('data-tm2wis')&&!x.hasAttribute('data-tmweg')&&!/wis|verwijder/i.test(x.textContent||'');})[0]||null;
+          // ook geen rolkeuze: één pijltoets daarop vraagt meteen om een rolwissel (sweep 2026-11-18, Karin)
+          return !x.hasAttribute('data-tm2wis')&&!x.hasAttribute('data-tmweg')&&!x.hasAttribute('data-tmrol')&&!/wis|verwijder/i.test(x.textContent||'');})[0]||null;
         if(fn){try{fn.focus();}catch(e){}}}
       var msg=function(t){var m=document.getElementById('tm_msg');if(m)m.textContent=t||'';};
       var sm=document.getElementById('tm_seinmail');
       if(sm)sm.addEventListener('change',function(){
         var wil=sm.checked;sm.disabled=true;
-        teamPost('sein-mail',{aan:wil}).then(function(r){sm.disabled=false;if(!r.ok){sm.checked=!wil;msg(r.fout||'Dat lukte niet.');}else msg('');})
+        teamPost('sein-mail',{aan:wil}).then(function(r){sm.disabled=false;if(!r.ok){sm.checked=!wil;
+          // rol intussen ingetrokken: Team opnieuw tekenen zonder beheerknoppen, dan de weigering
+          if(r._status===403){laadTeam(function(){msg(r.fout||'Dat lukte niet.');});return;}
+          msg(r.fout||'Dat lukte niet.');}else msg('');})
           .catch(function(){sm.disabled=false;sm.checked=!wil;msg('Geen verbinding.');});
       });
       // ---- tweede stap: instellen (QR of sleutel, dan de eerste code), reservecodes, uitzetten ----
@@ -4665,6 +4669,10 @@ bridge2.jpg</div>
         teamPost('uitnodigen',{naam:document.getElementById('tm_unaam').value,email:document.getElementById('tm_uemail').value,rol:document.getElementById('tm_urol').value})
           .then(function(r){
             uDo.disabled=false;
+            // 403: de rol is intussen ingetrokken. Dan Team opnieuw tekenen (zonder uitnodigformulier en
+            // rolkeuzes) en daarna de weigering tonen; anders stond "Alleen een beheerder…" naast knoppen
+            // die er niet meer horen (gebruikers-sweep 2026-11-18, Karin)
+            if(!r.ok&&r._status===403){laadTeam(function(){msg(r.fout||'Uitnodigen lukte niet.');});return;}
             if(!r.ok){msg(r.fout||'Uitnodigen lukte niet.');try{uDo.focus();}catch(e){}return;}
             laadTeam(function(){
               var lk=document.getElementById('tm_link');if(!lk)return;
