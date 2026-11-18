@@ -6968,7 +6968,7 @@ bridge2.jpg</div>
         var klaar=function(){delete ov.dataset.bezig;knop.textContent=oud;};
         fetch(metTekst?'api/kaart/antwoord':'api/kaart/seintje/gezien',{method:'POST',headers:PJSON(),body:JSON.stringify(body)})
           .then(function(r){return r.json();})
-          .then(function(d){klaar();if(d.ok){closeOv('ovSein');toonSrvKaarten();}
+          .then(function(d){klaar();if(d.ok){closeOv('ovSein');toonSrvKaarten();kaartFocusTerug(['#k_srv_lijst [data-sopen]','#k_srv_arch']);}
             // proef voorbij: venster blijft open met de reden; de melding in de proefbalk
             // stond achter dit venster en de collega dacht dat het antwoord verstuurd was
             else if(d.proefVerlopen){toonProefVoorbij();

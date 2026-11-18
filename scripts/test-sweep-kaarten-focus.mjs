@@ -1,4 +1,4 @@
-// Gebruikers-sweep 2026-11-18 06u (Sanne, desktop, alleen toetsenbord): na × naar prullenbak, Rond af,
+// Gebruikers-sweep 2026-11-18 06u (Sanne en Mark (Beantwoorden bij een seintje), desktop, alleen toetsenbord): na × naar prullenbak, Rond af,
 // Gearchiveerd, Terughalen, Prullenbak, Herstellen en Definitief verwijderen in Kaarten stond de focus op <body>;
 // de volgende Tab sprong naar "Huidige kaart opslaan als" onder de lijst. Nu zet kaartFocusTerug() de focus
 // na het hertekenen op een logische knop in Kaarten.
@@ -14,7 +14,7 @@ import { join } from "node:path";
 const root = process.cwd();
 const index = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(index, /function kaartFocusTerug\(sels\)\{/, "hulpje voor focus terug in Kaarten");
-assert.ok((index.match(/kaartFocusTerug\(\[/g) || []).length >= 6, "alle zeven lijstacties zetten de focus terug");
+assert.ok((index.match(/kaartFocusTerug\(\[/g) || []).length >= 7, "alle zeven lijstacties en Beantwoorden zetten de focus terug");
 console.log("test-sweep-kaarten-focus: bron OK");
 
 let pw = null;
