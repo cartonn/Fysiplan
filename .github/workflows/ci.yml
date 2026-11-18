@@ -270,5 +270,6 @@ jobs:
       - run: npm run test:annulerenhernoem
       - run: npm run test:welkomlink
       - run: npm run test:proeftokenverloop
+      - run: npm run test:proefcookietermijn
       - run: npm run test:foutpagina
       - run: npm run test:wisdubbel
