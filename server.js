@@ -111,7 +111,7 @@ const VWO_VERSIE = "2026-11-15";
 const AV_VERSIE = "2026-11-16";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-16-3";
+const PRIVACY_VERSIE = "2026-11-18";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -1646,6 +1646,8 @@ async function praktijkAllesWissen(pk) {
   try { await vertaalCacheOpschonen(); } catch {}
   return { aantalKaarten, proefUitkomst };
 }
+// een tijdstip in ms als ISO-tekst voor de download; leeg of onzin wordt null
+const isoOfNull = (ms) => (Number(ms) > 0 && Number.isFinite(Number(ms)) ? new Date(Number(ms)).toISOString() : null);
 // wat de praktijk bij een download over de eigen aanmelding krijgt: alles behalve apparaat-tokens
 function proefVoorDownload(id) {
   const p = Object.hasOwn(proeven, String(id)) ? proeven[String(id)] : null;
@@ -9188,7 +9190,14 @@ async function afhandelen(request, response) {
         // de proefaanmelding (contactpersoon, e-mail, telefoon, betaling) hoort bij de praktijk
         aanmelding: acc.proef ? proefVoorDownload(acc.proef.id) : null,
         // teamleden zonder wachtwoord of uitnodigingscode
+        // ook wanneer de login ontstond, wie wanneer welke werkregels accepteerde, wanneer het wachtwoord
+        // via herstel wijzigde en tot wanneer een uitnodiging openstaat (legal 2026-11-18, art. 15/20 en
+        // art. 28 lid 3 h AVG: de praktijk moet kunnen laten zien dat haar team de werkregels kent)
         team: ledenVan(pk).map((l) => ({ naam: l.naam || "", email: l.email, rol: l.rol, actief: lidActief(l), laatst: l.laatst || null,
+          gemaakt: isoOfNull(l.gemaakt),
+          werkregels: l.regels && l.regels.versie ? { versie: String(l.regels.versie), t: l.regels.t || null } : null,
+          wachtwoordGewijzigd: isoOfNull(l.gewijzigd),
+          uitnodiging: l.uitnodiging && Number(l.uitnodiging.verloopt) ? { open: Number(l.uitnodiging.verloopt) > Date.now(), verloopt: isoOfNull(l.uitnodiging.verloopt) } : null,
           tweedeStap: heeftTweedeStap(l) ? { aan: true, sinds: l.totp.sinds ? new Date(l.totp.sinds).toISOString() : null, reservecodesOver: reservecodesOver(l) } : { aan: false } })),
         profiel: Object.entries(praktijken).filter(eigenProfiel).map(([, p]) => publiekProfiel(p)),
         // een kaart in de prullenbak verdwijnt op herstelTot (verlooptOp is dan 0 = 1970)
