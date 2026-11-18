@@ -191,6 +191,7 @@ jobs:
       - run: npm run test:nieuwekaartnaam
       - run: npm run test:proefwissen
       - run: node scripts/test-pilot-proefcookie.mjs
+      - run: node scripts/test-vwo-pilot.mjs
       - run: npm run test:pijnscorebezig
       - run: npm run test:herstellaatstetik
       - run: npm run test:opnameverouderd
