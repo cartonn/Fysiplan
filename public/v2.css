@@ -1100,3 +1100,18 @@ html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
   html.v2 .sjb-link:first-child{margin-left:-10px}
   html.v2 .sjb-vb-acties .btn{height:44px}
 }
+/* Tikvlakken in Praktijk, Kaarten en Sjablonen op een aanraakscherm (gebruikers-sweep 2026-11-18 14u,
+   Mark en Karin op iPad): het Praktijk-blok was 30 px, de knoppen in Kaarten en het Deel-paneel 32,
+   Rapport/CSV en de samenvattingsknoppen 22, "alleen mijn patiënten" 19, het kruisje van Sjablonen 30.
+   Met muis en toetsenbord blijft alles even rustig als het was. */
+@media screen and (pointer:coarse){
+  html.v2 #prakslot .ps-acties a{height:44px;padding:0 14px}
+  html.v2 #ovKaarten .btn,html.v2 #ovKaarten .btn.primary{height:auto;min-height:44px}
+  html.v2 #ovKaarten #k_srv_rap,html.v2 #ovKaarten #k_srv_csv,html.v2 #ovKaarten #k_srv_sam_sein,html.v2 #ovKaarten #k_srv_sam_aand{
+    min-height:44px!important;padding:0 14px!important}
+  html.v2 .ib-mijn{min-height:44px}
+  html.v2 #ib_mijn{width:22px!important;height:22px!important}
+  html.v2 .sjb-dicht{min-width:44px;min-height:44px}
+  html.v2 .sjb-cat{min-height:44px}
+  html.v2 #ovKaarten [data-szwaarklaar]{min-width:44px;min-height:44px;padding:0!important}
+}

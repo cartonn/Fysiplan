@@ -156,6 +156,9 @@ jobs:
       - run: npm run test:juridisch200
       - run: npm run test:afspraaktijdzone
       - run: npm run test:teamweigering
+      - run: npm run test:rolwissel
+      - run: npm run test:ipadtikvlak
+      - run: npm run test:letopdubbel
       - run: npm run test:focusterugvenster
       - run: npm run test:naamenbestand
       - run: npm run test:lightbox
