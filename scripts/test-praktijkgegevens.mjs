@@ -199,7 +199,10 @@ try {
   assert.deepEqual(pakket.support.verstuurd.map((z) => z.soort), ["stil"], "eigen verstuurde mail");
   assert.ok(pakket.support.gebruik.actieveLoginsPerDag.some((d) => d.n >= 1), "actieve logins per dag");
   assert.ok(pakket.support.logboek.every((r) => !("pk" in r) && !("wie" in r)), "geen interne sleutel of medewerker");
-  assert.doesNotMatch(JSON.stringify(pakket.support), /Hulp voor Blijf|fysio blijf/, "niets van support over een andere praktijk");
+  assert.doesNotMatch(JSON.stringify(pakket.support), /Hulp voor Blijf|Bericht aan Blijf|fysio blijf/, "niets van support over een andere praktijk");
+  // legal 2026-11-18 (art. 15/20): berichten van de agents aan de praktijk gaan bij Alles wissen weg, dus ook in de download
+  assert.deepEqual((pakket.support.berichtenVanAgents || []).map((b) => b.onderwerp + "|" + b.tekst + "|" + b.stand), ["Bericht aan Wis|Geheim voor Wis|verstuurd"], "eigen bericht van een agent in de download");
+  assert.ok(pakket.support.berichtenVanAgents.every((b) => !("pk" in b) && !("sleutel" in b) && !("door" in b)), "geen interne sleutel of medewerker bij de berichten");
 
   // ---- wissen vraagt een getypte bevestiging ----
   const zonderZeker = await formulier("/v2/gegevens/wissen", { praktijk: "Fysio Wis", wachtwoord: "wis-wachtwoord-1", zeker: "ja" });
