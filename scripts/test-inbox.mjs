@@ -93,6 +93,18 @@ try {
   assert.equal(opnieuw.status, 200);
   assert.ok(!(await opnieuw.json()).ongewijzigd, "echte wijziging");
   assert.deepEqual((await inbox()).kaarten.map((k) => k.id), [idB], "afgehandeld blijft afgehandeld na opnieuw bewaren");
+  // een pijnscore die nog niemand afhandelde, blijft in de inbox als iemand intussen alleen
+  // de kaart aanpast (gebruikers-sweep 2026-11-18, Truus: hoge pijn viel stil weg)
+  assert.equal((await post("/api/kaart/meting", { id: idB, score: 8 })).status, 200);
+  await wacht(5);
+  const nieuwB = await post("/api/kaarten", { praktijk: P, naam: "Fatima", client: { c_naam: "Fatima" },
+    chosen: [{ n: "Squat", i: 0 }, { n: "Lunge", i: 1 }], kaartId: idB }, S);
+  assert.equal(nieuwB.status, 200);
+  assert.ok(!(await nieuwB.json()).ongewijzigd, "echte wijziging aan B");
+  const pijnB = (await inbox()).kaarten.find((k) => k.id === idB);
+  assert.ok(pijnB && pijnB.items.some((i) => i.soort === "pijn" && i.s === 8), "open pijnscore blijft na opnieuw bewaren");
+  assert.equal((await post("/api/praktijk/inbox/afgehandeld", { praktijk: P, id: idB }, S)).status, 200);
+  assert.deepEqual((await inbox()).kaarten.map((k) => k.id), [], "na afhandelen weg");
   // patiëntroute lekt niets van inbox of dossier
   const pat = await (await get("/api/kaart?id=" + idA)).json();
   assert.ok(!("dossier" in pat.kaart) && !("inboxGezien" in pat.kaart) && !("contact" in pat.kaart));

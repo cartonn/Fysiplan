@@ -73,6 +73,13 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+### Sweep 2026-11-18 06u, derde inhaalrun (twee andere runs voor hetzelfde tijdvak hadden net vijf persona's gedraaid op dezelfde main; geen persona-agents opnieuw gestart, alleen een open punt dat geen andere run oppakte)
+- **OPGELOST 2026-11-18 deze run (test:inbox) — MIDDEL (Truus, eerder gevonden) — open pijnscore viel stil uit de inbox zodra iemand de kaart opnieuw bewaarde.**
+  `inboxItems` telde pijn alleen na `k.ts`. Nu telt alleen Afgehandeld (`inboxGezien`, blijft sinds #363 staan bij opnieuw bewaren). Test: pijn 8,
+  collega past de oefeningen aan, pijn staat nog in de inbox; na Afgehandeld weg.
+- **Volgende run:** de vijf persona's weer volledig; offline 409 in de wachtrij (Truus), status ophalen bij laden (Karin), tikvlakken iPad staand,
+  tijdzone-keuze (Jayden). Focus na Kaarten/Prullenbak en offline-kopie /k na een tik liepen in een parallelle run van dit tijdvak.
+
 ### Sweep 2026-11-18 06u (inhaalrun na een afgebroken run op 17-11; geen persona-agents gestart, alleen het open backlogpunt)
 - **OPGELOST 2026-11-18 deze run (test:inbox) — LAAG/MIDDEL (van legal) — inbox: een kaart opnieuw opslaan met een echte wijziging wiste `inboxGezien`.** Nagespeeld: herstel (ervaren herstel) dat de praktijk al had afgehandeld kwam na het bewaren van andere oefeningen opnieuw als "nieuw" in de inbox (pijnscores niet, die vallen al weg onder `ts`). POST /api/kaarten neemt `inboxGezien` nu mee.
 - **Volgende run:** de vijf persona's weer volledig; tijdzone-keuze (Jayden), focus na kaartacties in Kaarten/Prullenbak, tikvlakken Kaarten/Prullenbak op iPad, rechten na rolwissel.
@@ -90,7 +97,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   terwijl de agenda (.ics, TZID Amsterdam) hem een uur eerder zet. Nu "(Dutch time)"/"(Nederlandse tijd)" erbij als de telefoon in een andere zone staat.
 - **OPGELOST 2026-11-18 deze run — LAAG (Mark) — "je proef loopt nog vandaag nog"** → "loopt nog maar kort".
 - **(Karin/Truus, nagespeeld) — `inboxGezien` na opnieuw opslaan: zelfde fix staat in PR #363 van een parallelle sweep-run;** hier niet dubbel gebouwd.
-- **MIDDEL (Truus, iPhone SE) — pijnscore verdwijnt uit de inbox zodra iemand de kaart opnieuw bewaart:** `inboxItems` (server.js ~2438)
+- **OPGELOST 2026-11-18 (inhaalrun 06u-3, test:inbox) — MIDDEL (Truus, iPhone SE) — pijnscore verdwijnt uit de inbox zodra iemand de kaart opnieuw bewaart:** `inboxItems` (server.js ~2438)
   telt pijn alleen na `k.ts`; herstel heeft dat filter niet. Een collega die alleen de dosering aanpast, laat zo een hoge pijnscore stil uit
   de inbox vallen. Zodra #363 (`inboxGezien` blijft staan) gemerged is, kan het `ts`-filter vermoedelijk weg; niet gedaan omdat de bedoeling
   van het filter niet terug te vinden was (ingevoegd in een grote squash). Volgende run: nagaan en met test in test-inbox.mjs.
