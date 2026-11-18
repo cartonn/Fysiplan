@@ -78,6 +78,7 @@ jobs:
       - run: node scripts/test-mijn-gegevens.mjs
       - run: node scripts/test-dossier-contact.mjs
       - run: node scripts/test-wees-opnames.mjs
+      - run: node scripts/test-video-locatie.mjs
       - run: node scripts/test-proef-einde-wissen.mjs
       - run: node scripts/test-verdwijndatum-praktijk.mjs
       - run: node scripts/test-juridisch-b1.mjs
@@ -124,6 +125,7 @@ jobs:
       - run: npm run test:oefdagen
       - run: npm run test:oefdoelweek
       - run: npm run test:lijstfocus
+      - run: npm run test:kaartenfocus
       - run: npm run test:dossierannuleren
       - run: npm run test:prullenbak
       - run: npm run test:wachtrijdagen
@@ -135,6 +137,7 @@ jobs:
       - run: npm run test:hernoemvolledig
       - run: npm run test:opnamedubbel
       - run: npm run test:offlinescore
+      - run: npm run test:offlinekopie
       - run: npm run test:teamrolbevestig
       - run: npm run test:seintjevoorrang
       - run: npm run test:seintjestand

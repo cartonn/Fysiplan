@@ -5680,6 +5680,27 @@ bridge2.jpg</div>
       })
       .catch(function(){ib.style.display='none';});
   }
+  // Focus terug in Kaarten na een actie die de lijst (of de knop zelf) weghaalt: × naar prullenbak,
+  // Rond af, Terughalen, Gearchiveerd, Prullenbak, Herstellen, Definitief. Anders stond de focus op
+  // body en sprong Tab naar "Huidige kaart opslaan als" (gebruikers-sweep 2026-11-18, Sanne).
+  // Wacht tot de lijst opnieuw getekend is; verplaatst alleen als de focus echt kwijt is.
+  var KAART_FOCUS_KLOK=0;
+  function kaartFocusTerug(sels){
+    clearInterval(KAART_FOCUS_KLOK);
+    var pogingen=0,start=document.activeElement;
+    KAART_FOCUS_KLOK=setInterval(function(){
+      var a=document.activeElement;
+      // de gebruiker staat al ergens anders: niets verplaatsen
+      if(a&&a!==start&&a!==document.body&&a.isConnected&&!a.disabled){clearInterval(KAART_FOCUS_KLOK);return;}
+      var lijst=document.getElementById('k_srv_lijst');
+      var laden=lijst&&/Laden…/.test(lijst.textContent||'')&&lijst.children.length<2;
+      if(!laden)for(var i=0;i<sels.length;i++){
+        var el=document.querySelector(sels[i]);
+        if(el&&!el.disabled&&el.offsetParent!==null){clearInterval(KAART_FOCUS_KLOK);try{el.focus();}catch(e){}return;}
+      }
+      if(++pogingen>60)clearInterval(KAART_FOCUS_KLOK);
+    },100);
+  }
   function toonPrullenbak(blok,pr){
     var box=document.createElement('div');box.id='k_prullenbak';
     box.innerHTML="<button class='btn' type='button'>Prullenbak</button><div class='hint' hidden></div>";
@@ -5692,7 +5713,7 @@ bridge2.jpg</div>
           if(!d.ok){uit.textContent=d.fout||'Prullenbak ophalen is niet gelukt.';return;}
           uit.innerHTML='<p>Alleen de maker en beheerder kunnen herstellen. De patiëntlink werkt tot die tijd niet. Herstellen kan maximaal zeven dagen, nooit langer dan de bestaande bewaartermijn. Vraagt de patiënt om wissen, kies dan Definitief verwijderen. Kopieer eerst de samenvatting voor het dossier: na definitief verwijderen kan dat niet meer.</p>'+
             (d.kaarten.length?d.kaarten.map(function(k){return "<p><b>"+esc(k.naam)+"</b> — herstellen tot "+esc(new Date(k.herstelTot).toLocaleString('nl-NL'))+" <button class='btn' data-prulherstel='"+esc(k.id)+"'>Herstellen</button> <button class='btn' data-pruldos='"+esc(k.id)+"'>Kopieer voor dossier</button> <button class='btn' data-pruldef='"+esc(k.id)+"'>Definitief verwijderen</button></p>";}).join(''):'<p>Geen kaarten die je kunt herstellen.</p>');
-        }).catch(function(){uit.textContent='Geen verbinding. Probeer opnieuw.';}).then(function(){knop.disabled=false;});
+        }).catch(function(){uit.textContent='Geen verbinding. Probeer opnieuw.';}).then(function(){knop.disabled=false;kaartFocusTerug(['#k_prullenbak [data-prulherstel]','#k_prullenbak > button']);});
     };
     uit.onclick=function(e){
       // WGBO: wat de patiënt via de kaart meldde, staat alleen in Fysiplan. Ook na Verwijderen
@@ -5714,7 +5735,7 @@ bridge2.jpg</div>
         if(!confirm('Deze kaart en de opnames erbij nu definitief verwijderen? Dit kan niet ongedaan worden gemaakt. Heb je de samenvatting al in het dossier gezet? Gebruik anders eerst Kopieer voor dossier.'))return;
         d0.disabled=true;
         fetch('api/kaarten/definitief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:d0.dataset.pruldef})})
-          .then(function(r){return r.json();}).then(function(d){if(d.ok){markeerKaartWeg(d0.dataset.pruldef);var r0=d0.closest('p');if(r0)r0.remove();}else{d0.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
+          .then(function(r){return r.json();}).then(function(d){if(d.ok){markeerKaartWeg(d0.dataset.pruldef);var r0=d0.closest('p');if(r0)r0.remove();kaartFocusTerug(['#k_prullenbak [data-prulherstel]','#k_prullenbak > button']);}else{d0.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
           .catch(function(){d0.disabled=false;alert('Geen verbinding. Probeer opnieuw.');});
         return;
       }
@@ -5722,7 +5743,7 @@ bridge2.jpg</div>
       if(!confirm('Deze kaart herstellen? De bestaande patiëntlink werkt daarna weer.'))return;
       b.disabled=true;
       fetch('api/kaarten/herstel',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:pr,id:b.dataset.prulherstel})})
-        .then(function(r){return r.json();}).then(function(d){if(d.ok){if(KAART_WEG===b.dataset.prulherstel){zetKaartWeg('');laatsteDeel='';deelNu();}toonSrvKaarten();}else{b.disabled=false;alert(d.fout||'Herstellen is niet gelukt.');}})
+        .then(function(r){return r.json();}).then(function(d){if(d.ok){if(KAART_WEG===b.dataset.prulherstel){zetKaartWeg('');laatsteDeel='';deelNu();}toonSrvKaarten();kaartFocusTerug(['#k_prullenbak > button','#k_srv_lijst [data-sopen]']);}else{b.disabled=false;alert(d.fout||'Herstellen is niet gelukt.');}})
         .catch(function(){b.disabled=false;alert('Geen verbinding. Probeer opnieuw.');});
     };
   }
@@ -6126,7 +6147,7 @@ bridge2.jpg</div>
               (c.magWeg===true?"<button class='btn' data-sdel='"+esc(c.naam)+"' data-sdelid='"+esc(c.id)+"' title='Naar prullenbak' aria-label='Naar prullenbak — kaart "+esc(c.naam)+"'>×</button>":"")+"</div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            avRond(c.naam,'srv-av')+"<div class='srv-naam' style='flex:1;min-width:120px;overflow-wrap:anywhere'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" · <span title='Behandelaar' style='white-space:nowrap'>"+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, nog "+va.rest+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" ×"+va.rest:"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+zwChip+verloopChip+vg+hsChip+
+            avRond(c.naam,'srv-av')+"<div class='srv-naam' style='flex:1;min-width:120px;overflow-wrap:anywhere'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" <span title='Behandelaar' style='white-space:nowrap'>· "+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, nog "+va.rest+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" ×"+va.rest:"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+zwChip+verloopChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' aria-label='Deel — kaart "+esc(c.naam)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"' aria-label='Openen — kaart "+esc(c.naam)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' aria-label='Kopie — kaart "+esc(c.naam)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+
@@ -6328,7 +6349,7 @@ bridge2.jpg</div>
             sb.onclick=function(){if(sortEl){sortEl.dataset.filter=(sortEl.dataset.filter==='seintje')?'':'seintje';markeerFilter();}markSein();toon();};
           }
           var arb=document.getElementById('k_srv_arch');
-          if(arb)arb.onclick=function(){srvArchiefView=!srvArchiefView;toonSrvKaarten();};
+          if(arb)arb.onclick=function(){srvArchiefView=!srvArchiefView;toonSrvKaarten();kaartFocusTerug(['#k_srv_arch']);};
           var rb=document.getElementById('k_srv_rap');
           if(rb)rb.onclick=function(){
             // staat het behandelaar-filter aan, dan wordt dit een rapport over
@@ -6526,7 +6547,7 @@ bridge2.jpg</div>
       var oudA=knop.textContent;knop.textContent='Bezig…';
       fetch('api/kaart/archief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:id,archief:naarArchief})})
         .then(function(r){return r.json();})
-        .then(function(d){if(d.ok)toonSrvKaarten();else{knop.textContent=oudA;alert(d.fout||'Archiveren is niet gelukt.');}})
+        .then(function(d){if(d.ok){toonSrvKaarten();kaartFocusTerug(['#k_srv_arch','#k_srv_lijst [data-sopen]']);}else{knop.textContent=oudA;alert(d.fout||'Archiveren is niet gelukt.');}})
         .catch(function(){knop.textContent=oudA;alert('Archiveren is niet gelukt: geen verbinding.');});
       return;
     }
@@ -6723,7 +6744,7 @@ bridge2.jpg</div>
       x.disabled=true;
       fetch('api/kaarten/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',naam:nm,id:x.dataset.sdelid})})
         .then(function(r){return r.json();})
-        .then(function(d){if(d.ok){markeerKaartWeg(x.dataset.sdelid);toonSrvKaarten();ping('kaart-verwijderd');}else{x.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
+        .then(function(d){if(d.ok){markeerKaartWeg(x.dataset.sdelid);toonSrvKaarten();kaartFocusTerug(['#k_srv_lijst [data-sopen]','#k_prullenbak > button']);ping('kaart-verwijderd');}else{x.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
         .catch(function(){x.disabled=false;alert('Verwijderen is niet gelukt: geen verbinding.');})
         .then(delVrij);
     }
@@ -6947,7 +6968,7 @@ bridge2.jpg</div>
         var klaar=function(){delete ov.dataset.bezig;knop.textContent=oud;};
         fetch(metTekst?'api/kaart/antwoord':'api/kaart/seintje/gezien',{method:'POST',headers:PJSON(),body:JSON.stringify(body)})
           .then(function(r){return r.json();})
-          .then(function(d){klaar();if(d.ok){closeOv('ovSein');toonSrvKaarten();}
+          .then(function(d){klaar();if(d.ok){closeOv('ovSein');toonSrvKaarten();kaartFocusTerug(['#k_srv_lijst [data-sopen]','#k_srv_arch']);}
             // proef voorbij: venster blijft open met de reden; de melding in de proefbalk
             // stond achter dit venster en de collega dacht dat het antwoord verstuurd was
             else if(d.proefVerlopen){toonProefVoorbij();
