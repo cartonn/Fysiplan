@@ -30,6 +30,7 @@ import { InlogRem, laadRem, REM_MS } from "./lib/inlogrem.js";
 import { maakQrCache } from "./lib/qr-cache.js";
 import { kiesInpak, inpakbaar, pakIn, etagKomtOvereen } from "./lib/inpakken.js";
 import { kleinPadVoor, kleinMap } from "./lib/klein-beeld.js";
+import { wisVideoLocatie } from "./lib/video-locatie.js";
 import { nieuwGeheim, controleer, otpauth, nieuweReservecode, reservecodeNormaal } from "./lib/totp.js";
 import { maakBeheerOmgeving, merkGezien, merkLoginMis, merkAntwoord, vergeetLid } from "./lib/beheer-omgeving-routes.js";
 import { rechtenVan, magBuiten } from "./lib/beheer-toegang.js";
@@ -111,7 +112,7 @@ const VWO_VERSIE = "2026-11-15";
 const AV_VERSIE = "2026-11-16";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-16-3";
+const PRIVACY_VERSIE = "2026-11-18";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -6874,6 +6875,9 @@ async function afhandelen(request, response) {
       }
       await mkdir(join(uploadsDir, "videos"), { recursive: true });
       const pad = "uploads/videos/v-" + token + ext;
+      // een video uit de galerij van de telefoon kan de plek van opnemen en het toesteltype dragen;
+      // die gaan er vóór het bewaren uit (lib/video-locatie.js, /privacy#opnames)
+      if (o.doel === "kaart" && ext === ".mp4") wisVideoLocatie(buf);
       await writeFile(join(dataDir, pad), buf);
       videoOpslag.bytes += buf.length;
       if (o.doel === "oefening" && o.naam) {
