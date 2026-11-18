@@ -112,7 +112,7 @@ const VWO_VERSIE = "2026-11-15";
 const AV_VERSIE = "2026-11-16";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-18-2";
+const PRIVACY_VERSIE = "2026-11-18-3";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -1562,11 +1562,18 @@ function proefSlotVoor(req, urlPath) {
 // Standaard aan in productie; lokaal en in tests uit. PROEF_VERPLICHT=aan|uit dwingt het af.
 const PROEF_VERPLICHT = /^(aan|uit)$/.test(String(process.env.PROEF_VERPLICHT || ""))
   ? process.env.PROEF_VERPLICHT === "aan" : IS_PRODUCTIE;
-function proefCookie(token, request) {
+// Legal 2026-11-18 (f): /privacy#opslag belooft de proefcookie "tot PROEF_BEWAAR_DAGEN dagen na het
+// einde van de proef". Een vaste Max-Age vanaf nu hield dat niet: een cookie van de welkomstlink of de
+// maillink op dag 13 leefde tot dag 57, terwijl de gegevens van een proef zonder abonnement op dag 44
+// weg zijn. Nu nooit langer dan PROEF_COOKIE_MS (zo lang telt het token op de server, zie proefVan) en,
+// buiten een klant, nooit voorbij verloopt + PROEF_BEWAAR_DAGEN. Een klant houdt de vaste levensduur.
+function proefCookie(token, request, p) {
   const proxyProto = String(request.headers["x-forwarded-proto"] || "").split(",", 1)[0].trim().toLowerCase();
   const veilig = proxyProto === "https" || !!request.socket?.encrypted;
+  let ms = PROEF_COOKIE_MS;
+  if (p && !p.klant && Number(p.verloopt) > 0) ms = Math.min(ms, Number(p.verloopt) + PROEF_BEWAAR_DAGEN * 86400000 - Date.now());
   return "fpproef=" + (token || "") + "; Path=/; HttpOnly; SameSite=Lax" + (veilig ? "; Secure" : "") +
-    (token ? "; Max-Age=" + PROEF_COOKIE_MS / 1000 : "; Max-Age=0");
+    (token ? "; Max-Age=" + Math.max(1, Math.floor(ms / 1000)) : "; Max-Age=0");
 }
 function proefNieuwToken(p) {
   const token = randomBytes(24).toString("hex");
@@ -8533,7 +8540,7 @@ async function afhandelen(request, response) {
         ", vul bij de voorbeeldkaart een roepnaam in, print hem en scan de QR-code met je eigen telefoon. " +
         "Dan zie je precies wat je patiënt ziet.\n\nVragen? Antwoord gewoon op deze mail.\n\nGroet,\nFysiplan");
     }
-    response.writeHead(303, { location: proefVerlopen(p) ? "/v2/proef" : "/v2/app", "set-cookie": proefCookie(token, request), "cache-control": "no-store" });
+    response.writeHead(303, { location: proefVerlopen(p) ? "/v2/proef" : "/v2/app", "set-cookie": proefCookie(token, request, p), "cache-control": "no-store" });
     response.end();
     return;
   }
@@ -8587,7 +8594,7 @@ async function afhandelen(request, response) {
     // een vers token voor dít apparaat
     const token = proefNieuwToken(proeven[id]);
     await bewaarProeven();
-    response.writeHead(303, { location: proefVerlopen(proeven[id]) ? "/v2/proef" : "/v2/app", "set-cookie": proefCookie(token, request) });
+    response.writeHead(303, { location: proefVerlopen(proeven[id]) ? "/v2/proef" : "/v2/app", "set-cookie": proefCookie(token, request, proeven[id]) });
     response.end();
     return;
   }
