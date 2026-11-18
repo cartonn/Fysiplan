@@ -56,7 +56,18 @@ try {
   assert.match(twee, /^METHOD:PUBLISH\r$/m, "METHOD:PUBLISH");
   assert.match(een, /^RRULE:FREQ=WEEKLY;COUNT=4\r$/m, "eerst een reeks");
   assert.doesNotMatch(twee, /^RRULE:FREQ=WEEKLY/m, "na het verplaatsen eenmalig");
-  console.log("test-sweep-afspraak-uid: vaste UID, oplopend SEQUENCE, agenda werkt bij");
+  // Sweep 2026-11-18 10u (Jayden): de kaartlink in de agenda miste ?taal=en; een agenda-app opent hem vaak in een
+  // andere browser, en dan stond de kaart in het Nederlands.
+  const plat = (t) => t.replace(/\r\n[ \t]/g, "");
+  assert.ok(plat(twee).includes("/k/" + id + "?taal=en"), "afspraak.ics: kaartlink in het Engels");
+  const nl = plat(await (await fetch(origin + "/api/kaart/afspraak.ics?id=" + id, { headers: kop() })).text());
+  assert.ok(nl.includes("/k/" + id) && !nl.includes("?taal="), "afspraak.ics zonder taal: gewone link");
+  const raar = plat(await (await fetch(origin + "/api/kaart/afspraak.ics?id=" + id + "&taal=__proto__", { headers: kop() })).text());
+  assert.ok(!raar.includes("?taal="), "onbekende taal komt niet in de link");
+  const ag = await fetch(origin + "/api/kaart/agenda?id=" + id + "&dagen=MO,TH&tijd=09:00&taal=en", { headers: kop() });
+  assert.equal(ag.status, 200);
+  assert.ok(plat(await ag.text()).includes("/k/" + id + "?taal=en"), "herinneringen.ics: kaartlink in het Engels");
+  console.log("test-sweep-afspraak-uid: vaste UID, oplopend SEQUENCE, agenda werkt bij, link in de taal van de kaart");
 } catch (e) {
   console.error(uit.slice(-2000));
   throw e;
