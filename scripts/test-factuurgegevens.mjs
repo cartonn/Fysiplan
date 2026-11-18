@@ -62,6 +62,10 @@ try {
   const mijn = await (await fetch(origin + "/v2/proef?mijn=1", { headers: cookie("goed") })).text();
   assert.match(mijn, /id="factuurgegevens"/, "Mijn abonnement heeft het blok Factuurgegevens");
   assert.match(mijn, /action="\/v2\/proef\/factuurgegevens"/);
+  // factuuroverzicht: eerste maand en de latere maand, elk een regel
+  const tabel = (mijn.match(/<table class="facturen"[\s\S]*?<\/table>/) || [""])[0];
+  assert.equal((tabel.match(/<tr><td>/g) || []).length, 2, "twee betalingen, twee regels in het factuuroverzicht");
+  assert.ok(tabel.includes('href="/v2/proef/factuur"') && tabel.includes("&euro;&nbsp;109,89"));
 
   // alleen de eigen praktijk met abonnement; kruis-site en fouten veranderen niets
   assert.equal((await post("proef", { naam: "X", adres: "Y" })).status, 303, "proef zonder abonnement");

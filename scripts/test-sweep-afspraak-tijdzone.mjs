@@ -16,6 +16,8 @@ const html = await readFile(join(root, "public/kaart.html"), "utf8");
 const blok = html.slice(html.indexOf("document.getElementById('afkop').textContent"), html.indexOf("var el=document.getElementById('aftekst');"));
 assert.match(blok, /hourCycle:'h23',timeZone:'Europe\/Amsterdam'\}/, "afspraak op de kaart in Nederlandse tijd");
 assert.doesNotMatch(blok, /toDateString\(\)/, "vandaag/morgen niet volgens de tijdzone van de telefoon");
+// sweep 18-11 (Jayden in Londen): de kaart zegt erbij dat het Nederlandse tijd is, want de agenda zet hem een uur eerder
+assert.match(html, /createTextNode\(tekst\+\(andereZone\(at\)\?' \('\+\(TAFNL\[TAAL\]/, "label Nederlandse tijd bij een andere tijdzone");
 console.log("test-sweep-afspraak-tijdzone: statisch OK");
 
 let pw = null;
@@ -57,6 +59,7 @@ if (pw) {
       await page.waitForSelector("#afspraakblok", { state: "visible", timeout: 15000 });
       const tekst = (await page.textContent("#aftekst")).trim();
       assert.ok(tekst.includes(uurNL), `${timezoneId}: kaart toont ${tekst}, verwacht ${uurNL} (Nederlandse tijd)`);
+      assert.equal(tekst.includes("(Dutch time)"), timezoneId !== "Europe/Amsterdam", `${timezoneId}: label Dutch time in ${tekst}`);
       assert.deepEqual(fouten, []);
       await ctx.close();
     }

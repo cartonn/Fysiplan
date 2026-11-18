@@ -1315,6 +1315,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function trpsk(k){var d=TPSK[TAAL]||TPSK.nl;return d[k]!=null?d[k]:TPSK.nl[k];}
   // "vandaag"/"morgen"-accent op de afspraakregel: op de dag zelf moet de
   // herinnering opvallen, niet opgaan in een datumregel
+  // staat de telefoon op een andere tijdzone, dan zegt de kaart erbij dat de tijd Nederlands is:
+  // de agenda (.ics met TZID Europe/Amsterdam) zet hem in de eigen tijd (sweep 18-11, Jayden in Londen)
+  var TAFNL={nl:'Nederlandse tijd',en:'Dutch time',de:'niederländische Zeit',fr:'heure néerlandaise',es:'hora de los Países Bajos',pl:'czasu holenderskiego',tr:'Hollanda saati',ar:'بتوقيت هولندا',uk:'за нідерландським часом'};
+  function andereZone(t){try{var f=function(z){return new Date(t).toLocaleString('en-CA',{timeZone:z,hourCycle:'h23'});};return f('Europe/Amsterdam')!==f(Intl.DateTimeFormat().resolvedOptions().timeZone);}catch(e){return false;}}
   var TAFREL={nl:{v:'Vandaag',m:'Morgen'},en:{v:'Today',m:'Tomorrow'},de:{v:'Heute',m:'Morgen'},fr:{v:'Aujourd’hui',m:'Demain'},es:{v:'Hoy',m:'Mañana'},pl:{v:'Dzisiaj',m:'Jutro'},tr:{v:'Bugün',m:'Yarın'},ar:{v:'اليوم',m:'غدًا'},uk:{v:'Сьогодні',m:'Завтра'}};
   // teksten voor "vraag het aan je kaart" (apart blokje; valt terug op Nederlands)
   // AI-verordening art. 50: de patiënt weet dat het antwoord van een AI-programma komt.
@@ -2069,7 +2073,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var el=document.getElementById('aftekst');
     el.textContent='';
     if(relW){var b=document.createElement('b');b.textContent=relW+' — ';el.appendChild(b);}
-    el.appendChild(document.createTextNode(tekst));
+    el.appendChild(document.createTextNode(tekst+(andereZone(at)?' ('+(TAFNL[TAAL]||TAFNL.en)+')':'')));
     // de reeks erbij: "wekelijks, nog N keer" ná de getoonde datum. `rest` telt de getoonde
     // afspraak zelf mee (COUNT in de agenda); "nog 4 keer" bij een reeks van 4 las als vijf (sweep 2026-11-10 22u, Mark)
     var nogN=rest-1;

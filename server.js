@@ -21,7 +21,7 @@ import { plaatsenVan, merkPiek, volgendAantal, nieuwePeriode, kaartVol, KAARTEN_
 import { maandBedrag, betaalBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN,
   openMaand, zelfBetalenVerzoek, markeerZelfGestart, beoordeelZelf, markeerZelfBetaald } from "./lib/mollie.js";
-import { volgendFactuurNr, naarCent, factuurHtml, isFactuur, isKor, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
+import { volgendFactuurNr, naarCent, factuurHtml, factuurOverzichtHtml, isFactuur, isKor, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
 import { backupInstellingen } from "./lib/backup-elders.js";
 import { runBackup } from "./lib/backup-runner.js";
 import { gegevensRuimte } from "./lib/backup-snapshots.js";
@@ -112,7 +112,7 @@ const VWO_VERSIE = "2026-11-15";
 const AV_VERSIE = "2026-11-16";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-18";
+const PRIVACY_VERSIE = "2026-11-18-2";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -436,12 +436,20 @@ function weergaveNaam(pk) {
   const acc = Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
   return String((prof && prof.praktijk) || (acc && acc.naam) || (isPraktijkCode(pk) ? "" : pk));
 }
+// Hooguit zoveel scrypt-vergelijkingen per inlogverzoek (security 2026-11-18). Elke vergelijking houdt de
+// hele server ~25-50 ms bezig. Wie veertig praktijken met dezelfde naam of hetzelfde e-mailadres aanmaakte
+// (nieuw: true, 5 per dag per adres), liet met één inlogpoging de server een seconde stilstaan, en met het
+// goede wachtwoord telde geen rem. Er wordt nu met de oudste praktijken begonnen, zodat een later
+// aangemaakte nep-praktijk met dezelfde naam of hetzelfde adres de echte niet wegduwt.
+const MAX_VERGELIJK = 6;
+const oudsteEerst = (pks) => [...pks].sort((a, b) => (Number(praktijkAccounts[a].gemaakt) || 0) - (Number(praktijkAccounts[b].gemaakt) || 0));
 // inloggen op naam + wachtwoord: het account met deze naam waarvan het wachtwoord klopt
 function accountVoorLogin(naam, ww, veld = "hash") {
   // een praktijk waar het gedeelde wachtwoord niet meer meedoet, logt alleen nog per persoon in
   let vergeleken = 0;
-  for (const k of accountsMetNaam(naam)) {
+  for (const k of oudsteEerst(accountsMetNaam(naam))) {
     if (veld === "hash" && gedeeldStaatUit(k)) continue;
+    if (vergeleken >= MAX_VERGELIJK) break;
     vergeleken++;
     if (checkHash(ww, praktijkAccounts[k][veld])) return k;
   }
@@ -454,8 +462,9 @@ function accountVoorLogin(naam, ww, veld = "hash") {
 function ledenMetWachtwoord(nk, em, ww) {
   const uit = [];
   let vergeleken = 0;
-  for (const k of accountsMetNaam(nk)) for (const l of ledenVan(k)) {
+  for (const k of oudsteEerst(accountsMetNaam(nk))) for (const l of ledenVan(k)) {
     if (l.email !== em || !lidActief(l)) continue;
+    if (vergeleken >= MAX_VERGELIJK) break;
     vergeleken++;
     if (checkHash(String(ww || ""), l.hash)) uit.push({ pk: k, l });
   }
@@ -1638,6 +1647,8 @@ async function praktijkAllesWissen(pk) {
   try { await vertaalCacheOpschonen(); } catch {}
   return { aantalKaarten, proefUitkomst };
 }
+// een tijdstip in ms als ISO-tekst voor de download; leeg of onzin wordt null
+const isoOfNull = (ms) => (Number(ms) > 0 && Number.isFinite(Number(ms)) ? new Date(Number(ms)).toISOString() : null);
 // wat de praktijk bij een download over de eigen aanmelding krijgt: alles behalve apparaat-tokens
 function proefVoorDownload(id) {
   const p = Object.hasOwn(proeven, String(id)) ? proeven[String(id)] : null;
@@ -1673,7 +1684,7 @@ function proefVars(p, extra = {}) {
   const d = dagenOver(p.verloopt);
   return { NAAM: (p.naam || "").split(" ")[0], EMAIL: p.email, TEL: telefoonWeergave(p.tel), EINDDATUM: datumNl(p.verloopt),
     DAGEN_TEKST: d <= 1 ? "vandaag nog" : d + " dagen", TITEL: "Proef voorbij",
-    MIJN_KOP: p.klant ? "Hoi " + (p.naam || "").split(" ")[0] + ", fijn dat je Fysiplan gebruikt." : "Hoi " + (p.naam || "").split(" ")[0] + ", je proef loopt nog " + (d <= 1 ? "vandaag nog" : d + " dagen") + ".",
+    MIJN_KOP: p.klant ? "Hoi " + (p.naam || "").split(" ")[0] + ", fijn dat je Fysiplan gebruikt." : "Hoi " + (p.naam || "").split(" ")[0] + ", je proef loopt nog " + (d <= 1 ? "maar kort" : d + " dagen") + ".",
     MIJN_LEAD_HTML: p.klant ? "Je account staat op " + htmlEsc(p.email) + "."
       : "Tot en met <b>" + htmlEsc(datumNl(p.verloopt)) + "</b> gebruik je Fysiplan gratis. Je proef staat op " + htmlEsc(p.email) + ".",
     AFREKENEN: betalenKan() ? "Liever meteen geregeld? Reken de eerste maand hieronder online af." : "Online afrekenen is niet nodig.",
@@ -1789,9 +1800,9 @@ function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
   const tot = htmlEsc(datumNl(a.betaaldTot));
   const soort = isFactuur(FYSIPLAN_ID, isKor(a)) ? "Factuur" : "Betaalbewijs";
   // latere maanden (maandincasso) hebben elk een eigen factuur
-  const later = (Array.isArray(a.betalingen) ? a.betalingen : []).filter((b) => b && b.factuurNr)
-    .map((b) => '<a href="/v2/proef/factuur?nr=' + encodeURIComponent(b.factuurNr) + '">' + htmlEsc(b.factuurNr) + "</a>");
-  const factuur = '<a href="/v2/proef/factuur">' + soort + " bekijken en printen</a>" + (later.length ? " (eerste maand). Latere maanden: " + later.join(", ") : "");
+  // alle facturen staan in de tabel eronder (factuurOverzichtHtml); hier alleen de verwijzing
+  const factuur = '<a href="#facturen">' + (soort === "Factuur" ? "Je facturen" : "Je betaalbewijzen") + " staan hieronder</a>";
+  const overzicht = factuurOverzichtHtml(a, soort);
   // factuurgegevens van de praktijk (naam zoals bij de KvK, adres): optioneel, komen op elke nieuwe factuur
   const af = a.afnemer || {};
   const gegevens = '<form method="post" action="/v2/proef/factuurgegevens" id="factuurgegevens" style="margin-top:18px">' +
@@ -1811,7 +1822,7 @@ function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
     "Daarna schrijven we niets meer af en maak je geen nieuwe kaarten meer. Na nog " + NA_EINDE_WISSEN_DAGEN + " dagen wissen we alles van je praktijk, ook de gedeelde kaarten. " +
     "Download v\u00f3\u00f3r die tijd wat je wilt bewaren op <a href=\"/v2/gegevens\">Mijn gegevens</a>. " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="intrekken"/>' +
-    '<div class="knoppen"><button class="knop oranje" type="submit">Toch doorgaan</button></div></form>' + gegevens + "</div>";
+    '<div class="knoppen"><button class="knop oranje" type="submit">Toch doorgaan</button></div></form>' + overzicht + gegevens + "</div>";
   // na een mislukte maandincasso: de praktijk kan de openstaande maand zelf betalen (iDEAL of kaart)
   const open = mollieAan() ? openMaand(a) : null;
   const openBlok = !open ? "" : '<form method="post" action="/v2/proef/maand-betalen" id="open-maand" class="alarm" style="margin:14px 0 4px">' +
@@ -1825,7 +1836,7 @@ function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
     // alleen een beheerder zegt op: wachtwoord van een beheerder of van de praktijk
     (metWachtwoord ? '<div class="veld"><label for="o_ww">Wachtwoord van een beheerder</label>' +
       '<input id="o_ww" name="wachtwoord" type="password" autocomplete="current-password" maxlength="200" required/></div>' : "") +
-    '<div class="knoppen"><button class="knop omlijnd" type="submit">Abonnement opzeggen</button></div></form>' + gegevens + "</div>";
+    '<div class="knoppen"><button class="knop omlijnd" type="submit">Abonnement opzeggen</button></div></form>' + overzicht + gegevens + "</div>";
 }
 // Rem op het opvragen van een betaling bij Mollie. De terugkeerpagina's (/v2/proef/betaald,
 // /v2/proef/maand-betaald) en de webhook vroegen de status bij elk verzoek op; wie een eigen
@@ -2909,6 +2920,8 @@ function clientIp(req) {
 // het volledige adres gebruiken. Het /64-blok komt uit het volledig uitgeschreven
 // adres (lib/ip-sleutel.js): een ingekort adres met "::" gaf vroeger per adres een
 // eigen bucket (security 2026-11-16).
+// wie net alles wiste (verbinding + naam → { t, pk, acc }), voor een dubbeltik op /v2/gegevens/wissen
+const wisNetGedaan = new Map();
 function ipSleutel(req) {
   return ipSleutelVan(clientIp(req));
 }
@@ -4726,7 +4739,8 @@ async function afhandelen(request, response) {
           return;
         }
         let treffers = [], vergeleken = 0;
-        for (const pk of Object.keys(praktijkAccounts)) {
+        for (const pk of oudsteEerst(Object.keys(praktijkAccounts))) {
+          if (vergeleken >= MAX_VERGELIJK) break;
           for (const l of ledenVan(pk)) if (l.email === em && lidActief(l)) { vergeleken++; if (checkHash(ww, l.hash)) treffers.push({ pk, l }); }
         }
         // Een onbekend adres kostte geen scrypt en kwam tientallen milliseconden sneller terug dan een
@@ -5418,7 +5432,8 @@ async function afhandelen(request, response) {
       // kon die het gedeelde wachtwoord blijven omzetten, kreeg elke keer een verse code
       // en logde het hele team uit (security-backlog 2026-11-07)
       const metNaam = accountsMetNaam(nk);
-      const kandidaten = metNaam.filter((k) => !gedeeldStaatUit(k));
+      // oudste eerst en begrensd: elke kandidaat kost tot twee scrypt-vergelijkingen (zie MAX_VERGELIJK)
+      const kandidaten = oudsteEerst(metNaam.filter((k) => !gedeeldStaatUit(k))).slice(0, MAX_VERGELIJK / 2);
       if (nk && loginOpSlot(nk)) {
         await send429(response, 900, { ok: false, fout: "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
         return;
@@ -7226,6 +7241,9 @@ async function afhandelen(request, response) {
         antwoord: map[kk] ? map[kk].antwoord || null : null,
         notitie: map[kk] ? map[kk].notitie || null : null,
         notitieT: map[kk] ? Number(map[kk].notitieT) || null : null,
+        // wat de praktijk in de inbox al afhandelde blijft afgehandeld als de therapeut daarna
+        // de kaart aanpast; zonder dit kwam alles van de patiënt opnieuw als "nieuw" binnen
+        inboxGezien: map[kk] ? Number(map[kk].inboxGezien) || null : null,
         afspraak: map[kk] ? map[kk].afspraak || null : null,
         oefTrouw: map[kk] ? map[kk].oefTrouw || null : null,
         oefZwaar: map[kk] ? map[kk].oefZwaar || null : null,
@@ -7243,6 +7261,7 @@ async function afhandelen(request, response) {
         dossier: map[kk] ? map[kk].dossier || null : null };
       if (!map[kk].gearchiveerdOp) delete map[kk].gearchiveerdOp;
       if (!map[kk].planT) delete map[kk].planT;
+      if (!map[kk].inboxGezien) delete map[kk].inboxGezien;
       if (!map[kk].dossier) delete map[kk].dossier;
       await saveJson(kaartenPath, kaarten);
       await ruimKaartVideosOp(oudeVids.filter((p) => !Object.values(vids).includes(p)));
@@ -9104,8 +9123,25 @@ async function afhandelen(request, response) {
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
     const nk = cleanName(b.praktijk, 80).toLowerCase();
-    const opnieuw = (fout, status) => serveerProef(request, response, "gegevens", { TITEL: "Gegevens van je praktijk",
-      V_PRAKTIJK: cleanName(b.praktijk, 80), MELDING_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }, status);
+    // Dubbeltik op "Alles wissen": het eerste verzoek wist alles, het tweede viel op de al gebruikte
+    // code en de browser toonde "Die code klopt niet", alsof er niets gewist was (sweep 18-11, Karin
+    // op de iPad). Wiste dezelfde verbinding met dezelfde naam net alles, dan zegt de pagina dat.
+    let wisSleutel = "";
+    const opnieuw = async (fout, status) => {
+      if (wissen && wisSleutel) {
+        for (let i = 0; i < 15 && !wisNetGedaan.has(wisSleutel); i++) await new Promise((r) => setTimeout(r, 100));
+        const w = wisNetGedaan.get(wisSleutel);
+        // alleen voor dezelfde praktijk: is de naam intussen opnieuw in gebruik, dan de gewone melding
+        if (w && Date.now() - w.t < 10 * 60000 && (!Object.hasOwn(praktijkAccounts, w.pk) || praktijkAccounts[w.pk] === w.acc)) {
+          await serveerProef(request, response, "bericht", { TITEL: "Alles gewist", ETIKET: "Gewist", KOP: "Alles van je praktijk is al gewist.",
+            TEKST: "Je verstuurde het wissen twee keer. De eerste keer is alles gewist; daarna was er niets meer om te wissen.",
+            KNOP_HTML: '<a class="knop omlijnd" href="/v2">Naar de site</a>' });
+          return;
+        }
+      }
+      await serveerProef(request, response, "gegevens", { TITEL: "Gegevens van je praktijk",
+        V_PRAKTIJK: cleanName(b.praktijk, 80), MELDING_HTML: '<p class="melding" role="alert">' + htmlEsc(fout) + "</p>" }, status);
+    };
     // met eigen login: e-mail + wachtwoord van een beheerder van die praktijk. Zo blijft
     // downloaden en wissen mogelijk nadat het gedeelde praktijkwachtwoord uit staat.
     const em = normEmail(b.email);
@@ -9113,6 +9149,7 @@ async function afhandelen(request, response) {
     // app), anders per praktijknaam. Zo kan wie alleen de praktijknaam kent, met tien foute
     // pogingen de beheerder niet een kwartier buitensluiten (security 2026-11-12 16u).
     const remNaam = em ? "mail:" + em : nk;
+    if (remNaam) wisSleutel = ipSleutel(request) + "|" + remNaam;
     if (remNaam && loginOpSlot(remNaam)) { await opnieuw(em ? "Te veel pogingen met dit e-mailadres; probeer het over een kwartier opnieuw." : "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw.", 429); return; }
     if (beheerOpRem(request)) { await opnieuw("Te veel foute pogingen vanaf deze verbinding; probeer het over een paar minuten opnieuw.", 429); return; }
     let pk = null, lid = null, geenBeheerder = null;
@@ -9181,7 +9218,14 @@ async function afhandelen(request, response) {
         // de proefaanmelding (contactpersoon, e-mail, telefoon, betaling) hoort bij de praktijk
         aanmelding: acc.proef ? proefVoorDownload(acc.proef.id) : null,
         // teamleden zonder wachtwoord of uitnodigingscode
+        // ook wanneer de login ontstond, wie wanneer welke werkregels accepteerde, wanneer het wachtwoord
+        // via herstel wijzigde en tot wanneer een uitnodiging openstaat (legal 2026-11-18, art. 15/20 en
+        // art. 28 lid 3 h AVG: de praktijk moet kunnen laten zien dat haar team de werkregels kent)
         team: ledenVan(pk).map((l) => ({ naam: l.naam || "", email: l.email, rol: l.rol, actief: lidActief(l), laatst: l.laatst || null,
+          gemaakt: isoOfNull(l.gemaakt),
+          werkregels: l.regels && l.regels.versie ? { versie: String(l.regels.versie), t: l.regels.t || null } : null,
+          wachtwoordGewijzigd: isoOfNull(l.gewijzigd),
+          uitnodiging: l.uitnodiging && Number(l.uitnodiging.verloopt) ? { open: Number(l.uitnodiging.verloopt) > Date.now(), verloopt: isoOfNull(l.uitnodiging.verloopt) } : null,
           tweedeStap: heeftTweedeStap(l) ? { aan: true, sinds: l.totp.sinds ? new Date(l.totp.sinds).toISOString() : null, reservecodesOver: reservecodesOver(l) } : { aan: false } })),
         profiel: Object.entries(praktijken).filter(eigenProfiel).map(([, p]) => publiekProfiel(p)),
         // een kaart in de prullenbak verdwijnt op herstelTot (verlooptOp is dan 0 = 1970)
@@ -9204,6 +9248,10 @@ async function afhandelen(request, response) {
       response.end(JSON.stringify(pakket, null, 2));
       return;
     }
+    for (const [k, w] of wisNetGedaan) if (Date.now() - w.t > 10 * 60000) wisNetGedaan.delete(k);
+    // beide tikken kwamen tegelijk door de controle: de tweede wist niet nog eens (dan stond er "0 kaarten")
+    if (wisNetGedaan.has(wisSleutel) && wisNetGedaan.get(wisSleutel).acc === acc) { await opnieuw("", 200); return; }
+    wisNetGedaan.set(wisSleutel, { t: Date.now(), pk, acc });
     const { aantalKaarten, proefUitkomst } = await praktijkAllesWissen(pk);
     auditLog("(gewist)", "praktijk-alles-gewist", request);
     await serveerProef(request, response, "bericht", { TITEL: "Alles gewist", ETIKET: "Gewist", KOP: "Alles van je praktijk is gewist.",
