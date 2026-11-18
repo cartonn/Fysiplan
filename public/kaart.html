@@ -2290,6 +2290,17 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   }
   // "verstuurd", en als het getikte seintje niet het open seintje werd: dat het eerdere blijft staan
   function seinDankTekst(soort){var o=K&&K.kaart&&K.kaart.seinOpen;return trs('dank')+(o&&o.soort!==soort?' '+trs('blijft'):'');}
+  // Na een geslaagde tik de offline-kopie van de kaart verversen (via de service worker, die elk
+  // 200-antwoord bewaart). Anders toonde de kaart zonder internet na herladen de stand van bij het
+  // laden, terwijl de praktijk de tik al had (gebruikers-sweep 2026-11-18, Truus). Eén keer per reeks tikken.
+  var KOPIE_KLOK=0;
+  function verversKopie(){
+    try{
+      if(!navigator.serviceWorker||!navigator.serviceWorker.controller)return;
+      clearTimeout(KOPIE_KLOK);
+      KOPIE_KLOK=setTimeout(function(){fetch('/api/kaart?id='+id,{cache:'no-cache'}).catch(function(){});},800);
+    }catch(e){}
+  }
   function stuur(pad,body){
     return fetch(pad,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)})
       .catch(function(){WACHT_REDEN='net';zetInWacht(pad,body);var e=new Error('wacht');e.wacht=true;throw e;})
@@ -2299,6 +2310,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           var e=new Error('wacht');e.wacht=true;e.druk=true;throw e;
         }
         WACHT_REDEN='net';
+        if(r.ok)verversKopie();
         // 409 = de oefening staat niet meer op de kaart (#291): dat moet de kaart kunnen zien
         return r.json().then(function(j){if(r.status===409&&j&&typeof j==='object')j.weg=true;return j;});
       });
