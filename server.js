@@ -10,7 +10,7 @@ import { ipSleutel as ipSleutelVan } from "./lib/ip-sleutel.js";
 import { isAuditRuis, kiesActiviteit } from "./lib/audit-keuze.js";
 import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
-import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver, geldigEmail } from "./lib/proef.js";
+import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver, geldigEmail, proefEinde, eindeVanDagNl } from "./lib/proef.js";
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
 import * as vasteVragen from "./lib/vaste-vragen.js";
 import { prijsRegels, prijsZin, metBtwBijschrift, bedragVoor, euro as euroTekst } from "./lib/prijs.js";
@@ -8496,7 +8496,7 @@ async function afhandelen(request, response) {
         return;
       }
       const nu = Date.now();
-      p = { id: randomBytes(8).toString("hex"), email: w.email, gestart: nu, verloopt: nu + PROEF_DAGEN * 86400000,
+      p = { id: randomBytes(8).toString("hex"), email: w.email, gestart: nu, verloopt: proefEinde(nu),
         akkoord: new Date(nu).toISOString(), tokens: [], kaarten: 0 };
       proeven[p.id] = p;
     }
@@ -9257,8 +9257,10 @@ async function afhandelen(request, response) {
     const { aantalKaarten, proefUitkomst } = await praktijkAllesWissen(pk);
     auditLog("(gewist)", "praktijk-alles-gewist", request);
     await serveerProef(request, response, "bericht", { TITEL: "Alles gewist", ETIKET: "Gewist", KOP: "Alles van je praktijk is gewist.",
-      TEKST: aantalKaarten + (aantalKaarten === 1 ? " kaart" : " kaarten") + ", je eigen oefeningen, sjablonen, praktijkgegevens, wachtwoord, " +
-        (proefUitkomst === "gewist" ? "proefaanmelding " : "") + "en logboek zijn van de server. " +
+      // legal 2026-11-18 (art. 12 AVG): dezelfde opsomming als het blok "Alles wissen" op /v2/gegevens
+      TEKST: aantalKaarten + (aantalKaarten === 1 ? " kaart" : " kaarten") + ", je eigen oefeningen en vragen, sjablonen, praktijkgegevens, " +
+        (proefUitkomst === "gewist" ? "proefaanmelding, " : "") + "wachtwoord, de logins van je team, het logboek, het leeslog, " +
+        "je open ideeën en wat Fysiplan-support over je praktijk bijhield zijn van de server. " +
         (proefUitkomst === "betaling" ? "Van je betaling bewaren we alleen naam, e-mail, praktijknaam en de betaalgegevens, 7 jaar, omdat de wet dat vraagt. " : "") +
         "In de dagelijkse reservekopie staat het nog hooguit 7 dagen. De praktijknaam is weer vrij. " +
         "In de browser van je eigen computer staan nog namen en kaarten: wis die in de app bij Kaarten met \u201cWis Fysiplan van dit apparaat\u201d.",
@@ -9303,7 +9305,7 @@ async function afhandelen(request, response) {
         if (!p) { await sendJson(response, 404, { ok: false, fout: "Aanmelding niet gevonden." }); return; }
         if (b.actie === "wis") proefWis(p.id);
         else if (b.actie === "klant") p.klant = !p.klant;
-        else if (b.actie === "verleng") { p.verloopt = Math.max(p.verloopt, Date.now()) + 7 * 86400000; p.herinnerd = 0; p.eindeGemeld = 0; }
+        else if (b.actie === "verleng") { p.verloopt = eindeVanDagNl(Math.max(p.verloopt, Date.now()) + 7 * 86400000); p.herinnerd = 0; p.eindeGemeld = 0; }
         else { await sendJson(response, 400, { ok: false, fout: "Onbekende actie." }); return; }
         await bewaarProeven();
         await sendJson(response, 200, { ok: true, aanmeldingen: lijst() });

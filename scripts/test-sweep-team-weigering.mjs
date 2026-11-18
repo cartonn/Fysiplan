@@ -16,6 +16,10 @@ const index = await readFile(join(root, "public/index.html"), "utf8");
 assert.doesNotMatch(index, /msg\(r\.fout\|\|'Dat lukte niet\.'\);laadTeam\(\);/, "weigering niet vóór het opnieuw tekenen tonen");
 assert.match(index, /laadTeam\(function\(\)\{if\(!r\.ok\)msg\(r\.fout\|\|'Dat lukte niet\.'\);\}\);/, "weigering na het opnieuw tekenen");
 assert.match(index, /el\.innerHTML=h;\s*if\(fWas\)/, "Team zet de focus terug na opnieuw tekenen");
+// sweep 2026-11-18 06u (Karin): na een ingetrokken rol bleef het venster na "Nodig uit" vol beheerknoppen staan
+assert.match(index, /if\(!r\.ok&&r\._status===403\)\{laadTeam\(function\(\)\{msg\(r\.fout\|\|'Uitnodigen lukte niet\.'\);\}\);return;\}/,
+  "Nodig uit tekent Team opnieuw na een 403");
+assert.match(index, /!x\.hasAttribute\('data-tmrol'\)/, "focus valt na opnieuw tekenen niet terug op een rolkeuze");
 
 let pw = null;
 try { pw = createRequire(import.meta.url)("playwright"); } catch {}
@@ -99,6 +103,29 @@ try {
   assert.notEqual(await page.evaluate(() => document.activeElement === document.body), true, "focus niet op body na opnieuw tekenen");
   assert.equal(await page.evaluate(() => document.getElementById("ovTeam").contains(document.activeElement)), true, "focus blijft in Team");
   assert.equal(await rolLisa(), "beheerder", "Lisa is er nog");
+  // Karin weer beheerder; met Team open zet Lisa haar opnieuw op therapeut en Karin klikt "Nodig uit"
+  assert.equal((await post("/api/praktijk/team/rol", { id: karinId, rol: "beheerder" }, L)).status, 200, "Karin weer beheerder");
+  await page.reload();
+  await page.waitForSelector("[data-add]", { timeout: 15000 });
+  await page.evaluate(() => { document.querySelectorAll(".ov.on").forEach((o) => o.classList.remove("on")); });
+  await page.click("#kaartenBtn");
+  await page.waitForSelector("#ps_team", { state: "visible", timeout: 8000 });
+  await page.click("#ps_team");
+  await page.waitForSelector("#ovTeam.on #tm_udo", { state: "visible", timeout: 8000 });
+  assert.equal((await post("/api/praktijk/team/rol", { id: karinId, rol: "therapeut" }, L)).status, 200, "Lisa maakt Karin weer therapeut");
+  await page.fill("#tm_unaam", "Noor");
+  await page.fill("#tm_uemail", "noor@weiger.nl");
+  const antw2 = page.waitForResponse((r) => r.url().includes("/api/praktijk/team/uitnodigen"));
+  await page.click("#tm_udo");
+  assert.equal((await antw2).status(), 403, "server weigert uitnodigen");
+  await page.waitForFunction(() => !document.getElementById("tm_udo"), null, { timeout: 5000 }).catch(() => {});
+  await wacht(400);
+  const na = await page.evaluate(() => ({ udo: !!document.getElementById("tm_udo"), rol: document.querySelectorAll("#ovTeam [data-tmrol]").length,
+    msg: (document.getElementById("tm_msg") || {}).textContent || "" }));
+  assert.equal(na.udo, false, "geen uitnodigformulier meer na de weigering");
+  assert.equal(na.rol, 0, "geen rolkeuzes meer na de weigering");
+  assert.ok(na.msg.trim().length > 10, "weigering zichtbaar, was: '" + na.msg + "'");
+  assert.equal(await page.evaluate(() => document.getElementById("ovTeam").contains(document.activeElement)), true, "focus blijft in Team");
   assert.deepEqual(fouten, [], "geen paginafouten");
   console.log("team weigering: ok (weigering blijft staan na opnieuw tekenen, focus blijft in Team)");
 } catch (e) {
