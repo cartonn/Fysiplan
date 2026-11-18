@@ -21,7 +21,7 @@ import { plaatsenVan, merkPiek, volgendAantal, nieuwePeriode, kaartVol, KAARTEN_
 import { maandBedrag, betaalBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN,
   openMaand, zelfBetalenVerzoek, markeerZelfGestart, beoordeelZelf, markeerZelfBetaald } from "./lib/mollie.js";
-import { volgendFactuurNr, naarCent, factuurHtml, isFactuur, isKor, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
+import { volgendFactuurNr, naarCent, factuurHtml, factuurOverzichtHtml, isFactuur, isKor, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
 import { backupInstellingen } from "./lib/backup-elders.js";
 import { runBackup } from "./lib/backup-runner.js";
 import { gegevensRuimte } from "./lib/backup-snapshots.js";
@@ -1788,9 +1788,9 @@ function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
   const tot = htmlEsc(datumNl(a.betaaldTot));
   const soort = isFactuur(FYSIPLAN_ID, isKor(a)) ? "Factuur" : "Betaalbewijs";
   // latere maanden (maandincasso) hebben elk een eigen factuur
-  const later = (Array.isArray(a.betalingen) ? a.betalingen : []).filter((b) => b && b.factuurNr)
-    .map((b) => '<a href="/v2/proef/factuur?nr=' + encodeURIComponent(b.factuurNr) + '">' + htmlEsc(b.factuurNr) + "</a>");
-  const factuur = '<a href="/v2/proef/factuur">' + soort + " bekijken en printen</a>" + (later.length ? " (eerste maand). Latere maanden: " + later.join(", ") : "");
+  // alle facturen staan in de tabel eronder (factuurOverzichtHtml); hier alleen de verwijzing
+  const factuur = '<a href="#facturen">' + (soort === "Factuur" ? "Je facturen" : "Je betaalbewijzen") + " staan hieronder</a>";
+  const overzicht = factuurOverzichtHtml(a, soort);
   // factuurgegevens van de praktijk (naam zoals bij de KvK, adres): optioneel, komen op elke nieuwe factuur
   const af = a.afnemer || {};
   const gegevens = '<form method="post" action="/v2/proef/factuurgegevens" id="factuurgegevens" style="margin-top:18px">' +
@@ -1810,7 +1810,7 @@ function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
     "Daarna schrijven we niets meer af en maak je geen nieuwe kaarten meer. Na nog " + NA_EINDE_WISSEN_DAGEN + " dagen wissen we alles van je praktijk, ook de gedeelde kaarten. " +
     "Download v\u00f3\u00f3r die tijd wat je wilt bewaren op <a href=\"/v2/gegevens\">Mijn gegevens</a>. " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="intrekken"/>' +
-    '<div class="knoppen"><button class="knop oranje" type="submit">Toch doorgaan</button></div></form>' + gegevens + "</div>";
+    '<div class="knoppen"><button class="knop oranje" type="submit">Toch doorgaan</button></div></form>' + overzicht + gegevens + "</div>";
   // na een mislukte maandincasso: de praktijk kan de openstaande maand zelf betalen (iDEAL of kaart)
   const open = mollieAan() ? openMaand(a) : null;
   const openBlok = !open ? "" : '<form method="post" action="/v2/proef/maand-betalen" id="open-maand" class="alarm" style="margin:14px 0 4px">' +
@@ -1824,7 +1824,7 @@ function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
     // alleen een beheerder zegt op: wachtwoord van een beheerder of van de praktijk
     (metWachtwoord ? '<div class="veld"><label for="o_ww">Wachtwoord van een beheerder</label>' +
       '<input id="o_ww" name="wachtwoord" type="password" autocomplete="current-password" maxlength="200" required/></div>' : "") +
-    '<div class="knoppen"><button class="knop omlijnd" type="submit">Abonnement opzeggen</button></div></form>' + gegevens + "</div>";
+    '<div class="knoppen"><button class="knop omlijnd" type="submit">Abonnement opzeggen</button></div></form>' + overzicht + gegevens + "</div>";
 }
 // Rem op het opvragen van een betaling bij Mollie. De terugkeerpagina's (/v2/proef/betaald,
 // /v2/proef/maand-betaald) en de webhook vroegen de status bij elk verzoek op; wie een eigen

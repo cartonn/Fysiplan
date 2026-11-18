@@ -269,7 +269,9 @@ try {
       nep.betaling.status = "paid";
       html = await pagina("/v2/proef/betaald");
       assert.match(html, /Factuur bekijken/, naam + ": de bedankpagina wijst naar de factuur");
-      assert.match(await pagina("/v2/proef?mijn=1"), /Factuur bekijken en printen/, naam + ": Mijn abonnement ook");
+      const mijnAbo = await pagina("/v2/proef?mijn=1");
+      assert.match(mijnAbo, /id="facturen"[\s\S]*href="\/v2\/proef\/factuur"/, naam + ": Mijn abonnement ook, in het factuuroverzicht");
+      assert.ok(mijnAbo.includes("&euro;&nbsp;" + g.mollie.replace(".", ",")), naam + ": het overzicht noemt het betaalde bedrag");
       const a = (await proef()).abonnement;
       assert.deepEqual([a.status, a.aantal, a.bedrag, a.btw], ["actief", 3, g.mollie, g.btw], naam + ": het abonnement draagt het betaalde bedrag en de btw");
       html = await pagina("/v2/proef/factuur");
