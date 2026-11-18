@@ -236,7 +236,9 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   het eerste. Nog niet opgelost: CSV-export (geen venster), Esc in het zoekveld (`search.blur()` r. ~2606 → volgende Tab door 1634
   tabstops van de oefenlijst), welkom → "Nieuw in Fysiplan" (release-notes.js opent omdat de focus op body staat; een nieuwe gebruiker
   krijgt meteen het updatesvenster), welkomvenster op een tweede apparaat (Mark) zonder inlogknop.
-- **MIDDEL (Mark, desktop) — proef stopt eerder dan "t/m <datum>" belooft:** `verloopt` = start + 14×24 u (server.js ~8378), de balk en
+- **OPGELOST 2026-11-18 praktijk-routine (ruimhartig: nieuwe proeven en "verleng" lopen tot 23:59 NL-tijd van de t/m-dag, `proefEinde` in
+  lib/proef.js, test in test:proef; bestaande proeven houden hun tijdstip) —
+  MIDDEL (Mark, desktop) — proef stopt eerder dan "t/m <datum>" belooft:** `verloopt` = start + 14×24 u (server.js ~8378), de balk en
   Mijn proef zeggen "t/m maandag 30 november" terwijl schrijven die ochtend om 07:12 al stopt; op de laatste dag "t/m vandaag" en om 07:19
   al 403. Keuze: einde afronden naar 23:59 NL-tijd van de laatste dag (ruimhartig) of het tijdstip noemen. Raakt ook proefmail/wissen
   (30 dagen) → met de praktijk-routine afstemmen. LAAG: "je proef loopt nog vandaag nog" (server.js r. 1618).

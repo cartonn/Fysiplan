@@ -10,7 +10,7 @@ import { ipSleutel as ipSleutelVan } from "./lib/ip-sleutel.js";
 import { isAuditRuis, kiesActiviteit } from "./lib/audit-keuze.js";
 import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
-import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver, geldigEmail } from "./lib/proef.js";
+import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver, geldigEmail, proefEinde, eindeVanDagNl } from "./lib/proef.js";
 import { vraagOverKlacht, verwijzing, vraagOverDosering, doseringVerwijzing } from "./lib/vraaghulp-grens.js";
 import * as vasteVragen from "./lib/vaste-vragen.js";
 import { prijsRegels, prijsZin, metBtwBijschrift, bedragVoor, euro as euroTekst } from "./lib/prijs.js";
@@ -8494,7 +8494,7 @@ async function afhandelen(request, response) {
         return;
       }
       const nu = Date.now();
-      p = { id: randomBytes(8).toString("hex"), email: w.email, gestart: nu, verloopt: nu + PROEF_DAGEN * 86400000,
+      p = { id: randomBytes(8).toString("hex"), email: w.email, gestart: nu, verloopt: proefEinde(nu),
         akkoord: new Date(nu).toISOString(), tokens: [], kaarten: 0 };
       proeven[p.id] = p;
     }
@@ -9301,7 +9301,7 @@ async function afhandelen(request, response) {
         if (!p) { await sendJson(response, 404, { ok: false, fout: "Aanmelding niet gevonden." }); return; }
         if (b.actie === "wis") proefWis(p.id);
         else if (b.actie === "klant") p.klant = !p.klant;
-        else if (b.actie === "verleng") { p.verloopt = Math.max(p.verloopt, Date.now()) + 7 * 86400000; p.herinnerd = 0; p.eindeGemeld = 0; }
+        else if (b.actie === "verleng") { p.verloopt = eindeVanDagNl(Math.max(p.verloopt, Date.now()) + 7 * 86400000); p.herinnerd = 0; p.eindeGemeld = 0; }
         else { await sendJson(response, 400, { ok: false, fout: "Onbekende actie." }); return; }
         await bewaarProeven();
         await sendJson(response, 200, { ok: true, aanmeldingen: lijst() });
