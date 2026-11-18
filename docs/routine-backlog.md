@@ -73,7 +73,11 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
-- **LAAG (van legal, 2026-11-16 17u, niet nagespeeld in de browser) — inbox: een kaart opnieuw opslaan met een echte wijziging wist `inboxGezien`.**
+### Sweep 2026-11-18 06u (inhaalrun na een afgebroken run op 17-11; geen persona-agents gestart, alleen het open backlogpunt)
+- **OPGELOST 2026-11-18 deze run (test:inbox) — LAAG/MIDDEL (van legal) — inbox: een kaart opnieuw opslaan met een echte wijziging wiste `inboxGezien`.** Nagespeeld: herstel (ervaren herstel) dat de praktijk al had afgehandeld kwam na het bewaren van andere oefeningen opnieuw als "nieuw" in de inbox (pijnscores niet, die vallen al weg onder `ts`). POST /api/kaarten neemt `inboxGezien` nu mee.
+- **Volgende run:** de vijf persona's weer volledig; tijdzone-keuze (Jayden), focus na kaartacties in Kaarten/Prullenbak, tikvlakken Kaarten/Prullenbak op iPad, rechten na rolwissel.
+
+- **OPGELOST 2026-11-18 (zie hierboven) — LAAG (van legal, 2026-11-16 17u, niet nagespeeld in de browser) — inbox: een kaart opnieuw opslaan met een echte wijziging wist `inboxGezien`.**
   `/api/kaarten` (POST) bouwt de kaart opnieuw op met een vaste lijst velden; `inboxGezien` staat daar niet in (`dossier` wel sinds
   de legal-PR van deze run). Gevolg vermoedelijk: wat de therapeut in de inbox al als gezien had, telt na het bewaren van een
   nieuwe dosering weer als "nieuw". Kleinste fix: `inboxGezien` meenemen zoals `notitieT`, met een test in `test-inbox.mjs`.

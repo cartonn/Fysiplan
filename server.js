@@ -7233,6 +7233,9 @@ async function afhandelen(request, response) {
         antwoord: map[kk] ? map[kk].antwoord || null : null,
         notitie: map[kk] ? map[kk].notitie || null : null,
         notitieT: map[kk] ? Number(map[kk].notitieT) || null : null,
+        // wat de praktijk in de inbox al afhandelde blijft afgehandeld als de therapeut daarna
+        // de kaart aanpast; zonder dit kwam alles van de patiënt opnieuw als "nieuw" binnen
+        inboxGezien: map[kk] ? Number(map[kk].inboxGezien) || null : null,
         afspraak: map[kk] ? map[kk].afspraak || null : null,
         oefTrouw: map[kk] ? map[kk].oefTrouw || null : null,
         oefZwaar: map[kk] ? map[kk].oefZwaar || null : null,
@@ -7250,6 +7253,7 @@ async function afhandelen(request, response) {
         dossier: map[kk] ? map[kk].dossier || null : null };
       if (!map[kk].gearchiveerdOp) delete map[kk].gearchiveerdOp;
       if (!map[kk].planT) delete map[kk].planT;
+      if (!map[kk].inboxGezien) delete map[kk].inboxGezien;
       if (!map[kk].dossier) delete map[kk].dossier;
       await saveJson(kaartenPath, kaarten);
       await ruimKaartVideosOp(oudeVids.filter((p) => !Object.values(vids).includes(p)));
