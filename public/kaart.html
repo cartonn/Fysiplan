@@ -2330,8 +2330,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           // druk of serverfout: later nog eens; een afwijzing (4xx) heeft geen zin om te herhalen
           if(r.status===429||r.status>=500){wachtBezig=false;WACHT_REDEN='druk';later(r.headers.get('retry-after'));tekenWacht();throw 'druk';}
           // 400 op een oude tik (server: te lang geleden): niet herhalen, wel aan de patiënt zeggen
-          if(r.status===400&&Number(it.body&&it.body.wanneer)<Date.now()-WACHT_MAX_DAGEN*86400000)WACHT_OUD++;else verstuurd++;
+          // Alleen een geslaagde tik telt als "Verstuurd ✓". Een 409 op een vinkje = de praktijk haalde de
+          // oefening intussen van de kaart: dan het vinkje terug en de melding bij de oefening, net als
+          // bij een tik met internet. Eerder meldde de wachtrij "Verstuurd ✓" terwijl de server weigerde
+          // (gebruikers-sweep 2026-11-18).
+          var weg=r.status===409&&it.pad==='/api/kaart/oefening'&&it.body;
+          if(r.status===400&&Number(it.body&&it.body.wanneer)<Date.now()-WACHT_MAX_DAGEN*86400000)WACHT_OUD++;else if(r.ok)verstuurd++;
           var nu=leesWacht();delete nu[sleutels[i]];bewaarWacht(nu);
+          if(weg){try{oefWeg(Number(it.body.oef),it.body.aan!==false);}catch(e){}}
           return r.json().catch(function(){return null;});
         })
         .then(function(d){

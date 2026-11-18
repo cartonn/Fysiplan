@@ -26,6 +26,8 @@ for (const t of ["nl", "en", "de", "fr", "es", "pl", "tr", "ar", "uk"]) {
 }
 assert.doesNotMatch(kaart, /weg:'[^']*(Vernieuw de pagina|reload the page)/, "geen opdracht om zelf de pagina te vernieuwen");
 assert.match(kaart, /if\(SESSIE>-1&&SESSIE!==idx\)openOef\(idx\)/, "stappenmodus gaat terug naar de weggehaalde oefening");
+assert.match(kaart, /else if\(r\.ok\)verstuurd\+\+/, "wachtrij telt alleen een geslaagde tik als verstuurd");
+assert.match(kaart, /if\(weg\)\{try\{oefWeg\(Number\(it\.body\.oef\),it\.body\.aan!==false\);\}/, "409 uit de wachtrij draait het vinkje terug met de melding");
 
 let playwright = null;
 for (const van of [import.meta.url, "/opt/node22/lib/node_modules/"]) {
@@ -117,6 +119,30 @@ try {
   assert.match(s1.stel, /1/, "teller staat op die oefening: " + s1.stel);
   assert.ok(s1.zicht, "herlaadknop zichtbaar in de stappenmodus");
   assert.equal(s1.focus, "oefweg", "focus op de melding");
+  // Sweep 2026-11-18 10u: zonder internet een vinkje gezet bij een oefening die de praktijk intussen weghaalde.
+  // Weer online gaf de server 409, maar de wachtrij meldde "Sent to your physiotherapist ✓" en het vinkje bleef staan.
+  await page.unroute("**/api/kaart/oefening");
+  let offline = true, wachtVinkjes = 0;
+  await page.route("**/api/kaart/oefening", (r) => {
+    if (offline) return r.abort("internetdisconnected");
+    wachtVinkjes++; r.fulfill({ status: 409, contentType: "application/json", body: JSON.stringify(weg) });
+  });
+  await page.goto(origin + "/k/" + ID + "?taal=en");
+  await page.waitForSelector('#oefs .oefdone[data-idx="1"]');
+  await page.evaluate(() => { document.querySelectorAll(".ov.on,.lb.on").forEach((o) => o.classList.remove("on")); document.body.classList.remove("sessie"); });
+  await page.evaluate(() => document.querySelector('#oefs .oefdone[data-idx="1"]').click());
+  await page.waitForFunction(() => { const w = document.getElementById("wachtrij"); return w && w.style.display === "block"; }, null, { timeout: 4000 });
+  offline = false;
+  await page.evaluate(() => window.dispatchEvent(new Event("online")));
+  await page.waitForSelector('#oefs .oef[data-oidx="1"] .oefweg', { timeout: 4000 });
+  await page.waitForTimeout(300);
+  const o1 = await page.evaluate(() => ({ w: document.getElementById("wachtrij").textContent, zicht: document.getElementById("wachtrij").style.display,
+    pressed: document.querySelector('#oefs .oefdone[data-idx="1"]').getAttribute("aria-pressed"),
+    wacht: Object.keys(localStorage).filter((k) => /wacht/i.test(k) && localStorage.getItem(k) !== "{}").length }));
+  assert.equal(wachtVinkjes, 1, "het vinkje uit de wachtrij ging één keer mee");
+  assert.ok(o1.zicht === "none" || !/✓|Sent to/.test(o1.w), "wachtrij meldt geen 'verstuurd' na een 409: " + o1.w);
+  assert.equal(o1.pressed, "false", "vinkje uit de wachtrij teruggedraaid");
+  assert.equal(o1.wacht, 0, "de geweigerde tik staat niet meer in de wachtrij");
   assert.deepEqual(fouten, []);
   await ctx.close();
   console.log("PASS weggehaalde oefening op /k: vinkje terug, melding met herlaadknop, stappenmodus terug naar die oefening");
