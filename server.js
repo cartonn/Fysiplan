@@ -9255,8 +9255,10 @@ async function afhandelen(request, response) {
     const { aantalKaarten, proefUitkomst } = await praktijkAllesWissen(pk);
     auditLog("(gewist)", "praktijk-alles-gewist", request);
     await serveerProef(request, response, "bericht", { TITEL: "Alles gewist", ETIKET: "Gewist", KOP: "Alles van je praktijk is gewist.",
-      TEKST: aantalKaarten + (aantalKaarten === 1 ? " kaart" : " kaarten") + ", je eigen oefeningen, sjablonen, praktijkgegevens, wachtwoord, " +
-        (proefUitkomst === "gewist" ? "proefaanmelding " : "") + "en logboek zijn van de server. " +
+      // legal 2026-11-18 (art. 12 AVG): dezelfde opsomming als het blok "Alles wissen" op /v2/gegevens
+      TEKST: aantalKaarten + (aantalKaarten === 1 ? " kaart" : " kaarten") + ", je eigen oefeningen en vragen, sjablonen, praktijkgegevens, " +
+        (proefUitkomst === "gewist" ? "proefaanmelding, " : "") + "wachtwoord, de logins van je team, het logboek, het leeslog, " +
+        "je open ideeën en wat Fysiplan-support over je praktijk bijhield zijn van de server. " +
         (proefUitkomst === "betaling" ? "Van je betaling bewaren we alleen naam, e-mail, praktijknaam en de betaalgegevens, 7 jaar, omdat de wet dat vraagt. " : "") +
         "In de dagelijkse reservekopie staat het nog hooguit 7 dagen. De praktijknaam is weer vrij. " +
         "In de browser van je eigen computer staan nog namen en kaarten: wis die in de app bij Kaarten met \u201cWis Fysiplan van dit apparaat\u201d.",
