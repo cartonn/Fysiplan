@@ -313,6 +313,16 @@ nummer is uitgegeven toont "volgt". Code: `factuurRegels` en `factuurOverzichtHt
 **Env:** geen eigen schakelaar; het overzicht verschijnt alleen bij een praktijk die online betaalde, dus pas met `MOLLIE_API_KEY`.
 **Wat jij moet doen:** niets extra; dit hoort bij het aanzetten van Mollie (zie Factuur per online betaling hieronder).
 
+### Proef loopt nu echt "tot en met" de genoemde dag (praktijk-routine, 2026-11-18)
+**Wat de code nu doet:** overal staat "je proef loopt t/m maandag 30 november", maar de proef stopte op die maandag al
+op het tijdstip van aanmelden (om 07:12 aangemeld = 30 november om 07:12 dicht). Een nieuwe proef loopt nu die hele
+laatste dag door, tot 23:59 Nederlandse tijd; "verlengen" in het aanmeldingenoverzicht ook. Herinnering, mail op de
+einddag en wissen na 30 dagen rekenen vanaf dat nieuwe einde, dus hooguit een dag later dan voorheen. Proeven die al
+liepen houden hun oude tijdstip. Op de laatste dag zegt Mijn proef "je proef loopt nog tot en met vandaag" (was "nog
+vandaag nog"). Code: `proefEinde` in lib/proef.js; test in `npm run test:proef`.
+**Env:** geen; dit werkt meteen na de merge.
+**Wat jij moet doen:** niets.
+
 ### Starttip op dag 3 voor een proef zonder kaart (praktijk-routine, 2026-11-16)
 **Wat de code nu doet:** niets, tot jij hem aanzet. Met `PROEF_STARTTIP=aan` krijgt een proef die na 3 dagen nog geen
 enkele kaart met een patiënt deelde één mail "Je eerste Fysiplan-kaart in een paar minuten": drie stappen (app openen,

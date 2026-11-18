@@ -9,7 +9,18 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { valideerAanmelding, normaliseerTelefoon, telefoonWeergave, emailSuggestie } from "../lib/proef.js";
+import { valideerAanmelding, normaliseerTelefoon, telefoonWeergave, emailSuggestie, proefEinde, eindeVanDagNl, dagenOver } from "../lib/proef.js";
+
+// ---- einde van de proef: tot en met de genoemde dag, tot middernacht Nederlandse tijd ----
+// Voorheen gestart + 14 × 24 uur: om 07:12 aangemeld = op de "t/m"-dag om 07:12 dicht.
+assert.equal(new Date(proefEinde(Date.parse("2026-11-16T06:12:00Z"))).toISOString(), "2026-11-30T22:59:59.999Z");
+assert.equal(new Date(proefEinde(Date.parse("2026-11-16T22:30:00Z"))).toISOString(), "2026-11-30T22:59:59.999Z", "23:30 NL telt als 16 november");
+assert.equal(new Date(proefEinde(Date.parse("2026-11-16T23:30:00Z"))).toISOString(), "2026-12-01T22:59:59.999Z", "00:30 NL is al 17 november");
+assert.equal(new Date(proefEinde(Date.parse("2026-07-01T10:00:00Z"))).toISOString(), "2026-07-15T21:59:59.999Z", "zomertijd");
+assert.equal(new Date(proefEinde(Date.parse("2026-10-20T10:00:00Z"))).toISOString(), "2026-11-03T22:59:59.999Z", "over de wintertijd heen");
+assert.equal(new Date(eindeVanDagNl(Date.parse("2026-03-29T12:00:00Z"))).toISOString(), "2026-03-29T21:59:59.999Z", "dag van de zomertijd");
+assert.equal(dagenOver(proefEinde(Date.parse("2026-11-16T06:12:00Z")), Date.parse("2026-11-16T06:12:00Z")), 14, "startdag: nog 14 dagen");
+assert.equal(dagenOver(Date.parse("2026-11-30T22:59:59.999Z"), Date.parse("2026-11-30T06:20:00Z")), 1, "laatste dag");
 
 // ---- losse controles ----
 assert.equal(normaliseerTelefoon("06-12 34 56 79"), "+31612345679");
@@ -260,6 +271,14 @@ try {
   // de proef bewaart welke versie van de verwerkersovereenkomst is geaccepteerd
   const proefOpSchijf = JSON.parse(await readFile(join(dataDir, "proef-aanmeldingen.json"), "utf8"));
   assert.match(Object.values(proefOpSchijf).find((p) => p.email === "sanne@gmail.com").vwo.versie, /^\d{4}-\d{2}-\d{2}(-\d+)?$/);
+  // sweep 2026-11-16 (Mark): "t/m <datum>" moet kloppen; de proef loopt tot middernacht NL-tijd van die dag
+  {
+    const p = Object.values(proefOpSchijf).find((x) => x.email === "sanne@gmail.com");
+    assert.equal(p.verloopt, proefEinde(p.gestart), "proef eindigt aan het eind van de dag");
+    const nlTijd = new Date(p.verloopt).toLocaleTimeString("nl-NL", { timeZone: "Europe/Amsterdam", hour12: false });
+    assert.equal(nlTijd, "23:59:59");
+    assert.ok(p.verloopt - p.gestart >= 14 * dag && p.verloopt - p.gestart < 15 * dag);
+  }
 
   // persoonlijke maillink op een tweede apparaat
   // security (login-CSRF): een andere website die naar de link navigeert, zet geen proefcookie
