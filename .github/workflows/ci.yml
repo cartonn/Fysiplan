@@ -200,6 +200,9 @@ jobs:
       - run: npm run test:nietvertaald
       - run: npm run test:deelsnl
       - run: npm run test:wachtplek
+      - run: npm run test:wachtterug
+      - run: npm run test:opnamewees
+      - run: npm run test:deelenter
       - run: npm run test:uitteam
       - run: npm run test:vertaallaat
       - run: npm run test:kaartweg

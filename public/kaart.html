@@ -2332,7 +2332,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         WACHT_REDEN='net';
         if(r.ok)verversKopie();
         // 409 = de oefening staat niet meer op de kaart (#291): dat moet de kaart kunnen zien
-        return r.json().then(function(j){if(r.status===409&&j&&typeof j==='object')j.weg=true;return j;});
+        return r.json().then(function(j){if(r.status===409&&j&&typeof j==='object')j.weg=true;if(r.status===404&&j&&typeof j==='object')j.kwijt=true;return j;});
       });
   }
   var WACHT_VELD={'/api/kaart/meting':['metingen','meting'],'/api/kaart/gedaan':['gedaan','gedaan'],'/api/kaart/psk':['psk','psk'],'/api/kaart/ervaring':['ervaring','herstel']};
@@ -2346,6 +2346,33 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var el=document.getElementById('wachtrij');if(!el)return;
     wachtSlotten(trw('kwijt'),'fout');
     el.className='wachtrij fout';el.setAttribute('role','alert');el.textContent=trw('kwijt');el.style.display='block';
+  }
+  // Een tik uit de wachtrij die niet aankwam, stond al op het scherm (offline meteen getoond). Bij "Niet aangekomen"
+  // bleven pijn 8, de pijnnudge, "Ik heb vandaag geoefend", herstel, de vraagknop en het vinkje toch aan, direct
+  // onder de rode melding die het tegendeel zei (gebruikers-sweep 2026-11-18 22u, Truus). Nu gaat juist die tik terug.
+  function draaiKwijtTerug(it,status){
+    if(!K||!K.kaart||!it||!it.body)return;
+    var b=it.body,t=Number(b.wanneer)||Number(it.t)||0;if(!t)return;
+    var dag=dagStr(t),vandaag=dagStr(Date.now());
+    try{
+      if(WACHT_SCORE[it.pad]){
+        var veld=WACHT_SCORE[it.pad];
+        K.kaart[veld]=(K.kaart[veld]||[]).filter(function(x){return !(dagStr(x.t)===dag&&Number(x.s)===Number(b.score));});
+        if(veld==='metingen'){tekenMeting();var vs=null;(K.kaart.metingen||[]).forEach(function(x){if(dagStr(x.t)===vandaag)vs=Number(x.s);});toonPijnNudge(vs===null?0:vs);}
+        else if(veld==='psk')tekenPsk();else tekenHerstel();
+      }else if(it.pad==='/api/kaart/gedaan'&&b.aan!==false){
+        K.kaart.gedaan=(K.kaart.gedaan||[]).filter(function(x){return dagStr(x.t)!==dag;});tekenGedaan();
+      }else if(it.pad==='/api/kaart/oefening'&&b.aan!==false){
+        var idx=Number(b.oef);
+        if(typeof b.n==='string'&&b.n)K.kaart.oefTrouw=mgTrouwTik(K.kaart.oefTrouw,b.n,dag,false);
+        var st=leesOefDaan(),p=st.done.indexOf(idx);
+        if(dag===vandaag&&p>-1){st.done.splice(p,1);bewaarOefDaan(st);tekenOefDaan();}
+        tekenGedaan();
+      }else if(it.pad==='/api/kaart/seintje'&&status===404){
+        // kaart weg (prullenbak of gestopt): bij de praktijk staat dan niets meer open
+        zetSeinOpen(null);
+      }
+    }catch(e){}
   }
   function verstuurWacht(){
     if(wachtBezig||!id||id==='demo')return;
@@ -2367,7 +2394,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           var weg=r.status===409&&it.pad==='/api/kaart/oefening'&&it.body;
           // Elke andere weigering (404: kaart in de prullenbak of gestopt) is niet aangekomen: dat zeggen we
           // met een vaste melding, anders gingen pijnscore en vraag stil verloren.
-          if(r.status===400&&Number(it.body&&it.body.wanneer)<Date.now()-WACHT_MAX_DAGEN*86400000)WACHT_OUD++;else if(r.ok)verstuurd++;else if(!weg)kwijt++;
+          if(r.status===400&&Number(it.body&&it.body.wanneer)<Date.now()-WACHT_MAX_DAGEN*86400000)WACHT_OUD++;else if(r.ok)verstuurd++;else if(!weg){kwijt++;draaiKwijtTerug(it,r.status);}
           var nu=leesWacht();delete nu[sleutels[i]];bewaarWacht(nu);
           if(weg){try{oefWeg(Number(it.body.oef),it.body.aan!==false);}catch(e){}}
           return r.json().catch(function(){return null;});
@@ -3880,6 +3907,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           if(d&&d.ok&&'open' in d)zetSeinOpen(d.open);
           if(d&&d.ok)mgSeintjeErbij(K&&K.kaart,soort,Date.now());
           if(d&&d.ok)zetDank(dank,seinDankTekst(soort),'');
+          // 404: de kaart is gestopt of staat in de prullenbak. Dan niet "probeer het zo opnieuw" (dat komt nooit
+          // aan), maar de vaste melding met de weg naar de praktijk (gebruikers-sweep 2026-11-18 22u, Truus)
+          else if(d&&d.kwijt){zetSeinOpen(null);delete SEIN_LAATST[soort];zetDank(dank,trw('kwijt'),'fout');}
           else{zetSeinOpen(voor);delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout');}
           delete b.dataset.bezig;})
         .catch(function(e){delete b.dataset.bezig;if(e&&e.wacht){zetDank(dank,trw('een'),'wacht');return;}zetSeinOpen(voor);delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout');});

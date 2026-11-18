@@ -26,7 +26,7 @@ for (const t of ["nl", "en", "de", "fr", "es", "pl", "tr", "ar", "uk"]) {
 }
 assert.doesNotMatch(kaart, /weg:'[^']*(Vernieuw de pagina|reload the page)/, "geen opdracht om zelf de pagina te vernieuwen");
 assert.match(kaart, /if\(SESSIE>-1&&SESSIE!==idx\)openOef\(idx\)/, "stappenmodus gaat terug naar de weggehaalde oefening");
-assert.match(kaart, /else if\(r\.ok\)verstuurd\+\+;else if\(!weg\)kwijt\+\+/, "wachtrij telt alleen een geslaagde tik als verstuurd, de rest als niet aangekomen");
+assert.match(kaart, /else if\(r\.ok\)verstuurd\+\+;else if\(!weg\)\{?kwijt\+\+/, "wachtrij telt alleen een geslaagde tik als verstuurd, de rest als niet aangekomen");
 for (const t of ["nl", "en", "de", "fr", "es", "pl", "tr", "ar", "uk"]) assert.match(kaart, new RegExp("\\b" + t + ":\\{kwijt:'[^']{20,}'"), "melding niet aangekomen in het " + t);
 assert.match(kaart, /if\(weg\)\{try\{oefWeg\(Number\(it\.body\.oef\),it\.body\.aan!==false\);\}/, "409 uit de wachtrij draait het vinkje terug met de melding");
 

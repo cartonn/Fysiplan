@@ -18,6 +18,9 @@ const index = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(index, /function zetOpnameVideo\(naam,pad\)\{var k=normEx\(naam\);VIDS\[k\]=pad;OPNAME_NIEUW\[k\]=pad;/, "opname wordt als nog niet bewaard onthouden");
 assert.match(index, /startOpname\('kaart',naam,function\(pad\)\{zetOpnameVideo\(naam,pad\);\}\)/, "opname-callback gebruikt zetOpnameVideo");
 assert.match(index, /if\(d\.verouderd\)\{\s*if\(Object\.keys\(OPNAME_NIEUW\)\.length\)\{/, "duidelijke melding bij verouderd met een nieuwe video");
+// sweep 2026-11-18 22u (Mark, iPad): geen venster dat naar "rechtsboven" verwijst, maar de conflictbalk met knoppen van 44 px
+assert.match(index, /if\(!OPNAME_GEMELD\)\{OPNAME_GEMELD=true;toonConflictBalk\(oTekst,oKnoppen\);\}/, "opnameconflict toont de conflictbalk");
+assert.doesNotMatch(index, /Kies rechtsboven op de kaart/, "geen venster meer dat naar rechtsboven verwijst");
 assert.match(index, /if\(mee\)\{deelNu\(\);return;\}/, "nieuwste versie bewaart de meegenomen video");
 
 let pw = null;
@@ -89,14 +92,21 @@ try {
   const pad = (await up.json()).video;
   for (let i = 0; i < 200 && !/video gaat mee/.test(await page.textContent("#qrBlok")); i++) await wacht(50);
   assert.match(await page.textContent("#qrBlok"), /nieuwe video is nog niet bewaard/, "melding in het QR-vak noemt de video");
-  assert.ok(meldingen.some((m) => /nog niet op de kaart bewaard/.test(m)), "duidelijke melding (venster): " + JSON.stringify(meldingen));
+  await page.waitForSelector("#conflict_bar", { state: "visible", timeout: 8000 });
+  assert.match(await page.textContent("#conflict_bar"), /nieuwe video is nog niet bewaard/, "balk bovenin noemt de video");
+  const maten = await page.$$eval("#conflict_bar button", (bs) => bs.map((b) => { const r = b.getBoundingClientRect(); return [b.textContent, Math.round(r.width), Math.round(r.height)]; }));
+  assert.equal(maten.length, 3, "nieuwste, toch mijn versie, sluiten: " + JSON.stringify(maten));
+  for (const [t, w, h] of maten) assert.ok(w >= 44 && h >= 44, "tikdoel " + t + " " + w + "x" + h);
+  assert.deepEqual(meldingen, [], "geen venster (alert) meer: " + JSON.stringify(meldingen));
   assert.equal(Object.keys((await serverKaart()).kaart?.vids || {}).length, 0, "nog niet op de server");
 
-  // een volgende autosave: niet nog een venster
-  const n = meldingen.length;
+  // weggeklikt: een volgende autosave zet de balk niet opnieuw neer, het QR-vak houdt de keuze
+  await page.click("#conflict_bar [data-cfact='sluit']");
   await page.evaluate(() => { const b = document.querySelector("[data-add]"); if (b) b.click(); });
   await wacht(3000);
-  assert.equal(meldingen.length, n, "het venster komt één keer: " + JSON.stringify(meldingen));
+  assert.equal(await page.evaluate(() => { const b = document.getElementById("conflict_bar"); return !!b && b.style.display !== "none"; }), false, "balk komt één keer per opname");
+  assert.match(await page.textContent("#qrBlok"), /nieuwe video is nog niet bewaard/, "keuze blijft in het QR-vak");
+  assert.deepEqual(meldingen, [], "geen venster");
 
   // Open de nieuwste versie: video gaat mee en de wijziging van de desktop blijft
   await page.click("[data-qract='nieuwste']");
