@@ -107,7 +107,8 @@ try {
     if (extra[veld]) assert.match(extra[veld][0], extra[veld][1], "/privacy#patient noemt " + veld);
   }
   // het praktijkprofiel gaat als `praktijk: prof` mee naar de patiënt
-  assert.match(bron, /kaart: patientKaart, praktijk: prof,/, "/api/kaart stuurt het praktijkprofiel mee");
+  // (door zonderOmkeer: alleen tekst-omkeertekens eruit, verder hetzelfde object)
+  assert.match(bron, /kaart: zonderOmkeer\(patientKaart\), praktijk: zonderOmkeer\(prof\),/,"/api/kaart stuurt het praktijkprofiel mee");
   const profiel = JSON.parse(bron.match(/const PROFIEL_VELDEN = (\[[^\]]+\])/)[1]);
   const woord = { praktijk: /naam/, adres: /adres/, plaats: /adres/, tel: /telefoon/, email: /e-mail/, logo: /logo/, website: /website/ };
   const profielZin = therapeut.split("gegevens van je praktijk")[1] || "";
