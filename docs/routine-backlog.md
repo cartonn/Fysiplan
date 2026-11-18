@@ -73,7 +73,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
-- **OPGELOST 2026-11-18 deze run (test:inbox) — LAAG (van legal, 2026-11-16 17u) — inbox: een kaart opnieuw opslaan met een echte wijziging wiste `inboxGezien`.**
+- **LAAG (van legal, 2026-11-16 17u, niet nagespeeld in de browser) — inbox: een kaart opnieuw opslaan met een echte wijziging wist `inboxGezien`.**
   `/api/kaarten` (POST) bouwt de kaart opnieuw op met een vaste lijst velden; `inboxGezien` staat daar niet in (`dossier` wel sinds
   de legal-PR van deze run). Gevolg vermoedelijk: wat de therapeut in de inbox al als gezien had, telt na het bewaren van een
   nieuwe dosering weer als "nieuw". Kleinste fix: `inboxGezien` meenemen zoals `notitieT`, met een test in `test-inbox.mjs`.
@@ -85,10 +85,11 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - **OPGELOST 2026-11-18 deze run (test:afspraaktijdzone) — MIDDEL (Jayden, Pixel 7/iPhone 14 in Londen) — afspraak op /k zonder tijdzone,**
   terwijl de agenda (.ics, TZID Amsterdam) hem een uur eerder zet. Nu "(Dutch time)"/"(Nederlandse tijd)" erbij als de telefoon in een andere zone staat.
 - **OPGELOST 2026-11-18 deze run — LAAG (Mark) — "je proef loopt nog vandaag nog"** → "loopt nog maar kort".
+- **(Karin/Truus, nagespeeld) — `inboxGezien` na opnieuw opslaan: zelfde fix staat in PR #363 van een parallelle sweep-run;** hier niet dubbel gebouwd.
 - **MIDDEL (Truus, iPhone SE) — pijnscore verdwijnt uit de inbox zodra iemand de kaart opnieuw bewaart:** `inboxItems` (server.js ~2438)
   telt pijn alleen na `k.ts`; herstel heeft dat filter niet. Een collega die alleen de dosering aanpast, laat zo een hoge pijnscore stil uit
-  de inbox vallen. Nu `inboxGezien` blijft staan (deze run), kan het `ts`-filter vermoedelijk weg; niet gedaan omdat de bedoeling van het
-  filter niet terug te vinden was (ingevoegd in een grote squash). Volgende run: nagaan en met test in test-inbox.mjs.
+  de inbox vallen. Zodra #363 (`inboxGezien` blijft staan) gemerged is, kan het `ts`-filter vermoedelijk weg; niet gedaan omdat de bedoeling
+  van het filter niet terug te vinden was (ingevoegd in een grote squash). Volgende run: nagaan en met test in test-inbox.mjs.
 - **MIDDEL (Truus) — offline vinkje op een oefening die intussen van de kaart is gehaald: wachtrij meldt "Verstuurd ✓"** terwijl de server
   409 gaf; `verstuurWacht` (kaart.html ~2316) telt elke 4xx als verstuurd en roept `oefWeg()` niet aan (online tik doet dat wel, ~1579).
 - **MIDDEL (Mark) — proefbalk "t/m <dag>" belooft een dag die er niet is:** `verloopt` = start + 14×24 u op het aanmeldtijdstip

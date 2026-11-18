@@ -87,17 +87,6 @@ try {
   // patiëntroute lekt niets van inbox of dossier
   const pat = await (await get("/api/kaart?id=" + idA)).json();
   assert.ok(!("dossier" in pat.kaart) && !("inboxGezien" in pat.kaart) && !("contact" in pat.kaart));
-  // afgehandeld blijft afgehandeld als de therapeut daarna de kaart echt wijzigt (nieuwe dosering):
-  // een herstelscore van vóór het afhandelen komt niet terug als "nieuw" (legal 2026-11-16)
-  assert.equal((await post("/api/kaart/ervaring", { id: idB, score: 1 })).status, 200);
-  assert.ok((await inbox()).kaarten.find((k) => k.id === idB).items.some((i) => i.soort === "herstel"));
-  assert.equal((await post("/api/praktijk/inbox/afgehandeld", { praktijk: P, id: idB }, S)).status, 200);
-  assert.ok(!(await inbox()).kaarten.some((k) => k.id === idB), "B is afgehandeld");
-  const nieuwB = await post("/api/kaarten", { praktijk: P, naam: "Fatima", client: { c_naam: "Fatima" },
-    chosen: [{ n: "Squat", i: 0 }, { n: "Brug", i: 1 }], rows: { r0: "3x10" }, kaartId: idB }, S);
-  assert.equal(nieuwB.status, 200);
-  assert.ok(!(await nieuwB.json()).ongewijzigd, "echte wijziging");
-  assert.ok(!(await inbox()).kaarten.some((k) => k.id === idB), "oude herstelscore niet terug na opnieuw opslaan");
   // een nieuwe score na afhandeling komt weer binnen
   await wacht(5);
   await post("/api/kaart/meting", { id: idA, score: 3 });
