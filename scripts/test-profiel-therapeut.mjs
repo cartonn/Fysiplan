@@ -16,7 +16,7 @@ import { createRequire } from "node:module";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(join(root, "public/index.html"), "utf8");
-assert.match(html, /if\(d\.beheer(\|\|d\.website)?\)\{profielTerug\(d\.fout\);return;\}/, "een 403 van het praktijkprofiel wordt afgehandeld");
+assert.match(html, /if\(d\.beheer(\|\|d\.website)?\)\{(if\(d\.beheer\)rolBijwerken\(false\);)?profielTerug\(d\.fout\);return;\}/, "een 403 van het praktijkprofiel wordt afgehandeld");
 assert.match(html, /PRAKSLOT\.akkoord\.beheer===false/, "de logoknop kijkt naar de rol");
 assert.match(html, /profielAlleenLezen\(IS_V2&&geenBeheer\);/, "profielvelden volgen de rol");
 assert.match(html, /\['praktijk','p_adres','p_plaats','p_tel','p_email','p_website'\]\.forEach/, "ook de praktijknaam is alleen-lezen voor een therapeut");

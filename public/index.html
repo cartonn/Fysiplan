@@ -1642,8 +1642,10 @@ bridge2.jpg</div>
     var kop=ov.querySelector('.modal>h3');if(kop)kop.textContent=naam==='vandaag'?'Vandaag':naam==='patienten'?'Pati\u00ebnten':'Praktijk';
     paneelRol();
     if(naam==='praktijk')bouwPraktijkTegels();
-    // het paneel vult zich zoals bij de knop Kaarten (lijst, inbox, login)
+    // het paneel vult zich zoals bij de knop Kaarten (lijst, inbox, login); staat het al open, dan
+    // haalt het scherm wel opnieuw je rol op (een beheerder kan hem intussen gewijzigd hebben)
     if(!ov.classList.contains('on'))document.getElementById('kaartenBtn').click();
+    else verversRol();
     window.scrollTo(0,0);
   }
   // Vandaag, Patiënten en Praktijk zijn een scherm, geen venster: geen dialoog voor een
@@ -3256,7 +3258,7 @@ bridge2.jpg</div>
       .then(function(r){return r.json();}).then(function(d){
         if(d.ok){loadPraktijken();return;}
         // beheer: alleen een beheerder wijzigt het profiel; website: geen gewoon webadres (javascript:, data:)
-        if(d.beheer||d.website){profielTerug(d.fout);return;}
+        if(d.beheer||d.website){if(d.beheer)rolBijwerken(false);profielTerug(d.fout);return;}
         if(d.bezet&&!p.zelfdeNaam&&window.confirm(d.fout||'Er is al een andere praktijk met deze naam. Toch zo noemen?')){p.zelfdeNaam=true;stuurPraktijk(p);}
       }).catch(function(){});
   }
@@ -3269,7 +3271,10 @@ bridge2.jpg</div>
       l=Array.isArray(l)?l:[];
       var cur=(SET.praktijk||'').trim().toLowerCase();
       var p=l.length===1?l[0]:l.filter(function(x){return String(x.praktijk||'').toLowerCase()===cur;})[0];
+      // heeft de praktijk nog geen profiel op de server, dan ook geen geweigerd adres op de A4
+      // laten staan (gebruikers-sweep 2026-11-18 14u, Karin): alleen de naam blijft
       if(p){['praktijk','adres','plaats','tel','email','website','logo'].forEach(function(k){SET[k]=p[k]||'';});saveSettings();applySettings();}
+      else{['adres','plaats','tel','email','website','logo'].forEach(function(k){SET[k]='';});saveSettings();applySettings();}
       PRAKTIJKEN=l;renderPrakSelect();
     }).catch(function(){}).then(function(){
       var m=document.getElementById('p_msg');
@@ -3971,8 +3976,27 @@ bridge2.jpg</div>
     if(PRAKSLOT.vanMij)return PRAKSLOT.stapOpen?' Daar maak je met je e-mail en wachtwoord je tweede stap af.':'';
     return ' Heet een andere praktijk toevallig hetzelfde? Kies daar \u201cAndere praktijk met deze naam\u201d.';
   }
+  // Rechten na een rolwissel liepen in de open app onbeperkt achter: alleen Kaarten haalde de rol
+  // opnieuw op, dus een net gepromoveerde collega zag Gegevens dicht en een teruggezette beheerder
+  // Activiteit, logo en profiel nog open (gebruikers-sweep 2026-11-18 14u, Karin op iPad). Nu ververst
+  // de rol bij terugkeer naar het tabblad, bij elke schermwissel en zodra Team of een 403 hem kent.
+  var ROL_GEHAALD=0;
+  function verversRol(){
+    if(!IS_V2||!PRAKSLOT.bekend||!PRAKSLOT.ingelogd||!PRAKSLOT.pr)return;
+    var nu=Date.now();if(nu-ROL_GEHAALD<2000)return;ROL_GEHAALD=nu;
+    toonPrakSlot(PRAKSLOT.pr);
+  }
+  function rolBijwerken(beheer){
+    if(typeof beheer!=='boolean'||!PRAKSLOT.ingelogd)return;
+    if(PRAKSLOT.akkoord&&PRAKSLOT.akkoord.beheer===beheer)return;
+    PRAKSLOT.akkoord=Object.assign({},PRAKSLOT.akkoord||{},{beheer:beheer});
+    rendPrakSlot();
+    if(document.getElementById('k_praktijk'))bouwPraktijkTegels();
+    try{applyLogo();}catch(e){}
+  }
+  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')verversRol();});
   function toonPrakSlot(pr){
-    PRAKSLOT.pr=pr;
+    PRAKSLOT.pr=pr;ROL_GEHAALD=Date.now();
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
       .then(function(r){if(!r.ok)throw r.status;return r.json();}).then(function(d){
         PRAKSLOT.geclaimd=!!d.geclaimd;PRAKSLOT.ingelogd=!!d.ingelogd;PRAKSLOT.naam=d.naam||'';PRAKSLOT.wie=d.wie||'';PRAKSLOT.perEmail=!!d.perEmail;PRAKSLOT.akkoord=d.akkoord||null;PRAKSLOT.tweedeStap=typeof d.tweedeStap==='boolean'?d.tweedeStap:null;
@@ -4376,6 +4400,8 @@ bridge2.jpg</div>
     var el=document.getElementById('tm_inhoud');
     fetch('api/praktijk/team',PGET()).then(function(r){return r.json();}).then(function(d){
       if(!d.ok){el.textContent=d.fout||'Log eerst in bij je praktijk.';return;}
+      // Team kent je rol van nu; de tegels en knoppen eronder volgen hem meteen
+      if(d.ik)rolBijwerken(!!d.beheer);
       var h='';
       if(!d.ik){
         h+="<div style='border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:12px;background:var(--brand-50,transparent)'>"+

@@ -1852,8 +1852,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var cl=kaart.client||{};
     var regels=[];
     if(cl.c_naam)regels.push('<div class="rij"><b>'+esc(tr('voor'))+'</b><span>'+esc(cl.c_naam)+'</span></div>');
-    if(cl.c_doel)regels.push('<div class="rij"><b>'+esc(tr('doel'))+'</b><span>'+esc(vt(cl.c_doel))+'</span></div>');
-    if(cl.c_opm)regels.push('<div class="rij"><b>'+esc(tr('letop'))+'</b><span>'+esc(vt(cl.c_opm))+'</span></div>');
+    // begint de therapeut zelf met "Let op:" of "Doel:", dan stond het label er twee keer (gebruikers-sweep 2026-11-18, Truus)
+    var zonderLabel=function(t,labels){t=String(t);
+      for(var i=0;i<labels.length;i++){var k=String(labels[i]||'').replace(/[:\s]+$/,'');if(!k)continue;
+        var re=new RegExp('^\\s*'+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*[:\u2013-]\\s*','i');
+        var r=t.replace(re,'');if(r!==t&&r.trim())return r;}
+      return t;};
+    if(cl.c_doel)regels.push('<div class="rij"><b>'+esc(tr('doel'))+'</b><span>'+esc(zonderLabel(vt(cl.c_doel),[tr('doel'),'Doel']))+'</span></div>');
+    if(cl.c_opm)regels.push('<div class="rij"><b>'+esc(tr('letop'))+'</b><span>'+esc(zonderLabel(vt(cl.c_opm),[tr('letop'),'Let op']))+'</span></div>');
     var cb=document.getElementById('clientblok');
     if(regels.length){cb.innerHTML=regels.join('');cb.style.display='flex';}else cb.style.display='none';
 
