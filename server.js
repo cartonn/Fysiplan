@@ -1505,6 +1505,17 @@ function proefKoppel(pk, p) {
   acc.proef = { id: p.id, verloopt: p.verloopt };
   return true;
 }
+// Hooguit zoveel praktijken beveiligt één proef (security 2026-11-18). Elke beveiligde praktijk krijgt
+// de proef op het account (proefKoppel). Zonder grens vulde één proefcookie met `nieuw: true` en
+// wisselende adressen (5 per dag per /64) de grens van 1000 accounts, waarna niemand meer een praktijk
+// kon beveiligen. Een gewiste praktijk telt niet meer mee.
+const MAX_PRAKTIJKEN_PER_PROEF = 3;
+function praktijkenVanProef(id) {
+  if (!id) return 0;
+  let n = 0;
+  for (const acc of Object.values(praktijkAccounts)) if (acc && acc.proef && acc.proef.id === id) n++;
+  return n;
+}
 // een praktijk met een betaald abonnement (of door beheer als klant gemerkt)
 function praktijkIsKlant(pk) {
   const k = pk && Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk].proef : null;
@@ -4657,6 +4668,8 @@ async function afhandelen(request, response) {
         const p = proefVan(request);
         if (!p) return { ok: false, proefNodig: true, fout: "Start eerst je gratis proef van " + PROEF_DAGEN + " dagen. Daarna beveilig je hier je praktijk en deel je kaarten. Werkt je praktijk al met Fysiplan? Vraag je collega dan om een uitnodiging." };
         if (proefVerlopen(p)) return { ok: false, proefVerlopen: true, fout: "Je gratis proef is voorbij. Wil je doorgaan? Kijk op fysiplan.nl/v2/proef." };
+        if (praktijkenVanProef(p.id) >= MAX_PRAKTIJKEN_PER_PROEF) return { ok: false, proefVol: true,
+          fout: "Met deze proef zijn al " + MAX_PRAKTIJKEN_PER_PROEF + " praktijken beveiligd. Log in bij je praktijk, of vraag een collega om een uitnodiging." };
         return null;
       };
       if (eigen) {
