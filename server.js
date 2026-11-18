@@ -435,12 +435,20 @@ function weergaveNaam(pk) {
   const acc = Object.hasOwn(praktijkAccounts, pk) ? praktijkAccounts[pk] : null;
   return String((prof && prof.praktijk) || (acc && acc.naam) || (isPraktijkCode(pk) ? "" : pk));
 }
+// Hooguit zoveel scrypt-vergelijkingen per inlogverzoek (security 2026-11-18). Elke vergelijking houdt de
+// hele server ~25-50 ms bezig. Wie veertig praktijken met dezelfde naam of hetzelfde e-mailadres aanmaakte
+// (nieuw: true, 5 per dag per adres), liet met één inlogpoging de server een seconde stilstaan, en met het
+// goede wachtwoord telde geen rem. Er wordt nu met de oudste praktijken begonnen, zodat een later
+// aangemaakte nep-praktijk met dezelfde naam of hetzelfde adres de echte niet wegduwt.
+const MAX_VERGELIJK = 6;
+const oudsteEerst = (pks) => [...pks].sort((a, b) => (Number(praktijkAccounts[a].gemaakt) || 0) - (Number(praktijkAccounts[b].gemaakt) || 0));
 // inloggen op naam + wachtwoord: het account met deze naam waarvan het wachtwoord klopt
 function accountVoorLogin(naam, ww, veld = "hash") {
   // een praktijk waar het gedeelde wachtwoord niet meer meedoet, logt alleen nog per persoon in
   let vergeleken = 0;
-  for (const k of accountsMetNaam(naam)) {
+  for (const k of oudsteEerst(accountsMetNaam(naam))) {
     if (veld === "hash" && gedeeldStaatUit(k)) continue;
+    if (vergeleken >= MAX_VERGELIJK) break;
     vergeleken++;
     if (checkHash(ww, praktijkAccounts[k][veld])) return k;
   }
@@ -453,8 +461,9 @@ function accountVoorLogin(naam, ww, veld = "hash") {
 function ledenMetWachtwoord(nk, em, ww) {
   const uit = [];
   let vergeleken = 0;
-  for (const k of accountsMetNaam(nk)) for (const l of ledenVan(k)) {
+  for (const k of oudsteEerst(accountsMetNaam(nk))) for (const l of ledenVan(k)) {
     if (l.email !== em || !lidActief(l)) continue;
+    if (vergeleken >= MAX_VERGELIJK) break;
     vergeleken++;
     if (checkHash(String(ww || ""), l.hash)) uit.push({ pk: k, l });
   }
@@ -4725,7 +4734,8 @@ async function afhandelen(request, response) {
           return;
         }
         let treffers = [], vergeleken = 0;
-        for (const pk of Object.keys(praktijkAccounts)) {
+        for (const pk of oudsteEerst(Object.keys(praktijkAccounts))) {
+          if (vergeleken >= MAX_VERGELIJK) break;
           for (const l of ledenVan(pk)) if (l.email === em && lidActief(l)) { vergeleken++; if (checkHash(ww, l.hash)) treffers.push({ pk, l }); }
         }
         // Een onbekend adres kostte geen scrypt en kwam tientallen milliseconden sneller terug dan een
@@ -5417,7 +5427,8 @@ async function afhandelen(request, response) {
       // kon die het gedeelde wachtwoord blijven omzetten, kreeg elke keer een verse code
       // en logde het hele team uit (security-backlog 2026-11-07)
       const metNaam = accountsMetNaam(nk);
-      const kandidaten = metNaam.filter((k) => !gedeeldStaatUit(k));
+      // oudste eerst en begrensd: elke kandidaat kost tot twee scrypt-vergelijkingen (zie MAX_VERGELIJK)
+      const kandidaten = oudsteEerst(metNaam.filter((k) => !gedeeldStaatUit(k))).slice(0, MAX_VERGELIJK / 2);
       if (nk && loginOpSlot(nk)) {
         await send429(response, 900, { ok: false, fout: "Te veel pogingen voor deze praktijk; probeer het over een kwartier opnieuw." });
         return;
