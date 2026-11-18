@@ -3574,6 +3574,20 @@ const verbodenSleutel = /^(__proto__|constructor|prototype)$/i;
 // werd "�" in Kaarten, de CSV en de bevestigvraag (gebruikers-sweep 2026-11-18 10u, Sanne).
 // De lengte blijft in eenheden, zodat bestaande praktijksleutels gelijk blijven.
 const cleanName = (v, max) => { const s = String(v || "").trim().replace(/\s+/g, " ").slice(0, max).replace(/[\uD800-\uDBFF]$/, ""); return verbodenSleutel.test(s) ? "" : s; };
+// Tekst-omkeertekens (U+202A–U+202E inbedding/override, U+2066–U+2069 isolaten) uit alles wat de
+// patiënt op /k leest. Met U+202E draaide een zin van de therapeut of een praktijknaam om, zodat de
+// kaart iets anders liet zien dan er stond (bv. een link of telefoonnummer achterstevoren; sweep
+// 2026-11-09, Jayden). Gewone Arabische tekst en de richtingstekens U+200E/U+200F hebben ze niet
+// nodig en blijven zoals ze zijn. Diep, op een kopie; alleen gewone objecten en lijsten.
+const OMKEER_TEKENS = /[‪-‮⁦-⁩]/g;
+function zonderOmkeer(v, diepte = 0) {
+  if (typeof v === "string") return v.replace(OMKEER_TEKENS, "");
+  if (!v || typeof v !== "object" || diepte > 20) return v;
+  if (Array.isArray(v)) return v.map((x) => zonderOmkeer(x, diepte + 1));
+  const uit = {};
+  for (const [k, x] of Object.entries(v)) uit[k] = zonderOmkeer(x, diepte + 1);
+  return uit;
+}
 
 // Een te grote body: niet meer bewaren, de rest weglezen en pas daarna antwoorden.
 // Eerder deed de lezer meteen req.destroy(); dan ging de verbinding dicht vóór het
@@ -7492,7 +7506,7 @@ async function afhandelen(request, response) {
     }
     // dag (Amsterdam-tijd) waarop oefTrouw.d "vandaag" betekent: de kaart toont zo ook
     // de vinkjes die vandaag op een ander apparaat zijn gezet
-    await sendJson(response, 200, { ok: true, kaart: patientKaart, praktijk: prof, ai: VRAAGHULP_AAN, dag: nlDag(Date.now()), ...(pakket || {}) });
+    await sendJson(response, 200, { ok: true, kaart: zonderOmkeer(patientKaart), praktijk: zonderOmkeer(prof), ai: VRAAGHULP_AAN, dag: nlDag(Date.now()), ...(pakket || {}) });
     return;
   }
 
@@ -8127,7 +8141,8 @@ async function afhandelen(request, response) {
     // vertaling heeft nagelezen (de kaart zegt bij de rest dat ze automatisch vertaald zijn)
     const vertaaldUitCache = () => {
       const map = {}, nagelezen = [];
-      teksten.forEach((s) => { const v = leesVertaling(cache, s); if (v) { map[s] = v.t; if (v.nagelezen) nagelezen.push(s); } });
+      // zonder omkeertekens, net als de kaart zelf (/api/kaart): de sleutel is de naam zoals de kaart hem toont
+      teksten.forEach((s) => { const v = leesVertaling(cache, s); if (v) { map[zonderOmkeer(s)] = zonderOmkeer(v.t); if (v.nagelezen) nagelezen.push(zonderOmkeer(s)); } });
       return { map, nagelezen };
     };
     // Lukt het bijvertalen niet (geen sleutel, andere site, storing), dan krijgt de patiënt toch wat er
@@ -8244,7 +8259,7 @@ async function afhandelen(request, response) {
     response.setHeader("x-robots-tag", "noindex, noarchive");
     await send(response, 200, "application/manifest+json; charset=utf-8", JSON.stringify({
       // alleen de roepnaam: deze naam staat op het beginscherm van de telefoon
-      name: ("Trainingskaart " + roepnaamVan((found.client && found.client.c_naam) || "")).trim().slice(0, 60),
+      name: zonderOmkeer("Trainingskaart " + roepnaamVan((found.client && found.client.c_naam) || "")).trim().slice(0, 60),
       short_name: "Trainingskaart",
       start_url: "/k/" + found.id,
       scope: "/k/",

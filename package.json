@@ -201,6 +201,7 @@
     "test:vergelijkgrens": "node scripts/test-inlog-vergelijkgrens.mjs",
     "test:slowloris": "node scripts/test-slowloris-koptimeout.mjs",
     "test:kaartraden": "node scripts/test-kaart-raden.mjs",
+    "test:kaartomkeer": "node scripts/test-kaart-omkeer.mjs",
     "test:opnamegeencamera": "node scripts/test-opname-geen-camera.mjs",
     "test:opnamegalerij": "node scripts/test-opname-galerij-camera.mjs",
     "test:sjabloonipad": "node scripts/test-sjabloon-ipad.mjs",
