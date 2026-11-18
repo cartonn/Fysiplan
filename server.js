@@ -112,7 +112,7 @@ const VWO_VERSIE = "2026-11-15";
 const AV_VERSIE = "2026-11-16";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-18-3";
+const PRIVACY_VERSIE = "2026-11-18-4";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -9459,9 +9459,14 @@ async function afhandelen(request, response) {
         // grens op lopende kaarten uit lib/plaatsen.js: de voorwaarden noemen hetzelfde getal als de server hanteert
         KAARTEN_PROEF: String(KAARTEN_PROEF), KAARTEN_PER_LOGIN: String(KAARTEN_PER_LOGIN),
         // Mollie staat alleen in de privacyverklaring als online betalen echt aan staat
+        // legal 2026-11-18: ook de factuurgegevens (naam en adres van Mijn abonnement, #360) staan
+        // op elke factuur en blijven met de betaling 7 jaar (proefNaPraktijkWissen houdt het abonnement)
         BETAAL_RIJ_HTML: mollieAan() ? '<tr id="betalen"><td>Betaling: naam van de praktijk (of je eigen naam), e-mail, aantal therapeuten, bedrag, '
-          + "en de kenmerken van klant, betaling en machtiging bij Mollie. Geen rekeningnummer of kaartgegevens; die vul je alleen bij Mollie in.</td>"
-          + "<td>Het abonnement afrekenen en vastleggen dat je klant bent</td><td>Zolang je klant bent; facturen en betaalgegevens daarna 7 jaar, omdat de wet dat vraagt (fiscale bewaarplicht)</td></tr>" : "",
+          + "en de kenmerken van klant, betaling en machtiging bij Mollie. Geen rekeningnummer of kaartgegevens; die vul je alleen bij Mollie in. "
+          + "Vul je bij Mijn abonnement factuurgegevens in (naam van de praktijk zoals bij de KvK en adres; niet verplicht), dan bewaren we die en zetten we ze op elke nieuwe factuur. "
+          + "Werk je vanuit huis, dan is dat adres ook je woonadres.</td>"
+          + "<td>Het abonnement afrekenen, facturen maken en vastleggen dat je klant bent. Grondslag: de afspraak met de praktijk (de overeenkomst) en de wettelijke plicht om facturen te bewaren</td>"
+          + "<td>Zolang je klant bent; facturen en betaalgegevens, met de factuurgegevens die erop staan, daarna 7 jaar, omdat de wet dat vraagt (fiscale bewaarplicht)</td></tr>" : "",
         // de opslag van de versleutelde reservekopie staat er alleen als die aan staat én benoemd is
         BACKUP_RIJ_HTML: backupElders && backupElders.leverancier ? "<tr id=\"reservekopie\"><td>" + htmlEsc(backupElders.leverancier) + "</td><td>Reservekopie buiten Railway, elke dag, 7 dagen bewaard</td>"
           + "<td>Een versleutelde kopie van de opgeslagen applicatiegegevens, inclusief video&rsquo;s, foto&rsquo;s en logo&rsquo;s. De partij kan de inhoud niet lezen; alleen Fysiplan heeft de sleutel.</td></tr>" : "",

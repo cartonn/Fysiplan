@@ -158,6 +158,13 @@ try {
   const privacy = await (await fetch(srv.origin + "/privacy")).text();
   assert.match(privacy, /id="betalen"/, "met sleutel: betaalregel in de tabel");
   assert.match(privacy, /Mollie B\.V\./, "met sleutel: Mollie als ontvanger genoemd");
+  // legal 2026-11-18: de factuurgegevens van Mijn abonnement (naam zoals bij de KvK en adres) worden
+  // bewaard, staan op elke factuur en blijven 7 jaar; de betaalregel en de proefregel moeten dat zeggen
+  const betaalRij = (privacy.match(/<tr id="betalen">[\s\S]*?<\/tr>/) || [""])[0];
+  assert.match(betaalRij, /factuurgegevens/i, "betaalregel noemt de factuurgegevens");
+  assert.match(betaalRij, /adres/, "betaalregel noemt het factuuradres");
+  assert.match(betaalRij, /met de factuurgegevens die erop staan, daarna 7 jaar/, "betaalregel: factuurgegevens blijven 7 jaar");
+  assert.match(privacy, /de betaling en de factuurgegevens 7 jaar bewaard/, "proefregel: factuurgegevens horen bij wat 7 jaar blijft");
   assert.doesNotMatch(privacy, /__[A-Z_]+__/, "met sleutel: geen open plekken");
   const voorwaarden = await (await fetch(srv.origin + "/voorwaarden")).text();
   assert.match(voorwaarden, /eerste maand vooraf, via Mollie/, "voorwaarden noemen de online betaling");
