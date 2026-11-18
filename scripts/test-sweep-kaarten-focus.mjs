@@ -58,7 +58,15 @@ if (pw) {
     await p.evaluate(() => document.querySelectorAll(".ov.on").forEach((o) => o.classList.remove("on")));
     await p.click("#kaartenBtn");
     await p.waitForSelector("#k_srv_lijst [data-sopen]", { timeout: 10000 });
-    const focus = () => p.evaluate(() => {
+    // Sweep 2026-11-18 10u (Karin): met een sessie stond "Prullenbak" twee keer in Kaarten (dubbele id)
+    await p.waitForTimeout(1500);
+    assert.equal(await p.locator("#k_prullenbak").count(), 1, "Prullenbak staat één keer in Kaarten");
+    // twee overzichten die tegelijk laden (zo zag Karin het met een eigen login) zetten niet elk een knop neer
+    await p.evaluate(() => { const b = document.getElementById("kaartenBtn"); b.click(); b.click(); });
+    await p.waitForSelector("#k_srv_lijst [data-sopen]", { timeout: 10000 });
+    await p.waitForTimeout(1500);
+    assert.equal(await p.locator("#k_prullenbak").count(), 1, "Prullenbak één keer na twee gelijktijdige overzichten");
+    const focus =() => p.evaluate(() => {
       const a = document.activeElement;
       if (!a || a === document.body) return "BODY";
       return a.id ? "#" + a.id : (a.getAttribute("aria-label") || a.textContent || a.tagName).trim();
