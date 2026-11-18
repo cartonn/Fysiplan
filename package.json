@@ -105,6 +105,7 @@
     "test:gedeeldwerk": "node scripts/test-team-gedeeld-werk.mjs",
     "test:geweigerdactiviteit": "node scripts/test-geweigerd-activiteit.mjs",
     "test:gegevensrem": "node scripts/test-gegevens-rem.mjs",
+    "test:wisdubbel": "node scripts/test-sweep-wis-dubbel.mjs",
     "test:sjabloondelen": "node scripts/test-sweep-sjabloon-delen.mjs",
     "test:weekverder": "node scripts/test-weekverder.mjs",
     "test:daguitvraag": "node scripts/test-kaart-dag-uit-vraag.mjs",
