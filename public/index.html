@@ -2882,11 +2882,16 @@ bridge2.jpg</div>
     }
     if(d.verouderd){
       if(Object.keys(OPNAME_NIEUW).length){
-        // net een eigen video opgenomen: niet alleen een klein hintje in het QR-vak
-        toonQrHint('Je nieuwe video is nog niet bewaard: deze kaart is intussen op een ander apparaat gewijzigd. Open de nieuwste versie; je video gaat mee.',
-          [{act:'nieuwste',label:'Open de nieuwste versie (video gaat mee)'},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);
-        var hb=document.getElementById('qrBlok');if(hb){hb.setAttribute('role','alert');setTimeout(function(){hb.removeAttribute('role');},4000);}
-        if(!OPNAME_GEMELD)try{OPNAME_GEMELD=true;alert('Je nieuwe video is nog niet op de kaart bewaard: deze kaart is intussen op een ander apparaat gewijzigd.\n\nKies rechtsboven op de kaart \u201cOpen de nieuwste versie\u201d. Je video gaat dan mee.');}catch(e){}
+        // net een eigen video opgenomen: niet alleen een klein hintje in het QR-vak.
+        // Eerst kwam er ook een venster (alert) dat naar "rechtsboven" verwees, naar een link van 87x18 px op
+        // de verkleinde A4 op de iPad; nu dezelfde balk bovenin beeld als bij elk ander conflict, met knoppen
+        // van 44 px, zonder venster (sweep 2026-11-18 22u, Mark)
+        // "Toch mijn versie bewaren" overschrijft wat daar veranderd is: dat staat er nu ook bij (sweep 2026-11-18 22u, Mark)
+        var oTekst='Je nieuwe video is nog niet bewaard: deze kaart is intussen op een ander apparaat gewijzigd. Open de nieuwste versie; je video gaat mee. Met \u201cToch mijn versie bewaren\u201d gaan de wijzigingen van dat apparaat verloren.'+naamEldersZin(d,naam),
+          oKnoppen=[{act:'nieuwste',label:'Open de nieuwste versie (video gaat mee)'},{act:'overschrijf',label:'Toch mijn versie bewaren'}];
+        toonQrHint(oTekst,oKnoppen);
+        // de balk komt \u00e9\u00e9n keer per opname terug: wie hem wegklikte, krijgt hem niet bij elke autosave opnieuw
+        if(!OPNAME_GEMELD){OPNAME_GEMELD=true;toonConflictBalk(oTekst,oKnoppen);}
         return true;
       }
       var vTekst=(KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen (en eigen video\u2019s) verloren.'+naamEldersZin(d,naam),
@@ -3067,6 +3072,15 @@ bridge2.jpg</div>
   }
   // na een 409 verouderd: de versie van de server in deze editor laden (zelfde
   // stappen als Openen in Kaarten), zodat er niets van het andere apparaat verloren gaat
+  var OPNAME_WEES=[];
+  function toonOpnameWees(){
+    var namen=OPNAME_WEES.map(function(w){return '\u201c'+w.naam+'\u201d';}).join(', ');
+    var terug=OPNAME_WEES.some(function(w){return w.o&&OEF[w.o];});
+    var tekst=(OPNAME_WEES.length>1?'De oefeningen '+namen+' zijn':'De oefening '+namen+' is')+' op het andere apparaat van de kaart gehaald. Je nieuwe video daarbij is daarom nog niet bewaard.'+
+      (terug?' Zet de oefening met je video terug, of gooi de video weg.':' De video kan niet terug op de kaart.');
+    var knoppen=terug?[{act:'opnameterug',label:'Oefening en video terugzetten'},{act:'opnameweg',label:'Video weggooien'}]:[{act:'opnameweg',label:'Begrepen'}];
+    toonQrHint(tekst,knoppen);toonConflictBalk(tekst,knoppen);
+  }
   function openNieuwsteVersie(){
     if(!KAART_ID||kaartWachtNog())return;
     var id=KAART_ID;
@@ -3078,10 +3092,19 @@ bridge2.jpg</div>
         // nog niet bewaarde eigen opnames bij oefeningen die ook in de nieuwste versie staan
         var mee=0,opKaart={};
         chosen.forEach(function(c){var o=OEF[c.o];if(o)opKaart[normEx(o.naam)]=1;});
-        Object.keys(OPNAME_NIEUW).forEach(function(k){if(opKaart[k]){if(VIDS[k]!==OPNAME_NIEUW[k]){VIDS[k]=OPNAME_NIEUW[k];mee++;}}else delete OPNAME_NIEUW[k];});
+        // Haalde het andere apparaat de oefening bij de video weg, dan verdween de video eerst stil, terwijl de knop
+        // "video gaat mee" beloofde (sweep 2026-11-18 22u, Mark). Nu: zeggen en laten kiezen, oefening met video terug of weg.
+        OPNAME_WEES=[];
+        Object.keys(OPNAME_NIEUW).forEach(function(k){
+          if(opKaart[k]){if(VIDS[k]!==OPNAME_NIEUW[k]){VIDS[k]=OPNAME_NIEUW[k];mee++;}return;}
+          var oid=null;Object.keys(OEF).some(function(x){if(OEF[x]&&normEx(OEF[x].naam)===k){oid=x;return true;}return false;});
+          OPNAME_WEES.push({k:k,o:oid,naam:oid?OEF[oid].naam:k,pad:OPNAME_NIEUW[k]});
+          delete OPNAME_NIEUW[k];
+        });
         if(mee)render();
         zetKaartId(d.kaart.id||id,d.kaart.ts);OVERSCHRIJF='';NAAM_OK=String(d.kaart.naam||'').toLowerCase();
         QR_UIT_VOOR=null;laatsteDeel='';
+        if(OPNAME_WEES.length){toonOpnameWees();return;}
         if(mee){deelNu();return;}
         ensureQr(function(){toonQr(d.kaart.id||id);});
       })
@@ -3103,6 +3126,15 @@ bridge2.jpg</div>
     var cb=document.getElementById('conflict_bar');if(cb)cb.style.display='none';
       if(a==='beveilig')openBeveiligen(function(){laatsteDeel='';deelNu();});
       else if(a==='nieuwste')openNieuwsteVersie();
+      else if(a==='opnameterug'||a==='opnameweg'){
+        var wees=OPNAME_WEES;OPNAME_WEES=[];
+        if(a==='opnameterug')wees.forEach(function(w){
+          if(!w.o||!OEF[w.o])return;
+          if(!chosen.some(function(c){return c.o===w.o;})){if(chosen.length>=12)return;chosen.push({o:w.o,i:0});}
+          VIDS[w.k]=w.pad;OPNAME_NIEUW[w.k]=w.pad;
+        });
+        render();laatsteDeel='';deelNu();
+      }
       else if(a==='overschrijf'){neemServerNaamOver();OVERSCHRIJF=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
       else if(a==='roepnaam'&&cnA)roepnaamToepassen();
       else if(a==='naamok'){NAAM_OK=huidigeKaartNaam().toLowerCase();laatsteDeel='';deelNu();}
@@ -6508,6 +6540,18 @@ bridge2.jpg</div>
   });
   // bezig-slot per actie en kaart (Kopie, ×): een dubbelklik geeft één vraag en één verzoek
   var KAARTEN_BEZIG={};
+  // Enter in een invulveld van het Deel-paneel (behandelaar, werknotitie, bericht op de kaart) bewaart, zoals in de
+  // andere vensters. Eerst gebeurde er niets: wie na Enter het paneel sloot, was de notitie kwijt zonder het te merken
+  // (gebruikers-sweep 2026-11-18 22u, Sanne)
+  document.getElementById('k_srv_lijst').addEventListener('keydown',function(e){
+    if(e.key!=='Enter'||e.isComposing||e.shiftKey||e.altKey||e.ctrlKey||e.metaKey)return;
+    var v=e.target;if(!v||v.tagName!=='INPUT')return;
+    var knop=v.hasAttribute('data-snotitie')?document.querySelector("[data-snotitieopslaan='"+v.getAttribute('data-snotitie')+"']")
+      :v.hasAttribute('data-sbtekst')?document.querySelector("[data-sbericht='"+v.getAttribute('data-sbtekst')+"']")
+      :v.hasAttribute('data-sbeh')?document.querySelector("[data-sbehopslaan='"+v.getAttribute('data-sbeh')+"']"):null;
+    if(!knop)return;
+    e.preventDefault();knop.click();
+  });
   document.getElementById('k_srv_lijst').addEventListener('click',function(e){
     var m=e.target.closest('[data-mtoon]');
     if(m){var h=document.getElementById('mh_'+m.dataset.mtoon);if(h)h.style.display=h.style.display==='none'?'':'none';return;}
