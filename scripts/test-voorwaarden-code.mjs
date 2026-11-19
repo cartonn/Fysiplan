@@ -19,7 +19,7 @@ const serverBron = readFileSync(new URL("../server.js", import.meta.url), "utf8"
 const plaatsenBron = readFileSync(new URL("../lib/plaatsen.js", import.meta.url), "utf8");
 
 const tekst = (html) => html.replace(/<style[\s\S]*?<\/style>|<head[\s\S]*?<\/head>/g, "").replace(/<[^>]+>/g, " ")
-  .replace(/&euml;/g, "ë").replace(/&[a-z]+;/g, " ").replace(/\s+/g, " ");
+  .replace(/&euml;/g, "ë").replace(/&eacute;/g, "é").replace(/&[a-z]+;/g, " ").replace(/\s+/g, " ");
 
 async function metServer(inst, doe) {
   const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-av-"));
@@ -83,6 +83,14 @@ await metServer(null, async (haal) => {
     assert.match(av, /of voor het hoogste aantal in de maand daarvoor als dat hoger was/, "art. 4 noemt de piek van de maand ervoor");
     assert.match(av, /Tijdens een maand rekenen we niets bij en geven we niets terug/, "art. 4: niets tussentijds");
   }
+  // Legal 2026-11-19 05u (c): sinds #366 loopt een proef tot middernacht (NL-tijd) van de einddatum
+  // (proefEinde in lib/proef.js), en sinds #370 beveiligt één proef hooguit MAX_PRAKTIJKEN_PER_PROEF
+  // praktijken. Art. 3 noemde alleen "duurt 14 dagen" en alleen de grens op kaarten.
+  if (/export function proefEinde/.test(readFileSync(new URL("../lib/proef.js", import.meta.url), "utf8"))) {
+    assert.match(av, /tot en met de einddatum die je bij het aanmelden ziet, tot middernacht \(Nederlandse tijd\)/, "art. 3: proef loopt tot middernacht van de einddatum");
+  }
+  const maxPrak = serverBron.match(/const MAX_PRAKTIJKEN_PER_PROEF = (\d+);/);
+  if (maxPrak) assert.match(av, new RegExp("Met één proef beveilig je hooguit " + maxPrak[1] + " praktijken"), "art. 3 noemt de grens op praktijken per proef uit server.js");
   const akkoord = serverBron.match(/const AKKOORD_WIJZIGINGEN = \[[\s\S]*?\n\];/)[0];
   const avVersie = serverBron.match(/const AV_VERSIE = "([^"]+)"/)[1];
   assert.ok(akkoord.includes('stuk: "av", versie: "' + avVersie + '"'), "AKKOORD_WIJZIGINGEN noemt de huidige AV_VERSIE");
