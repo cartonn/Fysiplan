@@ -73,6 +73,11 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+- **LAAG (van legal, 2026-11-19 01u) — `npm run test:opnamewees` faalt lokaal ook op main (9860f01):** regel 87 verwacht bij
+  "Toch mijn versie bewaren" de zin "wijzigingen van dat apparaat verloren", maar de balk toont de gewone verouderd-tekst
+  ("Open eerst de nieuwste versie, anders gaan die wijzigingen (en eigen video’s) verloren"). Los en onder last herhaald; niet
+  aangeraakt door legal. Waarschijnlijk komt de test in de tak zonder `OPNAME_NIEUW` terecht (timing) of mist de tekst daar.
+
 ### Sweep 2026-11-18 22u (vijf persona's lokaal met EIGEN_LOGIN_VERPLICHT=aan en PROEF_VERPLICHT=aan; geen 500's of pageerrors in de serverlog; beheergrenzen hielden: laatste beheerder 400, zichzelf verwijderen 400, elke beheeractie als therapeut 403 met zin (scherm en API), X ↔ Y 404/403; verwijderde collega: sessie 401, login 403; Alles wissen: sessies dood, /k weg, Y ongemoeid; uploads via /o: tekst/pdf 400, 70 MB 413)
 - **OPGELOST 2026-11-18 deze run (test:opnamewees) — HOOG (Mark, iPad) — video verdween stil na "Open de nieuwste versie (video gaat mee)"**
   als het andere apparaat de oefening bij de video intussen had weggehaald (`openNieuwsteVersie`: `else delete OPNAME_NIEUW[k]`), bestand als
