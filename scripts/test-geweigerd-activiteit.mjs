@@ -119,8 +119,21 @@ try {
   a = (await (await get("/api/praktijk/activiteit?praktijk=" + encodeURIComponent(P), S2)).json()).activiteit || [];
   assert.equal(rij(a, "proef-geweigerd", "Sanne").length, 0);
 
+  // Security 2026-11-19 08u (gebruikers-sweep 06u, Karin): een leespoging van Activiteit of van het
+  // leeslog door een collega gaf 403, maar stond nergens; de schrijfpogingen wel.
+  assert.equal((await get("/api/praktijk/activiteit?praktijk=" + encodeURIComponent(P), M2)).status, 403);
+  assert.equal((await get("/api/praktijk/activiteit?praktijk=" + encodeURIComponent(P), M2)).status, 403);
+  assert.equal((await get("/api/kaart/leeslog?praktijk=" + encodeURIComponent(P) + "&id=" + encodeURIComponent(id), M2)).status, 403);
+  a = (await (await get("/api/praktijk/activiteit?praktijk=" + encodeURIComponent(P), S2)).json()).activiteit || [];
+  assert.equal(rij(a, "activiteit-lezen-geweigerd", "Mark").length, 1, "leespoging Activiteit door Mark staat erin: " + a.map((e) => e.actie + "/" + e.wie).join(", "));
+  assert.equal(rij(a, "activiteit-lezen-geweigerd", "Mark")[0].n, 2, "twee pogingen op één regel");
+  assert.equal(rij(a, "leeslog-lezen-geweigerd", "Mark").length, 1, "leespoging leeslog door Mark staat erin");
+  assert.equal(rij(a, "activiteit-lezen-geweigerd", "Sanne").length, 0, "de beheerder zelf geeft geen regel");
+  // zonder sessie van deze praktijk komt er niets in Activiteit (geen ruis van buitenaf)
+  assert.equal((await get("/api/kaart/leeslog?praktijk=" + encodeURIComponent(P) + "&id=" + encodeURIComponent(id))).status, 401);
+
   for (const actie of ["kaart-verwijderen-geweigerd", "kaart-herstellen-geweigerd", "kaart-definitief-geweigerd", "akkoord-geweigerd",
-    "proef-geweigerd", "akkoord", "alles-gedownload"]) {
+    "proef-geweigerd", "akkoord", "alles-gedownload", "activiteit-lezen-geweigerd", "leeslog-lezen-geweigerd"]) {
     assert.match(html, new RegExp("'" + actie + "':'[^']+'"), "app heeft een leesbare regel voor " + actie);
   }
   console.log("test-geweigerd-activiteit: ok");

@@ -5017,6 +5017,8 @@ async function afhandelen(request, response) {
     // rolwijzigingen, wie verwijderd is), net als het leeslog. Een gewone therapeut las het hele team
     // (gebruikers-sweep 2026-11-12 14u en 2026-11-14 06u, Karin; security-backlog MIDDEL).
     if (!isBeheer(sessieVan(request))) {
+      // ook een leespoging hoort in het spoor, net als de schrijfpogingen (gebruikers-sweep 2026-11-19 06u, Karin)
+      auditGeweigerd(pk, "activiteit-lezen-geweigerd", request);
       await sendJson(response, 403, { ok: false, beheer: true, fout: "Alleen een beheerder van de praktijk ziet de activiteit van het team." });
       return;
     }
@@ -5033,6 +5035,7 @@ async function afhandelen(request, response) {
       "oefening-verwijderen-geweigerd", "vragen-aanpassen-geweigerd", "sjabloon-verwijderen-geweigerd", "profiel-wijzigen-geweigerd",
       "alles-wissen-geweigerd", "download-geweigerd", "akkoord-geweigerd", "kaart-verwijderen-geweigerd",
       "kaart-herstellen-geweigerd", "kaart-definitief-geweigerd", "proef-geweigerd",
+      "activiteit-lezen-geweigerd", "leeslog-lezen-geweigerd",
       // een download van alle gegevens door een beheerder hoort in hetzelfde spoor als een geweigerde
       "alles-gedownload"]);
     // 15 echte gebeurtenissen plus hooguit 5 geweigerde of mislukte pogingen: een collega die blijft
@@ -7580,7 +7583,12 @@ async function afhandelen(request, response) {
     if (!pk || verbodenSleutel.test(pk)) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam op." }); return; }
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
     const s = sessieVan(request);
-    if (!s || s.pk !== pk || !isBeheer(s)) { await sendJson(response, 403, { ok: false, fout: "Alleen een beheerder van de praktijk kan zien wie een kaart heeft bekeken." }); return; }
+    if (!s || s.pk !== pk || !isBeheer(s)) {
+      // een collega van deze praktijk die het leeslog probeert te lezen, staat in Activiteit
+      if (s && s.pk === pk) auditGeweigerd(pk, "leeslog-lezen-geweigerd", request);
+      await sendJson(response, 403, { ok: false, fout: "Alleen een beheerder van de praktijk kan zien wie een kaart heeft bekeken." });
+      return;
+    }
     const id = String(q.get("id") || "");
     const kaart = Object.values(kaarten[pk] || {}).find((k) => k && !k.demo && k.id === id) || null;
     if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
