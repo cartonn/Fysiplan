@@ -10,7 +10,7 @@ import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { SOORTEN, SAMEN_MS, BEWAAR_DAGEN, MAX_PER_KAART, MAX_PER_PRAKTIJK, merk, vanKaart, vanPraktijk, snoei, wisKaart, wisPraktijk } from "../lib/leeslog.js";
+import { SOORTEN, SAMEN_MS, BEWAAR_DAGEN, MAX_PER_KAART, MAX_PER_PRAKTIJK, merk, vanKaart, vanPraktijk, snoei, wisKaart, wisPraktijk, hernoemKaart } from "../lib/leeslog.js";
 
 // ---- 1. de regels ----
 {
@@ -68,6 +68,14 @@ import { SOORTEN, SAMEN_MS, BEWAAR_DAGEN, MAX_PER_KAART, MAX_PER_PRAKTIJK, merk,
   assert.deepEqual(l, {}, "een praktijk die weg is, heeft geen leeslog meer");
   l = kopie();
   assert.equal(wisPraktijk(l, "pk"), true); assert.deepEqual(l, {}); assert.equal(wisPraktijk(l, "pk"), false);
+  // een nieuwe link: de regels verhuizen mee naar het nieuwe id, en snoei laat ze daarna staan
+  l = kopie();
+  const vanK1 = l.pk.filter((r) => r.k === "k1").length;
+  assert.equal(hernoemKaart(l, "pk", "k1", "k9"), vanK1);
+  assert.ok(!l.pk.some((r) => r.k === "k1") && l.pk.filter((r) => r.k === "k9").length === vanK1, "alle regels van k1 staan nu bij k9");
+  assert.equal(snoei(l, () => new Set(["k9", "k2", "k3"]), nu), 0, "na de nieuwe link haalt het opruimen ze niet weg");
+  assert.equal(hernoemKaart(l, "andere", "k9", "k1"), 0);
+  assert.equal(hernoemKaart(l, "pk", "", "k1"), 0, "zonder oud id (regels over alle kaarten) verhuist er niets");
 
   // plafonds
   const vol = {};
@@ -218,6 +226,22 @@ try {
   const na = await wachtOpSchijf((l) => !JSON.stringify(l).includes(kJoris));
   assert.ok(!JSON.stringify(na).includes(kJoris), "definitief verwijderd: geen regel meer over die kaart");
   assert.ok(na[pk].some((r) => r.k === kSanne), "de andere kaart houdt haar regels");
+
+  // Een nieuwe link voor de kaart (delen intrekken): het leeslog verhuist mee. Voorheen bleven de regels
+  // bij het oude id staan: de beheerder zag ze niet meer bij de kaart en de opruimronde wiste ze, zodat
+  // een collega die de kaart had ingezien met "Nieuwe link" dat spoor kon uitwissen (security 2026-11-19 20u).
+  const voorLink = kort(await regels(kSanne));
+  const nl = await post("/api/kaart/nieuwe-link", { praktijk: P, id: kSanne }, J);
+  assert.equal(nl.status, 200);
+  const kNieuw = (await nl.json()).id;
+  assert.notEqual(kNieuw, kSanne);
+  const naLink = kort(await regels(kNieuw));
+  assert.match(naLink[0], /^Joris: kaart bewaard( x\d+)?$/, "wie de link vernieuwde, staat erin");
+  const zonderJoris = (rs) => rs.filter((r) => !/^Joris: kaart bewaard/.test(r));
+  assert.deepEqual(zonderJoris(naLink), zonderJoris(voorLink), "en alles van vóór de nieuwe link staat er nog bij de kaart");
+  assert.ok(naLink.length >= voorLink.length);
+  const opSchijfNa = await wachtOpSchijf((l) => !JSON.stringify(l).includes(kSanne));
+  assert.ok(!JSON.stringify(opSchijfNa).includes(kSanne) && opSchijfNa[pk].filter((r) => r.k === kNieuw).length === naLink.length, "op schijf onder het nieuwe id, dus de opruimronde laat ze staan");
 
   // het leeslog gaat mee in de reservekopie
   const bron = await readFile(fileURLToPath(new URL("../server.js", import.meta.url)), "utf8");

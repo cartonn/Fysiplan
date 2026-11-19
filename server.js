@@ -7946,8 +7946,12 @@ async function afhandelen(request, response) {
       for (const m of Object.values(kaarten)) for (const k of Object.values(m)) bestaat.add(k.id);
       let nieuwId;
       do { nieuwId = randomBytes(6).toString("hex"); } while (bestaat.has(nieuwId));
+      const oudId = kaart.id;
       kaart.id = nieuwId;
       await saveJson(kaartenPath, kaarten);
+      // het leeslog van de kaart verhuist mee, en wie de link vernieuwde komt erin (lib/leeslog.js)
+      if (leeslogRegels.hernoemKaart(leeslog, pk, oudId, nieuwId)) leeslogBewaar();
+      if (!kaart.demo) leesMerk(request, pk, "bewaard", nieuwId);
       auditLog(pk, "kaart-link-vernieuwd", request);
       await sendJson(response, 200, { ok: true, id: nieuwId });
     } catch {
