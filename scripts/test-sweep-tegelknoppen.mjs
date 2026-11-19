@@ -81,15 +81,20 @@ try {
   let f = await page.evaluate(() => ({ mvr: document.activeElement.dataset.mvr || null, mvl: document.activeElement.dataset.mvl || null }));
   assert.ok(f.mvr === "1" || f.mvl === "1", "focus volgt de verschoven oefening: " + JSON.stringify(f));
 
-  // × met Enter: oefening weg, focus op de × van de volgende tegel
+  // × met Enter: oefening weg, focus op "Ongedaan maken" (sweep 2026-11-19 10u, Sanne); Esc zet de focus op de × van
+  // de tegel die nu op die plek staat
   await page.locator("#mon [data-rm='0']").focus();
   await page.keyboard.press("Enter");
   na = await namen();
   assert.equal(na.length, 2, "één oefening van de kaart");
+  assert.equal(await page.evaluate(() => document.activeElement.id), "oefweg_terug", "focus op Ongedaan maken");
+  await page.keyboard.press("Escape");
   f = await page.evaluate(() => document.activeElement.dataset.rm || null);
-  assert.equal(f, "0", "focus op de × die nu op plek 1 staat");
+  assert.equal(f, "0", "na Esc focus op de × die nu op plek 1 staat");
   await page.keyboard.press(" ");
-  assert.equal((await namen()).length, 1, "spatie werkt ook");
+  await page.waitForTimeout(150);
+  assert.equal((await namen()).length, 1, "spatie werkt ook (en maakt het niet meteen ongedaan bij het loslaten)");
+  await page.keyboard.press("Escape");
   // Enter op de × van de LAATSTE oefening: de kaart is leeg en de focus staat in het zoekveld. Eerst kwam
   // dezelfde Enter daarna ook bij het zoekveld langs en zette de eerste bibliotheekoefening stil op de kaart
   // (gebruikers-sweep 2026-11-16, toetsenbord).
@@ -97,7 +102,11 @@ try {
   await page.keyboard.press("Enter");
   await page.waitForTimeout(150);
   assert.equal((await namen()).length, 0, "Enter op de laatste × laat een lege kaart achter");
-  assert.equal(await page.evaluate(() => document.activeElement && document.activeElement.id), "search", "focus in het zoekveld");
+  assert.equal(await page.evaluate(() => document.activeElement && document.activeElement.id), "oefweg_terug", "focus op Ongedaan maken");
+  await page.keyboard.press("Escape");
+  await page.waitForTimeout(150);
+  assert.equal((await namen()).length, 0, "Esc zet niets terug en voegt niets toe");
+  assert.equal(await page.evaluate(() => document.activeElement && document.activeElement.id), "search", "daarna focus in het zoekveld");
   assert.deepEqual(fouten, [], "geen scriptfouten");
 
   // iPad (geen aanwijzen): onzichtbare pijltjes zijn niet aantikbaar; een tik rechtsonder in een vak schuift niets op
