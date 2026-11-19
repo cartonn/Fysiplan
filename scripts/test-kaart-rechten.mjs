@@ -39,3 +39,12 @@ for (const w of ["inzien", "verbeteren", "wissen"]) assert.ok(rechten.includes(w
 assert.ok(juridisch.includes("Autoriteit Persoonsgegevens"), "/privacy noemt de Autoriteit Persoonsgegevens niet");
 
 console.log("test-kaart-rechten: ok (" + TALEN.length + " talen)");
+
+// Sweep 2026-11-19 10u: geen houterige vraag "Do you disagree?" (waarmee?), en het adres is een echte link,
+// in het Engels naar de Engelse site van de Autoriteit Persoonsgegevens.
+for (const t of TALEN) assert.ok(!/disagree|niet mee eens|nicht einverstanden|pas d’accord|de acuerdo|Nie zgadzasz|Katılmıyor|غير موافق|Не згоден/i.test(TMG[t].rk), `rechten (${t}): onduidelijke vraag "ben je het er niet mee eens?"`);
+assert.ok(!/You may see/.test(TMG.en.rk), "rechten (en): 'You may see' is houterig");
+assert.match(kaart, /linkAP\(document\.getElementById\('mg_rk'\)\)/, "het adres van de AP in Je rechten wordt geen link");
+assert.match(kaart, /function linkAP\(el\)\{[\s\S]{0,400}createElement\('a'\)[\s\S]{0,300}autoriteitpersoonsgegevens\.nl'\+\(TAAL==='en'\?'\/en':''\)/, "linkAP maakt geen veilige link (createElement, Engelse site voor en)");
+assert.ok(!/innerHTML/.test(kaart.slice(kaart.indexOf("function linkAP"), kaart.indexOf("function linkAP") + 500)), "linkAP gebruikt innerHTML");
+console.log("test-kaart-rechten: Engelse tekst en AP-link ok");
