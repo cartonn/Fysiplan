@@ -23,6 +23,10 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **LAAG (gebruikers-sweep 2026-11-19 10u, Jayden) — Engelse rechten-tekst op /k (#389) loopt houterig:** "Do you disagree?" (waarmee?) en "You may see your data";
+  de site van de Autoriteit Persoonsgegevens staat er als platte tekst zonder link en verwijst naar de Nederlandse site (kaart.html ~1250, TMG.en.rk). Voorstel: "Not happy
+  with how your data is handled? You can complain to the Dutch Data Protection Authority (Autoriteit Persoonsgegevens)" met link naar de Engelse pagina. De/fr/es nalopen.
+
 - **OPGELOST 2026-11-19 09u (legal-PR van deze run; test `scripts/test-kaart-rechten.mjs` faalt zonder fix) — LAAG — begrijpelijkheid (i) / privacyverklaring (a): een patiënt die de kaart in een andere taal leest, kon zijn rechten nergens in die taal vinden.**
   Het patiëntdeel van /privacy is alleen Nederlands (open punt van 2026-11-08, PR #107). "Mijn gegevens" op /k noemde in de 9 kaarttalen
   wat er op de kaart staat en hoe lang, maar over rechten alleen "Vragen over je gegevens? Stel ze aan je praktijk." Nu staat daar in elke

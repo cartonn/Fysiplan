@@ -608,6 +608,11 @@ hetzelfde account-object; #363/#369 inbox; #366 `proefEinde` (alleen langer tot 
 
 ## Open
 
+- **LAAG (gebruikers-sweep 2026-11-19 10u, Karin) — tekst-omkeertekens en emoji in team/e-mail:** een naam met U+202E wordt bewaard en kan in de teamlijst en
+  Activiteit misleidend ogen (#376 haalde ze alleen op /k weg); een e-mailadres met een emoji als lokaal deel wordt aangenomen. `cleanName`/`geldigEmail` in server.js:
+  U+202A–202E en U+2066–2069 strippen, lokaal deel van e-mail ASCII. Daarnaast: Activiteit noemt bij "sjabloon-verwijderd"/"oefening-verwijderd" niet welk sjabloon
+  of welke oefening van welke collega (server.js ~6134/~6257).
+
 - **OPGELOST 2026-11-19 08u (deze PR, test:geweigerdactiviteit) — LAAG (van de gebruikers-sweep 2026-11-19 06u, Karin) — geweigerde leespoging van Activiteit door een collega staat niet in Activiteit.**
   Opgelost: een 403 op `GET /api/praktijk/activiteit` en op `GET /api/kaart/leeslog` voor een collega van dezelfde praktijk roept nu
   `auditGeweigerd` aan ("activiteit-lezen-geweigerd", "leeslog-lezen-geweigerd", met teller); de app toont er een leesbare regel bij.
