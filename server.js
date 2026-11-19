@@ -2782,7 +2782,7 @@ function kaartSleutel(kaart) {
   return String((kaart && kaart.praktijk) || "").toLowerCase();
 }
 // Mag dit verzoek een beschermd bestand uit /uploads/ zien (lib/medialink.js)?
-// `verwijzingen`: de kaarten die deze opname dragen (leeg bij een foto).
+// `verwijzingen()`: de kaarten die deze opname dragen (leeg bij een foto); pas aangeroepen als het nodig is.
 function magMedia(req, pad, verwijzingen) {
   const foto = mediaSoort(pad) === "foto";
   // 1. een tijdelijke link: de kaart bestaat nog en draagt dit bestand nog
@@ -2797,17 +2797,20 @@ function magMedia(req, pad, verwijzingen) {
       }
     }
   }
-  // 2. wie is ingelogd bij de praktijk van wie het bestand is
+  // 2. wie is ingelogd bij de praktijk van wie het bestand is. Zonder praktijksessie of v1-login
+  // telt alleen beheer: dan hoeven de kaarten niet doorzocht (security 2026-11-19)
+  const s = sessieVan(req);
+  const v1 = v1SessieVan(req);
+  if (!s && !v1) return beheerEigen(req);
   const eigenaars = new Set(foto
     ? Object.keys(praktijkOefeningen).filter((pk) => (praktijkOefeningen[pk] || []).some((o) => o && o.img === pad))
-    : verwijzingen.filter((k) => !k.verwijderdOp).map((k) => kaartSleutel(k)));
+    : verwijzingen().filter((k) => !k.verwijderdOp).map((k) => kaartSleutel(k)));
   // een opname die de praktijk zelf startte en die nog op geen bewaarde kaart staat: de eigen
   // praktijk mag hem al bekijken (voorbeeld in de app), niemand anders (sweep 2026-11-13)
   if (!foto) for (const o of opnames.values()) if (o.video === pad && o.praktijk) eigenaars.add(o.praktijk);
-  const s = sessieVan(req);
   if (s && eigenaars.has(s.pk)) return true;
   // de v1-app (eigen accountlaag) bij een praktijk zonder account, en beheer met een eigen sleutel
-  if (v1SessieVan(req) && [...eigenaars].some((pk) => !praktijkGeclaimd(pk))) return true;
+  if (v1 && [...eigenaars].some((pk) => !praktijkGeclaimd(pk))) return true;
   if (beheerEigen(req)) return true;
   return false;
 }
@@ -8337,18 +8340,24 @@ async function afhandelen(request, response) {
     // Bewaar privéopnames voor herstel, maar serveer ze niet via een oude directe link
     // wanneer uitsluitend verwijderde kaarten er nog naar verwijzen.
     const uploadPad = normalize(urlPath).slice(1);
-    const verwijzingen = Object.values(kaarten).flatMap((m) => Object.values(m))
-      .filter((k) => Object.values(k.vids || {}).includes(uploadPad));
-    if (verwijzingen.length && verwijzingen.every((k) => k.verwijderdOp) &&
-        !Object.values(videolinks).some((v) => v.eigen === uploadPad)) {
-      await send(response, 404, "text/plain; charset=utf-8", "Not found"); return;
-    }
+    const soort = mediaSoort(uploadPad);
+    const bibliotheek = !!soort && Object.values(videolinks).some((v) => v && v.eigen === uploadPad);
+    // De kaarten die dit bestand dragen. Security 2026-11-19: dit doorzocht bij elk verzoek naar
+    // /uploads/ (ook anoniem, een logo of een pad dat niet bestaat) alle kaarten van alle praktijken.
+    // Alleen een eigen opname kan op een kaart staan (`vids` neemt alleen uploads/videos/v-… aan), en
+    // gezocht wordt pas als magMedia het nodig heeft of het verzoek al is toegelaten.
+    let gevonden = null;
+    const verwijzingen = () => gevonden || (gevonden = soort !== "video" || bibliotheek ? [] :
+      Object.values(kaarten).flatMap((m) => Object.values(m)).filter((k) => Object.values(k.vids || {}).includes(uploadPad)));
 
     // Een eigen opname van een praktijk of de foto van een eigen oefening: alleen met een
     // tijdelijke link die bij een kaart hoort, of voor wie bij die praktijk is ingelogd
     // (lib/medialink.js). Een video uit de bibliotheek heeft dezelfde soort naam en blijft openbaar.
-    const beschermd = !!mediaSoort(uploadPad) && !Object.values(videolinks).some((v) => v && v.eigen === uploadPad);
+    const beschermd = !!soort && !bibliotheek;
     if (beschermd && !magMedia(request, uploadPad, verwijzingen)) {
+      await send(response, 404, "text/plain; charset=utf-8", "Not found"); return;
+    }
+    if (verwijzingen().length && verwijzingen().every((k) => k.verwijderdOp)) {
       await send(response, 404, "text/plain; charset=utf-8", "Not found"); return;
     }
 
