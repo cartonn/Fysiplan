@@ -1430,7 +1430,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // kaart bestaat niet meer: wat deze telefoon over juist die kaart onthield, gaat ook weg
   // Legal 2026-11-11: ook fp_beelden_<id> (welke oefenbeelden deze kaart gebruikte, met het kaart-id);
   // daarna schrijft de pagina die lijst niet opnieuw weg.
-  function vergeetKaartHier(){KAART_GEWIST=true;try{['fp_oefdaan_','fp_zwaar_','fp_priv_','fp_wacht_','fp_beelden_'].forEach(function(p){localStorage.removeItem(p+(id||'x'));});}catch(e){}}
+  // Legal 2026-11-19: ook fp_taalkeus_<id> (taalkeuze bij deze kaart, met het kaart-id); /privacy#opslag belooft dat
+  // de telefoon na wissen of verlopen niets meer van die kaart bewaart. scripts/test-kaart-weg.mjs eist elk
+  // sleutelvoorvoegsel dat kaart.html met het kaart-id maakt in deze lijst.
+  function vergeetKaartHier(){KAART_GEWIST=true;try{['fp_oefdaan_','fp_zwaar_','fp_priv_','fp_wacht_','fp_beelden_','fp_taalkeus_'].forEach(function(p){localStorage.removeItem(p+(id||'x'));});}catch(e){}}
   // Legal 2026-11-11: de server meldt dat de kaart weg is (gewist of verlopen). De service worker
   // haalt de kaart zelf uit de offline-cache; hier gaan ook de oefenbeelden van deze kaart weg,
   // behalve wat een andere kaart op deze telefoon nog gebruikt (zelfde regel als "Wis deze kaart").
