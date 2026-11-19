@@ -249,6 +249,7 @@
     "test:profieloudapparaat": "node scripts/test-profiel-oud-apparaat.mjs",
     "test:profielleegadres": "node scripts/test-profiel-leeg-adres.mjs",
     "test:afspraakreeksloopt": "node scripts/test-afspraak-reeks-loopt.mjs",
+    "test:lightboxfocus": "node scripts/test-lightbox-focus.mjs",
     "test:objectnaam": "node scripts/test-sweep-objectnaam.mjs",
     "test:proefaria": "node scripts/test-sweep-proefformulier-aria.mjs",
     "test:kaarttitel": "node scripts/test-sweep-kaarttitel-taal.mjs",

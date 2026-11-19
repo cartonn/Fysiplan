@@ -261,6 +261,7 @@ jobs:
       - run: npm run test:profieloudapparaat
       - run: npm run test:profielleegadres
       - run: npm run test:afspraakreeksloopt
+      - run: npm run test:lightboxfocus
       - run: npm run test:objectnaam
       - run: npm run test:proefaria
       - run: npm run test:kaarttitel
