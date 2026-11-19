@@ -1,7 +1,8 @@
 // Security 2026-11-16 (backlog MIDDEL, gebruikers-sweep 2026-11-15 22u en 2026-11-16 02u, Karin):
 // geweigerde pogingen van een collega duwden de echte gebeurtenissen uit Activiteit (15 regels) en,
 // op den duur, uit de opslag (300 echte gebeurtenissen per praktijk). Nu zijn geweigerde pogingen
-// ruis (klein plafond) en toont Activiteit 15 echte regels plus hooguit 5 geweigerde of mislukte.
+// ruis (klein plafond) en toont Activiteit 15 echte regels, hooguit 5 mislukte logins en per collega
+// elke soort geweigerde poging één keer met teller (hooguit 15; sinds 2026-11-19).
 // Zonder browser, past in CI. `npm run test:activiteitoverspoeld`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -22,9 +23,33 @@ for (let i = 0; i < 30; i++) lijst.push({ actie: "akkoord-geweigerd", i });
 lijst.push({ actie: "collega-verwijderd" });
 for (let i = 0; i < 30; i++) lijst.push({ actie: "ingelogd", i });
 const k = kiesActiviteit(lijst, (a) => isAuditRuis(a, basis));
-assert.equal(k.filter((e) => e.actie === "akkoord-geweigerd").length, 5);
+// sinds 2026-11-19: dezelfde soort van dezelfde collega is één regel met teller
+assert.equal(k.filter((e) => e.actie === "akkoord-geweigerd").length, 1);
+assert.equal(k[0].n, 30, "de teller telt alle 30 pogingen");
+assert.equal(lijst[0].n, undefined, "de opslag zelf wordt niet aangepast");
 assert.equal(k.filter((e) => !isAuditRuis(e.actie, basis)).length, 15);
-assert.equal(k[5].actie, "collega-verwijderd", "volgorde blijft nieuwste eerst");
+assert.equal(k[1].actie, "collega-verwijderd", "volgorde blijft nieuwste eerst");
+
+// Security 2026-11-19 (gebruikers-sweep 02u, Karin): Joost deed 7 verschillende geweigerde pogingen,
+// waaronder zichzelf beheerder maken; daarna 20 foute logins. Activiteit liet er maar 5 zien, de
+// oudste (de rolverhoging) viel weg. Nu staat elke soort er één keer, en foute logins duwen ze niet weg.
+const joost = ["team-wijziging-geweigerd", "akkoord-geweigerd", "profiel-wijzigen-geweigerd", "alles-wissen-geweigerd",
+  "download-geweigerd", "kaart-verwijderen-geweigerd", "proef-geweigerd"];
+const k2lijst = [];
+for (let i = 0; i < 20; i++) k2lijst.push({ actie: "login-mislukt", i });
+for (const a of [...joost].reverse()) { k2lijst.push({ actie: a, wie: "Joost", n: 2 }); k2lijst.push({ actie: "ingelogd" }); }
+k2lijst.push({ actie: "team-wijziging-geweigerd", wie: "Joost", n: 3 });
+const k2 = kiesActiviteit(k2lijst, (a) => isAuditRuis(a, basis));
+for (const a of joost) assert.equal(k2.filter((e) => e.actie === a && e.wie === "Joost").length, 1, a + " staat er precies één keer");
+assert.equal(k2.find((e) => e.actie === "team-wijziging-geweigerd").n, 5, "teller van de rolverhoging opgeteld");
+assert.equal(k2.filter((e) => e.actie === "login-mislukt").length, 5, "foute logins houden hun eigen plafond");
+assert.equal(k2.filter((e) => e.actie === "ingelogd").length, 7);
+// een andere collega met dezelfde soort is een eigen regel; het aantal soorten is begrensd
+const k3lijst = [{ actie: "akkoord-geweigerd", wie: "A" }, { actie: "akkoord-geweigerd", wie: "B" }];
+for (let i = 0; i < 40; i++) k3lijst.push({ actie: "akkoord-geweigerd", wie: "C" + i });
+const k3 = kiesActiviteit(k3lijst, (a) => isAuditRuis(a, basis));
+assert.equal(k3.length, 15, "hooguit 15 geweigerde regels");
+assert.deepEqual(k3.slice(0, 2).map((e) => e.wie), ["A", "B"]);
 
 // 2) runtime
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-overspoeld-"));
@@ -91,7 +116,7 @@ try {
   const tekst = a.map((e) => e.actie + "/" + (e.wie || "")).join(", ");
   assert.ok(a.some((e) => e.actie === "collega-uitgenodigd"), "collega uitgenodigd blijft in Activiteit: " + tekst);
   assert.ok(a.some((e) => e.actie === "geclaimd"), "het beveiligen blijft in Activiteit: " + tekst);
-  assert.ok(a.filter((e) => /-geweigerd$/.test(e.actie)).length <= 5, "hooguit 5 geweigerde regels: " + tekst);
+  assert.ok(a.filter((e) => /-geweigerd$/.test(e.actie)).length <= 15, "hooguit 15 geweigerde regels: " + tekst);
   assert.ok(a.some((e) => e.actie === "akkoord-geweigerd" && /^Mark/.test(e.wie || "")), "de nieuwste poging staat er nog: " + tekst);
 
   await stop();
