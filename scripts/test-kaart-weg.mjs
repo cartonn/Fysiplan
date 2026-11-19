@@ -39,7 +39,7 @@ const nepAntwoord = (status) => ({ status, clone() { return nepAntwoord(status);
 const ctx = vm.createContext({
   self, caches, URL, Promise, console,
   fetch: async (req) => nepAntwoord(serverAntwoord(new URL(typeof req === "string" ? req : req.url, ORIGIN)).status),
-  Response: { error: () => nepAntwoord(0) }
+  Response: Object.assign(function (body, init) { this.status = init.status; this.body = body; this.headers = init.headers; }, { error: () => nepAntwoord(0) })
 });
 vm.runInContext(await readFile(join(root, "public/kaart-sw.js"), "utf8"), ctx);
 assert.equal(typeof luisteraars.fetch, "function", "werker luistert naar fetch");
@@ -84,6 +84,14 @@ const offline = await haal(`/api/kaart?id=${WEG}`);
 assert.equal(offline.status, 0, "offline geeft geen gewiste kaart meer");
 const offlineBlijft = await haal(`/api/kaart?id=${BLIJFT}`);
 assert.equal(offlineBlijft.status, 200, "een bestaande kaart werkt offline nog");
+
+// sweep 2026-11-19 (Truus): de kaartpagina zelf offline openen nadat de kopie weg is gaf een wit scherm
+// (Response van caches.match = undefined → netwerkfout). Nu een vaste pagina die zegt wat er aan de hand is.
+const pagina = await haal(`/k/${WEG}`);
+assert.ok(pagina && pagina.status === 503 && /Geen internetverbinding/.test(pagina.body || ""), "offline zonder kopie: nette pagina, geen wit scherm");
+assert.match(pagina.body, /Bel of mail je praktijk/);
+assert.doesNotMatch(pagina.body, /<script/i, "geen script in de noodpagina");
+assert.equal((await haal(`/k/${BLIJFT}`)).status, 200, "bewaarde kaart opent offline nog gewoon");
 
 // een 404 op iets anders dan een kaart wist niets
 serverAntwoord = () => ({ status: 404 });

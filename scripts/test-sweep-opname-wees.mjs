@@ -84,7 +84,12 @@ try {
   assert.equal(up.status, 200, "telefoon verstuurt");
   const pad = (await up.json()).video;
   await page.waitForSelector("#conflict_bar", { state: "visible", timeout: 15000 });
-  assert.match(await page.textContent("#conflict_bar"), /wijzigingen van dat apparaat verloren/, "waarschuwing bij Toch mijn versie bewaren");
+  // eerst kan de gewone verouderd-balk staan (een autosave van vóór de video); zodra de video
+  // binnen is, moet de balk de opnamevariant tonen. Wachten met een lus, niet meteen lezen
+  // (de test faalde daardoor wisselend, legal 2026-11-19 01u)
+  let cbTekst = "";
+  for (let i = 0; i < 200; i++) { cbTekst = await page.textContent("#conflict_bar"); if (/wijzigingen van dat apparaat verloren/.test(cbTekst)) break; await wacht(50); }
+  assert.match(cbTekst, /wijzigingen van dat apparaat verloren/, "waarschuwing bij Toch mijn versie bewaren");
 
   // Open de nieuwste versie: de oefening is weg, dus de video kan niet mee. Dat moet er staan.
   await page.click("#conflict_bar [data-cfact='nieuwste']");

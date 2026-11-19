@@ -27,6 +27,10 @@ Sanity 2026-11-18 20u op #376–#377: #376 eigen fix; #377 (kaart) alleen front-
 401/403, de melding "deels Nederlands" via `textContent`, `lang="nl"` op namen door `esc`. Geen gat. In deze run (e) uploads.
 Volgende run: (c) proef-tokens, daarna (f) XSS.
 
+- **LAAG (van de gebruikers-sweep, 2026-11-19 02u, Karin) — geweigerde pogingen van een therapeut vallen weg uit Activiteit.** Joost (therapeut) probeerde via de API
+  zichzelf beheerder te maken (team/rol), de beheerder te verwijderen en uit te nodigen, plus 5 andere geweigerde acties. Alle 7 `team-wijziging-geweigerd` staan in
+  praktijk-audit.json, maar Activiteit toont alleen de laatste 5 geweigerde regels (`kiesActiviteit` in lib/audit-keuze.js, ruis = 5; server.js ~5033); ook
+  `akkoord-geweigerd` en `profiel-wijzigen-geweigerd` vielen weg. Voorstel: voorrang voor pogingen tot rolverhoging/verwijderen, of per soort samenvoegen. Niet zelf gebouwd (security-gebied).
 - **OPGELOST 2026-11-18 (deze PR) — LAAG — opnames die nog op geen kaart stonden, overleefden "Alles wissen".** Een opname via
   de QR (/o) staat tot 4 uur in `opnames` tot hij op een kaart komt. `praktijkAllesWissen` ruimde alleen video's op kaarten op:
   zo'n video (er kan een patiënt op staan) bleef na Alles wissen (en na het wissen na de proef) nog tot 4 uur op de schijf, en

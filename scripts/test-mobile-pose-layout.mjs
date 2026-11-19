@@ -97,7 +97,7 @@ const tekeningen = [];
 const gemaakt = [];
 function stubElement(tag) {
   const node = { tag, children: [], attrs: {}, style: {}, classList: { add() {}, remove() {}, contains: () => false, toggle() {} },
-    setAttribute(k, v) { this.attrs[k] = v; }, appendChild(c) { this.children.push(c); return c; },
+    setAttribute(k, v) { this.attrs[k] = v; }, getAttribute(k) { return k in this.attrs ? this.attrs[k] : null; }, appendChild(c) { this.children.push(c); return c; },
     addEventListener() {}, textContent: '', innerHTML: '', hidden: false };
   if (tag === 'canvas') {
     node.getContext = () => ({

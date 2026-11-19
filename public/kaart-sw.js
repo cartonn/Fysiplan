@@ -120,9 +120,33 @@ self.addEventListener('fetch', function (e) {
     }).catch(function () {
       return caches.match(req).then(function (uitCache) {
         if (uitCache) return uitCache;
-        if (req.mode === 'navigate') return caches.match(url.pathname);
+        if (req.mode === 'navigate') return caches.match(url.pathname).then(function (pagina) { return pagina || geenVerbindingPagina(req); });
         return Response.error();
       });
     })
   );
 });
+
+// Offline een kaart openen die niet (meer) op deze telefoon staat: eerst gaf dat een wit scherm met een
+// browserfout (bijvoorbeeld als de kaart eerder die dag "niet gevonden" gaf en de offline kopie dus weg is).
+// Nu een korte, vaste pagina zonder script, in het Nederlands of Engels (gebruikers-sweep 2026-11-19, Truus).
+function geenVerbindingPagina(req) {
+  var taal = '';
+  try { taal = String((req.headers && req.headers.get && req.headers.get('accept-language')) || ''); } catch (e) {}
+  var en = /^en\b/i.test(taal);
+  var t = en ? {
+    lang: 'en', titel: 'No internet connection',
+    tekst: 'This card is not saved on this phone, or it no longer exists. Try again when you are back online. Still not working? Call or email your practice.',
+    knop: 'Try again'
+  } : {
+    lang: 'nl', titel: 'Geen internetverbinding',
+    tekst: 'Deze kaart staat niet op deze telefoon, of bestaat niet meer. Probeer het opnieuw als je weer internet hebt. Lukt het dan nog niet? Bel of mail je praktijk.',
+    knop: 'Opnieuw proberen'
+  };
+  var html = '<!doctype html><html lang="' + t.lang + '"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<title>' + t.titel + ' \u2014 Fysiplan</title><style>body{margin:0;font:1.1rem/1.5 system-ui,sans-serif;background:#F2F5F3;color:#18343B}' +
+    'main{max-width:32rem;margin:0 auto;padding:2rem 1rem}h1{font-size:1.4rem;margin:0 0 .75rem;overflow-wrap:break-word;hyphens:auto}' +
+    'a{display:inline-flex;align-items:center;min-height:44px;padding:0 1.1rem;margin-top:1rem;border-radius:.6rem;background:#18343B;color:#fff;text-decoration:none;font-weight:600}</style></head>' +
+    '<body><main><h1>' + t.titel + '</h1><p>' + t.tekst + '</p><a href="">' + t.knop + '</a></main></body></html>';
+  return new Response(html, { status: 503, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
+}

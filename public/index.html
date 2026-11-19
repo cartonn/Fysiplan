@@ -1664,6 +1664,16 @@ bridge2.jpg</div>
   // tegel het vooraf. De rol is pas na het inloggen bekend, dus de teksten volgen bij elk openen.
   function praktijkTegelTeksten(){
     var ther=!!(typeof PRAKSLOT!=='undefined'&&PRAKSLOT&&PRAKSLOT.ingelogd&&PRAKSLOT.akkoord&&PRAKSLOT.akkoord.beheer===false);
+    // uitgelogd bij een beveiligde praktijk (ook: net uit het team gehaald met de app nog open) is de rol onbekend:
+    // dan geen beheerteksten alsof je alles mag, maar eerst inloggen (gebruikers-sweep 2026-11-19, Karin)
+    var uit=!!(typeof PRAKSLOT!=='undefined'&&PRAKSLOT&&PRAKSLOT.bekend&&PRAKSLOT.geclaimd&&!PRAKSLOT.ingelogd);
+    if(uit)return [
+      ['team','Team en logins','Log eerst in bij je praktijk (hierboven). Collega\u2019s uitnodigen en rollen wijzigen doet een beheerder.'],
+      ['eigen','Eigen oefeningen','Oefeningen met jullie eigen foto en uitleg, voor het hele team.'],
+      ['sjab','Sjablonen','Vaste behandelkaarten van de praktijk.'],
+      ['abon','Proef en abonnement','Log eerst in om de proef te zien. Betalen en opzeggen doet een beheerder van de praktijk.','/v2/proef?mijn=1'],
+      ['gegevens','Gegevens van de praktijk','Alles downloaden of wissen kan alleen een beheerder, met de eigen login.','/v2/gegevens']
+    ];
     return [
       ['team','Team en logins',ther?'Je eigen login en de tweede stap. Collega\u2019s uitnodigen en rollen wijzigen doet een beheerder.':'Collega\u2019s uitnodigen, rollen, je eigen login en de tweede stap.'],
       ['eigen','Eigen oefeningen','Oefeningen met jullie eigen foto en uitleg, voor het hele team.'],
@@ -2165,7 +2175,7 @@ bridge2.jpg</div>
   }
   function render(){updateChipCounts();renderList();renderA4();saveState();proefTeller();}
 
-  var TOEGEVOEGD={id:null,t:0};
+  var TOEGEVOEGD={id:null,t:0},WEGGEHAALD={id:null,t:0};
   function toggleExercise(id,tik){
     if(kaartWachtNog())return;
     var has=chosen.some(function(c){return c.o===id;});
@@ -2175,8 +2185,11 @@ bridge2.jpg</div>
     // dat de oefening op haar eigen plek terugzet.
     if(has){
       if(tik&&TOEGEVOEGD.id===id&&Date.now()-TOEGEVOEGD.t<800)return;
-      for(var hi=0;hi<chosen.length;hi++){if(chosen[hi].o===id){oefWeg(hi);return;}}
+      for(var hi=0;hi<chosen.length;hi++){if(chosen[hi].o===id){if(tik)WEGGEHAALD={id:id,t:Date.now()};oefWeg(hi);return;}}
     }
+    // en andersom: een dubbelklik op de − haalde de oefening weg en zette haar meteen achteraan terug, met de melding
+    // "van de kaart gehaald" terwijl ze er nog stond (gebruikers-sweep 2026-11-19, Sanne). Terugzetten gaat via Ongedaan maken.
+    else if(tik&&WEGGEHAALD.id===id&&Date.now()-WEGGEHAALD.t<800)return;
     else{TOEGEVOEGD={id:id,t:Date.now()};if(chosen.length>=12){alert('Maximaal 12 plaatjes op één A4.');return;}chosen.push({o:id,i:0});var o=OEF[id];if(o){var key=exerciseKey(o);RECENT=[key].concat(RECENT.filter(function(x){return x!==key;})).slice(0,24);try{localStorage.setItem('fysiplan_recent',JSON.stringify(RECENT));}catch(e){}}}
     render();
   }
@@ -4039,7 +4052,10 @@ bridge2.jpg</div>
         PRAKSLOT.eigenLogin=!!d.eigenLogin;PRAKSLOT.voorstel=d.voorstel||null;PRAKSLOT.vanMij=!!d.vanMij;PRAKSLOT.stapOpen=!!d.stapOpen;PRAKSLOT.proefNodig=!!d.proefNodig;PRAKSLOT.bekend=true;
         if(pr!==PRAKSLOT.nieuwVoor)PRAKSLOT.nieuw=false;
         if(d.bewaar)PRAKSLOT.bewaar=d.bewaar;
-        if(uitgelogd){SRV_KAART={};SRV_SIGNALEN={};var sl=document.getElementById('k_srv_lijst');if(sl)sl.innerHTML='';toonSrvKaarten();}
+        if(uitgelogd){SRV_KAART={};SRV_SIGNALEN={};var sl=document.getElementById('k_srv_lijst');if(sl)sl.innerHTML='';toonSrvKaarten();
+          // de proefbalk kwam van de praktijk (collega-apparaat zonder eigen proefcookie): die hoort er na het
+          // uitloggen of uit het team gaan niet meer te staan (gebruikers-sweep 2026-11-19, Karin)
+          if(PROEF&&PROEF.elders){PROEF=null;var pb=document.getElementById('proefBalk');if(pb)pb.hidden=true;}}
         rendPrakSlot();
         if(document.getElementById('k_praktijk'))bouwPraktijkTegels();
         try{applyLogo();}catch(e){}
