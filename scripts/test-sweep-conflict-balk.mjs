@@ -15,6 +15,7 @@ const root = process.cwd();
 const index = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(index, /toonQrHint\(vTekst,vKnoppen\);\s*toonConflictBalk\(vTekst,vKnoppen\);/, "409 verouderd toont ook de balk");
 assert.match(index, /function toonConflictBalk\(tekst,knoppen\)\{[\s\S]{0,900}?min-height:44px/, "knoppen van minstens 44 px");
+assert.match(index, /zetConflictTop\(bar\);\s*bar\.style\.display='flex';/, "balk onder de kopbalk, niet over de schermknoppen");
 assert.match(index, /function toonQr\(id\)\{\s*\/\/[^\n]*\n\s*var cfb=document\.getElementById\('conflict_bar'\);if\(cfb\)cfb\.style\.display='none';/, "balk weg na bewaren");
 
 let pw = null;
@@ -81,7 +82,16 @@ try {
   assert.equal(maten.length, 3, "nieuwste, toch mijn versie, sluiten");
   for (const [t, w, h] of maten) assert.ok(w >= 44 && h >= 44, "tikdoel " + t + " " + w + "x" + h);
   const vak = await page.$eval("#conflict_bar", (b) => { const r = b.getBoundingClientRect(); return { top: r.top, right: r.right, vw: innerWidth }; });
-  assert.ok(vak.top >= 0 && vak.top < 100 && vak.right <= vak.vw, "balk bovenin beeld, binnen het scherm");
+  assert.ok(vak.top >= 0 && vak.top < 260 && vak.right <= vak.vw, "balk bovenin beeld, binnen het scherm");
+  // sweep 2026-11-19 14u (Sanne): de balk lag over de kopbalk en blokkeerde de schermknoppen
+  const vrij = await page.evaluate(() => {
+    const hb = document.querySelector("header.topbar"), bar = document.getElementById("conflict_bar");
+    const knoppen = [...document.querySelectorAll("#fpSchermen [data-scherm]")].filter((b) => b.offsetParent);
+    return { onder: bar.getBoundingClientRect().top >= hb.getBoundingClientRect().bottom,
+      klikbaar: knoppen.every((b) => { const r = b.getBoundingClientRect(); const el = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return !!el && b.contains(el); }) };
+  });
+  assert.equal(vrij.onder, true, "balk staat onder de kopbalk");
+  assert.equal(vrij.klikbaar, true, "schermknoppen blijven klikbaar met de balk open");
   await page.tap("#conflict_bar [data-cfact='nieuwste']");
   await page.waitForSelector("#conflict_bar", { state: "hidden", timeout: 8000 });
   for (let i = 0; i < 100 && (await page.inputValue("#c_doel").catch(() => "")) !== "Traplopen zonder pijn"; i++) await wacht(50);
