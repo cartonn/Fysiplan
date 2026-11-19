@@ -4,6 +4,12 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Keuze: mag een net benoemde beheerder de oorspronkelijke beheerder meteen verwijderen? (gebruikers-sweep, 2026-11-19 06u)
+Karin maakte collega Tim beheerder; Tim kon daarna direct Karin (de aanmelder van de proef) uit het team halen. Dat staat in
+Activiteit, en er blijft altijd minstens één beheerder, maar Karin krijgt geen melding en er is geen extra bevestiging of
+wachttijd. Geen fout in de code, wel beleid. **Wat jij moet doen:** kiezen of dit zo mag blijven, of dat het verwijderen van
+een beheerder een mail aan die beheerder of een tweede beheerder als bevestiging moet vragen. De sweep bouwt het daarna.
+
 ### Voor de praktijk-routine: factuur eerste maand toont de huidige factuurgegevens (legal, 2026-11-18 13u)
 `/v2/proef/factuur` zonder `?nr=` (de eerste maand) gebruikt `p.abonnement.afnemer` van nu: wijzigt de praktijk later naam of
 adres bij Factuurgegevens, dan verandert ook die al uitgegeven factuur. Latere facturen leggen `b.afnemer` vast bij het

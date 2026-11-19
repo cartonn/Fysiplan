@@ -1486,6 +1486,13 @@ function pilotPkVanProef(p) {
   if (!p || !bestaandePilot || String(p.id) !== String(bestaandePilot.id)) return null;
   return pilotVan(bestaandePilot.pk) ? bestaandePilot.pk : null;
 }
+// een geldige sessie (beheerder of collega) van de praktijk die met deze proef is beveiligd
+function proefSessieVanPraktijk(req, p) {
+  const s = sessieVan(req);
+  if (!s || !p || !Object.hasOwn(praktijkAccounts, s.pk) || !praktijkGeclaimd(s.pk)) return false;
+  const k = praktijkAccounts[s.pk].proef;
+  return !!k && String(k.id) === String(p.id);
+}
 function proefVanPraktijk(req) {
   const s = sessieVan(req);
   if (!s || !Object.hasOwn(praktijkAccounts, s.pk) || !praktijkGeclaimd(s.pk)) return null;
@@ -9409,7 +9416,12 @@ async function afhandelen(request, response) {
     if (urlPath === "/v2/app/") { response.writeHead(301, { location: "/v2/app" }); response.end(); return; }
     telBezoek(request, false);
     // proefperiode voorbij: geen app maar een duidelijke melding met "ik wil doorgaan"
-    const proef = proefVan(request);
+    let proef = proefVan(request);
+    // Het eigen proefapparaat met een geldige sessie van de praktijk van die proef: dezelfde app
+    // (alleen lezen, proefbalk via /api/praktijk/status) als op een tweede apparaat. Anders vroeg de
+    // verlopen-pagina hier bij elk bezoek opnieuw wachtwoord en code, terwijl de sessie gewoon gold,
+    // en kwam je daarna op een kaal overzicht zonder seintjes of dossier (sweep 2026-11-19 06u, Mark).
+    if (proef && proefVerlopen(proef) && proefSessieVanPraktijk(request, proef)) proef = null;
     if (proef && proefVerlopen(proef)) {
       response.setHeader("cache-control", "no-store");
       await serveerProef(request, response, "verlopen", verlopenVars(request, proef));

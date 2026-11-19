@@ -17,6 +17,9 @@
   var button=document.createElement('button');button.type='button';button.className='mi';button.textContent='Updates';button.onclick=function(){if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');};
   var menu=document.querySelector('.topbar .menu');if(menu)menu.appendChild(button);
   var seen=false;try{seen=localStorage.getItem(key)===version;}catch(e){}
+  // wie net een proef begon (en dus nog nooit een versie zag), krijgt geen melding over wat al
+  // vóór zijn begin veranderde (gebruikers-sweep 2026-11-19 06u, Sanne); latere versies wel
+  try{if(!seen&&!localStorage.getItem(key)&&localStorage.getItem('fysiplan_proef_start')){localStorage.setItem(key,version);seen=true;}}catch(e){}
   // Geen kaart, invoerveld of ander dialoogvenster onderbreken.
   if(!seen&&typeof dialog.showModal==='function')setTimeout(function(){if(!document.querySelector('.ov.on')&&document.activeElement===document.body)dialog.showModal();},1200);
 })();
