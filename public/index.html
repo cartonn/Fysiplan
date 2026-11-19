@@ -1340,7 +1340,7 @@ bridge2.jpg</div>
   // t = wat de server na het inloggen teruggeeft (in de browser het woord "cookie"); leeg = uitgelogd
   function setPrakSes(t){try{localStorage.removeItem('fp_praksessie');}catch(e){}
     // net ingelogd: het praktijkprofiel (adres, logo) ophalen voor dit apparaat
-    if(t&&typeof window.fpLaadPraktijken==='function')window.fpLaadPraktijken();}
+    if(t&&typeof window.fpLaadPraktijken==='function')window.fpLaadPraktijken(true);}
   function PJSON(){var h={'content-type':'application/json'};var s=prakSes();if(s)h['x-praktijk-sessie']=s;return h;}
   function PGET(){var o={cache:'no-cache'};var s=prakSes();if(s)o.headers={'x-praktijk-sessie':s};return o;}
   // Een sleutel van vóór de cookie één keer omruilen. Lukt het (of werkt de sleutel niet meer),
@@ -3266,18 +3266,35 @@ bridge2.jpg</div>
   }
   // v2 geeft het eigen profiel alleen met de praktijksessie terug. Zonder die header kreeg een collega
   // op een nieuw apparaat nooit adres, telefoon of logo van de praktijk (gebruikers-sweep 2026-11-11 14u).
-  // Lege velden op dit apparaat worden aangevuld uit het profiel; wat hier al staat blijft staan.
-  function vulUitProfiel(){
+  // Bij het openen van de app en na het inloggen (gezag=true) wint het profiel van de server: een
+  // apparaat met een oud adres of telefoonnummer in fysiplan_settings stuurde anders bij de volgende
+  // wijziging het hele oude profiel terug, en /k en de print toonden weer het oude nummer (gebruikers-
+  // sweep 2026-11-19 10u, Karin). Een veld waarin nu getypt wordt, blijft staan. Na het eigen bewaren
+  // (gezag=false) worden alleen lege velden aangevuld, zodat wat net getypt is niet terugspringt.
+  // Op een nieuw apparaat is de praktijknaam soms nog leeg als het profiel binnenkomt: is er precies
+  // één eigen profiel, dan komt dat erin, ook de naam (sweep 2026-11-19 10u, Karin: logo-knop zei
+  // "Vul eerst de praktijknaam en het adres in" tot herladen).
+  var PROF_VELD={praktijk:'praktijk',adres:'p_adres',plaats:'p_plaats',tel:'p_tel',email:'p_email',website:'p_website'};
+  function vulUitProfiel(gezag){
     if(!IS_V2)return;
-    var cur=(SET.praktijk||'').trim().toLowerCase();if(!cur)return;
-    var p=PRAKTIJKEN.filter(function(x){return String(x.praktijk||'').toLowerCase()===cur;})[0];if(!p)return;
+    var cur=(SET.praktijk||'').trim().toLowerCase();
+    var p=cur?PRAKTIJKEN.filter(function(x){return String(x.praktijk||'').toLowerCase()===cur;})[0]:null;
+    if(!p&&!cur&&PRAKTIJKEN.length===1)p=PRAKTIJKEN[0];
+    if(!p)return;
+    var bezig=document.activeElement&&document.activeElement.id||'';
     var veranderd=false;
-    ['adres','plaats','tel','email','website','logo'].forEach(function(k){if(!SET[k]&&p[k]){SET[k]=p[k];veranderd=true;}});
+    ['praktijk','adres','plaats','tel','email','website','logo'].forEach(function(k){
+      var nu=SET[k]||'',srv=p[k]||'';
+      if(nu===srv)return;
+      if(PROF_VELD[k]&&PROF_VELD[k]===bezig)return;
+      if(k==='praktijk'&&nu)return;
+      if(!nu?srv:gezag){SET[k]=srv;veranderd=true;}
+    });
     if(veranderd){saveSettings();applySettings();}
   }
-  function loadPraktijken(){
+  function loadPraktijken(gezag){
     fetch('api/praktijken',PGET()).then(function(r){return r.ok?r.json():[];})
-      .then(function(l){PRAKTIJKEN=Array.isArray(l)?l:[];renderPrakSelect();vulUitProfiel();}).catch(function(){});
+      .then(function(l){PRAKTIJKEN=Array.isArray(l)?l:[];renderPrakSelect();vulUitProfiel(gezag===true);}).catch(function(){});
   }
   window.fpLaadPraktijken=loadPraktijken;
   prakSel.addEventListener('change',function(){
@@ -3336,7 +3353,7 @@ bridge2.jpg</div>
     var el=document.getElementById(id);
     if(el)el.addEventListener('change',upsertPraktijk);
   });
-  loadPraktijken();
+  loadPraktijken(true);
 
   // ---- praktijklogo (v2): één keer uploaden, daarna op elke geprinte kaart ----
   // het logo hoort bij het praktijkprofiel op de server, dus het werkt op elk apparaat
