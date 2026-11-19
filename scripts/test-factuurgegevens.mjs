@@ -94,14 +94,19 @@ try {
   const f3 = await (await fetch(origin + "/v2/proef/factuur?nr=" + nr, { headers: cookie("goed") })).text();
   assert.match(f3, /Dorpsstraat 1/, "uitgegeven factuur verandert niet");
   assert.doesNotMatch(f3, /Andere Straat 9/);
+  // ook de eerste factuur (aangevuld bij het eerste bewaren) volgt een latere wijziging niet
+  assert.equal((await lees()).goed.abonnement.factuurAfnemer.naam, "Fysio De Brug B.V.", "eerste factuur ligt vast");
+  const f3a = await (await fetch(origin + "/v2/proef/factuur", { headers: cookie("goed") })).text();
+  assert.match(f3a, /Fysio De Brug B\.V\./, "eerste factuur houdt de gegevens van het aanvullen");
+  assert.doesNotMatch(f3a, /Andere Straat 9|Nieuwe Naam/, "eerste factuur verandert niet mee");
 
-  // leegmaken mag
+  // leegmaken mag, maar verandert een uitgegeven factuur niet
   assert.equal((await post("goed", { naam: "", adres: "" })).status, 200);
   assert.equal((await lees()).goed.abonnement.afnemer, undefined);
-  // eerste factuur weer zonder adres: boven 100 euro de melding
   const f4 = await (await fetch(origin + "/v2/proef/factuur", { headers: cookie("goed") })).text();
   assert.match(f4, /<h1>Factuur<\/h1>/);
-  assert.match(f4, /hoort het adres van je praktijk/, "boven 100 euro zonder adres: melding");
+  assert.match(f4, /Dorpsstraat 1<br\/>1234 AB Ergens/, "eerste factuur blijft na leegmaken");
+  assert.doesNotMatch(f4, /hoort het adres/);
   assert.doesNotMatch(uitvoer, /TypeError|ReferenceError/);
   console.log("factuurgegevens ok");
 } finally {

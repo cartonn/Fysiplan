@@ -9,6 +9,11 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 adres bij Factuurgegevens, dan verandert ook die al uitgegeven factuur. Latere facturen leggen `b.afnemer` vast bij het
 uitgeven van het nummer. Voorstel: bij de eerste betaling `abonnement.afnemerEerste` vastleggen en die gebruiken. Geen
 privacygat (alleen gegevens van de praktijk zelf), wel een boekhoudpunt. **Wat jij moet doen:** niets; de praktijk-routine pakt het op.
+**OPGELOST 2026-11-19 (praktijk-routine):** bij het uitgeven van het nummer lag de eerste factuur al vast (`factuurAfnemer`) als
+er toen factuurgegevens waren. Het gat zat bij een factuur die zonder factuurgegevens was uitgegeven: die volgde elke latere
+wijziging. Nu wordt zo'n factuur bij het eerste bewaren van Factuurgegevens één keer aangevuld en ligt daarna vast; een latere
+wijziging of leegmaken verandert hem niet meer. Geen env-variabele. Voor de boekhouder: is één keer aanvullen van naam en adres
+op een al uitgegeven factuur goed, of wil die liever een creditfactuur met een nieuwe factuur?
 
 ### Voorwaarden 2026-11-16: hoe het aantal therapeuten telt, en de V2-pilot (legal, 2026-11-16 13u)
 Art. 4 zegt nu wat de server al deed: een nieuwe maand is voor de logins van dat moment, of voor het hoogste aantal in de
