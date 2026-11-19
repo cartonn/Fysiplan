@@ -10,6 +10,10 @@
   // tweede stokmelding verlengt een lopende wachttijd niet.
   var WACHTTIJD=12000;
   var HAPERT='De opname laadt niet of hapert. Controleer je verbinding en probeer het opnieuw, of lees de uitleg op de kaart.';
+  // zonder internet zei de kaart "De Noor-opname kon niet worden afgespeeld": jargon en geen woord over de
+  // verbinding, terwijl bovenaan al "Geen verbinding" stond (gebruikers-sweep 2026-11-19, Truus)
+  var GEEN_NET='Je hebt nu geen internet. Voorlezen lukt weer zodra je verbinding hebt; de uitleg staat hieronder op de kaart.';
+  function offline(){try{return typeof navigator!=='undefined'&&navigator.onLine===false;}catch(e){return false;}}
   // Het manifest kan op dezelfde slechte verbinding net zo goed blijven hangen, en de
   // wachttijd hierboven begint pas als er een opname is. Zonder eigen grens bleef de knop
   // dan eindeloos op "Stop" staan. Na een mislukte of verlopen poging begint de volgende
@@ -52,7 +56,7 @@
       var clips=items.map(function(x){return match(x.name,x.text);});
       if(!clips.length||clips.some(function(x){return !x;}))throw Error('Voor deze uitleg is nog geen actuele Noor-opname beschikbaar. Lees de uitleg op de kaart.');
       player=new Audio();player.preload='auto';var i=0,laatsteTijd=0;
-      function fail(bericht){if(token!==serial)return;stop();if(error)error(bericht||'De Noor-opname kon niet worden afgespeeld. Probeer opnieuw of lees de uitleg.');}
+      function fail(bericht){if(token!==serial)return;stop();if(error)error(offline()?GEEN_NET:(bericht||'De voorleesstem kon niet worden afgespeeld. Probeer opnieuw of lees de uitleg.'));}
       // wachttijd starten als er nog geen loopt; een lopende wachttijd niet verlengen
       function waak(){if(token!==serial||wacht)return;wacht=setTimeout(function(){wacht=null;fail(HAPERT);},WACHTTIJD);}
       function loopt(){if(token===serial)stopWacht();}
