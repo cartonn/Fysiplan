@@ -204,6 +204,9 @@ jobs:
       - run: npm run test:wachtterug
       - run: npm run test:opnamewees
       - run: npm run test:lightboxlang
+      - run: npm run test:terugvooruit
+      - run: npm run test:proefwelkom
+      - run: npm run test:proefeigenapparaat
       - run: npm run test:deelenter
       - run: npm run test:uitteam
       - run: npm run test:vertaallaat

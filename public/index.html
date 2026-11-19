@@ -3653,6 +3653,14 @@ bridge2.jpg</div>
     var nm=document.getElementById('pw_praktijk').value.trim();
     if(nm&&nm!==(SET.praktijk||'').trim())proefZetPraktijk(nm);
     closeOv('ovProefWelkom');
+    // het venster ging vanzelf open, dus er is geen knop om naar terug te gaan: de focus viel op
+    // body. Stap 1 van het welkom is "klik links om toe te voegen", dus naar het zoekveld
+    // (gebruikers-sweep 2026-11-19 06u, Sanne met alleen het toetsenbord)
+    setTimeout(function(){var z=document.getElementById('search');if(z&&z.offsetParent&&!document.querySelector('.ov.on')){try{z.focus();}catch(e){}}},40);
+  });
+  // Enter in de praktijknaam bevestigt, net als de knop
+  document.getElementById('pw_praktijk').addEventListener('keydown',function(e){
+    if(e.key==='Enter'&&!e.isComposing){e.preventDefault();document.getElementById('pw_start').click();}
   });
   document.getElementById('pb_qr').addEventListener('click',function(){
     var knop=this;
@@ -7421,7 +7429,7 @@ bridge2.jpg</div>
   // knop waarmee het venster openging. Werkt ook voor vensters die later worden
   // gemaakt (team, seintje, eigen oefening) en voor code die de klasse direct zet.
   (function vensterToetsenbord(){
-    var SLUIT=/(_cancel|_close|_dicht|_sluit)$|^welkom_zelf$/;
+    var SLUIT=/(_cancel|_close|_dicht|_sluit)$|^welkom_zelf$|^pw_start$/;
     var FOCUSBAAR='a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
     var nr=0,stapel=[];
     function zichtbaar(el){return !!(el.offsetWidth||el.offsetHeight||el.getClientRects().length)&&getComputedStyle(el).visibility!=='hidden';}

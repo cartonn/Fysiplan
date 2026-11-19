@@ -602,6 +602,10 @@ hetzelfde account-object; #363/#369 inbox; #366 `proefEinde` (alleen langer tot 
 
 ## Open
 
+- **LAAG (van de gebruikers-sweep 2026-11-19 06u, Karin) — geweigerde leespoging van Activiteit door een collega staat niet in Activiteit.**
+  `GET /api/praktijk/activiteit` als therapeut geeft netjes 403, maar roept geen `auditGeweigerd` aan (server.js ~5012), terwijl alle
+  schrijfpogingen sinds #323/#385 wel in Activiteit komen. Het leeslog van een kaart (`/api/kaart/leeslog`, ~7576) lijkt hetzelfde (niet live getest).
+
 - **OPGELOST 2026-11-18 (deze PR, test:vergelijkgrens) — HOOG — één inlogpoging hield de hele server tot seconden stil.**
   Elke wachtwoordvergelijking is een synchrone scrypt (~25–50 ms) op de enige event-loop. `/api/praktijk/login` met e-mail
   vergeleek met élk actief lid met dat adres in álle praktijken, op naam met élk account met die naam (ook `accountVoorLogin`

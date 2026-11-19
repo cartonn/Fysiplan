@@ -3539,9 +3539,11 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       SESSIE_SCROLL=window.pageYOffset||0;
       // de terugknop van de telefoon gaat naar het overzicht, niet de kaart uit
       try{history.scrollRestoration='manual';}catch(e){}
-      try{if(!(history.state&&history.state.fpoef))history.pushState({fpoef:1},'');}catch(e){}
+      // i: welke oefening, zodat "vooruit" na "terug" dezelfde oefening weer opent
+      try{if(!(history.state&&history.state.fpoef))history.pushState({fpoef:1,i:i},'');}catch(e){}
     }
     SESSIE=i;tekenSessie();
+    try{if(was&&history.state&&history.state.fpoef&&!history.state.fplb)history.replaceState({fpoef:1,i:i},'');}catch(e){}
     window.scrollTo(0,0);
     var t=document.getElementById('stel');
     try{t.focus({preventScroll:true});}catch(e){}
@@ -4087,19 +4089,32 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     function lbSluit(){
       var was=lbox.classList.contains('open');
       lbox.classList.remove('open');demoStop();
-      try{if(was&&history.state&&history.state.fplb)history.back();}catch(e){}
+      try{if(was&&history.state&&history.state.fplb){STIL_TERUG=true;history.back();}}catch(e){}
     }
+    // onze eigen stille stap terug (foto dicht met ×, of een "vooruit" naar een foto die al dicht is)
+    var STIL_TERUG=false;
     window.addEventListener('popstate',function(){
       // onze eigen stap terug na "Overzicht" of "Klaar": wie intussen alweer een oefening
       // opende, blijft daar staan (en krijgt de stap voor de terugknop opnieuw)
       if(SESSIE_TERUG){
         SESSIE_TERUG=false;
-        if(SESSIE>-1){try{history.pushState({fpoef:1},'');}catch(e){}}
+        if(SESSIE>-1){try{history.pushState({fpoef:1,i:SESSIE},'');}catch(e){}}
         return;
       }
+      if(STIL_TERUG){STIL_TERUG=false;return;}
       if(lbox.classList.contains('open')){lbox.classList.remove('open');demoStop();return;}
+      var st=history.state;
+      // "vooruit" naar de stap van een foto die al dicht is: die stap stil terugnemen, zodat de
+      // oefening open blijft en er geen lege terugstappen achterblijven (sweep 2026-11-19 06u, Jayden)
+      if(st&&st.fplb){STIL_TERUG=true;try{history.back();}catch(e){STIL_TERUG=false;}return;}
+      // "vooruit" (of terug na herladen) naar de stap van een oefening: die oefening weer openen
+      if(st&&st.fpoef&&SESSIE<0){
+        if(typeof st.i==='number'&&st.i>=0&&st.i<oefRijen().length)openOef(st.i);
+        else {try{history.replaceState(null,'');}catch(e){}}
+        return;
+      }
       // terug vanuit de oefenstand: naar het overzicht
-      if(SESSIE>-1&&!(history.state&&history.state.fpoef))sluitOef(false,true);
+      if(SESSIE>-1&&!(st&&st.fpoef))sluitOef(false,true);
     });
     document.addEventListener('keydown',function(e){
       if(e.key!=='Escape')return;
