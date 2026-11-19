@@ -209,6 +209,7 @@ jobs:
       - run: npm run test:beginschermbalk
       - run: npm run test:verlopeneigenlogin
       - run: npm run test:voorlezenoffline
+      - run: npm run test:oefwegtoetsenbord
       - run: npm run test:proefwelkom
       - run: npm run test:proefeigenapparaat
       - run: npm run test:deelenter

@@ -15,7 +15,7 @@ import { createRequire } from "node:module";
 
 const root = process.cwd();
 const html = await readFile(join(root, "public/index.html"), "utf8");
-assert.match(html, /function oefWeg\(n\)\{[\s\S]{0,1600}Ongedaan maken[\s\S]{0,900}chosen\.splice\(Math\.min\(n,chosen\.length\),0,weg\)/,
+assert.match(html, /function oefWeg\(n,kb\)\{[\s\S]{0,2400}Ongedaan maken[\s\S]{0,1800}chosen\.splice\(Math\.min\(n,chosen\.length\),0,weg\)/,
   "× geeft een melding met Ongedaan maken die de oefening op dezelfde plek terugzet");
 assert.match(html, /if\(chosen!==lijst\|\|chosen\.indexOf\(weg\)>=0\)return;/, "niet terugzetten op een andere kaart");
 assert.doesNotMatch(html, /chosen\.splice\((n|rn),1\);render\(\)/, "elke × loopt via oefWeg");
