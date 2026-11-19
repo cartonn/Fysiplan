@@ -627,6 +627,10 @@
   /* bij grote letters op een klein scherm (body.krap) bedekte de tip "Zet op beginscherm" een derde tot de helft van
      het scherm, ook de knop "Ik heb een vraag", en stond × buiten beeld: dan liever geen tip (sweep 2026-11-11, Truus) */
   body.krap .appbanner{display:none !important}
+  /* de vaste balk lag bij 100–140 % over het einde van de kaart: voettekst, Privacy-link en soms de spoedregel
+     waren niet meer te lezen of aan te tikken. Zolang hij staat krijgt de kaart onderaan zijn hoogte als ruimte
+     (sweep 2026-11-19, Truus) */
+  body.abaan .wrap{padding-bottom:calc(var(--ab-h,0px) + 36px + env(safe-area-inset-bottom))}
 
   /* één duidelijk zichtbare toetsenbord-focus op álle bedienbare elementen (WCAG 2.4.7):
      ook de taalkeuze en het tijdveld, die eerder op de browserstandaard terugvielen */
@@ -3080,6 +3084,20 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
 
   // ---- als app op het beginscherm: manifest, offline-werker en een vriendelijke uitnodiging ----
   var installEvent=null;
+  // houdt bij of de balk "Zet op beginscherm" echt zichtbaar is (niet weg door body.krap of een breed scherm)
+  // en geeft de kaart dan onderaan zijn hoogte als extra ruimte
+  function abRuimteBijhouden(banner){
+    if(!banner)return;
+    var zet=function(){
+      var zicht=banner.classList.contains('aan')&&getComputedStyle(banner).display!=='none';
+      document.body.classList.toggle('abaan',zicht);
+      try{document.documentElement.style.setProperty('--ab-h',(zicht?banner.offsetHeight:0)+'px');}catch(e){}
+    };
+    try{new MutationObserver(zet).observe(banner,{attributes:true,attributeFilter:['class']});}catch(e){}
+    try{new MutationObserver(zet).observe(document.body,{attributes:true,attributeFilter:['class']});}catch(e){}
+    window.addEventListener('resize',zet);
+    zet();
+  }
   function initApp(){
     try{
       var l=document.createElement('link');l.rel='manifest';l.href='/api/kaart/manifest?id='+id;
@@ -3103,6 +3121,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var standalone=(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||window.navigator.standalone;
     var weg=false;try{weg=localStorage.getItem('fp_app_weg')==='1';}catch(e){}
     var banner=document.getElementById('appbanner');
+    abRuimteBijhouden(banner);
     function toonBanner(ios){
       // wie binnen 2,5 s na een tik de kaart wist, kreeg de balk "Zet op beginscherm" alsnog (sweep 2026-11-15 14u, Truus)
       if(KAART_GEWIST)return;
