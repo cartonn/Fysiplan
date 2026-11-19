@@ -3350,8 +3350,34 @@ bridge2.jpg</div>
   function upsertPraktijk(){
     var p={praktijk:SET.praktijk||'',adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||'',website:SET.website||''};
     if(PROF_BASIS)p.basis=PROF_BASIS;
-    if(!p.praktijk.trim()||!p.adres.trim())return;
+    if(!p.praktijk.trim())return;
     if(document.getElementById('p_adres').readOnly)return;
+    // Leeg adres: de app stopte hier stil. Stond een tweede apparaat open van vóór het profiel er was,
+    // dan ging een nieuw telefoonnummer nergens heen terwijl de print het wel toonde (gebruikers-sweep
+    // 2026-11-19 18u, Karin). Nu eerst het serverprofiel ophalen en de lege velden daaruit aanvullen;
+    // heeft de server nog geen adres, dan zeggen we wat ontbreekt.
+    if(!p.adres.trim()){
+      if(!IS_V2)return;
+      clearTimeout(prakSaveTimer);
+      fetch('api/praktijken',PGET()).then(function(r){return r.ok?r.json():[];}).then(function(l){
+        l=Array.isArray(l)?l:[];
+        var cur=p.praktijk.trim().toLowerCase();
+        var s=l.filter(function(x){return String(x.praktijk||'').toLowerCase()===cur;})[0]||(l.length===1?l[0]:null);
+        if(!s||!String(s.adres||'').trim()){
+          // alleen een naam ingevuld (welkom, nieuw apparaat): nog niets te melden
+          if(!['plaats','tel','email','website'].some(function(k){return String(p[k]||'').trim();}))return;
+          profielMelding('Vul ook het adres van de praktijk in. Daarna bewaren we het profiel en zien je patiënten het op hun kaart.');return;
+        }
+        if(String(SET.adres||'').trim())return;
+        PROF_BASIS={};Object.keys(PROF_VELD).forEach(function(k){PROF_BASIS[k]=s[k]||'';});
+        ['adres','plaats','tel','email','website'].forEach(function(k){if(!SET[k])SET[k]=s[k]||'';});
+        if(!SET.logo&&s.logo)SET.logo=s.logo;
+        saveSettings();applySettings();profielMelding('');
+        upsertPraktijk();
+      }).catch(function(){});
+      return;
+    }
+    profielMelding('');
     clearTimeout(prakSaveTimer);
     prakSaveTimer=setTimeout(function(){
       stuurPraktijk(p);
@@ -3382,14 +3408,19 @@ bridge2.jpg</div>
       else{['adres','plaats','tel','email','website','logo'].forEach(function(k){SET[k]='';});saveSettings();applySettings();}
       PRAKTIJKEN=l;renderPrakSelect();
     }).catch(function(){}).then(function(){
-      var m=document.getElementById('p_msg');
-      if(!m){
-        m=document.createElement('div');m.id='p_msg';m.className='no-print';m.setAttribute('role','status');m.setAttribute('aria-live','polite');
-        var ad=document.querySelector('#a4 .prak .adres');if(ad&&ad.parentNode)ad.parentNode.insertBefore(m,ad.nextSibling);
-      }
-      m.textContent=(fout||'Alleen een beheerder van de praktijk kan het praktijkprofiel en het logo aanpassen.')+' De kaart toont weer de gegevens van de praktijk.';
-      m.style.display='block';
+      profielMelding((fout||'Alleen een beheerder van de praktijk kan het praktijkprofiel en het logo aanpassen.')+' De kaart toont weer de gegevens van de praktijk.');
     });
+  }
+  // één meldregel onder het praktijkprofiel op de A4 (niet op de print); lege tekst haalt hem weg
+  function profielMelding(tekst){
+    var m=document.getElementById('p_msg');
+    if(!m){
+      if(!tekst)return;
+      m=document.createElement('div');m.id='p_msg';m.className='no-print';m.setAttribute('role','status');m.setAttribute('aria-live','polite');
+      var ad=document.querySelector('#a4 .prak .adres');if(ad&&ad.parentNode)ad.parentNode.insertBefore(m,ad.nextSibling);
+    }
+    m.textContent=tekst;
+    m.style.display=tekst?'block':'none';
   }
   window.fpProfielTerug=profielTerug;
   ['praktijk','p_adres','p_plaats','p_tel','p_email','p_website'].forEach(function(id){
