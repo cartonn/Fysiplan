@@ -2865,7 +2865,12 @@ bridge2.jpg</div>
     if(w.length<2)return false;
     // al een roepnaam met initiaal en een toevoeging ("Jan K. schouder links")
     if(w.slice(1).some(function(x){return IS_INITIAAL.test(x);}))return false;
-    var l=w[w.length-1];
+    // woorden zonder letter (een emoji, een cijfer) tellen niet als achternaam: "Jan Jansen 2" en
+    // "Truus van der Berg 🦵" gingen anders zonder vraag als volledige naam naar de server (gebruikers-sweep
+    // 2026-11-19 22u, Sanne)
+    var mL=w.filter(function(x){return /\p{L}/u.test(x);});
+    if(mL.length<2)return false;
+    var l=mL[mL.length-1].replace(/[^\p{L}\p{M}.'\-]+/gu,'');
     return l.length>=3&&!/\.$/.test(l);
   }
   var NAAM_OK='',OVERSCHRIJF='',HERNOEM_VOOR='',ROEP_VOOR='',NA_BEVEILIG=null;

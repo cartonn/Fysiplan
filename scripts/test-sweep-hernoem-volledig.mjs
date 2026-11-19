@@ -18,6 +18,17 @@ const blok = idx.match(/var hn=e\.target\.closest\('\[data-shernoem\]'\);[\s\S]*
 assert.ok(blok, "hernoem-handler gevonden");
 assert.match(blok[0], /if\(hn\.dataset\.bezig\)return;[\s\S]*?prompt\(/, "bezig-slot vóór de vraag");
 assert.match(blok[0], /if\(IS_V2&&naamLijktVolledig\(nieuw\)\)\{[\s\S]{0,300}kaartLabelVan\(nieuw\)/, "nieuwe naam getoetst, roepnaam voorgesteld");
+// gedrag van naamLijktVolledig, ook met een emoji of cijfer als laatste woord (sweep 2026-11-19 22u, Sanne)
+{
+  const ini = idx.match(/var IS_INITIAAL=[^;]+;/)[0];
+  const fn = idx.match(/function naamLijktVolledig\(naam\)\{[\s\S]*?\n  \}/)[0];
+  const vm = await import("node:vm");
+  const ctx = {}; vm.runInNewContext(ini + fn + ";this.f=naamLijktVolledig;", ctx);
+  for (const [naam, verwacht] of [["Truus van Dam", true], ["Jan Jansen 2", true], ["Truus van der Berg-Ålesund 🦵", true],
+    ["Jan Jansen 🦵", true], ["Truus", false], ["Truus 🦵", false], ["Jan K.", false], ["Jan K. schouder links", false], ["Jan 2", false], ["Mia Bo", false]]) {
+    assert.equal(ctx.f(naam), verwacht, "naamLijktVolledig(" + JSON.stringify(naam) + ")");
+  }
+}
 
 let pw = null;
 try { pw = createRequire(import.meta.url)("playwright"); } catch {}
