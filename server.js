@@ -1448,6 +1448,9 @@ const proefOpApparaat = (req) => proefVan(req) || proefVanBeheer(req);
 // de verlopen-pagina: zonder betaalknop als dit apparaat de abonnementskant niet mag zien
 function verlopenVars(req, p) {
   const extra = { V_PRAKTIJK: p.praktijk || "" };
+  // op het apparaat van de aanmelding staat het e-mailadres van de proef al ingevuld (dat staat ook al
+  // elders op deze pagina); een collega of ander apparaat typt het zelf (gebruikers-sweep 2026-11-19, Mark)
+  if (proefVoorPagina(req) === p && p.email) extra.V_OV_EMAIL = p.email;
   if (proefVoorPagina(req) !== p) {
     extra.BETAAL_HTML = "";
     extra.AFREKENEN = "Betalen en doorgaan regelt een beheerder van je praktijk: die logt in met een eigen login.";
@@ -1706,6 +1709,23 @@ async function serveerProef(request, response, blok, vars = {}, status = 200) {
     BEVEILIG_STAP_HTML: EIGEN_LOGIN_VERPLICHT
       ? "<b>Beveilig je praktijk met je eigen login.</b> Je kiest een wachtwoord en koppelt een code-app op je telefoon; dat kost een paar minuten. Daarna komt de QR-code vanzelf op de kaart. Een onbeveiligde praktijk deelt geen pati&euml;ntkaarten."
       : "<b>Zet een wachtwoord op je praktijk.</b> Dat kost een halve minuut; daarna komt de QR-code vanzelf op de kaart. Zonder wachtwoord deelt Fysiplan geen pati&euml;ntkaarten.",
+    // inloggen op de verlopen-pagina en /v2/gegevens: met een verplichte eigen login bestaat er geen
+    // praktijkwachtwoord, dus geen "wachtwoord van de praktijk" en geen "alleen als je een eigen login hebt"
+    // (gebruikers-sweep 2026-11-19, Mark en Karin)
+    ...(EIGEN_LOGIN_VERPLICHT ? {
+      OV_UITLEG_HTML: "Bekijk ze hier, alleen lezen, met je eigen login.",
+      GEG_UITLEG_HTML: "Je logt in met je eigen login; je moet beheerder van de praktijk zijn.",
+      OV_EMAIL_HINT_HTML: "", BEH_EMAIL_HINT_HTML: " <span style=\"font-weight:400\">(je moet beheerder zijn)</span>",
+      EMAIL_VERPLICHT_HTML: " required", OV_WW_HINT_HTML: "", GEG_WW_HINT_HTML: ""
+    } : {
+      OV_UITLEG_HTML: "Bekijk ze hier, alleen lezen, met het wachtwoord van je praktijk of je eigen login.",
+      GEG_UITLEG_HTML: "Je hebt het wachtwoord van de praktijk nodig, of je eigen login als beheerder.",
+      OV_EMAIL_HINT_HTML: " <span style=\"font-weight:400\">(alleen als je met een eigen login werkt)</span>",
+      BEH_EMAIL_HINT_HTML: " <span style=\"font-weight:400\">(alleen als je met een eigen login werkt; je moet beheerder zijn)</span>",
+      EMAIL_VERPLICHT_HTML: "",
+      OV_WW_HINT_HTML: " <span style=\"font-weight:400\">(van de praktijk, of je eigen bij een eigen login)</span>",
+      GEG_WW_HINT_HTML: " <span style=\"font-weight:400\">(van de praktijk, of je eigen)</span>"
+    }),
     ...vars };
   // waarden met een _HTML-achtervoegsel zijn al door de server opgebouwd en veilig
   html = html.replace(/__([A-Z_]+)__/g, (heel, k) => k in alle ? (k.endsWith("_HTML") ? alle[k] : htmlEsc(alle[k]))

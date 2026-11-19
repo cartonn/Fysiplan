@@ -6927,14 +6927,20 @@ bridge2.jpg</div>
     var vq=e.target.closest('[data-vvid]');
     if(vq){var cq=chosen[+vq.dataset.vvid],oq=cq&&OEF[cq.o];if(oq)openVasteVragen(oq);return;}
     var rm=e.target.closest('.rm');if(!rm)return;
-    var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){oefWeg(n);if(kb)tegelFocus(Math.min(n,chosen.length-1),'rm');}
+    var n=+rm.dataset.rm;if(n>=0&&n<chosen.length){oefWeg(n,kb);}
   });
   // × haalt de oefening weg, maar een tik ernaast (op de iPad beslaat het tikvlak bijna een kwart van het
   // plaatje) of een verkeerde tik was niet terug te draaien: oefening, dosering en schema kwijt (gebruikers-sweep
   // 2026-11-15, Mark, iPad). Nu een melding met "Ongedaan maken" die de oefening op dezelfde plek terugzet;
   // de dosering hangt aan de oefening (GRID.cells per oefening), dus die komt mee terug.
+  // Met het toetsenbord stond "Ongedaan maken" achteraan de pagina, na honderden tabstops, en verdween de balk na
+  // 10 s (WCAG 2.1.1/2.2.1; gebruikers-sweep 2026-11-19, Sanne). Nu gaat de focus bij weghalen met het toetsenbord
+  // naar "Ongedaan maken"; Esc (of Tab weg) zet de focus terug op de tegels, en zolang de focus of muis op de balk
+  // staat verdwijnt hij niet.
   var OEFWEG_T=null;
-  function oefWeg(n){
+  function oefWegVerberg(){var b=document.getElementById('oefweg_bar');if(b&&!b.matches(':hover')&&!b.contains(document.activeElement))b.style.display='none';}
+  function oefWegTimer(){clearTimeout(OEFWEG_T);OEFWEG_T=setTimeout(oefWegVerberg,10000);}
+  function oefWeg(n,kb){
     var lijst=chosen,weg=chosen.splice(n,1)[0];render();
     if(!weg)return;
     var o=OEF[weg.o],bar=document.getElementById('oefweg_bar');
@@ -6943,7 +6949,15 @@ bridge2.jpg</div>
       bar.style.cssText='position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:9000;display:none;align-items:center;gap:12px;max-width:calc(100vw - 32px);padding:8px 8px 8px 16px;border-radius:10px;background:#18343B;color:#fff;font-size:15px;box-shadow:0 6px 24px rgba(0,0,0,.25)';
       bar.innerHTML="<span id='oefweg_tekst' style='overflow-wrap:anywhere'></span><button type='button' id='oefweg_terug' style='min-height:44px;min-width:44px;padding:0 14px;border:0;border-radius:8px;background:#B9E34B;color:#18343B;font:inherit;font-weight:700;cursor:pointer'>Ongedaan maken</button>";
       document.body.appendChild(bar);
+      bar.addEventListener('mouseleave',oefWegTimer);
+      bar.addEventListener('focusout',function(){setTimeout(function(){if(!bar.contains(document.activeElement))oefWegTimer();},0);});
     }
+    bar.onkeydown=function(e){
+      if(e.key!=='Escape'&&!(e.key==='Tab'&&!e.shiftKey))return;
+      e.preventDefault();e.stopPropagation();
+      if(e.key==='Escape'){clearTimeout(OEFWEG_T);bar.style.display='none';}
+      tegelFocus(Math.min(n,chosen.length-1),'rm');
+    };
     document.getElementById('oefweg_tekst').textContent=(o?o.naam:'Oefening')+' is van de kaart gehaald.';
     var knop=document.getElementById('oefweg_terug');
     knop.onclick=function(){
@@ -6955,7 +6969,8 @@ bridge2.jpg</div>
       var t=elMon.querySelector("[data-rm='"+Math.min(n,chosen.length-1)+"']");if(t)t.focus();
     };
     bar.style.display='flex';
-    clearTimeout(OEFWEG_T);OEFWEG_T=setTimeout(function(){bar.style.display='none';},10000);
+    if(kb)knop.focus();
+    oefWegTimer();
   }
   // focus na een herteken terug op een knopje van tegel n (× of pijltje); bestaat dat niet meer, dan het andere
   // pijltje of de × van die tegel. Geen tegel meer over: de zoekbalk van de bibliotheek.
@@ -6969,7 +6984,7 @@ bridge2.jpg</div>
     if(e.key!=='Enter'&&e.key!==' ')return;
     // × is een span met role=button: Enter of spatie haalt de oefening van de kaart, de focus gaat naar de volgende
     var rmk=e.target.closest&&e.target.closest('.rm[data-rm]');
-    if(rmk){e.preventDefault();var rn=+rmk.dataset.rm;if(rn>=0&&rn<chosen.length){oefWeg(rn);tegelFocus(Math.min(rn,chosen.length-1),'rm');}return;}
+    if(rmk){e.preventDefault();var rn=+rmk.dataset.rm;if(rn>=0&&rn<chosen.length){oefWeg(rn,true);}return;}
     var ev=e.target.closest&&e.target.closest('[data-evid]'),vq=e.target.closest&&e.target.closest('[data-vvid]');if(!ev&&!vq)return;
     e.preventDefault();
     if(vq){var cq=chosen[+vq.dataset.vvid],oq=cq&&OEF[cq.o];if(oq)openVasteVragen(oq);return;}
