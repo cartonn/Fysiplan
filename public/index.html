@@ -3372,8 +3372,10 @@ bridge2.jpg</div>
     if(!p.adres.trim()){
       if(!IS_V2)return;
       clearTimeout(prakSaveTimer);
-      fetch('api/praktijken',PGET()).then(function(r){return r.ok?r.json():[];}).then(function(l){
-        l=Array.isArray(l)?l:[];
+      // ophalen mislukt (rem, storing): niet "vul het adres in" zeggen, de praktijk kan er al een hebben (hertest Karin)
+      var mis='Het praktijkprofiel kon nu niet worden geladen, dus deze wijziging is nog niet bewaard. Probeer het zo opnieuw.';
+      fetch('api/praktijken',PGET()).then(function(r){return r.ok?r.json():null;}).then(function(l){
+        if(!Array.isArray(l)){profielMelding(mis);return;}
         var cur=p.praktijk.trim().toLowerCase();
         var s=l.filter(function(x){return String(x.praktijk||'').toLowerCase()===cur;})[0]||(l.length===1?l[0]:null);
         if(!s||!String(s.adres||'').trim()){
@@ -3383,11 +3385,11 @@ bridge2.jpg</div>
         }
         if(String(SET.adres||'').trim())return;
         PROF_BASIS={};Object.keys(PROF_VELD).forEach(function(k){PROF_BASIS[k]=s[k]||'';});
-        ['adres','plaats','tel','email','website'].forEach(function(k){if(!SET[k])SET[k]=s[k]||'';});
+        ['adres','plaats','tel','email','website'].forEach(function(k){if(!String(SET[k]||'').trim())SET[k]=s[k]||'';});
         if(!SET.logo&&s.logo)SET.logo=s.logo;
         saveSettings();applySettings();profielMelding('');
         upsertPraktijk();
-      }).catch(function(){});
+      }).catch(function(){profielMelding(mis);});
       return;
     }
     profielMelding('');

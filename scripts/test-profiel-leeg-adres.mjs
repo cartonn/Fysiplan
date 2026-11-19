@@ -89,7 +89,24 @@ try {
     for (let i = 0; i < 40 && (await B.inputValue("#p_adres")) !== "Deskstraat 1"; i++) await wacht(100);
     assert.equal(await B.inputValue("#p_adres"), "Deskstraat 1", "tweede apparaat toont nu het adres van de server");
     assert.equal(await melding(), "", "de melding is weg");
-    // de patiëntkaart krijgt hetzelfde profiel als de print
+    // 3. ophalen mislukt (rem): geen "vul het adres in", maar zeggen dat het profiel niet geladen kon worden (hertest Karin)
+    await B.route("**/api/praktijken", (route) => route.request().method() === "GET"
+      ? route.fulfill({ status: 429, contentType: "application/json", body: JSON.stringify({ ok: false, fout: "Even geduld." }) })
+      : route.continue());
+    await B.fill("#p_adres", "   ");
+    await B.fill("#p_tel", "030-6666666");
+    await B.press("#p_tel", "Tab");
+    m = "";
+    for (let i = 0; i < 60 && !/niet worden geladen/.test(m); i++) { m = await melding(); if (!/niet worden geladen/.test(m)) await wacht(100); }
+    assert.match(m, /kon nu niet worden geladen/, "mislukt ophalen: eerlijke melding");
+    assert.doesNotMatch(m, /Vul ook het adres/, "niet vragen om een adres dat de praktijk al heeft");
+    await B.unroute("**/api/praktijken");
+    // weer bereikbaar: een adres met alleen spaties telt als leeg en wordt aangevuld
+    await B.fill("#p_tel", "030-7777777");
+    await B.press("#p_tel", "Tab");
+    for (let i = 0; i < 80; i++) { srv = (await (await get("/api/praktijken", K)).json())[0]; if (srv && srv.tel === "030-7777777") break; await wacht(100); }
+    assert.equal(srv.tel, "030-7777777", "na herstel is de telefoon bewaard");
+    assert.equal(srv.adres, "Deskstraat 1", "adres met alleen spaties is aangevuld uit de server");
     assert.deepEqual(fouten, [], "geen scriptfouten");
     console.log("test-profiel-leeg-adres (browser): ok");
   }

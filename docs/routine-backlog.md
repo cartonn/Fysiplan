@@ -77,6 +77,8 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - **OPGELOST 2026-11-19 deze run (test:profielleegadres) — MIDDEL (Karin, desktop + iPad liggend) — profielwijziging op een tweede apparaat met leeg adres ging stil verloren.**
   `upsertPraktijk` stopte zonder melding bij een leeg adres. Nu haalt de app eerst het serverprofiel op en vult de lege velden aan (de eigen wijziging wint via `basis`);
   heeft de server nog geen adres, dan staat onder het profiel "Vul ook het adres van de praktijk in…". Een adres bewust leegmaken kan niet (verplicht): het komt terug uit de server.
+  Hertest Karin: a/b/c ok; haar nieuw gat (mislukt ophalen bij 429 gaf "vul het adres in", adres met alleen spaties niet aangevuld) ook gefixt. Nog open (LAAG): `loadPraktijken`
+  maakt van een 429 bij het openen stil een lege lijst (lege velden zonder melding); Karin zag `GET /api/praktijken` >3 min 429, ook met een nieuwe x-forwarded-for (nagaan welke rem).
 - **OPGELOST 2026-11-19 deze run (test:printknop) — MIDDEL (Sanne, toetsenbord) — focus naar body op drie plekken:** printmelding na Print/PDF (focus naar de eerste knop van de
   melding), reservecodes (focus naar de codelijst), venster zonder terugknop zoals "Ik heb ze bewaard" (focus naar het bovenste open venster).
 - **OPGELOST 2026-11-19 deze run (test:afspraakreeksloopt) — HOOG (Mark, iPad + desktop) — lopende afspraakreeks na de eerste afspraak niet meer te bewerken**, "+1 week" ook niet
