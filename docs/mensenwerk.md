@@ -4,6 +4,14 @@ Wat alleen Ahmed (of een jurist) kan doen. Routines zetten hier punten neer en b
 
 ## Voor Ahmed
 
+### Voor de praktijk-routine: einddatum abonnement een dag later dan op de factuur (gebruikers-sweep, 2026-11-19 22u, Karin)
+`betaaldTot` is exclusief (lib/mollie.js ~73: sinds plus een maand). De factuur (lib/factuur.js ~79 en ~135) trekt er een dag
+af ("t/m 28 november"), maar /v2/proef?mijn=1 (`abonnementBlok`, server.js ~1864), de opzegpagina (~8802) en de mails (~1950–2009,
+~9051) tonen `datumNl(a.betaaldTot)` als "tot en met zondag 29 november". Dat raakt ook wat de praktijk leest over wanneer het wissen
+na opzeggen ingaat. Daarnaast (LAAG): Mijn abonnement toont "je proef loopt nog 14 dagen … gratis" boven een actief abonnement als
+iemand tijdens de proef betaalt; en een therapeut die `actie=intrekken` post, staat in Activiteit als "abonnement opzeggen" (server.js
+~8800, `proefCollegaGeweigerd` vóór de controle op actie). Geen mensenwerk: de praktijk-routine bouwt het.
+
 ### Keuze: mag een net benoemde beheerder de oorspronkelijke beheerder meteen verwijderen? (gebruikers-sweep, 2026-11-19 06u)
 Karin maakte collega Tim beheerder; Tim kon daarna direct Karin (de aanmelder van de proef) uit het team halen. Dat staat in
 Activiteit, en er blijft altijd minstens één beheerder, maar Karin krijgt geen melding en er is geen extra bevestiging of

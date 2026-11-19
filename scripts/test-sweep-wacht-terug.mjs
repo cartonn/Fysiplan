@@ -88,7 +88,10 @@ try {
 
   // met internet een seintje op de gestopte kaart: de vaste melding, niet "probeer het zo opnieuw"
   await page.evaluate(() => document.querySelector('#sknoppen .sbtn[data-soort="pijn"]').click());
-  await tot(page, () => document.getElementById("sdank").classList.contains("fout") && /Niet aangekomen/.test(document.getElementById("sdank").textContent), "seintje 404");
+  // wacht op het antwoord van de server: "Niet aangekomen" stond al in #sdank van de wachtrij hierboven, dus
+  // alleen op de tekst wachten liet de controle soms vóór het antwoord lopen (sweep 2026-11-19 22u)
+  await tot(page, () => document.getElementById("sdank").classList.contains("fout") && /Niet aangekomen/.test(document.getElementById("sdank").textContent)
+    && !document.querySelector('#sknoppen .sbtn[data-soort="pijn"]').dataset.bezig, "seintje 404");
   assert.equal(await page.evaluate(() => document.querySelector('#sknoppen .sbtn[data-soort="pijn"]').getAttribute("aria-pressed")), "false");
   assert.deepEqual(fouten, []);
   await ctx.close();

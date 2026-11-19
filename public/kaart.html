@@ -953,7 +953,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     <button type="button" class="spijl" id="svolgende"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
   </div>
 </div>
-<div class="lightbox" id="lightbox" role="dialog" aria-label="vergrote oefenfoto"><button type="button" class="lbsluit" id="lbsluit" aria-label="Sluiten">×</button><div class="lbknoppen"><button type="button" class="lbknop" id="lbdemoKnop" aria-pressed="false" hidden></button><button type="button" class="lbknop" id="lbgeluid" aria-pressed="false" hidden></button><p class="vmeta stemnoot" id="lbStemNoot" hidden>De stem is met AI gemaakt.</p></div><div class="lbfoto" id="lbfoto"><span class="fpmerk" aria-hidden="true">Fysiplan</span><span class="lbbeeld"><img id="lbimg" alt=""/><i class="merkdek" id="lbdek" hidden></i></span></div><div class="vtekst lbuitleg" id="lbuitleg" hidden></div><div class="demowrap" id="lbdemo" hidden></div><div class="lbnaam" id="lbnaam" dir="auto"></div></div>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="vergrote oefenfoto"><button type="button" class="lbsluit" id="lbsluit" aria-label="Sluiten">×</button><div class="lbknoppen"><button type="button" class="lbknop" id="lbdemoKnop" aria-pressed="false" hidden></button><button type="button" class="lbknop" id="lbgeluid" aria-pressed="false" hidden></button><p class="vmeta stemnoot" id="lbStemNoot" hidden>De stem is met AI gemaakt.</p></div><div class="lbfoto" id="lbfoto"><span class="fpmerk" aria-hidden="true">Fysiplan</span><span class="lbbeeld"><img id="lbimg" alt=""/><i class="merkdek" id="lbdek" hidden></i></span></div><div class="vtekst lbuitleg" id="lbuitleg" hidden></div><div class="demowrap" id="lbdemo" hidden></div><div class="lbnaam" id="lbnaam" dir="auto"></div></div>
 <div class="appbanner" id="appbanner"><img src="/images/icoon-192.png" alt=""/><span class="tekst" id="ab_tekst"></span><button type="button" class="doen" id="ab_doen"></button><button type="button" class="weg" id="ab_weg" aria-label="sluiten">×</button></div>
 <div class="fout" id="fout" style="display:none">
   <h1 id="fout_kop">Kaart niet gevonden</h1>
@@ -2541,7 +2541,13 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     kop(L.sein);
     rij(k.mijnSeintjes,function(x){return L.seinW[x.soort]||x.soort;});
     if(k.antwoord&&k.antwoord.tekst){kop(L.antw);r.push('- '+h.dagTijd(k.antwoord.t)+': '+k.antwoord.tekst);}
-    if(k.afspraak&&k.afspraak.t){kop(L.afs);r.push('- '+h.dagTijd(k.afspraak.t)+(k.afspraak.herhaal?' ('+L.afsH.replace('{n}',k.afspraak.herhaal)+')':''));}
+    // de eerstvolgende afspraak, net als op de kaart: een lopende reeks rolt door (gebruikers-sweep 2026-11-19 22u, Jayden:
+    // de download noemde de al voorbije startdatum als volgende afspraak)
+    if(k.afspraak&&k.afspraak.t){
+      var aT=k.afspraak.t,aR=Number(k.afspraak.herhaal)||0;
+      if(aR>=2){while(aT<Date.now()-2*3600000&&aR>1){aT=typeof weekLater==="function"?weekLater(aT):aT+7*864e5;aR--;}}
+      if(aT>=Date.now()-2*3600000){kop(L.afs);r.push('- '+h.dagTijd(aT)+(aR>=2?' ('+L.afsH.replace('{n}',aR)+')':''));}
+    }
     var lo=lokaal||{};
     kop(L.tel);
     r.push(L.telD+': '+((lo.done||[]).length?(lo.done||[]).map(naamIdx).join(', '):L.geen));
@@ -3791,7 +3797,11 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           document.getElementById('lbimg').style.maxHeight='';
         }
         document.getElementById('lbsluit').setAttribute('aria-label',{nl:'Sluiten',en:'Close',de:'Schließen',fr:'Fermer',es:'Cerrar',pl:'Zamknij',tr:'Kapat',ar:'إغلاق',uk:'Закрити'}[TAAL]||'Sluiten');
+        // focus mee in het venster, en na sluiten terug naar de vergrootknop: de focus bleef achter de
+        // donkere laag en Tab bediende "Gedaan" en "Volgende" eronder (gebruikers-sweep 2026-11-19 22u, Truus)
+        if(!lb.classList.contains('open'))LB_TERUG=document.activeElement&&document.activeElement!==document.body?document.activeElement:fk;
         lb.classList.add('open');lb.scrollTop=0;
+        setTimeout(function(){if(lb.classList.contains('open')&&!lb.contains(document.activeElement)){try{document.getElementById('lbsluit').focus();}catch(e){}}},30);
         // terugknop van de telefoon sluit de foto in plaats van de kaart te verlaten
         try{if(!(history.state&&history.state.fplb))history.pushState({fplb:1},'');}catch(e){}
         var geluid=document.getElementById('lbgeluid');
@@ -4124,10 +4134,16 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     function lbSluit(){
       var was=lbox.classList.contains('open');
       lbox.classList.remove('open');demoStop();
+      if(was)lbFocusTerug();
       try{if(was&&history.state&&history.state.fplb){STIL_TERUG=true;history.back();}}catch(e){}
+    }
+    function lbFocusTerug(){
+      var t=LB_TERUG;LB_TERUG=null;
+      if(t&&document.contains(t)&&(t.offsetWidth||t.offsetHeight)){try{t.focus();}catch(e){}}
     }
     // onze eigen stille stap terug (foto dicht met ×, of een "vooruit" naar een foto die al dicht is)
     var STIL_TERUG=false;
+    var LB_TERUG=null;
     window.addEventListener('popstate',function(){
       // onze eigen stap terug na "Overzicht" of "Klaar": wie intussen alweer een oefening
       // opende, blijft daar staan (en krijgt de stap voor de terugknop opnieuw)
@@ -4137,7 +4153,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         return;
       }
       if(STIL_TERUG){STIL_TERUG=false;return;}
-      if(lbox.classList.contains('open')){lbox.classList.remove('open');demoStop();return;}
+      if(lbox.classList.contains('open')){lbox.classList.remove('open');demoStop();lbFocusTerug();return;}
       var st=history.state;
       // "vooruit" naar de stap van een foto die al dicht is: die stap stil terugnemen, zodat de
       // oefening open blijft en er geen lege terugstappen achterblijven (sweep 2026-11-19 06u, Jayden)
@@ -4152,6 +4168,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       if(SESSIE>-1&&!(st&&st.fpoef))sluitOef(false,true);
     });
     document.addEventListener('keydown',function(e){
+      // Tab blijft in de vergrote foto zolang die open is
+      if(e.key==='Tab'&&lbox.classList.contains('open')){
+        var f=Array.prototype.filter.call(lbox.querySelectorAll('button,a[href],input,select,textarea,[tabindex]:not([tabindex="-1"])'),function(el){return !el.disabled&&!el.hidden&&(el.offsetWidth||el.offsetHeight);});
+        if(!f.length)return;
+        var i=f.indexOf(document.activeElement);
+        if(i<0||(e.shiftKey&&i===0)||(!e.shiftKey&&i===f.length-1)){e.preventDefault();f[e.shiftKey?f.length-1:0].focus();}
+        return;
+      }
       if(e.key!=='Escape')return;
       if(lbox.classList.contains('open'))lbSluit();else if(SESSIE>-1)sluitOef(false);
     });

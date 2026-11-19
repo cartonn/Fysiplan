@@ -2865,7 +2865,12 @@ bridge2.jpg</div>
     if(w.length<2)return false;
     // al een roepnaam met initiaal en een toevoeging ("Jan K. schouder links")
     if(w.slice(1).some(function(x){return IS_INITIAAL.test(x);}))return false;
-    var l=w[w.length-1];
+    // woorden zonder letter (een emoji, een cijfer) tellen niet als achternaam: "Jan Jansen 2" en
+    // "Truus van der Berg 🦵" gingen anders zonder vraag als volledige naam naar de server (gebruikers-sweep
+    // 2026-11-19 22u, Sanne)
+    var mL=w.filter(function(x){return /\p{L}/u.test(x);});
+    if(mL.length<2)return false;
+    var l=mL[mL.length-1].replace(/[^\p{L}\p{M}.'\-]+/gu,'');
     return l.length>=3&&!/\.$/.test(l);
   }
   var NAAM_OK='',OVERSCHRIJF='',HERNOEM_VOOR='',ROEP_VOOR='',NA_BEVEILIG=null;
@@ -3210,6 +3215,14 @@ bridge2.jpg</div>
       (geenUitweg?'':"<button type='button' class='btn' data-pract='zonderqr'>Print zonder QR-code</button>")+"</div>";
     m.hidden=false;
     var f=document.getElementById('pr_naam');if(f)setTimeout(function(){f.focus();},30);
+    // Print / PDF zet zichzelf uit tijdens het bewaren: de focus viel dan op body en wie met het
+    // toetsenbord werkt, hoorde de melding niet en kwam niet bij de knoppen (gebruikers-sweep
+    // 2026-11-19, Sanne). Is de focus weg, dan naar de eerste knop van de melding.
+    else setTimeout(function(){
+      var a=document.activeElement;
+      if(a&&a!==document.body&&document.contains(a)&&!a.disabled)return;
+      var b=m.querySelector('button');if(b&&!m.hidden)b.focus();
+    },30);
   }
   function printMetQr(){document.getElementById('pr_do').click();}
   document.getElementById('pr_melding').addEventListener('click',function(e){
@@ -3350,8 +3363,36 @@ bridge2.jpg</div>
   function upsertPraktijk(){
     var p={praktijk:SET.praktijk||'',adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||'',website:SET.website||''};
     if(PROF_BASIS)p.basis=PROF_BASIS;
-    if(!p.praktijk.trim()||!p.adres.trim())return;
+    if(!p.praktijk.trim())return;
     if(document.getElementById('p_adres').readOnly)return;
+    // Leeg adres: de app stopte hier stil. Stond een tweede apparaat open van vóór het profiel er was,
+    // dan ging een nieuw telefoonnummer nergens heen terwijl de print het wel toonde (gebruikers-sweep
+    // 2026-11-19 18u, Karin). Nu eerst het serverprofiel ophalen en de lege velden daaruit aanvullen;
+    // heeft de server nog geen adres, dan zeggen we wat ontbreekt.
+    if(!p.adres.trim()){
+      if(!IS_V2)return;
+      clearTimeout(prakSaveTimer);
+      // ophalen mislukt (rem, storing): niet "vul het adres in" zeggen, de praktijk kan er al een hebben (hertest Karin)
+      var mis='Het praktijkprofiel kon nu niet worden geladen, dus deze wijziging is nog niet bewaard. Probeer het zo opnieuw.';
+      fetch('api/praktijken',PGET()).then(function(r){return r.ok?r.json():null;}).then(function(l){
+        if(!Array.isArray(l)){profielMelding(mis);return;}
+        var cur=p.praktijk.trim().toLowerCase();
+        var s=l.filter(function(x){return String(x.praktijk||'').toLowerCase()===cur;})[0]||(l.length===1?l[0]:null);
+        if(!s||!String(s.adres||'').trim()){
+          // alleen een naam ingevuld (welkom, nieuw apparaat): nog niets te melden
+          if(!['plaats','tel','email','website'].some(function(k){return String(p[k]||'').trim();}))return;
+          profielMelding('Vul ook het adres van de praktijk in. Daarna bewaren we het profiel en zien je patiënten het op hun kaart.');return;
+        }
+        if(String(SET.adres||'').trim())return;
+        PROF_BASIS={};Object.keys(PROF_VELD).forEach(function(k){PROF_BASIS[k]=s[k]||'';});
+        ['adres','plaats','tel','email','website'].forEach(function(k){if(!String(SET[k]||'').trim())SET[k]=s[k]||'';});
+        if(!SET.logo&&s.logo)SET.logo=s.logo;
+        saveSettings();applySettings();profielMelding('');
+        upsertPraktijk();
+      }).catch(function(){profielMelding(mis);});
+      return;
+    }
+    profielMelding('');
     clearTimeout(prakSaveTimer);
     prakSaveTimer=setTimeout(function(){
       stuurPraktijk(p);
@@ -3382,14 +3423,19 @@ bridge2.jpg</div>
       else{['adres','plaats','tel','email','website','logo'].forEach(function(k){SET[k]='';});saveSettings();applySettings();}
       PRAKTIJKEN=l;renderPrakSelect();
     }).catch(function(){}).then(function(){
-      var m=document.getElementById('p_msg');
-      if(!m){
-        m=document.createElement('div');m.id='p_msg';m.className='no-print';m.setAttribute('role','status');m.setAttribute('aria-live','polite');
-        var ad=document.querySelector('#a4 .prak .adres');if(ad&&ad.parentNode)ad.parentNode.insertBefore(m,ad.nextSibling);
-      }
-      m.textContent=(fout||'Alleen een beheerder van de praktijk kan het praktijkprofiel en het logo aanpassen.')+' De kaart toont weer de gegevens van de praktijk.';
-      m.style.display='block';
+      profielMelding((fout||'Alleen een beheerder van de praktijk kan het praktijkprofiel en het logo aanpassen.')+' De kaart toont weer de gegevens van de praktijk.');
     });
+  }
+  // één meldregel onder het praktijkprofiel op de A4 (niet op de print); lege tekst haalt hem weg
+  function profielMelding(tekst){
+    var m=document.getElementById('p_msg');
+    if(!m){
+      if(!tekst)return;
+      m=document.createElement('div');m.id='p_msg';m.className='no-print';m.setAttribute('role','status');m.setAttribute('aria-live','polite');
+      var ad=document.querySelector('#a4 .prak .adres');if(ad&&ad.parentNode)ad.parentNode.insertBefore(m,ad.nextSibling);
+    }
+    m.textContent=tekst;
+    m.style.display=tekst?'block':'none';
   }
   window.fpProfielTerug=profielTerug;
   ['praktijk','p_adres','p_plaats','p_tel','p_email','p_website'].forEach(function(id){
@@ -4279,6 +4325,13 @@ bridge2.jpg</div>
       var b=this;try{navigator.clipboard.writeText(codes.join('\n')).then(function(){b.textContent='Gekopieerd';},function(){b.textContent='Selecteer en kopieer';});}catch(e){b.textContent='Selecteer en kopieer';}
     });
     document.getElementById(p+'_rcklaar').addEventListener('click',klaar);
+    // het venster is net opnieuw getekend en de knop die focus had is weg (focus op body): naar de
+    // codes zelf, zodat een schermlezer ze voorleest en Tab naar Kopieer gaat (gebruikers-sweep 2026-11-19, Sanne)
+    var a=document.activeElement,lijst=document.getElementById(p+'_rcodes');
+    if(lijst&&(!a||a===document.body||!document.contains(a))){
+      lijst.setAttribute('tabindex','-1');lijst.setAttribute('aria-label','Reservecodes');
+      try{lijst.focus();}catch(e){}
+    }
   }
   // ---- inloggen in een praktijk die de tweede stap van iedereen vraagt ----
   // Het wachtwoord klopte en deze login heeft nog geen tweede stap: instellen hoort dan bij het
@@ -6737,6 +6790,22 @@ bridge2.jpg</div>
       if(veldW){
         var basisW=veldW.value?new Date(veldW.value).getTime():Date.now();
         if(!isFinite(basisW))basisW=Date.now();
+        // een reeks die al loopt: een week na de eerstvolgende afspraak, met de afspraken die nog over
+        // zijn. Vanaf de oude startdatum bleef de nieuwe datum in het verleden en weigerde de server
+        // (gebruikers-sweep 2026-11-19 22u, Mark). Alleen als het veld nog de bewaarde startdatum toont.
+        // Het aantal komt uit de keuzelijst zoals die nu staat: na "×6 → ×8, Bewaar" zonder herladen
+        // rekende +1 week anders met de oude ×6 en vielen er stil twee afspraken uit (hertest Mark).
+        var selW=document.querySelector("[data-safherhaal='"+aw.dataset.safweek+"']");
+        var vaW=(veldW.value&&veldW.value===veldW.defaultValue&&selW)?volgendeAfspraak({afspraak:{t:basisW,herhaal:Number(selW.value)||0}}):null;
+        if(vaW&&vaW.t!==basisW){
+          basisW=vaW.t;
+          var restW=vaW.rest;
+          if(selW){
+            var nW=String(restW>=2?restW:0);
+            if(!Array.prototype.some.call(selW.options,function(o){return o.value===nW;})){var oW=document.createElement('option');oW.value=nW;oW.textContent='wekelijks ×'+nW;selW.appendChild(oW);}
+            selW.value=nW;
+          }
+        }
         var dW=new Date(weekVerder(basisW)),pz=function(n){return ('0'+n).slice(-2);};
         veldW.value=dW.getFullYear()+'-'+pz(dW.getMonth()+1)+'-'+pz(dW.getDate())+'T'+pz(dW.getHours())+':'+pz(dW.getMinutes());
         var okW=document.querySelector("[data-safspraakopslaan='"+aw.dataset.safweek+"']");
@@ -7544,7 +7613,25 @@ bridge2.jpg</div>
     }
     function gesloten(ov){
       var s=null;stapel=stapel.filter(function(x){if(x.ov===ov){s=x;return false;}return true;});
-      if(!s||!s.terug)return;
+      // geen knop om naar terug te gaan (het venster kwam uit een ander venster dat al dicht is, zoals
+      // reservecodes na het inloggen): dan naar het bovenste venster dat nog open is, ook als dat een
+      // scherm is zoals Kaarten. De focus viel anders op body (gebruikers-sweep 2026-11-19, Sanne).
+      if(!s||!s.terug){
+        setTimeout(function(){
+          var a=document.activeElement;
+          if(a&&a!==document.body&&document.contains(a)&&!ov.contains(a))return;
+          if(ov.classList.contains('on'))return;
+          for(var i=stapel.length-1;i>=0;i--){
+            var o=stapel[i].ov;if(!o.classList.contains('on'))continue;
+            var f=focusbare(o).filter(function(el){return el.tagName!=='SELECT';});
+            var doel=f[0]||o.querySelector('.modal')||o;
+            if(doel===o||!doel.matches(FOCUSBAAR))doel.setAttribute('tabindex','-1');
+            try{doel.focus();}catch(e){}
+            return;
+          }
+        },60);
+        return;
+      }
       vorigeTerug=s.terug;
       var poging=0;
       (function zetTerug(){

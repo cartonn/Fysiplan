@@ -23,6 +23,10 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **LAAG — code tegen tekst (d) / begrijpelijkheid (i): "Mijn gegevens" op /k belooft "Blijf je oefenen, dan schuift dit op" ook tijdens een proef** (gebruikers-sweep 2026-11-19 22u, Truus).
+  De getoonde datum is dan de wisdatum van de proefpraktijk (`Math.min(v, praktijkWisOp(pk))`, server.js ~2577), die niet opschuift door te oefenen; de bewaartermijn van de kaart zelf ligt later.
+  Tekst in kaart.html ~1257 (`tot`). Voorstel: de zin alleen tonen als de datum echt van de kaart komt.
+
 - **OPGELOST 2026-11-19 21u (legal-PR van deze run; `scripts/test-kaart-weg.mjs` faalt zonder fix) — LAAG — cookies/opslag (f) / code tegen tekst (d): taalkeuze van een gewiste kaart bleef op de telefoon.**
   Kiest een patiënt op /k een andere taal dan de link, dan bewaart de kaart `fp_taalkeus_<kaart-id>`. Meldt de server dat de kaart
   weg is (gewist door de praktijk of verlopen), dan wist `vergeetKaartHier` de vinkjes, wachtrij en beeldenlijst van die kaart,

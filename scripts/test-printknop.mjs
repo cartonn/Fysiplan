@@ -27,6 +27,10 @@ assert.doesNotMatch(h[0], /d\.beveilig\)\{\s*closeOv/, "onbeveiligde praktijk: v
 assert.doesNotMatch(h[0], /toonDeelWeigering/, "weigering sluit het venster niet meer met alleen een hint op de A4");
 assert.match(h[0], /!cn\.value\.trim\(\)\)\{\s*prMelding/, "lege roepnaam wordt in het venster gevraagd");
 assert.match(index, /data-pract='zonderqr'/, "altijd een uitweg: Print zonder QR-code");
+// focus naar body op drie plekken (gebruikers-sweep 2026-11-19, Sanne): melding, reservecodes, venster zonder terug
+assert.match(index, /var b=m\.querySelector\('button'\);if\(b&&!m\.hidden\)b\.focus\(\);/, "melding in het printvenster krijgt de focus als die weg is");
+assert.match(index, /lijst\.setAttribute\('tabindex','-1'\);lijst\.setAttribute\('aria-label','Reservecodes'\);/, "reservecodes krijgen de focus na het opnieuw tekenen");
+assert.match(index, /if\(!s\|\|!s\.terug\)\{\n\s*setTimeout/, "venster zonder terug: focus naar het bovenste open venster");
 
 const require = createRequire(import.meta.url);
 let pw = null;
@@ -71,6 +75,10 @@ if (pw) {
     await p.click("#printBtn"); await p.click("#pr_do");
     await p.waitForSelector("#pr_melding:not([hidden])", { timeout: 5000 });
     assert.match(await p.textContent("#pr_melding"), /Er is al een kaart/, "bestaande roepnaam staat in het venster");
+    // Print / PDF zet zichzelf uit tijdens het bewaren; de focus hoort daarna in de melding, niet op body (sweep 2026-11-19, Sanne)
+    let inMelding = false;
+    for (let i = 0; i < 30 && !inMelding; i++) { inMelding = await p.evaluate(() => !!document.activeElement && !!document.activeElement.closest("#pr_melding")); if (!inMelding) await wacht(50); }
+    assert.ok(inMelding, "focus staat na de melding op een knop in het venster");
     assert.equal(await geprint(), 1, "nog niet geprint");
     await p.click("[data-pract='zonderqr']");
     await p.waitForFunction(() => (window.__geprint || 0) === 2, null, { timeout: 5000 });

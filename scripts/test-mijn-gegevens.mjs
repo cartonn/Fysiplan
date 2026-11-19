@@ -27,7 +27,7 @@ const kaart = {
   gedaan: [{ t: T }, { t: T + 864e5, ont: T + 2 * 864e5 }],
   oefTrouw: { Squat: { n: 7, d: "2026-11-03" } }, oefZwaar: { Brug: { t: T } },
   mijnSeintjes: [{ soort: "pijn", t: T }],
-  antwoord: { t: T, tekst: "Doe het rustig aan." }, afspraak: { t: T + 7 * 864e5, herhaal: 4 }
+  antwoord: { t: T, tekst: "Doe het rustig aan." }, afspraak: { t: Date.now() + 7 * 864e5, herhaal: 4 }
 };
 const lokaal = { done: [0], zwaar: [1], wacht: { "/api/kaart/meting@2026-11-08": { pad: "/api/kaart/meting", body: { id: "abc123def456", score: 6, wanneer: T }, t: T },
   "/api/kaart/oefzwaar#1@2026-11-08": { pad: "/api/kaart/oefzwaar", body: { id: "abc123def456", oef: 1, wanneer: T }, t: T } } };
@@ -38,6 +38,16 @@ const h = (loc) => ({
 });
 
 const nl = ctx.mgTekst(kaart, "Fysio Test", lokaal, "nl", h("nl-NL"));
+// lopende reeks: de download noemt de eerstvolgende afspraak en wat er nog over is, niet de voorbije start
+// (gebruikers-sweep 2026-11-19 22u, Jayden); een voorbije reeks geen afspraak
+{
+  const start = Date.now() - 8 * 864e5;
+  const loopt = ctx.mgTekst({ ...kaart, afspraak: { t: start, herhaal: 4 } }, "Fysio Test", lokaal, "nl", h("nl-NL"));
+  assert.match(loopt, /wekelijks, 2 keer/, "lopende reeks: nog 2 afspraken");
+  assert.ok(loopt.includes(h("nl-NL").dagTijd(start + 14 * 864e5).slice(0, 6)), "lopende reeks: de eerstvolgende datum");
+  const voorbij = ctx.mgTekst({ ...kaart, afspraak: { t: Date.now() - 60 * 864e5, herhaal: 4 } }, "Fysio Test", lokaal, "nl", h("nl-NL"));
+  assert.doesNotMatch(voorbij, /Volgende afspraak/, "voorbije reeks: geen afspraak");
+}
 for (const moet of [/^Mijn gegevens bij Fysiplan/, /Praktijk: Fysio Test/, /Roepnaam: Truus/, /Doel: Traplopen/,
   /1\. Squat \(3 series, 10 herhalingen\)/, /2\. Brug \(5 kg\)/, /3 november 2026: 4/, /\+1 \(beter\)/,
   /Doelactiviteit: Trap op/, /3 november 2026, 4 november 2026/, /Squat: 7 dagen/, /Brug: 3 november 2026/,
