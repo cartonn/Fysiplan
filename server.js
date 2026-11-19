@@ -8815,7 +8815,14 @@ async function afhandelen(request, response) {
         TEKST: "Er is niets veranderd.", KNOP_HTML: terug }, 422);
       return;
     }
-    if (g.naam) a.afnemer = { naam: g.naam, adres: g.adres, gewijzigd: Date.now() }; else delete a.afnemer;
+    if (g.naam) {
+      a.afnemer = { naam: g.naam, adres: g.adres, gewijzigd: Date.now() };
+      // een al uitgegeven factuur zonder factuurgegevens wordt één keer aangevuld en ligt
+      // daarna vast: een latere wijziging of leegmaken verandert hem niet meer
+      const vast = { naam: g.naam, adres: g.adres };
+      if (a.factuurNr && !a.factuurAfnemer) a.factuurAfnemer = vast;
+      for (const x of Array.isArray(a.betalingen) ? a.betalingen : []) if (x && x.factuurNr && !x.afnemer) x.afnemer = { ...vast };
+    } else delete a.afnemer;
     await bewaarProeven();
     await serveerProef(request, response, "bericht", { TITEL: "Factuurgegevens", ETIKET: "Factuurgegevens",
       KOP: g.naam ? "Je factuurgegevens zijn bewaard." : "Je factuurgegevens zijn leeggemaakt.",
