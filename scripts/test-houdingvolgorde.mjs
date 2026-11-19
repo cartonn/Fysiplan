@@ -109,7 +109,7 @@ assert.equal(T.nl.houding1, 'Beginhouding'); assert.equal(T.nl.houding2, 'Eindho
 const tekeningen = [], gemaakt = [], ids = {};
 function stub(tag) {
   const node = {tag, children: [], attrs: {}, style: {}, classList: {add() {}, remove() {}, contains: () => false, toggle() {}},
-    setAttribute(k, v) { this.attrs[k] = v; }, appendChild(c) { this.children.push(c); return c; }, addEventListener() {}, textContent: '', innerHTML: '', hidden: false};
+    setAttribute(k, v) { this.attrs[k] = v; }, getAttribute(k) { return k in this.attrs ? this.attrs[k] : null; }, appendChild(c) { this.children.push(c); return c; }, addEventListener() {}, textContent: '', innerHTML: '', hidden: false};
   if (tag === 'canvas') node.getContext = () => ({set fillStyle(v) { node.fill = v; }, fillRect() {}, drawImage(...a) { tekeningen.push({canvas: node, args: a}); }});
   gemaakt.push(node); return node;
 }

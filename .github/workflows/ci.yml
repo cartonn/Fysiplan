@@ -203,6 +203,7 @@ jobs:
       - run: npm run test:wachtplek
       - run: npm run test:wachtterug
       - run: npm run test:opnamewees
+      - run: npm run test:lightboxlang
       - run: npm run test:deelenter
       - run: npm run test:uitteam
       - run: npm run test:vertaallaat

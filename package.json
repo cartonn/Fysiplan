@@ -172,6 +172,7 @@
     "test:wachtplek": "node scripts/test-sweep-wacht-plek.mjs",
     "test:wachtterug": "node scripts/test-sweep-wacht-terug.mjs",
     "test:opnamewees": "node scripts/test-sweep-opname-wees.mjs",
+    "test:lightboxlang": "node scripts/test-sweep-lightbox-lang.mjs",
     "test:deelenter": "node scripts/test-sweep-deel-enter.mjs",
     "test:uitteam": "node scripts/test-sweep-uit-team.mjs",
     "test:vertaallaat": "node scripts/test-sweep-vertaal-laat.mjs",

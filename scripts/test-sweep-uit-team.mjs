@@ -15,7 +15,10 @@ import { createRequire } from "node:module";
 const root = process.cwd();
 const index = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(index, /var uitgelogd=PRAKSLOT\.bekend&&PRAKSLOT\.ingelogd&&!d\.ingelogd/, "status merkt dat je niet meer ingelogd bent");
-assert.match(index, /if\(uitgelogd\)\{SRV_KAART=\{\};SRV_SIGNALEN=\{\};[^\n]*toonSrvKaarten\(\);\}/, "dan de lijst opnieuw opbouwen");
+assert.match(index, /if\(uitgelogd\)\{SRV_KAART=\{\};SRV_SIGNALEN=\{\};[^\n]*toonSrvKaarten\(\);/, "dan de lijst opnieuw opbouwen");
+// sweep 2026-11-19 (Karin): daarna sprongen de Praktijk-tegels naar de beheerteksten en bleef de proefbalk van de praktijk staan
+assert.match(index, /if\(PROEF&&PROEF\.elders\)\{PROEF=null;var pb=document\.getElementById\('proefBalk'\);if\(pb\)pb\.hidden=true;\}\}/, "proefbalk van de praktijk weg");
+assert.match(index, /var uit=!!\(typeof PRAKSLOT!=='undefined'&&PRAKSLOT&&PRAKSLOT\.bekend&&PRAKSLOT\.geclaimd&&!PRAKSLOT\.ingelogd\);\s*if\(uit\)return \[/, "uitgelogd: eigen tegelteksten");
 assert.match(index, /if\(vers&&vers\.geweigerd\)\{[^\n]*return;\}/, "geen CSV uit oude gegevens na een weigering");
 
 let pw = null;
@@ -119,6 +122,12 @@ try {
   await wacht(2100);
   await p2.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
   await tot(p2, () => !/Henk/.test(document.getElementById("k_srv_lijst").textContent), "lijst Lies leeg na schermwissel");
+  // Praktijk-scherm: geen beheerteksten alsof Lies alles mag (sweep 2026-11-19, Karin)
+  await p2.evaluate(() => { document.querySelectorAll(".ov.on").forEach((o) => o.classList.remove("on")); const b = document.querySelector("#fpSchermen [data-scherm='praktijk']"); if (b) b.click(); });
+  await tot(p2, () => !!document.getElementById("k_praktijk"), "praktijktegels");
+  const tegels = await p2.evaluate(() => document.getElementById("k_praktijk").textContent);
+  assert.doesNotMatch(tegels, /betalen en opzeggen\.|Collega\u2019s uitnodigen, rollen|Alles downloaden, of alles wissen/, "geen beheerteksten: " + tegels);
+  assert.match(tegels, /Log eerst in/, "tegels zeggen: eerst inloggen");
   assert.deepEqual(fouten, [], "geen paginafouten");
   console.log("uit team: ok (lijst en CSV weg zodra de collega uit het team is)");
 } catch (e) {

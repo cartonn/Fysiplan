@@ -3380,7 +3380,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       uitlegEl.appendChild(uitlegP);uitlegEl.appendChild(nietVertaaldNoot());
     }else{uitlegEl.textContent=uitlegTekst;if(uitlegVertaald(eigenUitleg))uitlegEl.appendChild(vertaalNoot(eigenUitleg));}
     // een niet-vertaalde Nederlandse uitleg niet met een stem in een andere taal voorlezen
-    demo.introTekst=document.getElementById('lbnaam').textContent+'. '+(uitlegNl?(voorschrift?voorschrift+'.':''):uitlegTekst);
+    // ook de naam niet: een Nederlandse oefennaam met een Engelse stem is onverstaanbaar (sweep 2026-11-19, Jayden)
+    var lbNaamEl=document.getElementById('lbnaam'),naamNl=lbNaamEl.getAttribute('lang')==='nl';
+    demo.introTekst=(naamNl?'':lbNaamEl.textContent+'. ')+(uitlegNl?(voorschrift?voorschrift+'.':''):uitlegTekst);
     // eerlijk over wat dit is: twee uitsnedes uit dezelfde foto, geen oefentempo en
     // geen klinisch goedgekeurde bewegingsopname
     var bronNoot=document.createElement('div');bronNoot.className='demobron';
@@ -3731,6 +3733,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         var oefEl=foto.closest('.oef').querySelector('.naam');
         document.getElementById('lbnaam').textContent=oefEl?oefEl.textContent:'';
         document.getElementById('lbimg').alt=oefEl?oefEl.textContent:'';
+        // een niet-vertaalde Nederlandse oefennaam houdt ook in de lightbox lang="nl", net als in de lijst:
+        // anders las een Engelse schermlezer "Bruggen beginner" met een Engelse stem (gebruikers-sweep 2026-11-19, Jayden)
+        ['lbnaam','lbimg'].forEach(function(id){var el=document.getElementById(id);
+          if(oefEl&&oefEl.getAttribute('lang')==='nl')el.setAttribute('lang','nl');else el.removeAttribute('lang');});
         var kd=document.getElementById('lbdemoKnop');
         kd.hidden=true;
         // zelfde rustige uitleg als onder de video's, ook bij oefeningen zonder video

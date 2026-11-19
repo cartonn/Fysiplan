@@ -19,8 +19,10 @@ assert.match(html, /function oefWeg\(n\)\{[\s\S]{0,1600}Ongedaan maken[\s\S]{0,9
   "× geeft een melding met Ongedaan maken die de oefening op dezelfde plek terugzet");
 assert.match(html, /if\(chosen!==lijst\|\|chosen\.indexOf\(weg\)>=0\)return;/, "niet terugzetten op een andere kaart");
 assert.doesNotMatch(html, /chosen\.splice\((n|rn),1\);render\(\)/, "elke × loopt via oefWeg");
-assert.match(html, /if\(tik&&TOEGEVOEGD\.id===id&&Date\.now\(\)-TOEGEVOEGD\.t<800\)return;\s*for\(var hi=0;hi<chosen\.length;hi\+\+\)\{if\(chosen\[hi\]\.o===id\)\{oefWeg\(hi\);return;\}\}/,
+assert.match(html, /if\(tik&&TOEGEVOEGD\.id===id&&Date\.now\(\)-TOEGEVOEGD\.t<800\)return;\s*for\(var hi=0;hi<chosen\.length;hi\+\+\)\{if\(chosen\[hi\]\.o===id\)\{if\(tik\)WEGGEHAALD=\{id:id,t:Date\.now\(\)\};oefWeg\(hi\);return;\}\}/,
   "bibliotheek: weghalen via oefWeg, dubbeltik op + telt één keer");
+// sweep 2026-11-19 (Sanne, desktop): een dubbelklik op de − haalde de oefening weg en zette haar meteen achteraan terug
+assert.match(html, /else if\(tik&&WEGGEHAALD\.id===id&&Date\.now\(\)-WEGGEHAALD\.t<800\)return;/, "dubbelklik op − haalt één keer weg");
 
 let playwright = null;
 try { playwright = createRequire(import.meta.url)("playwright"); } catch {
@@ -91,6 +93,16 @@ try {
   await page.locator(`#list .row [data-add='${nieuwId}']`).dblclick();
   await page.waitForTimeout(200);
   assert.equal((await namen()).length, 4, "dubbeltik op + zet de oefening er één keer op");
+  // dubbelklik op de − (muis, desktop): één keer weg, niet achteraan terug (sweep 2026-11-19, Sanne)
+  const vierVoor = await namen();
+  await page.waitForTimeout(900); // buiten de rem van 0,8 s na het toevoegen
+  await page.locator(`#list .row [data-add='${nieuwId}']`).dblclick();
+  await page.waitForTimeout(200);
+  const naDbl = await namen();
+  assert.equal(naDbl.length, 3, "dubbelklik op − haalt de oefening één keer weg: " + JSON.stringify(naDbl));
+  assert.deepEqual(naDbl, vierVoor.slice(0, 3), "de andere oefeningen blijven op hun plek");
+  await page.locator("#oefweg_terug").tap();
+  assert.deepEqual(await namen(), vierVoor, "Ongedaan maken zet hem terug");
   void rijId;
   // "Wis alles" (zelfde functie als een nieuwe kaart beginnen) maakt een nieuwe lijst
   await page.locator("#mon [data-rm='0']").tap();
