@@ -1670,8 +1670,15 @@ async function praktijkAllesWissen(pk) {
     }
     await saveJson(praktijkenPath, praktijken);
   });
-  const proefUitkomst = acc && acc.proef ? proefNaPraktijkWissen(acc.proef.id) : null;
-  if (proefUitkomst) await bewaarProeven();
+  // Eén proef kan tot MAX_PRAKTIJKEN_PER_PROEF praktijken beveiligen (#370). Hangt er nog een andere
+  // praktijk aan dezelfde aanmelding, dan blijft die aanmelding (en een betaald abonnement) voor haar
+  // staan: anders zette het wissen van de ene praktijk het abonnement van de andere stil, en bleven
+  // haar gegevens daarna tot het einde van de fiscale termijn staan (legal 2026-11-19 17u, art. 5 lid 1 e
+  // en art. 17 AVG). De laatste praktijk die gaat, neemt de aanmelding mee.
+  const proefId = acc && acc.proef ? String(acc.proef.id || "") : "";
+  const proefGedeeld = !!proefId && Object.entries(praktijkAccounts).some(([k, a]) => k !== pk && a && a.proef && String(a.proef.id || "") === proefId);
+  const proefUitkomst = !proefId ? null : proefGedeeld ? "gedeeld" : proefNaPraktijkWissen(proefId);
+  if (proefUitkomst && proefUitkomst !== "gedeeld") await bewaarProeven();
   delete praktijkAccounts[pk];
   await saveJson(accountsPath, praktijkAccounts);
   for (const [token, s] of praktijkSessies) if (s.pk === pk) praktijkSessies.delete(token);
@@ -2202,9 +2209,11 @@ async function proefRondeEen() {
       }
     }
     if (einde === "wissen") {
-      const pk = Object.keys(praktijkAccounts).find((k) => String(praktijkAccounts[k].proef?.id || "") === p.id);
-      if (pk) await praktijkAllesWissen(pk).then(() => auditLog("(gewist)", "praktijk-gewist-na-einde", null)).catch((e) => console.error("wissen na einde:", e.message));
-      else proefNaPraktijkWissen(p.id);
+      // alle praktijken die aan dit abonnement hangen, niet alleen de eerste (zie praktijkAllesWissen)
+      const pks = Object.keys(praktijkAccounts).filter((k) => String(praktijkAccounts[k].proef?.id || "") === p.id);
+      for (const pk of pks) await praktijkAllesWissen(pk).then(() => auditLog("(gewist)", "praktijk-gewist-na-einde", null)).catch((e) => console.error("wissen na einde:", e.message));
+      const rest = Object.hasOwn(proeven, p.id) ? proeven[p.id] : null;
+      if (rest && !rest.gewist) proefNaPraktijkWissen(p.id);
       gewijzigd = true;
       continue;
     }
@@ -9399,6 +9408,7 @@ async function afhandelen(request, response) {
       TEKST: aantalKaarten + (aantalKaarten === 1 ? " kaart" : " kaarten") + ", je eigen oefeningen en vragen, sjablonen, praktijkgegevens, " +
         (proefUitkomst === "gewist" ? "proefaanmelding, " : "") + "wachtwoord, de logins van je team, het logboek, het leeslog, " +
         "je open ideeën en wat Fysiplan-support over je praktijk bijhield zijn van de server. " +
+        (proefUitkomst === "gedeeld" ? "Je proefaanmelding blijft staan, omdat er nog een andere praktijk mee is beveiligd. " : "") +
         (proefUitkomst === "betaling" ? "Van je betaling bewaren we alleen naam, e-mail, praktijknaam en de betaalgegevens, 7 jaar, omdat de wet dat vraagt. " : "") +
         "In de dagelijkse reservekopie staat het nog hooguit 7 dagen. De praktijknaam is weer vrij. " +
         "In de browser van je eigen computer staan nog namen en kaarten: wis die in de app bij Kaarten met \u201cWis Fysiplan van dit apparaat\u201d.",
