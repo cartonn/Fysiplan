@@ -760,7 +760,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(!t)try{var o=localStorage.getItem('fp_taal');if(k(o))t=o;}catch(e){}
     if(!t)try{var v=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||''];
       for(var i=0;i<v.length&&!t;i++){var c=String(v[i]||'').slice(0,2).toLowerCase();if(k(c))t=c;}}catch(e){}
-    if(t&&t!=='nl'){document.getElementById('laden_tekst').textContent=LADEN[t];document.documentElement.lang=t;if(t==='ar')document.documentElement.dir='rtl';}
+    // ook de tabtitel meteen in de taal van de kaart (sweep 2026-11-19 18u, Jayden: ~3 s "Trainingskaart" op een trage lijn)
+    var TITEL={en:'Training card',de:'Trainingskarte',fr:"Carte d'entraînement",es:'Tarjeta de entrenamiento',pl:'Karta treningowa',tr:'Antrenman kartı',ar:'بطاقة التمارين',uk:'Картка вправ'};
+    if(t&&t!=='nl'){document.getElementById('laden_tekst').textContent=LADEN[t];document.documentElement.lang=t;if(t==='ar')document.documentElement.dir='rtl';
+      if(h.call(TITEL,t))document.title=TITEL[t]+' — Fysiplan';}
   })();
 </script>
 <div class="skop" id="sessiekop" hidden>
@@ -1831,7 +1834,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var gb=document.getElementById('grootBtn');
     if(gb){gb.title=trg('groter');gb.setAttribute('aria-label',trg('groter'));}
     var prb=document.getElementById('printBtn');
-    if(prb){var pt=document.getElementById('printTxt');if(pt)pt.textContent=trg('print');prb.setAttribute('aria-label',trg('print'));}
+    if(prb){var pt=document.getElementById('printTxt');if(pt)pt.textContent=trg('print');prb.setAttribute('aria-label',trg('print'));prb.title=TAAL==='nl'?'Print of bewaar als PDF':trg('print');}
     tekenDagen();
   }
   var DAGCODES=['MO','TU','WE','TH','FR','SA','SU'];
@@ -4234,25 +4237,26 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     document.getElementById('fout').style.display='block';
   }
   // Storingsmelding in de taal van de kaart. 'net' = geen verbinding (verzoek kwam niet aan);
-  // 'druk' = de server antwoordde met een fout (429/5xx): dan ligt het niet aan de patiënt (sweep 2026-11-11).
+  // 'druk' = de server antwoordde met een fout (5xx): dan ligt het niet aan de patiënt (sweep 2026-11-11);
+  // 'rem' = 429, te vaak een verkeerde link vanaf deze verbinding.
   var STORING={
-    nl:{net:['Even geen verbinding','Je kaart is er nog, maar hij laadt nu niet. Probeer het over een minuut opnieuw.','Opnieuw proberen'],
+    nl:{rem:['Even geduld','Vanaf deze wifi of verbinding is vaak een verkeerde kaartlink geprobeerd, bijvoorbeeld op gedeelde wifi. Wacht vijf minuten en probeer het dan opnieuw, of scan de QR-code nog eens.','Opnieuw proberen'],net:['Even geen verbinding','Je kaart is er nog, maar hij laadt nu niet. Probeer het over een minuut opnieuw.','Opnieuw proberen'],
       druk:['Het lukt even niet','Je kaart is er nog, maar Fysiplan reageert nu niet. Dat ligt niet aan je internet. Probeer het over een paar minuten opnieuw.','Opnieuw proberen']},
-    en:{net:['No connection right now','Your card is still there, but it is not loading right now. Please try again in a minute.','Try again'],
+    en:{rem:['Please wait a moment','A wrong card link has been tried many times from this internet connection, for example on shared wifi. Wait five minutes and try again, or scan the QR code again.','Try again'],net:['No connection right now','Your card is still there, but it is not loading right now. Please try again in a minute.','Try again'],
       druk:['Not working right now','Your card is still there, but Fysiplan is not responding right now. It is not your internet connection. Please try again in a few minutes.','Try again']},
-    de:{net:['Gerade keine Verbindung','Deine Karte ist noch da, lädt aber gerade nicht. Bitte versuche es in einer Minute noch einmal.','Erneut versuchen'],
+    de:{rem:['Einen Moment bitte','Über diese Internetverbindung wurde oft ein falscher Kartenlink versucht, zum Beispiel im gemeinsamen WLAN. Warte fünf Minuten und versuche es dann noch einmal, oder scanne den QR-Code erneut.','Erneut versuchen'],net:['Gerade keine Verbindung','Deine Karte ist noch da, lädt aber gerade nicht. Bitte versuche es in einer Minute noch einmal.','Erneut versuchen'],
       druk:['Gerade nicht erreichbar','Deine Karte ist noch da, aber Fysiplan antwortet gerade nicht. Das liegt nicht an deiner Internetverbindung. Bitte versuche es in ein paar Minuten noch einmal.','Erneut versuchen']},
-    fr:{net:['Pas de connexion pour le moment','Ta carte est toujours là, mais elle ne se charge pas pour le moment. Réessaie dans une minute.','Réessayer'],
+    fr:{rem:['Un instant','Un mauvais lien de carte a été essayé plusieurs fois depuis cette connexion internet, par exemple sur un wifi partagé. Attends cinq minutes puis réessaie, ou scanne à nouveau le code QR.','Réessayer'],net:['Pas de connexion pour le moment','Ta carte est toujours là, mais elle ne se charge pas pour le moment. Réessaie dans une minute.','Réessayer'],
       druk:['Indisponible pour le moment','Ta carte est toujours là, mais Fysiplan ne répond pas pour le moment. Ce n’est pas ta connexion internet. Réessaie dans quelques minutes.','Réessayer']},
-    es:{net:['Sin conexión ahora mismo','Tu tarjeta sigue ahí, pero ahora no se carga. Inténtalo de nuevo en un minuto.','Reintentar'],
+    es:{rem:['Un momento','Desde esta conexión a internet se ha probado muchas veces un enlace de tarjeta incorrecto, por ejemplo en un wifi compartido. Espera cinco minutos e inténtalo de nuevo, o vuelve a escanear el código QR.','Reintentar'],net:['Sin conexión ahora mismo','Tu tarjeta sigue ahí, pero ahora no se carga. Inténtalo de nuevo en un minuto.','Reintentar'],
       druk:['No disponible ahora mismo','Tu tarjeta sigue ahí, pero Fysiplan no responde ahora mismo. No es tu conexión a internet. Inténtalo de nuevo en unos minutos.','Reintentar']},
-    pl:{net:['Brak połączenia','Twoja karta nadal istnieje, ale teraz się nie ładuje. Spróbuj ponownie za minutę.','Spróbuj ponownie'],
+    pl:{rem:['Chwileczkę','Z tego połączenia internetowego wiele razy próbowano błędnego linku do karty, na przykład we wspólnym wifi. Odczekaj pięć minut i spróbuj ponownie albo zeskanuj kod QR jeszcze raz.','Spróbuj ponownie'],net:['Brak połączenia','Twoja karta nadal istnieje, ale teraz się nie ładuje. Spróbuj ponownie za minutę.','Spróbuj ponownie'],
       druk:['Chwilowo niedostępne','Twoja karta nadal istnieje, ale Fysiplan teraz nie odpowiada. To nie wina Twojego internetu. Spróbuj ponownie za kilka minut.','Spróbuj ponownie']},
-    tr:{net:['Şu anda bağlantı yok','Kartın hâlâ duruyor ama şu anda yüklenmiyor. Bir dakika sonra tekrar dene.','Tekrar dene'],
+    tr:{rem:['Lütfen biraz bekle','Bu internet bağlantısından, örneğin ortak wifi üzerinden, birçok kez yanlış bir kart bağlantısı denendi. Beş dakika bekleyip tekrar dene ya da QR kodunu yeniden tara.','Tekrar dene'],net:['Şu anda bağlantı yok','Kartın hâlâ duruyor ama şu anda yüklenmiyor. Bir dakika sonra tekrar dene.','Tekrar dene'],
       druk:['Şu anda çalışmıyor','Kartın hâlâ duruyor ama Fysiplan şu anda yanıt vermiyor. Sorun senin internet bağlantında değil. Birkaç dakika sonra tekrar dene.','Tekrar dene']},
-    ar:{net:['لا يوجد اتصال الآن','بطاقتك لا تزال موجودة، لكنها لا تُحمَّل الآن. حاول مرة أخرى بعد دقيقة.','حاول مرة أخرى'],
+    ar:{rem:['لحظة من فضلك','تمت تجربة رابط بطاقة خاطئ عدة مرات من اتصال الإنترنت هذا، مثلًا عبر شبكة واي فاي مشتركة. انتظر خمس دقائق ثم حاول مرة أخرى، أو امسح رمز QR من جديد.','حاول مرة أخرى'],net:['لا يوجد اتصال الآن','بطاقتك لا تزال موجودة، لكنها لا تُحمَّل الآن. حاول مرة أخرى بعد دقيقة.','حاول مرة أخرى'],
       druk:['الخدمة غير متاحة الآن','بطاقتك لا تزال موجودة، لكن Fysiplan لا يستجيب الآن. المشكلة ليست في اتصالك بالإنترنت. حاول مرة أخرى بعد بضع دقائق.','حاول مرة أخرى']},
-    uk:{net:['Зараз немає з’єднання','Ваша картка нікуди не зникла, але зараз не завантажується. Спробуйте ще раз за хвилину.','Спробувати ще раз'],
+    uk:{rem:['Зачекайте трохи','З цього інтернет-з’єднання багато разів пробували неправильне посилання на картку, наприклад у спільному wifi. Зачекайте п’ять хвилин і спробуйте ще раз або знову відскануйте QR-код.','Спробувати ще раз'],net:['Зараз немає з’єднання','Ваша картка нікуди не зникла, але зараз не завантажується. Спробуйте ще раз за хвилину.','Спробувати ще раз'],
       druk:['Зараз не працює','Ваша картка нікуди не зникла, але Fysiplan зараз не відповідає. Справа не у вашому інтернеті. Спробуйте ще раз за кілька хвилин.','Спробувати ще раз']}
   };
   // De kaart ophalen met een grens: bleef de verbinding hangen (geen antwoord, geen fout), dan stond
@@ -4271,7 +4275,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   }
   function toonStoring(status){
     geenLaden();
-    var soort=(status===429||status>=500)?'druk':'net';
+    // 429 = de rem op verkeerde kaartlinks (of te veel verzoeken) vanaf deze verbinding: niet "je kaart is er nog"
+    // en niet "ligt niet aan je internet", want op gedeelde wifi kan een ander de rem hebben geraakt (sweep 2026-11-19 18u, Truus)
+    var soort=status===429?'rem':status>=500?'druk':'net';
     var t=(STORING[TAAL]||STORING.nl)[soort];
     document.getElementById('storing_kop').textContent=t[0];document.getElementById('storing_tekst').textContent=t[1];document.getElementById('storing_knop').textContent=t[2];
     if(STORING[TAAL])document.documentElement.lang=TAAL;

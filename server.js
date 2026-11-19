@@ -2067,8 +2067,14 @@ async function factuurNietTeZien(request, response, p) {
 }
 // het aanmeldformulier, eventueel opnieuw met de ingevulde waarden en per veld de fout
 async function proefFormVars(request, w, fouten, suggestie = "", akkoord = false, alarm = "") {
-  const fout = (k) => fouten[k] ? '<p class="melding" role="alert">' + htmlEsc(fouten[k]) + "</p>" : "";
-  const eerste = ["email", "naam", "tel"].find((k) => fouten[k]);
+  // Per veld hangt de melding met een id aan het veld (aria-describedby) en krijgt het veld
+  // aria-invalid; de focus gaat naar het eerste foute veld, ook als dat een vinkje is. Alleen de
+  // samenvatting bovenaan is role="alert": voorheen las een schermlezer bij een leeg formulier zes
+  // meldingen tegelijk voor en viel de focus bij alleen vinkjesfouten op body (sweep 2026-11-19, Sanne).
+  const fout = (k) => fouten[k] ? '<p class="melding" id="fout-' + k + '">' + htmlEsc(fouten[k]) + "</p>" : "";
+  const eerste = ["email", "naam", "tel", "akkoord", "vwo"].find((k) => fouten[k]);
+  const veld = (k) => (eerste === k ? " autofocus" : "") +
+    (k === "email" && suggestie ? ' aria-describedby="hulp-email"' : fouten[k] ? ' aria-invalid="true" aria-describedby="fout-' + k + '"' : "");
   let telling = 200;
   try { telling = (await buildManifest("v2")).length; } catch {}
   const aantalFouten = Object.keys(fouten).length;
@@ -2079,10 +2085,11 @@ async function proefFormVars(request, w, fouten, suggestie = "", akkoord = false
     M_VWO: fouten.vwo ? "mis" : "",
     // bij een tikfout-suggestie staat het verbeterde adres al in het veld; een
     // tweede keer versturen accepteert dan wat er staat, ook als het toch klopte
-    F_EMAIL_HTML: suggestie ? '<p class="hulp" role="alert">Bedoel je <b>' + htmlEsc(suggestie) + "</b>? We hebben het alvast aangepast. Klopt je eerste adres toch, verander het dan terug.</p>" : fout("email"),
+    F_EMAIL_HTML: suggestie ? '<p class="hulp" id="hulp-email" role="alert">Bedoel je <b>' + htmlEsc(suggestie) + "</b>? We hebben het alvast aangepast. Klopt je eerste adres toch, verander het dan terug.</p>" : fout("email"),
     EMAIL_OK_HTML: suggestie ? '<input type="hidden" name="email_ok" value="1"/>' : "",
     F_NAAM_HTML: fout("naam"), F_TEL_HTML: fout("tel"), F_AKKOORD_HTML: fout("akkoord"), F_VWO_HTML: fout("vwo"),
-    AUTOFOCUS_EMAIL_HTML: eerste === "email" ? " autofocus" : "", AUTOFOCUS_NAAM_HTML: eerste === "naam" ? " autofocus" : "", AUTOFOCUS_TEL_HTML: eerste === "tel" ? " autofocus" : "",
+    AUTOFOCUS_EMAIL_HTML: veld("email"), AUTOFOCUS_NAAM_HTML: veld("naam"), AUTOFOCUS_TEL_HTML: veld("tel"),
+    AUTOFOCUS_AKKOORD_HTML: veld("akkoord"), AUTOFOCUS_VWO_HTML: veld("vwo"),
     ALARM_HTML: alarm ? '<p class="alarm" role="alert" style="margin-top:20px">' + htmlEsc(alarm) + "</p>"
       : (aantalFouten && !(aantalFouten === 1 && suggestie)) ? '<p class="alarm" role="alert" style="margin-top:20px">Nog ' + (aantalFouten === 1 ? "één veld" : aantalFouten + " velden") + " om na te kijken.</p>" : "",
     EINDDATUM: datumNl(Date.now() + PROEF_DAGEN * 86400000),
