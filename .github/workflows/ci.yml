@@ -257,6 +257,8 @@ jobs:
       - run: npm run test:wachtwoordrem
       - run: npm run test:auditspoor
       - run: npm run test:profielbeheer
+      - run: npm run test:profieloudapparaat
+      - run: npm run test:objectnaam
       - run: npm run test:websiteveilig
       - run: npm run test:opzeggenbeheer
       - run: npm run test:praktijknaambezet

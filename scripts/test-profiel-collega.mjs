@@ -1,7 +1,7 @@
 // Regressietest gebruikers-sweep 2026-11-11 14u (Karin, beheerder, desktop): een collega die op een nieuw
 // apparaat inlogde, kreeg adres, telefoon en logo van de praktijk nooit op de kaart. loadPraktijken() vroeg
 // /api/praktijken op zonder praktijksessie, en de server geeft een v2-praktijk alleen met sessie het eigen
-// profiel. Nu met de sessie, opnieuw na het inloggen, en lege velden worden aangevuld uit het profiel.
+// profiel. Nu met de sessie, opnieuw na het inloggen; sinds 2026-11-19 wint het profiel bij openen en inloggen.
 // CI heeft geen Playwright: de serverstap en de statische controle draaien altijd, de browserstap alleen waar
 // Playwright staat. `npm run test:profielcollega`
 import assert from "node:assert/strict";
@@ -16,8 +16,8 @@ import { createRequire } from "node:module";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(html, /fetch\('api\/praktijken',PGET\(\)\)/, "praktijkprofiel wordt met de praktijksessie opgehaald");
-assert.match(html, /renderPrakSelect\(\);vulUitProfiel\(\);/, "lege velden worden uit het profiel aangevuld");
-assert.match(html, /if\(t&&typeof window\.fpLaadPraktijken==='function'\)window\.fpLaadPraktijken\(\);/, "na inloggen wordt het profiel opgehaald");
+assert.match(html, /renderPrakSelect\(\);vulUitProfiel\(gezag===true,basisVoor\|\|null\);/, "velden worden uit het profiel gevuld");
+assert.match(html, /if\(t&&typeof window\.fpLaadPraktijken==='function'\)window\.fpLaadPraktijken\(true\);/, "na inloggen wordt het profiel opgehaald");
 
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-profielcollega-"));
 const reserve = createServer();
@@ -74,7 +74,10 @@ try {
     await p.goto(origin + "/v2/app", { waitUntil: "networkidle" });
     await p.waitForFunction(() => (document.getElementById("p_adres") || {}).value === "Dorpsstraat 7", null, { timeout: 8000 });
     assert.equal(await p.inputValue("#p_plaats"), "Zeist", "plaats uit het profiel");
-    assert.equal(await p.inputValue("#p_tel"), "06-11112222", "wat al op dit apparaat stond blijft staan");
+    // sinds 2026-11-19 wint het serverprofiel bij het openen (een collega mag het nummer toch niet wijzigen,
+    // en een oud nummer op dit apparaat zette anders het nieuwe profiel terug): zie test-profiel-oud-apparaat
+    for (let i = 0; i < 80 && (await p.inputValue("#p_tel")) !== "030-7654321"; i++) await wacht(100);
+    assert.equal(await p.inputValue("#p_tel"), "030-7654321", "het profiel van de praktijk wint van een oud nummer op dit apparaat");
     await p.reload({ waitUntil: "networkidle" });
     assert.equal(await p.inputValue("#p_adres"), "Dorpsstraat 7", "na herladen bewaard");
     assert.deepEqual(fouten, [], "geen scriptfouten");

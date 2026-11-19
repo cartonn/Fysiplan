@@ -246,6 +246,8 @@
     "test:reekstitel": "node scripts/test-kaart-reeks-titel.mjs",
     "test:auditspoor": "node scripts/test-audit-spoor.mjs",
     "test:profielbeheer": "node scripts/test-profiel-beheer.mjs",
+    "test:profieloudapparaat": "node scripts/test-profiel-oud-apparaat.mjs",
+    "test:objectnaam": "node scripts/test-sweep-objectnaam.mjs",
     "test:websiteveilig": "node scripts/test-website-veilig.mjs",
     "test:opzeggenbeheer": "node scripts/test-opzeggen-beheer.mjs",
     "test:praktijknaambezet": "node scripts/test-praktijknaam-bezet.mjs",

@@ -1340,7 +1340,7 @@ bridge2.jpg</div>
   // t = wat de server na het inloggen teruggeeft (in de browser het woord "cookie"); leeg = uitgelogd
   function setPrakSes(t){try{localStorage.removeItem('fp_praksessie');}catch(e){}
     // net ingelogd: het praktijkprofiel (adres, logo) ophalen voor dit apparaat
-    if(t&&typeof window.fpLaadPraktijken==='function')window.fpLaadPraktijken();}
+    if(t&&typeof window.fpLaadPraktijken==='function')window.fpLaadPraktijken(true);}
   function PJSON(){var h={'content-type':'application/json'};var s=prakSes();if(s)h['x-praktijk-sessie']=s;return h;}
   function PGET(){var o={cache:'no-cache'};var s=prakSes();if(s)o.headers={'x-praktijk-sessie':s};return o;}
   // Een sleutel van vóór de cookie één keer omruilen. Lukt het (of werkt de sleutel niet meer),
@@ -2782,21 +2782,55 @@ bridge2.jpg</div>
     var bar=document.getElementById('conflict_bar');
     if(!bar){
       bar=document.createElement('div');bar.id='conflict_bar';bar.className='no-print';bar.setAttribute('role','alert');
-      bar.style.cssText='position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:9001;display:none;flex-wrap:wrap;align-items:center;gap:10px;width:min(640px,calc(100vw - 32px));box-sizing:border-box;padding:12px 12px 12px 16px;border-radius:10px;background:#18343B;color:#fff;font-size:15px;line-height:1.4;box-shadow:0 6px 24px rgba(0,0,0,.25)';
+      // In de pagina direct onder de kopbalk (sticky), niet zwevend: vast op top:12px dekte de balk de
+      // schermknoppen, praktijkchip en Lijntekeningen/Avatar af, en zwevend eronder de werkbalk en de kop van
+      // de kaart; achteraan in body was hij met Tab haast niet te bereiken (gebruikers-sweep 2026-11-19 14u,
+      // Sanne, desktop). Nu duwt hij de inhoud omlaag, blijft hij bij scrollen in beeld en komt hij in de
+      // tabvolgorde direct na de schermknoppen.
+      // Over de hele breedte en dicht, als verlengstuk van de kopbalk: zo schuift de inhoud bij scrollen eronder zoals
+      // onder de kopbalk, in plaats van dat een zwevend blok midden in de werkbalk hangt (hertest Sanne).
+      bar.style.cssText='position:sticky;top:0;z-index:29;display:none;flex-wrap:wrap;align-items:center;gap:10px;width:100%;margin:0;box-sizing:border-box;padding:10px max(16px,calc((100% - 640px) / 2));background:#18343B;color:#fff;font-size:15px;line-height:1.4;box-shadow:0 2px 8px rgba(0,0,0,.18)';
+      // focus terug naar waar je was: het laatste element buiten de balk dat focus had
+      // en een veld dat met Tab focus krijgt maar onder de balk valt, schuift in beeld (WCAG 2.4.11)
+      document.addEventListener('focusin',function(e){
+        var t=e.target;if(!t||t===document.body||bar.contains(t))return;
+        bar._terug=t;
+        if(bar.style.display==='none'||!t.getBoundingClientRect)return;
+        var rb=bar.getBoundingClientRect(),rt=t.getBoundingClientRect();
+        if(rt.top<rb.bottom&&rt.bottom>0)setTimeout(function(){var r2=t.getBoundingClientRect();if(r2.top<bar.getBoundingClientRect().bottom)window.scrollBy(0,r2.top-bar.getBoundingClientRect().bottom-12);},0);
+      });
+      var st=document.createElement('style');
+      st.textContent='#conflict_bar button:focus-visible{outline:3px solid #B9E34B;outline-offset:2px}';
+      document.head.appendChild(st);
       bar.addEventListener('click',function(e){
         var k=e.target.closest('[data-cfact]');if(!k)return;
-        if(k.dataset.cfact==='sluit'){bar.style.display='none';return;}
+        if(k.dataset.cfact==='sluit'){
+          bar.style.display='none';
+          // focus terug naar waar je was, anders naar het actieve scherm (niet naar body)
+          var t=bar._terug;if(!t||!t.isConnected||!t.offsetParent)t=document.querySelector('#fpSchermen [aria-pressed="true"]');
+          if(t&&t.focus)t.focus();
+          return;
+        }
         qrActie(k.dataset.cfact);
       });
-      document.body.appendChild(bar);
+      var hb=document.querySelector('header.topbar');
+      if(hb&&hb.parentNode)hb.parentNode.insertBefore(bar,hb.nextSibling);else document.body.appendChild(bar);
     }
     var knop="min-height:44px;min-width:44px;padding:0 14px;border-radius:8px;font:inherit;font-weight:700;cursor:pointer;";
     bar.innerHTML="<span style='flex:1 1 260px;overflow-wrap:anywhere'>"+esc(tekst)+"</span>"+
       (knoppen||[]).map(function(k,i){return "<button type='button' data-cfact='"+esc(k.act)+"' style='"+knop+(i===0?"border:0;background:#B9E34B;color:#18343B":"border:1px solid #fff;background:transparent;color:#fff")+"'>"+esc(k.label)+"</button>";}).join('')+
-      "<button type='button' data-cfact='sluit' aria-label='Melding sluiten' style='"+knop+"border:0;background:transparent;color:#fff;font-size:20px'>\u00d7</button>";
+      "<button type='button' data-cfact='sluit' aria-label='Melding sluiten' style='"+knop+"border:0;background:transparent;color:#fff;font-size:20px'>×</button>";
     // geen focus erheen: wie nog aan het typen is, typt anders in de balk; role=alert leest hem wel voor
+    zetConflictTop(bar);
     bar.style.display='flex';
   }
+  // sticky onder de kopbalk als die zelf sticky is (desktop), anders bovenaan
+  function zetConflictTop(bar){
+    var hb=document.querySelector('header.topbar');
+    var plak=hb&&getComputedStyle(hb).position==='sticky';
+    bar.style.top=(plak?hb.offsetHeight:0)+'px';
+  }
+  window.addEventListener('resize',function(){var b=document.getElementById('conflict_bar');if(b&&b.style.display!=='none')zetConflictTop(b);});
   // ---- pakket A: alleen een roepnaam op de gedeelde kaart ----
   // "Jan de Vries" -> "Jan V.", "Vries, Jan de" -> "Jan V." (EPD's leveren vaak de
   // achternaam eerst). Zo blijft de praktijk de kaart herkennen zonder dat de
@@ -3266,18 +3300,43 @@ bridge2.jpg</div>
   }
   // v2 geeft het eigen profiel alleen met de praktijksessie terug. Zonder die header kreeg een collega
   // op een nieuw apparaat nooit adres, telefoon of logo van de praktijk (gebruikers-sweep 2026-11-11 14u).
-  // Lege velden op dit apparaat worden aangevuld uit het profiel; wat hier al staat blijft staan.
-  function vulUitProfiel(){
+  // Bij het openen van de app en na het inloggen (gezag=true) wint het profiel van de server: een
+  // apparaat met een oud adres of telefoonnummer in fysiplan_settings stuurde anders bij de volgende
+  // wijziging het hele oude profiel terug, en /k en de print toonden weer het oude nummer (gebruikers-
+  // sweep 2026-11-19 10u, Karin). Een veld waarin nu getypt wordt, blijft staan. Na het eigen bewaren
+  // (gezag=false) worden alleen lege velden aangevuld, zodat wat net getypt is niet terugspringt.
+  // Op een nieuw apparaat is de praktijknaam soms nog leeg als het profiel binnenkomt: is er precies
+  // één eigen profiel, dan komt dat erin, ook de naam (sweep 2026-11-19 10u, Karin: logo-knop zei
+  // "Vul eerst de praktijknaam en het adres in" tot herladen).
+  // PROF_BASIS: het serverprofiel zoals deze pagina het laatst zag. Het gaat mee bij bewaren, zodat de
+  // server alleen de velden overneemt die hier echt gewijzigd zijn. Een iPad die de hele dag open stond
+  // zette anders met één nieuw telefoonnummer ook het oude adres terug dat intussen op de desktop was
+  // gewijzigd (hertest gebruikers-sweep 2026-11-19 14u, Karin). Na bewaren (basisVoor) neemt de pagina
+  // de servervelden over die ze zelf niet gewijzigd had.
+  var PROF_VELD={praktijk:'praktijk',adres:'p_adres',plaats:'p_plaats',tel:'p_tel',email:'p_email',website:'p_website'};
+  var PROF_BASIS=null;
+  function vulUitProfiel(gezag,basisVoor){
     if(!IS_V2)return;
-    var cur=(SET.praktijk||'').trim().toLowerCase();if(!cur)return;
-    var p=PRAKTIJKEN.filter(function(x){return String(x.praktijk||'').toLowerCase()===cur;})[0];if(!p)return;
+    var cur=(SET.praktijk||'').trim().toLowerCase();
+    var p=cur?PRAKTIJKEN.filter(function(x){return String(x.praktijk||'').toLowerCase()===cur;})[0]:null;
+    if(!p&&(!cur||basisVoor)&&PRAKTIJKEN.length===1)p=PRAKTIJKEN[0];
+    if(!p)return;
+    var bezig=document.activeElement&&document.activeElement.id||'';
     var veranderd=false;
-    ['adres','plaats','tel','email','website','logo'].forEach(function(k){if(!SET[k]&&p[k]){SET[k]=p[k];veranderd=true;}});
+    ['praktijk','adres','plaats','tel','email','website','logo'].forEach(function(k){
+      var nu=SET[k]||'',srv=p[k]||'';
+      if(nu===srv)return;
+      if(PROF_VELD[k]&&PROF_VELD[k]===bezig)return;
+      var nietZelf=!!basisVoor&&k!=='logo'&&nu===(basisVoor[k]||'');
+      if(k==='praktijk'&&nu&&!nietZelf)return;
+      if(!nu?srv:(gezag||nietZelf)){SET[k]=srv;veranderd=true;}
+    });
+    PROF_BASIS={};Object.keys(PROF_VELD).forEach(function(k){PROF_BASIS[k]=p[k]||'';});
     if(veranderd){saveSettings();applySettings();}
   }
-  function loadPraktijken(){
+  function loadPraktijken(gezag,basisVoor){
     fetch('api/praktijken',PGET()).then(function(r){return r.ok?r.json():[];})
-      .then(function(l){PRAKTIJKEN=Array.isArray(l)?l:[];renderPrakSelect();vulUitProfiel();}).catch(function(){});
+      .then(function(l){PRAKTIJKEN=Array.isArray(l)?l:[];renderPrakSelect();vulUitProfiel(gezag===true,basisVoor||null);}).catch(function(){});
   }
   window.fpLaadPraktijken=loadPraktijken;
   prakSel.addEventListener('change',function(){
@@ -3290,6 +3349,7 @@ bridge2.jpg</div>
   var prakSaveTimer=null;
   function upsertPraktijk(){
     var p={praktijk:SET.praktijk||'',adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||'',website:SET.website||''};
+    if(PROF_BASIS)p.basis=PROF_BASIS;
     if(!p.praktijk.trim()||!p.adres.trim())return;
     if(document.getElementById('p_adres').readOnly)return;
     clearTimeout(prakSaveTimer);
@@ -3301,7 +3361,7 @@ bridge2.jpg</div>
   function stuurPraktijk(p){
     fetch('api/praktijken',{method:'POST',headers:PJSON(),body:JSON.stringify(p)})
       .then(function(r){return r.json();}).then(function(d){
-        if(d.ok){loadPraktijken();return;}
+        if(d.ok){loadPraktijken(false,p.basis||null);return;}
         // beheer: alleen een beheerder wijzigt het profiel; website: geen gewoon webadres (javascript:, data:)
         if(d.beheer||d.website){if(d.beheer)rolBijwerken(false);profielTerug(d.fout);return;}
         if(d.bezet&&!p.zelfdeNaam&&window.confirm(d.fout||'Er is al een andere praktijk met deze naam. Toch zo noemen?')){p.zelfdeNaam=true;stuurPraktijk(p);}
@@ -3336,7 +3396,7 @@ bridge2.jpg</div>
     var el=document.getElementById(id);
     if(el)el.addEventListener('change',upsertPraktijk);
   });
-  loadPraktijken();
+  loadPraktijken(true);
 
   // ---- praktijklogo (v2): één keer uploaden, daarna op elke geprinte kaart ----
   // het logo hoort bij het praktijkprofiel op de server, dus het werkt op elk apparaat

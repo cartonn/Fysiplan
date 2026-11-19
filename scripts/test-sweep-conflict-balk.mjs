@@ -14,7 +14,10 @@ import { createRequire } from "node:module";
 const root = process.cwd();
 const index = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(index, /toonQrHint\(vTekst,vKnoppen\);\s*toonConflictBalk\(vTekst,vKnoppen\);/, "409 verouderd toont ook de balk");
-assert.match(index, /function toonConflictBalk\(tekst,knoppen\)\{[\s\S]{0,900}?min-height:44px/, "knoppen van minstens 44 px");
+assert.match(index, /function toonConflictBalk\(tekst,knoppen\)\{[\s\S]{0,3000}?min-height:44px/, "knoppen van minstens 44 px");
+assert.match(index, /zetConflictTop\(bar\);\s*bar\.style\.display='flex';/, "balk onder de kopbalk, niet over de schermknoppen");
+assert.match(index, /hb\.parentNode\.insertBefore\(bar,hb\.nextSibling\)/, "balk in de pagina direct na de kopbalk (niet zwevend, vroeg in de tabvolgorde)");
+assert.match(index, /#conflict_bar button:focus-visible\{outline:3px solid #B9E34B/, "zichtbare focusring op de donkere balk");
 assert.match(index, /function toonQr\(id\)\{\s*\/\/[^\n]*\n\s*var cfb=document\.getElementById\('conflict_bar'\);if\(cfb\)cfb\.style\.display='none';/, "balk weg na bewaren");
 
 let pw = null;
@@ -81,7 +84,44 @@ try {
   assert.equal(maten.length, 3, "nieuwste, toch mijn versie, sluiten");
   for (const [t, w, h] of maten) assert.ok(w >= 44 && h >= 44, "tikdoel " + t + " " + w + "x" + h);
   const vak = await page.$eval("#conflict_bar", (b) => { const r = b.getBoundingClientRect(); return { top: r.top, right: r.right, vw: innerWidth }; });
-  assert.ok(vak.top >= 0 && vak.top < 100 && vak.right <= vak.vw, "balk bovenin beeld, binnen het scherm");
+  assert.ok(vak.top >= 0 && vak.top < 260 && vak.right <= vak.vw, "balk bovenin beeld, binnen het scherm");
+  // sweep 2026-11-19 14u (Sanne): de balk lag over de kopbalk en blokkeerde de schermknoppen
+  const vrij = await page.evaluate(() => {
+    const hb = document.querySelector("header.topbar"), bar = document.getElementById("conflict_bar");
+    const knoppen = [...document.querySelectorAll("#fpSchermen [data-scherm]")].filter((b) => b.offsetParent);
+    return { onder: bar.getBoundingClientRect().top >= hb.getBoundingClientRect().bottom,
+      klikbaar: knoppen.every((b) => { const r = b.getBoundingClientRect(); const el = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return !!el && b.contains(el); }) };
+  });
+  assert.equal(vrij.onder, true, "balk staat onder de kopbalk");
+  assert.equal(vrij.klikbaar, true, "schermknoppen blijven klikbaar met de balk open");
+  const plek = await page.evaluate(() => { const b = document.getElementById("conflict_bar"); return { na: !!b.previousElementSibling && b.previousElementSibling.matches("header.topbar"), pos: getComputedStyle(b).position }; });
+  assert.equal(plek.na, true, "balk staat in de pagina direct na de kopbalk");
+  assert.equal(plek.pos, "sticky", "balk blijft bij scrollen in beeld zonder over de werkbalk te zweven");
+  await page.evaluate(() => { const k = [...document.querySelectorAll("#fpSchermen [data-scherm]")].filter((b) => b.offsetParent).pop(); k.focus(); });
+  let inBalk = false;
+  for (let i = 0; i < 25 && !inBalk; i++) { await page.keyboard.press("Tab"); inBalk = await page.evaluate(() => !!document.activeElement && !!document.activeElement.closest("#conflict_bar")); }
+  assert.equal(inBalk, true, "met Tab snel van de schermknoppen naar de balk");
+  await page.focus("#conflict_bar [data-cfact='sluit']");
+  await page.keyboard.press("Enter");
+  assert.equal(await page.evaluate(() => document.activeElement !== document.body), true, "na sluiten geen focus op body");
+  await page.evaluate(() => { document.getElementById("conflict_bar").style.display = "flex"; });
+  // hertest Sanne: over de hele breedte (geen zwevend blok over de werkbalk bij scrollen) en focus terug naar het veld
+  assert.equal(await page.evaluate(() => document.getElementById("conflict_bar").getBoundingClientRect().width >= document.documentElement.clientWidth - 2), true, "balk over de hele breedte");
+  await page.focus("#c_doel");
+  await page.click("#conflict_bar [data-cfact='sluit']");
+  assert.equal(await page.evaluate(() => document.activeElement && document.activeElement.id), "c_doel", "na sluiten met de muis focus terug in het veld waar je was");
+  await page.evaluate(() => { document.getElementById("conflict_bar").style.display = "flex"; });
+  // een veld dat focus krijgt terwijl het onder de balk ligt, schuift in beeld (WCAG 2.4.11; hertest Sanne)
+  await page.evaluate(() => { document.activeElement.blur(); const v = document.getElementById("c_doel"), b = document.getElementById("conflict_bar");
+    window.scrollBy(0, v.getBoundingClientRect().top - b.getBoundingClientRect().bottom + 20); });
+  const onder = await page.evaluate(() => { const v = document.getElementById("c_doel").getBoundingClientRect(), b = document.getElementById("conflict_bar").getBoundingClientRect(); return v.top < b.bottom; });
+  if (onder) {
+    await page.focus("#c_doel");
+    let vrijIn = false;
+    for (let i = 0; i < 30 && !vrijIn; i++) { await wacht(50); vrijIn = await page.evaluate(() => document.getElementById("c_doel").getBoundingClientRect().top >= document.getElementById("conflict_bar").getBoundingClientRect().bottom); }
+    assert.equal(vrijIn, true, "gefocust veld niet achter de balk");
+  }
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.tap("#conflict_bar [data-cfact='nieuwste']");
   await page.waitForSelector("#conflict_bar", { state: "hidden", timeout: 8000 });
   for (let i = 0; i < 100 && (await page.inputValue("#c_doel").catch(() => "")) !== "Traplopen zonder pijn"; i++) await wacht(50);

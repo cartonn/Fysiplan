@@ -3617,7 +3617,8 @@ const verbodenSleutel = /^(__proto__|constructor|prototype)$/i;
 // De lengte blijft in eenheden, zodat bestaande praktijksleutels gelijk blijven.
 // tekst-omkeertekens (U+202A–202E, U+2066–2069) horen niet in een naam: "Tom‮redeeh" oogt in Team
 // en Activiteit als een andere naam (gebruikers-sweep 2026-11-19 10u, Karin; #376 deed dit alleen op /k)
-const cleanName = (v, max) => { const s = String(v || "").replace(/[‪-‮⁦-⁩]/g, "").trim().replace(/\s+/g, " ").slice(0, max).replace(/[\uD800-\uDBFF]$/, ""); return verbodenSleutel.test(s) ? "" : s; };
+// een object of lijst als naam werd "[object Object]" (sjabloon, oefening in een sjabloon; sweep 2026-11-19 14u, Mark): leeg, zodat de route netjes 400 geeft
+const cleanName = (v, max) => { if (v !== null && typeof v === "object") return ""; const s = String(v || "").replace(/[‪-‮⁦-⁩]/g, "").trim().replace(/\s+/g, " ").slice(0, max).replace(/[\uD800-\uDBFF]$/, ""); return verbodenSleutel.test(s) ? "" : s; };
 // Tekst-omkeertekens (U+202A–U+202E inbedding/override, U+2066–U+2069 isolaten) uit alles wat de
 // patiënt op /k leest. Met U+202E draaide een zin van de therapeut of een praktijknaam om, zodat de
 // kaart iets anders liet zien dan er stond (bv. een link of telefoonnummer achterstevoren; sweep
@@ -6098,7 +6099,7 @@ async function afhandelen(request, response) {
       // een lijst of object als naam werd "[object Object]" (gebruikers-sweep 2026-11-13 22u, Mark)
       const naam = typeof b.naam === "string" ? cleanName(b.naam, 80) : "";
       if (!naam) { await sendJson(response, 400, { ok: false, fout: "Geef de oefening een naam." }); return; }
-      const uitleg = String(b.uitleg || "").replace(/\s+/g, " ").trim().slice(0, 400);
+      const uitleg = (typeof b.uitleg === "string" ? b.uitleg : "").replace(/\s+/g, " ").trim().slice(0, 400);
       const m = String(b.img || "").match(/^data:image\/(jpeg|png);base64,([A-Za-z0-9+/=]+)$/);
       if (!m) { await sendJson(response, 400, { ok: false, fout: "Kies een foto (JPEG of PNG)." }); return; }
       const buf = Buffer.from(m[2], "base64");
@@ -6233,7 +6234,7 @@ async function afhandelen(request, response) {
       const oefeningen = (Array.isArray(b.oefeningen) ? b.oefeningen : []).slice(0, 12)
         .map((x) => {
           const it = { n: cleanName(x && x.n, 80) };
-          for (const k of ["s", "h", "w"]) { const v = String((x && x[k]) || "").slice(0, 10); if (v) it[k] = v; }
+          for (const k of ["s", "h", "w"]) { const r = x && x[k]; const v = (typeof r === "string" || typeof r === "number") ? String(r).slice(0, 10) : ""; if (v) it[k] = v; }
           return it;
         })
         .filter((x) => x.n);
@@ -6530,6 +6531,15 @@ async function afhandelen(request, response) {
       const sessie = sessieVan(request);
       const eigenSessie = !!sessie && sessie.pk === key;
       const oudProfiel = praktijken[key];
+      // basis = het profiel zoals de app het laatst zag. Velden die de app niet heeft gewijzigd, nemen we
+      // van de server: een iPad die de hele dag open stond, zette anders met één nieuw telefoonnummer ook
+      // het oude adres terug dat intussen op de desktop was gewijzigd (gebruikers-sweep 2026-11-19 14u,
+      // Karin). Zonder basis (oudere app, v1) blijft het zoals het was.
+      if (eigenSessie && oudProfiel && b.basis && typeof b.basis === "object" && !Array.isArray(b.basis)) {
+        for (const v of ["praktijk", "adres", "plaats", "tel", "email", "website"]) {
+          if (typeof b.basis[v] === "string" && cleanName(b.basis[v], 200) === p[v]) p[v] = oudProfiel[v] || "";
+        }
+      }
       const gewijzigd = !oudProfiel || !!b.logo ||
         ["praktijk", "adres", "plaats", "tel", "email"].some((v) => (oudProfiel[v] || "") !== p[v]) ||
         (Object.hasOwn(b, "website") && (oudProfiel.website || "") !== p.website);
