@@ -109,7 +109,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-18";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-18";
+const AV_VERSIE = "2026-11-19";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-19";
@@ -144,7 +144,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-15", tekst: "Beveiliging: naast de eigen beheerlogins met een tweede stap staat op de server één noodsleutel zonder tweede stap, voor het eerste account en als niemand meer kan inloggen. Wat daarmee gebeurt, staat in het beheerlogboek als \"beheersleutel\", niet op naam." },
   { stuk: "av", versie: "2026-11-16", tekst: "Verduidelijking: een nieuwe maand is voor het aantal logins van dat moment, of voor het hoogste aantal in de maand daarvoor als dat hoger was. Tijdens een maand rekenen we niets bij en geven we niets terug." },
   { stuk: "av", versie: "2026-11-18", tekst: "Verduidelijking: werkte je praktijk al met Fysiplan vóór de proef en probeer je de nieuwe app als pilot, dan wissen we na de proef alleen je proefaanmelding; je bestaande gegevens blijven." },
-  { stuk: "vwo", versie: "2026-11-18", tekst: "Einde: werkte je praktijk al met Fysiplan vóór de proef en probeer je de nieuwe app als pilot, dan wist het einde van de pilot alleen de proefaanmelding; je bestaande gegevens blijven. Beveiliging: een video uit de galerij bewaren we zonder plek van opnemen en zonder merk en type telefoon." }
+  { stuk: "vwo", versie: "2026-11-18", tekst: "Einde: werkte je praktijk al met Fysiplan vóór de proef en probeer je de nieuwe app als pilot, dan wist het einde van de pilot alleen de proefaanmelding; je bestaande gegevens blijven. Beveiliging: een video uit de galerij bewaren we zonder plek van opnemen en zonder merk en type telefoon." },
+  { stuk: "av", versie: "2026-11-19", tekst: "Verduidelijking: de proef loopt tot en met de einddatum die je bij het aanmelden ziet, tot middernacht (Nederlandse tijd). Met één proef beveilig je hooguit 3 praktijken." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -9507,6 +9508,8 @@ async function afhandelen(request, response) {
         PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN), PROEF_DAGEN: String(PROEF_DAGEN), NA_EINDE: String(NA_EINDE_WISSEN_DAGEN), INCASSO_VOORAF: String(INCASSO_VOORAF_DAGEN),
         // grens op lopende kaarten uit lib/plaatsen.js: de voorwaarden noemen hetzelfde getal als de server hanteert
         KAARTEN_PROEF: String(KAARTEN_PROEF), KAARTEN_PER_LOGIN: String(KAARTEN_PER_LOGIN),
+        // grens op beveiligde praktijken per proef (#370): de voorwaarden noemen het getal van de server
+        PRAKTIJKEN_PROEF: String(MAX_PRAKTIJKEN_PER_PROEF),
         // Mollie staat alleen in de privacyverklaring als online betalen echt aan staat
         // legal 2026-11-18: ook de factuurgegevens (naam en adres van Mijn abonnement, #360) staan
         // op elke factuur en blijven met de betaling 7 jaar (proefNaPraktijkWissen houdt het abonnement)

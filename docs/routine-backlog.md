@@ -416,6 +416,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   links vóór de velden in de Tab-volgorde. Truus: bevestiging na "Wis van dit apparaat" in vaste 16px (kaart.html ~2587/4110); taalmenu
   "Nederlan", AA-knopletters, dagletters "WoDo" bij 200 %. Jayden: afspraaktijd zonder "(Dutch time)" bij afwijkende toesteltijdzone; privacylinks
   < 44 px.
+- **LAAG (van legal, 2026-11-19 05u) — `npm run test:spronglinks` faalt lokaal met Chromium weer op schone main (2a24a3c):** sprongkoppeling 38 px hoog (l 427, t 485, b 96), de test eist 44 px. Wisselt per run (zie de twee regels hieronder); vermoedelijk afhankelijk van fonts of laadmoment. CI zonder browser blijft groen. Niet door legal aangeraakt.
 - **OPGELOST (niet meer na te maken 2026-11-16 10u):** `test:spronglinks` met Chromium lokaal groen op main 24ed858.
 - **Niet getest:** Mark: inloggen tweede apparaat via UI, eigen oefening, afspraak/seintje, proefeinde; abonnement/opzeggen (lokaal uit); video in
   de lightbox (lokaal geen video's); vertaling (lokaal uit).
