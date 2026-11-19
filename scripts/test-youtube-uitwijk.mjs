@@ -49,7 +49,7 @@ assert.ok(!/<meta[^>]+name=["']?referrer/i.test(kaart) && !/<meta[^>]+name=["']?
 
 // ---------- 2. patiëntkaart: de echte klikafhandeling ----------
 const T = vm.runInNewContext(tussen(kaart, '  var T={', '  var SPRAAK=') + ';T');
-function kaartKlik(taal, dataset) {
+function kaartKlik(taal, dataset, { akkoord = false } = {}) {
   let handler = null;
   const element = () => ({children:[], events:{}, textContent:'', setAttribute(){}, appendChild(n){this.children.push(n);}, addEventListener(t,fn){this.events[t]=fn;}});
   const nativeVideo = { ...element(), isConnected:true, paused:true, error:null };
@@ -62,7 +62,7 @@ function kaartKlik(taal, dataset) {
   });
   vm.runInContext(regel(kaart, /  function esc\(s\)\{[^\n]*\n/) + tussen(kaart, '  var T={', '  var SPRAAK=') +
     regel(kaart, /  var VIDEO_TEKST_ALG=[^\n]*\n/) + regel(kaart, /  var VIDEO_BRON_PRAKTIJK=[^\n]*\n/) + regel(kaart, /  var VIDEO_TEKST_LABEL=[^\n]*\n/) +
-    regel(kaart, /  function tr\(k\)\{[^\n]*\n/) + regel(kaart, /  function ytKijkUrl\(id\)\{[^\n]*\n/) +
+    regel(kaart, /  function tr\(k\)\{[^\n]*\n/) + tussen(kaart, '  var YT_AKKOORD=false;', '  function ytKijkUrl(') + regel(kaart, /  function ytKijkUrl\(id\)\{[^\n]*\n/) +
     tussen(kaart, '  function bewaakVideo(', '  // ---- alle knoppen één keer') +
     tussen(kaart, "    document.getElementById('oefs').addEventListener('click',", "    document.getElementById('mschaal')"), ctx);
   assert.equal(typeof handler, 'function');
@@ -72,17 +72,35 @@ function kaartKlik(taal, dataset) {
     nativeVideo.events.error();
     assert.equal(houder.children[0].children.at(-1).type,'button','native fout biedt echte retry');
   }
+  if (akkoord) {
+    // legal 2026-11-19: eerst de melding, YouTube pas na een tik op "Speel af via YouTube"
+    const knop = houder.innerHTML.match(/<button type="button" data-ytspeel="([^"]*)" data-ytlabel="([^"]*)">/);
+    assert.ok(knop, 'knop Speel af via YouTube');
+    let erin = null, weg = false;
+    const melding = { insertAdjacentHTML: (waar, html) => { assert.equal(waar, 'afterend'); erin = html; }, remove() { weg = true; } };
+    const ys = { dataset: { ytspeel: knop[1], ytlabel: knop[2].replace(/&quot;/g, '"').replace(/&amp;/g, '&') }, closest: (sel) => (sel === '.ytmeld' ? melding : null) };
+    handler({ target: { closest: (sel) => (sel === '[data-ytspeel]' ? ys : null) } });
+    assert.ok(weg, 'melding weg na de tik');
+    // daarna in dezelfde pagina: meteen de speler
+    handler({ target: { closest: (sel) => (sel === '.vbtn' ? b : null) } });
+    return { speler: erin, html: houder.innerHTML };
+  }
   return houder.innerHTML;
 }
 const linksIn = (html) => [...html.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)].map((m) => m[0]);
 {
   const html = kaartKlik('en', { yt: ID, vbron: 'bibliotheek', vtekst: 'Tekst' });
-  // speler exact zoals voorheen
-  assert.ok(html.startsWith('<iframe src="https://www.youtube-nocookie.com/embed/' + ID + '?autoplay=1&rel=0&modestbranding=1" title="Video instructions" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>'), 'ingesloten speler ongewijzigd en eerst');
+  // eerst een melding, nog geen speler van YouTube (art. 11.7a Tw; legal 2026-11-19)
+  assert.ok(!html.includes('<iframe') && !html.includes('youtube-nocookie'), 'geen YouTube-speler vóór de eigen tik');
+  assert.ok(html.startsWith('<div class="ytmeld" role="note"><p>' + T.en.ytMeld + '</p><button type="button" data-ytspeel="' + ID + '"'), 'melding eerst');
+  const na = kaartKlik('en', { yt: ID, vbron: 'bibliotheek', vtekst: 'Tekst' }, { akkoord: true });
+  // speler exact zoals voorheen, na de tik
+  assert.equal(na.speler, '<iframe src="https://www.youtube-nocookie.com/embed/' + ID + '?autoplay=1&rel=0&modestbranding=1" title="Video instructions" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>', 'speler na de tik');
+  assert.ok(na.html.startsWith('<iframe src="https://www.youtube-nocookie.com/embed/' + ID + '?autoplay=1&rel=0&modestbranding=1" title="Video instructions" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>'), 'ingesloten speler ongewijzigd en eerst');
   const links = linksIn(html);
   assert.equal(links.length, 1, 'precies één uitwijklink');
   assert.equal(links[0], '<a class="ytextern" href="' + KIJK + '" target="_blank" rel="noopener noreferrer">Open this video on YouTube (external website)</a>');
-  assert.ok(html.indexOf('</iframe>') < html.indexOf('<a class="ytextern"'), 'link onder de speler');
+  assert.ok(na.html.indexOf('</iframe>') > 0 && na.html.indexOf('</iframe>') < na.html.indexOf('<a class="ytextern"'), 'tweede keer in dezelfde pagina: meteen de speler, link eronder');
   const url = new URL(links[0].match(/href="([^"]*)"/)[1]);
   assert.equal(url.origin, 'https://www.youtube.com');assert.equal(url.pathname, '/watch');
   assert.deepEqual([...url.searchParams.keys()], ['v'], 'alleen het video-id, geen andere parameters');
@@ -93,6 +111,10 @@ const linksIn = (html) => [...html.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)].map((m)
 // elke taal zegt dat de link YouTube opent
 for (const taal of ['nl', 'en', 'de', 'fr', 'es', 'pl', 'tr', 'ar', 'uk']) {
   assert.ok(typeof T[taal].ytOpen === 'string' && T[taal].ytOpen.includes('YouTube'), taal);
+  // de melding vóór het afspelen noemt YouTube en IP in elke taal, de knop noemt YouTube
+  assert.ok(typeof T[taal].ytMeld === 'string' && T[taal].ytMeld.includes('YouTube') && T[taal].ytMeld.includes('IP'), taal + ': ytMeld');
+  assert.ok(typeof T[taal].ytSpeel === 'string' && T[taal].ytSpeel.includes('YouTube'), taal + ': ytSpeel');
+  assert.ok(!kaartKlik(taal, { yt: ID }).includes('<iframe'), taal + ': geen speler vóór de tik');
   assert.ok(linksIn(kaartKlik(taal, { yt: ID }))[0].includes('>' + T[taal].ytOpen.replace(/'/g, '&#39;') + '</a>'), taal);
 }
 // ongeldige id's: geen link (de speler-tak zelf is niet aangepast)
@@ -128,4 +150,4 @@ function voorbeeld(video) {
   // eigen video gaat in het voorbeeld nog steeds vóór een YouTube-link
   assert.ok(!/youtube/.test(voorbeeld({ eigen: 'uploads/videos/v-abc.mp4', yt: ID })), 'beheer: bronvolgorde ongewijzigd');
 }
-console.log('YouTube-uitwijklink: referrer-policy same-origin ongewijzigd (statisch en live op /, /k/demo, /kaart.html, /v2/oefeningen.json); link alleen bij een gevalideerd id, exact youtube.com/watch?v=ID, nieuw tabblad zonder referrer, geen kaartgegevens, negen talen; speler, bronvolgorde en andere bronnen ongewijzigd; geen automatische navigatie. Herstelt de ingesloten speler niet.');
+console.log('YouTube: speler pas na een eigen tik op Speel af via YouTube, met melding in negen talen. YouTube-uitwijklink: referrer-policy same-origin ongewijzigd (statisch en live op /, /k/demo, /kaart.html, /v2/oefeningen.json); link alleen bij een gevalideerd id, exact youtube.com/watch?v=ID, nieuw tabblad zonder referrer, geen kaartgegevens, negen talen; speler, bronvolgorde en andere bronnen ongewijzigd; geen automatische navigatie. Herstelt de ingesloten speler niet.');

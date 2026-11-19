@@ -375,6 +375,12 @@ if (pw) {
       // YouTube: de speler komt in de plaats van het beeld, de knop blijft een gewone knop eronder
       await wacht(750);
       await pv.click("#oefs .oef.actief .vbtn[data-yt]");
+      // eerst de melding over YouTube; de speler laadt pas na "Speel af via YouTube" (legal 2026-11-19)
+      await pv.waitForFunction(() => !!document.querySelector("#oefs .oef.actief .vhouder.open .ytmeld button"));
+      assert.equal(await pv.locator("#oefs .oef.actief .vhouder.open iframe").count(), 0, toestel + ": geen YouTube-speler vóór de tik");
+      const ytspeel = await vak("#oefs .oef.actief .ytmeld button");
+      assert.ok(ytspeel && ytspeel.h >= 44, toestel + ": knop Speel af via YouTube is minstens 44 px hoog");
+      await pv.click("#oefs .oef.actief .ytmeld button");
       await pv.waitForFunction(() => !!document.querySelector("#oefs .oef.actief .vhouder.open iframe"));
       await wacht(300);
       const speler = await vak("#oefs .oef.actief .vhouder.open iframe"), ytknop = await vak("#oefs .oef.actief .vbtn[data-yt]"), ytnaam = await vak("#oefs .oef.actief .naam");
