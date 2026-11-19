@@ -2545,7 +2545,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     // de download noemde de al voorbije startdatum als volgende afspraak)
     if(k.afspraak&&k.afspraak.t){
       var aT=k.afspraak.t,aR=Number(k.afspraak.herhaal)||0;
-      if(aR>=2){while(aT<Date.now()-2*3600000&&aR>1){aT=weekLater(aT);aR--;}}
+      if(aR>=2){while(aT<Date.now()-2*3600000&&aR>1){aT=typeof weekLater==="function"?weekLater(aT):aT+7*864e5;aR--;}}
       if(aT>=Date.now()-2*3600000){kop(L.afs);r.push('- '+h.dagTijd(aT)+(aR>=2?' ('+L.afsH.replace('{n}',aR)+')':''));}
     }
     var lo=lokaal||{};
