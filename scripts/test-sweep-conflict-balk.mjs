@@ -105,6 +105,12 @@ try {
   await page.keyboard.press("Enter");
   assert.equal(await page.evaluate(() => document.activeElement !== document.body), true, "na sluiten geen focus op body");
   await page.evaluate(() => { document.getElementById("conflict_bar").style.display = "flex"; });
+  // hertest Sanne: over de hele breedte (geen zwevend blok over de werkbalk bij scrollen) en focus terug naar het veld
+  assert.equal(await page.evaluate(() => document.getElementById("conflict_bar").getBoundingClientRect().width >= document.documentElement.clientWidth - 2), true, "balk over de hele breedte");
+  await page.focus("#c_doel");
+  await page.click("#conflict_bar [data-cfact='sluit']");
+  assert.equal(await page.evaluate(() => document.activeElement && document.activeElement.id), "c_doel", "na sluiten met de muis focus terug in het veld waar je was");
+  await page.evaluate(() => { document.getElementById("conflict_bar").style.display = "flex"; });
   await page.tap("#conflict_bar [data-cfact='nieuwste']");
   await page.waitForSelector("#conflict_bar", { state: "hidden", timeout: 8000 });
   for (let i = 0; i < 100 && (await page.inputValue("#c_doel").catch(() => "")) !== "Traplopen zonder pijn"; i++) await wacht(50);
