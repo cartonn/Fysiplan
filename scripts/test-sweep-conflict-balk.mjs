@@ -111,6 +111,17 @@ try {
   await page.click("#conflict_bar [data-cfact='sluit']");
   assert.equal(await page.evaluate(() => document.activeElement && document.activeElement.id), "c_doel", "na sluiten met de muis focus terug in het veld waar je was");
   await page.evaluate(() => { document.getElementById("conflict_bar").style.display = "flex"; });
+  // een veld dat focus krijgt terwijl het onder de balk ligt, schuift in beeld (WCAG 2.4.11; hertest Sanne)
+  await page.evaluate(() => { document.activeElement.blur(); const v = document.getElementById("c_doel"), b = document.getElementById("conflict_bar");
+    window.scrollBy(0, v.getBoundingClientRect().top - b.getBoundingClientRect().bottom + 20); });
+  const onder = await page.evaluate(() => { const v = document.getElementById("c_doel").getBoundingClientRect(), b = document.getElementById("conflict_bar").getBoundingClientRect(); return v.top < b.bottom; });
+  if (onder) {
+    await page.focus("#c_doel");
+    let vrijIn = false;
+    for (let i = 0; i < 30 && !vrijIn; i++) { await wacht(50); vrijIn = await page.evaluate(() => document.getElementById("c_doel").getBoundingClientRect().top >= document.getElementById("conflict_bar").getBoundingClientRect().bottom); }
+    assert.equal(vrijIn, true, "gefocust veld niet achter de balk");
+  }
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.tap("#conflict_bar [data-cfact='nieuwste']");
   await page.waitForSelector("#conflict_bar", { state: "hidden", timeout: 8000 });
   for (let i = 0; i < 100 && (await page.inputValue("#c_doel").catch(() => "")) !== "Traplopen zonder pijn"; i++) await wacht(50);

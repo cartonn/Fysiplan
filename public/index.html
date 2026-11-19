@@ -2791,7 +2791,14 @@ bridge2.jpg</div>
       // onder de kopbalk, in plaats van dat een zwevend blok midden in de werkbalk hangt (hertest Sanne).
       bar.style.cssText='position:sticky;top:0;z-index:29;display:none;flex-wrap:wrap;align-items:center;gap:10px;width:100%;margin:0;box-sizing:border-box;padding:10px max(16px,calc((100% - 640px) / 2));background:#18343B;color:#fff;font-size:15px;line-height:1.4;box-shadow:0 2px 8px rgba(0,0,0,.18)';
       // focus terug naar waar je was: het laatste element buiten de balk dat focus had
-      document.addEventListener('focusin',function(e){if(e.target&&e.target!==document.body&&!bar.contains(e.target))bar._terug=e.target;});
+      // en een veld dat met Tab focus krijgt maar onder de balk valt, schuift in beeld (WCAG 2.4.11)
+      document.addEventListener('focusin',function(e){
+        var t=e.target;if(!t||t===document.body||bar.contains(t))return;
+        bar._terug=t;
+        if(bar.style.display==='none'||!t.getBoundingClientRect)return;
+        var rb=bar.getBoundingClientRect(),rt=t.getBoundingClientRect();
+        if(rt.top<rb.bottom&&rt.bottom>0)setTimeout(function(){var r2=t.getBoundingClientRect();if(r2.top<bar.getBoundingClientRect().bottom)window.scrollBy(0,r2.top-bar.getBoundingClientRect().bottom-12);},0);
+      });
       var st=document.createElement('style');
       st.textContent='#conflict_bar button:focus-visible{outline:3px solid #B9E34B;outline-offset:2px}';
       document.head.appendChild(st);
