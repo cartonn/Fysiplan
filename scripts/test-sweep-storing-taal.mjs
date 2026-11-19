@@ -21,6 +21,16 @@ const storing = talen("STORING");
 for (const t of talen("NIETGEVONDEN")) assert.ok(storing.includes(t), `storingsmelding ook in ${t}`);
 assert.ok(storing.includes("nl"), "storingsmelding in het Nederlands");
 assert.match(html, /toonStoring\(res\[0\]&&res\[0\]\.status\)/, "status van de server gaat mee naar de melding");
+// 429 (rem op verkeerde kaartlinks, gedeelde wifi) heeft in elke taal een eigen melding die geen kaart belooft
+// en niet zegt dat het niet aan het internet ligt (sweep 2026-11-19 18u, Truus)
+{
+  const blok = html.match(/var STORING=\{([\s\S]*?)\n  \};/)[1];
+  for (const t of storing) assert.match(blok, new RegExp("\\b" + t + ":\\{rem:\\['"), "rem-melding in " + t);
+  const nlRem = blok.match(/nl:\{rem:\[([^\]]*)\]/)[1];
+  assert.doesNotMatch(nlRem, /Je kaart is er nog|niet aan je internet/);
+  assert.match(nlRem, /vijf minuten/);
+  assert.match(html, /var soort=status===429\?'rem'/);
+}
 
 let pw = null;
 try { pw = createRequire(import.meta.url)("playwright"); } catch { console.log("test-sweep-storing-taal: geen Playwright, browserdeel overgeslagen"); }
@@ -45,7 +55,8 @@ try {
     ["de", 0, "Gerade keine Verbindung", "net"],
     ["nl", 500, "Het lukt even niet", "druk"],
     ["nl", 0, "Even geen verbinding", "net"],
-    ["en", 429, "Not working right now", "druk"],
+    ["en", 429, "Please wait a moment", "rem"],
+    ["nl", 429, "Even geduld", "rem"],
     ["tr", 502, "Şu anda çalışmıyor", "druk"]
   ];
   let n = 0;
