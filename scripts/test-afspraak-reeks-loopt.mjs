@@ -15,8 +15,8 @@ import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const index = await readFile(join(root, "public/index.html"), "utf8");
 const kaart = await readFile(join(root, "public/kaart.html"), "utf8");
-assert.match(index, /data-safvolg='"\+va\.t\+"' data-safrest='"\+va\.rest\+"'/, "+1 week kent de eerstvolgende afspraak van de reeks");
-assert.match(index, /if\(volgW&&veldW\.value===veldW\.defaultValue&&volgW!==basisW\)\{\s*basisW=volgW;/, "+1 week telt vanaf de eerstvolgende afspraak");
+assert.match(index, /volgendeAfspraak\(\{afspraak:\{t:basisW,herhaal:Number\(selW\.value\)\|\|0\}\}\)/, "+1 week rekent met het aantal in de keuzelijst zoals het nu staat");
+assert.match(index, /if\(vaW&&vaW\.t!==basisW\)\{\s*basisW=vaW\.t;/, "+1 week telt vanaf de eerstvolgende afspraak");
 assert.match(kaart, /if\(aR>=2\)\{while\(aT<Date\.now\(\)-2\*3600000&&aR>1\)\{aT=weekLater\(aT\);aR--;\}\}/, "download Mijn gegevens rolt de reeks door");
 
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-reeksloopt-"));

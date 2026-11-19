@@ -6280,7 +6280,7 @@ bridge2.jpg</div>
                   [[0,'eenmalig'],[4,'wekelijks ×4'],[6,'wekelijks ×6'],[8,'wekelijks ×8'],[12,'wekelijks ×12']].map(function(o){return "<option value='"+o[0]+"'"+((Number(c.afspraak&&c.afspraak.herhaal)||0)===o[0]?" selected":"")+">"+o[1]+"</option>";}).join("")+
                 "</select>"+
                 "<button class='btn' data-safspraakopslaan='"+esc(c.id)+"'>Bewaar</button>"+
-                "<button class='btn' data-safweek='"+esc(c.id)+"'"+((function(){var va=volgendeAfspraak(c);return va&&va.t!==c.afspraak.t?" data-safvolg='"+va.t+"' data-safrest='"+va.rest+"'":"";})())+" title='Zet de afspraak één week later dan de huidige (of één week vanaf nu) en bewaar direct — fysio-afspraken keren meestal wekelijks terug'>+1 week</button>"+
+                "<button class='btn' data-safweek='"+esc(c.id)+"' title='Zet de afspraak één week later dan de huidige (of één week vanaf nu) en bewaar direct — fysio-afspraken keren meestal wekelijks terug'>+1 week</button>"+
               "</div>"+
               // reeks al onderweg: het veld toont de startdatum (bron van waarheid),
               // dit regeltje toont waar de reeks nu staat — zoals de patiënt hem ziet
@@ -6786,10 +6786,13 @@ bridge2.jpg</div>
         // een reeks die al loopt: een week na de eerstvolgende afspraak, met de afspraken die nog over
         // zijn. Vanaf de oude startdatum bleef de nieuwe datum in het verleden en weigerde de server
         // (gebruikers-sweep 2026-11-19 22u, Mark). Alleen als het veld nog de bewaarde startdatum toont.
-        var volgW=Number(aw.dataset.safvolg)||0,restW=Number(aw.dataset.safrest)||0;
-        if(volgW&&veldW.value===veldW.defaultValue&&volgW!==basisW){
-          basisW=volgW;
-          var selW=document.querySelector("[data-safherhaal='"+aw.dataset.safweek+"']");
+        // Het aantal komt uit de keuzelijst zoals die nu staat: na "×6 → ×8, Bewaar" zonder herladen
+        // rekende +1 week anders met de oude ×6 en vielen er stil twee afspraken uit (hertest Mark).
+        var selW=document.querySelector("[data-safherhaal='"+aw.dataset.safweek+"']");
+        var vaW=(veldW.value&&veldW.value===veldW.defaultValue&&selW)?volgendeAfspraak({afspraak:{t:basisW,herhaal:Number(selW.value)||0}}):null;
+        if(vaW&&vaW.t!==basisW){
+          basisW=vaW.t;
+          var restW=vaW.rest;
           if(selW){
             var nW=String(restW>=2?restW:0);
             if(!Array.prototype.some.call(selW.options,function(o){return o.value===nW;})){var oW=document.createElement('option');oW.value=nW;oW.textContent='wekelijks ×'+nW;selW.appendChild(oW);}
