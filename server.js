@@ -3615,7 +3615,9 @@ const verbodenSleutel = /^(__proto__|constructor|prototype)$/i;
 // Afkappen op `max` UTF-16-eenheden, maar nooit midden in een emoji: een losse helft (surrogaat)
 // werd "�" in Kaarten, de CSV en de bevestigvraag (gebruikers-sweep 2026-11-18 10u, Sanne).
 // De lengte blijft in eenheden, zodat bestaande praktijksleutels gelijk blijven.
-const cleanName = (v, max) => { const s = String(v || "").trim().replace(/\s+/g, " ").slice(0, max).replace(/[\uD800-\uDBFF]$/, ""); return verbodenSleutel.test(s) ? "" : s; };
+// tekst-omkeertekens (U+202A–202E, U+2066–2069) horen niet in een naam: "Tom‮redeeh" oogt in Team
+// en Activiteit als een andere naam (gebruikers-sweep 2026-11-19 10u, Karin; #376 deed dit alleen op /k)
+const cleanName = (v, max) => { const s = String(v || "").replace(/[‪-‮⁦-⁩]/g, "").trim().replace(/\s+/g, " ").slice(0, max).replace(/[\uD800-\uDBFF]$/, ""); return verbodenSleutel.test(s) ? "" : s; };
 // Tekst-omkeertekens (U+202A–U+202E inbedding/override, U+2066–U+2069 isolaten) uit alles wat de
 // patiënt op /k leest. Met U+202E draaide een zin van de therapeut of een praktijknaam om, zodat de
 // kaart iets anders liet zien dan er stond (bv. een link of telefoonnummer achterstevoren; sweep
@@ -5063,7 +5065,8 @@ async function afhandelen(request, response) {
     const lijst = kiesActiviteit(praktijkAudit.filter((e) => e && e.praktijk === pk && relevant.has(e.actie)),
       (a) => isAuditRuis(a, AUDIT_RUIS))
       .map((e) => ({ t: e.t, actie: e.actie, ip: e.ip, ...(e.wie ? { wie: e.wie } : {}), ...(Number(e.n) > 1 ? { n: Number(e.n) } : {}) }));
-    await sendJson(response, 200, { ok: true, activiteit: lijst });
+    // oude regels kunnen nog omkeertekens dragen (van vóór cleanName ze weghaalde)
+    await sendJson(response, 200, { ok: true, activiteit: zonderOmkeer(lijst) });
     return;
   }
 
@@ -5084,7 +5087,7 @@ async function afhandelen(request, response) {
       // als de kaart geen behandelaar of maker met een eigen login heeft (gemaskeerd)
       await sendJson(response, 200, { ok: true, praktijk: weergaveNaam(pk), beheer: isBeheer(s),
         ik: ik ? { ...lidUit(ik), ...(heeftTweedeStap(ik) ? { tweedeStapSinds: ik.totp.sinds || null, reservecodesOver: reservecodesOver(ik) } : {}) } : null,
-        gedeeldUit: gedeeldStaatUit(pk), leden: ledenVan(pk).map(lidUit),
+        gedeeldUit: gedeeldStaatUit(pk), leden: zonderOmkeer(ledenVan(pk).map(lidUit)),
         // stapVoorIedereen: de tweede stap geldt voor elke praktijk (EIGEN_LOGIN_VERPLICHT); dan is
         // er niets aan of uit te zetten en kan het praktijkwachtwoord niet meer aan
         stapVerplicht: stapVerplicht(pk), ...(acc.stapVerplicht ? { stapVerplichtSinds: acc.stapVerplicht.sinds || null } : {}),
