@@ -108,12 +108,22 @@ const kaart = await readFile(join(root, "public/kaart.html"), "utf8");
 assert.match(kaart, /status===404\)\{toonNietGevonden\(\);vergeetKaartWeg\(\);\}/);
 const fn = kaart.match(/function vergeetKaartHier\(\)\{[^\n]*\}/);
 assert.ok(fn, "vergeetKaartHier staat in kaart.html");
-for (const sleutel of ["fp_oefdaan_", "fp_zwaar_", "fp_priv_", "fp_beelden_"]) assert.ok(fn[0].includes(`'${sleutel}'`), sleutel);
-const ls = new Map([[`fp_oefdaan_${WEG}`, "1"], [`fp_zwaar_${WEG}`, "1"], [`fp_priv_${WEG}`, "1"], [`fp_beelden_${WEG}`, "[]"], [`fp_priv_${BLIJFT}`, "1"], ["fp_taal", "en"]]);
+for (const sleutel of ["fp_oefdaan_", "fp_zwaar_", "fp_priv_", "fp_beelden_", "fp_taalkeus_"]) assert.ok(fn[0].includes(`'${sleutel}'`), sleutel);
+// Legal 2026-11-19 (fail-closed): elk voorvoegsel dat kaart.html met het kaart-id in localStorage zet
+// ('fp_x_'+id, 'fp_x_'+(id||'x') of via een constante zoals BEELDEN_PREFIX) moet vergeetKaartHier ook wissen.
+// Voorheen bleef fp_taalkeus_<id> staan nadat de praktijk de kaart had gewist of hij verliep.
+{
+  const prefixen = new Set();
+  for (const m of kaart.matchAll(/'(fp_[a-z]+_)'\s*\+\s*\(?id\b/g)) prefixen.add(m[1]);
+  for (const m of kaart.matchAll(/var\s+[A-Z_]+\s*=\s*'(fp_[a-z]+_)'/g)) prefixen.add(m[1]);
+  assert.ok(prefixen.has("fp_taalkeus_") && prefixen.has("fp_oefdaan_") && prefixen.has("fp_wacht_"), "voorvoegsels gevonden: " + [...prefixen]);
+  for (const p of prefixen) assert.ok(fn[0].includes(`'${p}'`), `vergeetKaartHier wist ook ${p}<id> (staat in kaart.html)`);
+}
+const ls = new Map([[`fp_oefdaan_${WEG}`, "1"], [`fp_zwaar_${WEG}`, "1"], [`fp_priv_${WEG}`, "1"], [`fp_beelden_${WEG}`, "[]"], [`fp_taalkeus_${WEG}`, '{"link":"nl","keus":"en"}'], [`fp_priv_${BLIJFT}`, "1"], [`fp_taalkeus_${BLIJFT}`, "{}"], ["fp_taal", "en"]]);
 vm.runInNewContext("var KAART_GEWIST=false;" + fn[0] + ";vergeetKaartHier();", {
   id: WEG, localStorage: { removeItem: (k) => ls.delete(k) }
 });
-assert.deepEqual([...ls.keys()].sort(), [`fp_priv_${BLIJFT}`, "fp_taal"].sort(), "alleen deze kaart vergeten, taal blijft");
+assert.deepEqual([...ls.keys()].sort(), [`fp_priv_${BLIJFT}`, `fp_taalkeus_${BLIJFT}`, "fp_taal"].sort(), "alleen deze kaart vergeten, taal blijft");
 
 // ---- Legal 2026-11-11: bij 'niet gevonden' gaan ook de oefenbeelden van die kaart weg ----
 // Voorheen bleven fp_beelden_<id> (kaart-id + lijst van oefenbeelden) en de beelden zelf in de
