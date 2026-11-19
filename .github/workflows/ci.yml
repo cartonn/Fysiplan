@@ -55,6 +55,7 @@ jobs:
       - run: npm run test:slowloris
       - run: npm run test:kaartraden
       - run: npm run test:kaartomkeer
+      - run: npm run test:teamomkeer
       - run: npm run test:agendadubbel
       - run: npm run test:offline
       - run: npm run test:tablet
