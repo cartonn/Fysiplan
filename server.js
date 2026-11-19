@@ -2529,6 +2529,18 @@ function inboxItems(k) {
   return items.sort((a, b) => b.t - a.t);
 }
 
+// eerstvolgende afspraak van een kaart, met doorrollen van een wekelijkse reeks (zoals /k en de app
+// het tonen); 0 als alles voorbij is. Een reeks die al begonnen is, loopt nog zolang haar laatste
+// afspraak niet voorbij is (gebruikers-sweep 2026-11-19 22u, Mark: na de eerste afspraak was de reeks
+// niet meer te bewerken, en het overzicht na de proef liet hem weg).
+function volgendeAfspraakTijd(a, nu = Date.now()) {
+  if (!a || !Number(a.t)) return 0;
+  let t = Number(a.t), rest = Number.isInteger(a.herhaal) && a.herhaal >= 2 ? a.herhaal : 1;
+  const grens = nu - 2 * 3600000;
+  while (t < grens && rest > 1) { t += 7 * 86400000; rest--; }
+  return t < grens ? 0 : t;
+}
+
 // laatste teken van gebruik: de praktijk (opslaan), de patiënt (tik, vinkje, seintje,
 // bezoek) of een afspraak die nog moet komen (bij een wekelijkse reeks de laatste)
 function laatsteActiviteitKaart(k) {
@@ -7836,15 +7848,19 @@ async function afhandelen(request, response) {
       if (!leeg && typeof b.t !== "number") { await sendJson(response, 400, { ok: false, fout: "Ongeldig moment." }); return; }
       const t = leeg ? 0 : b.t;
       if (t) {
-        if (!Number.isFinite(t) || t < Date.now() - 3600000 || t > Date.now() + 366 * 864e5) {
+        // wekelijks herhalende behandelreeks (zelfde dag en tijd): 2 t/m 12 keer; 0, 1 of leeg is
+        // eenmalig. Een andere waarde maakte van de reeks stil een eenmalige afspraak: nu een 400.
+        const herhaal = Number(b.herhaal);
+        const leegH = b.herhaal === undefined || b.herhaal === null || b.herhaal === "" || herhaal === 0 || herhaal === 1;
+        const reeks = Number.isInteger(herhaal) && herhaal >= 2 && herhaal <= 12;
+        if (!leegH && !reeks) { await sendJson(response, 400, { ok: false, fout: "Kies eenmalig of een wekelijkse reeks van 2 tot en met 12 keer." }); return; }
+        // een reeks die al begonnen is, mag met haar startdatum worden bewaard zolang er nog een afspraak komt
+        const nogBezig = Number.isFinite(t) && reeks && volgendeAfspraakTijd({ t, herhaal }) > 0;
+        if (!Number.isFinite(t) || (t < Date.now() - 3600000 && !nogBezig) || t > Date.now() + 366 * 864e5) {
           await sendJson(response, 400, { ok: false, fout: "Kies een moment in de komende twaalf maanden." });
           return;
         }
-        // wekelijks herhalende behandelreeks (zelfde dag en tijd): 2 t/m 12 keer,
-        // al het andere telt als eenmalig — de agenda-ICS krijgt er een RRULE bij
-        const herhaal = Number(b.herhaal);
-        kaart.afspraak = (Number.isInteger(herhaal) && herhaal >= 2 && herhaal <= 12)
-          ? { t: Math.round(t), herhaal } : { t: Math.round(t) };
+        kaart.afspraak = reeks ? { t: Math.round(t), herhaal } : { t: Math.round(t) };
       } else kaart.afspraak = null;
       if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
@@ -9154,7 +9170,8 @@ async function afhandelen(request, response) {
       if (m) delen.push("pijn " + m.s + " (" + kort(m.t) + ")");
       if (e && HERSTEL[String(e.s)]) delen.push("herstel: " + HERSTEL[String(e.s)]);
       if (g) delen.push("laatst geoefend " + kort(g.t));
-      if (k.afspraak && k.afspraak.t > nu) delen.push("afspraak " + kort(k.afspraak.t));
+      const volgende = volgendeAfspraakTijd(k.afspraak, nu);
+      if (volgende && volgende > nu) delen.push("afspraak " + kort(volgende));
       return "<li" + (sein ? ' class="sein"' : "") + "><b>" + htmlEsc(String(k.naam || "kaart").slice(0, 60)) + "</b>" +
         (sein ? ' <span class="chip">' + htmlEsc(SEIN[sein.soort] + (Array.isArray(sein.ook) && sein.ook.includes("vraag") && sein.soort !== "vraag" ? " (ook een vraag)" : "")) + " · " + htmlEsc(kort(sein.t)) + "</span>" : "") +
         '<br/><span class="klein">' + htmlEsc(delen.join(" · ") || "nog niets ingevuld") + "</span></li>";
