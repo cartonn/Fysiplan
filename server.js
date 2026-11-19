@@ -6530,6 +6530,15 @@ async function afhandelen(request, response) {
       const sessie = sessieVan(request);
       const eigenSessie = !!sessie && sessie.pk === key;
       const oudProfiel = praktijken[key];
+      // basis = het profiel zoals de app het laatst zag. Velden die de app niet heeft gewijzigd, nemen we
+      // van de server: een iPad die de hele dag open stond, zette anders met één nieuw telefoonnummer ook
+      // het oude adres terug dat intussen op de desktop was gewijzigd (gebruikers-sweep 2026-11-19 14u,
+      // Karin). Zonder basis (oudere app, v1) blijft het zoals het was.
+      if (eigenSessie && oudProfiel && b.basis && typeof b.basis === "object" && !Array.isArray(b.basis)) {
+        for (const v of ["praktijk", "adres", "plaats", "tel", "email", "website"]) {
+          if (typeof b.basis[v] === "string" && cleanName(b.basis[v], 200) === p[v]) p[v] = oudProfiel[v] || "";
+        }
+      }
       const gewijzigd = !oudProfiel || !!b.logo ||
         ["praktijk", "adres", "plaats", "tel", "email"].some((v) => (oudProfiel[v] || "") !== p[v]) ||
         (Object.hasOwn(b, "website") && (oudProfiel.website || "") !== p.website);

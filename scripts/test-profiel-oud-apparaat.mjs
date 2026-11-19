@@ -16,14 +16,15 @@ import { createRequire } from "node:module";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(join(root, "public/index.html"), "utf8");
-const fn = (html.match(/function vulUitProfiel\(gezag\)\{[\s\S]*?\n  \}/) || [""])[0];
+const fn = (html.match(/function vulUitProfiel\(gezag,basisVoor\)\{[\s\S]*?\n  \}/) || [""])[0];
 assert.ok(fn, "vulUitProfiel kent het verschil tussen openen (gezag) en eigen bewaren");
-assert.match(fn, /if\(!nu\?srv:gezag\)/, "bij openen wint het serverprofiel, ook boven een gevuld veld");
+assert.match(fn, /if\(!nu\?srv:\(gezag\|\|nietZelf\)\)/, "bij openen wint het serverprofiel, ook boven een gevuld veld");
 assert.match(fn, /PROF_VELD\[k\]===bezig/, "een veld waarin getypt wordt blijft staan");
-assert.match(fn, /!cur&&PRAKTIJKEN\.length===1/, "nieuw apparaat zonder praktijknaam krijgt het enige eigen profiel");
+assert.match(fn, /\(!cur\|\|basisVoor\)&&PRAKTIJKEN\.length===1/, "nieuw apparaat zonder praktijknaam krijgt het enige eigen profiel");
 assert.match(html, /\}\);\n  loadPraktijken\(true\);/, "bij het openen van de app met gezag laden");
 assert.match(html, /window\.fpLaadPraktijken\(true\);\}/, "na het inloggen met gezag laden");
-assert.match(html, /if\(d\.ok\)\{loadPraktijken\(\);return;\}/, "na eigen bewaren alleen aanvullen");
+assert.match(html, /if\(d\.ok\)\{loadPraktijken\(false,p\.basis\|\|null\);return;\}/, "na eigen bewaren: servervelden die hier niet gewijzigd zijn overnemen");
+assert.match(html, /if\(PROF_BASIS\)p\.basis=PROF_BASIS;/, "het laatst geziene profiel gaat mee bij bewaren");
 
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-profieloud-"));
 const reserve = createServer();
@@ -53,6 +54,15 @@ try {
   const K = ses(await (await post("/api/praktijk/team/eigen-login", { naam: "Karin Beheer", email: "karin@oud.nl", wachtwoord: "karin-wachtwoord", regels: true }, G)).json());
   const nieuw = { praktijk: "Fysio Oud", adres: "Nieuwstraat 2", plaats: "Utrecht", tel: "030-2222222", email: "info@oud.nl", website: "https://oud.nl" };
   assert.equal((await post("/api/praktijken", nieuw, K)).status, 200, "beheerder bewaart het nieuwe profiel (apparaat B)");
+  // server: met basis neemt hij alleen de velden over die de app zelf wijzigde (hertest 2026-11-19 14u, Karin)
+  const zelfde = { ...nieuw };
+  assert.equal((await post("/api/praktijken", { ...nieuw, adres: "Tussenweg 5" }, K)).status, 200, "ander apparaat wijzigt het adres");
+  assert.equal((await post("/api/praktijken", { ...zelfde, tel: "030-4444444", basis: zelfde }, K)).status, 200, "open pagina wijzigt alleen de telefoon");
+  let sp = (await (await get("/api/praktijken", K)).json())[0];
+  assert.equal(sp.adres, "Tussenweg 5", "adres van het andere apparaat blijft staan");
+  assert.equal(sp.tel, "030-4444444", "telefoon van de open pagina is bewaard");
+  assert.equal((await post("/api/praktijken", { ...nieuw, basis: [] }, K)).status, 200, "rare basis: gewoon zoals vroeger");
+  assert.equal((await post("/api/praktijken", nieuw, K)).status, 200, "terug naar het nieuwe profiel");
   console.log("test-profiel-oud-apparaat (statisch + server): ok");
 
   let pw = null;
@@ -92,10 +102,19 @@ try {
     assert.equal(srv.tel, "030-2222222", "het oude nummer van A is niet teruggezet");
     assert.equal(srv.adres, "Nieuwstraat 2", "het oude adres van A is niet teruggezet");
 
+    // A blijft open; een ander apparaat wijzigt het adres; A wijzigt daarna alleen de telefoon
+    assert.equal((await post("/api/praktijken", { ...nieuw, website: "https://oud-fysio.nl", adres: "Derdeplein 3" }, K)).status, 200);
+    await A.fill("#p_tel", "030-3333333");
+    await A.press("#p_tel", "Tab");
+    for (let i = 0; i < 60; i++) { srv = (await (await get("/api/praktijken", K)).json())[0]; if (srv.tel === "030-3333333") break; await wacht(100); }
+    assert.equal(srv.tel, "030-3333333", "telefoon van de open pagina is bewaard");
+    assert.equal(srv.adres, "Derdeplein 3", "adres van het andere apparaat is niet teruggezet");
+    assert.equal(await tot(A, "#p_adres", "Derdeplein 3"), "Derdeplein 3", "open pagina toont daarna het nieuwe adres");
+
     // apparaat C: nieuw, nog geen praktijknaam op dit apparaat
     const C = await apparaat({}, "10.66.2.2");
-    assert.equal(await tot(C, "#p_adres", "Nieuwstraat 2"), "Nieuwstraat 2", "nieuw apparaat krijgt het profiel zonder herladen");
-    assert.equal(await C.inputValue("#p_tel"), "030-2222222");
+    assert.equal(await tot(C, "#p_adres", "Derdeplein 3"), "Derdeplein 3", "nieuw apparaat krijgt het profiel zonder herladen");
+    assert.equal(await C.inputValue("#p_tel"), "030-3333333");
     assert.deepEqual(fouten, [], "geen scriptfouten");
     console.log("test-profiel-oud-apparaat (browser): ok");
   }

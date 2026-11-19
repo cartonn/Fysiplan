@@ -3298,12 +3298,18 @@ bridge2.jpg</div>
   // Op een nieuw apparaat is de praktijknaam soms nog leeg als het profiel binnenkomt: is er precies
   // één eigen profiel, dan komt dat erin, ook de naam (sweep 2026-11-19 10u, Karin: logo-knop zei
   // "Vul eerst de praktijknaam en het adres in" tot herladen).
+  // PROF_BASIS: het serverprofiel zoals deze pagina het laatst zag. Het gaat mee bij bewaren, zodat de
+  // server alleen de velden overneemt die hier echt gewijzigd zijn. Een iPad die de hele dag open stond
+  // zette anders met één nieuw telefoonnummer ook het oude adres terug dat intussen op de desktop was
+  // gewijzigd (hertest gebruikers-sweep 2026-11-19 14u, Karin). Na bewaren (basisVoor) neemt de pagina
+  // de servervelden over die ze zelf niet gewijzigd had.
   var PROF_VELD={praktijk:'praktijk',adres:'p_adres',plaats:'p_plaats',tel:'p_tel',email:'p_email',website:'p_website'};
-  function vulUitProfiel(gezag){
+  var PROF_BASIS=null;
+  function vulUitProfiel(gezag,basisVoor){
     if(!IS_V2)return;
     var cur=(SET.praktijk||'').trim().toLowerCase();
     var p=cur?PRAKTIJKEN.filter(function(x){return String(x.praktijk||'').toLowerCase()===cur;})[0]:null;
-    if(!p&&!cur&&PRAKTIJKEN.length===1)p=PRAKTIJKEN[0];
+    if(!p&&(!cur||basisVoor)&&PRAKTIJKEN.length===1)p=PRAKTIJKEN[0];
     if(!p)return;
     var bezig=document.activeElement&&document.activeElement.id||'';
     var veranderd=false;
@@ -3311,14 +3317,16 @@ bridge2.jpg</div>
       var nu=SET[k]||'',srv=p[k]||'';
       if(nu===srv)return;
       if(PROF_VELD[k]&&PROF_VELD[k]===bezig)return;
-      if(k==='praktijk'&&nu)return;
-      if(!nu?srv:gezag){SET[k]=srv;veranderd=true;}
+      var nietZelf=!!basisVoor&&k!=='logo'&&nu===(basisVoor[k]||'');
+      if(k==='praktijk'&&nu&&!nietZelf)return;
+      if(!nu?srv:(gezag||nietZelf)){SET[k]=srv;veranderd=true;}
     });
+    PROF_BASIS={};Object.keys(PROF_VELD).forEach(function(k){PROF_BASIS[k]=p[k]||'';});
     if(veranderd){saveSettings();applySettings();}
   }
-  function loadPraktijken(gezag){
+  function loadPraktijken(gezag,basisVoor){
     fetch('api/praktijken',PGET()).then(function(r){return r.ok?r.json():[];})
-      .then(function(l){PRAKTIJKEN=Array.isArray(l)?l:[];renderPrakSelect();vulUitProfiel(gezag===true);}).catch(function(){});
+      .then(function(l){PRAKTIJKEN=Array.isArray(l)?l:[];renderPrakSelect();vulUitProfiel(gezag===true,basisVoor||null);}).catch(function(){});
   }
   window.fpLaadPraktijken=loadPraktijken;
   prakSel.addEventListener('change',function(){
@@ -3331,6 +3339,7 @@ bridge2.jpg</div>
   var prakSaveTimer=null;
   function upsertPraktijk(){
     var p={praktijk:SET.praktijk||'',adres:SET.adres||'',plaats:SET.plaats||'',tel:SET.tel||'',email:SET.email||'',website:SET.website||''};
+    if(PROF_BASIS)p.basis=PROF_BASIS;
     if(!p.praktijk.trim()||!p.adres.trim())return;
     if(document.getElementById('p_adres').readOnly)return;
     clearTimeout(prakSaveTimer);
@@ -3342,7 +3351,7 @@ bridge2.jpg</div>
   function stuurPraktijk(p){
     fetch('api/praktijken',{method:'POST',headers:PJSON(),body:JSON.stringify(p)})
       .then(function(r){return r.json();}).then(function(d){
-        if(d.ok){loadPraktijken();return;}
+        if(d.ok){loadPraktijken(false,p.basis||null);return;}
         // beheer: alleen een beheerder wijzigt het profiel; website: geen gewoon webadres (javascript:, data:)
         if(d.beheer||d.website){if(d.beheer)rolBijwerken(false);profielTerug(d.fout);return;}
         if(d.bezet&&!p.zelfdeNaam&&window.confirm(d.fout||'Er is al een andere praktijk met deze naam. Toch zo noemen?')){p.zelfdeNaam=true;stuurPraktijk(p);}

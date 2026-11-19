@@ -16,7 +16,7 @@ import { createRequire } from "node:module";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(html, /fetch\('api\/praktijken',PGET\(\)\)/, "praktijkprofiel wordt met de praktijksessie opgehaald");
-assert.match(html, /renderPrakSelect\(\);vulUitProfiel\(gezag===true\);/, "velden worden uit het profiel gevuld");
+assert.match(html, /renderPrakSelect\(\);vulUitProfiel\(gezag===true,basisVoor\|\|null\);/, "velden worden uit het profiel gevuld");
 assert.match(html, /if\(t&&typeof window\.fpLaadPraktijken==='function'\)window\.fpLaadPraktijken\(true\);/, "na inloggen wordt het profiel opgehaald");
 
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-profielcollega-"));
