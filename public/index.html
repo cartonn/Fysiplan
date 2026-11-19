@@ -3210,6 +3210,14 @@ bridge2.jpg</div>
       (geenUitweg?'':"<button type='button' class='btn' data-pract='zonderqr'>Print zonder QR-code</button>")+"</div>";
     m.hidden=false;
     var f=document.getElementById('pr_naam');if(f)setTimeout(function(){f.focus();},30);
+    // Print / PDF zet zichzelf uit tijdens het bewaren: de focus viel dan op body en wie met het
+    // toetsenbord werkt, hoorde de melding niet en kwam niet bij de knoppen (gebruikers-sweep
+    // 2026-11-19, Sanne). Is de focus weg, dan naar de eerste knop van de melding.
+    else setTimeout(function(){
+      var a=document.activeElement;
+      if(a&&a!==document.body&&document.contains(a)&&!a.disabled)return;
+      var b=m.querySelector('button');if(b&&!m.hidden)b.focus();
+    },30);
   }
   function printMetQr(){document.getElementById('pr_do').click();}
   document.getElementById('pr_melding').addEventListener('click',function(e){
@@ -4310,6 +4318,13 @@ bridge2.jpg</div>
       var b=this;try{navigator.clipboard.writeText(codes.join('\n')).then(function(){b.textContent='Gekopieerd';},function(){b.textContent='Selecteer en kopieer';});}catch(e){b.textContent='Selecteer en kopieer';}
     });
     document.getElementById(p+'_rcklaar').addEventListener('click',klaar);
+    // het venster is net opnieuw getekend en de knop die focus had is weg (focus op body): naar de
+    // codes zelf, zodat een schermlezer ze voorleest en Tab naar Kopieer gaat (gebruikers-sweep 2026-11-19, Sanne)
+    var a=document.activeElement,lijst=document.getElementById(p+'_rcodes');
+    if(lijst&&(!a||a===document.body||!document.contains(a))){
+      lijst.setAttribute('tabindex','-1');lijst.setAttribute('aria-label','Reservecodes');
+      try{lijst.focus();}catch(e){}
+    }
   }
   // ---- inloggen in een praktijk die de tweede stap van iedereen vraagt ----
   // Het wachtwoord klopte en deze login heeft nog geen tweede stap: instellen hoort dan bij het
@@ -7575,7 +7590,25 @@ bridge2.jpg</div>
     }
     function gesloten(ov){
       var s=null;stapel=stapel.filter(function(x){if(x.ov===ov){s=x;return false;}return true;});
-      if(!s||!s.terug)return;
+      // geen knop om naar terug te gaan (het venster kwam uit een ander venster dat al dicht is, zoals
+      // reservecodes na het inloggen): dan naar het bovenste venster dat nog open is, ook als dat een
+      // scherm is zoals Kaarten. De focus viel anders op body (gebruikers-sweep 2026-11-19, Sanne).
+      if(!s||!s.terug){
+        setTimeout(function(){
+          var a=document.activeElement;
+          if(a&&a!==document.body&&document.contains(a)&&!ov.contains(a))return;
+          if(ov.classList.contains('on'))return;
+          for(var i=stapel.length-1;i>=0;i--){
+            var o=stapel[i].ov;if(!o.classList.contains('on'))continue;
+            var f=focusbare(o).filter(function(el){return el.tagName!=='SELECT';});
+            var doel=f[0]||o.querySelector('.modal')||o;
+            if(doel===o||!doel.matches(FOCUSBAAR))doel.setAttribute('tabindex','-1');
+            try{doel.focus();}catch(e){}
+            return;
+          }
+        },60);
+        return;
+      }
       vorigeTerug=s.terug;
       var poging=0;
       (function zetTerug(){
