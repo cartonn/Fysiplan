@@ -462,6 +462,20 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
       await rm(map, { recursive: true, force: true });
     }
 
+    // namen van Object.prototype als pad (security 2026-11-19 16u): ROUTE_RECHT["constructor"] was een
+    // functie, geenRecht() las daarna RECHTEN[functie].titel en het verzoek eindigde in een 500.
+    // Nu gedragen ze zich als elk ander onbekend pad, met elk account.
+    {
+      const onbekend = await beheer("bestaat-niet", {});
+      for (const pad of ["constructor", "__proto__", "toString", "hasOwnProperty", "valueOf", "loket/constructor", "loket/__proto__"]) {
+        for (const R of [undefined, ["finance"]]) {
+          const r = await beheer(pad, {}, R ? { R } : {});
+          // het loket vraagt eerst het recht "agents", ook voor een onbekend pad
+          assert.equal(r.status, pad.startsWith("loket/") && R ? 403 : onbekend.status, pad + " met " + (R ? "beperkte rechten" : "alles") + ": zoals een onbekend pad");
+        }
+      }
+    }
+
     // rechten wijzigen: alleen volledig beheer, niet voor jezelf, en er blijft iemand met alles
     assert.equal((await beheer("rechten", { email: "twee@x.example", rechten: ["finance"] }, { R: ["agents", "finance"] })).status, 403);
     assert.equal((await beheer("rechten", { email: "een@x.example", rechten: ["finance"] })).status, 409, "niet je eigen rechten");
