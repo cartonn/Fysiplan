@@ -2782,30 +2782,44 @@ bridge2.jpg</div>
     var bar=document.getElementById('conflict_bar');
     if(!bar){
       bar=document.createElement('div');bar.id='conflict_bar';bar.className='no-print';bar.setAttribute('role','alert');
-      bar.style.cssText='position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:9001;display:none;flex-wrap:wrap;align-items:center;gap:10px;width:min(640px,calc(100vw - 32px));box-sizing:border-box;padding:12px 12px 12px 16px;border-radius:10px;background:#18343B;color:#fff;font-size:15px;line-height:1.4;box-shadow:0 6px 24px rgba(0,0,0,.25)';
+      // In de pagina direct onder de kopbalk (sticky), niet zwevend: vast op top:12px dekte de balk de
+      // schermknoppen, praktijkchip en Lijntekeningen/Avatar af, en zwevend eronder de werkbalk en de kop van
+      // de kaart; achteraan in body was hij met Tab haast niet te bereiken (gebruikers-sweep 2026-11-19 14u,
+      // Sanne, desktop). Nu duwt hij de inhoud omlaag, blijft hij bij scrollen in beeld en komt hij in de
+      // tabvolgorde direct na de schermknoppen.
+      bar.style.cssText='position:sticky;top:8px;z-index:29;display:none;flex-wrap:wrap;align-items:center;gap:10px;width:min(640px,calc(100vw - 32px));margin:8px auto;box-sizing:border-box;padding:12px 12px 12px 16px;border-radius:10px;background:#18343B;color:#fff;font-size:15px;line-height:1.4;box-shadow:0 6px 24px rgba(0,0,0,.25)';
+      var st=document.createElement('style');
+      st.textContent='#conflict_bar button:focus-visible{outline:3px solid #B9E34B;outline-offset:2px}';
+      document.head.appendChild(st);
       bar.addEventListener('click',function(e){
         var k=e.target.closest('[data-cfact]');if(!k)return;
-        if(k.dataset.cfact==='sluit'){bar.style.display='none';return;}
+        if(k.dataset.cfact==='sluit'){
+          bar.style.display='none';
+          // focus terug naar waar je was, anders naar het actieve scherm (niet naar body)
+          var t=bar._terug;if(!t||!t.isConnected||!t.offsetParent)t=document.querySelector('#fpSchermen [aria-pressed="true"]');
+          if(t&&t.focus)t.focus();
+          return;
+        }
         qrActie(k.dataset.cfact);
       });
-      document.body.appendChild(bar);
+      var hb=document.querySelector('header.topbar');
+      if(hb&&hb.parentNode)hb.parentNode.insertBefore(bar,hb.nextSibling);else document.body.appendChild(bar);
     }
     var knop="min-height:44px;min-width:44px;padding:0 14px;border-radius:8px;font:inherit;font-weight:700;cursor:pointer;";
     bar.innerHTML="<span style='flex:1 1 260px;overflow-wrap:anywhere'>"+esc(tekst)+"</span>"+
       (knoppen||[]).map(function(k,i){return "<button type='button' data-cfact='"+esc(k.act)+"' style='"+knop+(i===0?"border:0;background:#B9E34B;color:#18343B":"border:1px solid #fff;background:transparent;color:#fff")+"'>"+esc(k.label)+"</button>";}).join('')+
-      "<button type='button' data-cfact='sluit' aria-label='Melding sluiten' style='"+knop+"border:0;background:transparent;color:#fff;font-size:20px'>\u00d7</button>";
+      "<button type='button' data-cfact='sluit' aria-label='Melding sluiten' style='"+knop+"border:0;background:transparent;color:#fff;font-size:20px'>×</button>";
     // geen focus erheen: wie nog aan het typen is, typt anders in de balk; role=alert leest hem wel voor
-    // Onder de kopbalk, niet eroverheen: op top:12px dekte de balk de schermknoppen (Patiënten, Kaart maken,
-    // Praktijk), de praktijkchip en Lijntekeningen/Avatar af, en die werkten niet tot de balk weg was
-    // (gebruikers-sweep 2026-11-19 14u, Sanne, desktop)
+    var ae=document.activeElement;if(ae&&ae!==document.body&&!bar.contains(ae))bar._terug=ae;
     zetConflictTop(bar);
     bar.style.display='flex';
   }
+  // sticky onder de kopbalk als die zelf sticky is (desktop), anders bovenaan
   function zetConflictTop(bar){
-    var hb=document.querySelector('header.topbar'),r=hb&&hb.getBoundingClientRect();
-    bar.style.top=Math.max(12,Math.round(r&&r.bottom>0?r.bottom+8:0))+'px';
+    var hb=document.querySelector('header.topbar');
+    var plak=hb&&getComputedStyle(hb).position==='sticky';
+    bar.style.top=(plak?hb.offsetHeight+8:8)+'px';
   }
-  window.addEventListener('scroll',function(){var b=document.getElementById('conflict_bar');if(b&&b.style.display!=='none')zetConflictTop(b);},{passive:true});
   window.addEventListener('resize',function(){var b=document.getElementById('conflict_bar');if(b&&b.style.display!=='none')zetConflictTop(b);});
   // ---- pakket A: alleen een roepnaam op de gedeelde kaart ----
   // "Jan de Vries" -> "Jan V.", "Vries, Jan de" -> "Jan V." (EPD's leveren vaak de

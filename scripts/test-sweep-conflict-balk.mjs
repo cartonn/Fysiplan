@@ -14,8 +14,10 @@ import { createRequire } from "node:module";
 const root = process.cwd();
 const index = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(index, /toonQrHint\(vTekst,vKnoppen\);\s*toonConflictBalk\(vTekst,vKnoppen\);/, "409 verouderd toont ook de balk");
-assert.match(index, /function toonConflictBalk\(tekst,knoppen\)\{[\s\S]{0,900}?min-height:44px/, "knoppen van minstens 44 px");
+assert.match(index, /function toonConflictBalk\(tekst,knoppen\)\{[\s\S]{0,3000}?min-height:44px/, "knoppen van minstens 44 px");
 assert.match(index, /zetConflictTop\(bar\);\s*bar\.style\.display='flex';/, "balk onder de kopbalk, niet over de schermknoppen");
+assert.match(index, /hb\.parentNode\.insertBefore\(bar,hb\.nextSibling\)/, "balk in de pagina direct na de kopbalk (niet zwevend, vroeg in de tabvolgorde)");
+assert.match(index, /#conflict_bar button:focus-visible\{outline:3px solid #B9E34B/, "zichtbare focusring op de donkere balk");
 assert.match(index, /function toonQr\(id\)\{\s*\/\/[^\n]*\n\s*var cfb=document\.getElementById\('conflict_bar'\);if\(cfb\)cfb\.style\.display='none';/, "balk weg na bewaren");
 
 let pw = null;
@@ -92,6 +94,17 @@ try {
   });
   assert.equal(vrij.onder, true, "balk staat onder de kopbalk");
   assert.equal(vrij.klikbaar, true, "schermknoppen blijven klikbaar met de balk open");
+  const plek = await page.evaluate(() => { const b = document.getElementById("conflict_bar"); return { na: !!b.previousElementSibling && b.previousElementSibling.matches("header.topbar"), pos: getComputedStyle(b).position }; });
+  assert.equal(plek.na, true, "balk staat in de pagina direct na de kopbalk");
+  assert.equal(plek.pos, "sticky", "balk blijft bij scrollen in beeld zonder over de werkbalk te zweven");
+  await page.evaluate(() => { const k = [...document.querySelectorAll("#fpSchermen [data-scherm]")].filter((b) => b.offsetParent).pop(); k.focus(); });
+  let inBalk = false;
+  for (let i = 0; i < 25 && !inBalk; i++) { await page.keyboard.press("Tab"); inBalk = await page.evaluate(() => !!document.activeElement && !!document.activeElement.closest("#conflict_bar")); }
+  assert.equal(inBalk, true, "met Tab snel van de schermknoppen naar de balk");
+  await page.focus("#conflict_bar [data-cfact='sluit']");
+  await page.keyboard.press("Enter");
+  assert.equal(await page.evaluate(() => document.activeElement !== document.body), true, "na sluiten geen focus op body");
+  await page.evaluate(() => { document.getElementById("conflict_bar").style.display = "flex"; });
   await page.tap("#conflict_bar [data-cfact='nieuwste']");
   await page.waitForSelector("#conflict_bar", { state: "hidden", timeout: 8000 });
   for (let i = 0; i < 100 && (await page.inputValue("#c_doel").catch(() => "")) !== "Traplopen zonder pijn"; i++) await wacht(50);
