@@ -11,7 +11,7 @@ af ("t/m 28 november"), maar /v2/proef?mijn=1 (`abonnementBlok`, server.js ~1864
 na opzeggen ingaat. Daarnaast (LAAG): Mijn abonnement toont "je proef loopt nog 14 dagen … gratis" boven een actief abonnement als
 iemand tijdens de proef betaalt; en een therapeut die `actie=intrekken` post, staat in Activiteit als "abonnement opzeggen" (server.js
 ~8800, `proefCollegaGeweigerd` vóór de controle op actie). Geen mensenwerk: de praktijk-routine bouwt het.
-**OPGELOST 2026-11-20 PR #NNN (praktijk-routine):** Mijn abonnement, het opzegvinkje, de opzegbevestiging, de mails (eerste
+**OPGELOST 2026-11-20 PR #403 (praktijk-routine):** Mijn abonnement, het opzegvinkje, de opzegbevestiging, de mails (eerste
 betaling, incasso gelukt, zelf betaald, aankondiging, opzegging) en de melding aan beheer noemen nu de laatste betaalde dag
 (`laatsteDagNl`, betaaldTot min een dag), net als de factuur. Er verandert niets aan wanneer de app op slot gaat of wanneer er
 gewist wordt; de tekst noemt alleen geen dag te laat meer. Een geweigerde `intrekken` van een collega staat in Activiteit nu als
