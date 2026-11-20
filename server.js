@@ -31,6 +31,7 @@ import { maakQrCache } from "./lib/qr-cache.js";
 import { kiesInpak, inpakbaar, pakIn, etagKomtOvereen } from "./lib/inpakken.js";
 import { kleinPadVoor, kleinMap } from "./lib/klein-beeld.js";
 import { wisVideoLocatie } from "./lib/video-locatie.js";
+import { zonderBeeldMetadata } from "./lib/beeld-metadata.js";
 import { nieuwGeheim, controleer, otpauth, nieuweReservecode, reservecodeNormaal } from "./lib/totp.js";
 import { maakBeheerOmgeving, merkGezien, merkLoginMis, merkAntwoord, vergeetLid } from "./lib/beheer-omgeving-routes.js";
 import { rechtenVan, magBuiten } from "./lib/beheer-toegang.js";
@@ -4439,7 +4440,8 @@ async function afhandelen(request, response) {
       if (!echteAfbeelding(buf, m[1])) { await sendJson(response, 400, { ok: false, fout: "Dit bestand is geen geldige JPEG of PNG." }); return; }
       await mkdir(uploadsDir, { recursive: true });
       const file = `${slug(naam)}-${Date.now()}.${m[1] === "png" ? "png" : "jpg"}`;
-      await writeFile(join(uploadsDir, file), buf);
+      // geen plek of toestel uit de foto mee (lib/beeld-metadata.js)
+      await writeFile(join(uploadsDir, file), zonderBeeldMetadata(buf, m[1]));
       extra.push({ naam, groep, img: "uploads/" + file });
       await saveJson(extraPath, extra);
       await sendJson(response, 200, { ok: true, naam });
@@ -6189,7 +6191,8 @@ async function afhandelen(request, response) {
       lijst.push(rij);
       try {
         await mkdir(uploadsDir, { recursive: true });
-        await writeFile(join(uploadsDir, file), buf);
+        // de foto staat op de patiëntkaart: geen plek, toestel of opnametijd mee (lib/beeld-metadata.js)
+        await writeFile(join(uploadsDir, file), zonderBeeldMetadata(buf, m[1]));
       } catch (e) { const i = lijst.indexOf(rij); if (i > -1) lijst.splice(i, 1); throw e; }
       await saveJson(praktijkOefeningenPath, praktijkOefeningen);
       auditLog(pk, "oefening-toegevoegd", request);
@@ -6638,7 +6641,8 @@ async function afhandelen(request, response) {
         const buf = Buffer.from(m[2], "base64");
         if (buf.length < 100 || buf.length > 400 * 1024) { await sendJson(response, 400, { ok: false, fout: "Logo is te groot (max. 400 kB)." }); return; }
         if (!echteAfbeelding(buf, m[1])) { await sendJson(response, 400, { ok: false, fout: "Dit bestand is geen geldige JPEG of PNG." }); return; }
-        logoBuf = buf; logoExt = m[1] === "png" ? "png" : "jpg";
+        // het logo staat op elke patiëntkaart: geen plek of toestel uit de foto mee (lib/beeld-metadata.js)
+        logoBuf = zonderBeeldMetadata(buf, m[1]); logoExt = m[1] === "png" ? "png" : "jpg";
       }
       // schrijven, profielopslag en veeg geserialiseerd per praktijk (zie
       // inProfielRij): een parallelle vervanging kan zo nooit meer het net
