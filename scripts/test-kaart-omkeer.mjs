@@ -55,6 +55,18 @@ try {
   // de praktijk zelf ziet in haar editor nog precies wat ze bewaarde (alleen de patiëntkant wordt geschoond)
   const eigen = await (await fetch(origin + "/api/praktijk/kaart?id=" + id + "&praktijk=" + encodeURIComponent(P), { headers: { ...S, "x-forwarded-for": "10.72.9.11" } })).json();
   if (eigen && eigen.ok && eigen.kaart && eigen.kaart.client) assert.ok(String(eigen.kaart.client.c_doel).includes("‮"), "editor houdt de tekst zoals bewaard");
+  // security 2026-11-20: werknotitie en behandelaar (alleen binnen de praktijk: app, kaartenlijst, CSV) hielden
+  // omkeertekens; de server haalt ze nu weg bij bewaren en in de kaartenlijst
+  const rn = await post("/api/kaart/notitie", { praktijk: P, id, tekst: "Bel ‮0612345678‬ terug " + arabisch }, S);
+  assert.equal(rn.status, 200);
+  assert.equal((await rn.json()).notitie, "Bel 0612345678 terug " + arabisch, "notitie zonder omkeertekens, Arabisch blijft");
+  const rb = await post("/api/kaart/behandelaar", { praktijk: P, id, naam: "Jan⁦ ‮nimdA⁩" }, S);
+  assert.equal(rb.status, 200);
+  assert.equal((await rb.json()).behandelaar, "Jan nimdA", "behandelaar zonder omkeertekens");
+  const lijst = await (await fetch(origin + "/api/kaarten?praktijk=" + encodeURIComponent(P), { headers: { ...S, "x-forwarded-for": "10.72.9.12" } })).json();
+  const rij = lijst.find((k) => k.id === id);
+  assert.ok(rij, "kaart in de lijst");
+  assert.ok(!OMKEER.test(String(rij.notitie) + String(rij.behandelaar)), "kaartenlijst met omkeertekens: " + JSON.stringify([rij.notitie, rij.behandelaar]));
   console.log("test-kaart-omkeer: ok");
 } catch (e) {
   console.error(log.slice(-2000));

@@ -12,7 +12,7 @@ import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
-  leegBestand, normaliseer, telling, ranglijst, huidigeTop, sluitRonde, rondeEinde, besluit, wisPraktijk, lijktOp, agentUitkomst, agentInvoer, ideeVoorPraktijk
+  leegBestand, normaliseer, telling, ranglijst, huidigeTop, sluitRonde, rondeEinde, besluit, wisPraktijk, lijktOp, agentUitkomst, agentInvoer, ideeVoorPraktijk, magNieuwIdee, OPEN_PER_PRAKTIJK
 } from "../lib/ideeen.js";
 
 // ---------- rekenwerk ----------
@@ -42,6 +42,19 @@ import {
   assert.equal(b.ideeen["i-000000000002"].stand, "open", "nummer 5 doet de volgende ronde weer mee, met zijn stemmen");
   assert.equal(b.ronde.nr, 2);
   assert.equal(b.ronde.eind, Date.UTC(2026, 11, 1, 8));
+
+  // security 2026-11-20: hooguit 25 open ideeën per praktijk (de daggrens is per login, 50 logins per praktijk)
+  {
+    const g = leegBestand(nu);
+    const zet = (n, pk, stand, extra = {}) => { g.ideeen["i-g" + n] = { id: "i-g" + n, titel: "Idee " + n, tekst: "", pk, lid: "l" + n, t: n, stemmen: {}, stand, ...extra }; };
+    for (let n = 0; n < 24; n++) zet(n, "p-vol", "open");
+    zet(90, "p-vol", "gepland"); zet(91, "p-vol", "afgewezen"); zet(92, "p-vol", "voorgesteld");
+    assert.equal(magNieuwIdee(g, "p-vol"), true, "24 open plus besliste ideeën: er kan er nog één bij");
+    zet(24, "p-vol", "open", { verborgen: true });
+    assert.equal(magNieuwIdee(g, "p-vol"), false, "25 open (ook verborgen) is vol");
+    assert.equal(magNieuwIdee(g, "p-ander"), true, "een andere praktijk merkt er niets van");
+    assert.equal(OPEN_PER_PRAKTIJK, 25);
+  }
 
   // een ronde zonder idee met score >= 1 sluit ook, zonder voorstel
   const leeg = leegBestand(nu);
