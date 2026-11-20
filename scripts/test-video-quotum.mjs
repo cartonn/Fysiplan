@@ -62,6 +62,25 @@ try {
   // een andere praktijk merkt daar niets van
   const vB = await neemOp(sB);
   assert.equal(vB.status, 200, "praktijk B kan gewoon opnemen");
+
+  // Security 2026-11-20: vier gelijktijdige uploads van één praktijk passeerden alle vier de
+  // controle (4 × 20 kB op 50 kB), want de video telt pas mee na het wegschrijven. Nu
+  // reserveert elke upload zijn bytes vóór de controle: hooguit twee passen.
+  const sC = await sessie("Fysio Tegelijk");
+  const tokens = [];
+  for (let i = 0; i < 4; i++) {
+    const st = await post("/api/opname/start", { doel: "kaart" }, { "x-praktijk-sessie": sC });
+    assert.equal(st.status, 200, "opname start C");
+    tokens.push((await st.json()).token);
+  }
+  const tegelijk = await Promise.all(tokens.map((t) => fetch(origin + "/api/opname/upload?token=" + t, {
+    method: "POST", headers: { "content-type": "video/mp4", "x-forwarded-for": "10.9.2." + (ip++) }, body: video }).then((r) => r.status)));
+  assert.ok(tegelijk.filter((s) => s === 200).length <= 2, "gelijktijdig hooguit 2 × 20 kB binnen 50 kB, kreeg " + tegelijk.join(","));
+  assert.ok(tegelijk.filter((s) => s === 200).length >= 1, "minstens één upload lukt, kreeg " + tegelijk.join(","));
+  assert.ok(tegelijk.every((s) => s === 200 || s === 507), "alleen 200 of 507, kreeg " + tegelijk.join(","));
+  // na afloop is de reservering weer vrij
+  const sD = await sessie("Fysio Daarna");
+  assert.equal((await neemOp(sD)).status, 200, "reservering lekt niet naar een andere praktijk");
   console.log("videoquotum per praktijk: ok");
 } catch (e) {
   console.error(uit.slice(-2000));
