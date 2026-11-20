@@ -5314,10 +5314,21 @@ async function afhandelen(request, response) {
       return;
     }
 
+    const weigerNieuweBeheerder = () => sendJson(response, 403, { ok: false, eigenLogin: true,
+      fout: "Iemand beheerder maken kan alleen een beheerder die met een eigen login is ingelogd." });
     if (urlPath === "/api/praktijk/team/uitnodigen") {
       const em = normEmail(b.email), naam = cleanName(b.naam, 60);
       const rol = LID_ROLLEN.has(b.rol) ? b.rol : "therapeut";
       if (!geldigEmail(em)) { await sendJson(response, 400, { ok: false, fout: "Vul een geldig e-mailadres in." }); return; }
+      // Security 2026-11-20 20u (gebruikers-sweep 18u, Karin): met het gedeelde praktijkwachtwoord
+      // mag niemand een beheerder met eigen login aanpassen, maar een nieuwe beheerder uitnodigen
+      // kon wel. Die nam de uitnodiging zelf aan, logde in met die eigen login en zette de eigenaar
+      // alsnog uit het team. Staat er al een beheerder met eigen login, dan nodigt alleen een
+      // beheerder met eigen login een beheerder uit.
+      if (!ik && rol === "beheerder" && beheerders().length > 0) {
+        auditGeweigerd(pk, "team-wijziging-geweigerd", request, "praktijkwachtwoord → " + (naam || maskeerEmail(em)) + " (uitnodigen als beheerder)");
+        await weigerNieuweBeheerder(); return;
+      }
       let l = acc.leden.find((x) => x.email === em);
       if (l && lidActief(l)) { await sendJson(response, 409, { ok: false, fout: "Deze collega heeft al een eigen login." }); return; }
       if (!l && acc.leden.length >= 50) { await sendJson(response, 400, { ok: false, fout: "Maximaal 50 mensen per praktijk." }); return; }
@@ -5325,9 +5336,11 @@ async function afhandelen(request, response) {
       l.naam = naam || l.naam || "";
       l.rol = rol;
       const token = randomBytes(24).toString("hex");
-      l.uitnodiging = { hash: tokenHash(token), verloopt: Date.now() + 7 * 86400000 };
+      // gedeeld: uitgenodigd met het gedeelde praktijkwachtwoord (zie het aannemen in /v2/uitnodiging)
+      l.uitnodiging = { hash: tokenHash(token), verloopt: Date.now() + 7 * 86400000, ...(ik ? {} : { gedeeld: true }) };
       await opslaan();
-      auditLog(pk, "collega-uitgenodigd", request);
+      // wie nodigde wie uit: zonder naam stond er in Activiteit "undefined"
+      auditLog(pk, "collega-uitgenodigd", request, (ik ? (ik.naam || ik.email) : "praktijkwachtwoord") + " → " + (l.naam || maskeerEmail(em)) + " (" + rol + ")");
       const link = instelBasis(request) + "/v2/uitnodiging?t=" + token;
       let gemaild = false, mailLimiet = false;
       if (mailIngesteld() && uitnodigMailOpSlot(pk)) {
@@ -5410,6 +5423,12 @@ async function afhandelen(request, response) {
       if (!doel) { await sendJson(response, 404, { ok: false, fout: "Deze collega staat niet in je team." }); return; }
       if (!LID_ROLLEN.has(b.rol)) { await sendJson(response, 400, { ok: false, fout: "Kies beheerder of therapeut." }); return; }
       if (beschermdeBeheerder && b.rol !== "beheerder") { auditLog(pk, "team-wijziging-geweigerd", request, wieMetDoel(doel, "naar " + b.rol)); await weigerBeschermd(); return; }
+      // zelfde gat als bij uitnodigen: een collega met het gedeelde wachtwoord maakte zijn eigen
+      // login beheerder en zette daarmee de eigenaar uit het team (security 2026-11-20 20u)
+      if (!ik && b.rol === "beheerder" && doel.rol !== "beheerder" && beheerders().length > 0) {
+        auditGeweigerd(pk, "team-wijziging-geweigerd", request, wieMetDoel(doel, "naar beheerder"));
+        await weigerNieuweBeheerder(); return;
+      }
       if (doel.rol === "beheerder" && b.rol !== "beheerder" && lidActief(doel) && beheerders().length <= 1 && (gedeeldStaatUit(pk) || (ik && ik.id === doel.id))) {
         await sendJson(response, 400, { ok: false, fout: "Er moet minstens één beheerder overblijven." }); return;
       }
@@ -9370,6 +9389,15 @@ async function afhandelen(request, response) {
     if (!isZelf) {
       lid.naam = naam;
       lid.regels = { versie: WERKREGELS_VERSIE, t: new Date().toISOString() };
+    }
+    // Een beheerder-uitnodiging die met het gedeelde praktijkwachtwoord is gemaakt, toen er nog geen
+    // beheerder met eigen login was: is die er nu wel (of staat het gedeelde wachtwoord intussen uit),
+    // dan begint deze login als therapeut. Anders bleef zo'n open uitnodiging een weg om de eigenaar
+    // uit het team te zetten (security 2026-11-20 20u). Een beheerder kan hem daarna beheerder maken.
+    if (!isHerstel && lid.uitnodiging.gedeeld && lid.rol === "beheerder" &&
+        ledenVan(pk).some((x) => x !== lid && lidActief(x) && x.rol === "beheerder")) {
+      lid.rol = "therapeut";
+      auditLog(pk, "team-wijziging-geweigerd", request, "praktijkwachtwoord → " + naam + " (uitnodiging als beheerder, begint als therapeut)");
     }
     lid.hash = maakHash(ww);
     delete lid.uitnodiging;

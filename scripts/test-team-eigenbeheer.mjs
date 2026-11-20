@@ -4,7 +4,8 @@
 // halen, zonder naam in het logboek (gebruikers-sweep 2026-11-11 18u, Karin).
 // - Gedeelde sessie: eigen-login-beheerder degraderen of verwijderen → 403, niets verandert,
 //   en de poging staat met naam in Activiteit.
-// - Gedeelde sessie: een therapeut beheren en iemand beheerder maken blijft werken.
+// - Gedeelde sessie: een therapeut beheren blijft werken; iemand beheerder maken (rol of
+//   uitnodiging) niet meer zodra er een beheerder met eigen login is (security 2026-11-20 20u).
 // - Beheerder met eigen login: een andere eigen-login-beheerder aanpassen blijft werken.
 // - Rol gewijzigd en collega verwijderd tonen wie en welke collega.
 // Zonder browser, past in CI. `npm run test:teameigenbeheer`
@@ -81,7 +82,12 @@ try {
     body: new URLSearchParams({ t: token, naam: "Mark", wachtwoord: "mark-wachtwoord", regels: "1" }).toString() });
   assert.ok(aan.status < 400, "uitnodiging aannemen: " + aan.status);
   const markId = nj.lid.id;
-  assert.equal((await post("/api/praktijk/team/rol", { id: markId, rol: "beheerder" }, C)).status, 200, "gedeelde sessie maakt iemand beheerder");
+  // security 2026-11-20 20u: zolang er een beheerder met eigen login is, maakt de gedeelde sessie
+  // niemand beheerder (anders maakt een collega zijn eigen login beheerder en zet Karin eruit)
+  const promo = await post("/api/praktijk/team/rol", { id: markId, rol: "beheerder" }, C);
+  assert.equal(promo.status, 403, "gedeelde sessie maakt niemand beheerder naast een eigen-login-beheerder");
+  assert.equal((await promo.json()).eigenLogin, true);
+  assert.equal((await post("/api/praktijk/team/rol", { id: markId, rol: "beheerder" }, K)).status, 200, "Karin maakt Mark beheerder");
   // Mark is nu een eigen-login-beheerder: de gedeelde sessie kan hem niet meer terugzetten
   assert.equal((await post("/api/praktijk/team/rol", { id: markId, rol: "therapeut" }, C)).status, 403);
   // Karin (eigen login, beheerder) wel
