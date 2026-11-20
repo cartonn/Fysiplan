@@ -2588,6 +2588,14 @@ function verdwijntOp(pk, k) {
   const v = verlooptOp(k);
   return k && k.demo ? v : Math.min(v, praktijkWisOp(pk));
 }
+// Schuift die datum op als de patiënt blijft oefenen? Niet bij een afgeronde kaart en niet als
+// de praktijk eerder verdwijnt (proef zonder abonnement, opgezegd abonnement). Dan mag "Mijn
+// gegevens" op /k niet beloven dat oefenen de kaart langer bewaart (legal 2026-11-20).
+function verdwijntVast(pk, k) {
+  if (!k || k.demo) return false;
+  if (k.gearchiveerd) return true;
+  return verdwijntOp(pk, k) < laatsteActiviteitKaart(k) + BEWAAR_STIL_DAGEN * 86400000;
+}
 async function bewaartermijnOpruimen() {
   const nu = Date.now();
   let gewist = 0;
@@ -7577,6 +7585,8 @@ async function afhandelen(request, response) {
     // de patiënt ziet tot wanneer de kaart minstens bestaat (bewaartermijn): bij een
     // afgeronde kaart en in "Mijn gegevens"
     if (!found.demo) patientKaart.verloopt = verdwijntOp(fpk, found);
+    // true = de datum ligt vast (afgerond, of de praktijk verdwijnt eerder): oefenen schuift hem niet op
+    if (!found.demo) patientKaart.verlooptVast = verdwijntVast(fpk, found);
     // ai-vlag: de kaartpagina toont de vraaghulp alleen als die op de server aan staat
     // (VRAAGHULP=aan en een AI-sleutel); standaard uit
     // eigen oefeningen van de praktijk staan niet in de openbare bibliotheek: naam,

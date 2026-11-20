@@ -97,6 +97,7 @@ try {
     mijnSeintjes: [patientDeel, /seintje aan je praktijk/],
     seinOpen: [patientDeel, /seintje aan je praktijk/],
     verloopt: [patientDeel, /tot wanneer hij minstens blijft/],
+    verlooptVast: [patientDeel, /tot wanneer hij minstens blijft/], // alleen of die datum nog opschuift
     eigenOef: [therapeut, /eigen video of foto bij een oefening/],
     vasteVragen: [therapeut, /vragen met antwoorden die je praktijk bij een oefening schreef/]
   };
