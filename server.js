@@ -1712,6 +1712,9 @@ function proefVoorDownload(id) {
   return rest;
 }
 const datumNl = (ms) => new Date(ms).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Amsterdam" });
+// betaaldTot is het begin van de volgende maand (exclusief). "Tot en met" is dus de dag ervoor,
+// net als op de factuur (lib/factuur.js); anders noemen app en mails een dag later dan de factuur.
+const laatsteDagNl = (betaaldTot) => datumNl(Number(betaaldTot) - 86400000);
 // de proefpagina's: één sjabloon (public/proef.html) met blokken; alle waarden escapen
 const htmlEsc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 async function serveerProef(request, response, blok, vars = {}, status = 200) {
@@ -1869,7 +1872,7 @@ function abonnementBeheerder(pk, ww) {
 // Opzeggen gaat in per het einde van de al betaalde maand; er wordt niets teruggeboekt.
 function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
   const therapeuten = a.aantal + (a.aantal === 1 ? " therapeut" : " therapeuten");
-  const tot = htmlEsc(datumNl(a.betaaldTot));
+  const tot = htmlEsc(datumNl(a.betaaldTot)), tm = htmlEsc(laatsteDagNl(a.betaaldTot));
   const soort = isFactuur(FYSIPLAN_ID, isKor(a)) ? "Factuur" : "Betaalbewijs";
   // latere maanden (maandincasso) hebben elk een eigen factuur
   // alle facturen staan in de tabel eronder (factuurOverzichtHtml); hier alleen de verwijzing
@@ -1890,7 +1893,7 @@ function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
     (straks !== a.aantal ? " De volgende maand is voor <b>" + straks + (straks === 1 ? " therapeut" : " therapeuten") + "</b>" +
       (straks > loginsNu ? ", omdat je team er deze maand zoveel had" : "") + "." : "") + "</span>";
   if (a.status === "opgezegd") return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement is opgezegd</h2>' +
-    '<p class="klein" style="font-size:14.5px">Je kunt Fysiplan nog gebruiken tot en met <b>' + tot + "</b> (" + therapeuten + "). " +
+    '<p class="klein" style="font-size:14.5px">Je kunt Fysiplan nog gebruiken tot en met <b>' + tm + "</b> (" + therapeuten + "). " +
     "Daarna schrijven we niets meer af en maak je geen nieuwe kaarten meer. Na nog " + NA_EINDE_WISSEN_DAGEN + " dagen wissen we alles van je praktijk, ook de gedeelde kaarten. " +
     "Download v\u00f3\u00f3r die tijd wat je wilt bewaren op <a href=\"/v2/gegevens\">Mijn gegevens</a>. " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="intrekken"/>' +
@@ -1902,9 +1905,9 @@ function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
     "Betaal deze maand (EUR " + htmlEsc(bedragVan(open)) + ") nu zelf met iDEAL of je bankkaart, of wacht tot we je bellen.</p>" +
     '<div class="knoppen"><button class="knop oranje" type="submit">Deze maand nu betalen</button></div></form>';
   return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement</h2>' + openBlok +
-    '<p class="klein" style="font-size:14.5px">Actief voor ' + therapeuten + ", betaald tot en met " + tot + "." + logins + incasso + " " + factuur + ".</p>" +
+    '<p class="klein" style="font-size:14.5px">Actief voor ' + therapeuten + ", betaald tot en met " + tm + "." + logins + incasso + " " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="opzeggen"/>' +
-    '<label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, zeg mijn abonnement op per ' + tot + ".</span></label>" +
+    '<label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, zeg mijn abonnement op. Het loopt dan nog tot en met ' + tm + ".</span></label>" +
     // alleen een beheerder zegt op: wachtwoord van een beheerder of van de praktijk
     (metWachtwoord ? '<div class="veld"><label for="o_ww">Wachtwoord van een beheerder</label>' +
       '<input id="o_ww" name="wachtwoord" type="password" autocomplete="current-password" maxlength="200" required/></div>' : "") +
@@ -1955,7 +1958,7 @@ function eersteBetalingMail(p) {
   const a = p.abonnement;
   const voornaam = String(p.naam || "").split(" ")[0];
   return "Hoi" + (voornaam ? " " + voornaam : "") + ",\n\nDank je wel, we hebben EUR " + a.bedrag + " ontvangen voor de eerste maand van je Fysiplan-abonnement (" +
-    a.aantal + (a.aantal === 1 ? " therapeut" : " therapeuten") + "). Je praktijk is nu klant en kan Fysiplan gebruiken tot en met " + datumNl(a.betaaldTot) + ".\n\n" +
+    a.aantal + (a.aantal === 1 ? " therapeut" : " therapeuten") + "). Je praktijk is nu klant en kan Fysiplan gebruiken tot en met " + laatsteDagNl(a.betaaldTot) + ".\n\n" +
     "Je factuur of betaalbewijs staat onder Mijn abonnement: https://fysiplan.nl/v2/proef?mijn=1" +
     (a.afnemer && a.afnemer.naam ? "" : "\nVul daar ook de naam en het adres van je praktijk in, dan staan die op je volgende facturen.") + "\n\n" +
     (incassoAan() ? "De volgende maanden schrijven we automatisch af met de machtiging van deze betaling. Je krijgt " + INCASSO_VOORAF_DAGEN +
@@ -1971,9 +1974,9 @@ async function incassoVerwerk(p, betaling) {
     geefFactuurNr(p);
     await bewaarProeven();
     const a = p.abonnement;
-    proefMeldAhmed("Maand betaald: " + naam, p, "De maandincasso is gelukt (EUR " + bedragVan(a.incasso) + "). Betaald tot en met " + datumNl(a.betaaldTot) + ".");
+    proefMeldAhmed("Maand betaald: " + naam, p, "De maandincasso is gelukt (EUR " + bedragVan(a.incasso) + "). Betaald tot en met " + laatsteDagNl(a.betaaldTot) + ".");
     proefMail(p.email, "Fysiplan: je maandbetaling is gelukt", "Hoi " + p.naam + ",\n\nWe hebben EUR " + bedragVan(a.incasso) +
-      " afgeschreven voor je Fysiplan-abonnement. Je kunt Fysiplan gebruiken tot en met " + datumNl(a.betaaldTot) + ".\n" +
+      " afgeschreven voor je Fysiplan-abonnement. Je kunt Fysiplan gebruiken tot en met " + laatsteDagNl(a.betaaldTot) + ".\n" +
       "Je factuur of betaalbewijs staat op https://fysiplan.nl/v2/proef?mijn=1\n\nGroet,\nFysiplan");
   } else if (oordeel === "mislukt" && markeerIncassoMislukt(p, betaling.status)) {
     await bewaarProeven();
@@ -1995,9 +1998,9 @@ async function zelfVerwerk(p, betaling) {
     await bewaarProeven();
     const a = p.abonnement;
     proefMeldAhmed("Openstaande maand zelf betaald: " + naam, p, "Na de mislukte maandincasso heeft de praktijk de maand zelf betaald (EUR " +
-      bedragVan(a.incasso) + "). Betaald tot en met " + datumNl(a.betaaldTot) + ". Bellen is niet meer nodig.");
+      bedragVan(a.incasso) + "). Betaald tot en met " + laatsteDagNl(a.betaaldTot) + ". Bellen is niet meer nodig.");
     proefMail(p.email, "Fysiplan: je betaling is gelukt", "Hoi " + p.naam + ",\n\nDank je wel, we hebben EUR " + bedragVan(a.incasso) +
-      " ontvangen voor je Fysiplan-abonnement. Je kunt Fysiplan gebruiken tot en met " + datumNl(a.betaaldTot) + ".\n" +
+      " ontvangen voor je Fysiplan-abonnement. Je kunt Fysiplan gebruiken tot en met " + laatsteDagNl(a.betaaldTot) + ".\n" +
       "Je factuur of betaalbewijs staat op https://fysiplan.nl/v2/proef?mijn=1\n\nGroet,\nFysiplan");
   } else if (oordeel === "mislukt" && p.abonnement.incasso.zelf.status !== betaling.status) {
     p.abonnement.incasso.zelf.status = betaling.status;
@@ -2014,7 +2017,7 @@ async function incassoRondeStap(p, nu) {
     if (loginsVanProef(p)) nieuwePeriode(a, loginsVanProef(p));
     markeerGemeld(p, nu, prijsNu()); // het bedrag uit deze aankondiging is wat er straks wordt afgeschreven
     proefMail(p.email, "Fysiplan: aankondiging van je maandbetaling", "Hoi " + p.naam + ",\n\nJe betaalde maand loopt tot en met " +
-      datumNl(a.betaaldTot) + ". Op of rond " + datumNl(incassoDatum(p, nu)) + " schrijven we EUR " + a.gemeldBedrag.bedrag +
+      laatsteDagNl(a.betaaldTot) + ". Op of rond " + datumNl(incassoDatum(p, nu)) + " schrijven we EUR " + a.gemeldBedrag.bedrag +
       " af voor de volgende maand (" + a.aantal + (a.aantal === 1 ? " therapeut" : " therapeuten") + "), via Mollie, met de machtiging van je eerste betaling.\n\n" +
       "Wil je stoppen? Zeg vóór die datum op via https://fysiplan.nl/v2/proef?mijn=1, dan schrijven we niets meer af.\n\nGroet,\nFysiplan");
     return true;
@@ -8832,9 +8835,9 @@ async function afhandelen(request, response) {
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
     const p = proefVoorPagina(request);
-    if (!p) proefCollegaGeweigerd(request, "abonnement opzeggen");
+    if (!p) proefCollegaGeweigerd(request, b.actie === "intrekken" ? "opzegging intrekken" : "abonnement opzeggen");
     if (!p || !p.abonnement) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
-    const a = p.abonnement, naam = p.praktijk || p.naam, tot = datumNl(a.betaaldTot);
+    const a = p.abonnement, naam = p.praktijk || p.naam, tot = laatsteDagNl(a.betaaldTot);
     const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Terug naar mijn abonnement</a>';
     if (b.actie === "intrekken") {
       if (trekOpzeggingIn(p)) {
@@ -8886,7 +8889,7 @@ async function afhandelen(request, response) {
     if (markeerOpgezegd(p)) {
       if (opzegPk) auditLog(opzegPk, "abonnement-opgezegd", request, opzegDoor);
       await bewaarProeven();
-      proefMeldAhmed("Opgezegd: " + naam, p, "Deze praktijk heeft het abonnement zelf opgezegd in de app, per " + tot +
+      proefMeldAhmed("Opgezegd: " + naam, p, "Deze praktijk heeft het abonnement zelf opgezegd in de app; het loopt tot en met " + tot +
         ". Zet een eventuele maandincasso bij Mollie stop als die al loopt.");
       proefMail(p.email, "Bevestiging: je Fysiplan-abonnement is opgezegd", "Hoi " + (p.naam || "").split(" ")[0] + ",\n\n" +
         "We hebben je opzegging ontvangen. Je kunt Fysiplan nog gebruiken tot en met " + tot + "; daarna schrijven we niets meer af.\n" +
@@ -9083,7 +9086,7 @@ async function afhandelen(request, response) {
     const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Naar mijn abonnement</a>';
     if (zelf.status === "paid") {
       await serveerProef(request, response, "bericht", { TITEL: "Betaald", ETIKET: "Betaald", KOP: "Dank je wel, de maand is betaald.",
-        TEKST: "Je kunt Fysiplan gebruiken tot en met " + datumNl(p.abonnement.betaaldTot) + ". De factuur staat bij je abonnement.",
+        TEKST: "Je kunt Fysiplan gebruiken tot en met " + laatsteDagNl(p.abonnement.betaaldTot) + ". De factuur staat bij je abonnement.",
         KNOP_HTML: '<a class="knop oranje" href="/v2/app">Naar mijn kaarten</a> ' + terug });
       return;
     }
