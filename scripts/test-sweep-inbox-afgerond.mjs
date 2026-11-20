@@ -47,7 +47,7 @@ try {
   assert.equal((await post("/api/kaart/seintje", { id, soort: "vraag" })).status, 200);
   assert.equal((await post("/api/kaart/seintje", { id: stil, soort: "vraag" })).status, 200);
   await wacht(5);
-  for (const k of [id, stil]) assert.equal((await post("/api/kaart/archief", { praktijk: P, id: k, archief: true }, S)).status, 200);
+  for (const k of [id, stil]) assert.equal((await post("/api/kaart/archief", { praktijk: P, id: k, archief: true, seintjeGezien: true }, S)).status, 200);
   let ib = await inbox();
   assert.equal(ib.kaarten.length, 0, "afronden haalt oude dingen uit de inbox: " + JSON.stringify(ib.kaarten));
 
@@ -73,7 +73,7 @@ try {
   const c = await deel("Cees");
   assert.equal((await post("/api/kaart/seintje", { id: c, soort: "pijn" })).status, 200);
   await wacht(5);
-  assert.equal((await post("/api/kaart/archief", { praktijk: P, id: c, archief: true }, S)).status, 200);
+  assert.equal((await post("/api/kaart/archief", { praktijk: P, id: c, archief: true, seintjeGezien: true }, S)).status, 200);
   await wacht(5);
   assert.equal((await post("/api/kaart/seintje", { id: c, soort: "vraag" })).status, 200);
   ib = await inbox();
@@ -82,7 +82,7 @@ try {
   assert.equal((await post("/api/praktijk/inbox/afgehandeld", { praktijk: P, id: c }, S)).status, 200);
   // (2) offline getikt vóór het archiveren, pas daarna binnengekomen → ook zichtbaar
   const dd = await deel("Dirk");
-  assert.equal((await post("/api/kaart/archief", { praktijk: P, id: dd, archief: true }, S)).status, 200);
+  assert.equal((await post("/api/kaart/archief", { praktijk: P, id: dd, archief: true, seintjeGezien: true }, S)).status, 200);
   await wacht(5);
   const r = await post("/api/kaart/seintje", { id: dd, soort: "pijn", wanneer: Date.now() - 10 * 60000 });
   assert.equal(r.status, 200, "seintje uit de wachtrij aangenomen");

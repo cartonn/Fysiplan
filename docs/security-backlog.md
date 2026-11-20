@@ -651,6 +651,10 @@ hetzelfde account-object; #363/#369 inbox; #366 `proefEinde` (alleen langer tot 
 
 ## Open
 
+- **Vraag van de gebruikers-sweep 2026-11-20 14u (Karin) — LAAG/MIDDEL beschikbaarheid — teamplafond van de rem per login (#409) is vast 4× de grens per login:**
+  in een praktijk van vijf konden vier collega's die elk hun eigen 429 raakten de vijfde (ook de beheerder) vastzetten op /api/praktijk/team
+  (één keer gezien, niet hard reproduceerbaar; server.js ~3098 `remVol`, `REM_TEAM_FACTOR = 4`). Te wegen: plafond laten meegroeien met het aantal
+  actieve logins, of een kleine eigen ruimte voor beheerders. Wat #409 belooft (één collega zet niet het hele team vast) klopte; praktijk Y bleef 200.
 - **Vraag van de gebruikers-sweep 2026-11-20 10u (Karin) — MIDDEL toegang — overstap van gedeeld wachtwoord: wie het eerst komt wordt de enige beheerder:**
   bij een oude praktijk met alleen een gedeeld wachtwoord kan elke collega die het wachtwoord kent als eerste "Maak je eigen login" doen; die
   wordt enige beheerder en het gedeelde wachtwoord gaat uit (server.js ~5038–5077, commentaar noemt het bewust). De eigenaar komt daarna alleen

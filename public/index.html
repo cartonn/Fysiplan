@@ -6808,11 +6808,20 @@ bridge2.jpg</div>
     var arch=e.target.closest('[data-sarch]'),herstel=e.target.closest('[data-sherstel]');
     if(arch||herstel){
       var knop=arch||herstel,id=knop.dataset.sarch||knop.dataset.sherstel,naarArchief=!!arch;
+      // een collega rondde een kaart af terwijl de patiënt net te veel pijn meldde: het seintje verdween stil
+      // uit Vandaag bij de behandelaar (gebruikers-sweep 2026-11-20 14u, Mark). De server weigert dan eerst
+      // (409 seintjeOpen, ook als het seintje binnenkwam nadat dit paneel openging); na Toch afronden opnieuw.
       var oudA=knop.textContent;knop.textContent='Bezig…';
-      fetch('api/kaart/archief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:id,archief:naarArchief})})
-        .then(function(r){return r.json();})
-        .then(function(d){if(d.ok){toonSrvKaarten();kaartFocusTerug(['#k_srv_arch','#k_srv_lijst [data-sopen]']);}else{knop.textContent=oudA;alert(d.fout||'Archiveren is niet gelukt.');}})
-        .catch(function(){knop.textContent=oudA;alert('Archiveren is niet gelukt: geen verbinding.');});
+      var archiefStuur=function(gezien){
+        fetch('api/kaart/archief',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:id,archief:naarArchief,seintjeGezien:gezien})})
+          .then(function(r){return r.json();})
+          .then(function(d){
+            if(d.ok){toonSrvKaarten();kaartFocusTerug(['#k_srv_arch','#k_srv_lijst [data-sopen]']);return;}
+            if(d.seintjeOpen&&!gezien){if(window.confirm((d.fout||'Er staat nog een seintje open.')+' Toch afronden?'))archiefStuur(true);else{knop.textContent=oudA;try{knop.focus();}catch(e){}}return;}
+            knop.textContent=oudA;alert(d.fout||'Archiveren is niet gelukt.');})
+          .catch(function(){knop.textContent=oudA;alert('Archiveren is niet gelukt: geen verbinding.');});
+      };
+      archiefStuur(false);
       return;
     }
     // dossiersamenvatting kopiëren: kaart ophalen, platte tekst bouwen, klembord
