@@ -203,7 +203,7 @@ try {
   assert.equal(r.status, 400);
   j = await r.json();
   assert.equal(j.kaartenVol, true);
-  assert.match(j.fout, /te veel afgeronde en verwijderde kaarten.*Leeg de prullenbak/, "vol archief: een eigen melding");
+  assert.match(j.fout, /te veel kaarten.*afgeronde en verwijderde meegeteld.*leeg de prullenbak/, "vol archief: een eigen melding");
   // een klant met drie logins: 900 lopende kaarten
   r = await deel("klant", "Laatste");
   assert.equal(r.status, 200, "een klant komt ver voorbij de 100");

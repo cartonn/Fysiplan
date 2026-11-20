@@ -91,10 +91,36 @@ await metServer(null, async (haal) => {
   }
   const maxPrak = serverBron.match(/const MAX_PRAKTIJKEN_PER_PROEF = (\d+);/);
   if (maxPrak) assert.match(av, new RegExp("Met één proef beveilig je hooguit " + maxPrak[1] + " praktijken"), "art. 3 noemt de grens op praktijken per proef uit server.js");
+  // Legal 2026-11-20 17u (c): kaartVol (lib/plaatsen.js) weigert ook een nieuwe kaart als alle kaarten
+  // samen, afgerond en prullenbak meegeteld, KAARTEN_BEWAARD_KEER keer de grens halen. Art. 3 zei
+  // "afgeronde kaarten en de prullenbak tellen niet mee" zonder die tweede grens; art. 4 alleen "heel veel".
+  const keer = Number((plaatsenBron.match(/export const KAARTEN_BEWAARD_KEER = (\d+);/) || [])[1]);
+  if (keer && /t\.totaal >= grens \* KAARTEN_BEWAARD_KEER/.test(plaatsenBron)) {
+    assert.match(av, new RegExp("grens voor alle kaarten samen, afgeronde en verwijderde meegeteld: hooguit " + KAARTEN_PROEF * keer + "\\."), "art. 3 noemt de grens op alle kaarten samen in de proef");
+    assert.match(av, new RegExp("Voor alle kaarten samen, afgeronde en verwijderde meegeteld, geldt hooguit " + keer + " keer die ruimte"), "art. 4 noemt de grens op alle kaarten samen voor een klant");
+    assert.doesNotMatch(av, /heel veel afgeronde of verwijderde kaarten/, "art. 4 noemt een getal in plaats van 'heel veel'");
+  }
   const akkoord = serverBron.match(/const AKKOORD_WIJZIGINGEN = \[[\s\S]*?\n\];/)[0];
   const avVersie = serverBron.match(/const AV_VERSIE = "([^"]+)"/)[1];
   assert.ok(akkoord.includes('stuk: "av", versie: "' + avVersie + '"'), "AKKOORD_WIJZIGINGEN noemt de huidige AV_VERSIE");
 });
+// 1b. Legal 2026-11-20 17u (c)/(i): art. 4 en 5 en de app noemen de pagina met facturen en opzeggen
+// "Mijn proef" (de link in de app, de titel en het etiket van de pagina). De mail na de eerste betaling,
+// de factuur en de foutpagina's stuurden naar "Mijn abonnement", een naam die nergens in beeld staat.
+{
+  const appLink = readFileSync(new URL("../public/index.html", import.meta.url), "utf8").match(/href="\/v2\/proef\?mijn=1">([^<]+)</);
+  assert.ok(appLink, "de app linkt naar /v2/proef?mijn=1");
+  const naam = appLink[1].trim();
+  const bronnen = { "server.js": serverBron, "lib/factuur.js": readFileSync(new URL("../lib/factuur.js", import.meta.url), "utf8"),
+    "lib/mollie.js": readFileSync(new URL("../lib/mollie.js", import.meta.url), "utf8") };
+  for (const [bestand, bron] of Object.entries(bronnen)) {
+    bron.split("\n").forEach((regel, i) => {
+      if (/^\s*\/\//.test(regel)) return; // commentaar
+      const m = regel.match(/Mijn (proef|abonnement)\b/g) || [];
+      for (const gevonden of m) assert.equal(gevonden, naam, bestand + ":" + (i + 1) + " noemt '" + gevonden + "', de app noemt de pagina '" + naam + "'");
+    });
+  }
+}
 // 2. inclusief en kleineondernemersregeling: de voorwaarden volgen de keuze, zoals de landing
 await metServer({ kor: "nee", prijsBtw: "inclusief" }, async (haal) => {
   const av = tekst(await haal("/voorwaarden"));
