@@ -4086,7 +4086,7 @@ bridge2.jpg</div>
         "<input id='ps_email' type='email' autocomplete='username' placeholder='Je e-mail (eigen login)' style='flex:1;min-width:170px;display:none'/>"+
         "<input id='ps_ww' type='password' autocomplete='current-password' placeholder='Wachtwoord' style='flex:1;min-width:130px'/>"+
         // tweede stap: de server vraagt erom als deze login er een heeft (zes cijfers, of een reservecode)
-        "<input id='ps_code' type='text' autocomplete='one-time-code' autocapitalize='characters' spellcheck='false' maxlength='24' placeholder='Code uit je code-app' aria-label='Code uit je code-app, of een reservecode' style='flex:1;min-width:150px;display:none'/>"+
+        "<input id='ps_code' type='text' autocomplete='one-time-code' autocapitalize='characters' spellcheck='false' maxlength='24' placeholder='Code uit je code-app of reservecode' aria-label='Code uit je code-app, of een reservecode' style='flex:1;min-width:150px;display:none'/>"+
         "<button class='btn' id='ps_do' type='button'></button></div>"+
       // AVG art. 28: wie de praktijk beveiligt, gaat namens de praktijk akkoord met de
       // algemene voorwaarden en de verwerkersovereenkomst, in één vinkje (alleen bij
@@ -4759,7 +4759,7 @@ bridge2.jpg</div>
             :uit?"Zet je de tweede stap uit, dan is je wachtwoord weer genoeg om in te loggen.":"Je krijgt acht nieuwe reservecodes; de oude werken daarna niet meer.")+
             " Bevestig met je wachtwoord en een code uit je code-app (of een reservecode).</div>"+
             "<div class='tm-uitnodig' style='display:flex;gap:6px;flex-wrap:wrap;margin-top:6px'><input id='tm_sww2' type='password' autocomplete='current-password' placeholder='Je wachtwoord' aria-label='Je wachtwoord' style='flex:1;min-width:150px'/>"+
-            "<input id='tm_scode2' type='text' autocomplete='one-time-code' autocapitalize='characters' spellcheck='false' maxlength='24' placeholder='Code uit je code-app' aria-label='Code uit je code-app, of een reservecode' style='flex:1;min-width:150px'/>"+
+            "<input id='tm_scode2' type='text' autocomplete='one-time-code' autocapitalize='characters' spellcheck='false' maxlength='24' placeholder='Code uit je code-app of reservecode' aria-label='Code uit je code-app, of een reservecode' style='flex:1;min-width:150px'/>"+
             "<button class='btn primary' id='tm_sdo2' type='button'>"+(opnieuw?"Stel opnieuw in":uit?"Zet uit":"Maak nieuwe codes")+"</button></div>";
           var doe=document.getElementById('tm_sdo2');
           var stuur=function(){
@@ -4808,7 +4808,7 @@ bridge2.jpg</div>
             "Bevestig met je wachtwoord."
           :"Daarna kiest iedereen weer zelf. Het praktijkwachtwoord blijft uit. Bevestig met je wachtwoord en een code uit je code-app (of een reservecode).")+"</div>"+
           "<div class='tm-uitnodig' style='display:flex;gap:6px;flex-wrap:wrap;margin-top:6px'><input id='tm_vww' type='password' autocomplete='current-password' placeholder='Je wachtwoord' aria-label='Je wachtwoord' style='flex:1;min-width:150px'/>"+
-          (aan?"":"<input id='tm_vcode' type='text' autocomplete='one-time-code' autocapitalize='characters' spellcheck='false' maxlength='24' placeholder='Code uit je code-app' aria-label='Code uit je code-app, of een reservecode' style='flex:1;min-width:150px'/>")+
+          (aan?"":"<input id='tm_vcode' type='text' autocomplete='one-time-code' autocapitalize='characters' spellcheck='false' maxlength='24' placeholder='Code uit je code-app of reservecode' aria-label='Code uit je code-app, of een reservecode' style='flex:1;min-width:150px'/>")+
           "<button class='btn primary' id='tm_vbev' type='button'>"+(aan?"Maak verplicht":"Hef op")+"</button></div>";
         var w=document.getElementById('tm_vww'),c=document.getElementById('tm_vcode'),bev=document.getElementById('tm_vbev');
         var stuur=function(){
@@ -5135,11 +5135,28 @@ bridge2.jpg</div>
     PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;PRAKSLOT.nieuw=false;rendPrakSlot();toonPrakSlot(PRAKSLOT.pr);toonSrvKaarten();reloadLibraryKeepingCard();
     if(d.herstelcode)toonHerstelcode(d.herstelcode);
     // ingelogd met een reservecode: zeggen hoeveel er nog zijn (elke code werkt één keer)
-    if(typeof d.reservecodesOver==='number')toonPsMsg('Je bent ingelogd met een reservecode. Je hebt er nog '+d.reservecodesOver+'. Nieuwe maak je onder Team.');
+    if(typeof d.reservecodesOver==='number')toonReserveOver(d.reservecodesOver);
     // de kaart in de editor mag nu gedeeld worden: de QR komt er vanzelf op
     if(IS_V2){laatsteDeel='';deelNu();}
     // het praktijkprofiel (adres, telefoon) wordt pas na beveiligen bewaard; stuur het nu mee
     if(IS_V2&&beveiligd)upsertPraktijk();
+  }
+  // Na inloggen met een reservecode zegt de app hoeveel er nog over zijn. Die zin stond in het
+  // inlogblok (#ps_msg), en dat is na het inloggen dicht: niemand zag hem (gebruikers-sweep
+  // 2026-11-20, Sanne). Nu een eigen melding onder de kopbalk, met een weg naar Team en Sluiten.
+  function toonReserveOver(n){
+    var oud=document.getElementById('ps_reserve');if(oud)oud.remove();
+    n=Math.max(0,Number(n)||0);
+    var el=document.createElement('div');
+    el.id='ps_reserve';el.className='proefbalk no-print';el.setAttribute('role','status');
+    el.innerHTML="<span id='ps_reserve_t'></span><button type='button' class='btn' id='ps_reserve_team'>Naar Team</button><button type='button' class='btn' id='ps_reserve_dicht'>Sluiten</button>";
+    el.querySelector('#ps_reserve_t').textContent='Je bent ingelogd met een reservecode. Elke reservecode werkt één keer; je hebt er nog '+n+'.'+(n<=2?' Maak nu nieuwe onder Team.':' Nieuwe maak je onder Team.');
+    var plek=document.getElementById('proefBalk');
+    if(plek&&plek.parentNode)plek.parentNode.insertBefore(el,plek.nextSibling);else document.body.insertBefore(el,document.body.firstChild);
+    // na Sluiten de focus niet op body laten vallen: naar de praktijkknop in de kopbalk
+    el.querySelector('#ps_reserve_dicht').addEventListener('click',function(){el.remove();var z=document.getElementById('zb_praktijk');if(z&&z.focus)z.focus();});
+    el.querySelectorAll('button').forEach(function(b){b.style.minHeight='44px';});
+    el.querySelector('#ps_reserve_team').addEventListener('click',function(){el.remove();openTeam();});
   }
   function prakSlotActie(){
     var knop=document.getElementById('ps_do'),ww=document.getElementById('ps_ww'),vwo=document.getElementById('ps_vwo');
@@ -5172,7 +5189,7 @@ bridge2.jpg</div>
           // wachtwoord goed, nu de code: de eerste keer is het een vraag, daarna een fout
           cv.style.display='';
           if(codeStond&&lijf.code)psFout(d.fout||'Die code klopt niet.',cv,true);
-          else{psGeenMist();toonPsMsg(d.fout||'Vul de code uit je code-app in.');cv.focus();}
+          else{psGeenMist();toonPsMsg(d.fout||'Vul de code uit je code-app in, of een reservecode.');cv.focus();}
           return;
         }
         if(!d.ok&&d.stapInstellen&&act==='login'){

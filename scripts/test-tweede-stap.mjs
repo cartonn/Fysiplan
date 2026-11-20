@@ -21,6 +21,7 @@ import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { createHash, randomBytes } from "node:crypto";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
@@ -359,7 +360,19 @@ try {
   r = await login({ email: "eva@stap.invalid", wachtwoord: "eva-wachtwoord", code: reserve[0].toLowerCase().replace(/-/g, "") });
   assert.equal(r.status, 200, "inloggen met een reservecode");
   assert.equal((await r.json()).reservecodesOver, 7, "de app hoort hoeveel er nog zijn");
-  assert.equal((await login({ email: "eva@stap.invalid", wachtwoord: "eva-wachtwoord", code: reserve[0] })).status, 403, "een reservecode werkt één keer");
+  const tweede = await login({ email: "eva@stap.invalid", wachtwoord: "eva-wachtwoord", code: reserve[0] });
+  assert.equal(tweede.status, 403, "een reservecode werkt één keer");
+  // sweep 2026-11-20 (Sanne): de melding ging over de code-app; nu zegt hij dat de reservecode al gebruikt kan zijn
+  const tweedeTekst = (await tweede.json()).fout;
+  assert.match(tweedeTekst, /reservecode klopt niet of is al gebruikt/, "eigen melding bij een gebruikte reservecode");
+  assert.doesNotMatch(tweedeTekst, /Wacht op de volgende code/, "geen zin over de code-app bij een reservecode");
+  // de app zegt na inloggen met een reservecode hoeveel er over zijn, buiten het (dan dichte) inlogblok
+  {
+    const idx = readFileSync(join(process.cwd(), "public/index.html"), "utf8");
+    assert.match(idx, /if\(typeof d\.reservecodesOver==='number'\)toonReserveOver\(d\.reservecodesOver\);/, "reservecodes-melding via toonReserveOver");
+    assert.match(idx, /function toonReserveOver\(n\)\{[\s\S]{0,1200}getElementById\('proefBalk'\)/, "melding onder de kopbalk, niet in #ps_msg");
+    assert.match(idx, /placeholder='Code uit je code-app of reservecode'/, "codeveld noemt de reservecode");
+  }
   act = await activiteit(E);
   assert.ok(act.some((a) => a.actie === "ingelogd-met-reservecode" && a.wie === "Eva Bos"));
   assert.equal((await team(E)).ik.reservecodesOver, 7);
