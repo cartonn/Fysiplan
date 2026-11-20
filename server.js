@@ -6,7 +6,7 @@ import { createHash, randomBytes, timingSafeEqual, scryptSync } from "node:crypt
 import { join, extname, normalize, sep } from "node:path";
 import { exerciseId } from "./lib/exercise-id.js";
 import { byteRange } from "./lib/byte-range.js";
-import { ipSleutel as ipSleutelVan } from "./lib/ip-sleutel.js";
+import { ipSleutel as ipSleutelVan, ipBlok as ipBlokVan } from "./lib/ip-sleutel.js";
 import { isAuditRuis, kiesActiviteit } from "./lib/audit-keuze.js";
 import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
@@ -2295,10 +2295,15 @@ const proefTeller = new Map();
 function proefLimiet(req) {
   const nu = Date.now();
   if (proefTeller.size > 5000) for (const [k, v] of proefTeller) if (nu - v.start > 3600e3) proefTeller.delete(k);
-  const ip = ipSleutel(req);
-  const t = proefTeller.get(ip);
-  if (!t || nu - t.start > 3600e3) { proefTeller.set(ip, { start: nu, n: 1 }); return false; }
-  return ++t.n > 10;
+  // per /64 (IPv4: per adres) 10 per uur, en per /48 (IPv4: /24) samen 30: met alleen de /64
+  // vulde één /48 binnen het uur de grens van 5000 aanmeldingen (security 2026-11-20)
+  const tel = (sleutel, grens) => {
+    const t = proefTeller.get(sleutel);
+    if (!t || nu - t.start > 3600e3) { proefTeller.set(sleutel, { start: nu, n: 1 }); return false; }
+    return ++t.n > grens;
+  };
+  const ip = ipSleutel(req), blok = "blok:" + ipBlokVan(clientIp(req));
+  return tel(ip, 10) || tel(blok, 30);
 }
 
 // de inlogpagina die de v1-app afschermt; zelfstandige pagina met één inline script
@@ -3146,25 +3151,30 @@ function kaartMisLimiet(req, res) {
   if (kaartMisTeller.size > 5000) {
     for (const [k, v] of kaartMisTeller) if (nu - v.start > 5 * 60 * 1000) kaartMisTeller.delete(k);
   }
-  const ip = ipSleutel(req);
-  const t = kaartMisTeller.get(ip);
-  if (!t || nu - t.start > 5 * 60 * 1000) {
-    kaartMisTeller.set(ip, { start: nu, n: 1 });
-    return false;
-  }
-  if (++t.n > 30) {
-    if (t.n === 31) logGeweigerd(req, "kaart-raden");
+  // per /64 (IPv4: per adres) 30 missers, en per /48 (IPv4: /24) samen 480: met alleen de /64
+  // raadde één /48 met 65.536 blokken ~2 miljoen kaartlinks per 5 minuten (security 2026-11-20)
+  const tel = (sleutel, grens) => {
+    const t = kaartMisTeller.get(sleutel);
+    if (!t || nu - t.start > 5 * 60 * 1000) { kaartMisTeller.set(sleutel, { start: nu, n: 1 }); return false; }
+    return ++t.n > grens;
+  };
+  const ip = ipSleutel(req), blok = "blok:" + ipBlokVan(clientIp(req));
+  if (tel(ip, KAART_MIS_IP) || tel(blok, KAART_MIS_BLOK)) {
+    const t = kaartMisTeller.get(ip), tb = kaartMisTeller.get(blok);
+    if (t.n === KAART_MIS_IP + 1 || (tb && tb.n === KAART_MIS_BLOK + 1)) logGeweigerd(req, "kaart-raden");
     send429(res, 300, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
     return true;
   }
   return false;
 }
+const KAART_MIS_IP = 30, KAART_MIS_BLOK = 480;
 // Wie de rem al raakte, krijgt ook bij een bestaand id een 429: anders betekent 429 "mis"
 // en 200 "raak", en houdt de rem doorraden niet tegen (gebruikers-sweep 2026-11-15 22u).
 // Alleen voor routes waar het id de enige sleutel is; de teller zelf loopt hier niet op.
 function kaartRadenGeblokt(req, res) {
-  const t = kaartMisTeller.get(ipSleutel(req));
-  if (!t || Date.now() - t.start > 5 * 60 * 1000 || t.n <= 30) return false;
+  const nu = Date.now();
+  const vol = (sleutel, grens) => { const t = kaartMisTeller.get(sleutel); return !!t && nu - t.start <= 5 * 60 * 1000 && t.n > grens; };
+  if (!vol(ipSleutel(req), KAART_MIS_IP) && !vol("blok:" + ipBlokVan(clientIp(req)), KAART_MIS_BLOK)) return false;
   send429(res, 300, { ok: false, fout: "Even te veel verzoeken; probeer het over een paar minuten opnieuw." });
   return true;
 }
