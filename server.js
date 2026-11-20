@@ -17,7 +17,7 @@ import { prijsRegels, prijsZin, metBtwBijschrift, bedragVoor, euro as euroTekst 
 import * as leeslogRegels from "./lib/leeslog.js";
 import { mediaSoort, mediaLink, leesMediaLink } from "./lib/medialink.js";
 import { veiligeWebsite } from "./lib/website.js";
-import { plaatsenVan, merkPiek, volgendAantal, nieuwePeriode, kaartVol, KAARTEN_PROEF, KAARTEN_PER_LOGIN } from "./lib/plaatsen.js";
+import { plaatsenVan, merkPiek, volgendAantal, nieuwePeriode, kaartVol, KAARTEN_PROEF, KAARTEN_PER_LOGIN, KAARTEN_BEWAARD_KEER } from "./lib/plaatsen.js";
 import { maandBedrag, betaalBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN,
   openMaand, zelfBetalenVerzoek, markeerZelfGestart, beoordeelZelf, markeerZelfBetaald } from "./lib/mollie.js";
@@ -110,10 +110,10 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-18";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-19";
+const AV_VERSIE = "2026-11-20";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-20";
+const PRIVACY_VERSIE = "2026-11-20-2";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -146,7 +146,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-16", tekst: "Verduidelijking: een nieuwe maand is voor het aantal logins van dat moment, of voor het hoogste aantal in de maand daarvoor als dat hoger was. Tijdens een maand rekenen we niets bij en geven we niets terug." },
   { stuk: "av", versie: "2026-11-18", tekst: "Verduidelijking: werkte je praktijk al met Fysiplan vóór de proef en probeer je de nieuwe app als pilot, dan wissen we na de proef alleen je proefaanmelding; je bestaande gegevens blijven." },
   { stuk: "vwo", versie: "2026-11-18", tekst: "Einde: werkte je praktijk al met Fysiplan vóór de proef en probeer je de nieuwe app als pilot, dan wist het einde van de pilot alleen de proefaanmelding; je bestaande gegevens blijven. Beveiliging: een video uit de galerij bewaren we zonder plek van opnemen en zonder merk en type telefoon." },
-  { stuk: "av", versie: "2026-11-19", tekst: "Verduidelijking: de proef loopt tot en met de einddatum die je bij het aanmelden ziet, tot middernacht (Nederlandse tijd). Met één proef beveilig je hooguit 3 praktijken." }
+  { stuk: "av", versie: "2026-11-19", tekst: "Verduidelijking: de proef loopt tot en met de einddatum die je bij het aanmelden ziet, tot middernacht (Nederlandse tijd). Met één proef beveilig je hooguit 3 praktijken." },
+  { stuk: "av", versie: "2026-11-20", tekst: "Verduidelijking: naast de grens op lopende kaarten geldt een grens voor alle kaarten samen, afgeronde en verwijderde meegeteld (" + KAARTEN_BEWAARD_KEER + " keer zoveel). Zit je daaraan, dan verwijder je afgeronde kaarten en leeg je de prullenbak." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -1962,7 +1963,7 @@ function eersteBetalingMail(p) {
   const voornaam = String(p.naam || "").split(" ")[0];
   return "Hoi" + (voornaam ? " " + voornaam : "") + ",\n\nDank je wel, we hebben EUR " + a.bedrag + " ontvangen voor de eerste maand van je Fysiplan-abonnement (" +
     a.aantal + (a.aantal === 1 ? " therapeut" : " therapeuten") + "). Je praktijk is nu klant en kan Fysiplan gebruiken tot en met " + laatsteDagNl(a.betaaldTot) + ".\n\n" +
-    "Je factuur of betaalbewijs staat onder Mijn abonnement: https://fysiplan.nl/v2/proef?mijn=1" +
+    "Je factuur of betaalbewijs staat onder Mijn proef: https://fysiplan.nl/v2/proef?mijn=1" +
     (a.afnemer && a.afnemer.naam ? "" : "\nVul daar ook de naam en het adres van je praktijk in, dan staan die op je volgende facturen.") + "\n\n" +
     (incassoAan() ? "De volgende maanden schrijven we automatisch af met de machtiging van deze betaling. Je krijgt " + INCASSO_VOORAF_DAGEN +
       " dagen vooraf een mail met het bedrag. " : "") +
@@ -2071,11 +2072,11 @@ async function factuurNietTeZien(request, response, p) {
   const s = sessieVan(request);
   const collega = !p && s && Object.hasOwn(praktijkAccounts, s.pk) && praktijkAccounts[s.pk].proef;
   const tekst = p
-    ? (p.abonnement?.eersteBetaling ? "Deze factuur hoort niet bij je praktijk of bestaat niet. Je facturen staan onder Mijn abonnement."
-      : "Je praktijk heeft nog niet online betaald, dus er is nog geen factuur. Na de eerste betaling staat hij onder Mijn abonnement.")
-    : collega ? "Je bent ingelogd bij " + weergaveNaam(s.pk) + ". Alleen een beheerder met een eigen login ziet de facturen, onder Mijn abonnement. Vraag het aan een beheerder van je praktijk."
-      : "Log in met de eigen login van een beheerder van je praktijk. De facturen staan daarna onder Mijn abonnement.";
-  const knop = p ? '<a class="knop oranje" href="/v2/proef?mijn=1">Naar Mijn abonnement</a>' : '<a class="knop omlijnd" href="/v2/app">Naar de app</a>';
+    ? (p.abonnement?.eersteBetaling ? "Deze factuur hoort niet bij je praktijk of bestaat niet. Je facturen staan onder Mijn proef."
+      : "Je praktijk heeft nog niet online betaald, dus er is nog geen factuur. Na de eerste betaling staat hij onder Mijn proef.")
+    : collega ? "Je bent ingelogd bij " + weergaveNaam(s.pk) + ". Alleen een beheerder met een eigen login ziet de facturen. Vraag het aan een beheerder van je praktijk."
+      : "Log in met de eigen login van een beheerder van je praktijk. Daarna zie je de facturen.";
+  const knop = p ? '<a class="knop oranje" href="/v2/proef?mijn=1">Naar Mijn proef</a>' : '<a class="knop omlijnd" href="/v2/app">Naar de app</a>';
   response.setHeader("x-robots-tag", "noindex");
   await serveerProef(request, response, "bericht", { TITEL: "Factuur", ETIKET: "Facturen", KOP: "Deze factuur is hier niet te zien.", TEKST: tekst, KNOP_HTML: knop }, 404);
 }
@@ -7377,7 +7378,8 @@ async function afhandelen(request, response) {
           await sendJson(response, 400, { ok: false, kaartenVol: true, grens: vol.grens, fout: vol.soort === "lopend"
             ? "Je praktijk heeft " + vol.lopend + " lopende kaarten; dat is het maximum" + (praktijkIsKlant(pk) ? " voor het aantal logins in je team" : " tijdens de proef") +
               ". Rond kaarten af van patiënten die klaar zijn (Kaarten, Afronden); dan komt er ruimte vrij."
-            : "Er staan te veel afgeronde en verwijderde kaarten bij je praktijk. Leeg de prullenbak (Kaarten, Prullenbak); dan komt er ruimte vrij." });
+            : "Er staan te veel kaarten bij je praktijk, afgeronde en verwijderde meegeteld (hooguit " + vol.grens * KAARTEN_BEWAARD_KEER +
+              "). Verwijder afgeronde kaarten die je niet meer nodig hebt en leeg de prullenbak (Kaarten, Prullenbak); dan komt er ruimte vrij." });
           return;
         }
       }
@@ -9697,6 +9699,8 @@ async function afhandelen(request, response) {
         PROEF_BEWAAR: String(PROEF_BEWAAR_DAGEN), PROEF_DAGEN: String(PROEF_DAGEN), NA_EINDE: String(NA_EINDE_WISSEN_DAGEN), INCASSO_VOORAF: String(INCASSO_VOORAF_DAGEN),
         // grens op lopende kaarten uit lib/plaatsen.js: de voorwaarden noemen hetzelfde getal als de server hanteert
         KAARTEN_PROEF: String(KAARTEN_PROEF), KAARTEN_PER_LOGIN: String(KAARTEN_PER_LOGIN),
+        // legal 2026-11-20 17u: ook de grens op alle kaarten samen (afgerond en prullenbak meegeteld, kaartVol)
+        KAARTEN_BEWAARD_PROEF: String(KAARTEN_PROEF * KAARTEN_BEWAARD_KEER), KAARTEN_BEWAARD_KEER: String(KAARTEN_BEWAARD_KEER),
         // grens op beveiligde praktijken per proef (#370): de voorwaarden noemen het getal van de server
         PRAKTIJKEN_PROEF: String(MAX_PRAKTIJKEN_PER_PROEF),
         // Mollie staat alleen in de privacyverklaring als online betalen echt aan staat
@@ -9704,7 +9708,7 @@ async function afhandelen(request, response) {
         // op elke factuur en blijven met de betaling 7 jaar (proefNaPraktijkWissen houdt het abonnement)
         BETAAL_RIJ_HTML: mollieAan() ? '<tr id="betalen"><td>Betaling: naam van de praktijk (of je eigen naam), e-mail, aantal therapeuten, bedrag, '
           + "en de kenmerken van klant, betaling en machtiging bij Mollie. Geen rekeningnummer of kaartgegevens; die vul je alleen bij Mollie in. "
-          + "Vul je bij Mijn abonnement factuurgegevens in (naam van de praktijk zoals bij de KvK en adres; niet verplicht), dan bewaren we die en zetten we ze op elke nieuwe factuur. "
+          + "Vul je bij Mijn proef factuurgegevens in (naam van de praktijk zoals bij de KvK en adres; niet verplicht), dan bewaren we die en zetten we ze op elke nieuwe factuur. "
           + "Werk je vanuit huis, dan is dat adres ook je woonadres.</td>"
           + "<td>Het abonnement afrekenen, facturen maken en vastleggen dat je klant bent. Grondslag: de afspraak met de praktijk (de overeenkomst) en de wettelijke plicht om facturen te bewaren</td>"
           + "<td>Zolang je klant bent; facturen en betaalgegevens, met de factuurgegevens die erop staan, daarna 7 jaar, omdat de wet dat vraagt (fiscale bewaarplicht)</td></tr>" : "",
