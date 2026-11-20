@@ -3087,12 +3087,21 @@ function telVenster(teller, sleutel, max, req, logPad) {
   return false;
 }
 // remmen voor schrijven en lezen: anoniem (patiënt, aanmelden, inloggen) per IP; met een
-// geldige praktijksessie per praktijk en per IP in een eigen, ruimere bak
+// geldige praktijksessie eerst per login, dan per praktijk en per IP in een eigen, ruimere bak.
+// Security 2026-11-20 12u (vraag gebruikers-sweep 02u, Karin): de bak telde per praktijk voor het
+// hele team samen. Eén collega (of één vastgelopen tabblad) met 600 keer lezen in 5 minuten zette
+// zo iedereen in de praktijk vijf minuten op 429. Nu heeft elke login (een eigen login, of het
+// gedeelde praktijkwachtwoord samen) de oude grens als eigen bak; een verzoek dat daar al vastloopt
+// telt niet mee in de praktijkbak. De praktijkbak en de bak per IP zijn het plafond voor het hele
+// team (REM_TEAM_FACTOR keer de grens per login), zodat een sessie nog steeds geen vrijbrief is.
+const REM_TEAM_FACTOR = 4;
 function remVol(req, ipTeller, ipMax, pkTeller, pkMax, sesIpTeller, sesIpMax, logPad) {
-  const pk = praktijkSessieVan(req);
-  if (!pk) return telVenster(ipTeller, ipSleutel(req), ipMax, req, logPad);
-  return telVenster(pkTeller, pk, pkMax, req, logPad + "-praktijk") ||
-    telVenster(sesIpTeller, ipSleutel(req), sesIpMax, req, logPad + "-sessies");
+  const s = sessieVan(req);
+  if (!s) return telVenster(ipTeller, ipSleutel(req), ipMax, req, logPad);
+  const login = s.pk + "\u0000" + (s.lid ? "lid:" + s.lid : "gedeeld");
+  return telVenster(pkTeller, login, pkMax, req, logPad + "-login") ||
+    telVenster(pkTeller, s.pk, pkMax * REM_TEAM_FACTOR, req, logPad + "-praktijk") ||
+    telVenster(sesIpTeller, ipSleutel(req), sesIpMax * REM_TEAM_FACTOR, req, logPad + "-sessies");
 }
 function schrijfLimiet(req, res) {
   if (!remVol(req, schrijfTeller, SCHRIJF_IP_MAX, schrijfPraktijkTeller, SCHRIJF_PRAKTIJK_MAX,
