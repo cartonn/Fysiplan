@@ -670,6 +670,14 @@ hetzelfde account-object; #363/#369 inbox; #366 `proefEinde` (alleen langer tot 
 
 ## Open
 
+- **Vraag van de gebruikers-sweep 2026-11-20 22u (Karin, eigen server zonder EIGEN_LOGIN_VERPLICHT) — MIDDEL toegang — met het gedeelde wachtwoord een
+  openstaande uitnodiging van een beheerder met eigen login overnemen:** Karin (eigen login) nodigt Nina uit als beheerder. Een collega met het gedeelde
+  praktijkwachtwoord doet `POST /api/praktijk/team/uitnodigen` met hetzelfde e-mailadres en `rol:"therapeut"`: 200, de nieuwe link staat in het antwoord en
+  Karins link geeft daarna 404. Ook `/team/rol` en `/team/verwijder` op de nog niet aangenomen Nina geven 200; Karin krijgt geen melding. Verwacht: een
+  uitnodiging die een beheerder met eigen login verstuurde is beschermd zoals `beschermdeBeheerder`. Plek: server.js ~5332–5340 (`l && lidActief(l)` kijkt alleen
+  of de uitnodiging al is aangenomen) en ~5364. Productie heeft EIGEN_LOGIN_VERPLICHT=aan, dus alleen relevant zolang de schakelaar uit kan (zelfde familie als
+  de vondst van 18u hieronder).
+
 - **OPGELOST 2026-11-20 20u (deze PR, test:uitnodigingbeheerder) — Vraag van de gebruikers-sweep 2026-11-20 18u (Karin, eigen server zonder EIGEN_LOGIN_VERPLICHT) — MIDDEL toegang — uitnodigen als beheerder omzeilt
   de bescherming van een beheerder met eigen login:** collega Tom (ingelogd met het gedeelde praktijkwachtwoord) kan Ellen (beheerder met eigen login) niet
   degraderen of verwijderen (403, `beschermdeBeheerder` server.js ~5349), maar `POST /api/praktijk/team/uitnodigen` met `rol:"beheerder"` geeft 200 (~5318, geen

@@ -20,7 +20,7 @@ const talen = (naam) => {
 const storing = talen("STORING");
 for (const t of talen("NIETGEVONDEN")) assert.ok(storing.includes(t), `storingsmelding ook in ${t}`);
 assert.ok(storing.includes("nl"), "storingsmelding in het Nederlands");
-assert.match(html, /toonStoring\(res\[0\]&&res\[0\]\.status\)/, "status van de server gaat mee naar de melding");
+assert.match(html, /toonStoring\(res\[0\]&&res\[0\]\.status,/,"status van de server gaat mee naar de melding");
 // 429 (rem op verkeerde kaartlinks, gedeelde wifi) heeft in elke taal een eigen melding die geen kaart belooft
 // en niet zegt dat het niet aan het internet ligt (sweep 2026-11-19 18u, Truus)
 {
@@ -29,7 +29,16 @@ assert.match(html, /toonStoring\(res\[0\]&&res\[0\]\.status\)/, "status van de s
   const nlRem = blok.match(/nl:\{rem:\[([^\]]*)\]/)[1];
   assert.doesNotMatch(nlRem, /Je kaart is er nog|niet aan je internet/);
   assert.match(nlRem, /vijf minuten/);
-  assert.match(html, /var soort=status===429\?'rem'/);
+  assert.match(html, /var soort=status===429\?\(rem==='lezen'\?'veel':'rem'\)/);
+  // leesrem (rem:"lezen", te veel kaarten geopend) heeft een eigen zin zonder "verkeerde kaartlink" (sweep 2026-11-20 22u, Jayden)
+  assert.equal((blok.match(/\bveel:\['/g) || []).length, storing.length, "leesrem-melding in elke taal");
+  const enVeel = blok.match(/en:\{rem:[\s\S]*?veel:\[([^\]]*)\]/)[1];
+  assert.doesNotMatch(enVeel, /wrong card link/);
+  assert.match(html, /toonStoring\(res\[0\]&&res\[0\]\.status,res\[0\]&&res\[0\]\.rem\)/, "soort rem gaat mee naar de melding");
+  const srv = await readFile(join(root, "server.js"), "utf8");
+  assert.match(srv, /function leesLimiet[\s\S]{0,800}?send429\(res, 300, \{ ok: false, rem: "lezen"/, "server zegt welke rem");
+  // wie al raadde, houdt de raad-tekst, ook als daarna de leesrem vol is (hertest Jayden)
+  assert.match(srv, /urlPath === "\/api\/kaart" && request\.method === "GET"\) \{[\s\S]{0,300}?kaartRadenGeblokt\(request, response\)\) return;\s*if \(leesLimiet\(request, response\)\) return;/, "raad-rem vóór leesrem");
 }
 
 let pw = null;
@@ -57,16 +66,18 @@ try {
     ["nl", 0, "Even geen verbinding", "net"],
     ["en", 429, "Please wait a moment", "rem"],
     ["nl", 429, "Even geduld", "rem"],
+    ["en", 429, "Please wait a moment", "veel", "lezen"],
+    ["nl", 429, "Even geduld", "veel", "lezen"],
     ["tr", 502, "Şu anda çalışmıyor", "druk"]
   ];
   let n = 0;
-  for (const [taal, status, kop, soort] of gevallen) {
+  for (const [taal, status, kop, soort, rem] of gevallen) {
     const ctx = await browser.newContext({ viewport: { width: 320, height: 568 }, locale: "nl-NL", serviceWorkers: "block",
       extraHTTPHeaders: { "x-forwarded-for": `10.74.0.${++n}` } });
     const p = await ctx.newPage();
     const fouten = [];
     p.on("pageerror", (e) => fouten.push(e.message));
-    await p.route("**/api/kaart?id=*", (r) => status ? r.fulfill({ status, contentType: "application/json", body: JSON.stringify({ ok: false, error: "x" }) }) : r.abort("internetdisconnected"));
+    await p.route("**/api/kaart?id=*", (r) => status ? r.fulfill({ status, contentType: "application/json", body: JSON.stringify(rem ? { ok: false, rem, fout: "x" } : { ok: false, error: "x" }) }) : r.abort("internetdisconnected"));
     await p.goto(`${origin}/k/abc123def456?taal=${taal}`, { waitUntil: "load" });
     await p.waitForSelector("#storing", { state: "visible" });
     const m = await p.evaluate(() => ({ kop: document.getElementById("storing_kop").textContent, soort: document.getElementById("storing").dataset.soort, lang: document.documentElement.lang }));
