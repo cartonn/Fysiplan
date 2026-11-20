@@ -2,7 +2,8 @@
 // of waarop een klant onterecht kon verdwijnen. Zonder browser. `npm run test:proefarchief`
 // 1. Na een verlopen proef zette archiveren/terugzetten de bewaartermijn van een kaart steeds
 //    opnieuw (aan/uit/aan = steeds 30 dagen vanaf nu): kaarten bleven onbeperkt leven.
-//    Nu mag archiveren dan alleen als de kaart daardoor niet later verloopt.
+//    Nu mag archiveren dan alleen als de kaart daardoor niet later verdwijnt (verdwijntOp, met de
+//    wisdatum van de praktijk; legal 2026-11-20: terughalen kan dus als de praktijk toch eerder gaat).
 // 2. Was proef-aanmeldingen.json onleesbaar, dan zag de server geen enkele aanmelding en wiste
 //    het uurlijkse rondje elk praktijkaccount met een oude proef en zonder kaarten, ook klanten.
 import assert from "node:assert/strict";
@@ -69,14 +70,28 @@ try {
 
   const r1 = await archief("k1aaaaaaaaaa", true);
   assert.equal(r1.status, 403, "archiveren dat de bewaartermijn verlengt, is dicht na de proef");
-  assert.equal((await r1.json()).proefVerlopen, true);
+  const j1 = await r1.json();
+  assert.equal(j1.proefVerlopen, true);
   assert.ok(!(await lees("kaarten.json"))[pk].truus.gearchiveerd, "k1 bleef ongewijzigd");
+  const datum = (ms) => new Date(ms).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Amsterdam" });
+  assert.ok(j1.fout.includes(datum(nu - 80 * dag + 90 * dag)), "foutzin noemt de echte bewaardatum van k1: " + j1.fout);
 
+  // Legal 2026-11-20 (gebruikers-sweep, Mark): de praktijk verdwijnt 30 dagen na de proef (over 28
+  // dagen). Afronden en terughalen veranderen die dag niet, dus terughalen mag: een per ongeluk
+  // afgeronde kaart moet terug kunnen. De kaart leeft daardoor niet langer dan de praktijk.
+  const wisPraktijk = nu - 2 * dag + 30 * dag;
   const r2 = await archief("k2bbbbbbbbbb", true);
   assert.equal(r2.status, 200, "archiveren dat de termijn inkort, mag gewoon");
   const r3 = await archief("k2bbbbbbbbbb", false);
-  assert.equal(r3.status, 403, "terugzetten dat de termijn weer verlengt, is dicht na de proef");
-  assert.ok((await lees("kaarten.json"))[pk].jan.gearchiveerd, "k2 blijft gearchiveerd");
+  assert.equal(r3.status, 200, "terughalen mag als de praktijk toch eerder verdwijnt");
+  const j3 = await r3.json();
+  assert.ok(Math.abs(j3.verloopt - wisPraktijk) < 60000, "kaart verdwijnt nog steeds met de praktijk");
+  assert.ok(!(await lees("kaarten.json"))[pk].jan.gearchiveerd, "k2 is terug");
+  for (const aan of [true, false, true, false]) {
+    const r = await archief("k2bbbbbbbbbb", aan);
+    assert.equal(r.status, 200);
+    assert.ok((await r.json()).verloopt <= wisPraktijk + 60000, "aan/uit rekt de termijn niet op");
+  }
   await stop(app);
 
   // ---- 2. onleesbaar aanmeldingenbestand: oude proef, geen kaarten, maar klant ----

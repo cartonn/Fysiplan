@@ -8082,16 +8082,20 @@ async function afhandelen(request, response) {
       // Archiveren en terugzetten blijven open na een verlopen proef, maar mogen de bewaartermijn
       // dan niet meer oprekken: aan/uit/aan zette `gearchiveerdOp` steeds op nu, zodat een
       // praktijk zonder abonnement haar kaarten onbeperkt kon laten leven (gebruikers-sweep
-      // 2026-11-09, Mark). Zou de wijziging de kaart later laten verlopen dan nu, dan 403.
+      // 2026-11-09, Mark). Zou de wijziging de kaart later laten verdwijnen dan nu, dan 403.
+      // Legal 2026-11-20: vergelijk de datum die praktijk en patiënt echt zien (verdwijntOp, met
+      // de wisdatum van de praktijk). Met alleen verlooptOp kon een per ongeluk afgeronde kaart
+      // niet meer terug, terwijl de praktijk toch op dezelfde dag verdwijnt, en noemde de
+      // foutzin een latere datum dan de kaart en /k (art. 5 lid 1 a en d, art. 12 lid 1 AVG).
       const voorArchief = { gearchiveerd: kaart.gearchiveerd, gearchiveerdOp: kaart.gearchiveerdOp };
-      const verlooptVoor = verlooptOp(kaart);
+      const verlooptVoor = verdwijntOp(pk, kaart);
       if (b.archief) {
         if (!kaart.gearchiveerd) kaart.gearchiveerdOp = Date.now();
         kaart.gearchiveerd = true;
       } else { delete kaart.gearchiveerd; delete kaart.gearchiveerdOp; }
       const proefVoorbij = !beheerEigen(request) &&
         (proefVerlopen(proefVan(request)) || praktijkProefVerlopen(pk, request));
-      if (proefVoorbij && verlooptOp(kaart) > verlooptVoor) {
+      if (proefVoorbij && verdwijntOp(pk, kaart) > verlooptVoor) {
         for (const [veld, waarde] of Object.entries(voorArchief)) { if (waarde === undefined) delete kaart[veld]; else kaart[veld] = waarde; }
         await sendJson(response, 403, { ok: false, proefVerlopen: true,
           fout: "De gratis proef van je praktijk is voorbij. Deze kaart blijft tot " + datumNl(verlooptVoor) + " bewaard; langer kan niet zonder abonnement." });
