@@ -627,6 +627,11 @@ hetzelfde account-object; #363/#369 inbox; #366 `proefEinde` (alleen langer tot 
 
 ## Open
 
+- **Vraag van de gebruikers-sweep 2026-11-20 02u (Karin) — MIDDEL beschikbaarheid — leesrem per praktijk:** ingelogd telt `leesLimiet` per praktijk
+  (`LEES_PRAKTIJK_MAX` 600 per 5 min, vast venster via `telVenster`, `retry-after: 300`) voor het hele team samen. Een team met veel logins (tot 50)
+  kan dat met herladen en tabbladen halen; dan krijgt iedereen tot 5 min 429. Voorstel om te wegen: grens per login of schuivend venster, met de
+  praktijkgrens als plafond. De app-kant (`loadPraktijken` maakt van een 429 stil een lege lijst) pakt de sweep op.
+
 - **OPGELOST 2026-11-19 20u (deze PR, test:leeslog) — MIDDEL — "Nieuwe link" wiste het leeslog van een kaart.** Het leeslog
   (wie een kaart opende of bewaarde) hangt aan het kaart-id. `/api/kaart/nieuwe-link` gaf de kaart een nieuw id, maar de regels
   bleven bij het oude: de beheerder zag ze niet meer bij de kaart (Inzage gaf alleen nog regels over alle kaarten) en `snoei` in

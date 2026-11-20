@@ -76,6 +76,14 @@ for (const t of TALEN) {
 assert.equal(ctx.mgTekst(kaart, "", lokaal, "xx", h("en-GB")).split("\n")[0], "My data at Fysiplan", "onbekende taal: Engels");
 // de pagina geeft de taal van de kaart door, niet alleen nl/en
 assert.match(html, /var mt=TMGD\[TAAL\]\?TAAL:'en'/, "download volgt de kaarttaal");
+// sweep 2026-11-20 (Jayden): "1 days" en een oefening met 0 dagen (aan- en weer uitgevinkt)
+const eenDag = { ...kaart, oefTrouw: { Squat: { n: 1, d: "2026-11-03" }, Brug: { n: 0, d: "" } } };
+const en1 = ctx.mgTekst(eenDag, "Fysio Test", lokaal, "en", h("en-GB"));
+assert.match(en1, /- Squat: 1 day\n/, "en: enkelvoud bij één dag");
+assert.doesNotMatch(en1, /Brug: 0/, "en: oefening met 0 dagen niet genoemd");
+assert.match(ctx.mgTekst(eenDag, "Fysio Test", lokaal, "nl", h("nl-NL")), /- Squat: 1 dag\n/, "nl: enkelvoud bij één dag");
+const nul = ctx.mgTekst({ ...kaart, oefTrouw: { Brug: { n: 0, d: "" } } }, "Fysio Test", lokaal, "en", h("en-GB"));
+assert.doesNotMatch(nul, /Brug: 0/, "alleen 0 dagen: niets genoemd");
 
 // lege kaart: geen fouten, overal "niets"
 const leeg = ctx.mgTekst({ client: {} }, "", {}, "nl", h("nl-NL"));
@@ -102,7 +110,7 @@ assert.match(html, /var tekst=mgTekst\(K\.kaart/);
   ctx.mgSeintjeErbij(k, "<script>", T);
   assert.equal(k.mijnSeintjes.length, 1, "alleen de drie vaste soorten");
   const fr = ctx.mgTekst(k, "", {}, "fr", h("fr-FR"));
-  assert.match(fr, /- Squat: 1 jours/);
+  assert.match(fr, /- Squat: 1 jour\n/);
   assert.match(fr, /- Brug: 3 jours/);
   assert.doesNotMatch(fr, /: 0 jours/);
   assert.ok(fr.includes(ctx.TMGD.fr.seinW.vraag), "eigen seintje staat er direct in");

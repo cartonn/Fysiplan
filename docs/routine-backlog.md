@@ -73,6 +73,38 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+### Sweep 2026-11-20 02u (vijf persona's lokaal met EIGEN_LOGIN_VERPLICHT=aan en PROEF_VERPLICHT=aan. Let op: de eerste ronde draaide per ongeluk op een verouderde checkout (#357, 16-11; `git fetch` was nog niet klaar); alle punten hieronder zijn daarna op main #401 opnieuw nagelopen en alleen wat daar nog bestaat staat hier. Geen 500's of pageerrors; beheergrenzen hielden: minstens één beheerder, zichzelf verwijderen 400, X ↔ Y 404/403, elke beheeractie als therapeut 403 met zin (scherm en API); verwijderde collega: sessie 401, login 403; opnieuw akkoord via het scherm ok; /v2/gegevens download + WISSEN ok; inloggen met een reservecode eindelijk getest: werkt, ook kleine letters)
+- **OPGELOST 2026-11-20 deze run (test:luistergeenopname) — HOOG (Truus, iPhone SE) — "Luister naar uitleg" stond er ook als geen oefening een opname had;** een tik gaf alleen
+  een groen blok met "Nog geen actuele stemopname … deze selectie … behandelaar". Nu staat de knop er in het Nederlands pas als het stemmanifest geladen is en minstens één oefening een
+  opname heeft; laadt het manifest niet, of is de kaart in een andere taal (toestelstem), dan blijft hij. Hertest Truus: ok (ook 200 %, taalwissel, offline); haar gat (traag manifest:
+  knop 4 s zichtbaar) ook gefixt. Nog open (LAAG): de melding bij een gemengde kaart heeft nog vakjargon en groene opmaak; manifest geblokkeerd → "De natuurlijke stem kon niet laden" bij een kaart zonder opnames.
+- **OPGELOST 2026-11-20 deze run (test:tweedestap) — MIDDEL (Sanne) — reservecode:** "je hebt er nog N" stond in het dichte inlogblok (onzichtbaar), nu een eigen balk onder de
+  kopbalk met "Naar Team" en "Sluiten" (44 px, focus na Sluiten naar de praktijkknop); een gebruikte reservecode kreeg de zin over de code-app, nu "Die reservecode klopt niet of is al
+  gebruikt…"; codeveld en "nodig"-melding noemen de reservecode. Hertest Sanne ok. Nog open (LAAG): de balk is eenmalig (na herladen weg), focus na inloggen op body.
+- **OPGELOST 2026-11-20 deze run (test:mijngegevens) — LAAG (Jayden) — "1 days" in de download "Mijn gegevens";** oefening met 0 dagen niet meer genoemd.
+- **MIDDEL (Mark, iPad) — A4-schema op de iPad (bekend, opnieuw gemeten op #401):** S/H/W-vakjes 16×12 staand, 13×10 liggend, tekst 9,5 px, geen toegankelijke naam, geen
+  `inputmode`/maxlength; een tik rechts in een gevuld vakje selecteert alles, en typen vervangt dan de waarde zonder waarschuwing ("2,5 kg" → "X"). Knopjes video/vragen op de A4-tegels
+  20–24 px, aria-label "Eigen video"/"Vragen bij deze oefening" zonder oefeningnaam. Voorstel: op `pointer:coarse` een bewerkpaneel. Ontwerpkeuze, groter werk.
+- **MIDDEL (Karin) — leesrem per praktijk:** ingelogd telt `leesLimiet` per praktijk (600 per 5 min, vast venster) voor het hele team samen; een groot team kan dat halen en dan zit
+  iedereen tot 5 min vast. `loadPraktijken` (index.html ~3351) maakt van een 429 stil `[]`. Ook als vraag in docs/security-backlog.md (i). Sanne: zonder login 429 na ~121 GET's (~18× herladen).
+- **MIDDEL (Sanne) — terugknop verlaat de app; zoeken zonder leeg-staat (alleen-emoji toont alle 817); 200 % tekst doet niets in /v2/app (px), A4-preview bij 200 % zoom afgesneden;**
+  welkom weg na herladen vóór de praktijknaam; tweede apparaat zonder "Ik heb al een account" (Mark: Kaarten zegt alleen "Vul eerst de naam… beveilig", focus op `k_naam`).
+- **MIDDEL (Mark) — velden zonder label:** `#tm_unaam`, `#tm_uemail`, `#tm_urol`, `#eo_naam`, `#eo_uitleg`, `#eo_foto`, `#ev_yt`, `[data-safspraak]`, `[data-safherhaal]`.
+- **MIDDEL (Mark) — proef:** verlopen-pagina zegt "Sinds <EINDDATUM> kun je geen nieuwe kaarten meer maken" terwijl de proef t/m die dag liep (proef.html ~236; moet de dag erna zijn);
+  "Mijn proef" 64×16 px; /v2/proef?mijn=1 heeft op de laatste dag geen "doorgaan". Verlopen-pagina: "Terug naar de site" 14 px, logo 20 px, vinkje 18 px.
+- **MIDDEL (Truus, Jayden) — patiëntkaart:** oefenstand liggend foto 73×109 met vergrootknop op de eindhouding, uitleg onder de vouw; lightbox liggend 94×142; pijnschaal 26–34 px breed
+  (schuif is `aria-hidden`), cijfers groeien niet bij 200 %; "Ik heb een vraag" zonder typveld (kaart belooft "staat je vraag er niet bij"); onderbalk liggend links uitgelijnd.
+- **MIDDEL (Jayden) — vertalen faalt:** kaart meldt het nu, maar de download "My data" heeft Nederlandse namen zonder melding; geen "Saving…"-tekst bij traag (alleen pulserende knop).
+- **LAAG (Karin):** Team iPad liggend "laatst ingelogd 20 / nov" breekt af (`a[data-tm2wis]` 44 px in de tekst, v2.css ~436, gewone spatie in de datum); lange naam zonder spaties onder de
+  rolkeuze (`.tm-naam b` overflow-wrap); tikdoelen Team desktop (rol 32, × 36, "wissen" 15 px); verwijderde collega krijgt "Beveilig eerst je praktijk" (server.js ~821).
+- **LAAG (Sanne):** 0612345678-zin; 13e oefening als alert; thuiskaart Groot 4 per vel terwijl het label "zes" belooft; Kaarten opent met focus op `k_naam`.
+- **LAAG (Mark):** Help/Updates (Engels) zichtbaar op iPad naast verborgen "Hulp"; opnieuw uitnodigen zelfde adres verandert de naam stil; eigen oefening zonder naam: focus niet naar het veld;
+  regeleinden in uitleg eigen oefening weg; dubbele sjablooncategorieën ("Rug" naast "Rug en bekken" e.a.); verlopen /o-link noemt "camera-icoon".
+- **LAAG (Truus, Jayden):** losse W-waarde ("langzaam") als getal opgemaakt; "1/7 geoefend" dubbelzinnig bij de therapeut; privacylink /k 17–20 px; Engelse kaart bij en-US met NL-namen (vertalen 503 lokaal); 429 per IP achter gedeeld wifi blokkeert ook de echte kaart (tekst nu duidelijk).
+- **Al opgelost op main (niet meer melden):** lightbox-focus, "Nieuw in Fysiplan" na welkom, Print-tooltip, "loopt nog vandaag nog", proef t/m einde dag, Vandaag-knoppen 44 px, oude websitefout, therapeut-profiel vóór status (kwam door ingeplakte cookie).
+- **Niet getest:** uitnodigen per mail, abonnement/opzeggen (Mollie lokaal uit), echte iOS Safari, video op /k, het 24-uursslot na foute codes.
+- **Volgende run:** A4-schema op iPad (ontwerpkeuze), terugknop in de app, leeg-staat bibliotheek, labels op formuliervelden, tweede apparaat "Ik heb al een account", verlopen-pagina "Sinds".
+
 ### Sweep 2026-11-19 22u (vijf persona's lokaal met EIGEN_LOGIN_VERPLICHT=aan en PROEF_VERPLICHT=aan; geen 500's of pageerrors; beheergrenzen hielden: minstens één beheerder, zichzelf verwijderen 400, X ↔ Y 404 of eigen gegevens, elke beheeractie als therapeut 403 met zin (scherm en API); verwijderde collega: sessie, login en geldige TOTP 401/403; verlopen proef: 17 schrijfroutes 403, /k en .ics blijven werken; /v2/gegevens download + WISSEN ok)
 - **OPGELOST 2026-11-19 deze run (test:profielleegadres) — MIDDEL (Karin, desktop + iPad liggend) — profielwijziging op een tweede apparaat met leeg adres ging stil verloren.**
   `upsertPraktijk` stopte zonder melding bij een leeg adres. Nu haalt de app eerst het serverprofiel op en vult de lege velden aan (de eigen wijziging wint via `basis`);

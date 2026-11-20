@@ -1174,7 +1174,7 @@ function lopendeInstelling(sleutel) {
 }
 const reservecodesOver = (l) => (heeftTweedeStap(l) && Array.isArray(l.totp.reserve)) ? l.totp.reserve.length : 0;
 const TWEEDE_STAP_TEKST = {
-  nodig: "Vul de code uit je code-app in.",
+  nodig: "Vul de code uit je code-app in, of een reservecode.",
   fout: "Die code klopt niet. Wacht op de volgende code in je code-app, of gebruik een reservecode.",
   slot: "Te veel foute codes. De code uit je code-app werkt 24 uur niet; log in met een reservecode. Heb jij die codes niet ingevuld, kies dan na het inloggen een nieuw wachtwoord."
 };
@@ -1211,7 +1211,15 @@ function tweedeStapCheck(l, invoer) {
   // maar verlengt een slot dat er al is niet (anders hield één poging per dag het eeuwig dicht).
   const n = (mis ? mis.n : 0) + 1;
   l.totp.mis = { start: (mis && n !== TOTP_MIS_PER_DAG) ? mis.start : nu, n };
-  return { ok: false, reden: "fout", vol: n === TOTP_MIS_PER_DAG };
+  return { ok: false, reden: "fout", vol: n === TOTP_MIS_PER_DAG, reserve: !!reserve };
+}
+// Melding bij een foute code. Een reservecode die niet (meer) klopt kreeg de tekst over de code-app,
+// terwijl ze juist een reservecode gebruikte, vaak een die ze al eens had gebruikt (gebruikers-sweep
+// 2026-11-20, Sanne). Of hij al gebruikt is weet de server niet (alleen ongebruikte hashes staan op schijf).
+function stapFoutTekst(u) {
+  return u && u.reserve
+    ? "Die reservecode klopt niet of is al gebruikt: elke reservecode werkt één keer. Gebruik een andere reservecode of de code uit je code-app."
+    : TWEEDE_STAP_TEKST.fout;
 }
 // Mail aan de eigenaar van de login zodra het maximum aan foute codes is bereikt. Zonder mail op
 // de server blijft het bij de regel in het logboek van de praktijk. Hooguit één per login per
@@ -1261,7 +1269,7 @@ async function weigerZonderTweedeStap(request, pk, lid, code, remNaam, pad, opni
     loginMisTel(remNaam || "?");
     telInlogMisIp(request, pad);
   }
-  await opnieuw(u.reden === "nodig" ? "Deze login heeft een tweede stap. Vul ook de code uit je code-app in, of een reservecode." : TWEEDE_STAP_TEKST[u.reden],
+  await opnieuw(u.reden === "nodig" ? "Deze login heeft een tweede stap. Vul ook de code uit je code-app in, of een reservecode." : u.reden === "fout" ? stapFoutTekst(u) : TWEEDE_STAP_TEKST[u.reden],
     u.reden === "slot" ? 429 : 403);
   return true;
 }
@@ -4963,7 +4971,7 @@ async function afhandelen(request, response) {
             if (stap2.reden === "slot") { await send429(response, 3600, { ok: false, tweedeStap: true, fout: TWEEDE_STAP_TEKST.slot }); return; }
             loginMisTel(remKey);
             telInlogMisIp(request, "tweede-stap");
-            await sendJson(response, 403, { ok: false, tweedeStap: true, fout: TWEEDE_STAP_TEKST.fout });
+            await sendJson(response, 403, { ok: false, tweedeStap: true, fout: stapFoutTekst(stap2) });
             return;
           }
           viaReserve = stap2.via === "reserve";
@@ -5182,7 +5190,7 @@ async function afhandelen(request, response) {
       const u = await tweedeStap(request, pk, ik, b.code);
       if (u.ok) return true;
       if (u.reden === "slot") { await send429(response, 3600, { ok: false, code: true, fout: TWEEDE_STAP_TEKST.slot }); return false; }
-      await sendJson(response, u.reden === "fout" ? 403 : 400, { ok: false, code: true, fout: u.reden === "fout" ? TWEEDE_STAP_TEKST.fout : "Vul de code uit je code-app in, of een reservecode." });
+      await sendJson(response, u.reden === "fout" ? 403 : 400, { ok: false, code: true, fout: u.reden === "fout" ? stapFoutTekst(u) : "Vul de code uit je code-app in, of een reservecode." });
       return false;
     };
     if (urlPath.startsWith("/api/praktijk/team/tweede-stap/") && urlPath !== "/api/praktijk/team/tweede-stap/wis") {

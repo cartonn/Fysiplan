@@ -307,3 +307,4 @@ jobs:
       - run: npm run test:proefcookietermijn
       - run: npm run test:foutpagina
       - run: npm run test:wisdubbel
+      - run: npm run test:luistergeenopname
