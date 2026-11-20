@@ -7145,12 +7145,16 @@ async function afhandelen(request, response) {
     const nu = Date.now();
     leesMerk(request, pk, "berichten");
     const kaartenMetNieuws = Object.values(kaarten[pk] || {})
-      .filter((k) => !k.verwijderdOp && !k.demo && !k.gearchiveerd && verlooptOp(k) > nu)
-      .map((k) => ({ k, items: inboxItems(k) }))
+      .filter((k) => !k.verwijderdOp && !k.demo && verlooptOp(k) > nu)
+      // een afgeronde (gearchiveerde) kaart werkt voor de patiënt nog tot de bewaardatum; wat hij daarna
+      // doorgeeft (bv. "te veel pijn") viel nergens binnen terwijl /k "Verstuurd" zei (gebruikers-sweep
+      // 2026-11-20 10u, Mark). Dus: kwam er ná het archiveren iets binnen (`naArchief`, moment van ontvangst,
+      // niet van tikken), dan staat de kaart met alles wat open is in de inbox, met het label "afgeronde kaart".
+      .map((k) => ({ k, items: !k.gearchiveerd || Number(k.naArchief) > (Number(k.gearchiveerdOp) || 0) ? inboxItems(k) : [] }))
       .filter((x) => x.items.length)
       .map(({ k, items }) => {
         const oudste = Math.min(...items.map((i) => i.t));
-        return { id: k.id, naam: k.naam, behandelaar: k.behandelaar || null, items,
+        return { id: k.id, naam: k.naam, behandelaar: k.behandelaar || null, items, ...(k.gearchiveerd ? { gearchiveerd: true } : {}),
           laatst: Math.max(...items.map((i) => i.t)), wachtWerkdagen: werkdagenSinds(oudste, nu),
           dossier: k.dossier || null, inDossier: inDossierBij(k) };
       })

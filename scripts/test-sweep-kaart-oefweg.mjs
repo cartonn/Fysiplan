@@ -17,7 +17,7 @@ import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const kaart = await readFile(join(root, "public/kaart.html"), "utf8");
 assert.match(kaart, /if\(r\.status===409&&j&&typeof j==='object'\)j\.weg=true/, "stuur() geeft een 409 door aan de kaart");
-assert.match(kaart, /\.then\(function\(d\)\{if\(d&&d\.weg\)oefWeg\(idx,p===-1\);\}\)/, "vinkje leest het antwoord");
+assert.match(kaart, /\.then\(function\(d\)\{if\(d&&d\.weg\)oefWeg\(idx,p===-1\);/, "vinkje leest het antwoord");
 assert.match(kaart, /if\(st===409\)\{oefWeg\(zidx,false\);return;\}/, "te zwaar: bij 409 geen 'tik opnieuw' maar de melding met herlaadknop");
 // Sweep 2026-11-14 06u (Truus, iPhone SE): "Vernieuw de pagina" kon ze vanaf een beginschermicoon niet opvolgen.
 // Nu een echte knop "Kaart opnieuw laden", en in de stappenmodus gaat de kaart terug naar de weggehaalde oefening.
@@ -161,6 +161,20 @@ try {
   assert.equal(o2.rol, "alert");
   await page.waitForTimeout(6500);
   assert.equal(await page.evaluate(() => document.getElementById("wachtrij").style.display), "block", "de melding blijft staan");
+  // Sweep 2026-11-20 10u (Truus, iPhone SE): de praktijk wiste de kaart terwijl hij open stond; online gaf het
+  // vinkje een 404 maar bleef groen met "Goed bezig". Nu teruggedraaid, met de zin dat het niet aankwam.
+  await page.unroute("**/api/kaart/oefening");
+  await page.route("**/api/kaart/oefening", (r) => r.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ ok: false, fout: "Kaart niet gevonden." }) }));
+  await page.evaluate(() => { try { Object.keys(localStorage).forEach((k) => localStorage.removeItem(k)); } catch {} });
+  await page.goto(origin + "/k/" + ID + "?taal=en");
+  await page.waitForSelector('#oefs .oefdone[data-idx="1"]');
+  await page.evaluate(() => { document.querySelectorAll(".ov.on,.lb.on").forEach((o) => o.classList.remove("on")); document.body.classList.remove("sessie"); });
+  await page.evaluate(() => document.querySelector('#oefs .oefdone[data-idx="1"]').click());
+  await page.waitForSelector('#oefs .oef[data-oidx="1"] .oefweg', { timeout: 4000 });
+  const k1 = await page.evaluate(() => ({ pressed: document.querySelector('#oefs .oefdone[data-idx="1"]').getAttribute("aria-pressed"),
+    t: document.querySelector('#oefs .oef[data-oidx="1"] .oefweg').textContent }));
+  assert.equal(k1.pressed, "false", "vinkje op een gewiste kaart teruggedraaid");
+  assert.match(k1.t, /Not received.*call or email your practice/, "zin dat het niet aankwam: " + k1.t);
   assert.deepEqual(fouten, []);
   await ctx.close();
   console.log("PASS weggehaalde oefening op /k: vinkje terug, melding met herlaadknop, stappenmodus terug naar die oefening");
