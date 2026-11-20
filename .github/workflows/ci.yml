@@ -123,6 +123,9 @@ jobs:
       - run: npm run test:kaartgewist
       - run: npm run test:taalicoon
       - run: npm run test:archiefsein
+      - run: npm run test:agendaeinde
+      - run: npm run test:hernoemvraagbalk
+      - run: npm run test:proefnieuwapparaat
       - run: npm run test:naamemoji
       - run: npm run test:allesgedaan
       - run: npm run test:seintje

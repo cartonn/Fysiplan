@@ -660,6 +660,13 @@ hetzelfde account-object; #363/#369 inbox; #366 `proefEinde` (alleen langer tot 
 
 ## Open
 
+- **Vraag van de gebruikers-sweep 2026-11-20 18u (Karin, eigen server zonder EIGEN_LOGIN_VERPLICHT) — MIDDEL toegang — uitnodigen als beheerder omzeilt
+  de bescherming van een beheerder met eigen login:** collega Tom (ingelogd met het gedeelde praktijkwachtwoord) kan Ellen (beheerder met eigen login) niet
+  degraderen of verwijderen (403, `beschermdeBeheerder` server.js ~5349), maar `POST /api/praktijk/team/uitnodigen` met `rol:"beheerder"` geeft 200 (~5318, geen
+  `!ik`-check). Tom neemt de uitnodiging aan, logt in met die eigen login, zet het praktijkwachtwoord uit en verwijdert Ellen: 200, Ellens sessie 401. Een open
+  beheerder-uitnodiging blijft ook geldig nadat het praktijkwachtwoord uit gaat. Activiteit toont bij "collega-uitgenodigd" als wie `undefined`. Productie heeft
+  EIGEN_LOGIN_VERPLICHT=aan (daar geen gedeelde sessie), dus alleen relevant zolang de schakelaar uit kan; zelfde familie als "overstap: wie het eerst komt".
+
 - **Vraag van de gebruikers-sweep 2026-11-20 14u (Karin) — LAAG/MIDDEL beschikbaarheid — teamplafond van de rem per login (#409) is vast 4× de grens per login:**
   in een praktijk van vijf konden vier collega's die elk hun eigen 429 raakten de vijfde (ook de beheerder) vastzetten op /api/praktijk/team
   (één keer gezien, niet hard reproduceerbaar; server.js ~3098 `remVol`, `REM_TEAM_FACTOR = 4`). Te wegen: plafond laten meegroeien met het aantal
