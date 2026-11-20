@@ -643,6 +643,13 @@ hetzelfde account-object; #363/#369 inbox; #366 `proefEinde` (alleen langer tot 
 
 ## Open
 
+- **Vraag van de gebruikers-sweep 2026-11-20 10u (Karin) — MIDDEL toegang — overstap van gedeeld wachtwoord: wie het eerst komt wordt de enige beheerder:**
+  bij een oude praktijk met alleen een gedeeld wachtwoord kan elke collega die het wachtwoord kent als eerste "Maak je eigen login" doen; die
+  wordt enige beheerder en het gedeelde wachtwoord gaat uit (server.js ~5038–5077, commentaar noemt het bewust). De eigenaar komt daarna alleen
+  binnen via een uitnodiging van die collega. Te wegen: eerste eigen login bij de overstap pas beheerder na bevestiging per mail aan het adres
+  van de proef/het abonnement, of een herstelweg voor de eigenaar. Hangt samen met de keuze in docs/mensenwerk.md ("mag een net benoemde beheerder…").
+- **Opgelost door de gebruikers-sweep 2026-11-20 10u (Sanne) — e-mail met emoji/omkeerteken vóór de @ bij /v2/proef:** `valideerAanmelding`
+  toetste alleen `EMAIL_RE`, niet `geldigEmail`; nu dezelfde toets als Beveiligen en Team (test:proefemailteken).
 - **Vraag van de gebruikers-sweep 2026-11-20 06u (Sanne) — LAAG beschikbaarheid — grens nieuwe praktijken per IP pas bij de eerste kaart:**
   de zesde proef op een dag vanaf hetzelfde IP kan zich aanmelden, claimen en de tweede stap instellen; pas bij delen/QR komt
   "Er zijn vandaag al meerdere nieuwe praktijken vanaf dit adres aangemaakt" (`nieuwePraktijkLimiet`, server.js ~3283, 5 per dag per IP).

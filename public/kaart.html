@@ -1598,21 +1598,24 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       // 409: de praktijk haalde deze oefening intussen van de kaart. Dan het vinkje terugdraaien en
       // zeggen wat er aan de hand is; eerst bleef het stil groen staan (gebruikers-sweep 2026-11-13 22u, Jayden)
       try{stuur('/api/kaart/oefening',{id:id,oef:idx,n:oefNamen([idx])[0],aan:p===-1})
-        .then(function(d){if(d&&d.weg)oefWeg(idx,p===-1);}).catch(function(){});}catch(e){}
+        .then(function(d){if(d&&d.weg)oefWeg(idx,p===-1);
+          // 404: de praktijk wiste de hele kaart terwijl hij open stond; het vinkje bleef dan groen met "Goed bezig"
+          // (gebruikers-sweep 2026-11-20 10u, Truus). Zelfde terugdraai, met de zin dat het niet is aangekomen.
+          else if(d&&d.kwijt)oefWeg(idx,p===-1,trw('kwijt'));}).catch(function(){});}catch(e){}
     }
     // alle oefeningen af -> bevestig de dag-teller (idempotent; server telt één keer per dag)
     var totaal=document.querySelectorAll('#oefs .oefdone').length;
     if(totaal>0&&st.done.filter(function(i){return i<totaal;}).length>=totaal)bevestigGedaan();
   }
   // de oefening staat niet meer op de kaart (server 409): vinkje terug en een melding bij de oefening
-  function oefWeg(idx,wasAan){
+  function oefWeg(idx,wasAan,tekst){
     var st=leesOefDaan(),p=st.done.indexOf(idx);
-    if(wasAan&&p>-1){st.done.splice(p,1);zetOefTrouwLokaal(idx,false);bewaarOefDaan(st);tekenOefDaan();}
+    if(wasAan&&p>-1){st.done.splice(p,1);zetOefTrouwLokaal(idx,false);bewaarOefDaan(st);tekenOefDaan();try{tekenGedaan();}catch(e){}}
     var knop=document.querySelector('#oefs .oefdone[data-idx="'+idx+'"]');
     var oef=knop&&knop.closest('.oef');if(!oef)return;
     var info=oef.querySelector('.oefinfo')||oef,m=oef.querySelector('.oefweg');
     if(!m){m=document.createElement('p');m.className='oefweg';m.setAttribute('role','alert');info.appendChild(m);}
-    m.textContent=trg('weg');
+    m.textContent=tekst||trg('weg');
     // "Vernieuw de pagina" kon Truus niet opvolgen vanaf een beginschermicoon (geen adresbalk):
     // daarom een echte knop die de kaart opnieuw laadt (gebruikers-sweep 2026-11-14 02u, Truus)
     var hk=oef.querySelector('.oefherlaad');

@@ -23,6 +23,11 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **Vraag van de gebruikers-sweep 2026-11-20 10u — LAAG — AI-melding bij de Zoekhulp en het archiveren na de proef.**
+  (Sanne) De landing /v2 beschrijft de Zoekhulp als filter op lichaamsdeel en doel; de app zegt "een AI-dienst kiest de oefeningen" (privacyverklaring
+  noemt het wel). Nakijken of de landing hier een AI-melding nodig heeft (art. 50) of juist niets belooft. (Mark) Na een verlopen proef is archiveren
+  één klik zonder bevestiging en terughalen kan dan niet meer (403); de patiënt ziet meteen "behandeling afgerond". De foutzin noemt een andere
+  einddatum (verlooptOp, 20 dec) dan kaart en antwoord (verdwijntOp, 19 dec), server.js ~8084. Teksten tegen gedrag laten kloppen.
 - **OPGELOST 2026-11-20 05u (legal-PR van deze run; `scripts/test-mailrij-privacy.mjs` faalt zonder fix) — LAAG — subverwerkers (b) / code tegen tekst (d): de mail bij een seintje van een patiënt stond niet in /privacy.**
   Sinds #355 (2026-11-16) mailt de server de behandelaar of maker van een kaart (anders de beheerders, anders het adres van de proef)
   als een patiënt een seintje geeft; standaard aan, een beheerder zet het uit onder Team. De rij van de maildienst op

@@ -5861,7 +5861,7 @@ bridge2.jpg</div>
         }else{
           h+="<div class='ib-lijst'>"+lijst.map(function(k){
             var wacht=k.wachtWerkdagen>=d.herinnerNa?"<span class='ib-label wacht' title='Wacht al "+k.wachtWerkdagen+" werkdagen op afhandeling'>wacht "+k.wachtWerkdagen+" werkdagen</span>":"";
-            var dos=k.inDossier?"<span class='ib-label'>in dossier</span>":"";
+            var dos=(k.gearchiveerd?"<span class='ib-label' title='Deze kaart staat in het archief; de patiënt gaf dit door na het afronden'>afgeronde kaart</span>":"")+(k.inDossier?"<span class='ib-label'>in dossier</span>":"");
             return "<div class='ib-item'>"+avRond(k.naam,'ib-av')+
               "<div class='ib-tekst'><b>"+esc(k.naam)+"</b>"+(k.behandelaar?" <span class='ib-wie'>· "+esc(k.behandelaar)+"</span>":"")+
               "<div class='ib-wat'>"+k.items.map(function(i){return esc(inboxTekst(i))+" <small>· "+esc(wanneerTekst(i.t))+"</small>";}).join('<br/>')+"</div></div>"+
@@ -5926,6 +5926,23 @@ bridge2.jpg</div>
         if(el&&!el.disabled&&el.offsetParent!==null){clearInterval(KAART_FOCUS_KLOK);try{el.focus();}catch(e){}return;}
       }
       if(++pogingen>60)clearInterval(KAART_FOCUS_KLOK);
+    },100);
+  }
+  // Na een actie in het Deel-paneel tekent toonSrvKaarten de lijst opnieuw met alle panelen
+  // dicht. Wacht tot de rij er weer is, klap het paneel van die kaart open en zet de focus
+  // op de knop waar de gebruiker was.
+  function deelOpenTerug(id,knopSel){
+    var n=0,t=setInterval(function(){
+      var lijst=document.getElementById('k_srv_lijst');
+      var laden=!lijst||(/Laden…/.test(lijst.textContent||'')&&lijst.children.length<2);
+      var db=laden?null:document.getElementById('deel_'+id);
+      if(db){
+        clearInterval(t);db.style.display='';
+        var k=db.querySelector(knopSel);
+        if(k){var a=document.activeElement;if(!a||a===document.body||!a.isConnected){try{k.focus();}catch(e){}}}
+        return;
+      }
+      if(++n>60)clearInterval(t);
     },100);
   }
   function toonPrullenbak(blok,pr){
@@ -6762,7 +6779,10 @@ bridge2.jpg</div>
               var knv=document.getElementById('k_naam');
               if(knv)knv.value=d.naam||nieuw;
             }
-            delete hn.dataset.bezig;toonSrvKaarten();
+            // het Deel-paneel bleef na het opnieuw tekenen dicht en de focus viel op body
+            // (gebruikers-sweep 2026-11-20 06u, Sanne): open het weer en zet de focus terug
+            var hid=hn.dataset.shernoem;
+            delete hn.dataset.bezig;toonSrvKaarten();deelOpenTerug(hid,'[data-shernoem]');
           }
           else{delete hn.dataset.bezig;hn.textContent=oudH;alert(d.fout||'Naam wijzigen is niet gelukt.');}
         })
