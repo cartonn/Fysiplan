@@ -1650,7 +1650,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var knop=document.getElementById('gdaan');
     if(knop&&knop.dataset.bezig)return;if(knop)knop.dataset.bezig='1';
     stuur('/api/kaart/gedaan',{id:id,aan:true})
-      .then(function(d){if(d&&d.ok){K.kaart.gedaan=d.gedaan||[];tekenGedaan();}if(knop)delete knop.dataset.bezig;})
+      .then(function(d){if(d&&d.ok){K.kaart.gedaan=d.gedaan||[];tekenGedaan();}else if(d&&d.kwijt)zetDank(document.getElementById('mdank'),trw('kwijt'),'fout',true);if(knop)delete knop.dataset.bezig;})
       .catch(function(){if(knop)delete knop.dataset.bezig;});
   }
   // Vaste vragen in plaats van de vraaghulp (lib/vaste-vragen.js). De standaardvragen staan in
@@ -2785,8 +2785,21 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(typeof navigator!=='undefined'&&navigator.onLine===false)return;
     if(Date.now()-inhoudLaatst<30000)return;
     inhoudBezig=true;inhoudLaatst=Date.now();
-    fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+    fetch('/api/kaart?id='+id,{cache:'no-cache'}).then(function(r){
+      // de kaart is intussen gewist of gestopt: de open kaart liet stil de oude oefeningen staan en elke
+      // tik gaf daarna "probeer het zo opnieuw" (gebruikers-sweep 2026-11-20 14u, Truus en Jayden). Nu
+      // herlaadt hij (dezelfde melding als bij het openen van een gewiste kaart), zodra dat mag.
+      if(r.status===404)return {weg:true};
+      return r.ok?r.json():null;
+    }).then(function(d){
       inhoudBezig=false;
+      if(d&&d.weg){
+        // tikken uit de wachtrij die net niet aankwamen: de rode melding "Niet aangekomen … Bel of mail je
+        // praktijk" blijft staan; herladen naar het kale niet-gevonden-scherm wiste die (hertest Truus)
+        var wq=document.getElementById('wachtrij');
+        if(wq&&wq.classList.contains('fout')&&wq.style.display==='block')return;
+        if(wachtBezig||Object.keys(leesWacht()).length){inhoudLaatst=0;return;}
+        if(magHerladen())location.reload();else inhoudLaatst=0;return;}
       if(!d||!d.ok||!d.kaart)return;
       if(inhoudSig(d.kaart)===INHOUD_SIG){neemPatientDeelOver(d);return;}
       if(!magHerladen()){inhoudLaatst=0;return;}
@@ -2835,6 +2848,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function wisselTaal(t,klaar){
     TAAL=isTaal(t)?t:'nl';
     try{localStorage.setItem('fp_taal',TAAL);}catch(e){}
+    try{var ml=document.getElementById('kmanifest');if(ml)ml.href=manifestPad();}catch(e){}
     stopLezen();
     var gedaan=false,taal=TAAL;
     var af=function(teksten){if(gedaan)return;gedaan=true;if(!VERT[taal]&&teksten)VERT[taal]=teksten;if(TAAL===taal)alles();if(klaar)klaar();};
@@ -3166,9 +3180,11 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     window.addEventListener('resize',zet);
     zet();
   }
+  // het beginschermicoon opent in de taal van nu (sweep 2026-11-20 14u, Jayden), zie /api/kaart/manifest
+  function manifestPad(){return '/api/kaart/manifest?id='+id+'&taal='+encodeURIComponent(TAAL);}
   function initApp(){
     try{
-      var l=document.createElement('link');l.rel='manifest';l.href='/api/kaart/manifest?id='+id;
+      var l=document.createElement('link');l.rel='manifest';l.id='kmanifest';l.href=manifestPad();
       document.head.appendChild(l);
       if('serviceWorker' in navigator){
         navigator.serviceWorker.register('/kaart-sw.js',{scope:'/k/'}).catch(function(){});
@@ -3643,6 +3659,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var was=SESSIE;
     stopLezen();stopVideos();
     SESSIE=-1;tekenSessie();
+    // een wijziging van de therapeut die tijdens de oefenstand binnenkwam (antwoord, gewiste kaart) wachtte
+    // tot de volgende tabwissel (sweep 2026-11-20 14u, Truus): nu meteen na het sluiten nakijken
+    setTimeout(inhoudCheck,0);
     // history.back() komt pas even later aan; SESSIE_TERUG onthoudt dat die stap van ons is
     if(!viaTerug){try{if(history.state&&history.state.fpoef){SESSIE_TERUG=true;history.back();}}catch(e){}}
     var kop=document.getElementById('metingkop');
@@ -3801,7 +3820,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
           .then(function(r){if(!r.ok)throw r.status;delete oz.dataset.bezig;zetZwaar();})
           // 409: de oefening staat niet meer op de kaart; opnieuw tikken helpt dan niet (gebruikers-sweep
           // 2026-11-13 22u, Jayden: eindeloos "Niet verstuurd. Tik opnieuw")
-          .catch(function(st){delete oz.dataset.bezig;if(st===409){oefWeg(zidx,false);return;}oz.disabled=false;oz.textContent=trg('zwaarmis');});
+          .catch(function(st){delete oz.dataset.bezig;if(st===409){oefWeg(zidx,false);return;}if(st===404){oefWeg(zidx,false,trw('kwijt'));return;}oz.disabled=false;oz.textContent=trg('zwaarmis');});
         return;
       }
       // tik (of Enter/Space, want de fotoknop is een echte knop) op de foto
@@ -3951,7 +3970,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         .then(function(d){
           klaar();
           var nudge=document.getElementById('mnudge');
-          if(!d.ok){zetDank(dank,(TAAL==='nl'&&d.fout)?d.fout:tr('mfout'),'fout');if(nudge)nudge.style.display='none';return;}
+          if(!d.ok){zetDank(dank,d.kwijt?trw('kwijt'):(TAAL==='nl'&&d.fout)?d.fout:tr('mfout'),'fout',!!d.kwijt);if(nudge)nudge.style.display='none';return;}
           K.kaart.metingen=d.metingen||[];
           // er wacht al een nieuwere tik: niet terugspringen naar deze score en nog geen "Bewaard"
           if(MSCORE_NA&&MSCORE_NA.dataset.score!==b.dataset.score)return;
@@ -3998,6 +4017,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
             // "alles gedaan" terwijl de therapeut geen oefendag ziet
             if(!wil){var st=leesOefDaan();st.done.slice().forEach(function(i){toggleOefDaan(i);});}
           }
+          // kaart gewist of gestopt: niet stil laten staan alsof er niets gebeurde (sweep 2026-11-20 14u, Jayden)
+          else if(d&&d.kwijt)zetDank(document.getElementById('mdank'),trw('kwijt'),'fout',true);
           delete knop.dataset.bezig;})
         .catch(function(e){
           // zonder internet staat de tik in de wachtrij: toon nu al de stand die straks op de
@@ -4066,7 +4087,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       return stuur('/api/kaart/psk',{id:id,score:score})
         .then(function(d){pklaar();var dank=document.getElementById('pskdank');
           if(d&&d.ok){K.kaart.psk=d.psk||[];if(!nogEen()){tekenPsk();zetDank(dank,trpsk('dank'));}}
-          else zetDank(dank,(TAAL==='nl'&&d&&d.fout)?d.fout:trpsk('fout'),'fout');})
+          else zetDank(dank,d&&d.kwijt?trw('kwijt'):(TAAL==='nl'&&d&&d.fout)?d.fout:trpsk('fout'),'fout',!!(d&&d.kwijt));})
         .catch(function(e){pklaar();zetDank(document.getElementById('pskdank'),e&&e.wacht?trw('een'):trpsk('fout'),e&&e.wacht?'wacht':'fout');
           if(e&&e.wacht){K.kaart.psk=vandaagLokaal(K.kaart.psk,score);tekenPsk();}});
     });
@@ -4081,7 +4102,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       return stuur('/api/kaart/ervaring',{id:id,score:score})
         .then(function(d){
           if(d&&d.ok){K.kaart.ervaring=d.ervaring||[];if(!nogEen()){tekenHerstel();zetDank(dank,trh('dank'));}}
-          else{tekenHerstel();zetDank(dank,trh('fout'),'fout');}
+          else{tekenHerstel();zetDank(dank,d&&d.kwijt?trw('kwijt'):trh('fout'),'fout',!!(d&&d.kwijt));}
         })
         .catch(function(e){zetDank(dank,e&&e.wacht?trw('een'):trh('fout'),e&&e.wacht?'wacht':'fout');
           if(!(e&&e.wacht))tekenHerstel();
@@ -4237,6 +4258,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     sel.value=TAAL;
     sel.addEventListener('change',function(){
       var q=null;try{q=new URLSearchParams(location.search).get('taal');}catch(e){}
+      // zonder ?taal= (beginschermicoon, gewone link) bleef een oude keus bij de taallink staan: daarna opende
+      // ?taal=en uit de agenda toch Nederlands, ook al koos de patiënt intussen weer Engels (sweep 2026-11-20 14u, Jayden)
+      if(!isTaal(q)){var kz=taalKeus();if(kz&&isTaal(kz.link))q=kz.link;}
       if(isTaal(q)&&id)try{if(sel.value===q)localStorage.removeItem('fp_taalkeus_'+id);else localStorage.setItem('fp_taalkeus_'+id,JSON.stringify({link:q,keus:sel.value}));}catch(e){}
       wisselTaal(sel.value);
     });

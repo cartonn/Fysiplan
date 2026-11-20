@@ -120,6 +120,9 @@ jobs:
       - run: npm run test:gedaansync
       - run: npm run test:oefnaam
       - run: npm run test:oefweg
+      - run: npm run test:kaartgewist
+      - run: npm run test:taalicoon
+      - run: npm run test:archiefsein
       - run: npm run test:naamemoji
       - run: npm run test:allesgedaan
       - run: npm run test:seintje

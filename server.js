@@ -8087,6 +8087,18 @@ async function afhandelen(request, response) {
       // de wisdatum van de praktijk). Met alleen verlooptOp kon een per ongeluk afgeronde kaart
       // niet meer terug, terwijl de praktijk toch op dezelfde dag verdwijnt, en noemde de
       // foutzin een latere datum dan de kaart en /k (art. 5 lid 1 a en d, art. 12 lid 1 AVG).
+      // Afronden met een open vraag- of pijnseintje: eerst bevestigen. Een collega rondde anders een kaart af
+      // terwijl de patiënt net te veel pijn meldde, en het seintje verdween stil uit Vandaag en de inbox van de
+      // behandelaar; ook vanuit een paneel dat al open stond vóór het seintje binnenkwam (sweep 2026-11-20 14u, Mark).
+      const seinSoort = kaart.seintje && [kaart.seintje.soort, ...(Array.isArray(kaart.seintje.ook) ? kaart.seintje.ook : [])]
+        .find((x) => x === "pijn") || (kaart.seintje && [kaart.seintje.soort, ...(Array.isArray(kaart.seintje.ook) ? kaart.seintje.ook : [])]
+        .find((x) => x === "vraag"));
+      if (b.archief && !kaart.gearchiveerd && seinSoort && b.seintjeGezien !== true) {
+        await sendJson(response, 409, { ok: false, seintjeOpen: seinSoort,
+          fout: "Deze patiënt " + (seinSoort === "pijn" ? "meldt te veel pijn" : "heeft een vraag") +
+            " en dat seintje is nog niet afgehandeld. Na afronden staat het niet meer in Vandaag en in de inbox." });
+        return;
+      }
       const voorArchief = { gearchiveerd: kaart.gearchiveerd, gearchiveerdOp: kaart.gearchiveerdOp };
       const verlooptVoor = verdwijntOp(pk, kaart);
       if (b.archief) {
@@ -8431,11 +8443,19 @@ async function afhandelen(request, response) {
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     response.setHeader("x-robots-tag", "noindex, noarchive");
+    // de taal waarin de patiënt de kaart op het beginscherm zette: het icoon opende anders in de taal
+    // van de laatst geopende link, van welke kaart dan ook, en heette Nederlands (sweep 2026-11-20 14u, Jayden)
+    const MANIFEST_TITEL = { nl: "Trainingskaart", en: "Training card", de: "Trainingskarte", fr: "Carte d'entraînement",
+      es: "Tarjeta de entrenamiento", pl: "Karta treningowa", tr: "Antrenman kartı", ar: "بطاقة التمارين", uk: "Картка вправ" };
+    const mTaal = Object.prototype.hasOwnProperty.call(MANIFEST_TITEL, String(q.get("taal") || "")) ? String(q.get("taal")) : "";
+    const mTitel = MANIFEST_TITEL[mTaal || "nl"];
     await send(response, 200, "application/manifest+json; charset=utf-8", JSON.stringify({
       // alleen de roepnaam: deze naam staat op het beginscherm van de telefoon
-      name: zonderOmkeer("Trainingskaart " + roepnaamVan((found.client && found.client.c_naam) || "")).trim().slice(0, 60),
-      short_name: "Trainingskaart",
-      start_url: "/k/" + found.id,
+      name: zonderOmkeer(mTitel + " " + roepnaamVan((found.client && found.client.c_naam) || "")).trim().slice(0, 60),
+      short_name: mTitel,
+      lang: mTaal || "nl",
+      ...(mTaal === "ar" ? { dir: "rtl" } : {}),
+      start_url: "/k/" + found.id + (mTaal ? "?taal=" + mTaal : ""),
       scope: "/k/",
       display: "standalone",
       background_color: "#f6f2e9",
