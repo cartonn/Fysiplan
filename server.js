@@ -7179,11 +7179,12 @@ async function afhandelen(request, response) {
         // toont zo "bericht klaar" en het berichtveld start met de huidige tekst
         antwoord: (k.antwoord && k.antwoord.tekst) ? { t: k.antwoord.t, tekst: k.antwoord.tekst } : null,
         ervaring: (k.ervaring || []).slice(-1),
-        notitie: k.notitie || null,
+        // security 2026-11-20: ook oude opgeslagen werknotitie en behandelaar zonder tekst-omkeertekens
+        notitie: k.notitie ? zonderOmkeer(k.notitie) : null,
         afspraak: k.afspraak || null,
         oefTrouw: k.oefTrouw || null,
         oefZwaar: k.oefZwaar || null,
-        behandelaar: k.behandelaar || null,
+        behandelaar: k.behandelaar ? zonderOmkeer(k.behandelaar) : null,
         pskDoel: k.pskDoel || null,
         // recente PSK-reeks (zelfde venster als de pijnscores): het overzicht kan
         // zo een PSK-verloopje tonen zonder de hele kaart op te halen; de laatste
@@ -7759,8 +7760,8 @@ async function afhandelen(request, response) {
       const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      // besturingstekens eruit en begrensd; als platte tekst getoond in de app
-      const tekst = String(b.tekst || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 500);
+      // besturingstekens en tekst-omkeertekens eruit en begrensd; als platte tekst getoond in de app
+      const tekst = String(b.tekst || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(OMKEER_TEKENS, "").replace(/\s+/g, " ").trim().slice(0, 500);
       if ((kaart.notitie || null) !== (tekst || null)) kaart.notitieT = Date.now();
       kaart.notitie = tekst || null;
       if (!kaart.notitie) delete kaart.notitieT;
@@ -7788,8 +7789,8 @@ async function afhandelen(request, response) {
       const kaart = Object.values(map).find((k) => !k.verwijderdOp && k.id === idTekst(b.id));
       // zelfde enumeratierem als op de andere kaart-endpoints
       if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
-      // besturingstekens eruit en kort begrensd; als platte tekst getoond in de app
-      const naam = String(b.naam || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 40);
+      // besturingstekens en tekst-omkeertekens eruit en kort begrensd; als platte tekst getoond in de app
+      const naam = String(b.naam || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(OMKEER_TEKENS, "").replace(/\s+/g, " ").trim().slice(0, 40);
       merkPlanWijziging(kaart, kaart.behandelaar, naam);
       kaart.behandelaar = naam || null;
       if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
