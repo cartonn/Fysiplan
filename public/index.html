@@ -3110,6 +3110,10 @@ bridge2.jpg</div>
         [{act:'roepnaam',label:'Maak er \u201c'+voorstel+'\u201d van'},{act:'naamok',label:'Toch zo laten'}]);
       laatsteDeel='';return;
     }
+    if(voorbeeldVanElders(naam,pr)){
+      toonQrHint('Dit is de voorbeeldkaart van je eigen proef. Die deelt Fysiplan niet in “'+pr+'”. Geef de kaart een roepnaam als je hem toch voor een patiënt wilt gebruiken.');
+      laatsteDeel='';return;
+    }
     if(kaartIsWeg()&&OPNIEUW_DELEN!==KAART_ID){toonKaartWegHint();return;}
     var c=serverKaart(naam);
     var opnieuw=kaartIsWeg();if(opnieuw){c.kaartId='';delete c.basisTs;}
@@ -3700,6 +3704,23 @@ bridge2.jpg</div>
     var t=document.getElementById('pb_teller');
     if(t){t.textContent=chosen.length+' / 12 oefeningen';t.classList.toggle('vol',chosen.length>=12);}
   }
+  // De vanzelf gemaakte "Voorbeeldpatiënt" hoort bij de proefpraktijk waarvoor hij gemaakt is. Een collega die
+  // eerst een eigen proef startte en daarna inlogde bij een andere praktijk, deelde hem anders daar
+  // (gebruikers-sweep 2026-11-20 18u en 22u, Mark): een nep-patiënt in andermans praktijk die meetelde voor de
+  // lopende kaarten. Wie de kaart een eigen roepnaam geeft, maakt er een echte kaart van: die deelt gewoon.
+  var VB_SLEUTEL='fp_voorbeeld_praktijk';
+  function zetVoorbeeldPraktijk(pr){try{localStorage.setItem(VB_SLEUTEL,String(pr||'').trim().toLowerCase());}catch(e){}}
+  // Beslist op wat de server weet, niet alleen op de naam (hertest Mark: een proef zonder praktijknaam, of
+  // een praktijknaam die op het A4 werd aangepast): de proefstand "elders" (deze sessie hoort niet bij de
+  // proef van dit apparaat), of een login in deze app bij een andere praktijk dan die van de voorbeeldkaart.
+  var VB_LOGIN=false;
+  function voorbeeldVanElders(naam,pr){
+    if(naam!=='Voorbeeldpatiënt'||KAART_ID)return false;
+    var vb=null;try{vb=localStorage.getItem(VB_SLEUTEL);}catch(e){}
+    if(vb===null)return false;
+    if(PROEF&&PROEF.elders)return true;
+    return VB_LOGIN&&vb!==String(pr||'').trim().toLowerCase();
+  }
   function proefZetPraktijk(nm){
     var el=document.getElementById('praktijk');
     if(!nm||!el)return;
@@ -3716,7 +3737,11 @@ bridge2.jpg</div>
       pasSjabloonToe({naam:s.naam,dosering:s.dosering,oefeningen:(s.oefeningen||[]).slice(0,6)});
       closeOv('ovSjab');
       var cn=document.getElementById('c_naam');
-      if(cn&&!cn.value.trim()){cn.value='Voorbeeldpati\u00ebnt';cn.dispatchEvent(new Event('input'));}
+      if(cn&&!cn.value.trim()){
+        // onthoud voor welke praktijk deze voorbeeldkaart vanzelf gemaakt is (zie voorbeeldVanElders)
+        zetVoorbeeldPraktijk((SET.praktijk||'').trim()||(PROEF&&PROEF.praktijk)||'');
+        cn.value='Voorbeeldpati\u00ebnt';cn.dispatchEvent(new Event('input'));
+      }
       render();
     }).catch(function(){});
   }
@@ -3778,6 +3803,8 @@ bridge2.jpg</div>
   document.getElementById('pw_start').addEventListener('click',function(){
     var nm=document.getElementById('pw_praktijk').value.trim();
     if(nm&&nm!==(SET.praktijk||'').trim())proefZetPraktijk(nm);
+    // de nieuwe proefgebruiker koos hier de naam van de eigen praktijk: daar hoort de voorbeeldkaart bij
+    try{if(localStorage.getItem(VB_SLEUTEL)!==null)zetVoorbeeldPraktijk((SET.praktijk||'').trim());}catch(e){}
     closeOv('ovProefWelkom');
     // het venster ging vanzelf open, dus er is geen knop om naar terug te gaan: de focus viel op
     // body. Stap 1 van het welkom is "klik links om toe te voegen", dus naar het zoekveld
@@ -5142,6 +5169,9 @@ bridge2.jpg</div>
   function psIngelogd(d,beveiligd){
     var ww=document.getElementById('ps_ww');
     psGeenMist();setPrakSes(d.sessie);if(ww)ww.value='';psCodeWeg();document.getElementById('ps_msg').style.display='none';
+    // net beveiligd: dit is de eigen praktijk, daar hoort een voorbeeldkaart van dit apparaat bij; ingelogd bij
+    // een bestaande praktijk: de voorbeeldkaart deelt alleen als het dezelfde praktijk is (zie voorbeeldVanElders)
+    try{if(localStorage.getItem(VB_SLEUTEL)!==null){if(beveiligd)zetVoorbeeldPraktijk((SET.praktijk||'').trim());else VB_LOGIN=true;}}catch(e){}
     // Ingelogd met "fysio duinrand": de server kent de naam zoals de praktijk hem schreef. Die komt in
     // het veld, de kop en op het A4, anders stonden daar de kleine letters (gebruikers-sweep 2026-11-14, Mark).
     // Alleen bij dezelfde naam op hoofdletters na (of een leeg veld): een andere naam blijft van de gebruiker.
@@ -5864,10 +5894,32 @@ bridge2.jpg</div>
       var lab=blok.querySelector(':scope > label');
       if(lab)blok.insertBefore(ib,lab);else blok.appendChild(ib);
     }
+    // Lukt het ophalen niet (eigen rem 429, storing, geen verbinding), dan verdwijnt "Nieuw van patiënten"
+    // niet meer stil: een open pijnseintje was dan onzichtbaar (gebruikers-sweep 2026-11-20 18u, Karin).
+    // Een eerder getoonde lijst blijft staan met een zin dat hij niet is bijgewerkt.
+    var ibMis=function(code,fout){
+      if(code===401||code===403){ib.style.display='none';ib.removeAttribute('data-ibok');return;}
+      var zin=(code===429?(fout||'Even te veel verzoeken; probeer het over een paar minuten opnieuw.'):
+        code?'Nieuw van patiënten kan nu niet worden geladen; probeer het zo opnieuw.':'Geen verbinding; Nieuw van patiënten kan nu niet worden bijgewerkt.');
+      var oud=ib.querySelector('.ib-mis');if(oud)oud.remove();
+      var n=document.createElement('div');n.className='hint ib-mis';n.setAttribute('role','status');n.style.margin='4px 0';
+      n.textContent=ib.getAttribute('data-ibok')?'Niet bijgewerkt. '+zin:'Of er iets nieuw is van patiënten, kan nu niet worden gecontroleerd. '+zin;
+      // zelf opnieuw proberen: een schermwissel laadt de inbox niet altijd opnieuw (hertest Karin)
+      var ov=document.createElement('button');ov.type='button';ov.className='btn';ov.textContent='Opnieuw proberen';ov.style.marginLeft='8px';
+      ov.addEventListener('click',function(){ov.disabled=true;laadInbox(blok,pr);});
+      n.appendChild(ov);
+      if(!ib.getAttribute('data-ibok'))ib.innerHTML="<label style='margin:0'>Nieuw van patiënten</label>";
+      ib.appendChild(n);ib.style.display='';
+    };
     fetch('api/praktijk/inbox?praktijk='+encodeURIComponent(pr),PGET())
-      .then(function(r){return r.ok?r.json():null;})
+      .then(function(r){
+        if(r.ok)return r.json();
+        return r.json().catch(function(){return {};}).then(function(j){ibMis(r.status,j&&j.fout);return 'mis';});
+      })
       .then(function(d){
+        if(d==='mis')return;
         if(!d||!d.ok){ib.style.display='none';return;}
+        ib.setAttribute('data-ibok','1');
         var mijn=(PRAKSLOT.wie||'').split(' ')[0].toLowerCase();
         // "Alleen mijn patiënten": kaarten met mijn voornaam als behandelaar (heel het woord,
         // "Sanneke" is niet "Sanne"), plus kaarten zonder behandelaar: een vraag mag nooit
@@ -5926,7 +5978,7 @@ bridge2.jpg</div>
           });
         });
       })
-      .catch(function(){ib.style.display='none';});
+      .catch(function(){ibMis(0);});
   }
   // Focus terug in Kaarten na een actie die de lijst (of de knop zelf) weghaalt: × naar prullenbak,
   // Rond af, Terughalen, Gearchiveerd, Prullenbak, Herstellen, Definitief. Anders stond de focus op

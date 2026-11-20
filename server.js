@@ -3325,7 +3325,9 @@ const leesSessieIpTeller = new Map();
 function leesLimiet(req, res) {
   if (!remVol(req, leesTeller, LEES_IP_MAX, leesPraktijkTeller, LEES_PRAKTIJK_MAX,
     leesSessieIpTeller, LEES_SESSIE_IP_MAX, "leeslimiet")) return false;
-  send429(res, 300, { ok: false, fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
+  // rem:"lezen": /k toont dan "te veel kaarten geopend" in plaats van "verkeerde kaartlink" (sweep 2026-11-20 22u, Jayden).
+  // Geldt voor elk id, bestaand of niet, dus het verraadt niets over het bestaan van een kaart.
+  send429(res, 300, { ok: false, rem: "lezen", fout: "Even te veel verzoeken achter elkaar; probeer het over een paar minuten opnieuw." });
   return true;
 }
 
@@ -7628,9 +7630,10 @@ async function afhandelen(request, response) {
 
   // één kaart op id (voor de digitale kaart die de cliënt via de QR-code opent)
   if (urlPath === "/api/kaart" && request.method === "GET") {
+    // eerst de raad-rem: wie al raadde, krijgt die tekst ("verkeerde kaartlink"), niet de leesrem-zin (hertest Jayden 2026-11-20 22u)
+    if (kaartRadenGeblokt(request, response)) return;
     if (leesLimiet(request, response)) return;
     const q = new URLSearchParams((request.url || "").split("?")[1] || "");
-    if (kaartRadenGeblokt(request, response)) return;
     const found = vindKaart(String(q.get("id") || ""));
     if (!found) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     const fpk = kaartSleutel(found);

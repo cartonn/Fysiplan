@@ -322,7 +322,9 @@
     "test:ipsleutel": "node scripts/test-ip-sleutel.mjs",
     "test:ipblokrem": "node scripts/test-ip-blok-rem.mjs",
     "test:activiteitoverspoeld": "node scripts/test-activiteit-overspoeld.mjs",
-    "test:luistergeenopname": "node scripts/test-luister-geen-opname.mjs"
+    "test:luistergeenopname": "node scripts/test-luister-geen-opname.mjs",
+    "test:inboxrem": "node scripts/test-sweep-inbox-rem.mjs",
+    "test:voorbeeldelders": "node scripts/test-sweep-voorbeeld-elders.mjs"
   },
   "engines": {
     "node": ">=20"
