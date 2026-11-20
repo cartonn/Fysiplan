@@ -8144,6 +8144,13 @@ async function afhandelen(request, response) {
           fout: "De gratis proef van je praktijk is voorbij. Deze kaart blijft tot " + datumNl(verlooptVoor) + " bewaard; langer kan niet zonder abonnement." });
         return;
       }
+      // Legal 2026-11-20 21u (WGBO, art. 7:454 BW): afronden ondanks een open seintje haalt het uit Vandaag en
+      // de inbox, maar het seintje zelf staat al in het contactlogboek. Zonder deze regel leek het in de
+      // dossiertekst onbeantwoord; nu staat erbij dat en door wie de kaart toch werd afgerond.
+      if (b.archief && seinSoort && !voorArchief.gearchiveerd) {
+        const l = sessieLid(sessieVan(request));
+        logContact(kaart, { van: "praktijk", soort: "afgerond-open", sein: seinSoort, ...(l ? { wie: l.naam || l.email } : {}) });
+      }
       if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, gearchiveerd: !!kaart.gearchiveerd, verloopt: verdwijntOp(pk, kaart) });

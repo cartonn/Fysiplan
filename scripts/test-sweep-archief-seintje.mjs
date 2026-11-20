@@ -3,12 +3,14 @@
 // behandelaar, ook vanuit een paneel dat al open stond vóór het seintje binnenkwam (hertest Mark), en via de API.
 // Nu weigert /api/kaart/archief eerst met 409 { seintjeOpen } en uitleg; de app vraagt "Toch afronden?"
 // en stuurt dan opnieuw met seintjeGezien: true. Zonder browser, past in CI. `npm run test:archiefsein`
+// Legal 2026-11-20 21u (WGBO): toch afronden komt als regel in het contactlogboek en de dossiertekst.
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import vm from "node:vm";
 
 const root = process.cwd();
 const idx = await readFile(join(root, "public/index.html"), "utf8");
@@ -53,6 +55,23 @@ try {
   assert.match(d.fout, /meldt te veel pijn/);
   assert.ok((await inbox()).some((k) => k.id === k1), "seintje staat nog in de inbox");
   assert.equal((await archief(k1, { seintjeGezien: true })).status, 200, "na bevestigen afgerond");
+  // Legal 2026-11-20 21u (WGBO, art. 7:454 BW): het seintje verdwijnt uit Vandaag en de inbox, dus de
+  // dossiertekst moet zeggen dat de kaart toch werd afgerond; anders lijkt het pijnseintje onbeantwoord.
+  const kaartVan = async (id) => (await (await get("/api/praktijk/kaart?praktijk=" + encodeURIComponent(P) + "&id=" + id, S)).json()).kaart;
+  const c1 = (await kaartVan(k1)).contact || [];
+  assert.deepEqual(c1.map((x) => x.van + ":" + x.soort + (x.sein ? ":" + x.sein : "")), ["patient:pijn", "praktijk:afgerond-open:pijn"],
+    "afronden ondanks een open seintje staat in het contactlogboek");
+  const fn = idx.match(/  function dossierTekst\(kaart\)\{[\s\S]*?\n  \}\n/);
+  const od = idx.match(/  function oefDagen\(c\)\{[\s\S]*?\n  \}\n/);
+  assert.ok(fn && od, "dossierTekst en oefDagen gevonden");
+  const ctx = { location: { origin: "https://fysiplan.nl" }, normEx: (s) => String(s || "").toLowerCase().replace(/[^a-z0-9]/g, "") };
+  vm.runInNewContext(od[0] + fn[0] + ";this.dossierTekst=dossierTekst;", ctx);
+  const dossier = ctx.dossierTekst(await kaartVan(k1));
+  assert.match(dossier, /praktijk: kaart afgerond terwijl het seintje "meldt te veel pijn" nog open stond/);
+  assert.doesNotMatch(dossier, /praktijk: ""/, "geen lege berichtregel");
+  // nog eens afronden (al afgerond) of terughalen schrijft geen tweede regel
+  assert.equal((await archief(k1, { seintjeGezien: true })).status, 200);
+  assert.equal(((await kaartVan(k1)).contact || []).filter((x) => x.soort === "afgerond-open").length, 1, "één regel");
 
   // open vraag
   const k2 = await deel("Patient B");
