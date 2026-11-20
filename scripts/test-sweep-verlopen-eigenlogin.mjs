@@ -61,6 +61,9 @@ await metServer(true, async (origin, cookie) => {
   assert.doesNotMatch(verlopen, /wachtwoord van (je|de) praktijk|van de praktijk, of je eigen|alleen als je met een eigen login werkt/,
     "eigen login: geen praktijkwachtwoord op de verlopen-pagina");
   assert.match(verlopen, /met je eigen login\./, "uitleg noemt de eigen login");
+  // sweep 20-11: de proef liep t/m de einddatum, dus niet "Sinds <einddatum> kun je geen kaarten meer maken"
+  assert.doesNotMatch(verlopen, /Sinds <b>/, "verlopen-pagina zegt niet 'Sinds <einddatum>'");
+  assert.match(verlopen, /Je proef liep tot en met <b>[^<]+<\/b>/, "verlopen-pagina: proef liep t/m de einddatum");
   assert.match(veld(verlopen, "ov_email"), /value="proef@example\.test"/, "e-mail van de proef ingevuld op het eigen apparaat");
   assert.match(veld(verlopen, "ov_email"), /\brequired\b/, "e-mail verplicht bij eigen login");
   assert.equal(label(verlopen, "ov_ww").trim(), "Wachtwoord", "wachtwoordlabel zonder praktijkwachtwoord");

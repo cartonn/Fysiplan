@@ -635,6 +635,11 @@ hetzelfde account-object; #363/#369 inbox; #366 `proefEinde` (alleen langer tot 
 
 ## Open
 
+- **Vraag van de gebruikers-sweep 2026-11-20 06u (Sanne) — LAAG beschikbaarheid — grens nieuwe praktijken per IP pas bij de eerste kaart:**
+  de zesde proef op een dag vanaf hetzelfde IP kan zich aanmelden, claimen en de tweede stap instellen; pas bij delen/QR komt
+  "Er zijn vandaag al meerdere nieuwe praktijken vanaf dit adres aangemaakt" (`nieuwePraktijkLimiet`, server.js ~3283, 5 per dag per IP).
+  Dan staat er een beveiligde praktijk die niets kan delen; bij een congresdemo of gedeelde NAT raakt dit echte gebruikers. Te wegen:
+  grens al bij aanmelding/claim tonen, of een praktijk met een geldige proef niet meetellen.
 - **Vraag van de gebruikers-sweep 2026-11-20 02u (Karin) — MIDDEL beschikbaarheid — leesrem per praktijk:** ingelogd telt `leesLimiet` per praktijk
   (`LEES_PRAKTIJK_MAX` 600 per 5 min, vast venster via `telVenster`, `retry-after: 300`) voor het hele team samen. Een team met veel logins (tot 50)
   kan dat met herladen en tabbladen halen; dan krijgt iedereen tot 5 min 429. Voorstel om te wegen: grens per login of schuivend venster, met de

@@ -309,3 +309,6 @@ jobs:
       - run: npm run test:foutpagina
       - run: npm run test:wisdubbel
       - run: npm run test:luistergeenopname
+      - run: npm run test:veldlabels
+      - run: npm run test:vraagdankinbeeld
+      - run: npm run test:beveilighint

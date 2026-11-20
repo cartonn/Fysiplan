@@ -14,7 +14,7 @@ import { createRequire } from "node:module";
 const root = process.cwd();
 const k = await readFile(join(root, "public/kaart.html"), "utf8");
 assert.match(k, /\.mdank\.fout,\.sdank\.fout\{/, "foutopmaak bestaat");
-assert.match(k, /function zetDank\(el,tekst,soort\)/, "zetDank bestaat");
+assert.match(k, /function zetDank\(el,tekst,soort(,inBeeld)?\)/, "zetDank bestaat");
 assert.match(k, /var schaal=this;if\(schaal\.dataset\.bezig\)\{/, "pijnscore: bezig-slot");
 assert.match(k, /MSCORE_NA=b;b\.classList\.add\('bezig'\);return;/, "pijnscore: laatste tik tijdens opslaan onthouden");
 assert.match(k, /\.then\(verder,verder\);/, "pijnscore: onthouden tik na het antwoord nasturen");

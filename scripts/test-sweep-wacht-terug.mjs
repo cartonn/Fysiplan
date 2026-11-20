@@ -16,7 +16,7 @@ const root = process.cwd();
 const k = await readFile(join(root, "public/kaart.html"), "utf8");
 assert.match(k, /else if\(!weg\)\{kwijt\+\+;draaiKwijtTerug\(it,r\.status\);\}/, "niet aangekomen tik gaat terug");
 assert.match(k, /function draaiKwijtTerug\(it,status\)\{/, "hulpfunctie");
-assert.match(k, /else if\(d&&d\.kwijt\)\{zetSeinOpen\(null\);delete SEIN_LAATST\[soort\];zetDank\(dank,trw\('kwijt'\),'fout'\);\}/, "seintje op gestopte kaart: vaste melding");
+assert.match(k, /else if\(d&&d\.kwijt\)\{zetSeinOpen\(null\);delete SEIN_LAATST\[soort\];zetDank\(dank,trw\('kwijt'\),'fout'(,true)?\);\}/, "seintje op gestopte kaart: vaste melding");
 
 let pw = null;
 try { pw = createRequire(import.meta.url)("playwright"); } catch {}

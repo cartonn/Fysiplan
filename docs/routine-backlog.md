@@ -73,6 +73,36 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 
 ## Open
 
+### Sweep 2026-11-20 06u (vijf persona's lokaal op main #405 met EIGEN_LOGIN_VERPLICHT=aan en PROEF_VERPLICHT=aan; geen 500's of pageerrors; beheergrenzen hielden: minstens één beheerder, zichzelf verwijderen 400, X ↔ Y 404/403, elke beheeractie als therapeut 403 met zin (scherm en API, ook sein-mail, leeslog, akkoord); verwijderde collega: sessie 401, login geweigerd, oude uitnodiging 404; opnieuw akkoord ok; /v2/gegevens download + WISSEN ok, Y intact; ideeënbox X ↔ Y 403; .ics Engels met TZID en RRULE klopt)
+- **OPGELOST 2026-11-20 06u deze run (test:beveilighint) — MIDDEL (Sanne, desktop) — app zei "Zet eerst een wachtwoord op je praktijk" / "beveiligd met een wachtwoord"**
+  (A4-hint en printvenster) terwijl de eigen login verplicht is; de app wist dat pas na het openen van Kaarten. De weigering van de server zegt nu `eigenLogin`, de app neemt
+  dat over, en de foutzin bij delen noemt de eigen login.
+- **OPGELOST 2026-11-20 06u deze run (test:vraagdankinbeeld) — MIDDEL (Truus, iPhone SE 200 %) — "Verstuurd" na "Ik heb een vraag" stond onder de onderrand;** nu schuift de
+  melding na elke seintjes-tik in beeld (rustig bij reduced motion), de wachtrij schuift niets.
+- **OPGELOST 2026-11-20 06u deze run (test:veldlabels) — MIDDEL (Mark, uit 02u) — velden zonder label** in Team, eigen oefening, eigen video en afspraak hebben nu een
+  toegankelijke naam; fotolabel hangt aan het veld. **En (Mark, verlopen proef):** proefbalk beloofde "iets wijzigen kan niet meer" terwijl afhandelen (dossier, gezien, archief,
+  sein-mail, prullenbak herstellen) bewust open is; tekst zegt nu wat wel en niet kan (ook /v2/proef/overzicht en het seintjesvenster).
+- **OPGELOST 2026-11-20 06u deze run (test:verlopeneigenlogin) — MIDDEL (Mark, uit 02u) — verlopen-pagina "Sinds <einddatum>"** → "Je proef liep tot en met <einddatum>".
+- **MIDDEL (Mark, iPad) — tikdoelen app op iPad:** chips 24, ★ 26, "+" 32, Recent/Favorieten/Met video 26, werkbalk 36, Help 30, welkom-knoppen 36, Eigen oefening-knoppen 36 px;
+  sjabloonvenster desktop "Delen met de praktijk"/"Verwijderen" 15 px naast elkaar; A4-knopjes 14×14 (bekend). v2.css.
+- **MIDDEL (Jayden, iPhone 14/Pixel 7 liggend) — oefenstand liggend:** foto 77×116 (34vh bij 340 px), zoekknop over de figuur, oefennaam achter de onderbalk, uitleg onder de vouw;
+  `.srij` 600 px links met lege strook rechts (kaart.html r. ~214, ~356–371). Voorstel: liggend foto en tekst naast elkaar.
+- **MIDDEL (Sanne, toetsenbord) — na "Naam wijzigen" in Kaarten focus op body** en Deel-paneel dicht (index.html ~6763: geen `kaartFocusTerug` na `toonSrvKaarten`).
+- **LAAG/MIDDEL (Sanne):** "Print met QR → Beveiligen" eindigt in Kaarten; pas na sluiten gaat het printvenster weer open, en dan nog eens Print (index.html ~2981, `NA_BEVEILIG` ~7013).
+- **LAAG (Sanne):** welkom `#pw_praktijk` zonder zichtbaar label; lange praktijknaam in A4-kop hard afgekapt zonder …; zesde proef per IP per dag merkt de grens pas bij de eerste kaart
+  (na beveiligen; server.js `nieuwePraktijkLimiet` ~3283; ook naar security-backlog als vraag); `<`/`>` stil uit de naam in het proefformulier (lib/proef.js `schoon`); gegokt /k-id geeft 200
+  met "niet gevonden" (geen 404); ingebakken Fysiplan-logo in enkele avatarbeelden (beelden: niet aanraken, videostroom).
+- **LAAG (Mark):** Enter in `#welkom_praktijk` doet niets op iPad met toetsenbord (Sanne op desktop: werkt; nakijken welk veld); tweede apparaat krijgt welkom ("Beveilig…") + "Nieuw in Fysiplan"
+  terwijl de praktijk al beveiligd is (release-notes.js 19–22); dubbele sjablooncategorieën; eigen oefening "=1+1" bewaard (CSV-export nakijken).
+- **LAAG (Truus, 200 %):** pijn- en PSK-cijfers blijven 16,6 px (`min(1rem,5.2vw)`, kaart.html r. ~414); taalkeuze "Nederlan"; dagletters "WoDo" plakken; Mijn gegevens "Persoonsgegeven/s"
+  zonder koppelteken en AP-link browserblauw; privacy-links 17–20 px; printknop aria-label "Print" in NL; service worker blijft na "Wis van dit apparaat" (lekt niets).
+- **LAAG (Jayden, EN):** lightbox toont NL-uitleg vóór de melding "not available in English" (oefenstand andersom); taalkeuze zet `?taal=` niet in de URL (Engelse link opent daarna Duits);
+  agenda zonder dag → `alert()` i.p.v. `.agmelding` (kaart.html ~4124); oefennaam-knop 22 px hoog.
+- **LAAG (Karin):** verwijderde collega met open app ziet alleen "Deze praktijk is beveiligd. Log in…" zonder reden; /v2/gegevens vergeet het e-mailadres na een fout (server.js ~9370 `opnieuw()`);
+  open uitnodiging toont geen geldigheid en de link is niet opnieuw te kopiëren; tweede tik binnen 0,7 s op "Zeker verwijderen?" zonder feedback.
+- **Niet getest:** uitnodigen per mail, abonnement/opzeggen (Mollie lokaal uit), echte iOS Safari, signalen over meerdere dagen.
+- **Volgende run:** iPad-tikdoelen app (v2.css), oefenstand liggend /k, focus na Naam wijzigen, Print→Beveiligen terug naar printen, /v2/gegevens e-mail na fout.
+
 ### Sweep 2026-11-20 02u (vijf persona's lokaal met EIGEN_LOGIN_VERPLICHT=aan en PROEF_VERPLICHT=aan. Let op: de eerste ronde draaide per ongeluk op een verouderde checkout (#357, 16-11; `git fetch` was nog niet klaar); alle punten hieronder zijn daarna op main #401 opnieuw nagelopen en alleen wat daar nog bestaat staat hier. Geen 500's of pageerrors; beheergrenzen hielden: minstens één beheerder, zichzelf verwijderen 400, X ↔ Y 404/403, elke beheeractie als therapeut 403 met zin (scherm en API); verwijderde collega: sessie 401, login 403; opnieuw akkoord via het scherm ok; /v2/gegevens download + WISSEN ok; inloggen met een reservecode eindelijk getest: werkt, ook kleine letters)
 - **OPGELOST 2026-11-20 deze run (test:luistergeenopname) — HOOG (Truus, iPhone SE) — "Luister naar uitleg" stond er ook als geen oefening een opname had;** een tik gaf alleen
   een groen blok met "Nog geen actuele stemopname … deze selectie … behandelaar". Nu staat de knop er in het Nederlands pas als het stemmanifest geladen is en minstens één oefening een
@@ -89,8 +119,8 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   iedereen tot 5 min vast. `loadPraktijken` (index.html ~3351) maakt van een 429 stil `[]`. Ook als vraag in docs/security-backlog.md (i). Sanne: zonder login 429 na ~121 GET's (~18× herladen).
 - **MIDDEL (Sanne) — terugknop verlaat de app; zoeken zonder leeg-staat (alleen-emoji toont alle 817); 200 % tekst doet niets in /v2/app (px), A4-preview bij 200 % zoom afgesneden;**
   welkom weg na herladen vóór de praktijknaam; tweede apparaat zonder "Ik heb al een account" (Mark: Kaarten zegt alleen "Vul eerst de naam… beveilig", focus op `k_naam`).
-- **MIDDEL (Mark) — velden zonder label:** `#tm_unaam`, `#tm_uemail`, `#tm_urol`, `#eo_naam`, `#eo_uitleg`, `#eo_foto`, `#ev_yt`, `[data-safspraak]`, `[data-safherhaal]`.
-- **MIDDEL (Mark) — proef:** verlopen-pagina zegt "Sinds <EINDDATUM> kun je geen nieuwe kaarten meer maken" terwijl de proef t/m die dag liep (proef.html ~236; moet de dag erna zijn);
+- **OPGELOST 2026-11-20 06u (test:veldlabels) — MIDDEL (Mark) — velden zonder label:** `#tm_unaam`, `#tm_uemail`, `#tm_urol`, `#eo_naam`, `#eo_uitleg`, `#eo_foto`, `#ev_yt`, `[data-safspraak]`, `[data-safherhaal]`.
+- **MIDDEL (Mark) — proef (eerste deel OPGELOST 2026-11-20 06u, test:verlopeneigenlogin):** verlopen-pagina zegt "Sinds <EINDDATUM> kun je geen nieuwe kaarten meer maken" terwijl de proef t/m die dag liep (proef.html ~236; moet de dag erna zijn);
   "Mijn proef" 64×16 px; /v2/proef?mijn=1 heeft op de laatste dag geen "doorgaan". Verlopen-pagina: "Terug naar de site" 14 px, logo 20 px, vinkje 18 px.
 - **MIDDEL (Truus, Jayden) — patiëntkaart:** oefenstand liggend foto 73×109 met vergrootknop op de eindhouding, uitleg onder de vouw; lightbox liggend 94×142; pijnschaal 26–34 px breed
   (schuif is `aria-hidden`), cijfers groeien niet bij 200 %; "Ik heb een vraag" zonder typveld (kaart belooft "staat je vraag er niet bij"); onderbalk liggend links uitgelijnd.
