@@ -88,6 +88,12 @@ try {
   console.error(uit.slice(-2000));
   throw e;
 } finally {
-  app.kill();
-  await rm(dataDir, { recursive: true, force: true });
+  // eerst wachten tot de server echt weg is: anders schrijft hij nog in de datamap terwijl
+  // die gewist wordt (ENOTEMPTY in CI, 2026-11-20)
+  if (app.exitCode === null && app.signalCode === null) {
+    const weg = new Promise((r) => app.once("exit", r));
+    app.kill();
+    await weg;
+  }
+  await rm(dataDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
 }
