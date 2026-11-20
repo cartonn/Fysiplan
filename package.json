@@ -316,6 +316,7 @@
     "test:supportnaamlek": "node scripts/test-support-naamlek.mjs",
     "test:qrcachegrens": "node scripts/test-qr-cache-grens.mjs",
     "test:ipsleutel": "node scripts/test-ip-sleutel.mjs",
+    "test:ipblokrem": "node scripts/test-ip-blok-rem.mjs",
     "test:activiteitoverspoeld": "node scripts/test-activiteit-overspoeld.mjs",
     "test:luistergeenopname": "node scripts/test-luister-geen-opname.mjs"
   },

@@ -188,6 +188,7 @@ jobs:
       - run: npm run test:supportnaamlek
       - run: npm run test:qrcachegrens
       - run: npm run test:ipsleutel
+      - run: npm run test:ipblokrem
       - run: npm run test:activiteitoverspoeld
       - run: npm run test:sessie200
       - run: npm run test:profielovername
