@@ -3905,7 +3905,19 @@ async function videoOpslagVol(extraBytes) {
     } catch {}
     videoOpslag = { t: nu, bytes: som };
   }
-  return videoOpslag.bytes + extraBytes > VIDEO_OPSLAG_MAX;
+  return videoOpslag.bytes + videoBezig.totaal + extraBytes > VIDEO_OPSLAG_MAX;
+}
+// Bytes van opnames die nu binnenkomen. Tussen de controle op de grens en het tellen van de video
+// (videoOpslag.bytes, o.video) liggen awaits, dus vier gelijktijdige uploads van één praktijk
+// passeerden alle vier de controle: lokaal 4 × 20 kB op een quotum van 50 kB (security 2026-11-20).
+// Een upload reserveert zijn bytes vóór de controle en geeft ze in zijn finally weer vrij.
+const videoBezig = { totaal: 0, per: new Map() };
+const videoBezigVan = (pk) => (pk && videoBezig.per.get(pk)) || 0;
+function videoReserveer(pk, n) {
+  videoBezig.totaal = Math.max(0, videoBezig.totaal + n);
+  if (!pk) return;
+  const v = videoBezigVan(pk) + n;
+  if (v > 0) videoBezig.per.set(pk, v); else videoBezig.per.delete(pk);
 }
 // quotum per praktijk (security 2026-11-08): zonder dit kon één gratis geclaimde praktijk
 // met eigen opnames op haar kaarten (100 kaarten × 12 video's × 60 MB) de hele
@@ -6788,7 +6800,7 @@ async function afhandelen(request, response) {
       return;
     }
     lopendeUploads++;
-    let nieuwPad = "";
+    let nieuwPad = "", gereserveerd = 0;
     try {
       const q = new URLSearchParams((request.url || "").split("?")[1] || "");
       const id = String(q.get("exerciseId") || "");
@@ -6809,7 +6821,9 @@ async function afhandelen(request, response) {
         return;
       }
 
-      if (await videoOpslagVol(buf.length)) {
+      gereserveerd = buf.length;
+      videoReserveer(null, gereserveerd);
+      if (await videoOpslagVol(0)) {
         await sendJson(response, 507, { ok: false, fout: "De videopslag is vol. Ruim oude video's op of vergroot het volume." });
         return;
       }
@@ -6842,6 +6856,7 @@ async function afhandelen(request, response) {
         ? "De video is te groot (max. 60 MB)." : "Uploaden is niet gelukt." });
     } finally {
       lopendeUploads--;
+      if (gereserveerd) videoReserveer(null, -gereserveerd);
     }
     return;
   }
@@ -7021,6 +7036,7 @@ async function afhandelen(request, response) {
     // eerste await de kans; de finally geeft de claim weer vrij
     o.bezig = true;
     lopendeUploads++;
+    let quotumPk = null, gereserveerd = 0;
     try {
       const ct = String(request.headers["content-type"] || "");
       const ext = ct.startsWith("video/mp4") ? ".mp4" : ct.startsWith("video/webm") ? ".webm" : null;
@@ -7036,11 +7052,15 @@ async function afhandelen(request, response) {
         await sendJson(response, 400, { ok: false, fout: "Dit bestand is geen geldige video-opname." });
         return;
       }
-      if (await videoOpslagVol(buf.length)) {
+      // eerst reserveren, dan controleren: zie videoBezig
+      quotumPk = o.doel === "kaart" && o.praktijk ? o.praktijk : null;
+      gereserveerd = buf.length;
+      videoReserveer(quotumPk, gereserveerd);
+      if (await videoOpslagVol(0)) {
         await sendJson(response, 507, { ok: false, fout: "De videopslag is vol; de opname kan nu niet bewaard worden." });
         return;
       }
-      if (o.doel === "kaart" && o.praktijk && (await praktijkVideoBytes(o.praktijk)) + buf.length > VIDEO_PRAKTIJK_MAX) {
+      if (quotumPk && (await praktijkVideoBytes(quotumPk)) + videoBezigVan(quotumPk) > VIDEO_PRAKTIJK_MAX) {
         await sendJson(response, 507, { ok: false, praktijkVol: true,
           fout: "De videoruimte van deze praktijk is vol (" + Math.round(VIDEO_PRAKTIJK_MAX / 1048576) + " MB). Haal eerst oude eigen video's van kaarten af." });
         return;
@@ -7080,6 +7100,8 @@ async function afhandelen(request, response) {
       await sendJson(response, 400, { ok: false, fout: "Upload mislukt (video te groot?)." });
     } finally {
       lopendeUploads--;
+      // pas hier vrijgeven: o.video en videoOpslag.bytes tellen de video nu zelf
+      if (gereserveerd) videoReserveer(quotumPk, -gereserveerd);
       o.bezig = false;
     }
     return;
