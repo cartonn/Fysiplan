@@ -2794,6 +2794,8 @@ bridge2.jpg</div>
       // en een veld dat met Tab focus krijgt maar onder de balk valt, schuift in beeld (WCAG 2.4.11)
       document.addEventListener('focusin',function(e){
         var t=e.target;if(!t||t===document.body||bar.contains(t))return;
+        // een link in het QR-hoekje verdwijnt na de keuze: dan terug naar het veld daarvoor (hertest Sanne 2026-11-20 18u)
+        var qbF=document.getElementById('qrBlok');if(qbF&&qbF.contains(t))return;
         bar._terug=t;
         if(bar.style.display==='none'||!t.getBoundingClientRect)return;
         var rb=bar.getBoundingClientRect(),rt=t.getBoundingClientRect();
@@ -2802,6 +2804,12 @@ bridge2.jpg</div>
       var st=document.createElement('style');
       st.textContent='#conflict_bar button:focus-visible{outline:3px solid #B9E34B;outline-offset:2px}';
       document.head.appendChild(st);
+      // Escape in de balk sluit hem, net als × (hertest Sanne 2026-11-20 18u, toetsenbord)
+      bar.addEventListener('keydown',function(e){
+        if(e.key!=='Escape')return;
+        var x=bar.querySelector("[data-cfact='sluit']");if(!x)return;
+        e.preventDefault();e.stopPropagation();x.click();
+      });
       bar.addEventListener('click',function(e){
         var k=e.target.closest('[data-cfact]');if(!k)return;
         if(k.dataset.cfact==='sluit'){
@@ -2929,8 +2937,13 @@ bridge2.jpg</div>
       return true;
     }
     if(d.hernoemVraag){
-      toonQrHint('Deze editor heeft de kaart van \u201c'+(d.naam||'')+'\u201d open, met een eigen QR-code. Is \u201c'+naam+'\u201d een andere pati\u00ebnt, of verbeter je alleen de naam?',
-        [{act:'nieuwkaart',label:'Nieuwe kaart voor \u201c'+naam+'\u201d'},{act:'hernoem',label:'Zelfde pati\u00ebnt, naam verbeteren'}]);
+      // De vraag stond alleen als tekst van 8,5 px in het QR-hoekje van de verkleinde A4, zonder role=alert en
+      // 8 Tabs van het naamveld (gebruikers-sweep 2026-11-20 18u, Sanne, desktop). Nu ook de balk bovenin beeld
+      // met knoppen van 44 px, zoals bij elk ander conflict; de keuze komt maar \u00e9\u00e9n keer per nieuwe naam.
+      var hTekst='Deze editor heeft de kaart van \u201c'+(d.naam||'')+'\u201d open, met een eigen QR-code. Is \u201c'+naam+'\u201d een andere pati\u00ebnt, of verbeter je alleen de naam?',
+        hKnoppen=[{act:'nieuwkaart',label:'Nieuwe kaart voor \u201c'+naam+'\u201d'},{act:'hernoem',label:'Zelfde pati\u00ebnt, naam verbeteren'}];
+      toonQrHint(hTekst,hKnoppen);
+      if(HERNOEM_GEMELD!==naam.toLowerCase()){HERNOEM_GEMELD=naam.toLowerCase();toonConflictBalk(hTekst,hKnoppen);}
       return true;
     }
     if(d.verouderd){
@@ -3174,9 +3187,15 @@ bridge2.jpg</div>
     QR_UIT_VOOR=huidigeKaartNaam().toLowerCase();
     verbergQr();
   });
+  var HERNOEM_GEMELD='';
   function qrActie(a){
     var cnA=document.getElementById('c_naam');
-    var cb=document.getElementById('conflict_bar');if(cb)cb.style.display='none';
+    var cb=document.getElementById('conflict_bar');
+    // een knop in de balk had de focus: na verbergen viel die op body (sweep 2026-11-20 18u, Sanne); terug naar waar je was,
+    // pas na de actie, en nooit naar het naamveld: deelNu deelt niet zolang dat focus heeft
+    var qb=document.getElementById('qrBlok'),uitBalk=(cb&&cb.contains(document.activeElement))||(qb&&qb.contains(document.activeElement)&&a!=='beveilig');
+    if(cb)cb.style.display='none';
+    if(uitBalk){var tf=cb&&cb._terug;if(!tf||!tf.isConnected||!tf.offsetParent||(qb&&qb.contains(tf))||tf===cnA)tf=document.querySelector('#fpSchermen [aria-pressed="true"]');if(tf&&tf.focus)setTimeout(function(){tf.focus();},0);}
       if(a==='beveilig')openBeveiligen(function(){laatsteDeel='';deelNu();});
       else if(a==='nieuwste')openNieuwsteVersie();
       else if(a==='opnameterug'||a==='opnameweg'){

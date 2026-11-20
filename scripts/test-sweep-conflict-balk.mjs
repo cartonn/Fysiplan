@@ -14,7 +14,7 @@ import { createRequire } from "node:module";
 const root = process.cwd();
 const index = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(index, /toonQrHint\(vTekst,vKnoppen\);\s*toonConflictBalk\(vTekst,vKnoppen\);/, "409 verouderd toont ook de balk");
-assert.match(index, /function toonConflictBalk\(tekst,knoppen\)\{[\s\S]{0,3000}?min-height:44px/, "knoppen van minstens 44 px");
+assert.match(index, /function toonConflictBalk\(tekst,knoppen\)\{[\s\S]{0,4000}?min-height:44px/, "knoppen van minstens 44 px");
 assert.match(index, /zetConflictTop\(bar\);\s*bar\.style\.display='flex';/, "balk onder de kopbalk, niet over de schermknoppen");
 assert.match(index, /hb\.parentNode\.insertBefore\(bar,hb\.nextSibling\)/, "balk in de pagina direct na de kopbalk (niet zwevend, vroeg in de tabvolgorde)");
 assert.match(index, /#conflict_bar button:focus-visible\{outline:3px solid #B9E34B/, "zichtbare focusring op de donkere balk");

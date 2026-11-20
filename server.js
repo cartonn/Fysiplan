@@ -8214,6 +8214,20 @@ async function afhandelen(request, response) {
     }
     // zwevende lokale tijd (geen tijdzone in het bestand): elke agenda-app leest dit als eigen lokale tijd
     const dtStart = startDag.replace(/-/g, "") + "T" + tijd.replace(":", "") + "00";
+    // De herinneringen liepen altijd 12 weken, ook als de kaart eerder verdwijnt (proef zonder
+    // abonnement, afgeronde kaart): dan opende elke herinnering wekenlang "Kaart niet gevonden"
+    // (gebruikers-sweep 2026-11-20 18u, Jayden). Staat de datum vast en komt hij binnen die 12
+    // weken, dan stoppen de herinneringen de dag ervoor (UNTIL in zwevende lokale tijd, net als DTSTART).
+    let agendaTot = null;
+    if (!found.demo) {
+      const fpkA = kaartSleutel(found);
+      const weg = verdwijntOp(fpkA, found);
+      if (verdwijntVast(fpkA, found) && Number.isFinite(weg) && weg < Date.now() + 12 * 7 * 864e5) {
+        agendaTot = nlDag(weg - 864e5).replace(/-/g, "") + "T235959";
+        // UNTIL vóór DTSTART is ongeldig en agenda-apps doen er elk iets anders mee (hertest Jayden): dan één keer
+        if (agendaTot < dtStart) agendaTot = dtStart.slice(0, 8) + "T235959";
+      }
+    }
     const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
     const icsTekst = (s) => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/[\r\n]+/g, "\\n");
     // de Host-header komt van buiten en belandt in een bestand dat een agenda-app inleest.
@@ -8231,7 +8245,7 @@ async function afhandelen(request, response) {
       "DTSTAMP:" + stamp,
       "DTSTART:" + dtStart,
       "DURATION:PT20M",
-      "RRULE:FREQ=WEEKLY;BYDAY=" + dagen.join(",") + ";COUNT=" + dagen.length * 12,
+      "RRULE:FREQ=WEEKLY;BYDAY=" + dagen.join(",") + (agendaTot ? ";UNTIL=" + agendaTot : ";COUNT=" + dagen.length * 12),
       "SUMMARY:" + icsTekst(taalT.sum + ((pn) => pn ? " (" + pn + ")" : "")(kaartPraktijkNaam(kaartSleutel(found), found.praktijk))),
       "DESCRIPTION:" + icsTekst(taalT.desc + link),
       "URL:" + icsTekst(link),
@@ -9627,6 +9641,18 @@ async function afhandelen(request, response) {
       let html = await readFile(join(publicDir, "index.html"), "utf8");
       // tijdens een proef krijgt de app de stand mee (banner, voorbeeldkaart, QR-test);
       // alleen wat de app nodig heeft, geen telefoon of e-mail
+      // Een apparaat met een eigen proefcookie dat inlogt bij een praktijk die al kaarten heeft (zelfde
+      // proef op een nieuw apparaat), of bij een andere praktijk dan die van zijn eigen proef (collega
+      // met een eigen proef): ook dan geen welkom en geen voorbeeldkaart. Die werd anders vanzelf
+      // gedeeld, telde mee voor de grens van lopende kaarten en botste op een volgend apparaat stil
+      // met "Voorbeeldpatiënt"; de proefbalk toonde de einddatum van de eigen proef in plaats van die
+      // van de praktijk (gebruikers-sweep 2026-11-20 18u, Mark op iPad).
+      const sessieA = proef ? sessieVan(request) : null;
+      if (proef && sessieA && Object.hasOwn(praktijkAccounts, sessieA.pk) && praktijkGeclaimd(sessieA.pk) &&
+          (!proefSessieVanPraktijk(request, proef) || Object.keys(kaarten[sessieA.pk] || {}).length > 0)) {
+        const ep = proefVanPraktijk(request);
+        if (ep || !proefSessieVanPraktijk(request, proef)) proef = null;
+      }
       const elders = proef ? null : proefVanPraktijk(request);
       const proefData = proef ? { naam: (proef.naam || "").split(" ")[0], praktijk: proef.praktijk || "",
         dagenOver: proef.klant ? null : dagenOver(proef.verloopt), tot: datumNl(proef.verloopt), klant: !!proef.klant }
