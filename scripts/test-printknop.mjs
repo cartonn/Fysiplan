@@ -21,7 +21,7 @@ assert.match(index, /id="pr_melding"/, "printvenster heeft een meldingvak");
 const h = index.match(/getElementById\('pr_do'\)\.addEventListener\('click',function\(\)\{[\s\S]*?\n  \}\);\n/);
 assert.ok(h, "pr_do-afhandeling gevonden");
 for (const k of ["d.bestaat", "d.login", "d.verouderd", "d.beveilig"]) {
-  assert.match(h[0], new RegExp(k.replace(".", "\\.") + "\\)\\{prMelding"), `${k}: melding in het venster`);
+  assert.match(h[0], new RegExp(k.replace(".", "\\.") + "\\)\\{(?:if\\(d\\.eigenLogin\\)PRAKSLOT\\.eigenLogin=true;)?prMelding"), `${k}: melding in het venster`);
 }
 assert.doesNotMatch(h[0], /d\.beveilig\)\{\s*closeOv/, "onbeveiligde praktijk: venster blijft open (sweep 2026-11-07 18u)");
 assert.doesNotMatch(h[0], /toonDeelWeigering/, "weigering sluit het venster niet meer met alleen een hint op de A4");

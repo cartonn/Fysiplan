@@ -2919,6 +2919,7 @@ bridge2.jpg</div>
     var pr=(SET.praktijk||'').trim();
     if(d.verouderd)VEROUDERD_NAAM=String(d.naam||'');
     if(d.beveilig){
+      if(d.eigenLogin)PRAKSLOT.eigenLogin=true;
       toonQrHint(PRAKSLOT.eigenLogin?'Beveilig eerst je praktijk met je eigen login; daarna komt de QR-code er vanzelf op. Een onbeveiligde praktijk deelt geen pati\u00ebntkaarten.'
         :'Zet eerst een wachtwoord op je praktijk; daarna komt de QR-code er vanzelf op. Zonder wachtwoord deelt Fysiplan geen pati\u00ebntkaarten.',[{act:'beveilig',label:'Beveilig mijn praktijk'}]);
       return true;
@@ -3284,7 +3285,7 @@ bridge2.jpg</div>
       if(!d.ok){
         // praktijk nog niet beveiligd: venster blijft open met de reden en "Print zonder
         // QR-code", in plaats van stil naar Beveiligen te springen (nieuwe proefgebruiker)
-        if(IS_V2&&d.beveilig){prMelding('Voor de QR-code moet je praktijk eerst beveiligd zijn'+(PRAKSLOT.eigenLogin?'':' met een wachtwoord')+', zodat alleen jullie de kaarten zien. Je kunt ook meteen printen, alleen zonder QR-code.',[{act:'beveilig',label:'Beveiligen',hoofd:true}]);return;}
+        if(IS_V2&&d.beveilig){if(d.eigenLogin)PRAKSLOT.eigenLogin=true;prMelding('Voor de QR-code moet je praktijk eerst beveiligd zijn'+(PRAKSLOT.eigenLogin?' met je eigen login':' met een wachtwoord')+', zodat alleen jullie de kaarten zien. Je kunt ook meteen printen, alleen zonder QR-code.',[{act:'beveilig',label:'Beveiligen',hoofd:true}]);return;}
         if(IS_V2&&d.bestaat){prMelding('Er is al een kaart \u201c'+(d.naam||naam)+'\u201d in je praktijk. Is dit dezelfde pati\u00ebnt? Anders: geef deze kaart een andere roepnaam, bijvoorbeeld met een initiaal.',[{act:'overschrijf',label:'Ja, die kaart bijwerken',hoofd:true}]);return;}
         if(IS_V2&&d.verouderd)VEROUDERD_NAAM=String(d.naam||'');
         if(IS_V2&&d.verouderd){prMelding((KAART_TS?'Deze kaart is intussen op een ander apparaat gewijzigd.':'Fysiplan weet niet zeker of dit de nieuwste versie van deze kaart is.')+' Open eerst de nieuwste versie, anders gaan die wijzigingen verloren.'+naamEldersZin(d,huidigeKaartNaam()),[{act:'nieuwste',label:'Open de nieuwste versie',hoofd:true},{act:'overschrijf',label:'Toch mijn versie bewaren'}]);return;}
@@ -3708,7 +3709,7 @@ bridge2.jpg</div>
     PROEF_VOORBIJ=true;
     var balk=document.getElementById('proefBalk');if(!balk)return;
     balk.innerHTML="<span id='pb_voorbij'><b>Je gratis proef is voorbij.</b> Je gedeelde kaarten, seintjes en scores kun je nog lezen; "+
-      "nieuwe kaarten maken of iets wijzigen kan niet meer.</span><span class='pb-ruimte'></span>"+
+      "nieuwe kaarten maken, kaarten aanpassen of pati\u00ebnten antwoorden kan niet meer. Seintjes afhandelen en kaarten opruimen kan nog wel.</span><span class='pb-ruimte'></span>"+
       "<a class='btn primary' href='/v2/proef'>Wil je doorgaan?</a>";
     balk.setAttribute('role','alert');
     balk.hidden=false;
@@ -4645,9 +4646,9 @@ bridge2.jpg</div>
       if(d.beheer){
         h+="<div class='tm-kop' style='margin-top:12px;font-weight:600;color:var(--ink)'>Collega uitnodigen</div>"+
           "<div class='tm-uitnodig' style='display:flex;gap:6px;flex-wrap:wrap;margin-top:4px'>"+
-          "<input id='tm_unaam' placeholder='Naam' style='flex:1;min-width:110px'/>"+
-          "<input id='tm_uemail' type='email' placeholder='E-mail' style='flex:1;min-width:160px'/>"+
-          "<select id='tm_urol' style='width:auto'><option value='therapeut'>Therapeut</option><option value='beheerder'>Beheerder</option></select>"+
+          "<input id='tm_unaam' aria-label='Naam van de collega' placeholder='Naam' style='flex:1;min-width:110px'/>"+
+          "<input id='tm_uemail' type='email' aria-label='E-mailadres van de collega' autocomplete='off' placeholder='E-mail' style='flex:1;min-width:160px'/>"+
+          "<select id='tm_urol' aria-label='Rol van de collega' style='width:auto'><option value='therapeut'>Therapeut</option><option value='beheerder'>Beheerder</option></select>"+
           "<button class='btn primary' id='tm_udo' type='button'>Nodig uit</button></div><div id='tm_link'></div>";
       }else{
         h+="<div style='margin-top:10px'>Een beheerder van je praktijk past het team aan.</div>";
@@ -6297,10 +6298,10 @@ bridge2.jpg</div>
             "<div style='margin-top:7px'>"+
               "<small style='color:var(--muted)'>Volgende afspraak (komt op de patiëntkaart met een agenda-knop; leeg = weghalen)</small>"+
               "<div style='display:flex;gap:6px;margin-top:3px;flex-wrap:wrap;align-items:center'>"+
-                "<input type='datetime-local' data-safspraak='"+esc(c.id)+"' value='"+esc(afspraakInput(c))+"' style='font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
+                "<input type='datetime-local' aria-label='Volgende afspraak' data-safspraak='"+esc(c.id)+"' value='"+esc(afspraakInput(c))+"' style='font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
                 // wekelijkse behandelreeks: de agenda-knop van de patiënt zet dan in
                 // één keer de hele reeks mét alarmen in de telefoonagenda (RRULE)
-                "<select data-safherhaal='"+esc(c.id)+"' title='Wekelijkse behandelreeks op dezelfde dag en tijd: de patiënt zet met één tik de hele reeks in de agenda, met herinneringen' style='font-size:12px;padding:5px 6px;border:1px solid var(--line);border-radius:8px'>"+
+                "<select aria-label='Herhaling van de afspraak' data-safherhaal='"+esc(c.id)+"' title='Wekelijkse behandelreeks op dezelfde dag en tijd: de patiënt zet met één tik de hele reeks in de agenda, met herinneringen' style='font-size:12px;padding:5px 6px;border:1px solid var(--line);border-radius:8px'>"+
                   [[0,'eenmalig'],[4,'wekelijks ×4'],[6,'wekelijks ×6'],[8,'wekelijks ×8'],[12,'wekelijks ×12']].map(function(o){return "<option value='"+o[0]+"'"+((Number(c.afspraak&&c.afspraak.herhaal)||0)===o[0]?" selected":"")+">"+o[1]+"</option>";}).join("")+
                 "</select>"+
                 "<button class='btn' data-safspraakopslaan='"+esc(c.id)+"'>Bewaar</button>"+
@@ -7246,7 +7247,7 @@ bridge2.jpg</div>
             // proef voorbij: venster blijft open met de reden; de melding in de proefbalk
             // stond achter dit venster en de collega dacht dat het antwoord verstuurd was
             else if(d.proefVerlopen){toonProefVoorbij();
-              fout.innerHTML='<b>Niet verstuurd:</b> de gratis proef van je praktijk is voorbij. Je kunt seintjes nog lezen, maar niet meer beantwoorden of afhandelen. <a href="/v2/proef">Wil je doorgaan?</a>';}
+              fout.innerHTML='<b>Niet verstuurd:</b> de gratis proef van je praktijk is voorbij. Je kunt seintjes nog lezen en afhandelen, maar niet meer beantwoorden. <a href="/v2/proef">Wil je doorgaan?</a>';}
             else fout.textContent=d.fout||'Dat is niet gelukt.';})
           .catch(function(){klaar();fout.textContent='Dat is niet gelukt: geen verbinding.';});
       };
@@ -7272,9 +7273,9 @@ bridge2.jpg</div>
       ovO.innerHTML="<div class='modal'><h3>Eigen oefening toevoegen</h3>"+
         "<div class='hint' id='eo_intro' style='margin:2px 0 12px;line-height:1.5'></div>"+
         "<div id='eo_form'>"+
-        "<input id='eo_naam' maxlength='80' placeholder='Naam van de oefening' style='width:100%;margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
-        "<textarea id='eo_uitleg' maxlength='400' rows='3' placeholder='Uitleg voor de pati\u00ebnt: hoe voer je de oefening uit?' style='width:100%;margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;resize:vertical'></textarea>"+
-        "<label class='hint' style='display:block;margin-bottom:4px'>Foto (bij voorkeur begin- en eindhouding naast elkaar op een witte achtergrond). Fotografeer jezelf of een collega, niet een pati\u00ebnt: deze oefening is zichtbaar voor de hele praktijk en op elke kaart waar hij op staat.</label>"+
+        "<input id='eo_naam' aria-label='Naam van de oefening' maxlength='80' placeholder='Naam van de oefening' style='width:100%;margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
+        "<textarea id='eo_uitleg' aria-label='Uitleg voor de pati\u00ebnt' maxlength='400' rows='3' placeholder='Uitleg voor de pati\u00ebnt: hoe voer je de oefening uit?' style='width:100%;margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;resize:vertical'></textarea>"+
+        "<label class='hint' for='eo_foto' style='display:block;margin-bottom:4px'>Foto (bij voorkeur begin- en eindhouding naast elkaar op een witte achtergrond). Fotografeer jezelf of een collega, niet een pati\u00ebnt: deze oefening is zichtbaar voor de hele praktijk en op elke kaart waar hij op staat.</label>"+
         "<input id='eo_foto' type='file' accept='image/jpeg,image/png'/>"+
         "<div id='eo_lijst' style='margin-top:12px'></div></div>"+
         "<div class='acts' style='margin-top:14px'><button class='btn' id='eo_sluit' type='button'>Sluiten</button><button class='btn primary' id='eo_bewaar' type='button'>Toevoegen</button></div></div>";
@@ -7445,7 +7446,7 @@ bridge2.jpg</div>
         "<div class='hint' style='margin:2px 0 12px;line-height:1.5'>De video komt bij deze oefening op de digitale kaart van je pati\u00ebnt, achter de QR-code. Film jezelf of een collega die de oefening voordoet, niet de pati\u00ebnt.</div>"+
         "<div id='ev_status' class='hint' style='margin:0 0 10px;font-weight:600'></div>"+
         "<button class='btn primary' id='ev_opname' type='button' style='width:100%;margin-bottom:10px'>Neem op met je telefoon</button>"+
-        "<div style='display:flex;gap:6px'><input id='ev_yt' placeholder='of plak een YouTube-link' style='flex:1;min-width:0;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
+        "<div style='display:flex;gap:6px'><input id='ev_yt' inputmode='url' aria-label='YouTube-link' placeholder='of plak een YouTube-link' style='flex:1;min-width:0;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
         "<button class='btn' id='ev_yt_ok' type='button'>Koppel</button></div>"+
         "<div class='acts' style='margin-top:14px'><button class='btn' id='ev_weg' type='button'>Video weghalen</button><button class='btn' id='ev_sluit' type='button'>Sluiten</button></div></div>";
       document.body.appendChild(ovE);

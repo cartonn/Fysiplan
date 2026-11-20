@@ -614,6 +614,7 @@
   .fout h1{font:700 1.375rem/1.3 var(--disp);color:var(--inkt);margin-bottom:8px}
 
   /* uitnodiging om de kaart als app op het beginscherm te zetten */
+  .sdank{scroll-margin-bottom:96px}
   .appbanner{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:12;
     background:#16181c;color:#f4f4f2;border-radius:14px;padding:12px 8px 12px 14px;
     display:none;align-items:center;gap:12px;box-shadow:0 8px 28px rgba(0,0,0,.28)}
@@ -2304,9 +2305,20 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     wachtKlok=setTimeout(function(){wachtKlok=null;verstuurWacht();},s*1000+500);
   }
   // meldingsvak onder een knoppenrij: groen bij gelukt, rood bij fout, neutraal in de wachtrij
-  function zetDank(el,tekst,soort){
+  // inBeeld: na een tik van de patiënt de melding in beeld schuiven als hij onder de rand valt (bij 200 % tekst
+  // stond "Verstuurd" na "Ik heb een vraag" onder het scherm; gebruikers-sweep 2026-11-20 06u, Truus)
+  function zetDank(el,tekst,soort,inBeeld){
     if(!el)return;el.textContent=tekst;el.style.display='block';
     el.classList.toggle('fout',soort==='fout');el.classList.toggle('wacht',soort==='wacht');
+    if(inBeeld)toonInBeeld(el);
+  }
+  function toonInBeeld(el){
+    try{
+      var r=el.getBoundingClientRect(),h=window.innerHeight||document.documentElement.clientHeight;
+      if(r.bottom<=h&&r.top>=0)return;
+      var rustig=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      el.scrollIntoView({block:'nearest',behavior:rustig?'auto':'smooth'});
+    }catch(e){}
   }
   // Seintjes: de knoppen tonen wat er bij de praktijk openstaat, niet de laatste tik. De server
   // houdt het zwaarste open seintje vast (pijn > vraag > goed) en zet een lichter seintje dat
@@ -4002,7 +4014,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     document.getElementById('sknoppen').addEventListener('click',function(e){
       var b=e.target.closest('.sbtn');if(!b||b.dataset.bezig)return;
       var soort=b.dataset.soort,nu=Date.now();
-      if(SEIN_LAATST[soort]&&nu-SEIN_LAATST[soort]<30000){zetDank(document.getElementById('sdank'),seinDankTekst(soort),'');return;}
+      if(SEIN_LAATST[soort]&&nu-SEIN_LAATST[soort]<30000){zetDank(document.getElementById('sdank'),seinDankTekst(soort),'',true);return;}
       SEIN_LAATST[soort]=nu;b.dataset.bezig='1';
       var dank=document.getElementById('sdank');
       var voor=K&&K.kaart?K.kaart.seinOpen||null:null;
@@ -4013,13 +4025,13 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       seinKetting.then(function(d){
           if(d&&d.ok&&'open' in d)zetSeinOpen(d.open);
           if(d&&d.ok)mgSeintjeErbij(K&&K.kaart,soort,Date.now());
-          if(d&&d.ok)zetDank(dank,seinDankTekst(soort),'');
+          if(d&&d.ok)zetDank(dank,seinDankTekst(soort),'',true);
           // 404: de kaart is gestopt of staat in de prullenbak. Dan niet "probeer het zo opnieuw" (dat komt nooit
           // aan), maar de vaste melding met de weg naar de praktijk (gebruikers-sweep 2026-11-18 22u, Truus)
-          else if(d&&d.kwijt){zetSeinOpen(null);delete SEIN_LAATST[soort];zetDank(dank,trw('kwijt'),'fout');}
-          else{zetSeinOpen(voor);delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout');}
+          else if(d&&d.kwijt){zetSeinOpen(null);delete SEIN_LAATST[soort];zetDank(dank,trw('kwijt'),'fout',true);}
+          else{zetSeinOpen(voor);delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout',true);}
           delete b.dataset.bezig;})
-        .catch(function(e){delete b.dataset.bezig;if(e&&e.wacht){zetDank(dank,trw('een'),'wacht');return;}zetSeinOpen(voor);delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout');});
+        .catch(function(e){delete b.dataset.bezig;if(e&&e.wacht){zetDank(dank,trw('een'),'wacht',true);return;}zetSeinOpen(voor);delete SEIN_LAATST[soort];zetDank(dank,trs('fout'),'fout',true);});
       seinKetting=seinKetting.catch(function(){});
     });
     // ervaren herstel: één tik stuurt de score (-2..+2), vandaag opnieuw tikken wijzigt

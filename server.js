@@ -817,7 +817,9 @@ async function eisBeveiligdePraktijk(req, res, pk, fout) {
     await sendJson(res, 401, { ok: false, fout: "Log eerst in bij deze praktijk.", login: true });
     return true;
   }
-  await sendJson(res, 401, { ok: false, beveilig: true,
+  // eigenLogin: de app noemt dan meteen "je eigen login" in plaats van "een wachtwoord op je praktijk",
+  // ook als het Kaarten-paneel de status nog niet had opgehaald (gebruikers-sweep 2026-11-20 06u, Sanne)
+  await sendJson(res, 401, { ok: false, beveilig: true, eigenLogin: EIGEN_LOGIN_VERPLICHT,
     fout: fout || (EIGEN_LOGIN_VERPLICHT ? "Beveilig eerst je praktijk; daarna zie je hier je kaarten." : "Zet eerst een wachtwoord op je praktijk; daarna zie je hier je kaarten.") });
   return true;
 }
@@ -7258,7 +7260,8 @@ async function afhandelen(request, response) {
       // wachtwoordplicht: patiëntgegevens komen pas op de server als de praktijk een
       // eigenaar met wachtwoord heeft (v1-sessies en een eigen beheersleutel uitgezonderd)
       if (await eisBeveiligdePraktijk(request, response, pk,
-        "Beveilig eerst je praktijk met een wachtwoord; daarna deel je kaarten met je patiënten.")) return;
+        EIGEN_LOGIN_VERPLICHT ? "Beveilig eerst je praktijk met je eigen login; daarna deel je kaarten met je patiënten."
+          : "Beveilig eerst je praktijk met een wachtwoord; daarna deel je kaarten met je patiënten.")) return;
       // de naam op de patiëntkaart komt van de praktijk zelf (profiel of naam bij het beveiligen),
       // niet uit het verzoek: anders zette elke collega met een sessie een willekeurige praktijknaam
       // bovenaan de kaart, langs de regel dat alleen een beheerder het profiel wijzigt
