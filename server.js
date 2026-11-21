@@ -2355,7 +2355,7 @@ async function serveerV1App(response, email) {
 function weekBrief(pk) {
   const nu = Date.now();
   const dag = 86400000;
-  const actief = Object.values(kaarten[pk] || {}).filter((k) => !k.gearchiveerd && (k.demo || verlooptOp(k) > nu));
+  const actief = Object.values(kaarten[pk] || {}).filter((k) => !k.gearchiveerd && kaartLeeft(k, pk, nu));
   if (!actief.length) return "";
   const naam = (k) => String(k.naam || "kaart").slice(0, 40);
   const lijst = (items) => items.length > 8 ? items.slice(0, 8).join(", ") + " en " + (items.length - 8) + " andere" : items.join(", ");
@@ -7236,7 +7236,7 @@ async function afhandelen(request, response) {
     const nu = Date.now();
     leesMerk(request, pk, "berichten");
     const kaartenMetNieuws = Object.values(kaarten[pk] || {})
-      .filter((k) => !k.verwijderdOp && !k.demo && verlooptOp(k) > nu)
+      .filter((k) => !k.demo && kaartLeeft(k, pk, nu))
       // een afgeronde (gearchiveerde) kaart werkt voor de patiënt nog tot de bewaardatum; wat hij daarna
       // doorgeeft (bv. "te veel pijn") viel nergens binnen terwijl /k "Verstuurd" zei (gebruikers-sweep
       // 2026-11-20 10u, Mark). Dus: kwam er ná het archiveren iets binnen (`naArchief`, moment van ontvangst,
@@ -7306,7 +7306,7 @@ async function afhandelen(request, response) {
     leesMerk(request, pk, "overzicht");
     const magLog = (() => { const s = sessieVan(request); return !!(s && s.pk === pk && isBeheer(s)); })();
     const list = Object.values(map)
-      .filter((k) => !k.verwijderdOp && (k.demo || verlooptOp(k) > nuLijst))
+      .filter((k) => kaartLeeft(k, pk, nuLijst))
       .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, magWeg: magKaartVerwijderen(request, pk, k), ...(magLog && !k.demo ? { magLog: true } : {}), aantal: (k.chosen || []).length,
         // wanneer de kaart door de bewaartermijn verdwijnt: het overzicht waarschuwt
         // ruim van tevoren, zodat de praktijk eerst naar het dossier kan kopiëren
@@ -7777,7 +7777,7 @@ async function afhandelen(request, response) {
       await sendJson(response, 200, { ok: true, kaart: { ...pkaart, inPrullenbak: true, verloopt: Math.min(Number(pkaart.herstelTot) || 0, praktijkWisOp(pk)) } });
       return;
     }
-    const kaart = Object.values(kaarten[pk] || {}).find((k) => !k.verwijderdOp && k.id === id && (k.demo || verlooptOp(k) > nu)) || null;
+    const kaart = Object.values(kaarten[pk] || {}).find((k) => k.id === id && kaartLeeft(k, pk, nu)) || null;
     if (!kaart) { if (kaartMisLimiet(request, response)) return; await sendJson(response, 404, { ok: false, fout: "Kaart niet gevonden." }); return; }
     if (!kaart.demo) leesMerk(request, pk, "geopend", kaart.id);
     await sendJson(response, 200, { ok: true, kaart: { ...kaart, verloopt: verdwijntOp(pk, kaart) } });
@@ -9376,7 +9376,7 @@ async function afhandelen(request, response) {
     const kort = (ms) => new Date(ms).toLocaleDateString("nl-NL", { day: "numeric", month: "short", timeZone: "Europe/Amsterdam" });
     const laatste = (r) => (r && r.length) ? r[r.length - 1] : null;
     const lijst = Object.values(kaarten[pk] || {})
-      .filter((k) => !k.verwijderdOp && !k.demo && !k.gearchiveerd && verlooptOp(k) > nu)
+      .filter((k) => !k.demo && !k.gearchiveerd && kaartLeeft(k, pk, nu))
       .map((k) => ({ k, sein: (k.seintje && SEIN[k.seintje.soort]) ? k.seintje : null }))
       .sort((a, b2) => ((b2.sein ? b2.sein.t : 0) - (a.sein ? a.sein.t : 0)) || ((b2.k.ts || 0) - (a.k.ts || 0)));
     const rijen = lijst.map(({ k, sein }) => {
