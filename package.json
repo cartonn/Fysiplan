@@ -138,6 +138,7 @@
     "test:teamrolbevestig": "node scripts/test-sweep-team-rol-bevestig.mjs",
     "test:dubbeltik": "node scripts/test-sweep-dubbeltik-breedte.mjs",
     "test:kaartroutes": "node scripts/test-kaart-praktijkroutes.mjs",
+    "test:kaartverlopen": "node scripts/test-kaart-verlopen-routes.mjs",
     "test:sjablonenslot": "node scripts/test-sjablonen-onbeveiligd.mjs",
     "test:landingprint": "node scripts/test-sweep-landingprint-langetekst.mjs",
     "test:offlinestand": "node scripts/test-offline-stand.mjs",
