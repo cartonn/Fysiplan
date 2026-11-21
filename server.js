@@ -5194,10 +5194,15 @@ async function afhandelen(request, response) {
     if (!s) { await sendJson(response, 401, { ok: false, fout: "Log eerst in bij je praktijk.", login: true }); return; }
     const pk = s.pk, acc = praktijkAccounts[pk], ik = sessieLid(s);
     // tweedeStap: alleen óf hij aan staat; het geheim en de reservecodes verlaten de server niet
+    // legal 2026-11-21 (art. 5 lid 1 c AVG): een gewone therapeut ziet van collega's alleen naam, e-mail,
+    // rol en status. Wanneer iemand het laatst inlogde, of de tweede stap aan staat en tot wanneer een
+    // uitnodiging loopt, is beheerwerk: dat ziet alleen de beheerder (en ieder van zichzelf)
+    const volLid = isBeheer(s);
     const lidUit = (l) => ({ id: l.id, naam: l.naam || "", email: l.email, rol: l.rol,
-      status: lidActief(l) ? "actief" : "uitgenodigd", laatst: l.laatst || null,
-      uitnodigingTot: !lidActief(l) && l.uitnodiging ? l.uitnodiging.verloopt : null,
-      tweedeStap: heeftTweedeStap(l) });
+      status: lidActief(l) ? "actief" : "uitgenodigd",
+      ...(volLid || (ik && ik.id === l.id) ? { laatst: l.laatst || null,
+        uitnodigingTot: !lidActief(l) && l.uitnodiging ? l.uitnodiging.verloopt : null,
+        tweedeStap: heeftTweedeStap(l) } : {}) });
     const beheerders = () => ledenVan(pk).filter((l) => lidActief(l) && l.rol === "beheerder");
     if (urlPath === "/api/praktijk/team" && request.method === "GET") {
       if (leesLimiet(request, response)) return;
