@@ -1775,7 +1775,14 @@ function proefVars(p, extra = {}) {
 // of vanzelf na de proef (gebruikers-sweep 2026-11-15, Karin)
 function wisTeksten(p) {
   const gekoppeld = Object.values(praktijkAccounts).some((acc) => acc && acc.proef && String(acc.proef.id || "") === String(p.id));
-  if (!gekoppeld) return { WIS_UITLEG: "We bewaren je e-mailadres, naam, telefoonnummer en praktijknaam. Wis je ze, dan stopt je proef direct op dit apparaat. " +
+  // Legal 2026-11-21: de verlopen-pagina zei "blijven werken tot de bewaartermijn afloopt" (tot 90 dagen),
+  // terwijl de kaarten van een gekoppelde praktijk op de wisdatum dichtgaan (praktijkWisOp, #428/#430).
+  // Nu noemt de pagina die datum, zodat de praktijk op tijd naar het dossier kopieert (WGBO).
+  const KAARTEN_TOT = gekoppeld && !p.klant
+    ? "De kaarten die je al met patiënten deelde, blijven werken tot " + datumNl(p.verloopt + PROEF_BEWAAR_DAGEN * 86400000) +
+      ". Word je geen klant, dan wissen we op die dag alles van je praktijk. Kopieer daarvoor naar je dossier wat je wilt bewaren."
+    : "De kaarten die je al met patiënten deelde, blijven werken tot de bewaartermijn afloopt.";
+  if (!gekoppeld) return { KAARTEN_TOT, WIS_UITLEG: "We bewaren je e-mailadres, naam, telefoonnummer en praktijknaam. Wis je ze, dan stopt je proef direct op dit apparaat. " +
     "Kaarten die je al met patiënten deelde blijven werken, tot ze na de bewaartermijn vanzelf verdwijnen.",
     WIS_FORM_HTML: '<form method="post" action="/v2/proef/wissen" style="margin-top:14px">' +
       '<label class="vink"><input type="checkbox" name="zeker" value="1" required/><span>Ja, wis mijn gegevens en stop mijn proef.</span></label>' +
@@ -1784,7 +1791,7 @@ function wisTeksten(p) {
       '<p class="klein">Liever niet? Dan hoef je niets te doen; we wissen je gegevens automatisch na ' + PROEF_BEWAAR_DAGEN + ' dagen.</p>' +
       '<label class="vink" style="margin-top:8px"><input type="checkbox" name="zeker" value="1" required/><span>Ja, wis mijn gegevens nu meteen.</span></label>' +
       '<div class="knoppen"><button class="knop stil" type="submit" style="min-height:44px">Nu meteen wissen</button></div></form>' };
-  return { WIS_UITLEG: "We bewaren je e-mailadres, naam, telefoonnummer en praktijknaam van de aanmelding. Je proef hoort nu bij je praktijk " +
+  return { KAARTEN_TOT, WIS_UITLEG: "We bewaren je e-mailadres, naam, telefoonnummer en praktijknaam van de aanmelding. Je proef hoort nu bij je praktijk " +
       "en loopt tot en met " + datumNl(p.verloopt) + " voor het hele team. Wil je stoppen? Op Mijn gegevens wis je alles van de praktijk, ook je aanmelding. " +
       "Word je geen klant, dan wissen we alles " + PROEF_BEWAAR_DAGEN + " dagen na de proef vanzelf.",
     WIS_FORM_HTML: '<div class="knoppen" style="margin-top:14px"><a class="knop omlijnd" href="/v2/gegevens">Naar Mijn gegevens</a></div>',
@@ -8747,7 +8754,8 @@ async function afhandelen(request, response) {
       html = metBtwBijschrift(html, prijsNu());
       html = html.replace(/__FUNCTIES_AANTAL__/g, String((html.match(/class="fx"/g) || []).length));
       // bewaartermijnen zoals de server ze hanteert (pakket B); de tekst klopt zo altijd
-      html = html.replace(/__BEWAAR_STIL__/g, String(BEWAAR_STIL_DAGEN)).replace(/__BEWAAR_AFGEROND__/g, String(BEWAAR_AFGEROND_DAGEN));
+      html = html.replace(/__BEWAAR_STIL__/g, String(BEWAAR_STIL_DAGEN)).replace(/__BEWAAR_AFGEROND__/g, String(BEWAAR_AFGEROND_DAGEN))
+        .replace(/__PROEF_BEWAAR__/g, String(PROEF_BEWAAR_DAGEN));
       // QR naar de voorbeeldkaart: een desktop-bezoeker scant hem en ervaart de
       // app-vrije patiëntkaart meteen op de eigen telefoon. Host-pinning zoals bij
       // de ICS-agenda: alleen het eigen domein mag in de link, anders fysiplan.nl.

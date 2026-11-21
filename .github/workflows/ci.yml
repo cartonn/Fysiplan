@@ -211,6 +211,7 @@ jobs:
       - run: npm run test:sessie200
       - run: npm run test:profielovername
       - run: npm run test:proefarchief
+      - run: npm run test:proefkaartentot
       - run: npm run test:vensterterug
       - run: npm run test:inboxmijn
       - run: npm run test:dubbelklikoverzicht
