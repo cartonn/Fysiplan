@@ -74,15 +74,15 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 ## Open
 
 ### Sweep 2026-11-21 06u (vijf persona's lokaal op main #423 met EIGEN_LOGIN_VERPLICHT=aan en PROEF_VERPLICHT=aan; geen 500's of pageerrors; beheergrenzen hielden: jezelf verwijderen en enige beheerder naar therapeut geweigerd met zin, X ↔ Y 404, alle 15 beheeracties als therapeut 403 met zin (scherm en API), verwijderde collega sessie 401 en login 403; opnieuw akkoord desktop + iPad ok; profiel/logo → /k ok; sjabloon en eigen oefening van een collega voor de hele praktijk weg; /v2/gegevens download + WISSEN ok; proefroutes als therapeut nu 303 → nette zin op /v2/proef; /o met nep-camera ok; verlopen proef: 403 met vaste melding; /k: misbruik 400/404, offline wachtrij ok, alles Engels; .ics met VTIMEZONE)
-- **OPGELOST 2026-11-21 06u PR #PRNR (test:typeneigen) — HOOG (Mark, desktop + iPad; was MIDDEL) — eigen oefeningen vielen stil van een kaart geopend op een tweede apparaat**,
+- **OPGELOST 2026-11-21 06u PR #424 (test:typeneigen) — HOOG (Mark, desktop + iPad; was MIDDEL) — eigen oefeningen vielen stil van een kaart geopend op een tweede apparaat**,
   en een automatische `POST /api/kaarten` haalde ze ook van /k af (5 → 3). Oorzaak: bij het laden was de praktijknaam nog leeg, `voegPraktijkOefToe` haalde niets, en
   `proefStart`/typen in `#praktijk` laadde ze niet opnieuw. Nu haalt de editor de eigen oefeningen opnieuw zodra de praktijknaam verandert (`eigenNaPraktijknaam`), en wachten
   Openen, Kopie en "nieuwste versie" eerst op de eigen oefeningen (`metEigenOefeningen`); lukt dat niet, dan opent de kaart niet en zegt waarom. Ook het teamsjabloon-voorbeeld
   noemt ze niet meer "overgeslagen". Niet aangepast: de lokale Openen-knop (kaarten in localStorage).
-- **OPGELOST 2026-11-21 06u PR #PRNR (test:typeneigen) — HOOG (Sanne, desktop) — typen in een vol Opm./Casus-vak liet een half woord + tientallen spaties op print en /k**
+- **OPGELOST 2026-11-21 06u PR #424 (test:typeneigen) — HOOG (Sanne, desktop) — typen in een vol Opm./Casus-vak liet een half woord + tientallen spaties op print en /k**
   ("…na het oefene" + 61 spaties; midden in de tekst "heel vi bij"). Nu gaat het halve woord weg met een melding die het noemt, blijft het vak daarna vol tot je iets
   weghaalt, en telt een spatie achteraan alleen als er daarna nog iets past. Twee hertests Sanne.
-- **OPGELOST 2026-11-21 06u PR #PRNR (test:kaartlinkhoofd) — MIDDEL (Jayden, Pixel 7 + iPhone 14) — kaartlink in hoofdletters of met / erachter gaf "Card not found".**
+- **OPGELOST 2026-11-21 06u PR #424 (test:kaartlinkhoofd) — MIDDEL (Jayden, Pixel 7 + iPhone 14) — kaartlink in hoofdletters of met / erachter gaf "Card not found".**
   Nu stuurt /k door naar de gewone link (taal en # blijven). Hertest Jayden: 54 runs ok, ook met service worker en offline.
 - **HOOG (Sanne, bestaat nog) — Doel (c_doel) 500 tekens: op papier ~150, rest valt zonder melding weg midden in een zin**; bij een gescrold vak komt er een stuk uit het midden
   op papier. `c_doel` is geen `print-limited` en heeft geen printkopie (index.html ~463, ~1422). **Eerste kandidaat volgende run** (printkopie zoals Opm. met "…" of melding).
@@ -97,12 +97,12 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   voorgelezen; geel blok "Neem pijn serieus" plakt aan de kop eronder. Bestaat nog: `.vlab` bij 200 % over ~30 % van de foto en 20 px eronder uit; liggend 200 % achter de balk.
 - **LAAG (Jayden):** onderbalk oefenstand liggend niet gecentreerd (`@media (max-height:26em)` `.srij{margin:0}`, kaart.html ~364); terugknop met open "My data" verlaat de
   kaart; footerlinks ~20 px.
-- **LAAG (Mark, hertest #PRNR):** zijn de eigen oefeningen door een storing niet geladen, dan zegt het teamsjabloon-voorbeeld nog "2 oefeningen staan niet meer in de bibliotheek
+- **LAAG (Mark, hertest #424):** zijn de eigen oefeningen door een storing niet geladen, dan zegt het teamsjabloon-voorbeeld nog "2 oefeningen staan niet meer in de bibliotheek
   en worden overgeslagen" en staat "Op de kaart zetten" aan (index.html ~3661; zou `EIGEN_STAND==='storing'` moeten noemen en wachten).
 - **LAAG (Mark):** teamsjabloon delen bij verlopen proef kale `alert` (index.html ~4021 mist `d.proefVerlopen`); Deel-paneel-velden op iPad 38 px; videoknopje alleen bij hover, 22 px.
 - **LAAG (Karin, NIEUW):** POST /v2/proef/betalen met betalen lokaal uit valt door naar de v1-inlogpagina (server.js ~9111 `betalenKan()`); /v2/gegevens vult de praktijknaam
   niet in voor een ingelogde beheerder; × bij collega 32×36 en "Verwijderen voor de praktijk" 15 px hoog op desktop. Opgelost sinds vorige run: proefroutes als therapeut.
-- **LAAG (Sanne, hertest #PRNR):** midden in de tekst noemt de melding alleen de eerste letter ("het halve woord “v”" bij "voorzichtig"); binnen 8 s blijft de oude
+- **LAAG (Sanne, hertest #424):** midden in de tekst noemt de melding alleen de eerste letter ("het halve woord “v”" bij "voorzichtig"); binnen 8 s blijft de oude
   melding met het woord staan bij een nieuwe weigering (`el._afkapWoord`).
 - **LAAG (Sanne):** 13e oefening kale `alert`; al open kaart opnieuw openen vraagt "vervangen?"; Patiënten-knoppen 32 px, Rapport/CSV 22 px; roepnaamvoorstel bij `=HYPERLINK(...)` vreemd.
 - **Niet getest:** echte betaling/opzeggen (lokaal uit), mail, echte iOS Safari/WebKit, vertalen (lokaal 503), bibliotheekvideo's.
@@ -124,7 +124,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
   (`--sbalk-h`), alleen bij weinig hoogte en alleen liggend. Drie hertests Truus: past nu overal behalve SE liggend 200 % met afgevinkte oefening (10 px
   onder de balk, ondergrens 64 px; oplossing: statusregel liggend naast in plaats van onder). LAAG: soms blijft de video kleiner dan nodig nadat de balk weer
   kromp (na Gedaan → terug); staande opname letterbox in het liggende vak.
-- **OPGELOST 2026-11-21 06u PR #PRNR — MIDDEL (Mark, iPad + desktop, NIEUW) — eigen oefeningen vallen stil van een kaart die je opent voordat ze geladen zijn**: praktijknaam typen in `#praktijk`
+- **OPGELOST 2026-11-21 06u PR #424 — MIDDEL (Mark, iPad + desktop, NIEUW) — eigen oefeningen vallen stil van een kaart die je opent voordat ze geladen zijn**: praktijknaam typen in `#praktijk`
   met een bestaande sessie (zonder herladen), dan Kaarten → kaart met eigen oefening openen: `alert` "Niet meer in de oefeningenlijst (overgeslagen)", en opnieuw
   delen bewaart de kaart zonder die oefeningen (5 → 3, ook op /k). `api/praktijk/oefeningen` wordt na het typen niet opgevraagd; `openCard` (~4089) slaat over;
   de bescherming bij herladen (`mistEigen`/`herstelOpenKaart` ~2236) geldt hier niet. **Eerste kandidaat volgende run.**
