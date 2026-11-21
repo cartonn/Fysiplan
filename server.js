@@ -108,7 +108,7 @@ const ADMIN_KEY = (() => {
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88" && process.env.ADMIN_KEY !== "account";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-18";
+const VWO_VERSIE = "2026-11-21";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
 const AV_VERSIE = "2026-11-20";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
@@ -147,7 +147,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-18", tekst: "Verduidelijking: werkte je praktijk al met Fysiplan vóór de proef en probeer je de nieuwe app als pilot, dan wissen we na de proef alleen je proefaanmelding; je bestaande gegevens blijven." },
   { stuk: "vwo", versie: "2026-11-18", tekst: "Einde: werkte je praktijk al met Fysiplan vóór de proef en probeer je de nieuwe app als pilot, dan wist het einde van de pilot alleen de proefaanmelding; je bestaande gegevens blijven. Beveiliging: een video uit de galerij bewaren we zonder plek van opnemen en zonder merk en type telefoon." },
   { stuk: "av", versie: "2026-11-19", tekst: "Verduidelijking: de proef loopt tot en met de einddatum die je bij het aanmelden ziet, tot middernacht (Nederlandse tijd). Met één proef beveilig je hooguit 3 praktijken." },
-  { stuk: "av", versie: "2026-11-20", tekst: "Verduidelijking: naast de grens op lopende kaarten geldt een grens voor alle kaarten samen, afgeronde en verwijderde meegeteld (" + KAARTEN_BEWAARD_KEER + " keer zoveel). Zit je daaraan, dan verwijder je afgeronde kaarten en leeg je de prullenbak." }
+  { stuk: "av", versie: "2026-11-20", tekst: "Verduidelijking: naast de grens op lopende kaarten geldt een grens voor alle kaarten samen, afgeronde en verwijderde meegeteld (" + KAARTEN_BEWAARD_KEER + " keer zoveel). Zit je daaraan, dan verwijder je afgeronde kaarten en leeg je de prullenbak." },
+  { stuk: "vwo", versie: "2026-11-21", tekst: "Beveiliging: staat de vraaghulp op de patiëntkaart aan, dan gaat de korte vraag van de patiënt over een oefening naar de AI-dienst (niet bewaard; een vraag over pijn, klachten of dosering niet). Uit een foto bij een eigen oefening en uit je logo halen we de plek en het merk en type telefoon." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {

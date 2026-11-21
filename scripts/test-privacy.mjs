@@ -435,7 +435,7 @@ try {
       assert.match(blog, /noodsleutel/, "/privacy#beheerlog noemt de noodsleutel");
     }
     assert.doesNotMatch(vwo, /vrije tekst van de therapeut gaat niet naar/, "onjuiste AI-belofte is weg");
-    assert.match(vwo, /Wel de namen van oefeningen, ook van eigen oefeningen van de praktijk/);
+    assert.match(vwo, /de namen van oefeningen, ook van eigen oefeningen van de praktijk/);
   }
   {
     // /privacy#praktijk: bewaartermijn van het logboek volgt de plafonds uit de code (#175)
