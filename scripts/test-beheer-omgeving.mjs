@@ -202,6 +202,14 @@ const NU = Date.parse("2026-11-12T13:00:00Z");
   assert.equal(k3.stand, "ingediend");
   assert.equal(k3.teBetalen, k3.r1a.btw - k3.r5b);
   assert.equal(financeOverzicht(a, { ...inst, aangiftes: {} }).btw.find((b) => b.kwartaal === "2026-K3").stand, "te-laat", "na de uiterste datum is het te laat");
+  {
+    // de uiterste datum is een Nederlandse dag: om 00:30 op 1 november (23:30 UTC) is K3 te laat, om 23:30 op 31 oktober nog niet
+    const een = (nu) => ({ soort: "echt", nu, kosten: [], praktijken: [{ pk: "x", naam: "Nep", status: "klant", plaatsen: 1, leden: [] }],
+      facturen: [{ nr: "FP-2026-0001", datum: Date.UTC(2026, 7, 15, 10), pk: "x", praktijk: "Nep", aantal: 1, totaalCent: 999, status: "betaald", betaaldOp: Date.UTC(2026, 7, 15, 10) }] });
+    const k3Om = (t) => financeOverzicht(een(Date.parse(t)), { prijsBtw: "inclusief", kor: "nee" }).btw.find((b) => b.kwartaal === "2026-K3").stand;
+    assert.equal(k3Om("2026-10-31T22:30:00Z"), "te-doen", "op de laatste dag zelf nog op tijd");
+    assert.equal(k3Om("2026-10-31T23:30:00Z"), "te-laat", "na middernacht in Nederland te laat, ook al is het in UTC nog de 31e");
+  }
   // een ingediende aangifte ligt vast: wat er daarna in dat kwartaal verandert, is een verschil
   assert.ok(f.btw.every((b) => b.verschil === 0), "zonder vastgelegde bedragen is er geen verschil te melden");
   const vast = { ...inst, aangiftes: { ...inst.aangiftes, "2026-K3": { door: "x", op: "2026-10-21T10:00:00.000Z", bedragen: { omzet: k3.r1a.omzet, btw: k3.r1a.btw, voorbelasting: k3.r5b, teBetalen: k3.teBetalen } } } };
