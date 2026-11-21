@@ -3598,7 +3598,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       document.documentElement.style.setProperty('--vtop',Math.max(0,Math.round(v.getBoundingClientRect().top+(window.scrollY||0)))+'px');
     }catch(e){}
   }
-  window.addEventListener('resize',function(){zetVideoTop();});
+  if(window.addEventListener)window.addEventListener('resize',function(){zetVideoTop();});
   function volgSessiebalk(){
     var sb=document.getElementById('sessiebalk');if(!sb)return;
     var zet=function(){try{document.documentElement.style.setProperty('--sbalk-h',(sb.hidden?0:sb.offsetHeight)+'px');}catch(e){}zetVideoTop();};
