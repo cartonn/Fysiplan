@@ -122,6 +122,11 @@ try {
   assert.ok(logo, "logopad terug");
   const lb = await readFile(join(dataDir, logo));
   assert.deepEqual(sporen(lb), [], "logo op de server zonder sporen");
+  // legal 2026-11-21 (art. 13 en 25 AVG): /privacy#inhoud zegt dit ook, net als #opnames bij de video's
+  const privacy = await (await fetch(origin + "/privacy")).text();
+  const inhoud = (privacy.match(/<tr id="inhoud">[\s\S]*?<\/tr>/) || [""])[0];
+  assert.match(inhoud, /Uit een foto of logo haalt Fysiplan de plek waar hij is gemaakt en het merk en type telefoon/,
+    "/privacy#inhoud noemt het weghalen van plek en toestel uit foto's en logo's");
   console.log("test-beeld-metadata: ok");
 } catch (e) {
   console.error(log.slice(-2000));
