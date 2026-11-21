@@ -2919,6 +2919,13 @@ function vindKaart(id) {
   }
   return null;
 }
+// de praktijk waar een (gevonden) kaart bij hoort, voor de AI-rem per praktijk; de voorbeeldkaart telt als "demo"
+function praktijkVanKaart(k) {
+  if (!k) return "";
+  if (k.demo) return "demo";
+  for (const pk of Object.keys(kaarten)) if (Object.values(kaarten[pk]).includes(k)) return pk;
+  return "";
+}
 // roepnaam voor de patiëntkant: alleen het eerste woord van het naamveld. Het naamveld
 // is het interne kaartlabel van de praktijk ("Jan K."); de patiënt, het beginscherm
 // en de linkvoorvertoning krijgen nooit meer dan "Jan".
@@ -3277,9 +3284,15 @@ const ZOEK_DOEL = ["Mobiliteit", "Stabiliteit", "Krachtuithoudingsvermogen", "Ma
 // eigen limiet voor de AI-endpoints (die kosten per aanroep geld): per IP en per dag
 const aiTeller = new Map();
 let aiDag = { dag: "", n: 0 };
-function aiLimiet(req, res) {
+// Daarnaast een deel van het dagmaximum per praktijk (security 2026-11-21 08u): één praktijk, ook
+// een gratis proef met een paar adressen of de kaarten van één praktijk, vulde anders de hele
+// dagteller van 300 en zette de zoekhulp, de vertaling en de vraaghulp een dag uit voor iedereen.
+const AI_PRAKTIJK_DAG = 100;
+let aiPraktijkDag = { dag: "", n: new Map() };
+function aiLimiet(req, res, pk) {
   const dag = vandaagKey();
   if (aiDag.dag !== dag) aiDag = { dag, n: 0 };
+  if (aiPraktijkDag.dag !== dag) aiPraktijkDag = { dag, n: new Map() };
   const nu = Date.now();
   if (aiTeller.size > 5000) {
     for (const [k, v] of aiTeller) if (nu - v.start > 3600e3) aiTeller.delete(k);
@@ -3301,6 +3314,13 @@ function aiLimiet(req, res) {
     send429(res, 3600, { ok: false, fout: "De AI-hulp heeft het dagmaximum bereikt; probeer het morgen opnieuw." });
     return true;
   }
+  const pn = pk ? (aiPraktijkDag.n.get(pk) || 0) : 0;
+  if (pk && pn >= AI_PRAKTIJK_DAG) {
+    if (pn === AI_PRAKTIJK_DAG) { aiPraktijkDag.n.set(pk, pn + 1); logGeweigerd(req, "ai-limiet-praktijk"); }
+    send429(res, 3600, { ok: false, fout: "De AI-hulp heeft het dagmaximum voor deze praktijk bereikt; probeer het morgen opnieuw." });
+    return true;
+  }
+  if (pk) aiPraktijkDag.n.set(pk, pn + 1);
   aiDag.n++;
   return false;
 }
@@ -8325,6 +8345,15 @@ async function afhandelen(request, response) {
     // deze aanroep kost geld; een cross-site pagina mag het budget niet opstoken
     if (kruisSite(request)) { await weigerKruis(response); return; }
     if (schrijfLimiet(request, response)) return;
+    // Alleen een ingelogde praktijk (of eigen beheer). De zoekhulp is voor de therapeut in /v2/app;
+    // zonder deze poort kon iedereen zonder account hem aanroepen (elke keer de hele bibliotheek
+    // naar de AI-dienst, op kosten van Fysiplan) en met een paar adressen het dagmaximum van de
+    // AI-hulp vullen, waarna ook de vertaling op de patiëntkaart een dag uit stond (security 2026-11-21 08u).
+    const zoekSessie = sessieVan(request);
+    if (!zoekSessie && !beheerEigen(request)) {
+      await sendJson(response, 401, { ok: false, login: true, fout: "Log eerst in bij je praktijk; daarna kun je de zoekhulp gebruiken." });
+      return;
+    }
     try {
       const b = JSON.parse(await readBody(request));
       const regio = ZOEK_REGIO.includes(String(b.regio || "")) ? String(b.regio) : "";
@@ -8333,7 +8362,7 @@ async function afhandelen(request, response) {
       if (!regio || !doel) { await sendJson(response, 400, { ok: false, fout: "Kies een lichaamsdeel en een trainingsdoel." }); return; }
       // de AI-rem pas ná de goedkope validatie: anders vullen ongeldige verzoeken de
       // gedeelde dagteller en kan een handvol adressen de hulp voor iedereen uitzetten
-      if (aiLimiet(request, response)) return;
+      if (aiLimiet(request, response, zoekSessie ? zoekSessie.pk : "")) return;
       const manifest = await buildManifest();
       const lijst = manifest.map((e) => e.naam + " | " + e.groep + (e.ook && e.ook.length ? "/" + e.ook.join("/") : "")).join("\n");
       const sys = "Je bent de zoekhulp in de oefenbibliotheek van Fysiplan. Een fysiotherapeut zoekt oefeningen op lichaamsdeel en trainingsdoel, soms met een paar zoekwoorden (bijvoorbeeld materiaal of uitgangshouding). " +
@@ -8424,7 +8453,7 @@ async function afhandelen(request, response) {
       // maar een cross-site pagina mag geen nieuwe AI-vertalingen laten maken
       if (kruisSite(request)) { await deelsOfFout(403, "", true); return; }
       if (schrijfLimiet(request, response)) return;
-      if (aiLimiet(request, response)) return;
+      if (aiLimiet(request, response, praktijkVanKaart(found))) return;
       try {
         const uit = await vraagClaude(AI_MODEL_VERTAAL, 4000, vertaalOpdracht(taal), JSON.stringify(missend));
         if (!Array.isArray(uit) || uit.length !== missend.length) throw new Error("verkeerde vorm");
@@ -8480,7 +8509,7 @@ async function afhandelen(request, response) {
         await sendJson(response, 200, { ok: true, antwoord: doseringVerwijzing(taal), verwezen: true });
         return;
       }
-      if (aiLimiet(request, response)) return;
+      if (aiLimiet(request, response, praktijkVanKaart(found))) return;
       // context voor het antwoord: uitsluitend wat er op déze kaart staat
       let perNaam = new Map();
       try { perNaam = await uitlegPerNaam(); } catch {}
