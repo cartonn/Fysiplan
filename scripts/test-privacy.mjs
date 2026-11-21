@@ -227,11 +227,11 @@ try {
 
   // ---- zoekhulp: alleen lichaamsdeel, doel en zoekwoorden ----
   const ipZ = nieuwIp();
-  const leeg = await api("/api/assistent", { methode: "POST", body: { klacht: "Jan de Vries, 54, hernia" }, ip: ipZ });
+  const leeg = await api("/api/assistent", { methode: "POST", body: { klacht: "Jan de Vries, 54, hernia" }, sessie, ip: ipZ });
   assert.equal(leeg.status, 400, "zonder lichaamsdeel en doel geen AI-aanroep");
   const aiVoorZoek = aiAanvragen.length;
   const zoek = await (await api("/api/assistent", { methode: "POST",
-    body: { regio: "Knie", doel: "Maximale kracht", zoek: "zonder materiaal", klacht: "Jan de Vries, VKB-reconstructie" }, ip: ipZ })).json();
+    body: { regio: "Knie", doel: "Maximale kracht", zoek: "zonder materiaal", klacht: "Jan de Vries, VKB-reconstructie" }, sessie, ip: ipZ })).json();
   assert.equal(zoek.ok, true);
   // "Lunges" is de naam uit het bestand: de zoekhulp geeft de oefening terug onder de naam van nu
   assert.deepEqual(zoek.oefeningen.map((o) => o.naam), [SQUAT_NU, LUNGES_NU], "alleen echte bibliotheekoefeningen onder hun naam van nu, geen dubbele");

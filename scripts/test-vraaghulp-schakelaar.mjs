@@ -58,7 +58,7 @@ async function metServer(env, fn) {
   app.stderr.on("data", (c) => { uit += c; });
   const kop = () => ({ "content-type": "application/json", "x-forwarded-for": "10.6.0." + (ipTeller++) });
   const get = (pad) => fetch(origin + pad, { headers: kop() });
-  const post = (pad, body) => fetch(origin + pad, { method: "POST", headers: kop(), body: JSON.stringify(body) });
+  const post = (pad, body, extra = {}) => fetch(origin + pad, { method: "POST", headers: { ...kop(), ...extra }, body: JSON.stringify(body) });
   try {
     for (let i = 0; i < 100; i++) { try { if ((await fetch(origin + "/health")).ok) break; } catch {} await wacht(50); }
     await fn({ get, post });
@@ -72,7 +72,7 @@ const vraag = { id: "demo", vraag: "Hoe diep moet ik zakken?", taal: "nl" };
 
 try {
   // ---- 1. AI-sleutel, maar de vraaghulp niet aangezet: uit ----
-  await metServer({ ANTHROPIC_API_KEY: "test" }, async ({ get, post }) => {
+  await metServer({ ANTHROPIC_API_KEY: "test", ADMIN_KEY: "vh-beheer-sleutel" }, async ({ get, post }) => {
     assert.equal((await (await get("/health")).json()).vraaghulp, "uit", "/health toont dat de vraaghulp uit staat");
     const kaart = await (await get("/api/kaart?id=demo")).json();
     assert.equal(kaart.ok, true);
@@ -84,8 +84,12 @@ try {
     // ook een klachtzin die het woordfilter doorlaat, blijft nu binnen
     assert.equal((await post("/api/kaart/vraag", { ...vraag, vraag: "Ik heb last van mijn rug, kan dat kwaad?" })).status, 503);
     assert.equal(aiAanvragen.length, voor, "er gaat niets naar de AI-dienst");
-    // de zoekhulp voor de therapeut hangt aan dezelfde sleutel en blijft werken
-    const zoek = await (await post("/api/assistent", { regio: "Knie", doel: "Maximale kracht" })).json();
+    // de zoekhulp voor de therapeut hangt aan dezelfde sleutel en blijft werken (alleen met login of
+    // eigen beheer: zonder kon iedereen hem aanroepen, security 2026-11-21)
+    const zonderLogin = await post("/api/assistent", { regio: "Knie", doel: "Maximale kracht" });
+    assert.equal(zonderLogin.status, 401, "zoekhulp zonder login geweigerd");
+    assert.equal(aiAanvragen.length, voor, "zonder login gaat er niets naar de AI-dienst");
+    const zoek = await (await post("/api/assistent", { regio: "Knie", doel: "Maximale kracht" }, { "x-admin-sleutel": "vh-beheer-sleutel" })).json();
     assert.equal(zoek.ok, true, "zoekhulp werkt met de sleutel: " + JSON.stringify(zoek).slice(0, 200));
     assert.equal(aiAanvragen.length, voor + 1, "de zoekhulp gaat wel naar de AI-dienst");
     // de landing belooft geen vraaghulp die uit staat
