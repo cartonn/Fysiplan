@@ -162,6 +162,7 @@
     "test:sessie200": "node scripts/test-sweep-sessie-200.mjs",
     "test:profielovername": "node scripts/test-profiel-overname.mjs",
     "test:proefarchief": "node scripts/test-proef-archief-bewaar.mjs",
+    "test:proefkaartentot": "node scripts/test-proef-kaarten-tot.mjs",
     "test:vensterterug": "node scripts/test-sweep-venster-terug-spoed.mjs",
     "test:inboxmijn": "node scripts/test-sweep-inbox-mijn.mjs",
     "test:dubbelklikoverzicht": "node scripts/test-sweep-dubbelklik-overzicht.mjs",
