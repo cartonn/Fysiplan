@@ -5318,6 +5318,13 @@ async function afhandelen(request, response) {
 
     const weigerNieuweBeheerder = () => sendJson(response, 403, { ok: false, eigenLogin: true,
       fout: "Iemand beheerder maken kan alleen een beheerder die met een eigen login is ingelogd." });
+    // Security 2026-11-21 00u (gebruikers-sweep 2026-11-20 22u, Karin): een openstaande uitnodiging
+    // die een beheerder met eigen login verstuurde (geen `gedeeld`), kon een collega met het gedeelde
+    // praktijkwachtwoord overschrijven (nieuwe link, oude link 404), van rol veranderen of weghalen.
+    // Zolang er een beheerder met eigen login is, past alleen zo'n beheerder die uitnodiging aan.
+    const eigenUitnodiging = (l) => !!(l && !lidActief(l) && l.uitnodiging && !l.uitnodiging.gedeeld && beheerders().length > 0);
+    const weigerUitnodiging = () => sendJson(response, 403, { ok: false, eigenLogin: true,
+      fout: "Deze uitnodiging is verstuurd door een beheerder met een eigen login. Alleen een beheerder die met een eigen login is ingelogd kan haar aanpassen." });
     if (urlPath === "/api/praktijk/team/uitnodigen") {
       const em = normEmail(b.email), naam = cleanName(b.naam, 60);
       const rol = LID_ROLLEN.has(b.rol) ? b.rol : "therapeut";
@@ -5333,6 +5340,10 @@ async function afhandelen(request, response) {
       }
       let l = acc.leden.find((x) => x.email === em);
       if (l && lidActief(l)) { await sendJson(response, 409, { ok: false, fout: "Deze collega heeft al een eigen login." }); return; }
+      if (!ik && eigenUitnodiging(l)) {
+        auditGeweigerd(pk, "team-wijziging-geweigerd", request, "praktijkwachtwoord → " + (l.naam || maskeerEmail(em)) + " (uitnodiging overschrijven)");
+        await weigerUitnodiging(); return;
+      }
       if (!l && acc.leden.length >= 50) { await sendJson(response, 400, { ok: false, fout: "Maximaal 50 mensen per praktijk." }); return; }
       if (!l) { l = { id: randomBytes(6).toString("hex"), email: em, gemaakt: Date.now() }; acc.leden.push(l); }
       l.naam = naam || l.naam || "";
@@ -5363,8 +5374,10 @@ async function afhandelen(request, response) {
     // Het gedeelde praktijkwachtwoord kent vaak het hele team. Een sessie daarmee mag een
     // beheerder met eigen login niet verwijderen of naar therapeut zetten: anders zet elke
     // collega die het wachtwoord kent de eigenaar buitenspel (security-backlog 2026-11-11 20u).
-    const beschermdeBeheerder = !ik && doel && doel.rol === "beheerder" && lidActief(doel);
-    const weigerBeschermd = () => sendJson(response, 403, { ok: false, eigenLogin: true,
+    // Ook een openstaande uitnodiging van zo'n beheerder is beschermd (eigenUitnodiging).
+    const beschermdeUitnodiging = !ik && eigenUitnodiging(doel);
+    const beschermdeBeheerder = !ik && doel && ((doel.rol === "beheerder" && lidActief(doel)) || beschermdeUitnodiging);
+    const weigerBeschermd = () => beschermdeUitnodiging ? weigerUitnodiging() : sendJson(response, 403, { ok: false, eigenLogin: true,
       fout: "Een beheerder met een eigen login kan alleen worden aangepast door een beheerder die met een eigen login is ingelogd." });
     // logboek: wie (eigen login of het praktijkwachtwoord) wat deed met welke collega
     const wieMetDoel = (d, extra) => (ik ? (ik.naam || ik.email) : "praktijkwachtwoord") + " → " + (d.naam || d.email) + (extra ? " (" + extra + ")" : "");

@@ -8,6 +8,8 @@
 // - Een beheerder-uitnodiging uit de tijd vóór de eigen login van de eigenaar begint bij het
 //   aannemen als therapeut (en kan de eigenaar dus niet verwijderen).
 // - Een beheerder met eigen login nodigt gewoon een beheerder uit.
+// - Een openstaande uitnodiging van een beheerder met eigen login kan de gedeelde sessie niet
+//   overschrijven, van rol veranderen of weghalen (sweep 2026-11-20 22u); de link blijft werken.
 // - "collega-uitgenodigd" in Activiteit noemt wie en welke collega (geen "undefined").
 // Zonder browser, past in CI. `npm run test:uitnodigingbeheerder`
 import assert from "node:assert/strict";
@@ -92,6 +94,37 @@ try {
   await aannemen((await eb.json()).link, "Sara", "sara-wachtwoord");
   const teamA2 = await (await get("/api/praktijk/team", E)).json();
   assert.equal(teamA2.leden.find((l) => l.naam === "Sara").rol, "beheerder", "Sara is beheerder");
+
+  // --- openstaande uitnodigingen van Ellen (eigen login) zijn beschermd (sweep 2026-11-20 22u) ---
+  const ni = await post("/api/praktijk/team/uitnodigen", { email: mail("nina"), naam: "Nina", rol: "beheerder" }, E);
+  assert.equal(ni.status, 200);
+  const nij = await ni.json();
+  const pi = await post("/api/praktijk/team/uitnodigen", { email: mail("piet"), naam: "Piet", rol: "therapeut" }, E);
+  assert.equal(pi.status, 200);
+  const pij = await pi.json();
+  const voorOver = await readFile(join(dataDir, "praktijk-accounts.json"), "utf8");
+  const over = await post("/api/praktijk/team/uitnodigen", { email: mail("nina"), naam: "Nina", rol: "therapeut" }, T);
+  assert.equal(over.status, 403, "gedeelde sessie overschrijft Ellens uitnodiging niet");
+  const overj = await over.json();
+  assert.equal(overj.eigenLogin, true);
+  assert.equal(overj.link, undefined, "geen nieuwe link in het antwoord");
+  assert.equal((await post("/api/praktijk/team/uitnodigen", { email: mail("piet"), naam: "Piet", rol: "therapeut" }, T)).status, 403,
+    "ook een therapeut-uitnodiging van Ellen niet");
+  assert.equal((await post("/api/praktijk/team/rol", { id: nij.lid.id, rol: "therapeut" }, T)).status, 403, "rol van Nina blijft");
+  assert.equal((await post("/api/praktijk/team/verwijder", { id: nij.lid.id, gedeeld: "laten" }, T)).status, 403, "Nina niet weg");
+  assert.equal((await post("/api/praktijk/team/verwijder", { id: pij.lid.id, gedeeld: "laten" }, T)).status, 403, "Piet niet weg");
+  assert.equal(await readFile(join(dataDir, "praktijk-accounts.json"), "utf8"), voorOver, "niets bewaard");
+  await aannemen(nij.link, "Nina", "nina-wachtwoord");
+  const teamN = await (await get("/api/praktijk/team", E)).json();
+  assert.equal(teamN.leden.find((l) => l.id === nij.lid.id).rol, "beheerder", "Ellens link werkt nog: Nina is beheerder");
+  // Ellen zelf beheert haar uitnodiging gewoon
+  assert.equal((await post("/api/praktijk/team/verwijder", { id: pij.lid.id }, E)).status, 200, "Ellen haalt Piets uitnodiging weg");
+  // een uitnodiging die de gedeelde sessie zelf verstuurde, blijft ze beheren
+  const ge = await post("/api/praktijk/team/uitnodigen", { email: mail("gijs"), naam: "Gijs", rol: "therapeut" }, T);
+  assert.equal(ge.status, 200);
+  assert.equal((await post("/api/praktijk/team/uitnodigen", { email: mail("gijs"), naam: "Gijs", rol: "therapeut" }, T)).status, 200,
+    "eigen gedeelde uitnodiging opnieuw versturen mag");
+  assert.equal((await post("/api/praktijk/team/verwijder", { id: (await ge.json()).lid.id }, T)).status, 200, "en weghalen ook");
 
   const act = (await (await get("/api/praktijk/activiteit", E)).json()).activiteit;
   const uitgenodigd = act.filter((a) => a.actie === "collega-uitgenodigd").map((a) => String(a.wie));
