@@ -140,6 +140,7 @@
     "test:dubbeltik": "node scripts/test-sweep-dubbeltik-breedte.mjs",
     "test:kaartroutes": "node scripts/test-kaart-praktijkroutes.mjs",
     "test:kaartverlopen": "node scripts/test-kaart-verlopen-routes.mjs",
+    "test:kaartwisdatum": "node scripts/test-kaart-wisdatum.mjs",
     "test:airem": "node scripts/test-ai-rem-praktijk.mjs",
     "test:sjablonenslot": "node scripts/test-sjablonen-onbeveiligd.mjs",
     "test:landingprint": "node scripts/test-sweep-landingprint-langetekst.mjs",
