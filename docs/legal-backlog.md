@@ -23,6 +23,9 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **LAAG (gebruikers-sweep 2026-11-21 10u, Karin, iPad) — dataminimalisatie binnen de praktijk:** een gewone therapeut ziet in Team het e-mailadres, de laatste login en de status van
+  de tweede stap van alle collega's. Mogelijk bedoeld; legal toetst of "laatste login" en tweede-stapstatus alleen voor de beheerder horen (art. 5 lid 1 c AVG) en of /privacy dit noemt.
+
 - **OPGELOST 2026-11-21 09u (legal-PR van deze run; `node scripts/test-vwo-ai-beeld.mjs` faalt zonder fix) — LAAG — verwerkersovereenkomst (b) / code tegen tekst (d): art. 5 noemde niet alles wat naar de AI-dienst gaat.**
   Art. 5 (dataminimalisatie) zei: naar de AI-dienst gaan "wel de namen van oefeningen". Maar de zoekhulp stuurt de zoekwoorden
   van de therapeut, en de vraaghulp op /k (`/api/kaart/vraag`, standaard uit, `VRAAGHULP=aan`) de vrije vraag van de patiënt
