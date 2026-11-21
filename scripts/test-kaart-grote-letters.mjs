@@ -57,7 +57,8 @@ if (pw) {
         return { c: b.textContent.trim(), past: b.scrollWidth <= b.clientWidth, tl: t.left, tr: t.right, kl: k.left, kr: k.right };
       }));
       assert.deepEqual(cijfers.filter((x) => !x.past || x.tl < x.kl - 0.5 || x.tr > x.kr + 0.5).map((x) => x.c), [], tag + ": elk pijncijfer past in zijn vak");
-      for (let i = 1; i < cijfers.length; i++) assert.ok(cijfers[i].tl - cijfers[i - 1].tr >= 2, tag + ": " + cijfers[i - 1].c + " en " + cijfers[i].c + " lopen niet in elkaar over");
+      // bij heel grote letters staan de cijfers in twee rijen (gebruikers-sweep 2026-11-21): alleen buren in dezelfde rij
+      for (let i = 1; i < cijfers.length; i++) if (cijfers[i].kl > cijfers[i - 1].kl) assert.ok(cijfers[i].tl - cijfers[i - 1].tr >= 2, tag + ": " + cijfers[i - 1].c + " en " + cijfers[i].c + " lopen niet in elkaar over");
 
       // agenda: alle zeven dagen binnen het scherm
       await p.evaluate(() => { const d = document.getElementById("agdagen").closest("details"); d.open = true; d.scrollIntoView(); });

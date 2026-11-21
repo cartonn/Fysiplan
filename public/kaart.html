@@ -284,6 +284,10 @@
   .oef.actief>.vbtn[data-eigen][aria-expanded="true"]{z-index:4;place-self:start end;width:44px;height:44px;min-height:0;margin:8px;padding:0;
     border:0;border-radius:50%;background:rgba(22,24,28,.78);color:#fff;font-size:0}
   .oef.actief>.vbtn[data-eigen][aria-expanded="true"] .driehoek{display:none}
+  /* gebruikers-sweep 2026-11-21 (Truus, 200 %): bij grote letters op een klein scherm werd het label twee regels
+     hoog en lag het over de onderste kwart van de foto, precies over de eindhouding. Dan alleen de afspeelknop;
+     de tekst blijft de naam van de knop voor een schermlezer. */
+  body.krap .oef.actief:not(:has(.geenfoto))>.vbtn:not([data-noor])[aria-expanded="false"] .vlab{position:absolute;width:1px;height:1px;padding:0;margin:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   .oef.actief>.vbtn[data-eigen][aria-expanded="true"] .vlab{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   .oef.actief>.vbtn[data-eigen][aria-expanded="true"]::before{content:"";width:18px;height:18px;background:currentColor;
     -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.8' stroke-linecap='round'%3E%3Cpath d='M5 5l14 14M19 5L5 19'/%3E%3C/svg%3E") center/contain no-repeat;
@@ -416,6 +420,17 @@
   /* elf cijfers naast elkaar: bij heel grote letters (200 %) liepen 9 en 10 in elkaar over ("910");
      het cijfer groeit mee tot het vak vol is (de schuif erboven toont het gekozen cijfer groot) */
   .mschaal button{font-size:min(1rem,5.2vw);letter-spacing:-.02em}
+  /* gebruikers-sweep 2026-11-21 (Truus, 200 %): op een smalle telefoon bleven de cijfers 16 px naast 34 px tekst,
+     in vakjes van 26 px breed. Past een rij van elf niet meer (minder dan 16em, gemeten in de eigen lettergrootte),
+     dan twee rijen (0–5 en 6–10) met cijfers op volle grootte. De schuif hoort bij één rij en valt dan weg;
+     de knoppen doen het werk en het gekozen cijfer staat vet. */
+  .mkaart{container-type:inline-size}
+  @container (max-width:16em){
+    .mschaal{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px 4px}
+    .mschaal button{font-size:1rem;min-height:48px;border:1.5px solid var(--rand)}
+    .mschaal button.aan{border-color:var(--kn)}
+    .pschuif{display:none}
+  }
   .mschaal button:active{color:var(--kn)}
   /* bezig: de tik is gezien en wordt bewaard (trage lijn), zodat niemand blijft tikken */
   .mschaal button.bezig,.pskschaal button.bezig,[data-psk].bezig{color:var(--kn);

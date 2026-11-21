@@ -6197,13 +6197,32 @@ bridge2.jpg</div>
     };
   }
   // een gedeelde kaart van de praktijk in de editor openen (lijst, Vandaag)
+  // gebruikers-sweep 2026-11-21 18u (Sanne): dubbelklik op Openen gaf twee keer de vraag "vervangen?" en laadde
+  // de kaart twee keer; wie de tweede vraag annuleerde, dacht dat het openen was afgebroken. Nu één tegelijk.
+  // En de kaart die al open staat (zelfde id, geen nieuwere versie op de server) wordt niet opnieuw geladen.
+  var SRV_OPEN_BEZIG=false;
+  function focusOpenKaart(naam){
+    setTimeout(function(){
+      var a=document.getElementById('a4'),f=document.activeElement;
+      // alleen niet als er intussen een ander venster openstaat (bijv. een melding)
+      if(!a||(f&&f.closest&&f.closest('.ov.on')))return;
+      if(!a.hasAttribute('tabindex'))a.setAttribute('tabindex','-1');
+      a.setAttribute('aria-label','Kaart '+String(naam||''));
+      try{a.focus({preventScroll:true});}catch(e){}
+    },0);
+  }
   function openSrvKaart(id){
+    if(SRV_OPEN_BEZIG)return;
     if(kaartWachtNog())return;
+    SRV_OPEN_BEZIG=true;
     fetch(praktijkKaartUrl(id),PGET())
       .then(function(r){return r.json();})
       .then(metEigenOefeningen)
       .then(function(d){
         if(!d.ok){alert('Kaart openen is niet gelukt.');return;}
+        if(KAART_ID&&d.kaart.id===KAART_ID&&chosen.length&&(Number(d.kaart.ts)||0)<=KAART_TS){
+          closeOv('ovKaarten');focusOpenKaart(d.kaart.naam);return;
+        }
         if(chosen.length&&!confirm('Huidige kaart vervangen door “'+d.kaart.naam+'”?'))return;
         openCard(d.kaart);
         zetKaartId(d.kaart.id||'',d.kaart.ts);OVERSCHRIJF='';NAAM_OK=String(d.kaart.naam||'').toLowerCase();
@@ -6215,16 +6234,10 @@ bridge2.jpg</div>
         closeOv('ovKaarten');
         // toetsenbord: na Openen stond de focus op body (gebruikers-sweep 2026-11-21, Sanne). Nu gaat hij
         // naar de geopende kaart zelf; niet naar de roepnaam, want focus daar start het delen bij blur.
-        setTimeout(function(){
-          var a=document.getElementById('a4'),f=document.activeElement;
-          // alleen niet als er intussen een ander venster openstaat (bijv. een melding)
-          if(!a||(f&&f.closest&&f.closest('.ov.on')))return;
-          if(!a.hasAttribute('tabindex'))a.setAttribute('tabindex','-1');
-          a.setAttribute('aria-label','Kaart '+String(d.kaart.naam||''));
-          try{a.focus({preventScroll:true});}catch(e){}
-        },0);
+        focusOpenKaart(d.kaart.naam);
       })
-      .catch(function(e){alert(e&&e.message==='eigen'?EIGEN_NIET_GELADEN:'Kaart openen is niet gelukt: geen verbinding.');});
+      .catch(function(e){alert(e&&e.message==='eigen'?EIGEN_NIET_GELADEN:'Kaart openen is niet gelukt: geen verbinding.');})
+      .then(function(){SRV_OPEN_BEZIG=false;});
   }
   function toonSrvKaarten(){
     var oudePrul=document.getElementById('k_prullenbak');if(oudePrul)oudePrul.remove();

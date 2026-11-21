@@ -20,7 +20,7 @@ assert.match(index, /<textarea id="c_doel"[^>]*><\/textarea><div class="print-te
 assert.match(index, /#a4 \.box textarea#c_doel\{display:none!important\}|textarea\.print-limited,#a4 \.box textarea#c_doel\{display:none!important\}/, "op papier de kopie, niet het (gescrolde) vak");
 assert.match(index, /function doelPrintTekst\(el\)/, "printtekst voor Doel");
 assert.match(index, /function render\(\)\{[^}]*printKopieBij\(\)/, "render werkt de printkopieën bij");
-assert.match(index, /a\.setAttribute\('aria-label','Kaart '\+String\(d\.kaart\.naam/, "na Openen gaat de focus naar de kaart");
+assert.match(index, /a\.setAttribute\('aria-label','Kaart '\+String\((d\.kaart\.)?naam/, "na Openen gaat de focus naar de kaart");
 
 let pw = null;
 try { pw = createRequire(import.meta.url)("playwright"); } catch {}
