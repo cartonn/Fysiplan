@@ -182,6 +182,7 @@ jobs:
       - run: npm run test:dubbeltik
       - run: npm run test:kaartroutes
       - run: npm run test:kaartverlopen
+      - run: npm run test:kaartwisdatum
       - run: npm run test:airem
       - run: npm run test:landingprint
       - run: npm run test:offlinestand
