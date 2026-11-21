@@ -110,7 +110,7 @@ const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "ad
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
 const VWO_VERSIE = "2026-11-21";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-20";
+const AV_VERSIE = "2026-11-21";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-21";
@@ -148,6 +148,7 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-18", tekst: "Einde: werkte je praktijk al met Fysiplan vóór de proef en probeer je de nieuwe app als pilot, dan wist het einde van de pilot alleen de proefaanmelding; je bestaande gegevens blijven. Beveiliging: een video uit de galerij bewaren we zonder plek van opnemen en zonder merk en type telefoon." },
   { stuk: "av", versie: "2026-11-19", tekst: "Verduidelijking: de proef loopt tot en met de einddatum die je bij het aanmelden ziet, tot middernacht (Nederlandse tijd). Met één proef beveilig je hooguit 3 praktijken." },
   { stuk: "av", versie: "2026-11-20", tekst: "Verduidelijking: naast de grens op lopende kaarten geldt een grens voor alle kaarten samen, afgeronde en verwijderde meegeteld (" + KAARTEN_BEWAARD_KEER + " keer zoveel). Zit je daaraan, dan verwijder je afgeronde kaarten en leeg je de prullenbak." },
+  { stuk: "av", versie: "2026-11-21", tekst: "Verduidelijking: na het einde van je abonnement werken gedeelde kaarten tot hun bewaartermijn afloopt, en uiterlijk tot de dag dat we alles van je praktijk wissen." },
   { stuk: "vwo", versie: "2026-11-21", tekst: "Beveiliging: staat de vraaghulp op de patiëntkaart aan, dan gaat de korte vraag van de patiënt over een oefening naar de AI-dienst (niet bewaard; een vraag over pijn, klachten of dosering niet). Uit een foto bij een eigen oefening en uit je logo halen we de plek en het merk en type telefoon." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
@@ -1792,11 +1793,11 @@ function wisTeksten(p) {
       '<label class="vink" style="margin-top:8px"><input type="checkbox" name="zeker" value="1" required/><span>Ja, wis mijn gegevens nu meteen.</span></label>' +
       '<div class="knoppen"><button class="knop stil" type="submit" style="min-height:44px">Nu meteen wissen</button></div></form>' };
   return { KAARTEN_TOT, WIS_UITLEG: "We bewaren je e-mailadres, naam, telefoonnummer en praktijknaam van de aanmelding. Je proef hoort nu bij je praktijk " +
-      "en loopt tot en met " + datumNl(p.verloopt) + " voor het hele team. Wil je stoppen? Op Mijn gegevens wis je alles van de praktijk, ook je aanmelding. " +
+      "en loopt tot en met " + datumNl(p.verloopt) + " voor het hele team. Wil je stoppen? Op Gegevens van je praktijk wis je alles van de praktijk, ook je aanmelding. " +
       "Word je geen klant, dan wissen we alles " + PROEF_BEWAAR_DAGEN + " dagen na de proef vanzelf.",
-    WIS_FORM_HTML: '<div class="knoppen" style="margin-top:14px"><a class="knop omlijnd" href="/v2/gegevens">Naar Mijn gegevens</a></div>',
+    WIS_FORM_HTML: '<div class="knoppen" style="margin-top:14px"><a class="knop omlijnd" href="/v2/gegevens">Naar Gegevens van je praktijk</a></div>',
     VERLOPEN_WIS_HTML: '<p class="klein" style="margin-top:22px">Liever niet? Dan hoef je niets te doen; we wissen alles van de praktijk automatisch ' +
-      PROEF_BEWAAR_DAGEN + ' dagen na de proef. Meteen wissen doet een beheerder op <a href="/v2/gegevens">Mijn gegevens</a>.</p>' };
+      PROEF_BEWAAR_DAGEN + ' dagen na de proef. Meteen wissen doet een beheerder op <a href="/v2/gegevens">Gegevens van je praktijk</a>.</p>' };
 }
 
 // ---- abonnement: eerste maand online afrekenen via Mollie (alleen met MOLLIE_API_KEY) ----
@@ -1907,7 +1908,7 @@ function abonnementBlok(a, metWachtwoord, loginsNu = 0) {
   if (a.status === "opgezegd") return '<div class="blad" style="margin-top:28px" id="abonnement"><h2>Je abonnement is opgezegd</h2>' +
     '<p class="klein" style="font-size:14.5px">Je kunt Fysiplan nog gebruiken tot en met <b>' + tm + "</b> (" + therapeuten + "). " +
     "Daarna schrijven we niets meer af en maak je geen nieuwe kaarten meer. Na nog " + NA_EINDE_WISSEN_DAGEN + " dagen wissen we alles van je praktijk, ook de gedeelde kaarten. " +
-    "Download v\u00f3\u00f3r die tijd wat je wilt bewaren op <a href=\"/v2/gegevens\">Mijn gegevens</a>. " + factuur + ".</p>" +
+    "Download v\u00f3\u00f3r die tijd wat je wilt bewaren op <a href=\"/v2/gegevens\">Gegevens van je praktijk</a>. " + factuur + ".</p>" +
     '<form method="post" action="/v2/proef/opzeggen" style="margin-top:12px"><input type="hidden" name="actie" value="intrekken"/>' +
     '<div class="knoppen"><button class="knop oranje" type="submit">Toch doorgaan</button></div></form>' + overzicht + gegevens + "</div>";
   // na een mislukte maandincasso: de praktijk kan de openstaande maand zelf betalen (iDEAL of kaart)
@@ -8996,9 +8997,9 @@ async function afhandelen(request, response) {
       await serveerProef(request, response, "bericht", { TITEL: "Gegevens wissen", ETIKET: "Gegevens",
         KOP: "Je proef hoort nu bij je praktijk.",
         TEKST: "Er is niets gewist. De praktijk" + (p.praktijk ? " " + p.praktijk : "") + " loopt door tot en met " + datumNl(p.verloopt) +
-          ". Wil je stoppen? Wis dan alles van de praktijk, ook je aanmelding, op Mijn gegevens. Doe je niets en word je geen klant, dan wissen we alles " +
+          ". Wil je stoppen? Wis dan alles van de praktijk, ook je aanmelding, op Gegevens van je praktijk. Doe je niets en word je geen klant, dan wissen we alles " +
           PROEF_BEWAAR_DAGEN + " dagen na de proef vanzelf.",
-        KNOP_HTML: '<a class="knop oranje" href="/v2/gegevens">Naar Mijn gegevens</a> <a class="knop omlijnd" href="/v2/proef?mijn=1">Terug naar mijn proef</a>' }, 409);
+        KNOP_HTML: '<a class="knop oranje" href="/v2/gegevens">Naar Gegevens van je praktijk</a> <a class="knop omlijnd" href="/v2/proef?mijn=1">Terug naar mijn proef</a>' }, 409);
       return;
     }
     // ook een klant zonder online betaling (door beheer als klant gemerkt): wissen haalde het
@@ -9007,8 +9008,8 @@ async function afhandelen(request, response) {
       await serveerProef(request, response, "bericht", { TITEL: "Gegevens wissen", ETIKET: "Abonnement",
         KOP: "Bij een abonnement wis je je gegevens op een andere plek.",
         TEKST: "Er is niets gewist. Zeg je abonnement op; " + NA_EINDE_WISSEN_DAGEN + " dagen na het einde wissen we alles van je praktijk vanzelf. " +
-          "Wil je alles meteen wissen? Doe dat op Mijn gegevens.",
-        KNOP_HTML: '<a class="knop oranje" href="/v2/gegevens">Naar Mijn gegevens</a> <a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Naar mijn abonnement</a>' }, 409);
+          "Wil je alles meteen wissen? Doe dat op Gegevens van je praktijk.",
+        KNOP_HTML: '<a class="knop oranje" href="/v2/gegevens">Naar Gegevens van je praktijk</a> <a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Naar mijn abonnement</a>' }, 409);
       return;
     }
     // Geen (geldige) proefcookie op dit apparaat, bijvoorbeeld een therapeut die via de app
@@ -9017,8 +9018,8 @@ async function afhandelen(request, response) {
     if (!p) {
       await serveerProef(request, response, "bericht", { TITEL: "Gegevens wissen", ETIKET: "Gegevens",
         KOP: "Er is niets gewist.",
-        TEKST: "Op dit apparaat staat geen proef van je praktijk. Gegevens van een praktijk wist een beheerder op Mijn gegevens.",
-        KNOP_HTML: '<a class="knop oranje" href="/v2/gegevens">Naar Mijn gegevens</a> <a class="knop omlijnd" href="/v2">Terug naar de site</a>' }, 409);
+        TEKST: "Op dit apparaat staat geen proef van je praktijk. Gegevens van een praktijk wist een beheerder op Gegevens van je praktijk.",
+        KNOP_HTML: '<a class="knop oranje" href="/v2/gegevens">Naar Gegevens van je praktijk</a> <a class="knop omlijnd" href="/v2">Terug naar de site</a>' }, 409);
       return;
     }
     // na een online betaling blijft wat de fiscale bewaarplicht vraagt (7 jaar); de rest gaat weg

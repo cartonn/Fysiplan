@@ -121,6 +121,26 @@ await metServer(null, async (haal) => {
     });
   }
 }
+// 1c. Legal 2026-11-21 21u (c)/(i): de pagina /v2/gegevens heet "Gegevens van je praktijk" (titel, etiket,
+// voorwaarden art. 5, /privacy, verwerkersovereenkomst). Mijn proef, het opgezegde abonnement en de
+// foutpagina's stuurden naar "Mijn gegevens", een naam die nergens in beeld staat en op /k het eigen
+// overzicht van de patiënt is. En art. 5 zei "blijven nog even werken" waar de code (#428) de gedeelde
+// kaarten precies op de wisdatum van de praktijk dichtzet; art. 3 zei het voor de proef al concreet.
+{
+  const naam = "Gegevens van je praktijk";
+  assert.match(serverBron, new RegExp('TITEL: "' + naam + '"'), "de pagina /v2/gegevens heet " + naam);
+  serverBron.split("\n").forEach((regel, i) => {
+    if (/^\s*\/\//.test(regel)) return;
+    assert.doesNotMatch(regel, /Mijn gegevens/, "server.js:" + (i + 1) + " noemt 'Mijn gegevens', de pagina heet '" + naam + "'");
+    for (const m of regel.matchAll(/href=\\?"\/v2\/gegevens\\?">([^<]+)</g)) assert.match(m[1], new RegExp(naam + "$"), "server.js:" + (i + 1) + " linkt naar /v2/gegevens als '" + m[1] + "'");
+  });
+  const jur = readFileSync(new URL("../public/juridisch.html", import.meta.url), "utf8");
+  for (const m of jur.matchAll(/href="\/v2\/gegevens">([^<]+)</g)) assert.equal(m[1], naam, "juridisch.html linkt naar /v2/gegevens als '" + m[1] + "'");
+  const art5 = jur.match(/<h2 id="stoppen">[\s\S]*?<\/ul>/)[0];
+  assert.doesNotMatch(art5, /nog even werken/, "art. 5 zegt hoe lang gedeelde kaarten werken, niet 'nog even'");
+  assert.match(art5, /blijven werken tot hun bewaartermijn afloopt, en uiterlijk tot de dag dat we alles wissen/, "art. 5 noemt de grens zoals de code (kaartLeeft met verdwijntOp)");
+  assert.match(serverBron, /function verdwijntOp\(pk, k\)[\s\S]{0,200}praktijkWisOp\(pk\)/, "de code zet gedeelde kaarten dicht op de wisdatum van de praktijk");
+}
 // 2. inclusief en kleineondernemersregeling: de voorwaarden volgen de keuze, zoals de landing
 await metServer({ kor: "nee", prijsBtw: "inclusief" }, async (haal) => {
   const av = tekst(await haal("/voorwaarden"));

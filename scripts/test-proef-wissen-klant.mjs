@@ -79,7 +79,7 @@ try {
   // 1. lopend abonnement: wissen via de proefpagina wordt geweigerd, abonnement loopt door
   const r1 = await wis(tActief);
   assert.equal(r1.status, 409, "wissen met een lopend abonnement geweigerd");
-  assert.match(await r1.text(), /Mijn gegevens/);
+  assert.match(await r1.text(), /Gegevens van je praktijk/);
   let na = await lees("proef-aanmeldingen.json");
   assert.ok(!na.actief.gewist, "aanmelding niet gewist");
   assert.equal(na.actief.abonnement.status, "actief", "abonnement loopt door (incasso blijft)");
