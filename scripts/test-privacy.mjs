@@ -6,7 +6,7 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -383,13 +383,21 @@ try {
     // Fail-closed: elk kaartveld dat de patiënt krijgt (PATIENT_VELDEN) of dat de
     // server op een kaart zet, moet in artikel 2 uitgelegd zijn (of hier als techniek staan).
     const art2 = vwo.split("<h2>2. ")[1].split("<h2>")[0];
+    // legal 2026-11-21 01u (e): de patiëntroutes staan sinds de opsplitsing in lib/patient-routes.js;
+    // een veld dat daar op de kaart komt (zoals `naArchief`, #408) viel buiten deze controle. Nu
+    // telt elke bron die kaartvelden zet mee: server.js en alle modules in lib/.
+    const libBron = (await Promise.all((await readdir(join(root, "lib"))).filter((n) => n.endsWith(".js"))
+      .map((n) => readFile(join(root, "lib", n), "utf8")))).join("\n");
+    assert.match(libBron, /found\.oefZwaar = /, "patiëntroutes in lib/ niet gevonden; is de opzet veranderd?");
     const velden = new Set([
       ...JSON.parse(serverBron.match(/const PATIENT_VELDEN = (\[[^\]]+\])/)[1].replace(/\s+/g, " ")),
-      ...[...serverBron.matchAll(/\b(?:kaart|found)\.([a-zA-Z]+) = /g)].map((m) => m[1])
+      ...[...(serverBron + "\n" + libBron).matchAll(/\b(?:kaart|found)\.([a-zA-Z]+) = /g)].map((m) => m[1])
     ]);
     const uitleg = {
       id: null, demo: null, praktijk: null, ts: null, chosen: null, rows: null, cells: null,
-      gearchiveerd: null, gearchiveerdOp: null, inboxGezien: null, notitieT: null, dossier: null, planT: null,
+      gearchiveerd: null, gearchiveerdOp: null, inboxGezien: null,
+      // tijdstip waarop na het afronden nog iets van de patiënt binnenkwam (alleen voor de inbox; #408)
+      naArchief: null, notitieT: null, dossier: null, planT: null,
       maker: /account-id van de maker/, verwijderdOp: /verwijdermoment/, herstelTot: /hersteldatum/,
       naam: /naam die de praktijk de kaart geeft/, vids: /eigen video of foto/, doel: /weekdoel/,
       afspraak: /afspraakmomenten/, antwoord: /berichten van de praktijk/, pskDoel: /doelactiviteit/,
