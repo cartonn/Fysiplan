@@ -78,6 +78,26 @@ const maakPng = () => {
   const p = zonderBeeldMetadata(maakPng(), "png");
   assert.deepEqual(sporen(p), [], "PNG zonder tekst en eXIf");
   assert.ok(p.equals(echtePng), "PNG verder byte voor byte gelijk");
+  // security 2026-11-21: sporen NA de eerste scan. Een telefoon zet na de EOI extra beelden (MPF: diepte,
+  // HDR, een "bewegende foto" als mp4) met hun eigen Exif; een progressieve JPEG kan tussen twee scans nog
+  // een APP1 of COM hebben. Vroeger ging alles vanaf de eerste SOS ongewijzigd mee.
+  {
+    const eoi = echteJpeg.length - 2;
+    const tweedeSos = echteJpeg.indexOf(Buffer.from([0xff, 0xda]), sosVan(echteJpeg) + 2);
+    assert.ok(tweedeSos > 0, "testfoto is progressief (meer scans)");
+    const trailer = Buffer.concat([Buffer.from([0xff, 0xd8]), seg(0xe1, exif(6)), echteJpeg.subarray(2)]);
+    const laat = Buffer.concat([
+      echteJpeg.subarray(0, tweedeSos), seg(0xfe, "Jan Jansen thuis"), seg(0xe1, "http://ns.adobe.com/xap/1.0/\0GPSLatitude 52.3731"),
+      echteJpeg.subarray(tweedeSos, eoi + 2), trailer, Buffer.from("ftypmp42 ©xyz +52.3731+004.8952/ iPhone", "latin1")
+    ]);
+    assert.ok(sporen(laat).length >= 3, "testfoto draagt sporen na de eerste scan");
+    const s = zonderBeeldMetadata(laat, "jpeg");
+    assert.deepEqual(sporen(s), [], "ook na de eerste scan en na de EOI geen plek, toestel of naam");
+    assert.ok(s.equals(echteJpeg), "beeld verder byte voor byte gelijk (alle scans, eindigt op EOI)");
+    // afgekapt (geen EOI): beelddata blijft zoals hij was
+    const af = echteJpeg.subarray(0, eoi - 100);
+    assert.ok(zonderBeeldMetadata(af, "jpeg").equals(af), "afgekapte JPEG ongewijzigd");
+  }
   // kapot of geen beeld: ongewijzigd terug, geen fout
   const kapot = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe1, 0xff, 0xff]), Buffer.alloc(50)]);
   assert.equal(zonderBeeldMetadata(kapot, "jpeg"), kapot);
