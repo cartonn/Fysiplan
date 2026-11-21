@@ -79,7 +79,9 @@ vm.runInNewContext(blok[1] + ";this.mgTrouwTik=mgTrouwTik;this.mgTrouwDagen=mgTr
   const ctx = {
     K: { kaart: { gedaan: [], doel: 3, oefTrouw: tr } },
     document: { getElementById: el },
-    dagStr: (t) => { const d = new Date(t); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); },
+    // dezelfde kalender als de week hierboven (Europe/Amsterdam); met de lokale tijd van de runner (UTC)
+    // was "vandaag" tussen 23:00 en 24:00 UTC een dag eerder en faalde de test elke nacht
+    dagStr: (t) => nlDag(t),
     tr: () => ["ma", "di", "wo", "do", "vr", "za", "zo"],
     trg: (s) => ({ vdaan: "Ik heb vandaag geoefend", vweek: "Jouw oefenweek", doel: "Je oefendoel: {d}× per week — deze week {n}× gedaan.",
       doelklaar: "Je haalde je oefendoel van {d}× deze week — sterk!", reeks: "Al {n} weken op rij bezig" })[s] || s,

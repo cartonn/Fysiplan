@@ -1700,7 +1700,7 @@ bridge2.jpg</div>
     var P=PRAKSLOT||{};
     var pr=(SET.praktijk||'').trim(),nm=document.getElementById('zb_pnaam'),st=document.getElementById('zb_pstat'),av=document.getElementById('zb_pav');
     nm.textContent=pr||'Je praktijk';
-    st.textContent=!pr?'Vul je praktijknaam in':P.ingelogd?(P.wie?P.wie:'Ingelogd')+' · beveiligd':(P.geclaimd?'Niet ingelogd':'Open Kaarten om in te loggen');
+    st.textContent=!pr?'Vul je praktijknaam in':P.ingelogd?(P.wie?P.wie:'Ingelogd')+' · beveiligd':prakStoring()?'Even niet te controleren':(P.geclaimd?'Niet ingelogd':'Open Kaarten om in te loggen');
     av.textContent=avInitialen(pr||'?');var avk=avKleur(pr||'?');av.style.background=avk[0];av.style.color=avk[1];
     var fk=document.getElementById('fk_pr');if(fk)fk.textContent=pr||'Trainingskaart maken';
   }
@@ -1770,6 +1770,15 @@ bridge2.jpg</div>
       ['abon','Proef en abonnement','Log eerst in om de proef te zien. Betalen en opzeggen doet een beheerder van de praktijk.','/v2/proef?mijn=1'],
       ['gegevens','Gegevens van de praktijk','Alles downloaden of wissen kan alleen een beheerder, met de eigen login.','/v2/gegevens']
     ];
+    // de controle zelf lukte niet (429 van de leesrem, storing): de rol is onbekend, dus ook dan geen
+    // beheerteksten en Gegevens dicht (gebruikers-sweep 2026-11-21 22u, Karin)
+    if(prakStoring())return [
+      ['team','Team en logins','Even niet te controleren of je bent ingelogd. Je bent niet uitgelogd; probeer het zo opnieuw.'],
+      ['eigen','Eigen oefeningen','Oefeningen met jullie eigen foto en uitleg, voor het hele team.'],
+      ['sjab','Sjablonen','Vaste behandelkaarten van de praktijk.'],
+      ['abon','Proef en abonnement','Even niet te controleren. Probeer het zo opnieuw.','/v2/proef?mijn=1'],
+      ['gegevens','Gegevens van de praktijk','Even niet te controleren. Alles downloaden of wissen kan alleen een beheerder.','/v2/gegevens',true]
+    ];
     return [
       ['team','Team en logins',ther?'Je eigen login en de tweede stap. Collega\u2019s uitnodigen en rollen wijzigen doet een beheerder.':'Collega\u2019s uitnodigen, rollen, je eigen login en de tweede stap.'],
       ['eigen','Eigen oefeningen','Oefeningen met jullie eigen foto en uitleg, voor het hele team.'],
@@ -1801,7 +1810,7 @@ bridge2.jpg</div>
     t.addEventListener('click',function(e){
       var b=e.target.closest('[data-kp]');if(!b)return;
       var w=b.getAttribute('data-kp');
-      if(w==='team'){if(PRAKSLOT.geclaimd&&PRAKSLOT.ingelogd)openTeam();else alert('Log eerst in bij je praktijk; dat staat hierboven.');}
+      if(w==='team'){if(PRAKSLOT.geclaimd&&PRAKSLOT.ingelogd)openTeam();else if(prakStoring())alert('De server is even druk. Je bent niet uitgelogd; probeer het zo opnieuw.');else alert('Log eerst in bij je praktijk; dat staat hierboven.');}
       else if(w==='eigen')document.getElementById('eigenOefBtn').click();
       else if(w==='sjab')document.getElementById('sjabBtn').click();
     });
@@ -3588,7 +3597,7 @@ bridge2.jpg</div>
     else{img.removeAttribute('src');img.style.display='none';}
     // een therapeut kan het logo niet wijzigen (alleen een beheerder): dan geen knop
     var geenBeheer=!!(typeof PRAKSLOT!=='undefined'&&PRAKSLOT&&PRAKSLOT.ingelogd&&PRAKSLOT.akkoord&&PRAKSLOT.akkoord.beheer===false);
-    if(btn){btn.style.display=IS_V2&&!geenBeheer?'':'none';btn.textContent=has?'logo wijzigen':'+ praktijklogo';}
+    if(btn){btn.style.display=IS_V2&&!geenBeheer&&!prakStoring()?'':'none';btn.textContent=has?'logo wijzigen':'+ praktijklogo';}
     profielAlleenLezen(IS_V2&&geenBeheer);
   }
   // Adres, plaats, telefoon, e-mail en website op de A4 horen bij het praktijkprofiel; alleen een
@@ -4301,7 +4310,13 @@ bridge2.jpg</div>
   }
   // eigenLogin: de server vraagt van iedereen een eigen login met een tweede stap (EIGEN_LOGIN_VERPLICHT);
   // er is dan geen gedeeld praktijkwachtwoord. voorstel: naam en e-mail uit de proefaanmelding, als voorzet.
-  var PRAKSLOT={geclaimd:false,ingelogd:false,pr:'',bewaar:null,naam:'',nieuw:false,wie:'',perEmail:false,akkoord:null,tweedeStap:null,eigenLogin:false,voorstel:null,bekend:false};
+  // Herladen tijdens de eigen leesrem (429) of bij een storing: de controle mislukte, PRAKSLOT bleef op
+  // "niet ingelogd" en de app zei "Open Kaarten om in te loggen", gaf een gewone therapeut de beheerteksten
+  // en herstelde ook na de rem niet vanzelf (gebruikers-sweep 2026-11-21 22u, Karin). Nu onthoudt
+  // PRAKSLOT.storing dat de controle mislukte (rol onbekend), en volgt één nieuwe poging na Retry-After.
+  function prakStoring(){return !!(typeof PRAKSLOT!=='undefined'&&PRAKSLOT&&PRAKSLOT.storing&&!PRAKSLOT.bekend);}
+  var PRAKSLOT_WACHT=0;
+  var PRAKSLOT={storing:0,geclaimd:false,ingelogd:false,pr:'',bewaar:null,naam:'',nieuw:false,wie:'',perEmail:false,akkoord:null,tweedeStap:null,eigenLogin:false,voorstel:null,bekend:false};
   // bewaartermijnen zoals de server ze hanteert (standaard 90 en 30 dagen)
   function bewaarAfgerond(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.afgerond)||30;}
   function bewaarStil(){return (PRAKSLOT.bewaar&&PRAKSLOT.bewaar.stil)||90;}
@@ -4317,7 +4332,8 @@ bridge2.jpg</div>
   // de rol bij terugkeer naar het tabblad, bij elke schermwissel en zodra Team of een 403 hem kent.
   var ROL_GEHAALD=0;
   function verversRol(){
-    if(!IS_V2||!PRAKSLOT.bekend||!PRAKSLOT.ingelogd||!PRAKSLOT.pr)return;
+    if(!IS_V2||!PRAKSLOT.pr)return;
+    if(!prakStoring()&&(!PRAKSLOT.bekend||!PRAKSLOT.ingelogd))return;
     var nu=Date.now();if(nu-ROL_GEHAALD<2000)return;ROL_GEHAALD=nu;
     toonPrakSlot(PRAKSLOT.pr);
   }
@@ -4333,7 +4349,8 @@ bridge2.jpg</div>
   function toonPrakSlot(pr){
     PRAKSLOT.pr=pr;ROL_GEHAALD=Date.now();
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET())
-      .then(function(r){if(!r.ok)throw r.status;return r.json();}).then(function(d){
+      .then(function(r){if(!r.ok){PRAKSLOT.ra=Number(r.headers.get('retry-after'))||0;throw r.status;}return r.json();}).then(function(d){
+        PRAKSLOT.storing=0;
         // Uit het team gehaald (of elders uitgelogd) met de app nog open: de kaartenlijst van de praktijk
         // bleef staan en "Exporteer (CSV)" gaf hem nog als bestand (gebruikers-sweep 2026-11-18 18u, Karin).
         // Dan de lijst opnieuw opbouwen; de server weigert met 401 en de lijst maakt plaats voor de inlogvraag.
@@ -4355,6 +4372,17 @@ bridge2.jpg</div>
         // van /v2/app; de server geeft hem nu, dus de proefbalk komt meteen (zonder herladen)
         else if(IS_V2&&d.proef&&d.proef.elders&&!PROEF&&!PROEF_VOORBIJ){PROEF=d.proef;proefStart();}
       }).catch(function(code){
+        PRAKSLOT.storing=typeof code==='number'?code:'net';
+        if(!PRAKSLOT.bekend){
+          tekenZijbalk();
+          if(document.getElementById('k_praktijk'))bouwPraktijkTegels();
+          try{applyLogo();}catch(e){}
+          // één nieuwe poging zodra de rem voorbij is (Retry-After, anders 30 s; hooguit 5 min)
+          if(!PRAKSLOT_WACHT){
+            var ms=Math.min(300,Math.max(5,PRAKSLOT.ra||30))*1000;
+            PRAKSLOT_WACHT=setTimeout(function(){PRAKSLOT_WACHT=0;if(prakStoring())toonPrakSlot(PRAKSLOT.pr);},ms);
+          }
+        }
         // een 429/5xx of geen verbinding is niet "nog niet beveiligd": niets laten beveiligen
         var st=document.getElementById('ps_status'),form=document.getElementById('ps_form');
         if(!st)return;

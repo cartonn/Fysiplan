@@ -16,6 +16,7 @@ const nlDag = (ts) => new Date(ts).toLocaleDateString("en-CA", { timeZone: "Euro
 
 const html = await readFile(join(root, "public/kaart.html"), "utf8");
 assert.match(html, /function verversKopie\(\)\{/, "kaart ververst de offline-kopie");
+assert.match(html, /window\.addEventListener\('online',function\(\)\{setTimeout\(weerOnline,0\);\}\);/, "bij weer online kijkt de kaart of de server hem geeft");
 assert.match(html, /function stuur\(pad,body\)\{[\s\S]{0,900}verversKopie\(\)/, "stuur() ververst na een geslaagde tik");
 
 let pw = null;
@@ -83,9 +84,38 @@ try {
   const st = await gekozen();
   assert.deepEqual(st.pijn, [4], "offline herladen: online getikte pijnscore 4 blijft staan");
   if (heeftHerstel) assert.deepEqual(st.herstel, [0], "offline herladen: online getikt herstel blijft staan");
+  // gebruikers-sweep 2026-11-21 22u (Truus): weer online bleef "Geen verbinding" staan tot een app-wissel
+  const balk = () => page.evaluate(() => getComputedStyle(document.getElementById("offlijn")).display);
+  assert.notEqual(await balk(), "none", "offline: de balk staat er");
   await ctx.setOffline(false);
+  let weg = false;
+  for (let i = 0; i < 50 && !weg; i++) { weg = (await balk()) === "none"; if (!weg) await wacht(100); }
+  assert.ok(weg, "weer online: de balk 'Geen verbinding' gaat vanzelf weg");
   assert.deepEqual(fouten, [], "geen paginafouten");
   await ctx.close();
+
+  // De kaart hing bij het laden (12 s) en kwam uit de offline-kopie (UIT_KOPIE): daarna bleef "Geen verbinding"
+  // staan en keek de kaart nooit meer naar wijzigingen, ook als de verbinding terug was (sweep 2026-11-21 22u, Truus)
+  {
+    const c2 = await browser.newContext({ ...pw.devices["iPhone SE"], serviceWorkers: "block", extraHTTPHeaders: { "x-forwarded-for": "10.9.9.5" } });
+    const p2 = await c2.newPage();
+    p2.on("pageerror", (e) => fouten.push(String(e)));
+    await p2.goto(origin + "/k/" + id, { waitUntil: "networkidle" });
+    await p2.evaluate(async (kid) => { const u = location.origin + "/api/kaart?id=" + kid; const r = await fetch(u); await (await caches.open("test-kopie")).put(u, r); }, id);
+    let hang = true;
+    await c2.route("**/api/kaart?id=*", (route) => { if (!hang) return route.continue(); /* geen antwoord: de verbinding hangt */ });
+    await p2.reload({ waitUntil: "domcontentloaded" });
+    await p2.waitForSelector("#oefs .oefdone", { timeout: 20000 });
+    const balk2 = () => p2.evaluate(() => getComputedStyle(document.getElementById("offlijn")).display);
+    assert.notEqual(await balk2(), "none", "kaart uit de kopie: de balk staat er");
+    hang = false;
+    await p2.evaluate(() => window.dispatchEvent(new Event("online")));
+    let weg2 = false;
+    for (let i = 0; i < 50 && !weg2; i++) { weg2 = (await balk2()) === "none"; if (!weg2) await wacht(100); }
+    assert.ok(weg2, "verbinding terug na een kaart uit de kopie: de balk gaat weg");
+    await c2.close();
+    assert.deepEqual(fouten, [], "geen paginafouten");
+  }
   console.log("test-sweep-offline-kopie: alles groen" + (heeftHerstel ? " (pijn + herstel)" : " (pijn)"));
 } catch (e) {
   console.error(uit.slice(-2000));

@@ -63,7 +63,10 @@ try {
 
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.7.46.200" } });
   // een bestaande sessie, maar de praktijknaam staat nog niet in de editor (zoals bij Mark)
-  await ctx.addInitScript((t) => { try { localStorage.setItem("fp_praksessie", t); } catch {} }, sessie);
+  // "Nieuw in Fysiplan" opent 1,2 s na het laden als er niets open staat; deze test sluit de vensters zelf en
+  // klikte daarna soms net tegen dat venster aan (wisselvallig). Hier geldt de versie als gezien.
+  const rn = (await readFile(join(root, "public/release-notes.js"), "utf8")).match(/var version='([^']+)'/)[1];
+  await ctx.addInitScript(([t, v]) => { try { localStorage.setItem("fp_praksessie", t); localStorage.setItem("fysiplan_release_seen", v); } catch {} }, [sessie, rn]);
   const page = await ctx.newPage();
   const fouten = [], meldingen = [];
   page.on("pageerror", (e) => fouten.push(String(e)));

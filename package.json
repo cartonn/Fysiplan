@@ -323,6 +323,8 @@
     "test:praktijktegels": "node scripts/test-sweep-praktijktegels-rol.mjs",
     "test:proefwispraktijk": "node scripts/test-sweep-proefwis-praktijk.mjs",
     "test:kaartvers": "node scripts/test-sweep-kaart-vers.mjs",
+    "test:herlaadplek": "node scripts/test-sweep-herlaad-plek.mjs",
+    "test:prakslotstoring": "node scripts/test-sweep-prakslot-storing.mjs",
     "test:agendaoffline": "node scripts/test-sweep-agenda-offline.mjs",
     "test:oefwegongedaan": "node scripts/test-sweep-oefweg-ongedaan.mjs",
     "test:afspraakuid": "node scripts/test-sweep-afspraak-uid.mjs",

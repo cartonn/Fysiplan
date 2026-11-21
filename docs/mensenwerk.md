@@ -23,6 +23,14 @@ Karin maakte collega Tim beheerder; Tim kon daarna direct Karin (de aanmelder va
 Activiteit, en er blijft altijd minstens één beheerder, maar Karin krijgt geen melding en er is geen extra bevestiging of
 wachttijd. Geen fout in de code, wel beleid. **Wat jij moet doen:** kiezen of dit zo mag blijven, of dat het verwijderen van
 een beheerder een mail aan die beheerder of een tweede beheerder als bevestiging moet vragen. De sweep bouwt het daarna.
+Aanvulling 2026-11-21 22u (Mark): hetzelfde geldt voor terugzetten naar therapeut; een uitgenodigde beheerder kon de
+oprichter van de proef degraderen (200, regel in Activiteit). Dezelfde keuze.
+
+### Keuze: "Ja, ik wil doorgaan" al vóór het einde van de proef? (gebruikers-sweep, 2026-11-21 22u, Mark)
+Bij een proef die over een dag verloopt zegt "Mijn proef" alleen "je proef loopt nog maar kort" en biedt wissen; "Ja, ik wil
+doorgaan" verschijnt pas na het verlopen, en betalen staat uit zolang Mollie niet aan staat. Een praktijk met vier mensen
+kan dus niet vooraf zeggen dat ze doorgaan. **Wat jij moet doen:** kiezen of "Ja, ik wil doorgaan" in de laatste dagen al
+mag verschijnen (de sweep bouwt dat dan, het belt jou zoals nu), of dat dit wacht op Mollie.
 
 ### Voor de praktijk-routine: factuur eerste maand toont de huidige factuurgegevens (legal, 2026-11-18 13u)
 `/v2/proef/factuur` zonder `?nr=` (de eerste maand) gebruikt `p.abonnement.afnemer` van nu: wijzigt de praktijk later naam of

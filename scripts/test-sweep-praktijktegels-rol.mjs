@@ -26,7 +26,9 @@ const css = await readFile(join(root, "public/v2.css"), "utf8");
   assert.ok(b > a);
   const ctx = { PRAKSLOT: {} };
   vm.createContext(ctx);
-  vm.runInContext(idx.slice(a, b) + ";this.t=praktijkTegelTeksten;", ctx);
+  // prakStoring (sweep 2026-11-21 22u) hoort bij de tegelteksten
+  const ps = idx.indexOf("function prakStoring(");
+  vm.runInContext(idx.slice(ps, idx.indexOf("\n", ps)) + "\n" + idx.slice(a, b) + ";this.t=praktijkTegelTeksten;", ctx);
   const tekst = (p) => { ctx.PRAKSLOT = p; return Object.fromEntries(ctx.t().map((x) => [x[0], { s: x[2], uit: !!x[4] }])); };
   const ther = tekst({ ingelogd: true, akkoord: { beheer: false } });
   assert.doesNotMatch(ther.team.s, /^Collega/, "collega: team-tegel belooft geen uitnodigen");

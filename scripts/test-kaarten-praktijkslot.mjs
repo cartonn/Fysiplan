@@ -24,7 +24,7 @@ assert.doesNotMatch(srv[0], /r\.ok\?r\.json\(\):\[\]/, "een fout bij de kaartenl
 assert.match(srv[0], /toonPraktijknaamVraag\(blok\)/, "zonder praktijknaam vraagt Kaarten de naam (v2)");
 const slot = index.match(/function toonPrakSlot\(pr\)\{[\s\S]*?\n  \}\n/);
 assert.ok(slot, "toonPrakSlot gevonden");
-assert.match(slot[0], /if\(!r\.ok\)throw/, "status-fout wordt niet als 'nog niet beveiligd' gelezen");
+assert.match(slot[0], /if\(!r\.ok\)(\{[^}]*)?throw/, "status-fout wordt niet als 'nog niet beveiligd' gelezen");
 
 const v2css = await readFile(join(root, "public/v2.css"), "utf8");
 assert.doesNotMatch(v2css, /header\.topbar \.menu[^{]*\{display:none\}/, "menu met beeldkeuze niet verborgen op smalle schermen");

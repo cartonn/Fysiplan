@@ -342,3 +342,5 @@ jobs:
       - run: npm run test:veldlabels
       - run: npm run test:vraagdankinbeeld
       - run: npm run test:beveilighint
+      - run: npm run test:herlaadplek
+      - run: npm run test:prakslotstoring
