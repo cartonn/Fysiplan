@@ -4807,7 +4807,7 @@ bridge2.jpg</div>
         var zelf=d.ik&&d.ik.id===l.id;
         var st=l.status==='actief'?(l.laatst?'laatst ingelogd '+new Date(l.laatst).toLocaleDateString('nl-NL',{day:'numeric',month:'short'}):'actief'):'uitgenodigd';
         if(l.tweedeStap)st+=' · tweede stap aan';
-        else if(d.stapVerplicht&&l.status==='actief')st+=' · stelt de tweede stap in bij het inloggen';
+        else if(d.stapVerplicht&&l.status==='actief'&&l.tweedeStap===false)st+=' · stelt de tweede stap in bij het inloggen';
         // telefoon en reservecodes kwijt: een beheerder met een eigen login wist de tweede stap van een collega
         var wis2=(d.beheer&&d.ik&&!zelf&&l.tweedeStap)?" · <a href='#' data-tm2wis='"+esc(l.id)+"' data-naam='"+esc(l.naam||l.email)+"' title='Telefoon en reservecodes kwijt? Na het wissen "+(d.stapVerplicht?"stelt je collega de tweede stap opnieuw in bij het inloggen.":"logt je collega in met alleen het wachtwoord en stelt de tweede stap opnieuw in.")+"'>wissen</a>":"";
         var rol=d.beheer&&!zelf?"<select data-tmrol='"+esc(l.id)+"' aria-label='Rol van "+esc(l.naam||l.email||'collega')+"' style='width:auto'><option value='therapeut'"+(l.rol==='therapeut'?' selected':'')+">Therapeut</option><option value='beheerder'"+(l.rol==='beheerder'?' selected':'')+">Beheerder</option></select>"
