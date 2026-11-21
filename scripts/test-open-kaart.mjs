@@ -103,7 +103,7 @@ function scherm({ v2 = true, opslag = new Map() } = {}) {
     ...["vasteKaart", "vanVasteKaart", "saveState", "zetKaartId", "bewaardeKaartZonderPatient", "loadState", "vidsNaarNaamVanNu",
       "loadDefaultLibrary", "bibMislukt", "mistEigen", "bewaardeStaatMistEigen", "bewaardeKaartStond", "herstelOpenKaart", "kaartWachtNog",
       "startBib", "toonBibMelding", "currentCard", "openCard", "reloadLibraryKeepingCard"].map(functie),
-    tussen(index, "  var EIGEN_STAND='uit',EIGEN_LAATST=[];", "  // Seintje van een patiënt beantwoorden"),
+    tussen(index, "  var EIGEN_STAND='uit',EIGEN_LAATST=[]", "  // Seintje van een patiënt beantwoorden"),
   ].join("\n"), ctx);
   ctx.__ingebed = JSON.stringify(INGEBED);
   const doe = (code) => vm.runInContext(code, ctx);

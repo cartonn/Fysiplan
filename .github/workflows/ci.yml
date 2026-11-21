@@ -160,6 +160,8 @@ jobs:
       - run: npm run test:inboxrem
       - run: npm run test:voorbeeldelders
       - run: npm run test:leegenopm
+      - run: npm run test:typeneigen
+      - run: npm run test:kaartlinkhoofd
       - run: npm run test:videoliggend
       - run: npm run test:opnamedubbel
       - run: npm run test:offlinescore

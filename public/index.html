@@ -1250,11 +1250,12 @@ bridge2.jpg</div>
     if(proxy)proxy.textContent=el.value;
     el.scrollTop=0;
   }
-  function signalPrintableLimit(el,weg){
+  function signalPrintableLimit(el,weg,halfWoord){
     var status=document.getElementById('printLimitStatus');
     // zichtbaar (niet alleen voor schermlezers): wie een lange tekst plakt, moet zien dat er tekst wegviel
     if(status){
-      status.textContent='Het vak '+el.getAttribute('aria-label')+' is vol'+(weg>1?': '+weg+' tekens pasten niet en zijn niet geplakt.':'; extra tekst past niet op de print.')+' Zet een lange toelichting in je EPD.';
+      status.textContent='Het vak '+el.getAttribute('aria-label')+' is vol'+(halfWoord?': het halve woord \u201c'+halfWoord+'\u201d is weggehaald, want het past niet heel op de print.'
+        :weg>1?': '+weg+' tekens pasten niet en zijn niet geplakt.':'; extra tekst past niet op de print.')+' Zet een lange toelichting in je EPD.';
       status.classList.add('zichtbaar');
       clearTimeout(status._weg);
       status._weg=setTimeout(function(){status.classList.remove('zichtbaar');},8000);
@@ -1309,8 +1310,33 @@ bridge2.jpg</div>
         if(text==null)return;
         var start=el.selectionStart==null?el.value.length:el.selectionStart;
         var end=el.selectionEnd==null?start:el.selectionEnd;
-        if(printableTextFits(el,el.value.slice(0,start)+text+el.value.slice(end)))return;
-        e.preventDefault();insertPrintableText(el,text);
+        var aanEind=start===end&&end===el.value.length;
+        // Net een half woord weggehaald (hieronder): wie doortypt, plakt de rest van dat woord niet aan
+        // het woord ervoor ("het.fenen"), en smalle letters glippen er niet alsnog tussen ("heel vi").
+        // Het vak blijft vol tot er iets is weggehaald of veranderd; de melding blijft het woord noemen.
+        if(el._afkap===el.value){e.preventDefault();signalPrintableLimit(el,1,el._afkapWoord);return;}
+        // Typen aan het eind: een spatie telt alleen als er daarna nog iets past. Spaties achteraan
+        // maken het vak niet hoger, dus werden er eindeloos veel aangenomen (gebruikers-sweep
+        // 2026-11-21, Sanne: 61 spaties op de print).
+        var fitsNa=aanEind&&/^[ \t]$/.test(text)?el.value+text+'x':el.value.slice(0,start)+text+el.value.slice(end);
+        if(printableTextFits(el,fitsNa))return;
+        e.preventDefault();
+        // Past de volgende letter van een woord niet meer, dan blijft er geen half woord staan
+        // ("oefene", "trapl"), ook niet midden in de tekst: het woord dat nog niet af is gaat weg,
+        // en de melding zegt welk.
+        var voor=el.value.slice(0,start),na=el.value.slice(end);
+        if(start===end&&/^[0-9A-Za-zÀ-ÿ]$/.test(text)&&/[0-9A-Za-zÀ-ÿ]$/.test(voor)){
+          var half=(voor.match(/[0-9A-Za-zÀ-ÿ'’-]+$/)||[''])[0];
+          var rest=voor.slice(0,voor.length-half.length);
+          if(!na||/^[\s,.;:!?)]/.test(na))rest=rest.replace(/[\s,;:–-]+$/,'');
+          if(half&&rest.trim()){
+            el.value=rest+na;el.setSelectionRange(rest.length,rest.length);
+            el._afkap=el.value;el._afkapWoord=half;
+            el.dispatchEvent(new Event('input',{bubbles:true}));signalPrintableLimit(el,1,half);return;
+          }
+        }
+        if(/^\s$/.test(text)){signalPrintableLimit(el,1);return;}
+        insertPrintableText(el,text);
       });
       el.addEventListener('paste',function(e){
         var text=e.clipboardData&&e.clipboardData.getData('text/plain');
@@ -3179,6 +3205,7 @@ bridge2.jpg</div>
     var id=KAART_ID;
     fetch(praktijkKaartUrl(id),PGET())
       .then(function(r){return r.json();})
+      .then(metEigenOefeningen)
       .then(function(d){
         if(!d.ok){toonQrHint(d.fout||'De nieuwste versie openen is niet gelukt.');return;}
         openCard(d.kaart);
@@ -3201,7 +3228,7 @@ bridge2.jpg</div>
         if(mee){deelNu();return;}
         ensureQr(function(){toonQr(d.kaart.id||id);});
       })
-      .catch(function(){toonQrHint('Geen verbinding met de server.');});
+      .catch(function(e){toonQrHint(e&&e.message==='eigen'?EIGEN_NIET_GELADEN:'Geen verbinding met de server.');});
   }
   document.getElementById('qrBlok').addEventListener('click',function(e){
     var act=e.target.closest('[data-qract]');
@@ -6095,6 +6122,7 @@ bridge2.jpg</div>
     if(kaartWachtNog())return;
     fetch(praktijkKaartUrl(id),PGET())
       .then(function(r){return r.json();})
+      .then(metEigenOefeningen)
       .then(function(d){
         if(!d.ok){alert('Kaart openen is niet gelukt.');return;}
         if(chosen.length&&!confirm('Huidige kaart vervangen door “'+d.kaart.naam+'”?'))return;
@@ -6107,7 +6135,7 @@ bridge2.jpg</div>
         if(IS_V2&&d.kaart.id)ensureQr(function(){toonQr(d.kaart.id);});else verbergQr();
         closeOv('ovKaarten');
       })
-      .catch(function(){alert('Kaart openen is niet gelukt: geen verbinding.');});
+      .catch(function(e){alert(e&&e.message==='eigen'?EIGEN_NIET_GELADEN:'Kaart openen is niet gelukt: geen verbinding.');});
   }
   function toonSrvKaarten(){
     var oudePrul=document.getElementById('k_prullenbak');if(oudePrul)oudePrul.remove();
@@ -7079,6 +7107,7 @@ bridge2.jpg</div>
       var kpVrij=function(){delete KAARTEN_BEZIG[kpSlot];};
       fetch(praktijkKaartUrl(kp.dataset.skopie),PGET())
         .then(function(r){return r.json();})
+        .then(metEigenOefeningen)
         .then(function(d){
           if(!d.ok){alert('Kaart kopiëren is niet gelukt.');return;}
           if(chosen.length&&!confirm('Huidige kaart vervangen door een kopie van “'+d.kaart.naam+'”?'))return;
@@ -7090,7 +7119,7 @@ bridge2.jpg</div>
           document.getElementById('k_result').textContent='';
           var cn=document.getElementById('c_naam');if(cn)cn.focus();
         })
-        .catch(function(){alert('Kaart kopiëren is niet gelukt: geen verbinding.');})
+        .catch(function(e){alert(e&&e.message==='eigen'?EIGEN_NIET_GELADEN:'Kaart kopiëren is niet gelukt: geen verbinding.');})
         .then(function(){setTimeout(kpVrij,400);});
       return;
     }
@@ -7270,7 +7299,7 @@ bridge2.jpg</div>
   // Hoe het met de eigen oefeningen van de praktijk staat: 'ok' (geladen), 'uit' (geen praktijk of
   // niet ingelogd: er zijn er dan geen) of 'storing' (de server gaf geen antwoord; dan blijft de
   // laatst geladen lijst staan). Zie herstelOpenKaart.
-  var EIGEN_STAND='uit',EIGEN_LAATST=[];
+  var EIGEN_STAND='uit',EIGEN_LAATST=[],EIGEN_VOOR='',EIGEN_SIG='[]',EIGEN_VERANDERD=false;
   // vaste vragen per oefening van de praktijk (zie verderop bij openVasteVragen)
   var VV_EIGEN={},VV_STD=[],VV_MAX=5,VV_OEF=null,toonVV=function(){};
   function vvSleutel(n){return String(n==null?'':n).replace(/\s+/g,' ').trim().slice(0,120);}
@@ -7290,18 +7319,22 @@ bridge2.jpg</div>
     OEF=OEF.filter(function(o){return o.bron!=='praktijk';});
     OEF.forEach(function(o,i){o.id=i;});
     var klaar=function(lijst){
+      // is de lijst dezelfde als de vorige keer, dan hoeven de categorieknoppen niet opnieuw (zie eigenNaPraktijknaam)
+      var sig=JSON.stringify(lijst.map(function(e){return [e.id,e.naam,e.img];}));
+      EIGEN_VERANDERD=sig!==EIGEN_SIG;EIGEN_SIG=sig;
       lijst.forEach(function(e){
         var pad='/'+String(e.img||'').replace(/^\/+/,'');
         OEF.push({id:OEF.length,naam:e.naam,groep:EIGEN_GROEP,s:3,h:12,bron:'praktijk',exerciseId:e.id,uitleg:e.uitleg||'',magWeg:e.magWeg!==false,
           starthouding:'',uitvoering:'',opmerking:'',imgs:[{type:'img',src:pad,lineSrc:pad,colorSrc:pad,label:'Plaatje'}]});
       });
-      if(GROUPS){
+      if(GROUPS&&(EIGEN_VERANDERD||GROUPS.some(function(g){return g.g===EIGEN_GROEP;})!==(lijst.length>0))){
         GROUPS=GROUPS.filter(function(g){return g.g!==EIGEN_GROEP;});
         if(lijst.length)GROUPS.push({g:EIGEN_GROEP,label:EIGEN_GROEP});
         renderChips();
       }
       rebuildLookup();
     };
+    EIGEN_VOOR=pr;
     if(!pr){EIGEN_STAND='uit';EIGEN_LAATST=[];klaar([]);VV_EIGEN={};return Promise.resolve();}
     laadVasteVragen();
     return fetch('api/praktijk/oefeningen?praktijk='+encodeURIComponent(pr),PGET())
@@ -7836,7 +7869,7 @@ bridge2.jpg</div>
 
   // invulbare A4-velden: praktijk + adresblok, en het monitoring-grid
   var elPraktijk=document.getElementById('praktijk');
-  if(elPraktijk){elPraktijk.value=SET.praktijk;elPraktijk.addEventListener('input',function(){SET.praktijk=elPraktijk.value;saveSettings();if(IS_V2)planAutoDeel();});}
+  if(elPraktijk){elPraktijk.value=SET.praktijk;elPraktijk.addEventListener('input',function(){SET.praktijk=elPraktijk.value;saveSettings();if(IS_V2){planAutoDeel();eigenNaPraktijknaam();}});}
   Object.keys(PRAKKEYS).forEach(function(id){
     var el=document.getElementById(id);
     if(el)el.addEventListener('input',function(){SET[PRAKKEYS[id]]=el.value;saveSettings();});
@@ -7975,6 +8008,41 @@ bridge2.jpg</div>
   // bibliotheek staat?
   function mistEigen(lijst){
     return (Array.isArray(lijst)?lijst:[]).some(function(x){return !!x&&/^po_/.test(String(x.id||''))&&byStable[x.id]==null;});
+  }
+  // Een gedeelde kaart openen waar eigen oefeningen van de praktijk op staan die de editor nog niet
+  // kent (de praktijknaam is net ingetypt, of de lijst is ouder dan de kaart): eerst de eigen
+  // oefeningen opnieuw halen, dan pas openen. Anders viel de oefening stil van de kaart en ging bij
+  // het volgende delen ook van de patiëntkaart af (gebruikers-sweep 2026-11-21, Mark: 5 → 3).
+  // Lukt het halen niet, dan opent de kaart niet (fout 'eigen'): beter niet open dan half.
+  var EIGEN_NIET_GELADEN='De eigen oefeningen van de praktijk konden niet worden geladen, dus de kaart is niet geopend (anders vielen ze eraf). Probeer het zo opnieuw.';
+  function metEigenOefeningen(d){
+    if(!IS_V2||!d||!d.ok||!d.kaart||!mistEigen(d.kaart.chosen))return Promise.resolve(d);
+    // de open kaart verwijst naar plekken in de lijst; die kunnen schuiven als de eigen
+    // oefeningen opnieuw worden toegevoegd, dus eerst vastleggen en daarna terugzetten
+    return herlaadEigenOefeningen().then(function(){
+      if(mistEigen(d.kaart.chosen)&&EIGEN_STAND!=='ok')throw new Error('eigen');
+      return d;
+    });
+  }
+  function herlaadEigenOefeningen(){
+    var snap=currentCard('');
+    return voegPraktijkOefToe().then(function(){
+      var uit=vanVasteKaart(snap);
+      if(!uit.missing.length){chosen=uit.chosen;GRID={rows:snap.rows||{},cells:uit.cells};VIDS=uit.vids;}
+    });
+  }
+  // De praktijknaam komt vaak pas na het laden in de editor (proefStart zet hem op een nieuw apparaat,
+  // of de therapeut typt hem). De eigen oefeningen waren toen al 'geladen' voor een lege naam, dus
+  // ontbraken ze in de bibliotheek en in het voorbeeld van een teamsjabloon (Mark, 2026-11-21).
+  // Verandert de naam, dan haalt de editor ze even later opnieuw op, zonder de open kaart te raken.
+  var eigenNaamTimer=null;
+  function eigenNaPraktijknaam(){
+    clearTimeout(eigenNaamTimer);
+    eigenNaamTimer=setTimeout(function(){
+      if(!IS_V2||!SERVERLIB||!BIB_KLAAR)return;
+      if((SET.praktijk||'').trim()===EIGEN_VOOR)return;
+      herlaadEigenOefeningen().then(function(){if(EIGEN_VERANDERD)render();});
+    },600);
   }
   function bewaardeStaatMistEigen(){
     var st={};
