@@ -338,6 +338,17 @@ versie, wanneer en wie (ook in de download van /v2/gegevens).
 3. Laat de jurist privacyverklaring, verwerkersovereenkomst en voorwaarden samen toetsen (staat al
    hieronder bij Algemene voorwaarden, punt 7).
 
+### Proef met de naam van een al beveiligde praktijk (praktijk-routine, 2026-11-21)
+**Wat de code nu doet:** wie zich op /v2/proef aanmeldt met de praktijknaam van een praktijk die al beveiligd is,
+werd stil doorgelaten en liep in de app vast op "Deze praktijk is beveiligd. Log in", nog vóór de eerste kaart. Nu
+zegt het formulier het meteen bij het veld: werk je daar, vraag dan je beheerder om een uitnodiging in Team; is het
+een andere praktijk, zet er bijvoorbeeld de plaats bij of laat het veld leeg. Er wordt dan niets bewaard en er gaat
+geen mail uit. Wie al een proef heeft (zelfde e-mailadres), merkt niets. De controle komt na de rem per adres, zodat
+het formulier geen snelle lijst van bestaande namen geeft. Code: `/v2/proef` POST en `PROEF_NAAM_BEZET` in server.js,
+test `scripts/test-proef-naam-bezet.mjs` (in CI).
+**Env:** geen; dit werkt meteen na de merge.
+**Wat jij moet doen:** niets.
+
 ### Factuuroverzicht op Mijn abonnement (praktijk-routine, 2026-11-18)
 **Wat de code nu doet:** Mijn abonnement (fysiplan.nl/v2/proef?mijn=1) toonde de facturen als één link plus een rij losse
 nummers ("Latere maanden: FP-…, FP-…"). Nu staat er een tabel "Facturen" (of "Betaalbewijzen" zolang de btw-gegevens van

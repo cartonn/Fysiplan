@@ -2081,13 +2081,15 @@ async function factuurNietTeZien(request, response, p) {
   await serveerProef(request, response, "bericht", { TITEL: "Factuur", ETIKET: "Facturen", KOP: "Deze factuur is hier niet te zien.", TEKST: tekst, KNOP_HTML: knop }, 404);
 }
 // het aanmeldformulier, eventueel opnieuw met de ingevulde waarden en per veld de fout
+const PROEF_NAAM_BEZET = "Er is al een beveiligde praktijk met deze naam in Fysiplan. Werk je daar? Vraag dan je beheerder om een uitnodiging in Team. " +
+  "Is het een andere praktijk? Maak de naam herkenbaar, bijvoorbeeld met de plaats erbij, of laat het veld leeg en vul het later in.";
 async function proefFormVars(request, w, fouten, suggestie = "", akkoord = false, alarm = "") {
   // Per veld hangt de melding met een id aan het veld (aria-describedby) en krijgt het veld
   // aria-invalid; de focus gaat naar het eerste foute veld, ook als dat een vinkje is. Alleen de
   // samenvatting bovenaan is role="alert": voorheen las een schermlezer bij een leeg formulier zes
   // meldingen tegelijk voor en viel de focus bij alleen vinkjesfouten op body (sweep 2026-11-19, Sanne).
   const fout = (k) => fouten[k] ? '<p class="melding" id="fout-' + k + '">' + htmlEsc(fouten[k]) + "</p>" : "";
-  const eerste = ["email", "naam", "tel", "akkoord", "vwo"].find((k) => fouten[k]);
+  const eerste = ["email", "naam", "tel", "praktijk", "akkoord", "vwo"].find((k) => fouten[k]);
   const veld = (k) => (eerste === k ? " autofocus" : "") +
     (k === "email" && suggestie ? ' aria-describedby="hulp-email"' : fouten[k] ? ' aria-invalid="true" aria-describedby="fout-' + k + '"' : "");
   let telling = 200;
@@ -2097,14 +2099,14 @@ async function proefFormVars(request, w, fouten, suggestie = "", akkoord = false
     V_EMAIL: suggestie || w.email || "", V_NAAM: w.naam || "", V_TEL: w.telInvoer || "", V_PRAKTIJK: w.praktijk || "",
     V_AKKOORD_HTML: akkoord ? " checked" : "", V_VWO_HTML: w.vwo ? " checked" : "",
     M_EMAIL: fouten.email ? "mis" : "", M_NAAM: fouten.naam ? "mis" : "", M_TEL: fouten.tel ? "mis" : "", M_AKKOORD: fouten.akkoord ? "mis" : "",
-    M_VWO: fouten.vwo ? "mis" : "",
+    M_VWO: fouten.vwo ? "mis" : "", M_PRAKTIJK: fouten.praktijk ? "mis" : "",
     // bij een tikfout-suggestie staat het verbeterde adres al in het veld; een
     // tweede keer versturen accepteert dan wat er staat, ook als het toch klopte
     F_EMAIL_HTML: suggestie ? '<p class="hulp" id="hulp-email" role="alert">Bedoel je <b>' + htmlEsc(suggestie) + "</b>? We hebben het alvast aangepast. Klopt je eerste adres toch, verander het dan terug.</p>" : fout("email"),
     EMAIL_OK_HTML: suggestie ? '<input type="hidden" name="email_ok" value="1"/>' : "",
-    F_NAAM_HTML: fout("naam"), F_TEL_HTML: fout("tel"), F_AKKOORD_HTML: fout("akkoord"), F_VWO_HTML: fout("vwo"),
+    F_NAAM_HTML: fout("naam"), F_TEL_HTML: fout("tel"), F_AKKOORD_HTML: fout("akkoord"), F_VWO_HTML: fout("vwo"), F_PRAKTIJK_HTML: fout("praktijk"),
     AUTOFOCUS_EMAIL_HTML: veld("email"), AUTOFOCUS_NAAM_HTML: veld("naam"), AUTOFOCUS_TEL_HTML: veld("tel"),
-    AUTOFOCUS_AKKOORD_HTML: veld("akkoord"), AUTOFOCUS_VWO_HTML: veld("vwo"),
+    AUTOFOCUS_AKKOORD_HTML: veld("akkoord"), AUTOFOCUS_VWO_HTML: veld("vwo"), AUTOFOCUS_PRAKTIJK_HTML: veld("praktijk"),
     ALARM_HTML: alarm ? '<p class="alarm" role="alert" style="margin-top:20px">' + htmlEsc(alarm) + "</p>"
       : (aantalFouten && !(aantalFouten === 1 && suggestie)) ? '<p class="alarm" role="alert" style="margin-top:20px">Nog ' + (aantalFouten === 1 ? "één veld" : aantalFouten + " velden") + " om na te kijken.</p>" : "",
     EINDDATUM: datumNl(Date.now() + PROEF_DAGEN * 86400000),
@@ -8783,6 +8785,17 @@ async function afhandelen(request, response) {
       return;
     }
     const w = v.waarden;
+    // Gebruikers-sweep 2026-11-20 18u (Sanne): een nieuwe proef met de naam van een praktijk die al
+    // beveiligd is, werd stil aangenomen. De app zei daarna alleen "Deze praktijk is beveiligd. Log in",
+    // en de nieuwe gebruiker liep vast vóór de eerste kaart. Nu zegt het formulier het meteen, met de
+    // twee uitwegen: bij die praktijk horen (uitnodiging van de beheerder) of een naam die onderscheidt.
+    // Na de rem per adres, zodat het formulier geen snelle lijst van bestaande namen geeft; de app
+    // zegt hetzelfde al bij beveiligen ("Deze praktijknaam is al beveiligd"). Een bestaande proef
+    // (zelfde e-mailadres) gaat de gewone weg hieronder.
+    if (w.praktijk && !Object.values(proeven).some((x) => x.email === w.email && !x.gewist) && accountsMetNaam(w.praktijk).length) {
+      await serveerProef(request, response, "formulier", await proefFormVars(request, w, { praktijk: PROEF_NAAM_BEZET }, "", !!b.akkoord), 409);
+      return;
+    }
     // hetzelfde e-mailadres opnieuw: dezelfde proef terug (geen nieuwe 14 dagen).
     // Alleen vanaf een apparaat dat die proef al heeft (geldige proefcookie) worden
     // de contactgegevens bijgewerkt. Wie alleen het e-mailadres kent, krijgt geen

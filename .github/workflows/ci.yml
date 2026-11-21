@@ -155,6 +155,7 @@ jobs:
       - run: npm run test:hernoemvolledig
       - run: npm run test:hernoemfocus
       - run: npm run test:proefemailteken
+      - run: npm run test:proefnaambezet
       - run: npm run test:inboxafgerond
       - run: npm run test:inboxrem
       - run: npm run test:voorbeeldelders
