@@ -158,6 +158,8 @@ jobs:
       - run: npm run test:inboxafgerond
       - run: npm run test:inboxrem
       - run: npm run test:voorbeeldelders
+      - run: npm run test:leegenopm
+      - run: npm run test:videoliggend
       - run: npm run test:opnamedubbel
       - run: npm run test:offlinescore
       - run: npm run test:offlinekopie

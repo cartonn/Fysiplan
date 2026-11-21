@@ -324,7 +324,9 @@
     "test:activiteitoverspoeld": "node scripts/test-activiteit-overspoeld.mjs",
     "test:luistergeenopname": "node scripts/test-luister-geen-opname.mjs",
     "test:inboxrem": "node scripts/test-sweep-inbox-rem.mjs",
-    "test:voorbeeldelders": "node scripts/test-sweep-voorbeeld-elders.mjs"
+    "test:voorbeeldelders": "node scripts/test-sweep-voorbeeld-elders.mjs",
+    "test:leegenopm": "node scripts/test-sweep-leeg-en-opm.mjs",
+    "test:videoliggend": "node scripts/test-sweep-video-liggend.mjs"
   },
   "engines": {
     "node": ">=20"

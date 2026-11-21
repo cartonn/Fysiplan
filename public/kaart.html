@@ -357,6 +357,8 @@
   @media (max-height:26em){
     .oef.actief .fotoknop img{max-height:34vh}
     .oef.actief>.vhouder.open>video.avatar{max-height:40vh}
+    /* liggende video (eigen opname, YouTube): zo laag dat hij met bediening boven de onderbalk past (sweep 2026-11-21, Truus) */
+    .oef.actief>.vhouder.open>video:not(.avatar),.oef.actief>.vhouder.open>iframe{justify-self:center;width:auto;max-width:100%;height:clamp(64px,calc(100vh - var(--sbalk-h,0px) - var(--vtop,96px) - 6px),60vh);margin:0}
     .sbalk{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
     .sstatus{flex:1 1 14em;margin:0}
     .srij{flex:1 1 18em;margin:0}
@@ -366,6 +368,8 @@
      niet verder dan de breedte toelaat, zodat naam en begin van de uitleg in het eerste scherm passen. */
   body.krap .oef.actief .fotoknop img{max-height:34vh}
   body.krap .oef.actief>.vhouder.open>video.avatar{max-height:40vh}
+  /* alleen liggend: staand bij grote letters houdt de video zijn breedte (hertest Truus) */
+  @media (orientation:landscape){body.krap .oef.actief>.vhouder.open>video:not(.avatar),body.krap .oef.actief>.vhouder.open>iframe{justify-self:center;width:auto;max-width:100%;height:clamp(64px,calc(100vh - var(--sbalk-h,0px) - var(--vtop,96px) - 6px),60vh);margin:0}}
   body.krap .sbalk{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
   body.krap .sstatus{flex:1 1 14em;margin:0}
   body.krap .srij{flex:1 1 18em;margin:0}
@@ -3585,9 +3589,19 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   }
   // hoogte van de vaste onderbalk als CSS-variabele, zodat de pagina erboven altijd ruimte houdt (groeit mee met tekstgrootte)
   var SBALK_RO=null;
+  // waar de liggende video in de oefenstand begint (bij scroll 0), zodat hij bij weinig hoogte precies tussen kop en
+  // onderbalk past; een vaste kophoogte klopte niet op elk toestel (gebruikers-sweep 2026-11-21, hertest Truus)
+  function zetVideoTop(){
+    try{
+      var v=document.querySelector('.oef.actief>.vhouder.open>video:not(.avatar),.oef.actief>.vhouder.open>iframe');
+      if(!v)return;
+      document.documentElement.style.setProperty('--vtop',Math.max(0,Math.round(v.getBoundingClientRect().top+(window.scrollY||0)))+'px');
+    }catch(e){}
+  }
+  window.addEventListener('resize',function(){zetVideoTop();});
   function volgSessiebalk(){
     var sb=document.getElementById('sessiebalk');if(!sb)return;
-    var zet=function(){try{document.documentElement.style.setProperty('--sbalk-h',(sb.hidden?0:sb.offsetHeight)+'px');}catch(e){}};
+    var zet=function(){try{document.documentElement.style.setProperty('--sbalk-h',(sb.hidden?0:sb.offsetHeight)+'px');}catch(e){}zetVideoTop();};
     if(!SBALK_RO&&window.ResizeObserver){SBALK_RO=new ResizeObserver(zet);SBALK_RO.observe(sb);}
     zet();
   }
@@ -3941,6 +3955,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       }
       houder.classList.add('open');
       b.setAttribute('aria-expanded','true');
+      zetVideoTop();
       setTimeout(function(){
         if(typeof SESSIE!=='undefined'&&SESSIE>-1&&typeof window!=='undefined'&&window.scrollTo){
           try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}

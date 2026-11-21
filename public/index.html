@@ -139,6 +139,8 @@
   #a4 .box .print-text-value{display:none;min-height:0;padding:1px 0;color:#101828;font-size:12px;line-height:1.25;white-space:pre-wrap;overflow:hidden;overflow-wrap:anywhere}
   #a4 .box .print-text-value.opmerking{flex:1}
   #a4 .box .print-text-value.casus{flex:0 0 24px}
+  #printLimitStatus.zichtbaar{position:fixed!important;left:50%!important;bottom:20px!important;transform:translateX(-50%);width:auto!important;max-width:min(560px,calc(100vw - 32px));height:auto!important;margin:0!important;padding:12px 16px!important;clip:auto!important;overflow:visible!important;white-space:normal!important;background:#fff4e5;color:#7a2e0e;border:1px solid #f79009!important;border-radius:10px;font-size:14px;line-height:1.4;z-index:9000;box-shadow:0 6px 20px rgba(0,0,0,.15);pointer-events:none}
+  @media print{#printLimitStatus{display:none!important}}
   .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
   #a4 .pic{border:1.5px solid #475467;aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;position:relative;color:#222;background:#fff;overflow:hidden}
   #a4 .pic .thumb{width:100% !important;height:100% !important;border:none;border-radius:0;background:none;padding:2px;object-fit:contain}
@@ -1248,9 +1250,15 @@ bridge2.jpg</div>
     if(proxy)proxy.textContent=el.value;
     el.scrollTop=0;
   }
-  function signalPrintableLimit(el){
+  function signalPrintableLimit(el,weg){
     var status=document.getElementById('printLimitStatus');
-    if(status)status.textContent='Het vak '+el.getAttribute('aria-label')+' is vol; extra tekst past niet op de print.';
+    // zichtbaar (niet alleen voor schermlezers): wie een lange tekst plakt, moet zien dat er tekst wegviel
+    if(status){
+      status.textContent='Het vak '+el.getAttribute('aria-label')+' is vol'+(weg>1?': '+weg+' tekens pasten niet en zijn niet geplakt.':'; extra tekst past niet op de print.')+' Zet een lange toelichting in je EPD.';
+      status.classList.add('zichtbaar');
+      clearTimeout(status._weg);
+      status._weg=setTimeout(function(){status.classList.remove('zichtbaar');},8000);
+    }
     el.classList.add('print-limit-hit');
     clearTimeout(el._printLimitTimer);
     el._printLimitTimer=setTimeout(function(){el.classList.remove('print-limit-hit');},700);
@@ -1269,8 +1277,17 @@ bridge2.jpg</div>
       var mid=Math.ceil((low+high)/2);
       if(printableTextFits(el,before+text.slice(0,mid)+after))low=mid;else high=mid-1;
     }
-    if(low){el.setRangeText(text.slice(0,low),start,end,'end');el.dispatchEvent(new Event('input',{bubbles:true}));}
-    signalPrintableLimit(el);
+    // Net als bij fittingPrintableText: nooit een half woord laten staan ("bijhoude").
+    var deel=text.slice(0,low);
+    if(low<text.length&&/[0-9A-Za-zÀ-ÿ]$/.test(deel)&&/^[0-9A-Za-zÀ-ÿ]/.test(text.slice(low))){
+      deel=deel.replace(/\S*$/,'');
+    }
+    // geen losse komma of spatie aan het eind, en niet vastgeplakt aan de tekst erna (hertest Sanne)
+    if(deel.length<text.length)deel=deel.replace(/[\s,;:–-]+$/,'');
+    if(deel&&after&&/^[^\s]/.test(after)&&printableTextFits(el,before+deel+' '+after))deel+=' ';
+    if(deel){el.setRangeText(deel,start,end,'end');el.dispatchEvent(new Event('input',{bubbles:true}));}
+    // tellen in tekens zoals een mens ze ziet (een emoji is één teken)
+    signalPrintableLimit(el,Array.from(text).length-Array.from(deel.trim()).length);
     return false;
   }
   function normalizePrintableTextFields(){
@@ -3097,7 +3114,13 @@ bridge2.jpg</div>
     if(!BIB_KLAAR)return;
     var naam=huidigeKaartNaam();
     var pr=(SET.praktijk||'').trim();
-    if(!naam||!chosen.length){verbergQr();laatsteDeel='';return;}
+    if(!naam||!chosen.length){
+      // Een gedeelde kaart helemaal leeg gemaakt: de QR verdween zonder uitleg en de patiënt zag nog de oude
+      // oefeningen (gebruikers-sweep 2026-11-20/21, Sanne). Een lege kaart deelt Fysiplan niet; zeg dat dan wel.
+      if(naam&&KAART_ID&&IS_V2)toonQrHint('Er staan geen oefeningen meer op deze kaart. Je patiënt ziet nog de vorige versie. Zet er een oefening op om hem bij te werken, of rond de kaart af in Kaarten.');
+      else verbergQr();
+      laatsteDeel='';return;
+    }
     if(QR_UIT_VOOR===naam.toLowerCase())return;
     if(!pr){toonQrHint('Vul de naam van je praktijk in (linksboven op de kaart), dan komt de QR-code er vanzelf op.');laatsteDeel='';return;}
     // tijdens het typen van de naam niet delen: een halve naam werd anders een losse kaart
