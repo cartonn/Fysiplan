@@ -139,6 +139,8 @@
   #a4 .box .print-text-value{display:none;min-height:0;padding:1px 0;color:#101828;font-size:12px;line-height:1.25;white-space:pre-wrap;overflow:hidden;overflow-wrap:anywhere}
   #a4 .box .print-text-value.opmerking{flex:1}
   #a4 .box .print-text-value.casus{flex:0 0 24px}
+  #a4 .box .print-text-value.doel{flex:1}
+  #a4 .box textarea.print-overflow{box-shadow:inset 3px 0 0 #f79009}
   #printLimitStatus.zichtbaar{position:fixed!important;left:50%!important;bottom:20px!important;transform:translateX(-50%);width:auto!important;max-width:min(560px,calc(100vw - 32px));height:auto!important;margin:0!important;padding:12px 16px!important;clip:auto!important;overflow:visible!important;white-space:normal!important;background:#fff4e5;color:#7a2e0e;border:1px solid #f79009!important;border-radius:10px;font-size:14px;line-height:1.4;z-index:9000;box-shadow:0 6px 20px rgba(0,0,0,.15);pointer-events:none}
   @media print{#printLimitStatus{display:none!important}}
   .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
@@ -281,7 +283,7 @@
     #a4 .prak{width:60mm;flex-basis:60mm}
     #a4 .boxes{gap:2.5mm}
     #a4 .box{width:43mm;height:39mm;padding:1.5mm 2mm}
-    #a4 .box textarea.print-limited{display:none!important}
+    #a4 .box textarea.print-limited,#a4 .box textarea#c_doel{display:none!important}
     #a4 .box .print-text-value{display:block}
     #a4 table.mon{flex:1 1 0;min-height:0;margin-top:2.5mm;font-size:9px}
     #a4 .a4hd .logoIn{color:#1f6feb !important;border:none !important}
@@ -460,7 +462,7 @@
         </div>
         <div class="boxes">
           <div class="box"><b>Opm.</b><textarea id="c_opm" class="print-limited" aria-label="Opmerking" aria-describedby="printLimitStatus"></textarea><div class="print-text-value opmerking" data-print-for="c_opm" aria-hidden="true"></div><b>Casus</b><textarea id="c_cave" class="print-limited" aria-label="Casus" aria-describedby="printLimitStatus" style="flex:0 0 24px"></textarea><div class="print-text-value casus" data-print-for="c_cave" aria-hidden="true"></div></div>
-          <div class="box"><b>Doel:</b><textarea id="c_doel" aria-label="Doel"></textarea></div>
+          <div class="box"><b>Doel:</b><textarea id="c_doel" aria-label="Doel" aria-describedby="printLimitStatus"></textarea><div class="print-text-value doel" data-print-for="c_doel" aria-hidden="true"></div></div>
         </div>
         <div id="qrBlok" class="qrblok" style="display:none"></div>
       </div>
@@ -1291,8 +1293,59 @@ bridge2.jpg</div>
     signalPrintableLimit(el,Array.from(text).length-Array.from(deel.trim()).length);
     return false;
   }
+  // Doel mag langer zijn dan het printvak (de digitale kaart toont tot 500 tekens), maar op papier
+  // stond dan een stuk zonder melding: wat in het vak paste, of bij een gescrold vak een stuk uit
+  // het midden (gebruikers-sweep 2026-11-21, Sanne: ~150 van 500 tekens). Nu krijgt de print een
+  // kopie die bij een heel woord stopt met "…", en zegt het scherm dat het doel niet heel op papier past.
+  function doelPrintTekst(el){
+    var v=String(el.value||'').trim();
+    var oud=el.style.overflow;el.style.overflow='hidden';
+    try{
+      if(printableTextFits(el,v))return {tekst:v,past:true};
+      var low=0,high=v.length;
+      while(low<high){
+        var mid=Math.ceil((low+high)/2);
+        if(printableTextFits(el,v.slice(0,mid).replace(/[\s,;:.–-]+$/,'')+' …'))low=mid;else high=mid-1;
+      }
+      var deel=v.slice(0,low);
+      if(/[0-9A-Za-zÀ-ÿ]$/.test(deel)&&/^[0-9A-Za-zÀ-ÿ]/.test(v.slice(low))){
+        var heel=deel.replace(/\s+\S*$/,'');
+        if(heel.trim())deel=heel;
+      }
+      deel=deel.replace(/[\s,;:.–-]+$/,'');
+      return {tekst:deel?deel+' …':'…',past:false};
+    }finally{el.style.overflow=oud;}
+  }
+  function syncDoelPrint(meld){
+    var el=document.getElementById('c_doel');
+    var proxy=document.querySelector('[data-print-for="c_doel"]');
+    if(!el||!proxy)return;
+    // in de print-stijl staat het vak zelf uit en meet het niets (hertest Sanne): dan blijft de kopie van het scherm
+    if(!el.clientHeight)return;
+    el._doelGezien=el.value;
+    var r=doelPrintTekst(el);
+    proxy.textContent=r.tekst;
+    var was=el.classList.contains('print-overflow');
+    el.classList.toggle('print-overflow',!r.past);
+    el.title=r.past?'':'Het doel is langer dan op de print past. Op papier stopt het bij “…”; de digitale kaart toont het hele doel.';
+    if(meld&&!r.past&&!was){
+      var status=document.getElementById('printLimitStatus');
+      if(status){
+        status.textContent='Het doel past niet helemaal op de print: op papier stopt het bij “…”. De digitale kaart toont het hele doel.';
+        status.classList.add('zichtbaar');
+        clearTimeout(status._weg);
+        status._weg=setTimeout(function(){status.classList.remove('zichtbaar');},8000);
+      }
+    }
+  }
+  (function(){
+    var el=document.getElementById('c_doel');
+    if(el)el.addEventListener('input',function(){syncDoelPrint(true);});
+    window.addEventListener('beforeprint',function(){syncDoelPrint(false);});
+  })();
   function normalizePrintableTextFields(){
     var changed=false;
+    syncDoelPrint(false);
     document.querySelectorAll('#c_opm,#c_cave').forEach(function(el){
       var fitted=fittingPrintableText(el,el.value);
       if(fitted!==el.value){el.value=fitted;changed=true;}
@@ -2216,7 +2269,14 @@ bridge2.jpg</div>
     }
     el.style.display=chosen.length>=2?'flex':'none';
   }
-  function render(){updateChipCounts();renderList();renderA4();saveState();proefTeller();}
+  function render(){updateChipCounts();renderList();renderA4();printKopieBij();saveState();proefTeller();}
+  // De printkopieën van Opm., Casus en Doel volgen de velden ook als een kaart ze zonder input-event
+  // vult of leegmaakt (andere kaart openen, nieuwe kaart): anders kwam een oud doel op papier.
+  function printKopieBij(){
+    ['c_opm','c_cave'].forEach(function(k){var el=document.getElementById(k);if(el){var px=document.querySelector('[data-print-for="'+k+'"]');if(px&&px.textContent!==el.value)px.textContent=el.value;}});
+    var d=document.getElementById('c_doel');
+    if(d&&d._doelGezien!==d.value){d._doelGezien=d.value;syncDoelPrint(false);}
+  }
 
   var TOEGEVOEGD={id:null,t:0},WEGGEHAALD={id:null,t:0};
   function toggleExercise(id,tik){
@@ -3599,6 +3659,9 @@ bridge2.jpg</div>
   function sjOefeningen(s){
     return (s.oefeningen||[]).map(function(n){var id=byNorm[normEx(sjabNaam(n))];return (id!=null&&OEF[id])?{id:id,o:OEF[id],item:n}:null;}).filter(Boolean);
   }
+  function sjEigenKwijt(s){
+    return IS_V2&&EIGEN_STAND==='storing'&&(s.oefeningen||[]).length>sjOefeningen(s).length;
+  }
   function sjDosTekst(item,s){
     var od=(item&&typeof item==='object')?item:null,dz=s.dosering||{};
     var se=(od&&od.s)||dz.s||'',he=(od&&od.h)||dz.h||'',we=(od&&od.w)||dz.w||'';
@@ -3685,13 +3748,19 @@ bridge2.jpg</div>
       var d=sjDosTekst(x.item,s);
       return "<li>"+imgRender(x.o.imgs[0],48)+"<span><b>"+esc(x.o.naam)+"</b>"+(d?"<small>"+esc(d)+"</small>":"")+"</span></li>";
     }).join('')+"</ol>";
-    if(mist>0)h+="<p class='sjb-vb-noot'>"+mist+" oefening"+(mist===1?' staat':'en staan')+" niet meer in de bibliotheek en "+(mist===1?'wordt':'worden')+" overgeslagen.</p>";
+    // Konden de eigen oefeningen van de praktijk niet laden (storing), dan weet de app niet of een ontbrekende
+    // oefening echt weg is: niet "overgeslagen" zeggen en niet half op de kaart zetten (gebruikers-sweep
+    // 2026-11-21, Mark: 6 van 7 op de kaart, de eigen oefening stil weg).
+    var eigenKwijt=sjEigenKwijt(s);
+    if(eigenKwijt)h+="<p class='sjb-vb-noot' role='status'>"+mist+" oefening"+(mist===1?'':'en')+" kon"+(mist===1?'':'den')+" nu niet worden geladen: de eigen oefeningen van de praktijk zijn even niet bereikbaar. Daarom staat deze kaart nog uit. <button type='button' class='sjb-link' data-sjdo='herlaad' data-sj='"+sjSleutel(it)+"'>Probeer opnieuw</button></p>";
+    else if(mist>0)h+="<p class='sjb-vb-noot'>"+mist+" oefening"+(mist===1?' staat':'en staan')+" niet meer in de bibliotheek en "+(mist===1?'wordt':'worden')+" overgeslagen.</p>";
     if(oe.length>12)h+="<p class='sjb-vb-noot'>Een kaart past 12 oefeningen; de eerste 12 komen erop.</p>";
     var sl=sjSleutel(it);
     h+="<div class='sjb-vb-acties'>";
-    h+="<button class='btn primary' data-sjdo='gebruik' data-sj='"+sl+"'>"+(chosen.length?'Vervang de kaart':'Op de kaart zetten')+"</button>";
-    if(chosen.length)h+="<button class='btn' data-sjdo='erbij' data-sj='"+sl+"' title='Zet deze oefeningen erbij, achter wat er al op de kaart staat'>Toevoegen aan kaart</button>";
-    h+="<button class='btn' data-sjdo='aanpassen' data-sj='"+sl+"'>"+(it.bron==='eigen'?'Aanpassen':'Aanpassen als mijn kaart')+"</button>";
+    var uitAttr=eigenKwijt?" disabled aria-disabled='true'":'';
+    h+="<button class='btn primary' data-sjdo='gebruik' data-sj='"+sl+"'"+uitAttr+">"+(chosen.length?'Vervang de kaart':'Op de kaart zetten')+"</button>";
+    if(chosen.length)h+="<button class='btn' data-sjdo='erbij' data-sj='"+sl+"'"+uitAttr+" title='Zet deze oefeningen erbij, achter wat er al op de kaart staat'>Toevoegen aan kaart</button>";
+    h+="<button class='btn' data-sjdo='aanpassen' data-sj='"+sl+"'"+uitAttr+">"+(it.bron==='eigen'?'Aanpassen':'Aanpassen als mijn kaart')+"</button>";
     h+="</div>";
     var klein='';
     if(it.bron==='eigen'){
@@ -3919,6 +3988,8 @@ bridge2.jpg</div>
   function pasSjabloonToe(s,erbij){
     if(!s)return;
     if(kaartWachtNog())return;
+    // ook dubbelklik in de lijst: niet half op de kaart bij een storing van de eigen oefeningen (hertest Mark)
+    if(sjEigenKwijt(s)){renderSjabVoorbeeld();return false;}
     if(!erbij&&chosen.length&&!confirm('Je hebt al '+chosen.length+' oefening'+(chosen.length===1?'':'en')+' gekozen. Vervangen door "'+s.naam+'"?'))return;
     stopSjabBewerk();
     var missing=[],vol=0;
@@ -4016,6 +4087,12 @@ bridge2.jpg</div>
     var k=e.target.closest('[data-sjdo]');if(!k)return;
     var it=sjZoekItem(k.dataset.sj);if(!it)return;
     var wat=k.dataset.sjdo,s=it.s;
+    if(wat==='herlaad'){
+      if(k.disabled)return;k.disabled=true;k.textContent='Bezig…';
+      herlaadEigenOefeningen().catch(function(){}).then(function(){renderSjabLijst();});
+      return;
+    }
+    if((wat==='gebruik'||wat==='erbij'||wat==='aanpassen')&&sjEigenKwijt(s))return;
     if(wat==='gebruik'){pasSjabloonToe(s);return;}
     if(wat==='erbij'){pasSjabloonToe(s,true);return;}
     if(wat==='aanpassen'){
@@ -4045,6 +4122,8 @@ bridge2.jpg</div>
               if(confirm('Er is al een teamsjabloon "'+(d.naam||s.naam)+'" in de praktijk.\n\nVervangen door deze versie? Je collega\'s zien dan alleen nog de nieuwe.'))deel(true);
               else herstel();
             }
+            // verlopen proef: dezelfde balk als elders, geen kale alert met een platte link (gebruikers-sweep 2026-11-21, Mark)
+            else if(d.proefVerlopen){herstel();toonProefVoorbij(k);}
             else{herstel();alert(d.fout||'Delen is niet gelukt.'+(d.login?' Log eerst in bij de praktijk (via Kaarten).':''));}
           })
           .catch(function(){herstel();alert('Delen is niet gelukt: geen verbinding.');});
@@ -4058,7 +4137,7 @@ bridge2.jpg</div>
       fetch('api/praktijk/sjablonen/verwijder',{method:'POST',headers:PJSON(),
         body:JSON.stringify({praktijk:SET.praktijk||'',naam:s.naam})})
         .then(function(r){return r.json();})
-        .then(function(d){if(d.ok){PRAKSJAB=d.sjablonen;SJ_STAAT.sel=null;renderSjabLijst();}else alert(d.fout||'Verwijderen is niet gelukt.');})
+        .then(function(d){if(d.ok){PRAKSJAB=d.sjablonen;SJ_STAAT.sel=null;renderSjabLijst();}else if(d.proefVerlopen)toonProefVoorbij(k);else alert(d.fout||'Verwijderen is niet gelukt.');})
         .catch(function(){alert('Verwijderen is niet gelukt: geen verbinding.');});
       return;
     }
@@ -6134,6 +6213,16 @@ bridge2.jpg</div>
         QR_UIT_VOOR=null;laatsteDeel='';
         if(IS_V2&&d.kaart.id)ensureQr(function(){toonQr(d.kaart.id);});else verbergQr();
         closeOv('ovKaarten');
+        // toetsenbord: na Openen stond de focus op body (gebruikers-sweep 2026-11-21, Sanne). Nu gaat hij
+        // naar de geopende kaart zelf; niet naar de roepnaam, want focus daar start het delen bij blur.
+        setTimeout(function(){
+          var a=document.getElementById('a4'),f=document.activeElement;
+          // alleen niet als er intussen een ander venster openstaat (bijv. een melding)
+          if(!a||(f&&f.closest&&f.closest('.ov.on')))return;
+          if(!a.hasAttribute('tabindex'))a.setAttribute('tabindex','-1');
+          a.setAttribute('aria-label','Kaart '+String(d.kaart.naam||''));
+          try{a.focus({preventScroll:true});}catch(e){}
+        },0);
       })
       .catch(function(e){alert(e&&e.message==='eigen'?EIGEN_NIET_GELADEN:'Kaart openen is niet gelukt: geen verbinding.');});
   }

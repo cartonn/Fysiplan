@@ -361,7 +361,7 @@
     .oef.actief>.vhouder.open>video:not(.avatar),.oef.actief>.vhouder.open>iframe{justify-self:center;width:auto;max-width:100%;height:clamp(64px,calc(100vh - var(--sbalk-h,0px) - var(--vtop,96px) - 6px),60vh);margin:0}
     .sbalk{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
     .sstatus{flex:1 1 14em;margin:0}
-    .srij{flex:1 1 18em;margin:0}
+    .srij{flex:1 1 18em;margin:0 auto}
   }
   /* Zelfde bij grote letters via de telefooninstelling: een media-query in em rekent met 16 px en springt dan
      niet aan. zetKrap() zet body.krap als het scherm minder dan 26 regelhoogtes (rem) hoog is. De naam groeit dan
@@ -372,7 +372,7 @@
   @media (orientation:landscape){body.krap .oef.actief>.vhouder.open>video:not(.avatar),body.krap .oef.actief>.vhouder.open>iframe{justify-self:center;width:auto;max-width:100%;height:clamp(64px,calc(100vh - var(--sbalk-h,0px) - var(--vtop,96px) - 6px),60vh);margin:0}}
   body.krap .sbalk{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
   body.krap .sstatus{flex:1 1 14em;margin:0}
-  body.krap .srij{flex:1 1 18em;margin:0}
+  body.krap .srij{flex:1 1 18em;margin:0 auto}
   body.krap .oef.actief .naam{font-size:min(1.5rem,7.5vw);margin-top:10px}
   /* grote letters (200 % en/of "A A"): de onderbalk krimpt mee in plaats van de pijl "volgende" buiten beeld te
      duwen (flex-items houden anders hun inhoudsbreedte), en een lang woord breekt af in plaats van de pagina te
@@ -624,7 +624,7 @@
     display:none;align-items:center;gap:12px;box-shadow:0 8px 28px rgba(0,0,0,.28)}
   .appbanner.aan{display:flex}
   .appbanner img{width:34px;height:34px;border-radius:9px;flex:0 0 34px}
-  .appbanner .tekst{flex:1 1 8em;min-width:0;overflow-wrap:anywhere;font:500 .875rem/1.4 var(--disp)}
+  .appbanner .tekst{flex:1 1 8em;min-width:0;overflow-wrap:break-word;hyphens:auto;font:500 .875rem/1.4 var(--disp)}
   .appbanner button{font:600 .875rem/1 var(--disp);border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
   .appbanner .doen{min-height:44px;background:#fff;color:#16181c}
   .appbanner .weg{min-width:44px;min-height:44px;background:transparent;color:#d9d9d6;padding:10px 6px;font-size:1.375rem}
@@ -3176,7 +3176,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   }
 
   // ---- als app op het beginscherm: manifest, offline-werker en een vriendelijke uitnodiging ----
-  var installEvent=null;
+  var installEvent=null,AB_LAATST=0,AB_RUST=6000;
   // houdt bij of de balk "Zet op beginscherm" echt zichtbaar is (niet weg door body.krap of een breed scherm)
   // en geeft de kaart dan onderaan zijn hoogte als extra ruimte
   function abRuimteBijhouden(banner){
@@ -3246,8 +3246,16 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(/iphone|ipad|ipod/i.test(navigator.userAgent))straks=function(){toonBanner(true);};
     document.addEventListener('click',function(e){
       if(!straks||!e.target.closest||!e.target.closest('#gdaan,#mschaal button'))return;
-      var f=straks;straks=null;setTimeout(f,2500);
+      // pas tonen als de patiënt even niets doet: direct na de pijnscore tikt hij vaak meteen door naar
+      // "Hoe gaat het nu", en dan lag de balk precies over "Hetzelfde / Iets beter" en ving hij de tik
+      // (gebruikers-sweep 2026-11-21, Truus)
+      var f=straks;straks=null;
+      var probeer=function(){if(Date.now()-AB_LAATST<AB_RUST){setTimeout(probeer,1000);return;}f();};
+      AB_LAATST=Date.now();setTimeout(probeer,AB_RUST);
     },true);
+    ['pointerdown','keydown','scroll','touchstart'].forEach(function(t){
+      window.addEventListener(t,function(){AB_LAATST=Date.now();},{capture:true,passive:true});
+    });
   }
 
   // Pose controls require reviewed source-specific metadata; otherwise show the full image.
@@ -3585,7 +3593,11 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     uk:{door:'Далі',start:'Почати вправи',verder:'Продовжити вправи',overzicht:'Огляд',nvan:'Вправа {n} з {t}',volgende:'Наступна вправа',klaar:'Завершити',vorige:'Попередня вправа',status:'Зроблено сьогодні',ongedaan:'Все ж не зроблено',meer:'Більше'}
   };
   function trse(k){var d=TSES[TAAL]||TSES.nl;return d[k]!=null?d[k]:TSES.nl[k];}
-  var SESSIE=-1,SESSIE_SCROLL=0,SESSIE_BEELD=-1,SESSIE_TERUG=false,KLAAR_SLOT=0;
+  var SESSIE=-1,SESSIE_SCROLL=0,SESSIE_BEELD=-1,SESSIE_TERUG=false,KLAAR_SLOT=0,OPEN_SLOT=0,OPEN_PUNT=null,LAATSTE_PUNT=null;
+  // de tweede tik van een dubbeltik: kort na het openen en op dezelfde plek als de tik die opende
+  function tikNaOpen(e){
+    return !!(e&&e.isTrusted&&e.detail>0&&Date.now()<OPEN_SLOT&&OPEN_PUNT&&Math.abs(e.clientX-OPEN_PUNT.x)<40&&Math.abs(e.clientY-OPEN_PUNT.y)<40);
+  }
   function oefRijen(){return document.querySelectorAll('#oefs .oef[data-oidx]');}
   function oefIsDaan(i){return leesOefDaan().done.indexOf(i)>-1;}
   // eerstvolgende oefening die vandaag nog niet is afgevinkt, te beginnen ná 'van'
@@ -3657,6 +3669,9 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     if(img&&merkDek[img.dataset.pose||'']&&img.complete&&img.naturalWidth)dekMiniatuur(img);
   }
   function openOef(i){
+    // de tweede tik van een dubbeltik op "Begin met oefenen" (of een rij) valt na het openen precies op
+    // de foto en opende de vergrote foto of de video (gebruikers-sweep 2026-11-21, Truus): die tik telt niet
+    OPEN_SLOT=Date.now()+600;OPEN_PUNT=(LAATSTE_PUNT&&Date.now()-LAATSTE_PUNT.t<1000)?LAATSTE_PUNT:null;
     if(!(i>=0&&i<oefRijen().length))return;
     var was=SESSIE>-1;
     stopLezen();stopVideos();
@@ -3696,6 +3711,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     }
   }
   function bindSessie(){
+    window.addEventListener('pointerdown',function(e){LAATSTE_PUNT={x:e.clientX,y:e.clientY,t:Date.now()};},{capture:true,passive:true});
     try{if(history.state&&history.state.fpoef)history.replaceState(null,'');}catch(e){}
     document.getElementById('startknop').addEventListener('click',function(){
       var v=volgendeOpen(-1);openOef(v>-1?v:0);
@@ -3846,6 +3862,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       // tik (of Enter/Space, want de fotoknop is een echte knop) op de foto
       var fk=e.target.closest('.fotoknop');
       var foto=fk?fk.querySelector('img'):null;
+      if(foto&&tikNaOpen(e))return;
       if(foto){
         // Een play-badge betekent altijd een echte gekoppelde video. De foto is dan
         // één grote afspeelknop; er wordt nooit een CSS-overvloeiing als video getoond.
@@ -3921,6 +3938,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         return;
       }
       var b=e.target.closest('.vbtn');if(!b)return;
+      if(tikNaOpen(e))return;
       var houder=b.closest('.oef').querySelector('.vhouder');
       var open=houder.classList.contains('open');
       stopLezen();
