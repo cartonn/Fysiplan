@@ -976,6 +976,13 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
   function normEx(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
   var id=(location.pathname.match(/^\/k\/(demo|[a-f0-9]{8,16})$/)||[])[1];
+  // Een kaartlink in hoofdletters of met een schuine streep erachter (een QR-scanner of mailapp
+  // maakt daar soms /k/D8CF810E497B/ van) gaf "Kaart niet gevonden" (gebruikers-sweep 2026-11-21,
+  // Jayden). Dan naar de gewone link, met dezelfde taal en het stuk na #.
+  if(!id){
+    var kl=location.pathname.match(/^\/k\/(demo|[a-f0-9]{8,16})\/?$/i);
+    if(kl){location.replace('/k/'+kl[1].toLowerCase()+location.search+location.hash);return;}
+  }
   var DRIEHOEK='<span class="driehoek"><svg width="10" height="10" viewBox="0 0 12 12"><path d="M2 1.5l8 4.5-8 4.5z" fill="currentColor"/></svg></span>';
 
   // ---- vaste teksten in negen talen; de kaartinhoud zelf vertaalt de server op verzoek ----
