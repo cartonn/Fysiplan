@@ -226,6 +226,8 @@ jobs:
       - run: node scripts/test-pilot-proefcookie.mjs
       - run: node scripts/test-vwo-pilot.mjs
       - run: npm run test:pijnscorebezig
+      - run: npm run test:kaart200pijnvideo
+      - run: npm run test:openendubbel
       - run: npm run test:herstellaatstetik
       - run: npm run test:opnameverouderd
       - run: npm run test:opnamewacht

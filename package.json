@@ -175,6 +175,8 @@
     "test:nieuwekaartnaam": "node scripts/test-sweep-nieuwe-kaart-naam.mjs",
     "test:proefwissen": "node scripts/test-sweep-proef-wissen-vinkje.mjs",
     "test:pijnscorebezig": "node scripts/test-sweep-pijnscore-bezig.mjs",
+    "test:kaart200pijnvideo": "node scripts/test-sweep-kaart-200-pijn-video.mjs",
+    "test:openendubbel": "node scripts/test-sweep-openen-dubbel.mjs",
     "test:herstellaatstetik": "node scripts/test-sweep-herstel-laatste-tik.mjs",
     "test:opnameverouderd": "node scripts/test-opname-verouderd.mjs",
     "test:opnamewacht": "node scripts/test-sweep-opname-wacht.mjs",
