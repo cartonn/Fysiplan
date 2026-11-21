@@ -182,7 +182,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - **MIDDEL (Sanne) — kaart helemaal leeg gemaakt wordt niet gedeeld:** QR verdwijnt zonder uitleg, de patiënt ziet nog de oude 12 oefeningen (index.html ~3087).
 - **MIDDEL (Sanne) — focus op body na "Openen" vanuit Patiënten** (bestaat nog; ~6012 `closeOv('ovKaarten')` → `zetScherm('maken')`); native confirm ook als
   precies die kaart al open staat (~6004).
-- **MIDDEL (Sanne) — /v2/proef neemt de naam van een al beveiligde praktijk stil aan;** in de app daarna alleen "is beveiligd… Log eerst in" (nieuwe gebruiker loopt vast).
+- **OPGELOST 2026-11-21 praktijk-routine (test:proefnaambezet) — MIDDEL (Sanne) — /v2/proef neemt de naam van een al beveiligde praktijk stil aan;** in de app daarna alleen "is beveiligd… Log eerst in" (nieuwe gebruiker loopt vast).
 - **MIDDEL (Truus, iPhone SE 100 %) — installatiebalk over de rode melding op een gewiste kaart** (bestaat nog): `toonBanner` (kaart.html ~3209) kijkt alleen naar
   `KAART_GEWIST`, die niet aangaat bij een 404 op meting/gedaan (`d.kwijt`); de klikvanger (~3237) start de balk ook na een niet-aangekomen tik.
 - **MIDDEL (Truus, 200 %) — oefennaam in de oefenstand 24 px, kleiner dan knoppen en kop** (kaart.html ~372 `min(1.5rem,7.5vw)`); uitleg valt onder de onderbalk.
