@@ -239,7 +239,7 @@ const uitingen=[];
 const spraak={cancel(){},speak(u){uitingen.push(u);}};
 const lees=vm.createContext({document,speechSynthesis:spraak,window:{speechSynthesis:spraak},
   SpeechSynthesisUtterance:function(t){this.text=t;},NoorAudio:{stop(){}},noorRequest:0,TAAL:'en',
-  tr:k=>k,vt:s=>s,SPRAAK:{en:'en-GB'},kiesStem:()=>null,explanationWithheld:()=>false,demoGeluidKnop(){},stopVideos(){},
+  tr:k=>k,vt:s=>s,SPRAAK:{en:'en-GB'},kiesStem:()=>({name:'Teststem',lang:'en-GB',localService:true}),explanationWithheld:()=>false,demoGeluidKnop(){},stopVideos(){},
   // beoordeling geladen en niets tegengehouden: deze test gaat alleen over de beurtbewaking
   mediaReviewReady:true,mediaWithheld:()=>false,explanationHolds:[],
   K:{kaart:{chosen:[{n:'Squat'}],cells:{},client:{}},praktijk:{praktijk:'Praktijk'},lib:[{naam:'Squat',uitleg:'Rustig zakken.'}]}});

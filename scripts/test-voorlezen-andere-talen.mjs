@@ -41,7 +41,7 @@ function context(taal,{reviewOk=true}={}){
   const ctx=vm.createContext({Promise,Array,Number,String,Error,JSON,Math,
     document:{getElementById:knop,querySelectorAll:()=>[]},window:{speechSynthesis:spraak,NoorAudio:{stop(){}}},
     NoorAudio:{stop(){}},speechSynthesis:spraak,SpeechSynthesisUtterance:function(t){this.text=t;},
-    alert:m=>log.push({type:'alert',text:m}),demoGeluidKnop(){},kiesStem:()=>null,
+    alert:m=>log.push({type:'alert',text:m}),demoGeluidKnop(){},kiesStem:()=>({name:'Teststem',lang:'en-GB',localService:true}),
     fetch:async(url)=>reviewOk?{ok:true,json:async()=>url.includes('narration')?lees('public/mobile-narration-review.json'):JSON.parse(JSON.stringify(review))}
       :{ok:false,json:async()=>({})}});
   vm.runInContext(T_CODE+regelVan(/  var SPRAAK=\{[^\n]*\n/)+'var TAAL='+JSON.stringify(taal)+';var VERT={};\n'+
