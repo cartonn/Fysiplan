@@ -98,6 +98,20 @@ const maakPng = () => {
     const af = echteJpeg.subarray(0, eoi - 100);
     assert.ok(zonderBeeldMetadata(af, "jpeg").equals(af), "afgekapte JPEG ongewijzigd");
   }
+  // security 2026-11-22: een zwarte lijst liet de rest staan. APP2 is ook MPF/FlashPix, APP0 en APP14 kunnen
+  // van alles dragen; een PNG kan C2PA (caBX) of een eigen stuk hebben. Nu blijft alleen wat het beeld nodig heeft.
+  {
+    const andere = Buffer.concat([echteJpeg.subarray(0, 2), seg(0xe2, "FPXR\0 Jan Jansen"), seg(0xe2, "MPF\0 iPhone"),
+      seg(0xee, "Jan Jansen 52.3731"), seg(0xe0, "XYZ\0 Jan Jansen"), echteJpeg.subarray(2)]);
+    const s = zonderBeeldMetadata(andere, "jpeg");
+    assert.deepEqual(sporen(s), [], "APP0/APP2/APP14 met een andere naam gaan eruit");
+    assert.ok(s.equals(echteJpeg), "JFIF, ICC en Adobe van het origineel blijven byte voor byte");
+    const iend = echtePng.length - 12;
+    const pv = Buffer.concat([echtePng.subarray(0, iend), pngStuk("caBX", "jumb c2pa Jan Jansen iPhone"), pngStuk("prVW", "GPSLatitude 52.3731"), echtePng.subarray(iend)]);
+    const ps = zonderBeeldMetadata(pv, "png");
+    assert.deepEqual(sporen(ps), [], "PNG zonder C2PA of eigen stukken");
+    assert.ok(ps.equals(echtePng), "PNG verder byte voor byte gelijk");
+  }
   // kapot of geen beeld: ongewijzigd terug, geen fout
   const kapot = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe1, 0xff, 0xff]), Buffer.alloc(50)]);
   assert.equal(zonderBeeldMetadata(kapot, "jpeg"), kapot);
