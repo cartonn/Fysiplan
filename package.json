@@ -338,6 +338,7 @@
     "test:voorbeeldelders": "node scripts/test-sweep-voorbeeld-elders.mjs",
     "test:leegenopm": "node scripts/test-sweep-leeg-en-opm.mjs",
     "test:doelprint": "node scripts/test-sweep-doel-print.mjs",
+    "test:schemaprint": "node scripts/test-sweep-schema-print.mjs",
     "test:startdubbeltik": "node scripts/test-sweep-start-dubbeltik.mjs",
     "test:sjabloonstoring": "node scripts/test-sweep-sjabloon-storing.mjs",
     "test:typeneigen": "node scripts/test-sweep-typen-en-eigen.mjs",

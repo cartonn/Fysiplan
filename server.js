@@ -1057,7 +1057,11 @@ function seinMailOntvangers(pk, kaart) {
     // zelfde inkorting als behandelaarVanSessie: de kaart bewaart hooguit 40 tekens van de naam
     const kort = (n) => String(n || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 40).toLowerCase();
     const naam = kort(kaart.behandelaar);
-    const opNaam = naam ? leden.filter((l) => kort(l.naam) === naam) : [];
+    // maakte een collega die niet meer in het team staat de kaart, dan zegt de naam niets: met
+    // twee "Tom Jansen" ging na het verwijderen van Tom B de mail over diens patiënt stil naar
+    // Tom A (gebruikers-sweep 2026-11-22 22u, Karin). Dan de beheerders, zoals bij een kaart zonder maker.
+    const makerWeg = /^lid:/.test(String(kaart.maker || "")) && !ledenVan(pk).some((l) => "lid:" + l.id === kaart.maker);
+    const opNaam = naam && !makerWeg ? leden.filter((l) => kort(l.naam) === naam) : [];
     if (opNaam.length === 1) return [uit(opNaam[0])];
     const maker = leden.find((l) => "lid:" + l.id === kaart.maker);
     if (maker) return [uit(maker)];

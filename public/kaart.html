@@ -208,6 +208,14 @@
   /* position:relative erbij: zonder positie negeert Chromium de z-index van deze rastervakken */
   .oef.actief>.vbtn:not([data-noor])[aria-expanded="false"],.oef.actief>.vbtn[data-eigen][aria-expanded="true"],
   .oef.actief>.vhouder.open>video,.oef.actief>.vhouder.open>iframe{position:relative}
+  /* past de dosering niet onder het beeld (pasOefBeeld), dan naam en dosering bovenaan */
+  .oef.actief.dosboven>.oefkop>.oefinfo{grid-row:1;grid-column:1}
+  .oef.actief.dosboven .fotoknop,.oef.actief.dosboven>.vbtn:not([data-noor])[aria-expanded="false"],.oef.actief.dosboven>.vbtn[data-eigen][aria-expanded="true"],
+  .oef.actief.dosboven>.vhouder.open>video,.oef.actief.dosboven>.vhouder.open>iframe{grid-row:2;margin-top:14px}
+  .oef.actief.dosboven .naam{margin-top:0}
+  /* zo krap dat zelfs dat niet past (liggend met 200 % tekst): naam en cijfers iets kleiner */
+  @media (max-height:600px){body.sessie .oef.actief.dosboven .naam{font-size:1.125rem}body.sessie .oef.actief.dosboven .chips{margin-top:8px}body.sessie .oef.actief.dosboven .chip b{font-size:1.375rem}}
+  @media (max-height:400px){body.sessie .oef.actief.dosboven .naam{font-size:.9375rem;line-height:1.15}body.sessie .oef.actief.dosboven .chips{margin-top:4px}body.sessie .oef.actief.dosboven .chip{font-size:.8125rem}body.sessie .oef.actief.dosboven .chip b{font-size:1.125rem}}
   .oef.actief .fotoknop{justify-self:center;width:-moz-fit-content;width:fit-content;max-width:100%;margin:0;
     background:#fff;border-radius:12px;overflow:hidden;cursor:zoom-in}
   .oef.actief .fotoknop img{width:auto;height:auto;max-width:100%;max-height:min(46vh,420px);border:0;border-radius:0}
@@ -626,6 +634,7 @@
   tr:last-child td{border-bottom:none}
   td.dat,th.dat{position:sticky;left:0;background:var(--chip);font-weight:700;color:var(--inkt);z-index:1;border-right:1px solid var(--lijn)}
   .schemahint{font:400 .875rem/1.5 var(--disp);color:var(--grijs);padding:10px 0 0;display:flex;align-items:center;gap:7px}
+  .schemaprint{display:none}
 
   /* mijn gegevens */
   .mgkaart{font:400 1rem/1.55 var(--disp);color:var(--tekst)}
@@ -698,6 +707,11 @@
     .schemablok>summary{padding:0;min-height:0}
     .schemablok>summary::after{display:none}
     .schemablok>summary h2{display:block;margin:0 0 10px}
+    .schemawrap,.schemahint{display:none !important}
+    .schemaprint{display:block}
+    .schemaprint table{width:100%;table-layout:fixed;margin:0 0 10px;break-inside:avoid;border:1px solid #999}
+    .schemaprint th,.schemaprint td{white-space:normal;overflow-wrap:anywhere;padding:4px 3px;font-size:9pt;position:static}
+    .schemaprint th.dat,.schemaprint td.dat{width:16%}
   }
 
   /* tik op een oefenfoto: groot bekijken, één tik terug */
@@ -2095,7 +2109,28 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         });
         t+='</tr>';
       });
-      t+='</tbody></table></div><div class="schemahint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'+esc(tr('schemahint'))+'</div></div></details>';
+      t+='</tbody></table></div>';
+      // op papier scrolt niets: daar dezelfde tabel in stukken van vier oefeningen onder elkaar,
+      // anders viel alles na oefening 3 van de pagina (gebruikers-sweep 2026-11-22, Jayden)
+      t+='<div class="schemaprint">';
+      for(var st=0;st<chosen.length;st+=4){
+        var stuk=chosen.slice(st,st+4);
+        t+='<table><thead><tr><th class="dat">'+esc(tr('datum'))+'</th>';
+        stuk.forEach(function(x,j){t+='<th colspan="3" dir="auto"'+nlAttr(x.n)+'>'+(st+j+1)+'. '+esc(vt(x.n))+'</th>';});
+        t+='</tr><tr><th class="dat"></th>';
+        stuk.forEach(function(){t+='<th>S</th><th>H</th><th>W</th>';});
+        t+='</tr></thead><tbody>';
+        gevuld.forEach(function(rk){
+          t+='<tr><td class="dat">'+esc((kaart.rows&&kaart.rows[rk])||'')+'</td>';
+          stuk.forEach(function(x){
+            var key=cellPrefix(x)+'.'+(x.i||0);
+            ['S','H','W'].forEach(function(f){t+='<td>'+esc(cells[key+'|'+rk+'|'+f]||'')+'</td>';});
+          });
+          t+='</tr>';
+        });
+        t+='</tbody></table>';
+      }
+      t+='</div><div class="schemahint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'+esc(tr('schemahint'))+'</div></div></details>';
       schemaEl.innerHTML=t;
     }else schemaEl.innerHTML='';
     tekenMeting();
@@ -2113,8 +2148,14 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var vandaag=dagStr(Date.now());
     var vDag=null;
     m.forEach(function(x){if(dagStr(x.t)===vandaag)vDag=x.s;});
+    // de uiteinden noemen de schaal ("0 = geen pijn"), anders hoort een schermlezer alleen "0"
+    // en weet niet welke kant erg is (gebruikers-sweep 2026-11-22, Truus)
+    var ml0=document.getElementById('ml0'),ml10=document.getElementById('ml10');
+    schaal.setAttribute('aria-describedby','ml0 ml10');
     schaal.querySelectorAll('button').forEach(function(b){
-      var aan=vDag!==null&&Number(b.dataset.score)===vDag;
+      var sc=Number(b.dataset.score);
+      b.setAttribute('aria-label',sc===0&&ml0?ml0.textContent:sc===10&&ml10?ml10.textContent:String(sc));
+      var aan=vDag!==null&&sc===vDag;
       b.classList.toggle('aan',aan);
       b.setAttribute('aria-pressed',aan?'true':'false');
     });
@@ -3734,6 +3775,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       var img=oef.querySelector('.fotoknop img'),sb=document.getElementById('sessiebalk');
       if(!img||!sb||sb.hidden)return;
       var zoom=document.documentElement.classList.contains('groot')?1.16:1;
+      // eerst in de gewone volgorde meten (beeld boven, dosering eronder)
+      oef.classList.remove('dosboven');
       var oud=img.style.maxHeight;img.style.maxHeight='';
       var h=img.getBoundingClientRect().height;
       if(!img.complete){img.style.maxHeight=oud;img.addEventListener('load',pasOefBeeld,{once:true});return;}
@@ -3747,7 +3790,16 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       // alleen als het beeld zelf in het eerste scherm begint (anders is de kop al weggescrold)
       var teVeel=doel.getBoundingClientRect().bottom+sy+8-ruimte;
       if(teVeel>0&&beeldTop<ruimte){
-        var nieuw=Math.max(64,h-teVeel);
+        // past de dosering zelfs bij het kleinste beeld niet (liggend, 200 % of "A A"), dan komen
+        // naam en dosering bóven het beeld: dat is wat de patiënt moet weten, het beeld staat eronder
+        // (gebruikers-sweep 2026-11-22 22u, Truus: liggend 200 % de hele dosering onder de balk)
+        if(h-teVeel<64){
+          oef.classList.add('dosboven');
+          if(oud&&typeof herplaatsMerk==='function'&&SESSIE>-1)herplaatsMerk(SESSIE);
+          var fk0=img.closest('.fotoknop');if(fk0)fk0.classList.toggle('beeldklein',img.getBoundingClientRect().height<120);
+          return;
+        }
+        var nieuw=h-teVeel;
         if(nieuw<h){img.style.maxHeight=(nieuw/zoom).toFixed(1)+'px';
           if(oud!==img.style.maxHeight&&typeof herplaatsMerk==='function'&&SESSIE>-1)herplaatsMerk(SESSIE);}
       }

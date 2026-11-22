@@ -172,6 +172,7 @@ jobs:
       - run: npm run test:voorbeeldelders
       - run: npm run test:leegenopm
       - run: npm run test:doelprint
+      - run: npm run test:schemaprint
       - run: npm run test:startdubbeltik
       - run: npm run test:sjabloonstoring
       - run: npm run test:typeneigen
