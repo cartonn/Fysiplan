@@ -346,6 +346,15 @@ versie, wanneer en wie (ook in de download van /v2/gegevens).
 3. Laat de jurist privacyverklaring, verwerkersovereenkomst en voorwaarden samen toetsen (staat al
    hieronder bij Algemene voorwaarden, punt 7).
 
+### Collega zonder beheerdersrol krijgt uitleg bij abonnementsknoppen (praktijk-routine, 2026-11-22)
+**Wat de code nu doet:** een therapeut zonder beheerdersrol die toch doorgaan, betalen, opzeggen, intrekken,
+factuurgegevens of proef wissen post (bijvoorbeeld via een oud tabblad), kreeg een stille omleiding naar /v2/proef:
+de knop leek niets te doen. Nu krijgt die een pagina "Dit regelt een beheerder van je praktijk. Er is niets veranderd"
+(403) met een knop terug naar de kaarten. De poging staat zoals eerder in Activiteit. Wie niet is ingelogd, krijgt nog
+steeds de omleiding. Code: `proefCollegaUitleg` in server.js, test `scripts/test-geweigerd-activiteit.mjs` (in CI).
+**Env:** geen; dit werkt meteen na de merge.
+**Wat jij moet doen:** niets.
+
 ### Proef met de naam van een al beveiligde praktijk (praktijk-routine, 2026-11-21)
 **Wat de code nu doet:** wie zich op /v2/proef aanmeldt met de praktijknaam van een praktijk die al beveiligd is,
 werd stil doorgelaten en liep in de app vast op "Deze praktijk is beveiligd. Log in", nog vóór de eerste kaart. Nu

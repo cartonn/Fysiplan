@@ -106,9 +106,22 @@ try {
   const M2 = ses(await (await post("/api/praktijk/login", { email: mail("mark"), wachtwoord: "mark-wachtwoord" })).json());
   const S2 = ses(await (await post("/api/praktijk/login", { email: mail("sanne"), wachtwoord: "sanne-wachtwoord" })).json());
   const d = await formulier("/v2/proef/doorgaan", {}, M2);
-  assert.equal(d.status, 303, "Mark wordt teruggestuurd");
+  // praktijk-routine 2026-11-22: geen stille omleiding meer (de knop leek niets te doen), maar
+  // een uitleg dat een beheerder dit regelt (routine-backlog LAAG, "stille 303")
+  assert.equal(d.status, 403, "Mark krijgt uitleg in plaats van een stille omleiding");
+  assert.match(await d.text(), /Dit regelt een beheerder van je praktijk/);
   const w = await formulier("/v2/proef/wissen", { zeker: "1" }, M2);
-  assert.ok([200, 303, 409].includes(w.status), "wissen door Mark: " + w.status);
+  assert.equal(w.status, 403, "wissen door Mark: " + w.status);
+  assert.match(await w.text(), /Er is niets veranderd/);
+  for (const [pad, velden] of [["/v2/proef/opzeggen", { actie: "opzeggen", zeker: "1" }], ["/v2/proef/opzeggen", { actie: "intrekken" }],
+    ["/v2/proef/factuurgegevens", { naam: "Praktijk X", adres: "Straat 1" }]]) {
+    const x = await formulier(pad, velden, M2);
+    assert.equal(x.status, 403, pad + " door Mark: " + x.status);
+    assert.match(await x.text(), /Dit regelt een beheerder/);
+  }
+  // wie niet is ingelogd, merkt niets nieuws: nog steeds de omleiding
+  assert.equal((await formulier("/v2/proef/doorgaan", {})).status, 303);
+  assert.equal((await formulier("/v2/proef/factuurgegevens", { naam: "X" })).status, 303);
   const proeven = JSON.parse(await readFile(join(dataDir, "proef-aanmeldingen.json"), "utf8"));
   assert.ok(!proeven.gew0000000000001.doorgaan && !proeven.gew0000000000001.gewist, "er is niets veranderd aan de proef");
   a = (await (await get("/api/praktijk/activiteit?praktijk=" + encodeURIComponent(P), S2)).json()).activiteit || [];

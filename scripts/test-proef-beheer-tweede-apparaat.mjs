@@ -118,7 +118,8 @@ try {
 
   // doorgaan: een collega kan het niet namens de praktijk, de beheerder wel
   r = await formulier("/v2/proef/doorgaan", {}, { ...LOTTE, origin });
-  assert.equal(r.status, 303, "collega: terug naar /v2/proef");
+  assert.equal(r.status, 403, "collega: uitleg dat een beheerder dit regelt (was een stille omleiding)");
+  assert.match(await r.text(), /Dit regelt een beheerder van je praktijk/);
   assert.equal((await proeven()).proefmark0000001.doorgaan, undefined, "collega zette niets in gang");
   r = await formulier("/v2/proef/doorgaan", {}, { ...MARK, origin });
   assert.equal(r.status, 200);
