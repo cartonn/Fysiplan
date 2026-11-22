@@ -10,7 +10,7 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { isAuditRuis, kiesActiviteit } from "../lib/audit-keuze.js";
+import { isAuditRuis, kiesActiviteit, ruisOmTeSchrappen } from "../lib/audit-keuze.js";
 
 // 1) de keuze zelf
 const basis = new Set(["login-mislukt"]);
@@ -50,6 +50,24 @@ for (let i = 0; i < 40; i++) k3lijst.push({ actie: "akkoord-geweigerd", wie: "C"
 const k3 = kiesActiviteit(k3lijst, (a) => isAuditRuis(a, basis));
 assert.equal(k3.length, 15, "hooguit 15 geweigerde regels");
 assert.deepEqual(k3.slice(0, 2).map((e) => e.wie), ["A", "B"]);
+
+// Security 2026-11-22 (gebruikers-sweep 02u, Karin): anonieme 401's (toegang-geweigerd) deelden de ruispot
+// met geweigerde pogingen van een collega; bij een volle pot ging de oudste ruisregel weg, ook die van Tom.
+// Nu gaat eerst de oudste anonieme regel weg.
+{
+  const anoniem = new Set(["toegang-geweigerd", "login-mislukt"]);
+  const r = (a) => isAuditRuis(a, anoniem), an = (a) => anoniem.has(a);
+  const l = [];
+  for (let i = 0; i < 3; i++) l.push({ praktijk: "p", actie: "toegang-geweigerd" });
+  l.push({ praktijk: "q", actie: "toegang-geweigerd" });
+  l.push({ praktijk: "p", actie: "ingelogd" });
+  l.push({ praktijk: "p", actie: "team-wijziging-geweigerd", wie: "Tom" });
+  l.push({ praktijk: "p", actie: "toegang-geweigerd", oudste: true });
+  assert.equal(ruisOmTeSchrappen(l, "p", r, an, 5), -1, "pot niet vol");
+  assert.equal(l[ruisOmTeSchrappen(l, "p", r, an, 4)].oudste, true, "oudste anonieme regel eerst, ook als Tom ouder is dan de nieuwe");
+  const alleenTom = [{ praktijk: "p", actie: "akkoord-geweigerd" }, { praktijk: "p", actie: "team-wijziging-geweigerd", wie: "Tom" }];
+  assert.equal(ruisOmTeSchrappen(alleenTom, "p", r, an, 1), 1, "zonder anonieme ruis gaat de oudste geweigerde poging");
+}
 
 // 2) runtime
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-overspoeld-"));
@@ -124,6 +142,32 @@ try {
   for (const actie of ["geclaimd", "eigen-login-gemaakt", "collega-uitgenodigd"]) {
     assert.ok(na.includes(actie), actie + " staat nog in de opslag (geweigerde pogingen duwden het eruit)");
   }
+  // Security 2026-11-22: tweede praktijk, vers logboek. Tom (therapeut) probeert beheerder uit te nodigen,
+  // daarna 60 anonieme verzoeken op de kaartenlijst (401). Tom moet in Activiteit en in de opslag blijven.
+  start(); await klaar();
+  const P2 = "Fysio Ruispot";
+  const c2 = await post("/api/praktijk/claim", { praktijk: P2, wachtwoord: "praktijk-wachtwoord", akkoord: true });
+  assert.equal(c2.status, 200);
+  const G2 = ses(await c2.json());
+  const K = ses(await (await post("/api/praktijk/team/eigen-login", { naam: "Karin", email: mail("karin"), wachtwoord: "karin-wachtwoord", regels: true }, G2)).json());
+  const u2 = await post("/api/praktijk/team/uitnodigen", { email: mail("tom"), naam: "Tom", rol: "therapeut" }, K);
+  assert.equal(u2.status, 200);
+  const t2 = new URL((await u2.json()).link).searchParams.get("t");
+  assert.equal((await formulier("/v2/uitnodiging", { t: t2, naam: "Tom", wachtwoord: "tom-wachtwoord", regels: "1" })).status, 200);
+  const T = ses(await (await post("/api/praktijk/login", { email: mail("tom"), wachtwoord: "tom-wachtwoord" })).json());
+  assert.equal((await post("/api/praktijk/team/uitnodigen", { email: mail("z"), naam: "Z", rol: "beheerder" }, T)).status, 403);
+  for (let i = 0; i < 60; i++) {
+    const r = await get("/api/kaarten?praktijk=" + encodeURIComponent(P2));
+    assert.equal(r.status, 401, "anoniem: 401");
+  }
+  await wacht(300);
+  const a2 = (await (await get("/api/praktijk/activiteit?praktijk=" + encodeURIComponent(P2), K)).json()).activiteit || [];
+  assert.ok(a2.some((e) => e.actie === "team-wijziging-geweigerd" && /^Tom/.test(e.wie || "")),
+    "de poging van Tom blijft in Activiteit na 60 anonieme 401's: " + a2.map((e) => e.actie + "/" + (e.wie || "")).join(", "));
+  await stop();
+  const na2 = JSON.parse(await readFile(pad, "utf8")).filter((e) => e.praktijk === "fysio ruispot");
+  assert.ok(na2.some((e) => e.actie === "team-wijziging-geweigerd"), "de poging van Tom staat nog in de opslag");
+  assert.ok(na2.filter((e) => e.actie === "toegang-geweigerd").length >= 40, "anonieme ruis wordt wel bewaard (tot het plafond)");
   console.log("test-activiteit-overspoeld: ok");
 } catch (e) {
   console.error(uit.slice(-3000));
