@@ -4023,22 +4023,33 @@ function statsEventLimiet(req, res) {
 // rem op het raden van de beheersleutel: na 20 geweigerde pogingen per vijf minuten
 // per IP volgt 429 in plaats van 403. Met de juiste sleutel verandert er niets, ook
 // niet voor v1-beheer; alleen wie sleutels zit te proberen loopt vast.
+// Per /64 (IPv4: per adres) 20 missers, en per /48 (IPv4: /24) samen 320. Met alleen de /64
+// kreeg wie een /48 heeft (een gratis tunnel) 65.536 keer 20 pogingen per vijf minuten op de
+// beheersleutel en op wachtwoorden en herstelcodes, die dezelfde teller delen (security 2026-11-22).
 const adminMisTeller = new Map();
 const BEHEER_REM_MS = 5 * 60 * 1000;
+const BEHEER_MIS_IP = 20, BEHEER_MIS_BLOK = 320;
+const beheerBlokSleutel = (req) => "blok:" + ipBlokVan(clientIp(req));
 function beheerOpRem(req) {
-  const t = adminMisTeller.get(ipSleutel(req));
-  return !!(t && Date.now() - t.start <= BEHEER_REM_MS && t.n > 20);
+  const nu = Date.now();
+  const vol = (sleutel, grens) => { const t = adminMisTeller.get(sleutel); return !!(t && nu - t.start <= BEHEER_REM_MS && t.n > grens); };
+  return vol(ipSleutel(req), BEHEER_MIS_IP) || vol(beheerBlokSleutel(req), BEHEER_MIS_BLOK);
 }
-// telt één geweigerde beheerpoging; true zodra dit IP over de rem is
+// telt één geweigerde beheerpoging; true zodra dit IP of zijn blok over de rem is
 function telBeheerMis(req) {
   const nu = Date.now();
   if (adminMisTeller.size > 5000) {
     for (const [k, v] of adminMisTeller) if (nu - v.start > BEHEER_REM_MS) adminMisTeller.delete(k);
   }
-  const ip = ipSleutel(req);
-  const t = adminMisTeller.get(ip);
-  if (!t || nu - t.start > BEHEER_REM_MS) { adminMisTeller.set(ip, { start: nu, n: 1 }); return false; }
-  return ++t.n > 20;
+  const tel = (sleutel, grens) => {
+    const t = adminMisTeller.get(sleutel);
+    if (!t || nu - t.start > BEHEER_REM_MS) { adminMisTeller.set(sleutel, { start: nu, n: 1 }); return false; }
+    return ++t.n > grens;
+  };
+  // allebei tellen (geen kortsluiting): ook een /64 die al vol zit, vult het blok
+  const opIp = tel(ipSleutel(req), BEHEER_MIS_IP);
+  const opBlok = tel(beheerBlokSleutel(req), BEHEER_MIS_BLOK);
+  return opIp || opBlok;
 }
 const denied = (req, res, pad, melding) => {
   // een ingelogd beheeraccount zonder het recht voor deze route: geen foute poging, wel een nee
