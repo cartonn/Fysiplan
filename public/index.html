@@ -4408,6 +4408,18 @@ bridge2.jpg</div>
     tekenZijbalk();
     if(!st)return;
     tekenAkkoord();
+    if(PRAKSLOT.alLogin&&!PRAKSLOT.ingelogd){
+      // "Ik heb al een login": e-mail en wachtwoord, de server zoekt de praktijk erbij
+      ['ps_vwolab','ps_herstel','ps_vergeet','ps_wijzig','ps_hcform'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
+      st.innerHTML="🔑 Log in met het e-mailadres en wachtwoord van je eigen login. Fysiplan zoekt je praktijk er zelf bij, ook als de naam hier anders geschreven is."+
+        "<div class='ps-acties'><a href='#' id='ps_alterug'>Terug</a></div>";
+      form.style.display='flex';ww.style.display='';ww.placeholder='Je wachtwoord';ww.autocomplete='current-password';knop.textContent='Inloggen';knop.dataset.act='login';
+      var ema=document.getElementById('ps_email');ema.style.display='';ema.placeholder='Je e-mail';
+      var at2=document.getElementById('ps_alterug');
+      if(at2)at2.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.alLogin=false;PRAKSLOT.kiesNaam='';psCodeWeg();document.getElementById('ps_msg').style.display='none';
+        if(!(SET.praktijk||'').trim())toonSrvKaarten();else toonPrakSlot(PRAKSLOT.pr);});
+      return;
+    }
     if(!PRAKSLOT.geclaimd||(PRAKSLOT.nieuw&&!PRAKSLOT.ingelogd)){
       // eigen login voor iedereen: beveiligen is dan je eigen login maken. Dat gaat in een eigen
       // venster (naam, e-mail, wachtwoord, akkoord en werkregels); hier staat alleen de knop.
@@ -4415,6 +4427,7 @@ bridge2.jpg</div>
       st.innerHTML=PRAKSLOT.nieuw?"🔓 Nieuwe praktijk met de naam \u201c"+esc(PRAKSLOT.pr)+"\u201d. Je krijgt een eigen beveiligde praktijk, los van de andere met deze naam. <a href='#' id='ps_terug'>Toch inloggen</a>"
         :eig?"🔓 Deze praktijk is nog niet beveiligd. Maak je eigen login: daarna deel je kaarten met je pati\u00ebnten en ziet alleen jouw praktijk het overzicht."
         :"🔓 Deze praktijk is nog niet beveiligd. Zet er een wachtwoord op: daarna deel je kaarten met je pati\u00ebnten en ziet alleen jouw praktijk het overzicht.";
+      if(!PRAKSLOT.nieuw)st.innerHTML+="<div class='ps-acties'><a href='#' id='ps_allogin' title='Op een tweede apparaat of als collega: log in met je e-mail, ook als de praktijknaam hier anders geschreven is'>Ik heb al een login</a></div>";
       form.style.display='flex';ww.style.display=eig?'none':'';ww.placeholder='Kies een wachtwoord (min. 8 tekens)';ww.autocomplete='new-password';knop.textContent='Beveiligen';knop.dataset.act=eig?'eigen':'claim';
       document.getElementById('ps_email').style.display='none';
       psCodeWeg();
@@ -4423,6 +4436,8 @@ bridge2.jpg</div>
       document.getElementById('ps_vergeet').style.display='none';
       var tr=document.getElementById('ps_terug');
       if(tr)tr.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.nieuw=false;rendPrakSlot();});
+      var al=document.getElementById('ps_allogin');
+      if(al)al.addEventListener('click',function(e){e.preventDefault();PRAKSLOT.alLogin=true;PRAKSLOT.kiesNaam='';document.getElementById('ps_msg').style.display='none';rendPrakSlot();document.getElementById('ps_email').focus();});
     }else if(PRAKSLOT.ingelogd){
       document.getElementById('ps_vwolab').style.display='none';
       document.getElementById('ps_vergeet').style.display='none';
@@ -5333,10 +5348,12 @@ bridge2.jpg</div>
     // het veld, de kop en op het A4, anders stonden daar de kleine letters (gebruikers-sweep 2026-11-14, Mark).
     // Alleen bij dezelfde naam op hoofdletters na (of een leeg veld): een andere naam blijft van de gebruiker.
     var srvNaam=typeof d.praktijk==='string'?d.praktijk.trim().slice(0,80):'',eigenNaam=(SET.praktijk||'').trim();
-    if(srvNaam&&srvNaam!==eigenNaam&&(!eigenNaam||srvNaam.toLowerCase()===eigenNaam.toLowerCase())){
+    // via "Ik heb al een login" of een gekozen praktijk: de naam van de login geldt, ook bij een andere schrijfwijze
+    var gekozen=!!(PRAKSLOT.alLogin||PRAKSLOT.kiesNaam);PRAKSLOT.alLogin=false;PRAKSLOT.kiesNaam='';
+    if(srvNaam&&srvNaam!==eigenNaam&&(gekozen||!eigenNaam||srvNaam.toLowerCase()===eigenNaam.toLowerCase())){
       SET.praktijk=srvNaam;saveSettings();
       var epN=document.getElementById('praktijk');if(epN)epN.value=srvNaam;
-      if(!PRAKSLOT.pr||String(PRAKSLOT.pr).trim().toLowerCase()===srvNaam.toLowerCase())PRAKSLOT.pr=srvNaam;
+      if(gekozen||!PRAKSLOT.pr||String(PRAKSLOT.pr).trim().toLowerCase()===srvNaam.toLowerCase())PRAKSLOT.pr=srvNaam;
       try{applySettings();}catch(e){}
     }
     PRAKSLOT.geclaimd=true;PRAKSLOT.ingelogd=true;PRAKSLOT.nieuw=false;rendPrakSlot();toonPrakSlot(PRAKSLOT.pr);toonSrvKaarten();reloadLibraryKeepingCard();
@@ -5377,10 +5394,13 @@ bridge2.jpg</div>
       if(o.tekst){psFout(o.tekst,o.velden);PS_MIS=true;return;}
     }else if(!w){psFout('Vul het wachtwoord van je praktijk in.',ww);return;}
     knop.disabled=true;
-    var lijf={praktijk:PRAKSLOT.pr,wachtwoord:w};
+    // "Ik heb al een login": geen naam meesturen, de server zoekt de praktijk bij e-mail en wachtwoord;
+    // na een keuze uit psKiesKnoppen de gekozen praktijk
+    var prNaam=act==='login'&&PRAKSLOT.kiesNaam?PRAKSLOT.kiesNaam:(act==='login'&&PRAKSLOT.alLogin?'':PRAKSLOT.pr);
+    var lijf={praktijk:prNaam,wachtwoord:w};
     var emv=(document.getElementById('ps_email')||{}).value||'';
     if(act==='login'&&emv.trim())lijf.email=emv.trim();
-    if(act==='login'&&PRAKSLOT.perEmail&&!lijf.email){knop.disabled=false;psFout('Vul je e-mailadres in. Deze praktijk logt in met je eigen login.',document.getElementById('ps_email'));return;}
+    if(act==='login'&&(PRAKSLOT.perEmail||PRAKSLOT.alLogin)&&!lijf.email){knop.disabled=false;psFout('Vul je e-mailadres in. Deze praktijk logt in met je eigen login.',document.getElementById('ps_email'));return;}
     if(act==='claim')lijf.akkoord=true;
     if(act==='claim'&&PRAKSLOT.nieuw)lijf.nieuw=true;
     // tweede stap: het codeveld staat er pas als de server erom vroeg
@@ -5417,6 +5437,11 @@ bridge2.jpg</div>
           // de server vraagt intussen een eigen login van iedereen (de pagina stond al open): het venster
           PRAKSLOT.eigenLogin=true;ww.value='';psGeenMist();document.getElementById('ps_msg').style.display='none';
           rendPrakSlot();openEigenLogin('nieuw');
+          return;
+        }
+        if(!d.ok&&act==='login'&&lijf.email&&Array.isArray(d.kies)&&d.kies.length){
+          // het wachtwoord klopt, de login hoort bij een andere praktijk (of bij meer): kies bewust
+          psFout(d.fout||'Kies de praktijk waarvoor je nu werkt.');PRAKSLOT.kiesNaam='';psKiesKnoppen(d.kies);
           return;
         }
         if(!d.ok){
@@ -6008,11 +6033,14 @@ bridge2.jpg</div>
     if(document.getElementById('k_pr_vraag'))return;
     var v=document.createElement('form');v.id='k_pr_vraag';v.className='no-print';
     v.style.cssText='display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0';
-    v.innerHTML="<div class='hint' style='flex-basis:100%'>Vul eerst de naam van je praktijk in. Daarna beveilig je hem met een wachtwoord en deel je kaarten met je pati\u00ebnten.</div>"+
+    v.innerHTML="<div class='hint' style='flex-basis:100%'>Vul eerst de naam van je praktijk in. Daarna beveilig je hem met je eigen login en deel je kaarten met je pati\u00ebnten.</div>"+
       "<input id='k_pr_in' maxlength='80' autocomplete='organization' placeholder='Naam van je praktijk' aria-label='Naam van je praktijk' style='flex:1;min-width:180px;min-height:44px'/>"+
       "<button class='btn primary' type='submit' style='min-height:44px'>Verder</button>"+
-      "<div id='k_pr_fout' role='alert' style='flex-basis:100%;color:var(--fout,#b42318);font-size:12.5px'></div>";
+      "<div id='k_pr_fout' role='alert' style='flex-basis:100%;color:var(--fout,#b42318);font-size:12.5px'></div>"+
+      // tweede apparaat of collega: de naam hoeft niet exact te kloppen, de login wijst de praktijk aan
+      "<a href='#' id='k_pr_login' style='display:inline-flex;align-items:center;min-height:44px;font-size:13px'>Ik heb al een login</a>";
     blok.insertBefore(v,document.getElementById('k_srv_lijst'));
+    document.getElementById('k_pr_login').addEventListener('click',function(e){e.preventDefault();inlogZonderNaam(blok);});
     v.addEventListener('submit',function(e){
       e.preventDefault();
       var naam=(document.getElementById('k_pr_in').value||'').trim().slice(0,80);
@@ -6022,6 +6050,32 @@ bridge2.jpg</div>
       ['prakslot','weekbrief'].forEach(function(id){var e2=document.getElementById(id);if(e2)e2.style.display='';});
       toonSrvKaarten();
     });
+  }
+  // Inloggen op een tweede apparaat zonder de exacte praktijknaam: met een andere schrijfwijze zei de app
+  // "nog niet beveiligd… Beveiligen" en daarna "Start eerst je gratis proef", en de eigenaar kwam er niet in
+  // (gebruikers-sweep 2026-11-21 22u, Mark op iPad). De server vindt de praktijk zelf bij e-mail en
+  // wachtwoord; hier staat daarvoor "Ik heb al een login", ook zonder praktijknaam.
+  function inlogZonderNaam(blok){
+    var pv=document.getElementById('k_pr_vraag');if(pv)pv.remove();
+    bouwPrakSlot(blok);
+    var ps=document.getElementById('prakslot');if(ps)ps.style.display='';
+    PRAKSLOT.alLogin=true;PRAKSLOT.kiesNaam='';
+    if(!(SET.praktijk||'').trim()){PRAKSLOT.pr='';PRAKSLOT.geclaimd=false;PRAKSLOT.ingelogd=false;}
+    rendPrakSlot();
+    var em=document.getElementById('ps_email');if(em)em.focus();
+  }
+  // De server weigert stil inloggen bij een andere praktijk dan die op het scherm en noemt dan de
+  // praktijk(en) van deze login. Een knop per praktijk logt daar bewust in, met hetzelfde wachtwoord.
+  function psKiesKnoppen(namen){
+    var m=document.getElementById('ps_msg');if(!m)return;
+    var rij=document.createElement('div');rij.id='ps_kies';rij.style.cssText='display:flex;flex-wrap:wrap;gap:6px;margin-top:8px';
+    namen.slice(0,10).forEach(function(n){
+      var b=document.createElement('button');b.type='button';b.className='btn';b.style.minHeight='44px';
+      b.textContent='Inloggen bij '+String(n).slice(0,80);
+      b.addEventListener('click',function(){PRAKSLOT.kiesNaam=String(n);prakSlotActie();});
+      rij.appendChild(b);
+    });
+    m.appendChild(rij);
   }
 
   // ---- v2: inbox "Nieuw van patiënten" ----

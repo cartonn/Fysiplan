@@ -50,6 +50,7 @@ jobs:
       - run: npm run test:houdingengroot
       - run: npm run test:spronglinks
       - run: npm run test:loginanderepraktijk
+      - run: npm run test:loginzondernaam
       - run: npm run test:logintijd
       - run: npm run test:vergelijkgrens
       - run: npm run test:slowloris
