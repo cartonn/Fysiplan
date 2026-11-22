@@ -343,7 +343,8 @@
     "test:typeneigen": "node scripts/test-sweep-typen-en-eigen.mjs",
     "test:kaartlinkhoofd": "node scripts/test-sweep-kaartlink-hoofdletters.mjs",
     "test:videoliggend": "node scripts/test-sweep-video-liggend.mjs",
-    "test:loginzondernaam": "node scripts/test-sweep-login-zonder-naam.mjs"
+    "test:loginzondernaam": "node scripts/test-sweep-login-zonder-naam.mjs",
+    "test:v2voorlezen": "node scripts/test-sweep-v2-voorlezen.mjs"
   },
   "engines": {
     "node": ">=20"
