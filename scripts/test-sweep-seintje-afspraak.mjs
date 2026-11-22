@@ -107,10 +107,12 @@ if (pw) {
     const label = (await knop.textContent()).trim();
     await page.evaluate((i) => { document.querySelector(`[data-safspraak='${i}']`).value = "2099-01-01T10:00"; }, id);
     await knop.click();
-    await page.waitForFunction((l) => document.querySelector("[data-safspraakopslaan]").textContent.trim() !== l, label, { timeout: 4000 });
+    // sinds 2026-11-22 14u staat de fout op een vaste regel onder het veld, niet in de knop
+    await page.waitForFunction((i) => document.querySelector(`[data-saffout='${i}']`).textContent.trim() !== "", id, { timeout: 4000 });
+    assert.equal((await knop.textContent()).trim(), label, "fout niet in de knop");
     await page.evaluate((i) => { document.querySelector(`[data-safspraak='${i}']`).value = ""; }, id);
     await knop.click(); // tweede klik terwijl de fouttekst er nog staat
-    await page.waitForFunction((l) => document.querySelector("[data-safspraakopslaan]").textContent.trim() === l, label, { timeout: 6000 });
+    await page.waitForFunction((i) => document.querySelector(`[data-saffout='${i}']`).textContent.trim() === "", id, { timeout: 6000 });
     await wacht(4200);
     assert.equal((await knop.textContent()).trim(), label, "knop krijgt zijn eigen tekst terug, niet de fouttekst");
 

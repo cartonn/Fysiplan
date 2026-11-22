@@ -1817,6 +1817,15 @@ bridge2.jpg</div>
   }
   // Vandaag: wie deze week niet oefende (tonen, niet duiden). Een kaart van minder dan twee dagen
   // oud telt nog niet mee. Zelfde keuze "alleen mijn patiënten" als bij de seintjes.
+  // "Alleen mijn patiënten": staat er alleen een voornaam als behandelaar, dan telt de voornaam; staat er een
+  // volledige naam, dan moet die hele naam kloppen. Eerst vergeleek dit alleen het eerste woord, waardoor
+  // "Eva Smit" bij "Eva de Boer" in de lijst stond (gebruikers-sweep 2026-11-22 14u, Karin). Twee collega's met
+  // precies dezelfde naam zijn zo nog niet uit elkaar te houden (daarvoor moet de kaart een lid-id dragen).
+  function behIsMijn(beh,wie){
+    var b=String(beh||'').trim().toLowerCase().replace(/\s+/g,' '),w=String(wie||'').trim().toLowerCase().replace(/\s+/g,' ');
+    if(!b||!w)return true;
+    return b.indexOf(' ')<0?b===w.split(' ')[0]:b===w;
+  }
   function tekenNietGeoefend(blok,lijst){
     var el=document.getElementById('k_nietgeoefend');
     if(!el){
@@ -1829,7 +1838,7 @@ bridge2.jpg</div>
     var rijen=(lijst||[]).filter(function(c){
       if(!c||!c.id||c.gearchiveerd||c.demo||!c.ts)return false;
       var b=String(c.behandelaar||'').trim().toLowerCase();
-      if(INBOX_ALLEEN_MIJN&&mijn&&b&&b.split(/\s+/)[0]!==mijn)return false;
+      if(INBOX_ALLEEN_MIJN&&mijn&&b&&!behIsMijn(b,PRAKSLOT.wie))return false;
       if(nu-c.ts<2*dag){nieuw++;return false;}
       geteld++;
       return !oefDagen(c).some(function(g){return nu-g.t<7*dag;});
@@ -6172,7 +6181,7 @@ bridge2.jpg</div>
         // "Alleen mijn patiënten": kaarten met mijn voornaam als behandelaar (heel het woord,
         // "Sanneke" is niet "Sanne"), plus kaarten zonder behandelaar: een vraag mag nooit
         // verdwijnen omdat niemand de kaart op zijn naam heeft gezet
-        var lijst=d.kaarten.filter(function(k){var b=String(k.behandelaar||'').trim().toLowerCase();return !(INBOX_ALLEEN_MIJN&&mijn)||!b||b.split(/\s+/)[0]===mijn;});
+        var lijst=d.kaarten.filter(function(k){var b=String(k.behandelaar||'').trim().toLowerCase();return !(INBOX_ALLEEN_MIJN&&mijn)||!b||behIsMijn(b,PRAKSLOT.wie);});
         ib.style.display='';
         var h="<div class='ib-kop' style='display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap'>"+
           "<label style='margin:0'>Nieuw van patiënten"+(lijst.length?" <span class='ib-tel'>"+lijst.length+"</span>":"")+"</label>"+
@@ -6660,7 +6669,7 @@ bridge2.jpg</div>
             "<div style='margin-top:7px'>"+
               "<small style='color:var(--muted)'>Volgende afspraak (komt op de patiëntkaart met een agenda-knop; leeg = weghalen)</small>"+
               "<div style='display:flex;gap:6px;margin-top:3px;flex-wrap:wrap;align-items:center'>"+
-                "<input type='datetime-local' aria-label='Volgende afspraak' data-safspraak='"+esc(c.id)+"' value='"+esc(afspraakInput(c))+"' style='font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
+                "<input type='datetime-local' aria-label='Volgende afspraak' aria-describedby='saffout_"+esc(c.id)+"' data-safspraak='"+esc(c.id)+"' value='"+esc(afspraakInput(c))+"' style='font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
                 // wekelijkse behandelreeks: de agenda-knop van de patiënt zet dan in
                 // één keer de hele reeks mét alarmen in de telefoonagenda (RRULE)
                 "<select aria-label='Herhaling van de afspraak' data-safherhaal='"+esc(c.id)+"' title='Wekelijkse behandelreeks op dezelfde dag en tijd: de patiënt zet met één tik de hele reeks in de agenda, met herinneringen' style='font-size:12px;padding:5px 6px;border:1px solid var(--line);border-radius:8px'>"+
@@ -6669,6 +6678,9 @@ bridge2.jpg</div>
                 "<button class='btn' data-safspraakopslaan='"+esc(c.id)+"'>Bewaar</button>"+
                 "<button class='btn' data-safweek='"+esc(c.id)+"' title='Zet de afspraak één week later dan de huidige (of één week vanaf nu) en bewaar direct — fysio-afspraken keren meestal wekelijks terug'>+1 week</button>"+
               "</div>"+
+              // fout bij bewaren op een vaste plek, niet 4 s in de Bewaar-knop (die werd van 72 naar 333 px breed
+              // en de fout was weg voor je hem las; gebruikers-sweep 2026-11-21/22, Mark op desktop en iPad)
+              "<small role='alert' id='saffout_"+esc(c.id)+"' data-saffout='"+esc(c.id)+"' style='display:block;margin-top:3px;color:var(--danger,#b42318)'></small>"+
               // reeks al onderweg: het veld toont de startdatum (bron van waarheid),
               // dit regeltje toont waar de reeks nu staat — zoals de patiënt hem ziet
               ((function(){var va=volgendeAfspraak(c);if(!va||!va.rest||va.t===c.afspraak.t)return "";return "<small style='color:var(--muted);display:block;margin-top:3px'>Volgende in de reeks: "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+" (nog "+va.rest+" keer)</small>";})())+
@@ -7210,7 +7222,9 @@ bridge2.jpg</div>
       var veldA=document.querySelector("[data-safspraak='"+af.dataset.safspraakopslaan+"']");
       if(!veldA)return;
       var tA=veldA.value?new Date(veldA.value).getTime():0;
-      if(veldA.value&&(!tA||isNaN(tA))){alert('Kies een geldige datum en tijd.');return;}
+      var foutA=document.querySelector("[data-saffout='"+af.dataset.safspraakopslaan+"']");
+      var zetFoutA=function(t){if(foutA)foutA.textContent=t||'';if(t)veldA.setAttribute('aria-invalid','true');else veldA.removeAttribute('aria-invalid');};
+      if(veldA.value&&(!tA||isNaN(tA))){zetFoutA('Kies een geldige datum en tijd.');try{veldA.focus();}catch(e){}return;}
       // bezig-slot: een dubbelklik bewaart niet twee keer
       if(af.dataset.bezig)return;
       // de echte knoptekst één keer onthouden: een melding ("Mislukt", fouttekst) mag nooit
@@ -7223,13 +7237,13 @@ bridge2.jpg</div>
       var herhaalA=herhaalSel?Number(herhaalSel.value)||0:0;
       fetch('api/kaart/afspraak',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',id:af.dataset.safspraakopslaan,t:tA,herhaal:herhaalA})})
         .then(function(r){return r.json();})
-        .then(function(d){delete af.dataset.bezig;if(d.ok)toonA('Bewaard ✓');else if(d.proefVerlopen){af.textContent=oudA;
+        .then(function(d){delete af.dataset.bezig;if(d.ok){zetFoutA('');toonA('Bewaard ✓');}else if(d.proefVerlopen){af.textContent=oudA;zetFoutA('');
           // niet bewaard: veld en herhaling terug naar wat echt op de kaart staat
           // (het veld hield de nieuwe datum en leek bewaard; gebruikers-sweep 2026-11-15)
           veldA.value=veldA.defaultValue;
           if(herhaalSel)Array.prototype.forEach.call(herhaalSel.options,function(o){o.selected=o.defaultSelected;});
-          toonProefVoorbij(af);}else toonA(d.fout||'Mislukt');})
-        .catch(function(){delete af.dataset.bezig;toonA('Geen verbinding');});
+          toonProefVoorbij(af);}else{af.textContent=oudA;zetFoutA(d.fout||'Bewaren is niet gelukt.');try{veldA.focus();}catch(e){}}})
+        .catch(function(){delete af.dataset.bezig;af.textContent=oudA;zetFoutA('Niet bewaard: geen verbinding. Probeer het zo opnieuw.');});
       return;
     }
     // PSK-doelactiviteit opslaan (leeg = uitzetten); alleen de ingelogde praktijk
@@ -7653,13 +7667,25 @@ bridge2.jpg</div>
         "<div class='hint' id='eo_intro' style='margin:2px 0 12px;line-height:1.5'></div>"+
         "<div id='eo_form'>"+
         "<input id='eo_naam' aria-label='Naam van de oefening' maxlength='80' placeholder='Naam van de oefening' style='width:100%;margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit'/>"+
-        "<textarea id='eo_uitleg' aria-label='Uitleg voor de pati\u00ebnt' maxlength='400' rows='3' placeholder='Uitleg voor de pati\u00ebnt: hoe voer je de oefening uit?' style='width:100%;margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;resize:vertical'></textarea>"+
+        "<textarea id='eo_uitleg' aria-label='Uitleg voor de pati\u00ebnt' aria-describedby='eo_teller' maxlength='400' rows='3' placeholder='Uitleg voor de pati\u00ebnt: hoe voer je de oefening uit?' style='width:100%;margin-bottom:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;resize:vertical'></textarea>"+
+        // teller: de uitleg stopte stil op 400 tekens, ook midden in een woord bij plakken (gebruikers-sweep 2026-11-21/22, Mark)
+        "<small class='hint' id='eo_teller' aria-live='polite' style='display:block;margin:-4px 0 8px;text-align:right'>0/400 tekens</small>"+
         "<label class='hint' for='eo_foto' style='display:block;margin-bottom:4px'>Foto (bij voorkeur begin- en eindhouding naast elkaar op een witte achtergrond). Fotografeer jezelf of een collega, niet een pati\u00ebnt: deze oefening is zichtbaar voor de hele praktijk en op elke kaart waar hij op staat.</label>"+
         "<input id='eo_foto' type='file' accept='image/jpeg,image/png'/>"+
         "<div id='eo_lijst' style='margin-top:12px'></div></div>"+
         "<div class='acts' style='margin-top:14px'><button class='btn' id='eo_sluit' type='button'>Sluiten</button><button class='btn primary' id='eo_bewaar' type='button'>Toevoegen</button></div></div>";
       document.body.appendChild(ovO);
       document.getElementById('eo_sluit').addEventListener('click',function(){closeOv('ovEigenOef');});
+      (function(){
+        var ta=document.getElementById('eo_uitleg'),tl=document.getElementById('eo_teller'),teLang=false;
+        var tel=function(){var n=ta.value.length;
+          tl.textContent=teLang?'Niet alles paste: de uitleg mag 400 tekens zijn. Kijk of het einde nog klopt.':(n+'/400 tekens'+(n>=400?' (vol)':''));
+          tl.style.color=(teLang||n>=400)?'var(--danger,#b42318)':'';};
+        ta.addEventListener('paste',function(e){var t=(e.clipboardData&&e.clipboardData.getData('text'))||'';
+          var weg=(ta.selectionEnd||0)-(ta.selectionStart||0);teLang=ta.value.length-weg+t.length>400;setTimeout(tel,0);});
+        ta.addEventListener('input',function(e){if(!e||e.inputType!=='insertFromPaste')teLang=false;tel();});
+        ta._eoTel=function(){teLang=false;tel();};
+      })();
       document.getElementById('eo_lijst').addEventListener('click',function(e){
         var w=e.target.closest('[data-eoweg]');if(!w)return;
         if(!confirm('Deze eigen oefening verwijderen? Kaarten waar hij op staat tonen dan alleen nog de naam.'))return;
@@ -7688,6 +7714,7 @@ bridge2.jpg</div>
                 knop.disabled=false;knop.textContent='Toevoegen';
                 if(!d.ok){if(d.proefVerlopen){toonProefVoorbij(knop);return;}alert(d.fout||'Toevoegen is niet gelukt.');return;}
                 document.getElementById('eo_naam').value='';document.getElementById('eo_uitleg').value='';document.getElementById('eo_foto').value='';
+                var taE=document.getElementById('eo_uitleg');if(taE._eoTel)taE._eoTel();
                 reloadLibraryKeepingCard().then(function(){
                   // meteen op de kaart zetten: daarvoor voegde de therapeut hem toe
                   var nieuw=OEF.filter(function(o){return o.bron==='praktijk'&&o.naam===naam;})[0];
