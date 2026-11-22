@@ -85,6 +85,18 @@ try {
   const proefRij = pag.privacy.split("Proefaanmelding: e-mail")[1].split("</tr>")[0];
   assert.doesNotMatch(proefRij, /&eacute;&eacute;n keer benaderen|één keer benaderen/, "privacy: proefrij noemt meer dan één contact");
   assert.match(proefRij, /mailen we je[\s\S]*bellen/, "privacy: proefrij noemt mails tijdens de proef en bellen");
+  // legal 2026-11-22 09u (i)/(d): het vinkje en "Wat doen we met je gegevens?" op /v2/proef zeiden nog
+  // "één keer bellen of mailen over de ervaring", terwijl de server tijdens de proef meer mailt (herinnering
+  // vlak voor het einde, starttip, daarna een mail voor het wissen) en /privacy dat ook zegt. Het formulier volgt nu /privacy.
+  const proefPagina = await (await fetch(origin + "/v2/proef")).text();
+  assert.doesNotMatch(proefPagina, /__[A-Z_]+__/, "proef: geen open plekhouders");
+  for (const z of zinnen(proefPagina.replace(/<script[\s\S]*?<\/script>/g, "")))
+    assert.ok(woorden(z) <= 30, "proef: zin van " + woorden(z) + " woorden: " + z.slice(0, 120));
+  assert.doesNotMatch(proefPagina, /één keer te bellen|&eacute;&eacute;n keer te bellen|over de proef te benaderen/, "proef: belooft geen enkel contact meer");
+  const vinkje = proefPagina.split('name="akkoord"')[1].split("</label>")[0];
+  assert.match(vinkje, /tijdens de proef daarover mailen en mij bellen over mijn ervaring en over doorgaan/, "proef: vinkje noemt mails tijdens de proef en bellen");
+  const proefUitleg = proefPagina.split('class="privacy"')[1].split("</details>")[0];
+  assert.match(proefUitleg, /Tijdens de proef mailen we je erover[\s\S]*bellen over je ervaring en over doorgaan/, "proef: uitleg volgt /privacy");
   // legal 2026-11-16 05u (i): de blokken die de server alleen toont als een schakelaar aan staat
   // (<!--vraaghulp-->, <!--ideeenai-->, <!--database-->) zag deze test nooit, want hier staan ze uit.
   // Meet ze daarom in de bron, met dezelfde grenzen; in het patiëntdeel 30 woorden.
