@@ -13,11 +13,15 @@ import { createRequire } from "node:module";
 
 const root = process.cwd();
 const html = await readFile(join(root, "public/kaart.html"), "utf8");
-assert.match(html, /function laadKaartApi\(\)\{[\s\S]{0,400}new AbortController\(\)[\s\S]{0,200}KAART_WACHT_MS[\s\S]{0,400}caches\.match/,
+assert.match(html, /function laadKaartApi\(\)\{[\s\S]{0,900}KAART_WACHT_MS[\s\S]{0,400}caches\.match|function laadKaartApi\(\)\{[\s\S]{0,400}caches\.match[\s\S]{0,900}KAART_WACHT_MS/,
   "laadKaartApi heeft een tijdgrens en valt terug op de offline-kopie");
-assert.match(html, /if\(c\)\{UIT_KOPIE=true;return c;\}/, "kaart uit de offline-kopie zet UIT_KOPIE");
+assert.match(html, /if\(c\)\{UIT_KOPIE=true;klaar\(c\);\}/, "kaart uit de offline-kopie zet UIT_KOPIE");
+// sweep 2026-11-22 10u (Jayden): na de grens het verzoek niet afbreken, een laat antwoord toont de kaart alsnog
+assert.doesNotMatch(html, /function laadKaartApi\(\)\{[\s\S]{0,1500}\.abort\(\)[\s\S]{0,200}function kaartTochBinnen/, "het verzoek wordt niet afgebroken");
+assert.match(html, /var KAART_TRAAG_MS=\d+;/, "tussenmelding bij een trage verbinding");
+assert.match(html, /function kaartTochBinnen\(r\)\{[\s\S]{0,700}toonKaartVan\(Promise\.resolve\(r\)\)/, "een laat antwoord toont de kaart alsnog");
 assert.match(html, /function tekenOfflijn\(\)\{[^\n]*UIT_KOPIE\|\|/, "offlinebalk ook bij een kaart uit de offline-kopie");
-assert.match(html, /laadKaartApi\(\)\.then\(function\(r\)\{\s*return r\.json\(\)/, "de kaart laadt via laadKaartApi");
+assert.match(html, /toonKaartVan\(laadKaartApi\(\)\);[\s\S]{0,40}function toonKaartVan\(antwoord\)\{\s*antwoord\.then\(function\(r\)\{\s*return r\.json\(\)/, "de kaart laadt via laadKaartApi");
 const ms = Number((html.match(/var KAART_WACHT_MS=(\d+);/) || [])[1]);
 assert.ok(ms >= 5000 && ms <= 20000, "tijdgrens tussen 5 en 20 s: " + ms);
 
@@ -60,6 +64,8 @@ try {
   await page.route("**/api/kaart?id=**", () => { /* nooit antwoorden: de verbinding hangt */ });
   const t0 = Date.now();
   await page.goto(origin + "/k/" + id + "?taal=en", { waitUntil: "domcontentloaded" });
+  // na ~6 s een tussenmelding in de taal van de kaart
+  await page.waitForFunction(() => /slow/.test(document.getElementById("laden_tekst").textContent), null, { timeout: 9000 });
   await page.waitForSelector("#storing", { state: "visible", timeout: ms + 8000 });
   const duur = Date.now() - t0;
   assert.ok(duur >= ms - 1000, "niet te vroeg opgegeven: " + duur + " ms");
@@ -72,6 +78,32 @@ try {
   await page.waitForSelector("#oefs .oefdone", { timeout: 15000 });
   assert.deepEqual(fouten, [], "geen paginafouten");
   await ctx.close();
+
+  // trage lijn (sweep 2026-11-22 10u, Jayden): het antwoord komt na de grens toch, dan verschijnt de kaart alsnog
+  const traag = ms + 2500;
+  for (const metKopie of [false, true]) {
+    const c2 = await browser.newContext({ ...pw.devices["iPhone 14"], serviceWorkers: "block", extraHTTPHeaders: { "x-forwarded-for": "10.9.9." + (metKopie ? 5 : 4) } });
+    const p2 = await c2.newPage();
+    p2.on("pageerror", (e) => fouten.push(String(e)));
+    if (metKopie) {
+      // eerst één keer normaal openen; de kopie in de cache zetten zoals de service worker dat doet
+      await p2.goto(origin + "/k/" + id + "?taal=en", { waitUntil: "networkidle" });
+      await p2.waitForSelector("#oefs .oefdone");
+      await p2.evaluate(async (pad) => { const c = await caches.open("fp-test"); await c.put(location.origin + pad, await fetch(pad)); }, "/api/kaart?id=" + id);
+    }
+    await p2.route("**/api/kaart?id=**", async (route) => { await wacht(traag); try { await route.continue(); } catch {} });
+    await p2.goto(origin + "/k/" + id + "?taal=en", { waitUntil: "domcontentloaded" });
+    if (metKopie) {
+      await p2.waitForSelector("#offlijn", { state: "visible", timeout: ms + 4000 });
+      await p2.waitForFunction(() => getComputedStyle(document.getElementById("offlijn")).display === "none", null, { timeout: traag + 8000 });
+    } else {
+      await p2.waitForSelector("#storing", { state: "visible", timeout: ms + 4000 });
+      await p2.waitForSelector("#oefs .oefdone", { timeout: traag + 8000 });
+      assert.ok(!(await p2.isVisible("#storing")), "storingsscherm weg als de kaart alsnog komt");
+    }
+    await c2.close();
+  }
+  assert.deepEqual(fouten, [], "geen paginafouten bij een trage lijn");
   console.log("test-sweep-kaart-hangt: alles groen (" + duur + " ms)");
 } catch (e) {
   console.error(uit.slice(-2000));

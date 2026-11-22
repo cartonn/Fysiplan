@@ -347,7 +347,9 @@
     "test:staphervat": "node scripts/test-sweep-stap-hervat.mjs",
     "test:uitnodiglinks": "node scripts/test-sweep-uitnodiglinks.mjs",
     "test:engelswachtrij": "node scripts/test-sweep-engels-wachtrij.mjs",
-    "test:v2voorlezen": "node scripts/test-sweep-v2-voorlezen.mjs"
+    "test:v2voorlezen": "node scripts/test-sweep-v2-voorlezen.mjs",
+    "test:oefenstandkrap": "node scripts/test-kaart-oefenstand-krap.mjs",
+    "test:qrnauitloggen": "node scripts/test-sweep-qr-na-uitloggen.mjs"
   },
   "engines": {
     "node": ">=20"

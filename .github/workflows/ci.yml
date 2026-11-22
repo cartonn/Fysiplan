@@ -55,6 +55,8 @@ jobs:
       - run: npm run test:uitnodiglinks
       - run: npm run test:engelswachtrij
       - run: npm run test:v2voorlezen
+      - run: npm run test:oefenstandkrap
+      - run: npm run test:qrnauitloggen
       - run: npm run test:logintijd
       - run: npm run test:vergelijkgrens
       - run: npm run test:slowloris
