@@ -9649,8 +9649,9 @@ async function afhandelen(request, response) {
           uitnodiging: l.uitnodiging && Number(l.uitnodiging.verloopt) ? { open: Number(l.uitnodiging.verloopt) > Date.now(), verloopt: isoOfNull(l.uitnodiging.verloopt) } : null,
           tweedeStap: heeftTweedeStap(l) ? { aan: true, sinds: l.totp.sinds ? new Date(l.totp.sinds).toISOString() : null, reservecodesOver: reservecodesOver(l) } : { aan: false } })),
         profiel: Object.entries(praktijken).filter(eigenProfiel).map(([, p]) => publiekProfiel(p)),
-        // een kaart in de prullenbak verdwijnt op herstelTot (verlooptOp is dan 0 = 1970)
-        kaarten: Object.values(kaarten[pk] || {}).map((k) => { const v = k.verwijderdOp ? Math.min(Number(k.herstelTot) || 0, praktijkWisOp(pk)) : verlooptOp(k); return { ...k, ...(k.verwijderdOp ? { inPrullenbak: true } : {}), verlooptOp: Number.isFinite(v) && v > 0 ? new Date(v).toISOString() : null }; }),
+        // een kaart in de prullenbak verdwijnt op herstelTot (verlooptOp is dan 0 = 1970); een gewone kaart op
+        // de vroegste van zijn bewaartermijn en de wisdatum van de praktijk (legal 2026-11-22, art. 15 lid 1 d)
+        kaarten: Object.values(kaarten[pk] || {}).map((k) => { const v = k.verwijderdOp ? Math.min(Number(k.herstelTot) || 0, praktijkWisOp(pk)) : verdwijntOp(pk, k); return { ...k, ...(k.verwijderdOp ? { inPrullenbak: true } : {}), verlooptOp: Number.isFinite(v) && v > 0 ? new Date(v).toISOString() : null }; }),
         eigenOefeningen: praktijkOefeningen[pk] || [],
         sjablonen: praktijkSjablonen[pk] || [],
         vasteVragen: vasteVragen.voorApp(praktijkVragen, pk),
