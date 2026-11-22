@@ -2,7 +2,8 @@
 // praktijknaam zei Kaarten "Deze praktijk is nog niet beveiligd… Beveiligen" en daarna "Start eerst je gratis
 // proef"; de eigenaar kwam niet bij inloggen, terwijl de server bij e-mail en wachtwoord de praktijk zelf vindt.
 // Nu: "Ik heb al een login" (ook in de naamvraag zonder praktijknaam), en bij een login van een andere praktijk
-// een knop "Inloggen bij …" in plaats van alleen de zin "Vul die praktijknaam in".
+// een knop "Inloggen bij …" in plaats van alleen de zin "Vul die praktijknaam in". En (Mark, zelfde run) de fout bij
+// Team → uitnodigen schuift in beeld in plaats van onderaan het venster te blijven.
 // CI heeft geen Playwright: de broncontrole draait altijd, het browserdeel alleen waar Playwright staat.
 // `npm run test:loginzondernaam`
 import assert from "node:assert/strict";
@@ -25,6 +26,7 @@ const actie = index.match(/function prakSlotActie\(\)\{[\s\S]*?\n  \}\n/);
 assert.ok(actie, "prakSlotActie gevonden");
 assert.match(actie[0], /PRAKSLOT\.alLogin\?'':PRAKSLOT\.pr/, "'Ik heb al een login' stuurt geen praktijknaam mee");
 assert.match(actie[0], /psKiesKnoppen\(d\.kies\)/, "bij een login van een andere praktijk volgt een keuzeknop");
+assert.match(index, /var msg=function\(t\)\{var m=document\.getElementById\('tm_msg'\);[^\n]*scrollIntoView/, "een melding in Team schuift in beeld");
 
 const require = createRequire(import.meta.url);
 let pw = null;
@@ -91,6 +93,18 @@ if (pw) {
     assert.equal(await p1.isVisible("#ps_vwolab"), false, "geen akkoordvinkje bij inloggen");
     await logIn(p1);
     await isIngelogd(p1, "andere schrijfwijze");
+    // 4. (Mark, zelfde run) een fout bij Team → uitnodigen stond onderaan het venster, buiten beeld
+    await p1.setViewportSize({ width: 1024, height: 600 });
+    await p1.click("#ps_team");
+    await p1.waitForSelector("#tm_udo", { state: "visible", timeout: 8000 });
+    await p1.fill("#tm_unaam", "Collega Een");
+    await p1.fill("#tm_uemail", "geen-adres");
+    await p1.click("#tm_udo");
+    await p1.waitForFunction(() => (document.getElementById("tm_msg").textContent || "").trim().length > 0, null, { timeout: 5000 });
+    await wacht(400);
+    const r = await p1.evaluate(() => { const b = document.getElementById("tm_msg").getBoundingClientRect(); return { top: b.top, bottom: b.bottom, h: innerHeight, focus: document.activeElement && document.activeElement.id }; });
+    assert.ok(r.top >= 0 && r.bottom <= r.h, "foutmelding bij uitnodigen staat in beeld (" + JSON.stringify(r) + ")");
+    assert.equal(r.focus, "tm_uemail", "de focus staat op het e-mailveld");
     await c1.close();
 
     // 2. zonder praktijknaam: de naamvraag heeft dezelfde weg

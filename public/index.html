@@ -4905,7 +4905,9 @@ bridge2.jpg</div>
           // ook geen rolkeuze: één pijltoets daarop vraagt meteen om een rolwissel (sweep 2026-11-18, Karin)
           return !x.hasAttribute('data-tm2wis')&&!x.hasAttribute('data-tmweg')&&!x.hasAttribute('data-tmrol')&&!/wis|verwijder/i.test(x.textContent||'');})[0]||null;
         if(fn){try{fn.focus();}catch(e){}}}
-      var msg=function(t){var m=document.getElementById('tm_msg');if(m)m.textContent=t||'';};
+      // een fout onderaan het Team-venster viel buiten beeld: een klik op Uitnodigen leek niets te doen
+      // (gebruikers-sweep 2026-11-21 22u, Mark). Nu schuift de melding in beeld.
+      var msg=function(t){var m=document.getElementById('tm_msg');if(!m)return;m.textContent=t||'';if(t){try{m.scrollIntoView({block:'nearest'});}catch(e){}}};
       var sm=document.getElementById('tm_seinmail');
       if(sm)sm.addEventListener('change',function(){
         var wil=sm.checked;sm.disabled=true;
@@ -5092,7 +5094,7 @@ bridge2.jpg</div>
             // rolkeuzes) en daarna de weigering tonen; anders stond "Alleen een beheerder…" naast knoppen
             // die er niet meer horen (gebruikers-sweep 2026-11-18, Karin)
             if(!r.ok&&r._status===403){laadTeam(function(){msg(r.fout||'Uitnodigen lukte niet.');});return;}
-            if(!r.ok){msg(r.fout||'Uitnodigen lukte niet.');try{uDo.focus();}catch(e){}return;}
+            if(!r.ok){var ue=document.getElementById('tm_uemail'),vf=/e-mail/i.test(r.fout||'')&&ue?ue:uDo;try{vf.focus({preventScroll:true});}catch(e){}msg(r.fout||'Uitnodigen lukte niet.');return;}
             laadTeam(function(){
               var lk=document.getElementById('tm_link');if(!lk)return;
               lk.innerHTML="<div style='margin-top:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px'>"+(r.gemaild?'Uitnodiging gemaild. ':r.mailLimiet?'Vandaag mailen we geen uitnodigingen meer namens je praktijk. ':'')+
