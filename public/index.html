@@ -6669,7 +6669,7 @@ bridge2.jpg</div>
             "<div style='margin-top:7px'>"+
               "<small style='color:var(--muted)'>Volgende afspraak (komt op de patiëntkaart met een agenda-knop; leeg = weghalen)</small>"+
               "<div style='display:flex;gap:6px;margin-top:3px;flex-wrap:wrap;align-items:center'>"+
-                "<input type='datetime-local' aria-label='Volgende afspraak' data-safspraak='"+esc(c.id)+"' value='"+esc(afspraakInput(c))+"' style='font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
+                "<input type='datetime-local' aria-label='Volgende afspraak' aria-describedby='saffout_"+esc(c.id)+"' data-safspraak='"+esc(c.id)+"' value='"+esc(afspraakInput(c))+"' style='font-size:12px;padding:5px 8px;border:1px solid var(--line);border-radius:8px'/>"+
                 // wekelijkse behandelreeks: de agenda-knop van de patiënt zet dan in
                 // één keer de hele reeks mét alarmen in de telefoonagenda (RRULE)
                 "<select aria-label='Herhaling van de afspraak' data-safherhaal='"+esc(c.id)+"' title='Wekelijkse behandelreeks op dezelfde dag en tijd: de patiënt zet met één tik de hele reeks in de agenda, met herinneringen' style='font-size:12px;padding:5px 6px;border:1px solid var(--line);border-radius:8px'>"+
@@ -6680,7 +6680,7 @@ bridge2.jpg</div>
               "</div>"+
               // fout bij bewaren op een vaste plek, niet 4 s in de Bewaar-knop (die werd van 72 naar 333 px breed
               // en de fout was weg voor je hem las; gebruikers-sweep 2026-11-21/22, Mark op desktop en iPad)
-              "<small role='alert' data-saffout='"+esc(c.id)+"' style='display:block;margin-top:3px;color:var(--danger,#b42318)'></small>"+
+              "<small role='alert' id='saffout_"+esc(c.id)+"' data-saffout='"+esc(c.id)+"' style='display:block;margin-top:3px;color:var(--danger,#b42318)'></small>"+
               // reeks al onderweg: het veld toont de startdatum (bron van waarheid),
               // dit regeltje toont waar de reeks nu staat — zoals de patiënt hem ziet
               ((function(){var va=volgendeAfspraak(c);if(!va||!va.rest||va.t===c.afspraak.t)return "";return "<small style='color:var(--muted);display:block;margin-top:3px'>Volgende in de reeks: "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+" (nog "+va.rest+" keer)</small>";})())+

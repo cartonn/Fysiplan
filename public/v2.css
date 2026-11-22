@@ -1116,6 +1116,7 @@ html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
   html.v2 #ovKaarten [data-szwaarklaar]{min-width:44px;min-height:44px;padding:0!important}
   /* Velden in het Deel-paneel en Kaarten (afspraak, herhaling, behandelaar, zoeken): inline 11,5–12 px en 38 px hoog,
      dan zoomt iOS bij elke tik in en past het paneel niet meer (gebruikers-sweep 2026-11-21/22, Mark op iPad). */
-  html.v2 #ovKaarten input:not([type=checkbox]):not([type=radio]):not([type=file]),html.v2 #ovKaarten select,html.v2 #ovKaarten textarea{
+  html.v2 #ovKaarten input:not([type=checkbox]):not([type=radio]):not([type=file]),html.v2 #ovKaarten select,html.v2 #ovKaarten textarea,
+  html.v2 #ovEigenOef input:not([type=file]),html.v2 #ovEigenOef textarea{
     font-size:16px!important;min-height:44px}
 }

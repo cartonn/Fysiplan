@@ -23,7 +23,8 @@ const afs = (idx.match(/var af=e\.target\.closest\('\[data-safspraakopslaan\]'\)
 assert.ok(afs, "afspraak-handler gevonden");
 assert.doesNotMatch(afs, /toonA\(d\.fout/, "fout niet meer in de knop");
 assert.match(afs, /setAttribute\('aria-invalid','true'\)/, "veld krijgt aria-invalid");
-assert.match(idx, /<small role='alert' data-saffout='/, "vaste foutregel onder het afspraakveld");
+assert.match(idx, /<small role='alert' id='saffout_"\+esc\(c\.id\)\+"' data-saffout='/, "vaste foutregel onder het afspraakveld");
+assert.match(idx, /aria-describedby='saffout_/, "veld verwijst naar de foutregel");
 const coarse = css.split(/@media screen and \(pointer:coarse\)\{/).slice(1).join("\n");
 assert.match(coarse, /#ovKaarten select[^{]*\{\s*font-size:16px!important;min-height:44px\}/, "velden in Kaarten 16 px en 44 px op aanraakschermen");
 console.log("test-sweep-uitleg-afspraak-ipad (statisch): ok");
