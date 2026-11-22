@@ -70,11 +70,11 @@ try {
   await p.click("#oefs .oefdone");
   await p.click("#gdaan");
   // wachten tot beide tikken in de wachtrij staan (de tweede 429 kan net later binnenkomen)
-  await p.waitForFunction(() => /busy right now/.test(document.getElementById("wachtrij").textContent || "") && /2 saved/.test(document.getElementById("wachtrij").textContent || ""), null, { timeout: 5000 }).catch(() => {});
+  await p.waitForFunction(() => /busy right now/.test(document.getElementById("wachtrij").textContent || "") && /(2 saved|saved on your phone: 2)/.test(document.getElementById("wachtrij").textContent || ""), null, { timeout: 5000 }).catch(() => {});
   const wachtrij = await p.evaluate(() => { const el = document.getElementById("wachtrij"); return { t: el.textContent, zicht: getComputedStyle(el).display !== "none" }; });
   assert.ok(wachtrij.zicht, "wachtrijmelding zichtbaar");
   assert.doesNotMatch(wachtrij.t, /once you are online/, "niet beweren dat er geen internet is: " + wachtrij.t);
-  assert.match(wachtrij.t, /2 saved/, "beide tikken staan in de wachtrij: " + wachtrij.t);
+  assert.match(wachtrij.t, /2 saved|saved on your phone: 2/, "beide tikken staan in de wachtrij: " + wachtrij.t);
   let kaart = await serverKaart();
   assert.equal((kaart.gedaan || []).length, 0, "nog niets op de server tijdens de rem");
 

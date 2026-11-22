@@ -7,7 +7,7 @@ import { join, extname, normalize, sep } from "node:path";
 import { exerciseId } from "./lib/exercise-id.js";
 import { byteRange } from "./lib/byte-range.js";
 import { ipSleutel as ipSleutelVan, ipBlok as ipBlokVan } from "./lib/ip-sleutel.js";
-import { isAuditRuis, kiesActiviteit } from "./lib/audit-keuze.js";
+import { isAuditRuis, kiesActiviteit, ruisOmTeSchrappen } from "./lib/audit-keuze.js";
 import { listDrafts, loadDraft } from "./lib/draft-exercise-import.js";
 import { publicCatalogVideo } from "./lib/video-catalog.js";
 import { PROEF_DAGEN, valideerAanmelding, telefoonWeergave, dagenOver, geldigEmail, proefEinde, eindeVanDagNl } from "./lib/proef.js";
@@ -868,16 +868,24 @@ function auditGeweigerd(pk, actie, req, wieExpliciet) {
 // iedere praktijk eruit (wie logde in, wie verwijderde een kaart). Nu heeft elke
 // praktijk een eigen plafond, apart voor regels die iemand zonder login kan
 // veroorzaken (ruis), en bij een vol logboek gaat eerst de oudste ruis weg.
+// Binnen de ruis gaat eerst de oudste anonieme regel weg (lib/audit-keuze.js, security 2026-11-22):
+// 401's zonder login spoelen zo geen geweigerde poging van een collega meer uit Activiteit.
+const auditAnoniem = (actie) => AUDIT_RUIS.has(String(actie || ""));
 function auditSnoei(pk, ruis) {
-  const max = ruis ? AUDIT_RUIS_PER_PRAKTIJK : AUDIT_PER_PRAKTIJK;
-  let n = 0;
-  for (let i = 0; i < praktijkAudit.length; i++) {
-    const a = praktijkAudit[i];
-    if (a && a.praktijk === pk && isAuditRuis(a.actie, AUDIT_RUIS) === ruis && ++n > max) { praktijkAudit.splice(i, 1); break; }
+  if (ruis) {
+    const j = ruisOmTeSchrappen(praktijkAudit, pk, (a) => isAuditRuis(a, AUDIT_RUIS), auditAnoniem, AUDIT_RUIS_PER_PRAKTIJK);
+    if (j >= 0) praktijkAudit.splice(j, 1);
+  } else {
+    let n = 0;
+    for (let i = 0; i < praktijkAudit.length; i++) {
+      const a = praktijkAudit[i];
+      if (a && a.praktijk === pk && !isAuditRuis(a.actie, AUDIT_RUIS) && ++n > AUDIT_PER_PRAKTIJK) { praktijkAudit.splice(i, 1); break; }
+    }
   }
   while (praktijkAudit.length > AUDIT_TOTAAL) {
     let j = -1;
-    for (let i = praktijkAudit.length - 1; i >= 0; i--) if (!praktijkAudit[i] || isAuditRuis(praktijkAudit[i].actie, AUDIT_RUIS)) { j = i; break; }
+    for (let i = praktijkAudit.length - 1; i >= 0; i--) if (!praktijkAudit[i] || auditAnoniem(praktijkAudit[i].actie)) { j = i; break; }
+    if (j < 0) for (let i = praktijkAudit.length - 1; i >= 0; i--) if (isAuditRuis(praktijkAudit[i].actie, AUDIT_RUIS)) { j = i; break; }
     if (j < 0) j = praktijkAudit.length - 1;
     praktijkAudit.splice(j, 1);
   }
