@@ -59,7 +59,7 @@ assert.doesNotMatch(nl, /\d{12,}|chosen|oefTrouw|\|r0\||undefined|NaN|\[object/,
 
 const en = ctx.mgTekst(kaart, "Fysio Test", lokaal, "en", h("en-GB"));
 assert.match(en, /^My data at Fysiplan/);
-assert.match(en, /More pain/);
+assert.match(en, /It hurts too much/);
 assert.match(en, /Pain scores/);
 assert.doesNotMatch(en, /Roepnaam|Pijnscores|herhalingen|Mijn seintjes/, "Engelse download zonder Nederlandse kopjes");
 // Legal 2026-11-08 13u: alle talen van de kaart hebben eigen kopjes, met dezelfde sleutels als nl

@@ -20,7 +20,7 @@ import { createRequire } from "node:module";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(join(root, "public/kaart.html"), "utf8");
 assert.match(html, /var nogN=rest-1;/, "de reeks telt de getoonde afspraak niet nog eens mee");
-assert.match(html, /TAFHER1=\{en:'weekly, 1 more time'/, "enkelvoud voor nog één keer");
+assert.match(html, /TAFHER1=\{en:'repeats weekly, 1 more appointment'/, "enkelvoud voor nog één keer");
 assert.match(html, /function neutraleTitel\(\)\{try\{document\.title=tr\('eyebrow'\)\+' — Fysiplan';document\.documentElement\.lang=TAAL;/, "neutrale titel in de taal van de patiënt");
 assert.match(html, /neutraleTitel\(\);\s*try\{if\(history\.replaceState\)history\.replaceState\(null,'','\/k\?gewist=1'\+\(TAAL!=='nl'\?'&taal='/, "wissen: titel neutraal en taal blijft in de URL");
 // weekLater los rekenen (draait ook in CI zonder browser)
@@ -77,7 +77,7 @@ if (pw) {
       await p.goto(origin + "/k/" + id2 + "?taal=en", { waitUntil: "networkidle" });
       await p.waitForFunction(() => document.getElementById("afspraakblok").style.display !== "none" && document.documentElement.lang === "en");
       const t2 = await p.textContent("#aftekst");
-      assert.match(t2, /weekly, 1 more time$/, "reeks van 2 in het Engels: 1 more time (" + t2 + ")");
+      assert.match(t2, /repeats weekly, 1 more appointment$/, "reeks van 2 in het Engels: 1 more appointment (" + t2 + ")");
       await c.close();
     }
     // 1b) zomertijd: reeks ma 22-03-2027 14:00, telefoon op 23-03 → maandag 29 maart 14:00
