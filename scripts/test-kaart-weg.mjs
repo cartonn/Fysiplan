@@ -119,11 +119,32 @@ for (const sleutel of ["fp_oefdaan_", "fp_zwaar_", "fp_priv_", "fp_beelden_", "f
   assert.ok(prefixen.has("fp_taalkeus_") && prefixen.has("fp_oefdaan_") && prefixen.has("fp_wacht_"), "voorvoegsels gevonden: " + [...prefixen]);
   for (const p of prefixen) assert.ok(fn[0].includes(`'${p}'`), `vergeetKaartHier wist ook ${p}<id> (staat in kaart.html)`);
 }
+// Legal 2026-11-22 (fail-closed): elke sleutel die kaart.html in sessionStorage zet (nu fpPlek: plek op de
+// kaart bij een stille herlaad, #435) gaat ook weg bij wissen of verlopen en bij "Wis deze kaart van mijn
+// telefoon", en staat in /privacy#opslag. Voorheen bleef fpPlek (met het kaart-id) na "Wis deze kaart" staan.
+const sessieSleutels = new Set();
+for (const m of kaart.matchAll(/sessionStorage\.setItem\(\s*([A-Za-z_]+|'[^']+')/g)) {
+  const naam = m[1].startsWith("'") ? m[1].slice(1, -1) : (kaart.match(new RegExp(`var\\s+${m[1]}\\s*=\\s*'([^']+)'`)) || [])[1];
+  assert.ok(naam, "sessionStorage-sleutel gevonden voor " + m[1]);
+  sessieSleutels.add(naam);
+}
+assert.ok(sessieSleutels.has("fpPlek"), "fpPlek gevonden: " + [...sessieSleutels]);
+const wisTel = kaart.match(/function wisSleutelsVanTelefoon\(\)\{[\s\S]*?\n {2}\}/);
+assert.ok(wisTel, "wisSleutelsVanTelefoon staat in kaart.html");
+const juridisch = await readFile(join(root, "public/juridisch.html"), "utf8");
+assert.match(juridisch, /als de kaart zichzelf bijwerkt: waar je op de kaart was, alleen in dit tabblad/, "/privacy#opslag noemt de plek op de kaart");
+const ss = new Map();
+for (const s of sessieSleutels) {
+  assert.ok(fn[0].includes(`sessionStorage.removeItem('${s}')`), `vergeetKaartHier wist ook sessionStorage ${s}`);
+  assert.ok(wisTel[0].includes(`sessionStorage.removeItem('${s}')`), `"Wis deze kaart" wist ook sessionStorage ${s}`);
+  ss.set(s, JSON.stringify({ id: WEG }));
+}
 const ls = new Map([[`fp_oefdaan_${WEG}`, "1"], [`fp_zwaar_${WEG}`, "1"], [`fp_priv_${WEG}`, "1"], [`fp_beelden_${WEG}`, "[]"], [`fp_taalkeus_${WEG}`, '{"link":"nl","keus":"en"}'], [`fp_priv_${BLIJFT}`, "1"], [`fp_taalkeus_${BLIJFT}`, "{}"], ["fp_taal", "en"]]);
 vm.runInNewContext("var KAART_GEWIST=false;" + fn[0] + ";vergeetKaartHier();", {
-  id: WEG, localStorage: { removeItem: (k) => ls.delete(k) }
+  id: WEG, localStorage: { removeItem: (k) => ls.delete(k) }, sessionStorage: { removeItem: (k) => ss.delete(k) }
 });
 assert.deepEqual([...ls.keys()].sort(), [`fp_priv_${BLIJFT}`, `fp_taalkeus_${BLIJFT}`, "fp_taal"].sort(), "alleen deze kaart vergeten, taal blijft");
+assert.equal(ss.size, 0, "plek op de kaart in dit tabblad ook vergeten");
 
 // ---- Legal 2026-11-11: bij 'niet gevonden' gaan ook de oefenbeelden van die kaart weg ----
 // Voorheen bleven fp_beelden_<id> (kaart-id + lijst van oefenbeelden) en de beelden zelf in de
