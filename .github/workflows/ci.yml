@@ -58,6 +58,7 @@ jobs:
       - run: npm run test:oefenstandkrap
       - run: npm run test:qrnauitloggen
       - run: npm run test:uitlegafspraakipad
+      - run: npm run test:oefbeelddosering
       - run: npm run test:logintijd
       - run: npm run test:vergelijkgrens
       - run: npm run test:slowloris

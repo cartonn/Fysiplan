@@ -350,7 +350,8 @@
     "test:v2voorlezen": "node scripts/test-sweep-v2-voorlezen.mjs",
     "test:oefenstandkrap": "node scripts/test-kaart-oefenstand-krap.mjs",
     "test:qrnauitloggen": "node scripts/test-sweep-qr-na-uitloggen.mjs",
-    "test:uitlegafspraakipad": "node scripts/test-sweep-uitleg-afspraak-ipad.mjs"
+    "test:uitlegafspraakipad": "node scripts/test-sweep-uitleg-afspraak-ipad.mjs",
+    "test:oefbeelddosering": "node scripts/test-sweep-oefbeeld-dosering.mjs"
   },
   "engines": {
     "node": ">=20"

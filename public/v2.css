@@ -1119,4 +1119,9 @@ html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
   html.v2 #ovKaarten input:not([type=checkbox]):not([type=radio]):not([type=file]),html.v2 #ovKaarten select,html.v2 #ovKaarten textarea,
   html.v2 #ovEigenOef input:not([type=file]),html.v2 #ovEigenOef textarea{
     font-size:16px!important;min-height:44px}
+  /* Ook buiten Kaarten en Eigen oefening zoomde iOS in: zoeken, sjablonen, zoekhulp, Team, eigen video, eigen login,
+     tweede stap en proefwelkom hadden 12,5–14,5 px (gebruikers-sweep 2026-11-22 18u, Mark op iPad). Niet op de A4
+     zelf: die is verkleind en heeft een eigen maatvoering. */
+  html.v2 :is(input:not([type=checkbox],[type=radio],[type=file],[type=range],[type=color]),select,textarea):not(#a4 *){
+    font-size:16px!important}
 }

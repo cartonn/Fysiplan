@@ -3054,7 +3054,12 @@ bridge2.jpg</div>
       return true;
     }
     if(d.bestaat){
-      toonQrHint('Er is al een kaart \u201c'+(d.naam||naam)+'\u201d in je praktijk. Is dit dezelfde pati\u00ebnt? Anders: geef deze kaart een andere roepnaam, bijvoorbeeld met een initiaal.',[{act:'overschrijf',label:'Ja, die kaart bijwerken'}]);
+      // Ook deze vraag stond alleen als tekst van 8,5 px in het QR-hoekje, zonder role=alert (gebruikers-sweep
+      // 2026-11-22 18u, Sanne, desktop): nu ook de balk bovenin beeld, net als bij hernoemVraag, één keer per naam.
+      var bTekst='Er is al een kaart \u201c'+(d.naam||naam)+'\u201d in je praktijk. Is dit dezelfde pati\u00ebnt? Anders: geef deze kaart een andere roepnaam, bijvoorbeeld met een initiaal.',
+        bKnoppen=[{act:'overschrijf',label:'Ja, die kaart bijwerken'}];
+      toonQrHint(bTekst,bKnoppen);
+      if(BESTAAT_GEMELD!==String(naam||'').toLowerCase()){BESTAAT_GEMELD=String(naam||'').toLowerCase();toonConflictBalk(bTekst,bKnoppen);}
       return true;
     }
     if(d.hernoemVraag){
@@ -3319,7 +3324,7 @@ bridge2.jpg</div>
     QR_UIT_VOOR=huidigeKaartNaam().toLowerCase();
     verbergQr();
   });
-  var HERNOEM_GEMELD='';
+  var HERNOEM_GEMELD='',BESTAAT_GEMELD='';
   function qrActie(a){
     var cnA=document.getElementById('c_naam');
     var cb=document.getElementById('conflict_bar');
@@ -4888,20 +4893,24 @@ bridge2.jpg</div>
       }
       h+="<div class='tm-kop' style='font-weight:600;color:var(--ink);margin-bottom:4px'>Mensen in "+esc(d.praktijk||'je praktijk')+"</div>";
       if(!d.leden.length)h+="<div>Nog niemand met een eigen login.</div>";
+      // twee collega's met dezelfde naam: knoppen, schermlezer en bevestigingen noemen dan ook het e-mailadres,
+      // anders zei "Zeker: Tom Jansen verwijderen?" niet welke Tom (gebruikers-sweep 2026-11-22 18u, Karin)
+      var naamTel={};d.leden.forEach(function(l){var k=String(l.naam||'').trim().toLowerCase();if(k)naamTel[k]=(naamTel[k]||0)+1;});
       h+=d.leden.map(function(l){
         var zelf=d.ik&&d.ik.id===l.id;
+        var lidLabel=(l.naam&&naamTel[String(l.naam).trim().toLowerCase()]>1&&l.email)?l.naam+' ('+l.email+')':(l.naam||l.email);
         var st=l.status==='actief'?(l.laatst?'laatst ingelogd '+new Date(l.laatst).toLocaleDateString('nl-NL',{day:'numeric',month:'short'}):'actief'):'uitgenodigd';
         if(l.tweedeStap)st+=' · tweede stap aan';
         else if(d.stapVerplicht&&l.status==='actief'&&l.tweedeStap===false)st+=' · stelt de tweede stap in bij het inloggen';
         // telefoon en reservecodes kwijt: een beheerder met een eigen login wist de tweede stap van een collega
-        var wis2=(d.beheer&&d.ik&&!zelf&&l.tweedeStap)?" · <a href='#' data-tm2wis='"+esc(l.id)+"' data-naam='"+esc(l.naam||l.email)+"' title='Telefoon en reservecodes kwijt? Na het wissen "+(d.stapVerplicht?"stelt je collega de tweede stap opnieuw in bij het inloggen.":"logt je collega in met alleen het wachtwoord en stelt de tweede stap opnieuw in.")+"'>wissen</a>":"";
-        var rol=d.beheer&&!zelf?"<select data-tmrol='"+esc(l.id)+"' aria-label='Rol van "+esc(l.naam||l.email||'collega')+"' style='width:auto'><option value='therapeut'"+(l.rol==='therapeut'?' selected':'')+">Therapeut</option><option value='beheerder'"+(l.rol==='beheerder'?' selected':'')+">Beheerder</option></select>"
+        var wis2=(d.beheer&&d.ik&&!zelf&&l.tweedeStap)?" · <a href='#' data-tm2wis='"+esc(l.id)+"' data-naam='"+esc(lidLabel)+"' title='Telefoon en reservecodes kwijt? Na het wissen "+(d.stapVerplicht?"stelt je collega de tweede stap opnieuw in bij het inloggen.":"logt je collega in met alleen het wachtwoord en stelt de tweede stap opnieuw in.")+"'>wissen</a>":"";
+        var rol=d.beheer&&!zelf?"<select data-tmrol='"+esc(l.id)+"' aria-label='Rol van "+esc(lidLabel||'collega')+"' style='width:auto'><option value='therapeut'"+(l.rol==='therapeut'?' selected':'')+">Therapeut</option><option value='beheerder'"+(l.rol==='beheerder'?' selected':'')+">Beheerder</option></select>"
           :"<span class='tm-rol'>"+(l.rol==='beheerder'?'Beheerder':'Therapeut')+"</span>";
 
         return "<div class='tm-lid"+(l.status==='actief'?'':' uitgenodigd')+"' style='display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line)'>"+
           avRond(l.naam||l.email,'tm-av')+
           "<div class='tm-naam' style='flex:1;min-width:0'><b style='color:var(--ink)'>"+esc(l.naam||l.email)+(zelf?' (jij)':'')+"</b><div style='font-size:11.5px'>"+esc(l.email)+" · "+esc(st)+wis2+"</div></div>"+rol+
-          (d.beheer&&!zelf?"<button class='btn tm-weg' type='button' data-tmweg='"+esc(l.id)+"' data-naam='"+esc(l.naam||l.email)+"' aria-label='"+esc((l.naam||l.email)+" verwijderen")+"' title='Verwijderen; de kaarten blijven bij de praktijk'>&times;</button>":"")+"</div>";
+          (d.beheer&&!zelf?"<button class='btn tm-weg' type='button' data-tmweg='"+esc(l.id)+"' data-naam='"+esc(lidLabel)+"' aria-label='"+esc(lidLabel+" verwijderen")+"' title='Verwijderen; de kaarten blijven bij de praktijk'>&times;</button>":"")+"</div>";
       }).join('');
       if(d.beheer){
         h+="<div class='tm-kop' style='margin-top:12px;font-weight:600;color:var(--ink)'>Collega uitnodigen</div>"+
@@ -7041,6 +7050,9 @@ bridge2.jpg</div>
       if(!d.ok){
         // verlopen proef: de proefbalk met "Wil je doorgaan?", geen kale melding
         if(d.proefVerlopen){toonProefVoorbij(skn);return;}
+        // bestaande naam: geen venster dat de iPad blokkeert én daarna nog de balk met dezelfde tekst
+        // (hertest Sanne 2026-11-22 18u); de zin staat in het paneel, de balk bovenin biedt de keuze
+        if(d.bestaat){var kr=document.getElementById('k_result');if(kr){kr.setAttribute('role','alert');kr.textContent=d.fout||'Er is al een kaart met deze naam in je praktijk.';}return;}
         alert(d.fout||'Kaart delen is niet gelukt.');return;
       }
       document.getElementById('k_result').textContent='Kaart “'+naam+'” gedeeld met de praktijk.';
