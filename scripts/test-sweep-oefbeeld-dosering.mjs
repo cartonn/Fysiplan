@@ -24,6 +24,7 @@ const index = await readFile(join(root, "public/index.html"), "utf8");
 assert.match(kaart, /function pasOefBeeld\(\)/, "pasOefBeeld bestaat");
 assert.match(kaart, /zetVideoTop\(\);pasOefBeeld\(\);/, "onderbalk-meting past ook het beeld aan");
 assert.match(kaart, /if\(typeof pasOefBeeld==='function'\)pasOefBeeld\(\);\}/, "zetKrap (A A, tekstgrootte, draaien) past het beeld aan");
+assert.match(kaart, /\.fotoknop\.beeldklein \.infobadge\{/, "klein beeld: kleiner vergrootglas");
 // statisch: bestaande kaart ook in de balk bovenin
 assert.match(index, /if\(BESTAAT_GEMELD!==String\(naam\|\|''\)\.toLowerCase\(\)\)\{[^}]*toonConflictBalk\(bTekst,bKnoppen\);\}/, "bestaat → conflictbalk");
 // statisch: Engelse zinnen

@@ -213,6 +213,8 @@
   .oef.actief .fotoknop img{width:auto;height:auto;max-width:100%;max-height:min(46vh,420px);border:0;border-radius:0}
   @media (max-height:600px){.oef.actief .fotoknop img{max-height:42vh}}
   .oef.actief .infobadge{display:flex}
+  .oef.actief .fotoknop.beeldklein .infobadge{right:3px;bottom:3px;width:22px;height:22px}
+  .oef.actief .fotoknop.beeldklein .infobadge svg{width:10px;height:10px}
   /* in de lijst: een klein afspeelteken op het plaatje van een oefening met video */
   .oef:not(.actief) .demobadge{display:flex;right:3px;bottom:3px;width:22px;height:22px}
   .oef:not(.actief) .demobadge svg{width:9px;height:9px}
@@ -3727,7 +3729,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function pasOefBeeld(){
     try{
       // een eerder verkleind beeld krijgt in de lijst weer zijn eigen maat
-      Array.prototype.forEach.call(document.querySelectorAll('#oefs .oef:not(.actief) .fotoknop img'),function(i){if(i.style.maxHeight)i.style.maxHeight='';});
+      Array.prototype.forEach.call(document.querySelectorAll('#oefs .oef:not(.actief) .fotoknop img'),function(i){if(i.style.maxHeight)i.style.maxHeight='';var f=i.closest('.fotoknop');if(f)f.classList.remove('beeldklein');});
       var oef=document.querySelector('#oefs .oef.actief');if(!oef)return;
       var img=oef.querySelector('.fotoknop img'),sb=document.getElementById('sessiebalk');
       if(!img||!sb||sb.hidden)return;
@@ -3749,6 +3751,8 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         if(nieuw<h){img.style.maxHeight=(nieuw/zoom).toFixed(1)+'px';
           if(oud!==img.style.maxHeight&&typeof herplaatsMerk==='function'&&SESSIE>-1)herplaatsMerk(SESSIE);}
       }
+      // klein beeld: het vergrootglas niet over de halve foto heen (hertest Truus, liggend)
+      var fk=img.closest('.fotoknop');if(fk)fk.classList.toggle('beeldklein',img.getBoundingClientRect().height<120);
     }catch(e){}
   }
   function volgSessiebalk(){
