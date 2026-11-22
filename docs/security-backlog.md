@@ -691,6 +691,9 @@ hetzelfde account-object; #363/#369 inbox; #366 `proefEinde` (alleen langer tot 
 
 ## Open
 
+- **MIDDEL (gebruikers-sweep 2026-11-22 02u, Karin, NIEUW) — anonieme 401's spoelen geweigerde beheerpogingen uit Activiteit:**
+  therapeut Tom probeert zichzelf beheerder te maken (403, Activiteit toont `team-wijziging-geweigerd`). Daarna 60× `GET /api/kaarten?praktijk=<naam>` zonder login vanaf één IP (alle 401): `eisPraktijk` (server.js ~801) schrijft per 401 `toegang-geweigerd`, die deelt de ruispot van 50 per praktijk (`AUDIT_RUIS_PER_PRAKTIJK`, server.js ~299; `isAuditRuis` in lib/audit-keuze.js:16) met alle `-geweigerd`-regels, en de regel van Tom is weg. `toegang-geweigerd` staat zelf niet in Activiteit, dus het logboek wordt stil leeg. Voorstel: anonieme 401's een eigen pot (of niet per praktijk), geweigerde acties van een ingelogd lid nooit door ruis laten verdringen. Script: scratchpad karin/ruis.mjs (niet bewaard).
+
 - **OPGELOST 2026-11-21 20u (deze PR, test:beeldmetadata uitgebreid) — LAAG privacy — plek en toestel na de eerste scan of na de EOI van een foto:**
   `zonderBeeldMetadata` (#407) haalde Exif/XMP/IPTC/COM alleen weg vóór de eerste SOS en kopieerde de rest ongewijzigd. Een telefoonfoto
   zet na de EOI vaak extra beelden (MPF: diepte- of HDR-beeld, een "bewegende foto" als mp4) met hun eigen Exif, GPS en toestel; een
