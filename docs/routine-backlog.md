@@ -569,7 +569,7 @@ browsercontext lokaal een eigen `x-forwarded-for`, anders krijg je 429's.
 - **LAAG — overig:** tikdoelen iPad < 44 px (werkbalk 36, chips 24, ster/+ 32/26, "Mijn proef" 64×16; v2.css `pointer:coarse`); pijnschaal 26–34×44 px; taalkeuze 200 %
   afgekapt (kaart.html:94); printknop-title NL op Engelse kaart (r.929/1830); kolomkop "H" in "Completed schedule" (r.2009); Engelse rechten-tekst houterig, AP zonder link
   (TMG.en.rk ~1250; legal); offline pijnscore twee meldingen tegelijk; liggende oefenstand Pixel onderbalk links; 0612345678-zin misleidend (lib/proef.js 57/100); API-tekst
-  na ingetrokken login "Beveilig eerst je praktijk" (server.js ~7099); therapeut POST /v2/proef/opzeggen of /factuurgegevens: stille 303 (~8747/8824); Activiteit noemt niet welk
+  na ingetrokken login "Beveilig eerst je praktijk" (server.js ~7099); therapeut POST /v2/proef/opzeggen of /factuurgegevens: stille 303 (~8747/8824) (OPGELOST 2026-11-22 praktijk-routine: 403 met uitleg, test:geweigerdactiviteit); Activiteit noemt niet welk
   sjabloon/oefening verwijderd is (→ security-backlog); U+202E in namen en emoji in e-mail geaccepteerd (→ security-backlog); welkomstvenster na sluiten browser nooit meer.
 - **Niet getest:** Mollie, mail, echte vertaling (lokaal 503), /o-opname (Mark: hernoemvraag zat in de weg), seintje-knop patiënt.
 - **Volgende run:** profiel-overschrijven (Karin, HOOG), profiel leeg op nieuw apparaat, proefwelkom tweede apparaat, focus na Print/reservecodes en bij openen Kaarten,

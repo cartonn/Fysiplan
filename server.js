@@ -1478,9 +1478,22 @@ function verlopenVars(req, p) {
 // (gebruikers-sweep 2026-11-14 22u, Karin; security-backlog MIDDEL).
 function proefCollegaGeweigerd(req, wat) {
   const s = sessieVan(req);
-  if (!s || !s.lid || isBeheer(s) || !Object.hasOwn(praktijkAccounts, s.pk) || !praktijkAccounts[s.pk].proef) return;
+  if (!s || !s.lid || isBeheer(s) || !Object.hasOwn(praktijkAccounts, s.pk) || !praktijkAccounts[s.pk].proef) return false;
   const l = sessieLid(s);
   auditGeweigerd(s.pk, "proef-geweigerd", req, (l ? (l.naam || l.email) : "collega") + " (" + wat + ", geen beheerder)");
+  return true;
+}
+// Zo'n collega kreeg tot nu toe een stille omleiding naar /v2/proef: de knop leek niets te doen en
+// er stond nergens waarom (gebruikers-sweep, routine-backlog LAAG). Nu een uitleg met 403 en wie het
+// wel kan regelen. true = afgehandeld. Wie geen ingelogde collega is, merkt niets nieuws.
+async function proefCollegaUitleg(request, response, wat) {
+  if (!proefCollegaGeweigerd(request, wat)) return false;
+  await serveerProef(request, response, "bericht", { TITEL: "Alleen voor een beheerder", ETIKET: "Abonnement",
+    KOP: "Dit regelt een beheerder van je praktijk.",
+    TEKST: "Doorgaan, betalen, opzeggen, factuurgegevens en de proef wissen kan alleen een beheerder, met een eigen login. " +
+      "Er is niets veranderd. Vraag het een beheerder van je praktijk; je kaarten blijven gewoon werken.",
+    KNOP_HTML: '<a class="knop oranje" href="/v2/app">Naar mijn kaarten</a>' }, 403);
+  return true;
 }
 // De proefbalk ("laatste dag, t/m …") hing alleen aan de proefcookie van het apparaat waarop de
 // aanmelding begon: op een tweede apparaat en bij collega's stond nergens dat de proef bijna
@@ -8989,7 +9002,7 @@ async function afhandelen(request, response) {
     // (gebruikers-sweep 2026-11-09, Mark iPad)
     if (wb.zeker !== "1") { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     const p = proefVoorPagina(request);
-    if (!p) proefCollegaGeweigerd(request, "proefgegevens wissen");
+    if (!p && await proefCollegaUitleg(request, response, "proefgegevens wissen")) return;
     // Security (2026-11-11): met een betaald abonnement en een gekoppelde praktijk wiste deze
     // route (alleen de proefcookie nodig, geen beheerdersrol) de aanmelding tot de fiscale rest
     // met klant: true. De incasso stopte, het abonnement liep nooit af en de praktijk bleef
@@ -9048,7 +9061,7 @@ async function afhandelen(request, response) {
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
     const p = proefVoorPagina(request);
-    if (!p) proefCollegaGeweigerd(request, b.actie === "intrekken" ? "opzegging intrekken" : "abonnement opzeggen");
+    if (!p && await proefCollegaUitleg(request, response, b.actie === "intrekken" ? "opzegging intrekken" : "abonnement opzeggen")) return;
     if (!p || !p.abonnement) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     const a = p.abonnement, naam = p.praktijk || p.naam, tot = laatsteDagNl(a.betaaldTot);
     const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Terug naar mijn abonnement</a>';
@@ -9125,7 +9138,7 @@ async function afhandelen(request, response) {
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 4096))); } catch {}
     const p = proefVoorPagina(request);
-    if (!p) proefCollegaGeweigerd(request, "factuurgegevens wijzigen");
+    if (!p && await proefCollegaUitleg(request, response, "factuurgegevens wijzigen")) return;
     const a = p && p.abonnement;
     if (!a || !(a.status === "actief" || a.status === "opgezegd")) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#factuurgegevens">Terug naar mijn abonnement</a>';
@@ -9154,7 +9167,8 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try { await readBody(request, 2048); } catch {}
     const p = proefVoorPagina(request);
-    if (!p) { proefCollegaGeweigerd(request, "doorgaan na de proef"); response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
+    if (!p && await proefCollegaUitleg(request, response, "doorgaan na de proef")) return;
+    if (!p) { response.writeHead(303, { location: "/v2/proef" }); response.end(); return; }
     if (!p.doorgaan) {
       p.doorgaan = Date.now();
       await bewaarProeven();
@@ -9174,7 +9188,7 @@ async function afhandelen(request, response) {
     let b = {};
     try { b = Object.fromEntries(new URLSearchParams(await readBody(request, 2048))); } catch {}
     const p = proefVoorPagina(request);
-    if (!p) proefCollegaGeweigerd(request, "eerste maand betalen");
+    if (!p && await proefCollegaUitleg(request, response, "eerste maand betalen")) return;
     if (!p || p.klant) { response.writeHead(303, { location: p ? "/v2/app" : "/v2/proef" }); response.end(); return; }
     // het aantal komt niet uit het formulier: de server telt de logins van de praktijk
     const aantal = plaatsenVanProef(p);
@@ -9241,7 +9255,7 @@ async function afhandelen(request, response) {
     if (kruisSite(request)) { await weigerKruis(response); return; }
     try { await readBody(request, 1024); } catch {}
     const p = proefVoorPagina(request);
-    if (!p) proefCollegaGeweigerd(request, "openstaande maand betalen");
+    if (!p && await proefCollegaUitleg(request, response, "openstaande maand betalen")) return;
     const terug = '<a class="knop omlijnd" href="/v2/proef?mijn=1#abonnement">Terug naar mijn abonnement</a>';
     if (!p || !openMaand(p.abonnement)) { response.writeHead(303, { location: p ? "/v2/proef?mijn=1#abonnement" : "/v2/proef" }); response.end(); return; }
     if (proefLimiet(request)) {

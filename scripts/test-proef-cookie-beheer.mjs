@@ -115,7 +115,8 @@ try {
     r = await formulier("/v2/proef/wissen", { zeker: "1" }, wie);
     assert.doesNotMatch(await r.text(), /Je gegevens zijn gewist/);
     r = await formulier("/v2/proef/doorgaan", {}, wie);
-    assert.equal(r.status, 303);
+    // alleen de proefcookie: omleiding; ingelogde collega: uitleg (praktijk-routine 2026-11-22)
+    assert.equal(r.status, wie === PROEFCOOKIE ? 303 : 403);
   }
   let pr = (await proeven()).proefmark0000002;
   assert.ok(pr && !pr.gewist && pr.email === MARK_ADRES, "de aanmelding staat er nog");
