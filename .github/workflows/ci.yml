@@ -98,6 +98,7 @@ jobs:
       - run: node scripts/test-video-locatie.mjs
       - run: node scripts/test-beeld-metadata.mjs
       - run: node scripts/test-vwo-ai-beeld.mjs
+      - run: node scripts/test-vwo-datalek.mjs
       - run: node scripts/test-proef-einde-wissen.mjs
       - run: node scripts/test-verdwijndatum-praktijk.mjs
       - run: node scripts/test-juridisch-b1.mjs

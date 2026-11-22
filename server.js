@@ -108,7 +108,7 @@ const ADMIN_KEY = (() => {
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88" && process.env.ADMIN_KEY !== "account";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-21";
+const VWO_VERSIE = "2026-11-22";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
 const AV_VERSIE = "2026-11-21";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
@@ -149,7 +149,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-19", tekst: "Verduidelijking: de proef loopt tot en met de einddatum die je bij het aanmelden ziet, tot middernacht (Nederlandse tijd). Met één proef beveilig je hooguit 3 praktijken." },
   { stuk: "av", versie: "2026-11-20", tekst: "Verduidelijking: naast de grens op lopende kaarten geldt een grens voor alle kaarten samen, afgeronde en verwijderde meegeteld (" + KAARTEN_BEWAARD_KEER + " keer zoveel). Zit je daaraan, dan verwijder je afgeronde kaarten en leeg je de prullenbak." },
   { stuk: "av", versie: "2026-11-21", tekst: "Verduidelijking: na het einde van je abonnement werken gedeelde kaarten tot hun bewaartermijn afloopt, en uiterlijk tot de dag dat we alles van je praktijk wissen." },
-  { stuk: "vwo", versie: "2026-11-21", tekst: "Beveiliging: staat de vraaghulp op de patiëntkaart aan, dan gaat de korte vraag van de patiënt over een oefening naar de AI-dienst (niet bewaard; een vraag over pijn, klachten of dosering niet). Uit een foto bij een eigen oefening en uit je logo halen we de plek en het merk en type telefoon." }
+  { stuk: "vwo", versie: "2026-11-21", tekst: "Beveiliging: staat de vraaghulp op de patiëntkaart aan, dan gaat de korte vraag van de patiënt over een oefening naar de AI-dienst (niet bewaard; een vraag over pijn, klachten of dosering niet). Uit een foto bij een eigen oefening en uit je logo halen we de plek en het merk en type telefoon." },
+  { stuk: "vwo", versie: "2026-11-22", tekst: "Datalekken en geheimhouding gelden nu ook voor de gegevens van de medewerkers van je praktijk, niet alleen voor die van patiënten. Een melding van een datalek noemt ook welke soorten gegevens het raakt, wat Fysiplan nog gaat doen en wie je erover kunt bereiken." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
