@@ -206,6 +206,22 @@ try {
       const focusNa = await page.evaluate(() => { const a = document.activeElement; return { id: a && a.id, wis: !!(a && (a.hasAttribute("data-tm2wis") || a.hasAttribute("data-tmweg"))) }; });
       assert.equal(focusNa.wis, false, "focus na uitnodigen niet op wissen/verwijderen");
       assert.equal(focusNa.id, "tm_kopie", "focus na uitnodigen op Kopieer link: " + JSON.stringify(focusNa));
+      // per link staat erbij voor wie hij is, en eerdere links blijven te kopiëren (gebruikers-sweep 2026-11-22, Mark)
+      assert.match(await page.textContent("#tm_link"), /Stuur Eva Smit \(eva@brug\.nl\) deze link/);
+      assert.match(await page.textContent("#tm_eerder"), /Joris Bakker \(joris@brug\.nl\)/);
+      assert.equal(await page.locator("#tm_eerder [data-tmlink]").count(), 1);
+      await page.fill("#tm_unaam", "Joris Bakker");
+      await page.fill("#tm_uemail", "joris@brug.nl");
+      await page.click("#tm_udo");
+      await page.waitForSelector("#tm_vervangen", { state: "visible", timeout: 5000 });
+      assert.match(await page.textContent("#tm_link"), /Stuur Joris Bakker[\s\S]*De vorige link voor deze collega werkt niet meer/);
+      assert.match(await page.textContent("#tm_eerder"), /Eva Smit/);
+      assert.doesNotMatch(await page.textContent("#tm_eerder"), /Joris/, "Joris staat er één keer, met de nieuwe link");
+      // Team sluiten en weer openen: de links van deze sessie staan er nog (hertest Mark)
+      await page.click("#tm_sluit");
+      await page.click("#ps_team");
+      await page.waitForSelector("#tm_kopie", { state: "visible", timeout: 5000 });
+      assert.match(await page.textContent("#tm_link"), /Stuur Joris Bakker[\s\S]*Eva Smit/);
       await page.click("#tm_sluit");
       await page.waitForFunction(() => /ingelogd als Sanne de Wit/.test(document.getElementById("ps_status").textContent), null, { timeout: 5000 });
       // uitloggen en weer inloggen met e-mail

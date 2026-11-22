@@ -1163,12 +1163,19 @@ async function seinMailRondeEen() {
 const TOTP_INSTEL_MS = 15 * 60000; // zo lang blijft een begonnen instelling geldig
 const TOTP_MIS_PER_DAG = Math.min(20, getalEnv("TOTP_MIS_PER_DAG", 20)); // lager kan (voor de test), hoger niet
 const RESERVECODES = 8;
+const HERVAT_CODE_FOUT = "Die code klopt niet. Heb je eerder al een QR-code van Fysiplan gescand? Die werkt niet meer. Scan de QR-code hierboven opnieuw en vul de code in van de nieuwste regel in je code-app. Blijft het misgaan? Kijk of je telefoon de tijd automatisch instelt.";
 const totpWacht = new Map(); // "pk:lid" -> { geheim, t, n }: begonnen met instellen, nog niet bevestigd
 // een verse instelling voor deze login, met een nieuw geheim; een eerder begonnen instelling vervalt
 function nieuweInstelling(sleutel) {
   const nu = Date.now();
   if (totpWacht.size > 2000) for (const [k, v] of totpWacht) if (nu - v.t > TOTP_INSTEL_MS) totpWacht.delete(k);
-  const w = { geheim: nieuwGeheim(), t: nu, n: 0 };
+  // hervat: er was al een QR getoond voor deze login (ook een verlopen). Wie die al scande, heeft in de
+  // code-app een regel die nu niet meer werkt; de app zegt dat erbij (gebruikers-sweep 2026-11-22, Sanne).
+  // vorig: de geheimen van de (hooguit drie) QR-codes daarvoor. Een code die daarbij past, krijgt een eigen uitleg en telt niet als
+  // misser (wie dat geheim heeft, kreeg het na het juiste wachtwoord), anders zat de login na tien keer op slot.
+  const oud = totpWacht.get(sleutel);
+  const w = { geheim: nieuwGeheim(), t: nu, n: 0, hervat: !!oud,
+    vorig: oud ? [oud.geheim, ...(oud.vorig || [])].slice(0, 3) : [] };
   totpWacht.set(sleutel, w);
   return w;
 }
@@ -5038,7 +5045,7 @@ async function afhandelen(request, response) {
             // De tekst zonder code ziet alleen wie de app al open had staan van vóór deze
             // mogelijkheid: de app van nu toont dan het instelvenster in plaats van de tekst.
             await sendJson(response, 401, { ok: false, stapInstellen: true, geheim: w.geheim, uri: otpauth(w.geheim, l.email), minuten: TOTP_INSTEL_MS / 60000,
-              ...(code ? { vernieuwd: true } : {}),
+              ...(code ? { vernieuwd: true } : {}), ...(w.hervat ? { hervat: true } : {}),
               // voorIedereen: niet de praktijk vraagt hem, maar Fysiplan van elke login (voor de uitleg in de app)
               ...(praktijkAccounts[pk].stapVerplicht ? {} : { voorIedereen: true }),
               fout: code ? "De QR-code is vernieuwd. Scan hem opnieuw en vul de code in die de app dan toont."
@@ -5047,11 +5054,17 @@ async function afhandelen(request, response) {
           }
           // een foute code telt als misser, net als bij een gewone tweede stap
           const stap = controleer(lopend.geheim, code);
+          if (stap == null && (lopend.vorig || []).some((g) => controleer(g, code) != null)) {
+            await sendJson(response, 403, { ok: false, stapInstellen: true, code: true, oudeQr: true,
+              fout: "Deze code hoort bij een eerdere QR-code van Fysiplan; die werkt niet meer. Scan de QR-code hierboven opnieuw en vul de code in van de nieuwste regel in je code-app." });
+            return;
+          }
           if (stap == null) {
             loginMisTel(remKey);
             telInlogMisIp(request, "tweede-stap");
             await sendJson(response, 403, { ok: false, stapInstellen: true, code: true,
-              fout: "Die code klopt niet. Vul de zes cijfers in die de code-app nu toont. Blijft het misgaan? Kijk of je telefoon de tijd automatisch instelt." });
+              fout: lopend.hervat ? HERVAT_CODE_FOUT
+                : "Die code klopt niet. Vul de zes cijfers in die de code-app nu toont. Blijft het misgaan? Kijk of je telefoon de tijd automatisch instelt." });
             return;
           }
           const reserve = nieuweReservecodes();
@@ -5415,6 +5428,8 @@ async function afhandelen(request, response) {
       }
       if (!l && acc.leden.length >= 50) { await sendJson(response, 400, { ok: false, fout: "Maximaal 50 mensen per praktijk." }); return; }
       if (!l) { l = { id: randomBytes(6).toString("hex"), email: em, gemaakt: Date.now() }; acc.leden.push(l); }
+      // stond er nog een geldige link voor deze collega, dan werkt die hierna niet meer: de app zegt dat erbij
+      const vervangen = !!(l.uitnodiging && l.uitnodiging.verloopt > Date.now());
       l.naam = naam || l.naam || "";
       l.rol = rol;
       const token = randomBytes(24).toString("hex");
@@ -5436,7 +5451,7 @@ async function afhandelen(request, response) {
           gemaild = true;
         } catch {}
       }
-      await sendJson(response, 200, { ok: true, link, gemaild, ...(mailLimiet ? { mailLimiet } : {}), lid: lidUit(l) });
+      await sendJson(response, 200, { ok: true, link, gemaild, ...(mailLimiet ? { mailLimiet } : {}), ...(vervangen ? { vervangen } : {}), lid: lidUit(l) });
       return;
     }
     const doel = typeof b.id === "string" ? acc.leden.find((x) => x.id === b.id) : null;

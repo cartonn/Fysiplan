@@ -4469,7 +4469,7 @@ bridge2.jpg</div>
       document.getElementById('ps_vwolab').style.display='none';
       document.getElementById('ps_wijzig').style.display='none';
       document.getElementById('ps_hcform').style.display='none';
-      st.innerHTML=(PRAKSLOT.stapOpen?"🔒 Je praktijk is beveiligd, maar je tweede stap is nog niet af. Log in met je e-mail en wachtwoord, dan ga je verder waar je was.":"🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien.")+"<div class='ps-acties'><a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a><a href='#' id='ps_nieuw' title='Heet jouw praktijk toevallig hetzelfde als een andere? Beveilig dan je eigen praktijk met deze naam.'>Andere praktijk met deze naam?</a><a href='#' id='ps_wis' title='Wist alles wat Fysiplan op deze computer bewaart'>Wis Fysiplan van dit apparaat</a></div>";
+      st.innerHTML=(PRAKSLOT.stapOpen?"🔒 Je praktijk is beveiligd, maar je tweede stap is nog niet af. Log in met je e-mail en wachtwoord, dan stel je hem verder in met een nieuwe QR-code.":"🔒 Deze praktijk is beveiligd. Log in om de gedeelde kaarten te zien.")+"<div class='ps-acties'><a href='#' id='ps_vergeten'>Wachtwoord vergeten?</a><a href='#' id='ps_nieuw' title='Heet jouw praktijk toevallig hetzelfde als een andere? Beveilig dan je eigen praktijk met deze naam.'>Andere praktijk met deze naam?</a><a href='#' id='ps_wis' title='Wist alles wat Fysiplan op deze computer bewaart'>Wis Fysiplan van dit apparaat</a></div>";
       var wa2=document.getElementById('ps_wis');if(wa2)wa2.addEventListener('click',function(e){e.preventDefault();wisApparaat();});
       var nw=document.getElementById('ps_nieuw');
       if(nw&&PRAKSLOT.vanMij){nw.remove();nw=null;}
@@ -4637,7 +4637,8 @@ bridge2.jpg</div>
     };
     el.textContent='Even kijken…';
     openOv('ovStapLogin');
-    ensureQr(function(){if(wie)teken(d,'');});
+    // hervat: deze login kreeg eerder al een QR. Een regel die daarvan in de code-app staat, werkt niet meer.
+    ensureQr(function(){if(wie)teken(d,d.hervat?'Dit is een nieuwe QR-code. Heb je eerder al een QR-code van Fysiplan gescand? Die werkt niet meer: scan deze opnieuw en gebruik de nieuwste regel in je code-app.':'');});
   }
   // ---- eigen login voor iedereen: een praktijk beveiligen, of overstappen van het praktijkwachtwoord ----
   // Vraagt de server van iedereen een eigen login met een tweede stap (PRAKSLOT.eigenLogin), dan is
@@ -4789,6 +4790,35 @@ bridge2.jpg</div>
     "<li>Het dossier blijft in het EPD van de praktijk.</li>"+
     "<li>Werk op een apparaat met schermslot en log uit op een gedeelde computer.</li></ul>";
   var TEAM_LAATSTE_KNOP='';
+  // De uitnodigingslinks die in deze sessie zijn gemaakt, met naam en e-mail, nieuwste eerst. Eerst stond alleen
+  // de laatste link er, zonder naam; bij drie collega's na elkaar wist je niet meer welke link van wie was
+  // (gebruikers-sweep 2026-11-22, Mark). Alleen in het geheugen van deze pagina, per praktijk.
+  var TEAM_LINKS=[];
+  // Tekent de links van deze sessie in Team: na een uitnodiging (r = het antwoord, met gemaild/vervangen) en
+  // ook als Team opnieuw opent (r = null), anders waren ze na sluiten en openen niet meer te zien (hertest Mark).
+  function tekenTeamLinks(r){
+    var lk=document.getElementById('tm_link');if(!lk)return;
+    var pr=PRAKSLOT.pr||'',lijst=TEAM_LINKS.filter(function(x){return x.pr===pr;});
+    if(!lijst.length){lk.innerHTML='';return;}
+    var wieVan=function(x){return x.naam?esc(x.naam)+" ("+esc(x.email)+")":esc(x.email);};
+    var knop=function(i,x,id){return "<button class='btn' type='button'"+(id?" id='"+id+"'":"")+" data-tmlink='"+i+"' aria-label='Kopieer link voor "+esc(x.naam||x.email)+"'>Kopieer link</button>";};
+    var eerste=lijst[0];
+    lk.innerHTML="<div style='margin-top:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px'>"+(r&&r.gemaild?'Uitnodiging gemaild. ':r&&r.mailLimiet?'Vandaag mailen we geen uitnodigingen meer namens je praktijk. ':'')+
+      "Stuur <b style='color:var(--ink)'>"+wieVan(eerste)+"</b> deze link (7 dagen geldig):"+
+      (r&&r.vervangen?"<div id='tm_vervangen' style='margin-top:4px'>De vorige link voor deze collega werkt niet meer.</div>":"")+
+      "<div style='font:12px/1.5 ui-monospace,monospace;word-break:break-all;user-select:all;margin:4px 0'>"+esc(eerste.link)+"</div>"+
+      knop(0,eerste,'tm_kopie')+
+      (lijst.length>1?"<div id='tm_eerder' style='margin-top:10px;border-top:1px solid var(--line);padding-top:8px'>Eerder in deze sessie uitgenodigd:"+
+        lijst.slice(1).map(function(x,i){return "<div style='margin-top:6px;display:flex;flex-wrap:wrap;gap:8px;align-items:center'><span style='flex:1 1 200px'>"+wieVan(x)+"</span>"+knop(i+1,x)+"</div>";}).join('')+"</div>":"")+
+      "</div>";
+    lk.querySelectorAll('[data-tmlink]').forEach(function(b){
+      var x=lijst[Number(b.getAttribute('data-tmlink'))];if(!x)return;
+      b.addEventListener('click',function(){
+        lk.querySelectorAll('[data-tmlink]').forEach(function(o){o.textContent='Kopieer link';});
+        try{navigator.clipboard.writeText(x.link).then(function(){b.textContent='Gekopieerd';},function(){b.textContent='Selecteer en kopieer';});}catch(e){b.textContent='Selecteer en kopieer';}
+      });
+    });
+  }
   function laadTeam(na){
     var el=document.getElementById('tm_inhoud');
     fetch('api/praktijk/team',PGET()).then(function(r){return r.json();}).then(function(d){
@@ -5080,6 +5110,7 @@ bridge2.jpg</div>
           .then(function(r){eDo.disabled=false;if(!r.ok){msg(r.fout||'Dat lukte niet.');return;}setPrakSes(r.sessie);laadTeam();toonPrakSlot(PRAKSLOT.pr);})
           .catch(function(){eDo.disabled=false;msg('Geen verbinding.');});
       });
+      tekenTeamLinks(null);
       var uDo=document.getElementById('tm_udo');
       if(uDo)uDo.addEventListener('click',function(){
         TEAM_LAATSTE_KNOP='tm_udo';
@@ -5096,15 +5127,13 @@ bridge2.jpg</div>
             if(!r.ok&&r._status===403){laadTeam(function(){msg(r.fout||'Uitnodigen lukte niet.');});return;}
             if(!r.ok){var ue=document.getElementById('tm_uemail'),vf=/e-mail/i.test(r.fout||'')&&ue?ue:uDo;try{vf.focus({preventScroll:true});}catch(e){}msg(r.fout||'Uitnodigen lukte niet.');return;}
             laadTeam(function(){
-              var lk=document.getElementById('tm_link');if(!lk)return;
-              lk.innerHTML="<div style='margin-top:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px'>"+(r.gemaild?'Uitnodiging gemaild. ':r.mailLimiet?'Vandaag mailen we geen uitnodigingen meer namens je praktijk. ':'')+
-                "Stuur je collega deze link (7 dagen geldig):<div style='font:12px/1.5 ui-monospace,monospace;word-break:break-all;user-select:all;margin:4px 0'>"+esc(r.link)+"</div>"+
-                "<button class='btn' id='tm_kopie' type='button'>Kopieer link</button></div>";
+              var lid=r.lid||{},pr=PRAKSLOT.pr||'';
+              TEAM_LINKS=TEAM_LINKS.filter(function(x){return x.pr===pr&&x.email!==lid.email;});
+              TEAM_LINKS.unshift({pr:pr,naam:lid.naam||'',email:lid.email||'',link:r.link,t:Date.now()});
+              TEAM_LINKS=TEAM_LINKS.slice(0,10);
+              tekenTeamLinks(r);
               // de volgende stap na uitnodigen is de link doorsturen: focus daarheen
               try{document.getElementById('tm_kopie').focus();}catch(e){}
-              document.getElementById('tm_kopie').addEventListener('click',function(){
-                var b=this;try{navigator.clipboard.writeText(r.link).then(function(){b.textContent='Gekopieerd';},function(){b.textContent='Selecteer en kopieer';});}catch(e){b.textContent='Selecteer en kopieer';}
-              });
             });
           })
           .catch(function(){uDo.disabled=false;msg('Geen verbinding.');try{uDo.focus();}catch(e){}});
@@ -5576,6 +5605,7 @@ bridge2.jpg</div>
   }
   // het scherm na het uitloggen; ook als de server de sessie zelf al heeft ingetrokken
   function prakUitgelogd(){
+    TEAM_LINKS=[]; // uitnodigingslinks zijn sleutels: niet laten staan voor wie hierna achter deze computer zit
     setPrakSes('');PRAKSLOT.ingelogd=false;rendPrakSlot();toonSrvKaarten();
     // uitgelogd = geen patiënt meer op het scherm: QR, deelknoppen en roepnaam van de
     // laatste kaart weg, ook na herladen (gebruikers-sweep 2026-11-10, Sanne). De
