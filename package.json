@@ -344,6 +344,9 @@
     "test:kaartlinkhoofd": "node scripts/test-sweep-kaartlink-hoofdletters.mjs",
     "test:videoliggend": "node scripts/test-sweep-video-liggend.mjs",
     "test:loginzondernaam": "node scripts/test-sweep-login-zonder-naam.mjs",
+    "test:staphervat": "node scripts/test-sweep-stap-hervat.mjs",
+    "test:uitnodiglinks": "node scripts/test-sweep-uitnodiglinks.mjs",
+    "test:engelswachtrij": "node scripts/test-sweep-engels-wachtrij.mjs",
     "test:v2voorlezen": "node scripts/test-sweep-v2-voorlezen.mjs"
   },
   "engines": {

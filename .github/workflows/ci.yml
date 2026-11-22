@@ -51,6 +51,9 @@ jobs:
       - run: npm run test:spronglinks
       - run: npm run test:loginanderepraktijk
       - run: npm run test:loginzondernaam
+      - run: npm run test:staphervat
+      - run: npm run test:uitnodiglinks
+      - run: npm run test:engelswachtrij
       - run: npm run test:v2voorlezen
       - run: npm run test:logintijd
       - run: npm run test:vergelijkgrens
