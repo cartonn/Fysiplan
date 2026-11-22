@@ -244,6 +244,24 @@ try {
   await sein("demo", "pijn");
   await wacht(500);
   assert.equal(seinMails().length, voor6, "de voorbeeldkaart geeft geen mail");
+
+  // ---- 6b. twee collega's met dezelfde naam; de maker van de kaart is uit het team gehaald ----
+  // (gebruikers-sweep 2026-11-22 22u, Karin): de mail over de patiënt van Tom B ging na diens
+  // verwijdering stil naar de andere Tom Jansen. Nu naar de beheerders.
+  const P6 = "Fysio Naamgenoten";
+  const KB = await praktijkMetLogin(P6, "Kees Beheer", "kees@naamgenoot.invalid");
+  await nodigUit(KB, "tom.a@naamgenoot.invalid", "Tom Jansen", "therapeut");
+  const TB = await nodigUit(KB, "tom.b@naamgenoot.invalid", "Tom Jansen", "therapeut");
+  const kaartTomB = await kaart(P6, TB, "Carla B.");
+  const lidB = ((await (await get("/api/praktijk/team", KB)).json()).leden || []).find((l) => /tom\.b/.test(String(l.email || "")));
+  assert.ok(lidB && lidB.id, "Tom B staat in het team");
+  r = await post("/api/praktijk/team/verwijder", { id: lidB.id, gedeeld: "laten" }, KB);
+  assert.equal(r.status, 200, "Tom B verwijderd: " + await r.clone().text());
+  await sein(kaartTomB, "pijn");
+  assert.ok(await tot(() => naar("kees@naamgenoot.invalid").length === 1), "de mail gaat naar de beheerder: " + JSON.stringify(seinMails().map((m) => m.to)));
+  await wacht(400);
+  assert.equal(naar("tom.a@naamgenoot.invalid").length, 0, "niet naar de andere Tom Jansen");
+  assert.equal(naar("tom.b@naamgenoot.invalid").length, 0, "en niet naar wie uit het team is");
 } finally {
   await stop(app);
 }

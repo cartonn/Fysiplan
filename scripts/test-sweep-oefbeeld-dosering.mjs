@@ -25,6 +25,7 @@ assert.match(kaart, /function pasOefBeeld\(\)/, "pasOefBeeld bestaat");
 assert.match(kaart, /zetVideoTop\(\);pasOefBeeld\(\);/, "onderbalk-meting past ook het beeld aan");
 assert.match(kaart, /if\(typeof pasOefBeeld==='function'\)pasOefBeeld\(\);\}/, "zetKrap (A A, tekstgrootte, draaien) past het beeld aan");
 assert.match(kaart, /\.fotoknop\.beeldklein \.infobadge\{/, "klein beeld: kleiner vergrootglas");
+assert.match(kaart, /\.oef\.actief\.dosboven>\.oefkop>\.oefinfo\{grid-row:1/, "dosering boven het beeld als het niet past");
 // statisch: bestaande kaart ook in de balk bovenin
 assert.match(index, /if\(BESTAAT_GEMELD!==String\(naam\|\|''\)\.toLowerCase\(\)\)\{[^}]*toonConflictBalk\(bTekst,bKnoppen\);\}/, "bestaat → conflictbalk");
 // statisch: Engelse zinnen
@@ -59,19 +60,22 @@ if (pw) {
   try {
     for (let i = 0; i < 100; i++) { try { if ((await fetch(origin + "/health")).ok) break; } catch {} await wacht(50); }
     browser = await pw.chromium.launch();
-    let gemeten = 0;
-    for (const [stand, vp] of [["staand", { width: 320, height: 568 }], ["liggend", { width: 568, height: 320 }]]) for (const aa of [false, true]) {
-      const tag = "iPhone SE " + stand + (aa ? " + A A" : "");
+    let gemeten = 0, bovenGezien = 0;
+    for (const [stand, vp] of [["staand", { width: 320, height: 568 }], ["liggend", { width: 568, height: 320 }]]) for (const aa of [false, true, "200"]) {
+      // "200": tekstgrootte 200 % van de telefoon; past de dosering dan niet onder het kleinste beeld,
+      // dan staan naam en dosering bóven het beeld (sweep 2026-11-22 22u, Truus)
+      const tag = "iPhone SE " + stand + (aa === "200" ? " + 200 %" : aa ? " + A A" : "");
       const c = await browser.newContext({ ...pw.devices["iPhone SE"], viewport: vp, locale: "nl-NL", serviceWorkers: "block", extraHTTPHeaders: { "x-forwarded-for": "10.65.0.1" } });
       const p = await c.newPage();
       const fouten = [];
       p.on("pageerror", (e) => fouten.push(e.message));
       await p.goto(origin + "/k/demo", { waitUntil: "networkidle" });
-      if (aa) await p.click("#grootBtn");
+      if (aa === "200") await p.evaluate(() => { document.documentElement.style.fontSize = "200%"; });
+      else if (aa) await p.click("#grootBtn");
       await wacht(300);
       await p.click("#startknop");
       await p.waitForSelector("#sessiebalk:not([hidden])");
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 6; i++) {
         await wacht(600);
         await p.evaluate(() => scrollTo(0, 0));
         await wacht(150);
@@ -79,13 +83,17 @@ if (pw) {
           const a = document.querySelector(".oef.actief");
           const img = a && a.querySelector(".fotoknop img");
           const cijfers = a ? [...a.querySelectorAll(".chips .chip b")].map((x) => x.getBoundingClientRect()).filter((r) => r.height > 0) : [];
-          return { img: img && img.complete ? img.getBoundingClientRect().height : 0, cijfer: cijfers.length ? Math.max(...cijfers.map((r) => r.bottom)) : null,
+          const kop = a && a.querySelector(".naam").getBoundingClientRect();
+          const sk = document.querySelector(".skop") || document.getElementById("sessiekop");
+          return { boven: !!(a && a.classList.contains("dosboven")), naamTop: kop ? kop.top : 0, kopBodem: sk ? sk.getBoundingClientRect().bottom : 0,
+            img: img && img.complete ? img.getBoundingClientRect().height : 0, cijfer: cijfers.length ? Math.max(...cijfers.map((r) => r.bottom)) : null,
             balk: document.getElementById("sessiebalk").getBoundingClientRect().top, naam: a && a.querySelector(".naam").textContent };
         });
         if (m.cijfer != null && m.img > 0) {
           gemeten++;
           assert.ok(m.cijfer <= m.balk + 1, tag + " (" + m.naam + "): dosering " + Math.round(m.cijfer - m.balk) + " px onder de onderbalk");
-          assert.ok(m.img >= 60, tag + ": beeld blijft zichtbaar (" + Math.round(m.img) + " px)");
+          if (!m.boven) assert.ok(m.img >= 60, tag + ": beeld blijft zichtbaar (" + Math.round(m.img) + " px)");
+          else { bovenGezien++; assert.ok(m.naamTop >= m.kopBodem - 1, tag + ": naam niet onder de kop (" + Math.round(m.naamTop) + " < " + Math.round(m.kopBodem) + ")"); }
         }
         await p.evaluate(() => { const v = document.getElementById("svolgende"); if (v && !v.disabled) v.click(); });
       }
@@ -97,6 +105,7 @@ if (pw) {
       assert.deepEqual(fouten, [], tag + ": geen fouten in de pagina");
       await c.close();
     }
+    assert.ok(bovenGezien >= 1, "liggend 200 %: naam en dosering boven het beeld (" + bovenGezien + ")");
     assert.ok(gemeten >= 4, "minstens vier oefeningen met beeld en dosering gemeten (" + gemeten + ")");
     console.log("test-sweep-oefbeeld-dosering (telefoon): dosering boven de onderbalk, staand en liggend, met en zonder A A (" + gemeten + " metingen)");
   } finally {

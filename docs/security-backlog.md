@@ -691,6 +691,10 @@ hetzelfde account-object; #363/#369 inbox; #366 `proefEinde` (alleen langer tot 
 
 ## Open
 
+- **LAAG (gebruikers-sweep 2026-11-22 22u, Mark) — /o en `/api/opname/upload` controleren alleen de kop van het bestand:** willekeurige bytes met `ftyp` op byte 4
+  worden als video bewaard (200, "Video verstuurd"; server.js ~7202 en ~6970). Geen uitvoerbare inhoud, wel opslag van rommel tot 60 MB per token. Voorstel: minimaal een
+  `moov`/`mdat`-box (mp4) of EBML + Segment (webm) vereisen. Niet door de sweep gebouwd.
+
 - **OPGELOST 2026-11-22 20u (deze PR, test:beeldmetadata uitgebreid) — LAAG privacy — zwarte lijst in de beeldschoonmaak en onleesbare foto's ongewijzigd bewaard:**
   `lib/beeld-metadata.js` haalde bij PNG alleen eXIf/tEXt/zTXt/iTXt/tIME weg en hield bij JPEG elke APP0, APP2 en APP14. Repro (lokaal): een PNG met een
   `caBX`-stuk (C2PA, met naam en toestel) of een eigen stuk `prVW`, en een JPEG met APP2 `FPXR\0…`/`MPF\0…` of APP14 met tekst, kwamen met die tekst op de server.
