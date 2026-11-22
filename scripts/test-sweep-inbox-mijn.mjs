@@ -13,11 +13,16 @@ import { join } from "node:path";
 
 const root = process.cwd();
 const appHtml = await readFile(join(root, "public/index.html"), "utf8");
-assert.match(appHtml, /return !\(INBOX_ALLEEN_MIJN&&mijn\)\|\|!b\|\|b\.split\(\/\\s\+\/\)\[0\]===mijn;/, "filter: heel woord, zonder behandelaar blijft zichtbaar");
+assert.match(appHtml, /return !\(INBOX_ALLEEN_MIJN&&mijn\)\|\|!b\|\|behIsMijn\(b,PRAKSLOT\.wie\);/, "filter: zonder behandelaar blijft zichtbaar, de rest via behIsMijn");
 assert.match(appHtml, /\(lijst\.length\?" <span class='ib-tel'>"\+lijst\.length\+"<\/span>":""\)/, "teller telt de getoonde lijst");
 // het filter zelf, los nagespeeld
-const filter = (kaarten, mijn) => kaarten.filter((k) => { const b = String(k.behandelaar || "").trim().toLowerCase(); return !b || b.split(/\s+/)[0] === mijn; });
-assert.deepEqual(filter([{ behandelaar: "Sanne de Wit" }, { behandelaar: "Sanneke Bos" }, { behandelaar: null }, { behandelaar: "Joris" }], "sanne").length, 2);
+// sinds 2026-11-22 14u (Karin): een volledige naam moet helemaal kloppen, een losse voornaam telt als voornaam
+const behBron = (appHtml.match(/\n  function behIsMijn\(beh,wie\)\{[\s\S]*?\n  \}\n/) || [""])[0];
+assert.ok(behBron, "behIsMijn gevonden");
+const behIsMijn = new Function(behBron + "; return behIsMijn;")();
+const filter = (kaarten, wie) => kaarten.filter((k) => { const b = String(k.behandelaar || "").trim().toLowerCase(); return !b || behIsMijn(b, wie); });
+assert.deepEqual(filter([{ behandelaar: "Sanne de Wit" }, { behandelaar: "Sanneke Bos" }, { behandelaar: null }, { behandelaar: "Joris" }, { behandelaar: "Sanne" },
+  { behandelaar: "Sanne Smit" }, { behandelaar: "  sanne   DE wit " }], "Sanne de Wit").length, 4, "eigen naam, lege, losse voornaam en andere spaties; niet Sanne Smit of Sanneke");
 
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-inboxmijn-"));
 const reserve = createServer();
@@ -65,7 +70,7 @@ try {
   const kS = ib.kaarten.find((k) => k.id === idS), kG = ib.kaarten.find((k) => k.id === idG);
   assert.equal(kS && kS.behandelaar, "Sanne de Wit", "nieuwe kaart van Sanne staat op haar naam");
   assert.equal(kG && kG.behandelaar, null, "kaart met het gedeelde wachtwoord: geen behandelaar");
-  assert.deepEqual(filter(ib.kaarten, "sanne").map((k) => k.id).sort(), [idG, idS].sort(), "Alleen mijn: eigen vraag én die zonder behandelaar");
+  assert.deepEqual(filter(ib.kaarten, "Sanne de Wit").map((k) => k.id).sort(), [idG, idS].sort(), "Alleen mijn: eigen vraag én die zonder behandelaar");
   assert.deepEqual(filter(ib.kaarten, "mark").map((k) => k.id), [idG], "Mark ziet Sannes patiënt niet bij Alleen mijn");
 
   // opnieuw opslaan door een collega neemt de kaart niet over

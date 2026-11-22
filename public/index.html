@@ -1817,6 +1817,15 @@ bridge2.jpg</div>
   }
   // Vandaag: wie deze week niet oefende (tonen, niet duiden). Een kaart van minder dan twee dagen
   // oud telt nog niet mee. Zelfde keuze "alleen mijn patiënten" als bij de seintjes.
+  // "Alleen mijn patiënten": staat er alleen een voornaam als behandelaar, dan telt de voornaam; staat er een
+  // volledige naam, dan moet die hele naam kloppen. Eerst vergeleek dit alleen het eerste woord, waardoor
+  // "Eva Smit" bij "Eva de Boer" in de lijst stond (gebruikers-sweep 2026-11-22 14u, Karin). Twee collega's met
+  // precies dezelfde naam zijn zo nog niet uit elkaar te houden (daarvoor moet de kaart een lid-id dragen).
+  function behIsMijn(beh,wie){
+    var b=String(beh||'').trim().toLowerCase().replace(/\s+/g,' '),w=String(wie||'').trim().toLowerCase().replace(/\s+/g,' ');
+    if(!b||!w)return true;
+    return b.indexOf(' ')<0?b===w.split(' ')[0]:b===w;
+  }
   function tekenNietGeoefend(blok,lijst){
     var el=document.getElementById('k_nietgeoefend');
     if(!el){
@@ -1829,7 +1838,7 @@ bridge2.jpg</div>
     var rijen=(lijst||[]).filter(function(c){
       if(!c||!c.id||c.gearchiveerd||c.demo||!c.ts)return false;
       var b=String(c.behandelaar||'').trim().toLowerCase();
-      if(INBOX_ALLEEN_MIJN&&mijn&&b&&b.split(/\s+/)[0]!==mijn)return false;
+      if(INBOX_ALLEEN_MIJN&&mijn&&b&&!behIsMijn(b,PRAKSLOT.wie))return false;
       if(nu-c.ts<2*dag){nieuw++;return false;}
       geteld++;
       return !oefDagen(c).some(function(g){return nu-g.t<7*dag;});
@@ -6172,7 +6181,7 @@ bridge2.jpg</div>
         // "Alleen mijn patiënten": kaarten met mijn voornaam als behandelaar (heel het woord,
         // "Sanneke" is niet "Sanne"), plus kaarten zonder behandelaar: een vraag mag nooit
         // verdwijnen omdat niemand de kaart op zijn naam heeft gezet
-        var lijst=d.kaarten.filter(function(k){var b=String(k.behandelaar||'').trim().toLowerCase();return !(INBOX_ALLEEN_MIJN&&mijn)||!b||b.split(/\s+/)[0]===mijn;});
+        var lijst=d.kaarten.filter(function(k){var b=String(k.behandelaar||'').trim().toLowerCase();return !(INBOX_ALLEEN_MIJN&&mijn)||!b||behIsMijn(b,PRAKSLOT.wie);});
         ib.style.display='';
         var h="<div class='ib-kop' style='display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap'>"+
           "<label style='margin:0'>Nieuw van patiënten"+(lijst.length?" <span class='ib-tel'>"+lijst.length+"</span>":"")+"</label>"+
