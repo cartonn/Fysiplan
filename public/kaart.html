@@ -386,6 +386,24 @@
   body.krap .sstatus{flex-wrap:wrap}
   .srij .kn1{padding-inline:8px;overflow-wrap:anywhere}
   body.krap .srij .kn1{font-size:min(1.0625rem,6vw)}
+  /* grote letters + een oefening die al gedaan is (en/of geen internet): kop, statusregel en offlinebalk namen
+     samen het hele scherm, de oefennaam stond onder de onderbalk (sweep 2026-11-22 10u, Truus, iPhone SE 200 %).
+     Kop op één regel (woorden kleiner, zonder de streepjes), status als lopende tekst in plaats van drie
+     regels onder elkaar, en in de oefenstand een korte offlinetekst (hertest Truus: afgekapte tekst was onrustig) */
+  body.krap .sterug{gap:2px;padding:0 6px 0 0;font-size:min(1rem,5vw)}
+  body.krap .skop{flex-wrap:nowrap}
+  body.krap .stel{flex:1 1 auto;min-width:0;padding:0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:min(1rem,5vw);text-align:end}
+  body.krap .sstip{display:none}
+  body.krap .sstatus{display:block;flex-wrap:nowrap;font-size:min(.9375rem,4.6vw);line-height:1.25}
+  /* staat de statusregel er (oefening gedaan), dan een iets kleiner beeld zodat de naam erboven in beeld blijft */
+  body.krap:has(#sstatus:not([hidden])) .oef.actief .fotoknop img{max-height:26vh}
+  body.krap .sstatus .svink{display:inline-block;vertical-align:middle;margin-inline-end:6px}
+  body.krap #sstatusTxt{vertical-align:middle;margin-inline-end:10px}
+  body.krap .songedaan{display:inline-flex;align-items:center;min-height:44px;padding:0 2px;font-size:inherit;vertical-align:middle}
+  #offlijn .offkort{display:none}
+  body.sessie.krap #offlijn .offkort{display:inline}
+  body.sessie.krap #offlijn .offlang{display:none}
+  body.sessie.krap #offlijn{padding:4px 12px !important}
   .svink{flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:var(--groen-vul)}
   .svink::after{content:"";display:block;width:5px;height:10px;margin:3px 0 0 7px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
   .songedaan{margin-inline-start:auto;min-height:44px;padding:0 2px;border:0;background:none;
@@ -1054,9 +1072,16 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // Object.prototype) maakten de kaart leeg, en via fp_taal ook elke latere QR-scan.
   function isTaal(x){return typeof x==='string'&&Object.prototype.hasOwnProperty.call(T,x);}
   // grote letters (telefooninstelling) op een laag scherm: zie body.krap in de stijl
+  // "A A" vergroot body met zoom 1.16: dat telt mee. En de tekstgrootte kan veranderen terwijl de kaart open
+  // staat (telefooninstelling, "A A") zonder resize: dan meet een vak van 1rem het, anders bleef krap uit en
+  // was er bij 200 % in de oefenstand geen ruimte meer tussen kop- en onderbalk (sweep 2026-11-22 10u, Truus)
   function zetKrap(){try{var r=parseFloat(getComputedStyle(document.documentElement).fontSize)||16;
+    if(document.documentElement.classList.contains('groot'))r*=1.16;
     document.body.classList.toggle('krap',window.innerHeight/r<26);}catch(e){}}
   zetKrap();window.addEventListener('resize',zetKrap);
+  try{if(window.ResizeObserver){var remMaat=document.createElement('span');remMaat.setAttribute('aria-hidden','true');
+    remMaat.style.cssText='position:absolute;left:-9999px;top:0;width:1rem;height:1rem;visibility:hidden;pointer-events:none';
+    document.body.appendChild(remMaat);new ResizeObserver(function(){zetKrap();}).observe(remMaat);}}catch(e){}
   // eigen taalkeuze van de patiënt bij deze kaart: {link: taal in de link, keus: gekozen taal}
   function taalKeus(){try{var v=JSON.parse(localStorage.getItem('fp_taalkeus_'+id)||'null');return v&&typeof v==='object'?v:null;}catch(e){return null;}}
   var TAAL=(function(){
@@ -1259,11 +1284,15 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // kop voor de volgende afspraak (de agenda-knop hergebruikt tr('agknop'))
   // offline-banner: de kaart werkt offline (service worker), maar dat hoort de
   // patiënt ook te wéten — anders voelt een mislukte tik als een kapotte kaart
+  // korte versie voor de oefenstand bij grote letters (sweep 2026-11-22 10u, Truus)
+  var TOFFK={nl:'Geen internet. Wat je aantikt, gaat later mee.',en:'No internet. What you tap is sent later.',de:'Kein Internet. Was du antippst, wird später gesendet.',
+    fr:'Pas d’internet. Ce que tu touches sera envoyé plus tard.',es:'Sin internet. Lo que toques se enviará más tarde.',pl:'Brak internetu. To, co zaznaczysz, zostanie wysłane później.',
+    tr:'İnternet yok. Dokunduğun şeyler sonra gönderilir.',ar:'لا يوجد إنترنت. ما تنقر عليه سيُرسل لاحقًا.',uk:'Немає інтернету. Те, що ви позначите, буде надіслано пізніше.'};
   var TOFF={nl:'Geen verbinding. Je ziet je laatst geladen kaart. Wat je aantikt, bewaren we op je telefoon tot je weer internet hebt.',en:'No connection. You see your last loaded card. What you tap is kept on your phone until you are online again.',de:'Keine Verbindung. Du siehst deine zuletzt geladene Karte. Was du antippst, bleibt auf deinem Handy, bis du wieder online bist.',fr:'Pas de connexion. Vous voyez votre dernière carte chargée. Ce que vous indiquez reste sur votre téléphone jusqu’au retour d’internet.',es:'Sin conexión. Ves tu última tarjeta cargada. Lo que marcas se guarda en tu teléfono hasta que vuelvas a tener internet.',pl:'Brak połączenia. Widzisz ostatnio wczytaną kartę. To, co zaznaczysz, zostaje w telefonie, aż znów będziesz mieć internet.',tr:'Bağlantı yok. Son yüklenen kartını görüyorsun. İşaretlediklerin, internet gelene kadar telefonunda saklanır.',ar:'لا يوجد اتصال. ترى آخر بطاقة تم تحميلها. ما تضغط عليه يُحفظ على هاتفك حتى يعود الإنترنت.',uk:'Немає з’єднання. Ти бачиш останню завантажену картку. Те, що ти позначаєш, зберігається на телефоні, доки не з’явиться інтернет.'};
   // UIT_KOPIE: de verbinding hing en de kaart kwam uit de offline-kopie (laadKaartApi); dan dezelfde balk,
   // ook al zegt de browser dat hij online is (hertest Jayden 2026-11-14)
   var UIT_KOPIE=false;
-  function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;if(KAART_GEWIST){el.style.display='none';return;}el.textContent=TOFF[TAAL]||TOFF.nl;el.style.display=(UIT_KOPIE||(typeof navigator.onLine==='boolean'&&!navigator.onLine))?'block':'none';}
+  function tekenOfflijn(){var el=document.getElementById('offlijn');if(!el)return;if(KAART_GEWIST){el.style.display='none';return;}var lang=document.createElement('span'),kort=document.createElement('span');lang.className='offlang';kort.className='offkort';lang.textContent=TOFF[TAAL]||TOFF.nl;kort.textContent=TOFFK[TAAL]||TOFFK.nl;el.textContent='';el.appendChild(lang);el.appendChild(kort);el.style.display=(UIT_KOPIE||(typeof navigator.onLine==='boolean'&&!navigator.onLine))?'block':'none';}
   window.addEventListener('online',tekenOfflijn);window.addEventListener('offline',tekenOfflijn);
   var TAF={nl:'Je volgende afspraak',en:'Your next appointment',de:'Dein nächster Termin',fr:'Votre prochain rendez-vous',es:'Tu próxima cita',pl:'Twoja następna wizyta',tr:'Bir sonraki randevun',ar:'موعدك القادم',uk:'Твій наступний візит'};
   // afgeronde behandeling: eerlijk over de bewaartermijn. De kaart verdwijnt na een
@@ -4377,6 +4406,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     var gb=document.getElementById('grootBtn');
     var zetGroot=function(aan){
       document.documentElement.classList.toggle('groot',aan);
+      zetKrap();
       if(VERLOOP)try{tekenVerloop(VERLOOP);}catch(e){}
       gb.classList.toggle('aan',aan);
       gb.setAttribute('aria-pressed',aan?'true':'false');
@@ -4473,15 +4503,49 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   // "Je kaart wordt geladen…" eindeloos zonder knop Opnieuw (gebruikers-sweep 2026-11-14, Jayden).
   // Na KAART_WACHT_MS de laatst geladen kaart uit de offline-kopie, anders het storingsscherm.
   var KAART_WACHT_MS=12000;
+  // Een trage lijn is geen kapotte lijn: na 6 s zegt de laadregel dat het even duurt, en na de grens wordt het
+  // verzoek niet meer afgebroken. Komt het antwoord daarna nog, dan verschijnt de kaart alsnog (stond het
+  // storingsscherm) of gaat de balk "Geen verbinding" weg (stond de offline-kopie). Eerder gaf een lijn die
+  // structureel 13 s nodig had altijd "Geen verbinding", ook na Opnieuw (gebruikers-sweep 2026-11-22 10u, Jayden).
+  var KAART_TRAAG_MS=6000;
+  var TRAAG={nl:'Je kaart wordt geladen… De verbinding is traag, nog even geduld.',en:'Loading your card… The connection is slow, please wait a moment.',
+    de:'Deine Karte wird geladen… Die Verbindung ist langsam, einen Moment noch.',fr:'Chargement de ta carte… La connexion est lente, encore un instant.',
+    es:'Cargando tu tarjeta… La conexión es lenta, espera un momento.',pl:'Wczytywanie karty… Połączenie jest wolne, chwileczkę.',
+    tr:'Kartın yükleniyor… Bağlantı yavaş, biraz bekle.',ar:'جارٍ تحميل بطاقتك… الاتصال بطيء، انتظر قليلًا.',uk:'Завантаження картки… З’єднання повільне, зачекайте трохи.'};
   function laadKaartApi(){
     var pad='/api/kaart?id='+id;
-    if(typeof AbortController!=='function')return fetch(pad,{cache:'no-cache'});
-    var ac=new AbortController(),klok=setTimeout(function(){ac.abort();},KAART_WACHT_MS);
-    return fetch(pad,{cache:'no-cache',signal:ac.signal}).then(function(r){clearTimeout(klok);return r;},function(e){
-      clearTimeout(klok);
-      if(!window.caches)throw e;
-      return caches.match(location.origin+pad).then(function(c){if(c){UIT_KOPIE=true;return c;}throw e;},function(){throw e;});
+    return new Promise(function(klaar,mis){
+      var beslist=false;
+      var kopie=function(e){
+        if(!window.caches){mis(e);return;}
+        caches.match(location.origin+pad).then(function(c){if(c){UIT_KOPIE=true;klaar(c);}else mis(e);},function(){mis(e);});
+      };
+      var traag=setTimeout(function(){if(beslist)return;var l=document.getElementById('laden_tekst');if(l)l.textContent=TRAAG[TAAL]||TRAAG.nl;},KAART_TRAAG_MS);
+      var grens=setTimeout(function(){if(beslist)return;beslist=true;clearTimeout(traag);kopie(new Error('traag'));},KAART_WACHT_MS);
+      fetch(pad,{cache:'no-cache'}).then(function(r){
+        clearTimeout(traag);clearTimeout(grens);
+        if(!beslist){beslist=true;klaar(r);return;}
+        kaartTochBinnen(r);
+      },function(e){
+        clearTimeout(traag);clearTimeout(grens);
+        if(beslist)return;
+        beslist=true;kopie(e);
+      });
     });
+  }
+  // het antwoord kwam na de grens toch binnen
+  function kaartTochBinnen(r){
+    if(K&&K.kaart){
+      if(!UIT_KOPIE||!(r.ok||r.status===404))return;
+      // zelfde stap als weerOnline: de server geeft de kaart weer, dus balk weg en de gewone controle op wijzigingen
+      UIT_KOPIE=false;tekenOfflijn();INHOUD_SIG=inhoudSig(K.kaart);inhoudLaatst=0;inhoudCheck();
+      return;
+    }
+    var st=document.getElementById('storing');
+    if(!st||st.style.display!=='block')return;
+    st.style.display='none';
+    var l=document.getElementById('laden');if(l)l.style.display='';
+    toonKaartVan(Promise.resolve(r));
   }
   function toonStoring(status,rem){
     geenLaden();
@@ -4503,7 +4567,10 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
     // hele bibliotheek en het hele keuringsbestand binnenhaalt. Ontbreekt dat pakket (een
     // antwoord uit de offline-cache van een oudere versie), of klopt het niet, dan leest de
     // kaart de hele bestanden zoals eerst. Een kaart die niet bestaat haalt verder niets op.
-    laadKaartApi().then(function(r){
+    toonKaartVan(laadKaartApi());
+  }
+  function toonKaartVan(antwoord){
+    antwoord.then(function(r){
       return r.json().catch(function(){return {ok:false};}).then(function(d){if(d&&!d.ok)d.status=r.status;return d;});
     }).then(function(d){
       if(!d||!d.ok)return [d,[],null];

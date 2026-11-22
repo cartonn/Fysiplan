@@ -3948,7 +3948,10 @@ bridge2.jpg</div>
     if(!chosen.length){alert('Zet eerst minstens \u00e9\u00e9n oefening op de kaart.');return;}
     if(!(SET.praktijk||'').trim()){alert('Vul eerst de naam van je praktijk in, linksboven op de kaart.');var pe=document.getElementById('praktijk');if(pe)pe.focus();return;}
     var cn=document.getElementById('c_naam');
-    if(!cn.value.trim()){cn.value='Voorbeeldpati\u00ebnt';cn.dispatchEvent(new Event('input'));}
+    // zonder roepnaam geen verzonnen "Voorbeeldpatiënt" meer: na Uitloggen en weer Inloggen staan de oefeningen van
+    // de vorige patiënt er nog, en dan maakte deze knop stil een tweede kaart die meetelde in Patiënten en de CSV
+    // (gebruikers-sweep 2026-11-22 10u, Sanne). De voorbeeldkaart van een nieuwe proef heeft de naam al.
+    if(!cn.value.trim()){alert('Vul eerst een roepnaam in bij Naam, op de kaart. Zo hoort de QR-code bij \u00e9\u00e9n pati\u00ebnt.');try{cn.focus();}catch(e){}return;}
     // ook hier eerst het roepnaamvoorstel: "Test de QR" deelde een volledige naam zonder
     // de vraag die Delen en Printen wel stellen (gebruikers-sweep 2026-11-13, Sanne)
     if(IS_V2&&naamLijktVolledig(cn.value)&&NAAM_OK!==cn.value.trim().toLowerCase()){
@@ -5612,6 +5615,8 @@ bridge2.jpg</div>
     // gekozen oefeningen blijven staan; die zijn niet van één patiënt.
     SIGNAAL_KAART=null;zetKaartId('');OVERSCHRIJF='';NAAM_OK='';HERNOEM_VOOR='';ROEP_VOOR='';
     laatsteDeel='';QR_UIT_VOOR=null;verbergQr();
+    // ook de balk "Deze editor heeft de kaart van … open" noemt patiëntnamen: weg bij uitloggen (sweep 2026-11-22 10u, Sanne)
+    var cfbU=document.getElementById('conflict_bar');if(cfbU){cfbU.style.display='none';cfbU.textContent='';}
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value='';});
     if(typeof normalizePrintableTextFields==='function')normalizePrintableTextFields();
     // wacht de open kaart nog op de bibliotheek (zie BIB_KLAAR), dan bewaart render() niets en
