@@ -8182,7 +8182,12 @@ async function afhandelen(request, response) {
     };
     const taalQ = String(q.get("taal") || "").toLowerCase();
     const taalT = (Object.hasOwn(AFSPRAAK_TAAL, taalQ) && AFSPRAAK_TAAL[taalQ]) || AFSPRAAK_TAAL.nl; // geen __proto__/constructor
-    const d = new Date(found.afspraak.t);
+    // Een wekelijkse reeks waarvan al afspraken voorbij zijn, begint in de agenda bij de volgende, met het
+    // aantal dat nog komt; zo tellen kaart, app en agenda hetzelfde (gebruikers-sweep 2026-11-23, Jayden:
+    // DTSTART op de voorbije 17-11 met COUNT=4, terwijl de kaart 24-11 en nog 2 toonde).
+    let icsT = Number(found.afspraak.t), icsAantal = Number.isInteger(found.afspraak.herhaal) && found.afspraak.herhaal >= 2 ? found.afspraak.herhaal : 1;
+    while (icsAantal > 1 && icsT < Date.now() - 2 * 3600000) { icsT += 7 * 86400000; icsAantal--; }
+    const d = new Date(icsT);
     // De afspraak is één vast moment: tijd in Nederlandse klok mét tijdzone (TZID +
     // VTIMEZONE). Zonder tijdzone ("zwevend") leest een telefoon die op een andere
     // tijdzone staat 14:00 als 14:00 daar, en komt de patiënt een uur te laat.
@@ -8213,8 +8218,7 @@ async function afhandelen(request, response) {
       // wekelijkse behandelreeks: één agenda-tik zet alle vervolgafspraken mét
       // alarmen — het app-vrije antwoord op de afspraakherinneringen van
       // concurrenten die daar een patiënt-app met pushmeldingen voor eisen
-      ...((Number.isInteger(found.afspraak.herhaal) && found.afspraak.herhaal >= 2)
-        ? ["RRULE:FREQ=WEEKLY;COUNT=" + Math.min(found.afspraak.herhaal, 12)] : []),
+      ...(icsAantal >= 2 ? ["RRULE:FREQ=WEEKLY;COUNT=" + Math.min(icsAantal, 12)] : []),
       "DURATION:PT30M",
       "SUMMARY:" + icsTekst(taalT.sum + ((pn) => pn ? " (" + pn + ")" : "")(kaartPraktijkNaam(kaartSleutel(found), found.praktijk))),
       "DESCRIPTION:" + icsTekst(taalT.desc + link),

@@ -67,6 +67,19 @@ try {
   const ag = await fetch(origin + "/api/kaart/agenda?id=" + id + "&dagen=MO,TH&tijd=09:00&taal=en", { headers: kop() });
   assert.equal(ag.status, 200);
   assert.ok(plat(await ag.text()).includes("/k/" + id + "?taal=en"), "herinneringen.ics: kaartlink in het Engels");
+  // Sweep 2026-11-23 (Jayden): een reeks van 4 waarvan de eerste voorbij is, begon in de agenda op die voorbije
+  // datum met COUNT=4, terwijl de kaart de volgende en "nog 2" toonde. Nu: DTSTART = de volgende, COUNT=3.
+  const eerste = Date.now() - 6 * 86400000;
+  const zet = await post("/api/kaart/afspraak", { praktijk: P, id, t: eerste, herhaal: 4 }, S);
+  if (zet.status === 200) {
+    const drie = await ics();
+    const dag = (t) => new Date(t).toLocaleDateString("sv-SE", { timeZone: "Europe/Amsterdam" }).replace(/-/g, "");
+    assert.equal(String(veld(drie, "DTSTART;TZID=Europe/Amsterdam")).slice(0, 8), dag(eerste + 7 * 86400000), "agenda begint bij de volgende afspraak");
+    assert.match(drie, /^RRULE:FREQ=WEEKLY;COUNT=3\r$/m, "nog drie afspraken in de agenda");
+  } else console.log("  (voorbije afspraak niet te zetten: " + zet.status + ")");
+  const appHtml = await (await import("node:fs/promises")).readFile(join(root, "public/index.html"), "utf8");
+  assert.match(appHtml, /\(daarna nog "\+\(va\.rest-1\)\+" keer\)/, "app telt zoals de kaart: daarna nog N");
+  assert.doesNotMatch(appHtml, /" ×"\+va\.rest/, "geen ×4-telling meer in het overzicht");
   console.log("test-sweep-afspraak-uid: vaste UID, oplopend SEQUENCE, agenda werkt bij, link in de taal van de kaart");
 } catch (e) {
   console.error(uit.slice(-2000));
