@@ -21,6 +21,7 @@ import { plaatsenVan, merkPiek, volgendAantal, nieuwePeriode, kaartVol, KAARTEN_
 import { maandBedrag, betaalBedrag, geldigBetaalId, mollie, beoordeelBetaling, markeerBetaald, markeerOpgezegd, trekOpzeggingIn, abonnementEindeStap, NA_EINDE_WISSEN_DAGEN,
   incassoStap, markeerGemeld, incassoDatum, incassoVerzoek, incassoSleutel, markeerIncassoGestart, beoordeelIncasso, markeerIncassoBetaald, markeerIncassoMislukt, INCASSO_VOORAF_DAGEN,
   openMaand, zelfBetalenVerzoek, markeerZelfGestart, beoordeelZelf, markeerZelfBetaald } from "./lib/mollie.js";
+import { betaalChecks } from "./lib/betaal-gereed.js";
 import { volgendFactuurNr, naarCent, factuurHtml, factuurOverzichtHtml, isFactuur, isKor, afnemerGegevens, AFNEMER_NAAM_MAX, AFNEMER_ADRES_MAX } from "./lib/factuur.js";
 import { backupInstellingen } from "./lib/backup-elders.js";
 import { runBackup } from "./lib/backup-runner.js";
@@ -4251,7 +4252,8 @@ function beheerBronEcht() {
     { naam: "Opslag", ok: dataDir === "/data" || !!process.env.DATA_DIR, tekst: dataDir === "/data" || !!process.env.DATA_DIR ? "Gegevens staan op een blijvend volume" : "Geen blijvend volume: een uitrol wist de gegevens" },
     { naam: "Reservekopie", ok: !!backupElders && !!backupEldersStatus.ok && !backupEldersStatus.fout, tekst: !backupElders ? "Reservekopie buiten Railway staat uit" : backupEldersStatus.ok ? "Laatste kopie elders: " + new Date(backupEldersStatus.ok).toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam" }) : "Nog geen gelukte kopie elders" },
     { naam: "Mail", ok: mailIngesteld(), tekst: mailIngesteld() ? "Mail via de mailprovider ingesteld" : "Mail staat uit: geen herstelmails en geen agent-mails" },
-    { naam: "Betalingen", ok: !!MOLLIE_SLEUTEL, tekst: MOLLIE_SLEUTEL ? "Mollie ingesteld" : "Mollie staat uit (geen MOLLIE_API_KEY)" },
+    // klaar voor de eerste betaling: Mollie, prijs en btw, factuur en maandincasso (lib/betaal-gereed.js)
+    ...betaalChecks({ sleutel: MOLLIE_SLEUTEL, prijs: prijsNu(), incasso: MOLLIE_INCASSO, mail: mailIngesteld(), lev: FYSIPLAN_ID }),
     { naam: "Inloggen", ok: EIGEN_LOGIN_VERPLICHT, tekst: EIGEN_LOGIN_VERPLICHT ? "Eigen login met tweede stap verplicht" : "Eigen login met tweede stap is niet verplicht" }
   ];
   return { soort: "echt", nu, praktijken, facturen, kosten: [], systeem: { versie: buildInfo.commit || "", uptimeUren: Math.round((nu - startTijd) / 360000) / 10, checks, beschikbaarheid: [] } };

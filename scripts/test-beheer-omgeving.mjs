@@ -597,6 +597,10 @@ try {
     assert.equal(e.finance.kpi.facturen, 0, "zonder Mollie nog geen facturen");
     assert.equal(e.mail, true);
     assert.ok(e.systeem.checks.some((c) => c.naam === "Betalingen" && c.ok === false));
+    // klaar voor de eerste betaling: ook prijs en btw, factuur en maandincasso staan erbij, met de ontbrekende variabele
+    assert.deepEqual(e.systeem.checks.filter((c) => ["Prijs en btw", "Factuur", "Maandincasso"].includes(c.naam)).map((c) => [c.naam, c.ok]),
+      [["Prijs en btw", false], ["Factuur", false], ["Maandincasso", false]]);
+    assert.match(e.systeem.checks.find((c) => c.naam === "Maandincasso").tekst, /MOLLIE_INCASSO=aan/);
     assert.ok(Array.isArray(e.systeem.beschikbaarheid));
     const hart = JSON.parse(await readFile(join(dataDir, "beheer-hartslag.json"), "utf8"));
     assert.ok(hart.eerste > 0 && Object.values(hart.dagen)[0] === 1, "de server telt vanaf de start de minuten dat hij draait");
