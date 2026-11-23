@@ -3836,7 +3836,7 @@ bridge2.jpg</div>
   }
   function openSjab(){
     var z=document.getElementById('sj_zoek');if(z)z.value='';
-    SJ_STAAT.cat='alle';SJ_STAAT.sel=null;
+    SJ_STAAT.cat='alle';SJ_STAAT.sel=null;SJ_STAAT.melding=null;
     renderSjabLijst();laadPrakSjab();openOv('ovSjab');
     setTimeout(function(){if(z&&z.focus)z.focus();},60);
   }
@@ -4120,6 +4120,7 @@ bridge2.jpg</div>
     var sj=huidigAlsSjabloon(naam);
     if(idx>-1){if(!confirm('Bestaande eigen kaart "'+naam+'" vervangen?'))return false;lst[idx]=sj;}else lst.unshift(sj);
     if(!bewaarEigenSjab(lst))return false;
+    SJ_STAAT.melding=null; // een oude "Gedeeld"-melding hoort niet bij de nieuwe versie (hertest Mark 2026-11-23)
     stopSjabBewerk();
     return true;
   }
@@ -4134,7 +4135,7 @@ bridge2.jpg</div>
   document.getElementById('sjb_bstop').addEventListener('click',stopSjabBewerk);
   document.getElementById('sj_cats').addEventListener('click',function(e){
     var k=e.target.closest('[data-sjcat]');if(!k)return;
-    SJ_STAAT.cat=k.dataset.sjcat;SJ_STAAT.sel=null;renderSjabLijst();
+    SJ_STAAT.cat=k.dataset.sjcat;SJ_STAAT.sel=null;SJ_STAAT.melding=null;renderSjabLijst();
   });
   document.getElementById('sj_lijst').addEventListener('click',function(e){
     var r=e.target.closest('[data-sjsel]');if(!r)return;

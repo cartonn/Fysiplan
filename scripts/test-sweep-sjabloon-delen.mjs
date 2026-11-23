@@ -93,6 +93,7 @@ try {
   assert.equal(await page.locator("#sj_lijst [data-sjsel]", { hasText: "Knie na VKB" }).count(), 1, "in Alle staat de gedeelde kaart één keer");
   assert.equal(await page.locator("#sj_lijst [data-sjsel].aan", { hasText: "Knie na VKB" }).count(), 1, "de gedeelde kaart blijft gekozen");
   await page.click("[data-sjcat='eigen']");
+  assert.equal(await page.locator("#sj_voorbeeld [role='status']").count(), 0, "de melding verdwijnt bij een andere categorie");
   await page.locator("#sj_lijst [data-sjsel]", { hasText: "Knie na VKB" }).first().click();
   const vb = await page.locator("#sj_voorbeeld").innerText();
   assert.match(vb, /Mijn kaart · gedeeld met de praktijk/, "label na delen: " + vb);
