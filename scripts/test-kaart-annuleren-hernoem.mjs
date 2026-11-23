@@ -25,7 +25,7 @@ async function draai(antwoorden) {
     PJSON: () => ({}),
     KAART_ID: "8b29eda692f7",
     BIB_KLAAR: true, BIB_REDEN: "", // v2: de open kaart is hersteld, de editor mag delen (zie test-open-kaart.mjs)
-    zetKaartId: () => {}, volgNieuweKaart: () => {}, kaartIsWeg: () => false, zetKaartWeg: () => {},
+    zetKaartId: () => {}, volgNieuweKaart: () => {}, kaartIsWeg: () => false, kaartInPrullenbak: () => false, zetKaartWeg: () => {},
     confirm: (t) => { vragen.push(t); return antwoorden.shift() ?? false; },
     fetch: async (_url, opt) => {
       const body = JSON.parse(opt.body);

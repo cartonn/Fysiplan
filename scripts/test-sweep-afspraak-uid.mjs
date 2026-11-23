@@ -66,7 +66,15 @@ try {
   assert.ok(!raar.includes("?taal="), "onbekende taal komt niet in de link");
   const ag = await fetch(origin + "/api/kaart/agenda?id=" + id + "&dagen=MO,TH&tijd=09:00&taal=en", { headers: kop() });
   assert.equal(ag.status, 200);
-  assert.ok(plat(await ag.text()).includes("/k/" + id + "?taal=en"), "herinneringen.ics: kaartlink in het Engels");
+  const agTekst = await ag.text();
+  assert.ok(plat(agTekst).includes("/k/" + id + "?taal=en"), "herinneringen.ics: kaartlink in het Engels");
+  // Sweep 2026-11-23 10u (Jayden): andere dagen of een ander tijdstip gaven een nieuwe UID, dus een tweede
+  // wekelijkse reeks met alarm naast de oude. Nu één vaste UID per kaart met oplopend SEQUENCE.
+  await new Promise((r) => setTimeout(r, 1100));
+  const ag2 = await (await fetch(origin + "/api/kaart/agenda?id=" + id + "&dagen=TU,WE,TH&tijd=07:15&taal=en", { headers: kop() })).text();
+  assert.equal(String(veld(agTekst, "UID")).trim(), "fysiplan-oefenen-" + id + "@fysiplan.nl", "herinneringen: UID zonder dagen en tijd");
+  assert.equal(veld(ag2, "UID"), veld(agTekst, "UID"), "herinneringen: andere dagen/tijd, zelfde UID, dus bijwerken");
+  assert.ok(Number(veld(ag2, "SEQUENCE")) > Number(veld(agTekst, "SEQUENCE")), "herinneringen: SEQUENCE loopt op");
   // Sweep 2026-11-23 (Jayden): een reeks van 4 waarvan de eerste voorbij is, begon in de agenda op die voorbije
   // datum met COUNT=4, terwijl de kaart de volgende en "nog 2" toonde. Nu: DTSTART = de volgende, COUNT=3.
   const eerste = Date.now() - 6 * 86400000;

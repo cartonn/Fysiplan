@@ -1145,16 +1145,24 @@ bridge2.jpg</div>
   // Dan geen stille nieuwe kaart meer bij autosave, QR of printen: eerst een vraag
   // (sweep 2026-11-11 18u, Sanne: na "Definitief verwijderen" maakte één klik op "Test de QR"
   // de patiëntkaart stil opnieuw aan, met een nieuwe link). Bewaard over herladen heen.
-  var KAART_WEG='',OPNIEUW_DELEN='';
-  try{KAART_WEG=localStorage.getItem('fp_kaartweg')||'';}catch(e){}
+  // KAART_PRUL: de kaart staat (voor zover deze editor weet) nog in de prullenbak. Dan kan opnieuw
+  // delen niet (de server weigert de naam met 409) en is herstellen de weg; eerder beloofde een
+  // venster "OK = opnieuw delen" en weigerde de server het daarna meteen (sweep 2026-11-23 10u, Sanne)
+  var KAART_WEG='',KAART_PRUL=false,OPNIEUW_DELEN='';
+  try{KAART_WEG=localStorage.getItem('fp_kaartweg')||'';KAART_PRUL=localStorage.getItem('fp_kaartweg_prul')==='1';}catch(e){}
   function kaartIsWeg(){return !!(KAART_WEG&&KAART_ID&&KAART_WEG===KAART_ID);}
-  function zetKaartWeg(id){KAART_WEG=id||'';try{if(KAART_WEG)localStorage.setItem('fp_kaartweg',KAART_WEG);else localStorage.removeItem('fp_kaartweg');}catch(e){}}
-  function markeerKaartWeg(id){
+  function kaartInPrullenbak(){return kaartIsWeg()&&KAART_PRUL;}
+  function zetKaartWeg(id,prul){KAART_WEG=id||'';KAART_PRUL=!!(KAART_WEG&&prul);
+    try{if(KAART_WEG)localStorage.setItem('fp_kaartweg',KAART_WEG);else localStorage.removeItem('fp_kaartweg');
+      if(KAART_PRUL)localStorage.setItem('fp_kaartweg_prul','1');else localStorage.removeItem('fp_kaartweg_prul');}catch(e){}}
+  function markeerKaartWeg(id,prul){
     if(!id||!KAART_ID||id!==KAART_ID)return;
-    zetKaartWeg(id);laatsteDeel='';
+    zetKaartWeg(id,prul);laatsteDeel='';
     toonKaartWegHint();
   }
+  var PRUL_ZIN='Deze kaart staat in de prullenbak; de QR-code werkt nu niet. Zet hem terug via Kaarten \u2192 Prullenbak \u2192 Herstellen, dan werkt dezelfde QR-code weer.';
   function toonKaartWegHint(){
+    if(kaartInPrullenbak()){toonQrHint(PRUL_ZIN);return;}
     toonQrHint('Deze kaart is verwijderd; de oude QR-code werkt niet meer.',[{act:'opnieuwdelen',label:'Opnieuw delen met een nieuwe QR-code'}]);
   }
   function zetKaartId(id,ts){
@@ -4020,6 +4028,7 @@ bridge2.jpg</div>
         if(d.proefVerlopen){toonProefVoorbij();return;}
         if(d.beveilig){toonDeelWeigering(d,cn.value.trim());openBeveiligen(function(){knop.click();});return;}
         if(d.bestaat){toonDeelWeigering(d,cn.value.trim());return;}
+        if(d.verwijderd){toonQrHint(d.fout||PRUL_ZIN);return;}
         alert(d.login?'De praktijknaam \u201c'+(SET.praktijk||'')+'\u201d is beveiligd en je bent niet ingelogd. Log in onder Kaarten.'+andereNaamZin():(d.fout||'De QR-code maken is niet gelukt.'));
         return;
       }
@@ -5793,6 +5802,8 @@ bridge2.jpg</div>
       return;
     }
     var wasWeg=false;
+    // nog in de prullenbak: geen vraag die iets belooft wat de server weigert, meteen de echte weg
+    if(kaartInPrullenbak()){cb({ok:false,verwijderd:true,fout:PRUL_ZIN});return;}
     if(kaartIsWeg()){
       if(!confirm('Deze kaart is verwijderd. Opnieuw delen maakt een nieuwe patiëntkaart met een nieuwe QR-code.\n\nOK = opnieuw delen\nAnnuleren = niets delen')){
         cb({ok:false,geannuleerd:true,fout:'Niet gedeeld: deze kaart is verwijderd.'});return;
@@ -7106,7 +7117,7 @@ bridge2.jpg</div>
         if(d.proefVerlopen){toonProefVoorbij(skn);return;}
         // bestaande naam: geen venster dat de iPad blokkeert én daarna nog de balk met dezelfde tekst
         // (hertest Sanne 2026-11-22 18u); de zin staat in het paneel, de balk bovenin biedt de keuze
-        if(d.bestaat){var kr=document.getElementById('k_result');if(kr){kr.setAttribute('role','alert');kr.textContent=d.fout||'Er is al een kaart met deze naam in je praktijk.';}return;}
+        if(d.bestaat||d.verwijderd){var kr=document.getElementById('k_result');if(kr){kr.setAttribute('role','alert');kr.textContent=d.fout||'Er is al een kaart met deze naam in je praktijk.';}return;}
         alert(d.fout||'Kaart delen is niet gelukt.');return;
       }
       document.getElementById('k_result').textContent='Kaart “'+naam+'” gedeeld met de praktijk.';
@@ -7459,7 +7470,7 @@ bridge2.jpg</div>
       x.disabled=true;
       fetch('api/kaarten/verwijder',{method:'POST',headers:PJSON(),body:JSON.stringify({praktijk:SET.praktijk||'',naam:nm,id:x.dataset.sdelid})})
         .then(function(r){return r.json();})
-        .then(function(d){if(d.ok){markeerKaartWeg(x.dataset.sdelid);toonSrvKaarten();kaartFocusTerug(['#k_srv_lijst [data-sopen]','#k_prullenbak > button']);ping('kaart-verwijderd');}else{x.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
+        .then(function(d){if(d.ok){markeerKaartWeg(x.dataset.sdelid,true);toonSrvKaarten();kaartFocusTerug(['#k_srv_lijst [data-sopen]','#k_prullenbak > button']);ping('kaart-verwijderd');}else{x.disabled=false;alert(d.fout||'Verwijderen is niet gelukt.');}})
         .catch(function(){x.disabled=false;alert('Verwijderen is niet gelukt: geen verbinding.');})
         .then(delVrij);
     }
