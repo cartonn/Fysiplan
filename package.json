@@ -165,6 +165,8 @@
     "test:proefkaartentot": "node scripts/test-proef-kaarten-tot.mjs",
     "test:vensterterug": "node scripts/test-sweep-venster-terug-spoed.mjs",
     "test:inboxmijn": "node scripts/test-sweep-inbox-mijn.mjs",
+    "test:naamgenoten": "node scripts/test-sweep-naamgenoten.mjs",
+    "test:qrescape": "node scripts/test-sweep-qr-escape-bekeken.mjs",
     "test:dubbelklikoverzicht": "node scripts/test-sweep-dubbelklik-overzicht.mjs",
     "test:kaart200taal": "node scripts/test-sweep-kaart-200-taal.mjs",
     "test:printroepnaam": "node scripts/test-sweep-print-roepnaam.mjs",

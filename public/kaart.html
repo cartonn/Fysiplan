@@ -2418,14 +2418,30 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
   function zetDank(el,tekst,soort,inBeeld){
     if(!el)return;el.textContent=tekst;el.style.display='block';
     el.classList.toggle('fout',soort==='fout');el.classList.toggle('wacht',soort==='wacht');
-    if(inBeeld)toonInBeeld(el);
+    // na een seintje hoort ook de spoedregel ("Bij nood: 112") eronder in beeld
+    if(inBeeld){var sp=el.id==='sdank'?document.getElementById('sspoed'):null;toonInBeeld(el,sp&&sp.offsetHeight?sp:null);}
   }
-  function toonInBeeld(el){
+  // De balk "Zet op beginscherm" ligt vast onderaan over de kaart: wat erachter valt, is niet in beeld.
+  // Eerst telde alleen de schermrand, en lag de spoedregel na een seintje helemaal achter de balk
+  // (gebruikers-sweep 2026-11-23, Truus, iPhone SE, ook met A A). Nu telt de balk mee (--ab-h).
+  function onderBalkHoogte(){
     try{
-      var r=el.getBoundingClientRect(),h=window.innerHeight||document.documentElement.clientHeight;
-      if(r.bottom<=h&&r.top>=0)return;
+      if(!document.body.classList.contains('abaan'))return 0;
+      // de echte bovenkant van de balk (hij zweeft iets boven de rand), anders --ab-h
+      var b=document.getElementById('appbanner'),h=window.innerHeight||document.documentElement.clientHeight;
+      var t=b?b.getBoundingClientRect().top:h;
+      return t>0&&t<h?h-t:(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ab-h'))||0);
+    }catch(e){return 0;}
+  }
+  function toonInBeeld(el,tot){
+    try{
+      var r=el.getBoundingClientRect(),onder=(tot||el).getBoundingClientRect().bottom;
+      var h=(window.innerHeight||document.documentElement.clientHeight)-onderBalkHoogte();
+      if(onder<=h&&r.top>=0)return;
       var rustig=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      el.scrollIntoView({block:'nearest',behavior:rustig?'auto':'smooth'});
+      // zo weinig mogelijk schuiven, maar de bovenkant van de melding blijft altijd in beeld
+      var dy=r.top<0?r.top-8:Math.min(onder-h+8,r.top-8);
+      window.scrollBy({top:dy,left:0,behavior:rustig?'auto':'smooth'});
     }catch(e){}
   }
   // Seintjes: de knoppen tonen wat er bij de praktijk openstaat, niet de laatste tik. De server
@@ -4330,7 +4346,7 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       var dank=document.getElementById('hsdank');
       return stuur('/api/kaart/ervaring',{id:id,score:score})
         .then(function(d){
-          if(d&&d.ok){K.kaart.ervaring=d.ervaring||[];if(!nogEen()){tekenHerstel();zetDank(dank,trh('dank'));}}
+          if(d&&d.ok){K.kaart.ervaring=d.ervaring||[];if(!nogEen()){tekenHerstel();zetDank(dank,trh('dank'),'',true);}}
           else{tekenHerstel();zetDank(dank,d&&d.kwijt?trw('kwijt'):trh('fout'),'fout',!!(d&&d.kwijt));}
         })
         .catch(function(e){zetDank(dank,e&&e.wacht?trw('een'):trh('fout'),e&&e.wacht?'wacht':'fout');

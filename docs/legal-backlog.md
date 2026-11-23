@@ -23,6 +23,12 @@ De punten die op PR #41 wachtten, zijn op 2026-11-07 toch gebouwd (#69 en de jur
 
 ## Open
 
+- **LAAG (van de gebruikers-sweep 2026-11-23 02u) — verwerkersovereenkomst art. 2 (b): nieuw kaartveld `behandelaarLid`.**
+  Om twee collega's met dezelfde naam uit elkaar te houden bewaart de kaart naast de naam van de behandelaar nu ook
+  welk account van het team dat is (alleen op de server en in de praktijkroutes, nooit voor de patiënt). `scripts/test-privacy.mjs`
+  koppelt het veld voorlopig aan "de naam van de behandelaar" in art. 2. Te beoordelen: art. 2 aanvullen met "en welk account
+  van het team dat is" (zoals bij "het account-id van de maker"), met de gebruikelijke versieregel.
+
 - **OPGELOST 2026-11-22 21u (legal-PR van deze run; `scripts/test-vwo-datalek.mjs` faalt zonder fix) — LAAG — verwerkersovereenkomst (b): geheimhouding en datalekken alleen voor patiëntgegevens.**
   Art. 2 noemt sinds 2026-11-14 twee groepen betrokkenen: patiënten en medewerkers van de praktijk (leeslog, Activiteit, logins).
   Art. 4 (geheimhouding), art. 9 (datalekken) en art. 12 (looptijd) zeiden alleen "patiëntgegevens". Art. 28 lid 3 b en art. 33 lid 2

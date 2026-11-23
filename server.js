@@ -619,7 +619,29 @@ const behandelaarVanSessie = (req, pk) => {
   const naam = String((l && l.naam) || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 40);
   return naam || null;
 };
-const isBeheer = (s) => !!s && (!s.lid || (sessieLid(s) || {}).rol === "beheerder");
+// Twee collega's met precies dezelfde naam ("Tom Jansen") waren één behandelaar: de kaart bewaarde alleen
+// de naam, dus "Alleen mijn patiënten" bij Tom A toonde ook de patiënten van Tom B, en na het verwijderen
+// van Tom B diens kaarten (gebruikers-sweep 2026-11-22, Karin). Nu bewaart de kaart ook het lid (alleen op
+// de server en in de praktijkroutes); de lijsten geven per kaart `mijn` mee voor wie er kijkt.
+const behNaamKort = (n) => String(n || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 40).toLowerCase();
+const behandelaarLidVanSessie = (req, pk) => { const s = sessieVan(req); return (s && s.pk === pk && s.lid && lidVan(pk, s.lid)) ? s.lid : null; };
+// bij een met de hand gekozen naam: je eigen naam is jezelf; anders het ene lid met die naam; bij twee
+// collega's met dezelfde naam (en niet jezelf) is het niet te zeggen, dan alleen de naam zoals voorheen
+const behandelaarLidVoorNaam = (req, pk, naam) => {
+  const n = behNaamKort(naam);
+  if (!n) return null;
+  const s = sessieVan(req);
+  const eigen = (s && s.pk === pk) ? sessieLid(s) : null;
+  if (eigen && behNaamKort(eigen.naam) === n) return eigen.id;
+  const zelfde = ledenVan(pk).filter((l) => l && l.id && behNaamKort(l.naam) === n);
+  return zelfde.length === 1 ? zelfde[0].id : null;
+};
+// `mijn` per kaart alleen als zowel de kaart als de sessie een lid heeft; anders beslist de app op naam
+const mijnVoorSessie = (req, pk) => {
+  const lid = behandelaarLidVanSessie(req, pk);
+  return (k) => (lid && k && k.behandelaarLid) ? { mijn: k.behandelaarLid === lid } : {};
+};
+const isBeheer =(s) => !!s && (!s.lid || (sessieLid(s) || {}).rol === "beheerder");
 // Eén regel in het leeslog. Wie: de login van de sessie, het gedeelde wachtwoord, of beheer van
 // Fysiplan (dat alleen bij een praktijk zonder account kan lezen, en daar zijn eigen logboek van
 // houdt). De v1-app (eigen accountlaag) blijft erbuiten.
@@ -1054,14 +1076,19 @@ function seinMailOntvangers(pk, kaart) {
   const leden = ledenVan(pk).filter((l) => lidActief(l) && geldigEmail(l.email));
   const uit = (l) => ({ email: l.email, naam: l.naam || "" });
   if (kaart) {
+    // de kaart kent het lid van de behandelaar: dat lid, ook bij een naamgenoot in het team
+    if (kaart.behandelaarLid) {
+      const bl = leden.find((l) => l.id === kaart.behandelaarLid);
+      if (bl) return [uit(bl)];
+    }
     // zelfde inkorting als behandelaarVanSessie: de kaart bewaart hooguit 40 tekens van de naam
-    const kort = (n) => String(n || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 40).toLowerCase();
+    const kort =(n) => String(n || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim().slice(0, 40).toLowerCase();
     const naam = kort(kaart.behandelaar);
     // maakte een collega die niet meer in het team staat de kaart, dan zegt de naam niets: met
     // twee "Tom Jansen" ging na het verwijderen van Tom B de mail over diens patiënt stil naar
     // Tom A (gebruikers-sweep 2026-11-22 22u, Karin). Dan de beheerders, zoals bij een kaart zonder maker.
     const makerWeg = /^lid:/.test(String(kaart.maker || "")) && !ledenVan(pk).some((l) => "lid:" + l.id === kaart.maker);
-    const opNaam = naam && !makerWeg ? leden.filter((l) => kort(l.naam) === naam) : [];
+    const opNaam = naam && !makerWeg && !kaart.behandelaarLid ?leden.filter((l) => kort(l.naam) === naam) : [];
     if (opNaam.length === 1) return [uit(opNaam[0])];
     const maker = leden.find((l) => "lid:" + l.id === kaart.maker);
     if (maker) return [uit(maker)];
@@ -7338,6 +7365,7 @@ async function afhandelen(request, response) {
     if (await eisBeveiligdePraktijk(request, response, pk)) return;
     const nu = Date.now();
     leesMerk(request, pk, "berichten");
+    const mijnI = mijnVoorSessie(request, pk);
     const kaartenMetNieuws = Object.values(kaarten[pk] || {})
       .filter((k) => !k.demo && kaartLeeft(k, pk, nu))
       // een afgeronde (gearchiveerde) kaart werkt voor de patiënt nog tot de bewaardatum; wat hij daarna
@@ -7348,7 +7376,7 @@ async function afhandelen(request, response) {
       .filter((x) => x.items.length)
       .map(({ k, items }) => {
         const oudste = Math.min(...items.map((i) => i.t));
-        return { id: k.id, naam: k.naam, behandelaar: k.behandelaar || null, items, ...(k.gearchiveerd ? { gearchiveerd: true } : {}),
+        return { id: k.id, naam: k.naam, behandelaar: k.behandelaar || null, ...mijnI(k), items,...(k.gearchiveerd ? { gearchiveerd: true } : {}),
           laatst: Math.max(...items.map((i) => i.t)), wachtWerkdagen: werkdagenSinds(oudste, nu),
           dossier: k.dossier || null, inDossier: inDossierBij(k) };
       })
@@ -7408,9 +7436,10 @@ async function afhandelen(request, response) {
     const nuLijst = Date.now();
     leesMerk(request, pk, "overzicht");
     const magLog = (() => { const s = sessieVan(request); return !!(s && s.pk === pk && isBeheer(s)); })();
+    const mijnL = mijnVoorSessie(request, pk);
     const list = Object.values(map)
       .filter((k) => kaartLeeft(k, pk, nuLijst))
-      .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, magWeg: magKaartVerwijderen(request, pk, k), ...(magLog && !k.demo ? { magLog: true } : {}), aantal: (k.chosen || []).length,
+      .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, magWeg: magKaartVerwijderen(request, pk, k), ...mijnL(k),...(magLog && !k.demo ? { magLog: true } : {}), aantal: (k.chosen || []).length,
         // wanneer de kaart door de bewaartermijn verdwijnt: het overzicht waarschuwt
         // ruim van tevoren, zodat de praktijk eerst naar het dossier kan kopiëren
         verloopt: verdwijntOp(pk, k),
@@ -7643,6 +7672,7 @@ async function afhandelen(request, response) {
         // een nieuwe kaart van een collega met eigen login krijgt die collega als behandelaar,
         // anders vond "Alleen mijn patiënten" in de inbox haar eigen kaarten nooit terug
         behandelaar: map[kk] ? map[kk].behandelaar || null : behandelaarVanSessie(request, pk),
+        behandelaarLid: map[kk] ? map[kk].behandelaarLid || null : behandelaarLidVanSessie(request, pk),
         pskDoel: map[kk] ? map[kk].pskDoel || null : null,
         psk: map[kk] ? map[kk].psk || [] : [],
         contact: map[kk] ? map[kk].contact || [] : [],
@@ -7655,6 +7685,7 @@ async function afhandelen(request, response) {
       if (!map[kk].gearchiveerdOp) delete map[kk].gearchiveerdOp;
       if (!map[kk].planT) delete map[kk].planT;
       if (!map[kk].inboxGezien) delete map[kk].inboxGezien;
+      if (!map[kk].behandelaarLid || !map[kk].behandelaar) delete map[kk].behandelaarLid;
       if (!map[kk].dossier) delete map[kk].dossier;
       await saveJson(kaartenPath, kaarten);
       await ruimKaartVideosOp(oudeVids.filter((p) => !Object.values(vids).includes(p)));
@@ -8045,6 +8076,8 @@ async function afhandelen(request, response) {
       const naam = String(b.naam || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(OMKEER_TEKENS, "").replace(/\s+/g, " ").trim().slice(0, 40);
       merkPlanWijziging(kaart, kaart.behandelaar, naam);
       kaart.behandelaar = naam || null;
+      const behLid = behandelaarLidVoorNaam(request, pk, naam);
+      if (behLid) kaart.behandelaarLid = behLid; else delete kaart.behandelaarLid;
       if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
       await sendJson(response, 200, { ok: true, behandelaar: kaart.behandelaar });
@@ -8702,7 +8735,12 @@ async function afhandelen(request, response) {
     // de nooit-geopend-triage nooit, precies voor wie de link negeert.
     const bkUa = String(request.headers["user-agent"] || "");
     const previewBot = /bot|whatsapp|facebookexternalhit|facebot|telegram|skypeuripreview|iframely|preview|crawler|spider/i.test(bkUa);
-    if (bkKaart && !bkKaart.demo && !previewBot) {
+    // de praktijk zelf (ingelogd, bv. "Open op deze computer" na Test de QR) is ook geen patiëntbezoek:
+    // anders stond de kaart meteen op "bekeken" en viel hij uit de nooit-geopend-triage
+    // (gebruikers-sweep 2026-11-23, Sanne)
+    const bkSes = bkKaart ? sessieVan(request) : null;
+    const bkEigen = !!(bkSes && Object.hasOwn(kaarten, bkSes.pk) && Object.values(kaarten[bkSes.pk] || {}).includes(bkKaart));
+    if (bkKaart && !bkKaart.demo && !previewBot && !bkEigen) {
       const nuBk = Date.now();
       const b = bkKaart.bekeken || { t: 0, n: 0 };
       if (nuBk - b.t > 10 * 60 * 1000) {
