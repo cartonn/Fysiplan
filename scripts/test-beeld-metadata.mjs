@@ -112,7 +112,17 @@ const maakPng = () => {
     assert.deepEqual(sporen(ps), [], "PNG zonder C2PA of eigen stukken");
     assert.ok(ps.equals(echtePng), "PNG verder byte voor byte gelijk");
   }
-  // kapot of geen beeld: ongewijzigd terug, geen fout
+  // security 2026-11-23: een onleesbare foto (één los byte tussen de Exif en het volgende segment; een
+  // browser toont hem gewoon) kwam ongewijzigd terug, met plek en toestel. Nu null: de server weigert hem.
+  {
+    const vuil = maakJpeg(6), exifEind = 2 + 4 + exif(6).length;
+    const losByte = Buffer.concat([vuil.subarray(0, exifEind), Buffer.from([0x00]), vuil.subarray(exifEind)]);
+    assert.ok(sporen(losByte).length >= 3, "testfoto met los byte draagt sporen");
+    assert.ok(zonderBeeldMetadata(losByte, "jpeg") === null, "onleesbare JPEG met sporen: null");
+    const pngKapot = Buffer.concat([echtePng.subarray(0, echtePng.length - 12), pngStuk("tEXt", "Author\0Jan Jansen"), Buffer.from([1, 2, 3])]);
+    assert.ok(zonderBeeldMetadata(pngKapot, "png") === null, "onleesbare PNG met een tekststuk: null");
+  }
+  // kapot of geen beeld zonder sporen: ongewijzigd terug, geen fout
   const kapot = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe1, 0xff, 0xff]), Buffer.alloc(50)]);
   assert.equal(zonderBeeldMetadata(kapot, "jpeg"), kapot);
   assert.equal(zonderBeeldMetadata(Buffer.from("geen png"), "png").toString(), "geen png");
@@ -149,6 +159,20 @@ try {
   const foto = await readFile(join(dataDir, oef.img));
   assert.deepEqual(sporen(foto), [], "eigen-oefeningfoto op de server zonder sporen");
   assert.ok(foto.indexOf(Buffer.from("Exif\0\0MM", "latin1")) > 0, "oriëntatie bewaard");
+
+  // onleesbare foto met plek en toestel: geweigerd, niets bewaard
+  {
+    const vuil = maakJpeg(6), exifEind = 2 + 4 + exif(6).length;
+    const losByte = Buffer.concat([vuil.subarray(0, exifEind), Buffer.from([0x00]), vuil.subarray(exifEind)]);
+    const r = await post("/api/praktijk/oefeningen", { praktijk: P, naam: "Eigen brug Losbyte", uitleg: "x", img: url(losByte, "jpeg") }, S);
+    assert.equal(r.status, 400, "onleesbare foto met sporen geweigerd");
+    assert.match((await r.json()).fout, /niet goed lezen/);
+    const rl = await post("/api/praktijken", { praktijk: P, adres: "Straat 1", plaats: "Utrecht", tel: "", email: "", logo: url(losByte, "jpeg") }, S);
+    assert.equal(rl.status, 400, "onleesbaar logo met sporen geweigerd");
+    const { readdir } = await import("node:fs/promises");
+    const bestanden = await readdir(join(dataDir, "uploads")).catch(() => []);
+    for (const f of bestanden) assert.deepEqual(sporen(await readFile(join(dataDir, "uploads", f))), [], "geen bestand met sporen in uploads: " + f);
+  }
 
   const r2 = await post("/api/praktijken", { praktijk: P, adres: "Straat 1", plaats: "Utrecht", tel: "", email: "", logo: url(maakPng(), "png") }, S);
   assert.equal(r2.status, 200, "logo bewaard: " + r2.status);
