@@ -13,7 +13,9 @@ import { join } from "node:path";
 
 const root = process.cwd();
 const appHtml = await readFile(join(root, "public/index.html"), "utf8");
-assert.match(appHtml, /return !\(INBOX_ALLEEN_MIJN&&mijn\)\|\|!b\|\|behIsMijn\(b,PRAKSLOT\.wie\);/, "filter: zonder behandelaar blijft zichtbaar, de rest via behIsMijn");
+// sinds 2026-11-23 (naamgenoten): per kaart eerst `mijn` van de server, anders behIsMijn (lege naam = zichtbaar)
+assert.match(appHtml, /return !\(INBOX_ALLEEN_MIJN&&mijn\)\|\|kaartIsMijn\(k,PRAKSLOT\.wie\);/, "filter: via kaartIsMijn");
+assert.match(appHtml, /if\(!b\|\|!w\)return true;/, "zonder behandelaar blijft zichtbaar");
 assert.match(appHtml, /\(lijst\.length\?" <span class='ib-tel'>"\+lijst\.length\+"<\/span>":""\)/, "teller telt de getoonde lijst");
 // het filter zelf, los nagespeeld
 // sinds 2026-11-22 14u (Karin): een volledige naam moet helemaal kloppen, een losse voornaam telt als voornaam

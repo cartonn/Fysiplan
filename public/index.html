@@ -1826,6 +1826,12 @@ bridge2.jpg</div>
     if(!b||!w)return true;
     return b.indexOf(' ')<0?b===w.split(' ')[0]:b===w;
   }
+  // per kaart: weet de server welk lid de behandelaar is (`mijn`), dan telt dat; zo zijn twee collega's met
+  // dezelfde naam twee behandelaars (gebruikers-sweep 2026-11-23, Karin). Oude kaarten: op naam, zoals hierboven.
+  function kaartIsMijn(c,wie){
+    if(c&&typeof c.mijn==='boolean')return c.mijn;
+    return behIsMijn(c&&c.behandelaar,wie);
+  }
   function tekenNietGeoefend(blok,lijst){
     var el=document.getElementById('k_nietgeoefend');
     if(!el){
@@ -1837,8 +1843,7 @@ bridge2.jpg</div>
     var dag=864e5,nu=Date.now(),mijn=(PRAKSLOT.wie||'').split(' ')[0].toLowerCase(),geteld=0,nieuw=0;
     var rijen=(lijst||[]).filter(function(c){
       if(!c||!c.id||c.gearchiveerd||c.demo||!c.ts)return false;
-      var b=String(c.behandelaar||'').trim().toLowerCase();
-      if(INBOX_ALLEEN_MIJN&&mijn&&b&&!behIsMijn(b,PRAKSLOT.wie))return false;
+      if(INBOX_ALLEEN_MIJN&&mijn&&!kaartIsMijn(c,PRAKSLOT.wie))return false;
       if(nu-c.ts<2*dag){nieuw++;return false;}
       geteld++;
       return !oefDagen(c).some(function(g){return nu-g.t<7*dag;});
@@ -3120,6 +3125,10 @@ bridge2.jpg</div>
   // Kaarten-paneel openen met het wachtwoordveld in beeld; na beveiligen gaat het delen verder
   function openBeveiligen(daarna){
     NA_BEVEILIG=daarna||null;
+    // Kaarten gaat hier vanzelf open (daar staat het beveiligen). Wie het venster daarna met Annuleren of
+    // Escape sluit, wil terug naar waar hij was: dan gaat Kaarten ook weer dicht. Eerst bleef Kaarten open
+    // en stond de focus in het naamveld (gebruikers-sweep 2026-11-22, Sanne, toetsenbord na Test de QR).
+    var kv=document.getElementById('ovKaarten'),kaartenDicht=!(kv&&kv.classList.contains('on')),vanKnop=document.activeElement;
     document.getElementById('kaartenBtn').click();
     // het paneel haalt eerst de stand van de praktijk op; pas dan is zeker welk formulier er staat
     var toon=function(wacht){
@@ -3127,7 +3136,7 @@ bridge2.jpg</div>
       if(PRAKSLOT.eigenLogin){
         // eigen login voor iedereen: een onbeveiligde praktijk krijgt meteen het venster, een
         // beveiligde het inlogformulier (de knop heet dan Inloggen)
-        if(!PRAKSLOT.geclaimd){openEigenLogin('nieuw');return;}
+        if(!PRAKSLOT.geclaimd){openEigenLogin('nieuw',{kaartenDicht:kaartenDicht,terug:vanKnop});return;}
         psFocusLogin();
         toonPsMsg('Log in met je e-mailadres en wachtwoord. Daarna komt de QR-code vanzelf op je kaart.');
         return;
@@ -4720,6 +4729,14 @@ bridge2.jpg</div>
     });
     sluit.onclick=function(){
       dicht();
+      if(nieuw&&opts.kaartenDicht){
+        NA_BEVEILIG=null;closeOv('ovKaarten');
+        // met Annuleren (muis of Enter) viel de focus daarna op body (hertest Sanne 2026-11-23): terug naar de knop
+        // "Test de QR" zet zichzelf even uit, dan was de focus al op body: dan die knop
+        var tk=(opts.terug&&opts.terug!==document.body)?opts.terug:document.getElementById('pb_qr');
+        var terugNaar=function(){var a=document.activeElement;if((!a||a===document.body)&&tk&&document.contains(tk)&&tk.offsetParent!==null){try{tk.focus();}catch(e){}}};
+        setTimeout(terugNaar,150);setTimeout(terugNaar,600);
+      }
       if(!nieuw){toonPsMsg('Je bent nog niet ingelogd. Met het praktijkwachtwoord maak je eerst je eigen login; log opnieuw in om dat te doen.');psFocusLogin();}
     };
     var stuur=function(){
@@ -6190,7 +6207,7 @@ bridge2.jpg</div>
         // "Alleen mijn patiënten": kaarten met mijn voornaam als behandelaar (heel het woord,
         // "Sanneke" is niet "Sanne"), plus kaarten zonder behandelaar: een vraag mag nooit
         // verdwijnen omdat niemand de kaart op zijn naam heeft gezet
-        var lijst=d.kaarten.filter(function(k){var b=String(k.behandelaar||'').trim().toLowerCase();return !(INBOX_ALLEEN_MIJN&&mijn)||!b||behIsMijn(b,PRAKSLOT.wie);});
+        var lijst=d.kaarten.filter(function(k){return !(INBOX_ALLEEN_MIJN&&mijn)||kaartIsMijn(k,PRAKSLOT.wie);});
         ib.style.display='';
         var h="<div class='ib-kop' style='display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap'>"+
           "<label style='margin:0'>Nieuw van patiënten"+(lijst.length?" <span class='ib-tel'>"+lijst.length+"</span>":"")+"</label>"+

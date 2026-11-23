@@ -17,7 +17,9 @@ const root = process.cwd();
 const k = await readFile(join(root, "public/kaart.html"), "utf8");
 
 // ---- bron: zetDank kan in beeld schuiven, alleen de seintjes-tik vraagt dat ----
-assert.match(k, /function zetDank\(el,tekst,soort,inBeeld\)\{[\s\S]*?if\(inBeeld\)toonInBeeld\(el\);/, "zetDank schuift op verzoek in beeld");
+assert.match(k, /function zetDank\(el,tekst,soort,inBeeld\)\{[\s\S]*?if\(inBeeld\)\{var sp=el\.id==='sdank'\?document\.getElementById\('sspoed'\):null;toonInBeeld\(el,/, "zetDank schuift op verzoek in beeld, na een seintje met de spoedregel");
+// sweep 2026-11-23 (Truus): de balk "Zet op beginscherm" telt mee als onderrand
+assert.match(k, /function toonInBeeld\(el,tot\)\{[\s\S]*?-onderBalkHoogte\(\);/, "toonInBeeld rekent de beginschermbalk af");
 const handler = k.slice(k.indexOf("document.getElementById('sknoppen').addEventListener('click'"));
 const blok = handler.slice(0, handler.indexOf("seinKetting=seinKetting.catch"));
 const aanroepen = blok.match(/zetDank\([^;]*?\)(?=[;}])/g) || [];
@@ -59,7 +61,9 @@ try {
     chosen: [{ n: "Bruggen beginner", id: "fp_688499fde71e7575", i: 0 }], kaartId: "" }, { "x-praktijk-sessie": sessie })).json()).id;
   assert.ok(id, "kaart gedeeld");
 
-  for (const motion of ["reduce", "no-preference"]) {
+  // sweep 2026-11-23 (Truus, iPhone SE): met de balk "Zet op beginscherm" lag de spoedregel "112" na een seintje
+  // helemaal achter de balk. De laatste twee rondes zetten die balk aan en eisen ook de spoedregel in beeld.
+  for (const [motion, balk, maat] of [["reduce", false, "200%"], ["no-preference", false, "200%"], ["reduce", true, "100%"], ["reduce", true, "200%"]]) {
     const ctx = await browser.newContext({ ...pw.devices["iPhone SE"], locale: "nl-NL", serviceWorkers: "block", reducedMotion: motion,
       extraHTTPHeaders: { "x-forwarded-for": "10.7.31." + (100 + ip++) } });
     const p = await ctx.newPage();
@@ -72,7 +76,8 @@ try {
     }
     await wacht(500);
     // 200 % tekst, en de vraagknop helemaal onderaan in beeld: daar tikt Truus
-    await p.evaluate(() => { document.documentElement.style.fontSize = "200%"; });
+    await p.evaluate((m) => { document.documentElement.style.fontSize = m; }, maat);
+    if (balk) await p.evaluate(() => { document.getElementById("ab_tekst").textContent = "Zet deze kaart op je beginscherm"; document.getElementById("appbanner").classList.add("aan"); });
     await wacht(300);
     await p.evaluate(() => {
       const b = document.querySelector('#sknoppen .sbtn[data-soort="vraag"]');
@@ -90,14 +95,16 @@ try {
     for (let i = 0; i < 60; i++) {
       stand = await p.evaluate(() => {
         const d = document.getElementById("sdank");
-        const r = d.getBoundingClientRect();
-        return { tekst: d.textContent, zichtbaar: d.style.display === "block", top: Math.round(r.top), bottom: Math.round(r.bottom), h: window.innerHeight };
+        const r = d.getBoundingClientRect(), sp = document.getElementById("sspoed").getBoundingClientRect();
+        const ab = document.getElementById("appbanner"), abTop = ab.classList.contains("aan") && getComputedStyle(ab).display !== "none" && ab.getBoundingClientRect().top > 0 ? ab.getBoundingClientRect().top : window.innerHeight;
+        return { tekst: d.textContent, zichtbaar: d.style.display === "block", top: Math.round(r.top), bottom: Math.round(r.bottom), spoed: Math.round(sp.bottom), h: Math.round(Math.min(window.innerHeight, abTop)) };
       });
-      if (stand.zichtbaar && stand.tekst && stand.bottom <= stand.h + 1 && stand.top >= -1) break;
+      if (stand.zichtbaar && stand.tekst && stand.bottom <= stand.h + 1 && stand.top >= -1 && (!balk || stand.spoed <= stand.h + 1)) break;
       await wacht(50);
     }
     assert.ok(stand.zichtbaar && /verstuurd/i.test(stand.tekst), "bevestiging gezet (" + motion + "): " + JSON.stringify(stand));
-    assert.ok(stand.bottom <= stand.h + 1 && stand.top >= -1, "bevestiging staat in beeld bij 200 % (" + motion + "): " + JSON.stringify(stand));
+    assert.ok(stand.bottom <= stand.h + 1 && stand.top >= -1, "bevestiging staat in beeld bij " + maat + " (" + motion + (balk ? ", met beginschermbalk" : "") + "): " + JSON.stringify(stand));
+    if (balk) assert.ok(stand.spoed <= stand.h + 1, "spoedregel niet achter de beginschermbalk (" + maat + "): " + JSON.stringify(stand));
     assert.deepEqual(fouten, [], "geen paginafouten");
     await ctx.close();
   }

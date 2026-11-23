@@ -22,7 +22,7 @@ assert.match(k, /K\.kaart\.ervaring=vandaagLokaal\(K\.kaart\.ervaring,score\);te
 // sweep 2026-11-16 (Jayden): het antwoord op de eerste tik tekende de oude keuze terug met "Saved" erbij,
 // terwijl de laatste tik nog wachtte. Nu tekent alleen het antwoord op de laatste tik.
 assert.match(k, /verstuur\(v,function\(\)\{return na!==null&&na!==v;\}\)/, "verstuur weet of er een nieuwere tik wacht");
-assert.match(k, /if\(!nogEen\(\)\)\{tekenHerstel\(\);zetDank\(dank,trh\('dank'\)\);\}/, "herstel: geen terugsprong");
+assert.match(k, /if\(!nogEen\(\)\)\{tekenHerstel\(\);zetDank\(dank,trh\('dank'\)(,'',true)?\);\}/, "herstel: geen terugsprong");
 assert.match(k, /if\(!nogEen\(\)\)\{tekenPsk\(\);zetDank\(dank,trpsk\('dank'\)\);\}/, "PSK: geen terugsprong");
 assert.match(k, /if\(MSCORE_NA&&MSCORE_NA\.dataset\.score!==b\.dataset\.score\)return;\s*tekenMeting\(\);/, "pijnscore: geen terugsprong");
 assert.doesNotMatch(k, /var b=e\.target\.closest\('\.sbtn'\);if\(!b\|\|b\.dataset\.bezig\)return;\s*var score=Number\(b\.dataset\.hs\)/, "geen bezig-slot per herstelknop meer");
