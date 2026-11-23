@@ -733,6 +733,9 @@ html.v2 #pr_do:disabled{opacity:.7;cursor:progress}
   html.v2 .sjb-link:hover{text-decoration:underline}
   html.v2 .sjb-link.rood{color:#b42318}
   html.v2 .sjb-vb-noot{font-size:12px;color:var(--muted);margin:8px 0 0;line-height:1.5}
+  html.v2 .sjb-vb-melding{color:var(--ink,#18343B);background:#EEF7E0;border-radius:8px;padding:8px 10px}
+  html.v2 .sjb-vb-melding.fout{background:#FFF4E5}
+  html.v2 .sjb-vb-gedeeld{font-size:13px;color:var(--muted)}
   html.v2 .sjb-leeg{padding:22px 10px;font-size:13px;color:var(--muted);line-height:1.55}
   html.v2 .sjb-leeg b{display:block;color:var(--ink);margin-bottom:2px}
   html.v2 .sjb-voet{display:flex;align-items:center;gap:8px;margin:0;padding:12px 24px;border-top:1px solid var(--line);background:#fff}

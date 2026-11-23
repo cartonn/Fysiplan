@@ -331,7 +331,7 @@
   .tk-beeld{flex:0 0 33mm;display:flex;align-items:center;justify-content:center;overflow:hidden}
   .tk-beeld img,.tk-beeld svg{width:auto !important;height:auto !important;max-width:100%;max-height:33mm;object-fit:contain;border:0 !important;box-shadow:none !important;background:none !important}
   .tk-naam{font-weight:800;font-size:12.5pt;line-height:1.2;color:#18343B}
-  .tk-naam .tk-nr{display:inline-block;min-width:6mm;color:#5a6b70}
+  .tk-naam .tk-nr{display:inline-block;min-width:6mm;margin-right:1mm;color:#5a6b70}
   .tk-dos{font-weight:700;font-size:11pt}
   .tk-uitleg{font-size:9.5pt;line-height:1.32;color:#222;flex:1 1 0;min-height:0;overflow:hidden}
   .tk-uitleg.tk-lang{font-size:8.3pt;line-height:1.28}
@@ -2838,6 +2838,17 @@ bridge2.jpg</div>
         while(!ok()&&fs-0.5>=ondergrens){fs-=0.5;u.style.fontSize=fs+'px';u.style.lineHeight='1.25';}
         if(!ok())alles=false;
       });
+      // Gebruikers-sweep 2026-11-23 (Sanne): de keuze voor een kleiner beeld viel per tegel, waardoor de
+      // titels in één rij 9 mm uit elkaar stonden. Krijgt één tegel in een rij het kleinere beeld, dan de
+      // hele rij (een kleiner beeld geeft alleen meer ruimte, dus wat paste, past nog).
+      [].forEach.call(el.querySelectorAll('.tk-raster'),function(r){
+        var rijen={};
+        [].forEach.call(r.querySelectorAll('.tk-oef'),function(o){var k=Math.round(o.offsetTop);(rijen[k]=rijen[k]||[]).push(o);});
+        Object.keys(rijen).forEach(function(k){
+          var rij=rijen[k];
+          if(rij.some(function(o){return o.classList.contains('tk-veel');}))rij.forEach(function(o){o.classList.add('tk-veel');});
+        });
+      });
       [].forEach.call(el.querySelectorAll('.tk-vel'),function(v){if(!past(v))alles=false;});
       return alles;
     }finally{el.classList.remove('tk-meet');}
@@ -3688,6 +3699,17 @@ bridge2.jpg</div>
   }
   function sjSleutel(it){return it.bron+':'+it.i;}
   function sjCat(it){return it.bron==='eigen'?'eigen':it.bron==='praktijk'?'praktijk':(it.s.categorie||'Overig');}
+  // Gebruikers-sweep 2026-11-23 (Mark, desktop + iPad): na "Delen met de praktijk" bleef de eigen kaart
+  // "alleen op dit apparaat" heten, met dezelfde deelknop, en stond hij in "Alle" twee keer. De eigen kaart
+  // weet nu of de praktijk een kaart met dezelfde naam heeft, en of die gelijk is aan deze versie.
+  function sjOefSleutel(s){return JSON.stringify((s.oefeningen||[]).map(function(n){return typeof n==='string'?{n:n}:{n:n&&n.n||'',s:n&&n.s||'',h:n&&n.h||'',w:n&&n.w||''};}));}
+  function sjGedeeld(s){
+    if(!IS_V2||!Array.isArray(PRAKSJAB))return null;
+    var nm=String(s.naam||'').trim().toLowerCase(),p=null;
+    PRAKSJAB.forEach(function(x){if(String(x.naam||'').trim().toLowerCase()===nm)p=x;});
+    if(!p)return null;
+    return sjOefSleutel(p)===sjOefSleutel(s)?'gelijk':'anders';
+  }
   function sjOefeningen(s){
     return (s.oefeningen||[]).map(function(n){var id=byNorm[normEx(sjabNaam(n))];return (id!=null&&OEF[id])?{id:id,o:OEF[id],item:n}:null;}).filter(Boolean);
   }
@@ -3741,7 +3763,7 @@ bridge2.jpg</div>
       return "<button type='button' class='sjb-rij"+(SJ_STAAT.sel===sl?' aan':'')+"' role='option' aria-selected='"+(SJ_STAAT.sel===sl)+"' data-sjsel='"+sl+"'>"+
         "<span class='sjb-rij-beeld'>"+oe.slice(0,3).map(function(x){return imgRender(x.o.imgs[0],38);}).join('')+"</span>"+
         "<span class='sjb-rij-tekst'><b>"+esc(s.naam)+"</b>"+
-        "<small>"+oe.length+" oefening"+(oe.length===1?'':'en')+(dz?" · "+esc(dz):"")+(it.bron==='eigen'?" · alleen op dit apparaat":it.bron==='praktijk'?" · gedeeld met de praktijk":"")+"</small>"+
+        "<small>"+oe.length+" oefening"+(oe.length===1?'':'en')+(dz?" · "+esc(dz):"")+(it.bron==='eigen'?(sjGedeeld(s)==='gelijk'?" · gedeeld met de praktijk":sjGedeeld(s)==='anders'?" · gewijzigd, praktijk heeft een oudere versie":" · alleen op dit apparaat"):it.bron==='praktijk'?" · gedeeld met de praktijk":"")+"</small>"+
         (s.sub&&it.bron==='std'?"<span class='sjb-rij-sub'>"+esc(s.sub)+"</span>":"")+
         "</span></button>";
     };
@@ -3754,7 +3776,8 @@ bridge2.jpg</div>
       var groepen=['eigen','praktijk'].concat(stdCats);
       var opVolgorde=[];
       groepen.forEach(function(g){
-        var deel=zicht.filter(function(it){return sjCat(it)===g;});
+        // een eigen kaart die precies zo bij de praktijk staat, één keer tonen (onder Van de praktijk)
+        var deel=zicht.filter(function(it){return sjCat(it)===g&&!(it.bron==='eigen'&&sjGedeeld(it.s)==='gelijk');});
         if(!deel.length)return;
         opVolgorde=opVolgorde.concat(deel);
         h+="<div class='sjb-groep'>"+esc(g==='eigen'?'Mijn kaarten':g==='praktijk'?'Van de praktijk':g)+"</div>"+deel.map(rij).join('');
@@ -3774,8 +3797,9 @@ bridge2.jpg</div>
     var it=SJ_STAAT.sel?sjZoekItem(SJ_STAAT.sel):null;
     if(!it){el.innerHTML="<div class='sjb-leeg'>Kies links een behandelkaart om te zien wat erop staat.</div>";return;}
     var s=it.s,oe=sjOefeningen(s),mist=(s.oefeningen||[]).length-oe.length;
-    var label=it.bron==='eigen'?'Mijn kaart · alleen op dit apparaat':it.bron==='praktijk'?'Gedeeld met de praktijk':(s.categorie||'Standaard');
-    var h="<div class='sjb-vb-kop'><span class='sjb-chip'>"+esc(label)+"</span><h4>"+esc(s.naam)+"</h4>"+(s.sub?"<p>"+esc(s.sub)+"</p>":"")+"</div>";
+    var gedeeld=it.bron==='eigen'?sjGedeeld(s):null;
+    var label=it.bron==='eigen'?(gedeeld==='gelijk'?'Mijn kaart · gedeeld met de praktijk':gedeeld==='anders'?'Mijn kaart · gewijzigd na het delen':'Mijn kaart · alleen op dit apparaat'):it.bron==='praktijk'?'Gedeeld met de praktijk':(s.categorie||'Standaard');
+    var h="<div class='sjb-vb-kop'><span class='sjb-chip'>"+esc(label)+"</span><h4>"+esc(s.naam)+"</h4>"+(s.sub?"<p>"+esc(gedeeld?String(s.sub).replace(/\s*\(alleen op dit apparaat\)/,''):s.sub)+"</p>":"")+"</div>";
     h+="<ol class='sjb-vb-oef'>"+oe.map(function(x){
       var d=sjDosTekst(x.item,s);
       return "<li>"+imgRender(x.o.imgs[0],48)+"<span><b>"+esc(x.o.naam)+"</b>"+(d?"<small>"+esc(d)+"</small>":"")+"</span></li>";
@@ -3796,17 +3820,23 @@ bridge2.jpg</div>
     h+="</div>";
     var klein='';
     if(it.bron==='eigen'){
-      if(IS_V2&&(SET.praktijk||'').trim())klein+="<button class='sjb-link' data-sjdo='deel' data-sj='"+sl+"' title='Deel deze kaart met de hele praktijk: elke collega kan hem dan op elk apparaat gebruiken'>Delen met de praktijk</button>";
+      if(IS_V2&&(SET.praktijk||'').trim()){
+        if(gedeeld==='gelijk')klein+="<span class='sjb-vb-gedeeld'>Staat bij de praktijk</span>";
+        else if(gedeeld==='anders')klein+="<button class='sjb-link' data-sjdo='deelvervang' data-sj='"+sl+"' title='Vervang de versie die de praktijk nu heeft door deze; je collega\'s zien dan alleen nog deze'>Praktijkversie bijwerken</button>";
+        else klein+="<button class='sjb-link' data-sjdo='deel' data-sj='"+sl+"' title='Deel deze kaart met de hele praktijk: elke collega kan hem dan op elk apparaat gebruiken'>Delen met de praktijk</button>";
+      }
       klein+="<button class='sjb-link rood' data-sjdo='weg' data-sj='"+sl+"'>Verwijderen</button>";
     }
     if(it.bron==='praktijk'&&it.s.magWeg!==false)klein+="<button class='sjb-link rood' data-sjdo='weg' data-sj='"+sl+"' title='Verwijdert deze kaart voor de hele praktijk'>Verwijderen voor de praktijk</button>";
     if(klein)h+="<div class='sjb-vb-klein'>"+klein+"</div>";
+    // uitkomst van delen in beeld in plaats van een alert/confirm (die blokkeren de iPad)
+    if(SJ_STAAT.melding&&SJ_STAAT.melding.sl===sl)h+="<p class='sjb-vb-noot sjb-vb-melding"+(SJ_STAAT.melding.fout?' fout':'')+"' role='status'>"+SJ_STAAT.melding.html+"</p>";
     if(it.bron==='std')h+="<p class='sjb-vb-noot'>Een standaardkaart blijft altijd zoals hij is. Wat je aanpast bewaar je als je eigen kaart.</p>";
     el.innerHTML=h;
   }
   function openSjab(){
     var z=document.getElementById('sj_zoek');if(z)z.value='';
-    SJ_STAAT.cat='alle';SJ_STAAT.sel=null;
+    SJ_STAAT.cat='alle';SJ_STAAT.sel=null;SJ_STAAT.melding=null;
     renderSjabLijst();laadPrakSjab();openOv('ovSjab');
     setTimeout(function(){if(z&&z.focus)z.focus();},60);
   }
@@ -4090,6 +4120,7 @@ bridge2.jpg</div>
     var sj=huidigAlsSjabloon(naam);
     if(idx>-1){if(!confirm('Bestaande eigen kaart "'+naam+'" vervangen?'))return false;lst[idx]=sj;}else lst.unshift(sj);
     if(!bewaarEigenSjab(lst))return false;
+    SJ_STAAT.melding=null; // een oude "Gedeeld"-melding hoort niet bij de nieuwe versie (hertest Mark 2026-11-23)
     stopSjabBewerk();
     return true;
   }
@@ -4104,11 +4135,11 @@ bridge2.jpg</div>
   document.getElementById('sjb_bstop').addEventListener('click',stopSjabBewerk);
   document.getElementById('sj_cats').addEventListener('click',function(e){
     var k=e.target.closest('[data-sjcat]');if(!k)return;
-    SJ_STAAT.cat=k.dataset.sjcat;SJ_STAAT.sel=null;renderSjabLijst();
+    SJ_STAAT.cat=k.dataset.sjcat;SJ_STAAT.sel=null;SJ_STAAT.melding=null;renderSjabLijst();
   });
   document.getElementById('sj_lijst').addEventListener('click',function(e){
     var r=e.target.closest('[data-sjsel]');if(!r)return;
-    SJ_STAAT.sel=r.dataset.sjsel;
+    SJ_STAAT.sel=r.dataset.sjsel;SJ_STAAT.melding=null;
     Array.prototype.forEach.call(this.querySelectorAll('.sjb-rij.aan'),function(x){x.classList.remove('aan');x.setAttribute('aria-selected','false');});
     r.classList.add('aan');r.setAttribute('aria-selected','true');
     renderSjabVoorbeeld();
@@ -4141,29 +4172,35 @@ bridge2.jpg</div>
       if(!confirm('Je eigen kaart "'+s.naam+'" verwijderen?'))return;
       var lst=leesEigenSjab();lst.splice(it.i,1);bewaarEigenSjab(lst);SJ_STAAT.sel=null;renderSjabLijst();return;
     }
-    // eigen kaart delen met de hele praktijk (v2)
-    if(wat==='deel'){
+    // eigen kaart delen met de hele praktijk (v2); "Praktijkversie bijwerken" en "Vervang" zijn zelf de keuze
+    if(wat==='deel'||wat==='deelvervang'){
       if(k.disabled)return;
       SJ_STAAT.deelKlikTot=Date.now()+1500;
+      var tekstWas=k.textContent,slD=k.dataset.sj;
       k.style.minWidth=k.offsetWidth+'px';k.disabled=true;k.textContent='Bezig…';
-      var herstel=function(){k.disabled=false;k.textContent='Delen met de praktijk';};
-      var deel=function(vervang){
-        fetch('api/praktijk/sjablonen',{method:'POST',headers:PJSON(),
-          body:JSON.stringify({praktijk:SET.praktijk||'',naam:s.naam,oefeningen:s.oefeningen||[],vervang:!!vervang})})
-          .then(function(r){return r.json();})
-          .then(function(d){
-            if(d.ok){PRAKSJAB=d.sjablonen;renderSjabLijst();alert((vervang?'Het teamsjabloon "':'Gedeeld: "')+s.naam+(vervang?'" is vervangen. Je collega\'s zien nu deze versie.':'" staat nu bij de kaarten van de praktijk.'));}
-            else if(d.bestaat&&!vervang){
-              if(confirm('Er is al een teamsjabloon "'+(d.naam||s.naam)+'" in de praktijk.\n\nVervangen door deze versie? Je collega\'s zien dan alleen nog de nieuwe.'))deel(true);
-              else herstel();
-            }
-            // verlopen proef: dezelfde balk als elders, geen kale alert met een platte link (gebruikers-sweep 2026-11-21, Mark)
-            else if(d.proefVerlopen){herstel();toonProefVoorbij(k);}
-            else{herstel();alert(d.fout||'Delen is niet gelukt.'+(d.login?' Log eerst in bij de praktijk (via Kaarten).':''));}
-          })
-          .catch(function(){herstel();alert('Delen is niet gelukt: geen verbinding.');});
-      };
-      deel(false);
+      var meld=function(html,fout){SJ_STAAT.melding={sl:slD,html:html,fout:!!fout};renderSjabVoorbeeld();};
+      var herstel=function(){k.disabled=false;k.textContent=tekstWas;};
+      var vervang=wat==='deelvervang';
+      fetch('api/praktijk/sjablonen',{method:'POST',headers:PJSON(),
+        body:JSON.stringify({praktijk:SET.praktijk||'',naam:s.naam,oefeningen:s.oefeningen||[],vervang:vervang})})
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(d.ok){
+            PRAKSJAB=d.sjablonen;
+            // in "Alle" staat de gedeelde kaart nu één keer, onder Van de praktijk: die blijft gekozen
+            var pIdx=-1;(PRAKSJAB||[]).forEach(function(x,i){if(String(x.naam||'').trim().toLowerCase()===String(s.naam||'').trim().toLowerCase())pIdx=i;});
+            if(SJ_STAAT.cat==='alle'&&pIdx>-1){slD='praktijk:'+pIdx;SJ_STAAT.sel=slD;}
+            SJ_STAAT.melding={sl:slD,html:vervang?'Bijgewerkt: je collega\'s zien nu deze versie van “'+esc(s.naam)+'”.':'Gedeeld: “'+esc(s.naam)+'” staat nu bij de kaarten van de praktijk, voor elke collega op elk apparaat.'};renderSjabLijst();
+          }
+          else if(d.bestaat&&!vervang){
+            herstel();
+            meld('Er is al een teamsjabloon “'+esc(d.naam||s.naam)+'” in de praktijk. <button type=\'button\' class=\'sjb-link\' data-sjdo=\'deelvervang\' data-sj=\''+slD+'\'>Vervang die door deze versie</button>',true);
+          }
+          // verlopen proef: dezelfde balk als elders, geen kale alert met een platte link (gebruikers-sweep 2026-11-21, Mark)
+          else if(d.proefVerlopen){herstel();toonProefVoorbij(k);}
+          else{herstel();meld(esc(d.fout||'Delen is niet gelukt.')+(d.login?' Log eerst in bij de praktijk (via Kaarten).':''),true);}
+        })
+        .catch(function(){herstel();meld('Delen is niet gelukt: geen verbinding.',true);});
       return;
     }
     // gedeelde praktijkkaart (voor iedereen) verwijderen
@@ -6709,7 +6746,7 @@ bridge2.jpg</div>
               "<small role='alert' id='saffout_"+esc(c.id)+"' data-saffout='"+esc(c.id)+"' style='display:block;margin-top:3px;color:var(--danger,#b42318)'></small>"+
               // reeks al onderweg: het veld toont de startdatum (bron van waarheid),
               // dit regeltje toont waar de reeks nu staat — zoals de patiënt hem ziet
-              ((function(){var va=volgendeAfspraak(c);if(!va||!va.rest||va.t===c.afspraak.t)return "";return "<small style='color:var(--muted);display:block;margin-top:3px'>Volgende in de reeks: "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+" (nog "+va.rest+" keer)</small>";})())+
+              ((function(){var va=volgendeAfspraak(c);if(!va||!va.rest||va.t===c.afspraak.t)return "";return "<small style='color:var(--muted);display:block;margin-top:3px'>Volgende in de reeks: "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+" (daarna nog "+(va.rest-1)+" keer)</small>";})())+
             "</div>"+
             // behandelaar: één praktijk-login, heel het team — wie beheert deze kaart?
             "<div style='margin-top:7px'>"+
@@ -6777,7 +6814,7 @@ bridge2.jpg</div>
               (c.magWeg===true?"<button class='btn' data-sdel='"+esc(c.naam)+"' data-sdelid='"+esc(c.id)+"' title='Naar prullenbak' aria-label='Naar prullenbak — kaart "+esc(c.naam)+"'>×</button>":"")+"</div>";
           }
           return "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 4px;border-bottom:1px solid var(--line)'>"+
-            avRond(c.naam,'srv-av')+"<div class='srv-naam' style='flex:1;min-width:120px;overflow-wrap:anywhere'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" <span title='Behandelaar' style='white-space:nowrap'>· "+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, nog "+va.rest+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" ×"+va.rest:"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+zwChip+verloopChip+vg+hsChip+
+            avRond(c.naam,'srv-av')+"<div class='srv-naam' style='flex:1;min-width:120px;overflow-wrap:anywhere'><b>"+esc(c.naam)+"</b><br/><small style='color:var(--muted)'>"+dt+" · "+c.aantal+" oefening"+(c.aantal===1?"":"en")+trTxt+bkTxt+(c.behandelaar?" <span title='Behandelaar' style='white-space:nowrap'>· "+esc(c.behandelaar)+"</span>":"")+(c.notitie?" · <span title='"+esc(c.notitie)+"' style='white-space:nowrap'>notitie</span>":"")+(c.antwoord&&c.antwoord.tekst?" · <span title='Er staat een bericht op de patiëntkaart klaar dat nog niet is weggetikt: “"+esc(c.antwoord.tekst)+"”' style='white-space:nowrap'>bericht klaar</span>":"")+((function(){var va=volgendeAfspraak(c);if(!va)return "";return " · <span title='Volgende afspraak op de patiëntkaart"+(va.rest?" — wekelijkse reeks, daarna nog "+(va.rest-1)+" keer":"")+"' style='white-space:nowrap'>afspraak "+new Date(va.t).toLocaleDateString('nl-NL',{day:'2-digit',month:'2-digit'})+(va.rest?" +"+(va.rest-1):"")+"</span>";})())+((!pskChipGetoond&&c.pskDoel&&c.psk&&c.psk.length)?(function(){var pe2=(c.pskEerste&&typeof c.pskEerste.s==='number')?c.pskEerste.s:c.psk[0].s,pl2=c.psk[c.psk.length-1].s;return " · <span title='PSK bij \""+esc(c.pskDoel)+"\" (0 = geen moeite, 10 = onmogelijk)"+(pe2!==pl2?" — van "+pe2+" bij de start naar "+pl2:"")+"' style='white-space:nowrap'>PSK "+(pe2!==pl2?pe2+"→"+pl2:pl2)+"</span>";})():"")+"</small></div>"+seinChip+zwChip+verloopChip+vg+hsChip+
             "<button class='btn' data-sdeel='"+esc(c.id)+"' aria-label='Deel — kaart "+esc(c.naam)+"' title='Deel de patiëntlink via WhatsApp, e-mail of kopieer hem'>Deel</button>"+
             "<button class='btn' data-sopen='"+esc(c.id)+"' aria-label='Openen — kaart "+esc(c.naam)+"'>Openen</button>"+
             "<button class='btn' data-skopie='"+esc(c.id)+"' aria-label='Kopie — kaart "+esc(c.naam)+"' title='Maak een nieuwe kaart met dezelfde oefeningen voor een andere cliënt'>Kopie</button>"+

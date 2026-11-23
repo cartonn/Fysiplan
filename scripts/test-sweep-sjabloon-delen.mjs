@@ -2,8 +2,8 @@
 // behandelkaart.
 // 1. Een dubbelklik op Delen landde met de tweede klik op "Verwijderen" ernaast (de knop werd smaller
 //    door "Bezig…"); wie de vraag met OK beantwoordde, was de eigen kaart kwijt.
-// 2. Nog eens delen met dezelfde naam overschreef het teamsjabloon stil; nu vraagt de app "Vervangen?"
-//    en zegt na afloop wat er gebeurd is (de serverkant staat in test:gedeeldwerk).
+// 2. Nog eens delen met dezelfde naam overschreef het teamsjabloon stil; nu zegt de app in beeld wat er gebeurt
+//    (de serverkant staat in test:gedeeldwerk). 2026-11-23 (Mark): na delen "gedeeld met de praktijk", één keer in Alle, geen alert/confirm.
 // Broncontrole altijd (CI); het browserdeel alleen waar Playwright staat. `npm run test:sjabloondelen`
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -84,29 +84,39 @@ try {
   await page.mouse.click(x, y);
   await page.mouse.click(x, y);
   await wacht(1500);
-  assert.deepEqual(vragen.filter((v) => v.startsWith("confirm")), [], "geen vraag om de eigen kaart te verwijderen: " + JSON.stringify(vragen));
+  assert.deepEqual(vragen, [], "geen enkel venster (alert/confirm) bij delen: " + JSON.stringify(vragen));
   const eigen = await page.evaluate(() => JSON.parse(localStorage.getItem("fysiplan_eigen_sjablonen") || "[]").map((s) => s.naam));
   assert.deepEqual(eigen, ["Knie na VKB"], "de eigen behandelkaart staat er nog");
   assert.deepEqual((await teamSjablonen()).map((s) => s.naam), ["Knie na VKB"], "gedeeld met de praktijk");
-  assert.ok(vragen.some((v) => /^alert: Gedeeld: "Knie na VKB"/.test(v)), "de app bevestigt het delen: " + JSON.stringify(vragen));
+  assert.match(await page.locator("#sj_voorbeeld [role='status']").innerText(), /^Gedeeld: “Knie na VKB”/, "de app bevestigt het delen in beeld");
+  // gebruikers-sweep 2026-11-23 (Mark): na delen één keer in "Alle", niet meer "alleen op dit apparaat", geen tweede deelknop
+  assert.equal(await page.locator("#sj_lijst [data-sjsel]", { hasText: "Knie na VKB" }).count(), 1, "in Alle staat de gedeelde kaart één keer");
+  assert.equal(await page.locator("#sj_lijst [data-sjsel].aan", { hasText: "Knie na VKB" }).count(), 1, "de gedeelde kaart blijft gekozen");
+  await page.click("[data-sjcat='eigen']");
+  assert.equal(await page.locator("#sj_voorbeeld [role='status']").count(), 0, "de melding verdwijnt bij een andere categorie");
+  await page.locator("#sj_lijst [data-sjsel]", { hasText: "Knie na VKB" }).first().click();
+  const vb = await page.locator("#sj_voorbeeld").innerText();
+  assert.match(vb, /Mijn kaart · gedeeld met de praktijk/, "label na delen: " + vb);
+  assert.doesNotMatch(vb, /alleen op dit apparaat/, "niet meer 'alleen op dit apparaat'");
+  assert.equal(await page.locator("[data-sjdo='deel']").count(), 0, "geen tweede deelknop");
+  assert.match(vb, /Staat bij de praktijk/);
 
-  // 2. nog eens delen met dezelfde naam: eerst vragen; Annuleren laat het teamsjabloon staan
+  // 2. eigen kaart gewijzigd na het delen: "Praktijkversie bijwerken" is zelf de keuze, zonder confirm
   await page.evaluate(() => { const l = JSON.parse(localStorage.getItem("fysiplan_eigen_sjablonen")); l[0].oefeningen = [{ n: "Lunge" }]; localStorage.setItem("fysiplan_eigen_sjablonen", JSON.stringify(l)); });
-  vragen.length = 0; antwoord = false;
-  deel = await kies();
-  await deel.click();
+  vragen.length = 0;
+  await page.evaluate(() => { document.querySelectorAll(".ov.on").forEach((o) => o.classList.remove("on")); });
+  await page.click("#sjabBtn");
+  await page.click("[data-sjcat='eigen']");
+  await page.locator("#sj_lijst [data-sjsel]", { hasText: "Knie na VKB" }).first().click();
+  assert.match(await page.locator("#sj_voorbeeld").innerText(), /gewijzigd na het delen/);
+  await page.locator("[data-sjdo='deelvervang']").click();
   await wacht(1200);
-  assert.equal(vragen.filter((v) => /^confirm: Er is al een teamsjabloon "Knie na VKB"/.test(v)).length, 1, "vraagt om vervangen: " + JSON.stringify(vragen));
-  assert.equal((await teamSjablonen())[0].oefeningen[0].n, "Squat", "na Annuleren blijft de oude versie");
-  // OK vervangt
-  vragen.length = 0; antwoord = true;
-  deel = await kies();
-  await deel.click();
-  await wacht(1200);
-  assert.equal((await teamSjablonen())[0].oefeningen[0].n, "Lunge", "na OK staat de nieuwe versie bij de praktijk");
-  assert.ok(vragen.some((v) => /is vervangen/.test(v)), "de app zegt dat het vervangen is: " + JSON.stringify(vragen));
+  assert.equal((await teamSjablonen())[0].oefeningen[0].n, "Lunge", "de nieuwe versie staat bij de praktijk");
+  assert.deepEqual(vragen, [], "geen enkel venster bij bijwerken: " + JSON.stringify(vragen));
+  assert.match(await page.locator("#sj_voorbeeld [role='status']").innerText(), /^Bijgewerkt/);
+  assert.equal(await page.locator("[data-sjdo='deelvervang']").count(), 0, "daarna weer gelijk aan de praktijk");
   assert.deepEqual(fouten, []);
-  console.log("sjabloon delen: ok (dubbelklik verwijdert niets, zelfde naam vraagt eerst)");
+  console.log("sjabloon delen: ok (dubbelklik verwijdert niets, na delen één keer en gedeeld gelabeld, bijwerken zonder vensters)");
 } catch (e) {
   console.error(uit.slice(-2000));
   throw e;

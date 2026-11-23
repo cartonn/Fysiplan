@@ -34,8 +34,9 @@ assert.ok(/var veld=csvCel;/.test(index), "de CSV-export gebruikt csvCel");
 // ---- server met een eigen datamap ----
 const dataDir = await mkdtemp(join(tmpdir(), "fysiplan-sweep-"));
 const nu = Date.now();
-// afspraak: dinsdag 10 november 2026, 14:00 Nederlandse tijd = 13:00 UTC
-const afspraakT = Date.UTC(2026, 10, 10, 13, 0);
+// afspraak: dinsdag 9 november 2027, 14:00 Nederlandse tijd = 13:00 UTC (in de toekomst: een reeks met voorbije
+// afspraken begint in de agenda bij de volgende, zie test:afspraakuid)
+const afspraakT = Date.UTC(2027, 10, 9, 13, 0);
 await writeFile(join(dataDir, "kaarten.json"), JSON.stringify({
   "fysio sweep": {
     "jayden": { id: "abcdefabcdef", praktijk: "Fysio Sweep", naam: "Jayden", ts: nu, chosen: [{ n: "Squat", id: "", i: 0 }],
@@ -61,8 +62,8 @@ try {
 
   // ---- 2. .ics met tijdzone ----
   const ics = await (await fetch(origin + "/api/kaart/afspraak.ics?id=abcdefabcdef&taal=en", { headers: { "x-forwarded-for": "10.1.0.1" } })).text();
-  assert.match(ics, /^DTSTART;TZID=Europe\/Amsterdam:20261110T140000\r$/m, "DTSTART met TZID:\n" + ics);
-  assert.doesNotMatch(ics, /^DTSTART:2026/m, "geen zwevende tijd meer");
+  assert.match(ics, /^DTSTART;TZID=Europe\/Amsterdam:20271109T140000\r$/m, "DTSTART met TZID:\n" + ics);
+  assert.doesNotMatch(ics, /^DTSTART:20/m, "geen zwevende tijd meer");
   assert.match(ics, /BEGIN:VTIMEZONE\r\nTZID:Europe\/Amsterdam/);
   assert.match(ics, /TZOFFSETTO:\+0100/);
   assert.match(ics, /TZOFFSETTO:\+0200/);
