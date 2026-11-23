@@ -77,7 +77,8 @@ try {
     method: "POST", headers: { "content-type": "video/mp4", "x-forwarded-for": "10.9.2." + (ip++) }, body: video }).then((r) => r.status)));
   assert.ok(tegelijk.filter((s) => s === 200).length <= 2, "gelijktijdig hooguit 2 × 20 kB binnen 50 kB, kreeg " + tegelijk.join(","));
   assert.ok(tegelijk.filter((s) => s === 200).length >= 1, "minstens één upload lukt, kreeg " + tegelijk.join(","));
-  assert.ok(tegelijk.every((s) => s === 200 || s === 507), "alleen 200 of 507, kreeg " + tegelijk.join(","));
+  // sinds 2026-11-23 (test:uploadtraag) mag één praktijk hooguit 2 uploads tegelijk hebben: de rest krijgt 429
+  assert.ok(tegelijk.every((s) => s === 200 || s === 507 || s === 429), "alleen 200, 507 of 429, kreeg " + tegelijk.join(","));
   // na afloop is de reservering weer vrij
   const sD = await sessie("Fysio Daarna");
   assert.equal((await neemOp(sD)).status, 200, "reservering lekt niet naar een andere praktijk");

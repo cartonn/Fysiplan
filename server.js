@@ -2763,6 +2763,9 @@ try { vertalingen = JSON.parse(await readFile(vertalingenPath, "utf8")); } catch
 // ermee en het beeldscherm ziet via polling dat de video binnen is
 const opnames = new Map();
 let lopendeUploads = 0;
+// lopende opname-uploads per praktijk (of proef); leeg zodra er niets loopt, dus begrensd
+const OPNAME_UPLOADS_PER_PRAKTIJK = 2;
+const opnameUploadsPer = new Map();
 // levensduur van een opnametoken; via env instelbaar zodat tests het verlopen
 // zonder wachttijd kunnen bewijzen
 const OPNAME_TTL_MS = Math.max(1000, Number(process.env.OPNAME_TTL_MS) || 15 * 60 * 1000);
@@ -3803,28 +3806,53 @@ function bodyTeGroot(req) {
   });
   req.resume();
 }
-function leesBody(req, limit) {
+// Video-uploads houden een van de vier plekken (`lopendeUploads`) bezet tot de body binnen
+// is, en requestTimeout staat op 5 minuten. Wie een upload opent en dan druppelsgewijs
+// (of niets) stuurt, hield zo met vier QR-tokens de opname voor álle praktijken 5 minuten
+// dicht, en kon dat herhalen (security 2026-11-23 00u). Een echte opname van 60 MB moet
+// binnen die 5 minuten toch al ~200 kB/s halen; na een korte aanloop is een gemiddelde
+// onder UPLOAD_MIN_BPS dus geen echte upload meer: dan stoppen we en antwoorden met 408.
+const UPLOAD_AANLOOP_MS = 15 * 1000;
+const UPLOAD_MIN_BPS = 48 * 1024;
+function leesBody(req, limit, opts = {}) {
   return new Promise((resolve, reject) => {
     // een opgegeven content-length boven de grens hoeft niet eerst binnen te komen
     if (Number(req.headers["content-length"]) > limit) { bodyTeGroot(req); reject(new Error("body te groot")); return; }
     let size = 0;
     const chunks = [];
+    let wachter = null;
+    if (opts.minBps) {
+      const begin = Date.now();
+      wachter = setInterval(() => {
+        const ms = Date.now() - begin;
+        if (req.complete || req.teGroot) { clearInterval(wachter); return; }
+        if (ms < UPLOAD_AANLOOP_MS || size >= (opts.minBps * ms) / 1000) return;
+        clearInterval(wachter);
+        chunks.length = 0;
+        req.teTraag = true;
+        req.pause();
+        reject(new Error("upload te traag"));
+      }, 1000);
+      wachter.unref?.();
+    }
+    const stop = () => { if (wachter) clearInterval(wachter); };
     req.on("data", (c) => {
-      if (req.teGroot) return;
+      if (req.teGroot || req.teTraag) return;
       size += c.length;
-      if (size > limit) { chunks.length = 0; bodyTeGroot(req); reject(new Error("body te groot")); return; }
+      if (size > limit) { stop(); chunks.length = 0; bodyTeGroot(req); reject(new Error("body te groot")); return; }
       chunks.push(c);
     });
-    req.on("end", () => { if (!req.teGroot) resolve(Buffer.concat(chunks)); });
-    req.on("error", reject);
+    req.on("end", () => { stop(); if (!req.teGroot && !req.teTraag) resolve(Buffer.concat(chunks)); });
+    req.on("error", (e) => { stop(); reject(e); });
+    req.on("close", stop);
   });
 }
 function readBody(req, limit = 16 * 1024) {
   return leesBody(req, limit).then((buf) => buf.toString("utf8"));
 }
-// als readBody, maar levert de ruwe bytes (voor video-uploads)
+// als readBody, maar levert de ruwe bytes (voor video-uploads), met de snelheidsgrens
 function readBodyRaw(req, limit) {
-  return leesBody(req, limit);
+  return leesBody(req, limit, { minBps: UPLOAD_MIN_BPS });
 }
 
 // Verhardt de v2-pagina's met een per-antwoord script-nonce, zodat 'unsafe-inline'
@@ -3896,6 +3924,15 @@ async function send(res, status, type, body) {
     status = 413;
     res.setHeader("connection", "close");
     if (/json/.test(type)) body = JSON.stringify({ ok: false, teGroot: true, fout: "Dit is te groot om te versturen." });
+  }
+  // een upload die te traag binnenkwam (leesBody met minBps): 408 en de verbinding dicht
+  if (res.req && res.req.teTraag) {
+    status = 408;
+    res.setHeader("connection", "close");
+    if (/json/.test(type)) body = JSON.stringify({ ok: false, teTraag: true, fout: "De verbinding is te traag voor deze video. Probeer het op wifi of neem een kortere opname." });
+    const r = res.req;
+    res.once("finish", () => r.destroy());
+    res.once("close", () => r.destroy());
   }
   // Een sessiewijziging (inloggen, uitloggen, intrekken) staat op schijf vóór het antwoord
   // vertrekt. Meestal is er niets om op te wachten en loopt dit antwoord de oude weg.
@@ -7185,7 +7222,10 @@ async function afhandelen(request, response) {
       await sendJson(response, 413, { ok: false, fout: "De video is te groot (max. 60 MB). Neem een kortere opname." });
       return;
     }
-    if (lopendeUploads >= 4) {
+    // één praktijk (ook een gratis proef) mag hooguit twee van de vier plekken tegelijk
+    // bezetten, zodat ze de opname van andere praktijken niet kan dichtzetten
+    const uploadSleutel = o.praktijk ? "pk:" + o.praktijk : "proef:" + (o.proef || "");
+    if (lopendeUploads >= 4 || (opnameUploadsPer.get(uploadSleutel) || 0) >= OPNAME_UPLOADS_PER_PRAKTIJK) {
       await sendJson(response, 429, { ok: false, fout: "Het is even druk; probeer het over een minuut opnieuw." });
       return;
     }
@@ -7193,6 +7233,7 @@ async function afhandelen(request, response) {
     // eerste await de kans; de finally geeft de claim weer vrij
     o.bezig = true;
     lopendeUploads++;
+    opnameUploadsPer.set(uploadSleutel, (opnameUploadsPer.get(uploadSleutel) || 0) + 1);
     let quotumPk = null, gereserveerd = 0;
     try {
       const ct = String(request.headers["content-type"] || "");
@@ -7257,6 +7298,8 @@ async function afhandelen(request, response) {
       await sendJson(response, 400, { ok: false, fout: "Upload mislukt (video te groot?)." });
     } finally {
       lopendeUploads--;
+      const nogBezig = (opnameUploadsPer.get(uploadSleutel) || 1) - 1;
+      if (nogBezig > 0) opnameUploadsPer.set(uploadSleutel, nogBezig); else opnameUploadsPer.delete(uploadSleutel);
       // pas hier vrijgeven: o.video en videoOpslag.bytes tellen de video nu zelf
       if (gereserveerd) videoReserveer(quotumPk, -gereserveerd);
       o.bezig = false;

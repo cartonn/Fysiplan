@@ -181,6 +181,7 @@
     "test:opnameverouderd": "node scripts/test-opname-verouderd.mjs",
     "test:opnamewacht": "node scripts/test-sweep-opname-wacht.mjs",
     "test:opnameplafond": "node scripts/test-opname-plafond.mjs",
+    "test:uploadtraag": "node scripts/test-upload-traag.mjs",
     "test:nietvertaald": "node scripts/test-sweep-niet-vertaald.mjs",
     "test:deelsnl": "node scripts/test-sweep-deels-nl.mjs",
     "test:wachtplek": "node scripts/test-sweep-wacht-plek.mjs",
