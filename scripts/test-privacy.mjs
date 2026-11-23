@@ -404,8 +404,8 @@ try {
       psk: /PSK-score/, metingen: /pijnscore/, ervaring: /ervaren herstel/, gedaan: /oefenvinkjes/,
       oefTrouw: /oefenvinkjes/, oefZwaar: /te zwaar/, seintje: /seintjes/,
       notitie: /werknotitie/, behandelaar: /behandelaar/,
-      // welk account van het team de behandelaar is (naamgenoten, sweep 2026-11-23); legal-backlog: art. 2 noemt nu alleen de naam
-      behandelaarLid: /naam van de behandelaar/, contact: /logboek van het contact/
+      // welk account van het team de behandelaar is (naamgenoten, sweep 2026-11-23; legal 2026-11-23 05u)
+      behandelaarLid: /welk account van het team dat is/, contact: /logboek van het contact/
     };
     for (const veld of velden) {
       assert.ok(Object.hasOwn(uitleg, veld), "kaartveld '" + veld + "' staat niet in artikel 2 van de verwerkersovereenkomst");
