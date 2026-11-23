@@ -331,7 +331,7 @@
   .tk-beeld{flex:0 0 33mm;display:flex;align-items:center;justify-content:center;overflow:hidden}
   .tk-beeld img,.tk-beeld svg{width:auto !important;height:auto !important;max-width:100%;max-height:33mm;object-fit:contain;border:0 !important;box-shadow:none !important;background:none !important}
   .tk-naam{font-weight:800;font-size:12.5pt;line-height:1.2;color:#18343B}
-  .tk-naam .tk-nr{display:inline-block;min-width:6mm;color:#5a6b70}
+  .tk-naam .tk-nr{display:inline-block;min-width:6mm;margin-right:1mm;color:#5a6b70}
   .tk-dos{font-weight:700;font-size:11pt}
   .tk-uitleg{font-size:9.5pt;line-height:1.32;color:#222;flex:1 1 0;min-height:0;overflow:hidden}
   .tk-uitleg.tk-lang{font-size:8.3pt;line-height:1.28}
@@ -2837,6 +2837,17 @@ bridge2.jpg</div>
         var fs=parseFloat(getComputedStyle(u).fontSize)||12;
         while(!ok()&&fs-0.5>=ondergrens){fs-=0.5;u.style.fontSize=fs+'px';u.style.lineHeight='1.25';}
         if(!ok())alles=false;
+      });
+      // Gebruikers-sweep 2026-11-23 (Sanne): de keuze voor een kleiner beeld viel per tegel, waardoor de
+      // titels in één rij 9 mm uit elkaar stonden. Krijgt één tegel in een rij het kleinere beeld, dan de
+      // hele rij (een kleiner beeld geeft alleen meer ruimte, dus wat paste, past nog).
+      [].forEach.call(el.querySelectorAll('.tk-raster'),function(r){
+        var rijen={};
+        [].forEach.call(r.querySelectorAll('.tk-oef'),function(o){var k=Math.round(o.offsetTop);(rijen[k]=rijen[k]||[]).push(o);});
+        Object.keys(rijen).forEach(function(k){
+          var rij=rijen[k];
+          if(rij.some(function(o){return o.classList.contains('tk-veel');}))rij.forEach(function(o){o.classList.add('tk-veel');});
+        });
       });
       [].forEach.call(el.querySelectorAll('.tk-vel'),function(v){if(!past(v))alles=false;});
       return alles;
