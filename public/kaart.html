@@ -298,6 +298,9 @@
      hoog en lag het over de onderste kwart van de foto, precies over de eindhouding. Dan alleen de afspeelknop;
      de tekst blijft de naam van de knop voor een schermlezer. */
   body.krap .oef.actief:not(:has(.geenfoto))>.vbtn:not([data-noor])[aria-expanded="false"] .vlab{position:absolute;width:1px;height:1px;padding:0;margin:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  /* past driehoek + label niet in het verkleinde beeld (pasOefBeeld), dan een kleinere driehoek zonder label */
+  .oef.actief.vbklein>.vbtn:not([data-noor])[aria-expanded="false"] .vlab{position:absolute;width:1px;height:1px;padding:0;margin:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .oef.actief.vbklein>.vbtn:not([data-noor])[aria-expanded="false"] .driehoek{width:52px;height:52px;flex-basis:52px}
   .oef.actief>.vbtn[data-eigen][aria-expanded="true"] .vlab{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   .oef.actief>.vbtn[data-eigen][aria-expanded="true"]::before{content:"";width:18px;height:18px;background:currentColor;
     -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.8' stroke-linecap='round'%3E%3Cpath d='M5 5l14 14M19 5L5 19'/%3E%3C/svg%3E") center/contain no-repeat;
@@ -3792,7 +3795,13 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
       if(!img||!sb||sb.hidden)return;
       var zoom=document.documentElement.classList.contains('groot')?1.16:1;
       // eerst in de gewone volgorde meten (beeld boven, dosering eronder)
-      oef.classList.remove('dosboven');
+      oef.classList.remove('dosboven');oef.classList.remove('vbklein');
+      // de afspeelknop ligt in dezelfde cel als het beeld en heeft zelf een minimale hoogte (driehoek + label,
+      // bij "A A" 198 px): alleen het beeld verkleinen maakte de rij niet lager, en de dosering van een
+      // oefening mét video bleef onder de onderbalk (gebruikers-sweep 2026-11-23 10u, Truus)
+      var vb=oef.querySelector(':scope>.vbtn:not([data-noor])[aria-expanded="false"]');
+      if(vb&&oef.querySelector('.geenfoto'))vb=null;
+      if(vb)vb.style.maxHeight='';
       var oud=img.style.maxHeight;img.style.maxHeight='';
       var h=img.getBoundingClientRect().height;
       if(!img.complete){img.style.maxHeight=oud;img.addEventListener('load',pasOefBeeld,{once:true});return;}
@@ -3809,13 +3818,21 @@ body{background:#f2f5f3;color:#314d53}.kn1{background:#b9e34b;color:#18343b}.kop
         // past de dosering zelfs bij het kleinste beeld niet (liggend, 200 % of "A A"), dan komen
         // naam en dosering bóven het beeld: dat is wat de patiënt moet weten, het beeld staat eronder
         // (gebruikers-sweep 2026-11-22 22u, Truus: liggend 200 % de hele dosering onder de balk)
-        if(h-teVeel<64){
+        // de rij is zo hoog als het hoogste van beeld en afspeelknop
+        var rij=vb?Math.max(h,vb.getBoundingClientRect().height):h;
+        if(rij-teVeel<64){
           oef.classList.add('dosboven');
           if(oud&&typeof herplaatsMerk==='function'&&SESSIE>-1)herplaatsMerk(SESSIE);
           var fk0=img.closest('.fotoknop');if(fk0)fk0.classList.toggle('beeldklein',img.getBoundingClientRect().height<120);
           return;
         }
-        var nieuw=h-teVeel;
+        var nieuw=rij-teVeel;
+        if(vb){
+          // eerst kijken of driehoek + label nog passen; zo niet, alleen een kleinere driehoek
+          var nodig=0;Array.prototype.forEach.call(vb.children,function(c){nodig+=c.getBoundingClientRect().height;});
+          if(nodig+24>nieuw)oef.classList.add('vbklein');
+          vb.style.maxHeight=(nieuw/zoom).toFixed(1)+'px';
+        }
         if(nieuw<h){img.style.maxHeight=(nieuw/zoom).toFixed(1)+'px';
           if(oud!==img.style.maxHeight&&typeof herplaatsMerk==='function'&&SESSIE>-1)herplaatsMerk(SESSIE);}
       }

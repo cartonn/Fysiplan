@@ -95,13 +95,18 @@ try {
   const naB = await mijnIn(B, "/api/kaarten");
   assert.equal(naB[idK], true, "Tom B zet zichzelf op de kaart: mijn bij Tom B");
   assert.equal((await mijnIn(A, "/api/kaarten"))[idK], false, "en niet bij Tom A");
-  // de beheerder kiest "Tom Jansen": niet te zeggen welke, dan op naam zoals voorheen (geen `mijn`)
+  // de beheerder kiest opnieuw "Tom Jansen" op een kaart van Tom B: die blijft van Tom B
+  // (sweep 2026-11-23 06u: het lid viel weg en de kaart telde voor beide Toms als "mijn")
   assert.equal((await post("/api/kaart/behandelaar", { praktijk: P, id: idK, naam: "Tom Jansen" }, K)).status, 200);
-  assert.equal((await mijnIn(A, "/api/kaarten"))[idK], undefined, "dubbelzinnige naam: geen lid, de app beslist op naam");
+  assert.equal((await mijnIn(B, "/api/kaarten"))[idK], true, "zelfde naam opnieuw gekozen: blijft bij Tom B");
+  assert.equal((await mijnIn(A, "/api/kaarten"))[idK], false, "en wordt niet ook van Tom A");
   // een unieke naam van een collega: dat lid
   assert.equal((await post("/api/kaart/behandelaar", { praktijk: P, id: idK, naam: "Karin Beheer" }, A)).status, 200);
   assert.equal((await mijnIn(K, "/api/kaarten"))[idK], true, "unieke naam: het lid met die naam");
   assert.equal((await mijnIn(A, "/api/kaarten"))[idK], false);
+  // daarna "Tom Jansen" vanaf een kaart zonder Tom: niet te zeggen welke, dan op naam (geen `mijn`)
+  assert.equal((await post("/api/kaart/behandelaar", { praktijk: P, id: idK, naam: "Tom Jansen" }, K)).status, 200);
+  assert.equal((await mijnIn(A, "/api/kaarten"))[idK], undefined, "dubbelzinnige naam zonder vorig lid: de app beslist op naam");
 
   // Tom B weg: zijn kaart is niet ineens van Tom A
   const team = await (await get("/api/praktijk/team" + Q, K)).json();

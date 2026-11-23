@@ -23,7 +23,7 @@ const vraagOp = deel.indexOf("if(kaartIsWeg()){"), kaartOp = deel.indexOf("serve
 assert.ok(vraagOp > 0 && vraagOp < kaartOp && kaartOp < stuurOp, "delen vraagt eerst bij een verwijderde kaart");
 assert.ok(!/fetch\(|serverKaart\(|zetKaart/.test(deel.slice(0, vraagOp)), "en vóór die vraag wordt er niets gemaakt, verstuurd of gewijzigd");
 assert.match(idx, /markeerKaartWeg\(d0\.dataset\.pruldef\)/, "definitief verwijderen markeert de open kaart");
-assert.match(idx, /markeerKaartWeg\(x\.dataset\.sdelid\)/, "naar de prullenbak markeert de open kaart");
+assert.match(idx, /markeerKaartWeg\(x\.dataset\.sdelid,true\)/, "naar de prullenbak markeert de open kaart");
 
 let pw = null;
 try { pw = createRequire(import.meta.url)("playwright"); } catch {}
@@ -79,7 +79,8 @@ try {
   await page.click("#kaartenBtn");
   await page.waitForSelector(`[data-sdelid='${id}']`, { state: "visible", timeout: 8000 });
   await page.click(`[data-sdelid='${id}']`);
-  await page.waitForFunction(() => /is verwijderd/.test(document.getElementById("qrBlok").textContent), null, { timeout: 6000 });
+  // in de prullenbak: de weg terug (Herstellen) in beeld (sweep 2026-11-23 10u)
+  await page.waitForFunction(() => /staat in de prullenbak/.test(document.getElementById("qrBlok").textContent), null, { timeout: 6000 });
 
   // definitief verwijderen via de prullenbak
   await page.click("#k_prullenbak > button");

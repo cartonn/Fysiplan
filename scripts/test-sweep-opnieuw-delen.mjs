@@ -79,13 +79,17 @@ try {
   await page.click("#kaartenBtn");
   await page.waitForSelector(`[data-sdelid='${id}']`, { state: "visible", timeout: 8000 });
   await page.click(`[data-sdelid='${id}']`);
-  await page.waitForFunction(() => /is verwijderd/.test(document.getElementById("qrBlok").textContent), null, { timeout: 6000 });
+  // de kaart staat in de prullenbak: meteen de weg terug (Herstellen), geen knop "Opnieuw delen" die de
+  // server toch weigert (sweep 2026-11-23 10u, Sanne: eerst OK = opnieuw delen, daarna een weigering)
+  await page.waitForFunction(() => /prullenbak/i.test(document.getElementById("qrBlok").textContent), null, { timeout: 6000 });
   await page.click("#k_close").catch(() => {});
-
-  // "Opnieuw delen" terwijl de kaart nog in de prullenbak staat: de weigering staat op het scherm
-  await page.evaluate(() => document.querySelector("[data-qract='opnieuwdelen']").click());
-  await page.waitForFunction(() => /prullenbak/i.test(document.getElementById("qrBlok").textContent), null, { timeout: 8000 });
   assert.match(await qr(), /Herstellen/, "met de weg terug: " + (await qr()));
+  assert.equal(await page.evaluate(() => !!document.querySelector("[data-qract='opnieuwdelen']")), false, "geen knop Opnieuw delen zolang hij in de prullenbak staat");
+  const n00 = vragen.length;
+  await page.evaluate(() => document.getElementById("pb_qr").click());
+  await wacht(1200);
+  assert.deepEqual(vragen.slice(n00), [], "Test de QR: geen venster bij een kaart in de prullenbak");
+  assert.match(await qr(), /Herstellen/, "Test de QR: de weg terug in beeld");
   assert.equal(await page.evaluate(() => localStorage.getItem("fp_kaartweg")), id, "markering staat er nog");
   assert.equal((await kaarten()).length, 0, "geen nieuwe kaart");
 

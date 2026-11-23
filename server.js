@@ -8086,7 +8086,11 @@ async function afhandelen(request, response) {
       const naam = String(b.naam || "").replace(/[\u0000-\u001f\u007f]/g, " ").replace(OMKEER_TEKENS, "").replace(/\s+/g, " ").trim().slice(0, 40);
       merkPlanWijziging(kaart, kaart.behandelaar, naam);
       kaart.behandelaar = naam || null;
-      const behLid = behandelaarLidVoorNaam(request, pk, naam);
+      // de kaart had al een lid met deze naam (bv. de beheerder kiest bij twee naamgenoten opnieuw
+      // "Tom Jansen"): dan blijft dat lid de behandelaar, anders telde de kaart voor beide als "mijn"
+      // (gebruikers-sweep 2026-11-23 06u, Karin)
+      const vorigLid = kaart.behandelaarLid ? ledenVan(pk).find((l) => l && l.id === kaart.behandelaarLid) : null;
+      const behLid = (vorigLid && behNaamKort(vorigLid.naam) === behNaamKort(naam) && behNaamKort(naam)) ? vorigLid.id : behandelaarLidVoorNaam(request, pk, naam);
       if (behLid) kaart.behandelaarLid = behLid; else delete kaart.behandelaarLid;
       if (!kaart.demo) leesMerk(request, pk, "bewaard", kaart.id);
       await saveJson(kaartenPath, kaarten);
@@ -8472,7 +8476,11 @@ async function afhandelen(request, response) {
     const ics = [
       "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fysiplan//Trainingskaart//NL", "CALSCALE:GREGORIAN",
       "BEGIN:VEVENT",
-      "UID:fysiplan-" + found.id + "-" + dagen.join("") + "-" + tijd.replace(":", "") + "@fysiplan.nl",
+      // één vaste UID per kaart met een oplopend SEQUENCE, net als afspraak.ics: kiest de patiënt andere
+      // dagen of een ander tijdstip, dan werkt de agenda de reeks bij. Met dagen en tijd in de UID kwam er
+      // een tweede wekelijkse reeks met alarm bij en bleef de oude staan (sweep 2026-11-23 10u, Jayden).
+      "UID:fysiplan-oefenen-" + found.id + "@fysiplan.nl",
+      "SEQUENCE:" + Math.max(0, Math.floor((Date.now() - Date.UTC(2026, 0, 1)) / 1000)),
       "DTSTAMP:" + stamp,
       "DTSTART:" + dtStart,
       "DURATION:PT20M",
