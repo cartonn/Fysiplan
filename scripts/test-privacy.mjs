@@ -322,7 +322,7 @@ try {
   assert.match(privacy, /binnen een maand antwoord/);
   assert.match(privacy, /alleen door een computer/);
   assert.match(privacy, /zonder die gegevens kunnen we de proef niet starten/);
-  assert.match(privacy, /Versie 22 november 2026/);
+  assert.match(privacy, /Versie 23 november 2026/);
   assert.match(privacy, /hoe vaak, hoeveel of hoe zwaar je oefent/, "privacyverklaring noemt dat doseringsvragen niet naar de AI-dienst gaan");
   assert.match(privacy, /Foutlog/);
   // code tegen tekst (legal 2026-11-10 17u): alles wat de patiëntroute /api/kaart laat
@@ -391,7 +391,8 @@ try {
     assert.match(libBron, /found\.oefZwaar = /, "patiëntroutes in lib/ niet gevonden; is de opzet veranderd?");
     const velden = new Set([
       ...JSON.parse(serverBron.match(/const PATIENT_VELDEN = (\[[^\]]+\])/)[1].replace(/\s+/g, " ")),
-      ...[...(serverBron + "\n" + libBron).matchAll(/\b(?:kaart|found)\.([a-zA-Z]+) = /g)].map((m) => m[1])
+      // legal 2026-11-23 09u: ook `bkKaart`, de teller op /k; daardoor viel `bekeken` buiten deze controle
+      ...[...(serverBron + "\n" + libBron).matchAll(/\b(?:kaart|found|bkKaart)\.([a-zA-Z]+) = /g)].map((m) => m[1])
     ]);
     const uitleg = {
       id: null, demo: null, praktijk: null, ts: null, chosen: null, rows: null, cells: null,
@@ -405,8 +406,13 @@ try {
       oefTrouw: /oefenvinkjes/, oefZwaar: /te zwaar/, seintje: /seintjes/,
       notitie: /werknotitie/, behandelaar: /behandelaar/,
       // welk account van het team de behandelaar is (naamgenoten, sweep 2026-11-23; legal 2026-11-23 05u)
-      behandelaarLid: /welk account van het team dat is/, contact: /logboek van het contact/
+      behandelaarLid: /welk account van het team dat is/, contact: /logboek van het contact/,
+      // wanneer en hoe vaak de patiënt de kaart opende (de lijst "nooit geopend"); legal 2026-11-23 09u
+      bekeken: /pati&euml;nt de kaart het laatst opende en hoe vaak/
     };
+    // ook de patiënt leest in /privacy dat het openen wordt bijgehouden (art. 13 AVG via de praktijk)
+    assert.match(privacy, /id="geopend"[^>]*><b>Wat Fysiplan zelf bijhoudt:<\/b> wanneer je de kaart het laatst opende en hoe vaak/,
+      "/privacy#patient noemt dat het openen van de kaart wordt bijgehouden");
     for (const veld of velden) {
       assert.ok(Object.hasOwn(uitleg, veld), "kaartveld '" + veld + "' staat niet in artikel 2 van de verwerkersovereenkomst");
       if (uitleg[veld]) assert.match(art2, uitleg[veld], "verwerkersovereenkomst art. 2 noemt " + veld);

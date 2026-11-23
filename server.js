@@ -109,12 +109,12 @@ const ADMIN_KEY = (() => {
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88" && process.env.ADMIN_KEY !== "account";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-23";
+const VWO_VERSIE = "2026-11-23-2";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
 const AV_VERSIE = "2026-11-21";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
-const PRIVACY_VERSIE = "2026-11-22";
+const PRIVACY_VERSIE = "2026-11-23";
 // één akkoord namens de praktijk: algemene voorwaarden en verwerkersovereenkomst samen,
 // met versie, tijd en wie. Komt er een nieuwe versie, dan ziet de beheerder in de app
 // wat er veranderd is en gaat opnieuw akkoord. Bij elke ophoging van AV_VERSIE of
@@ -152,7 +152,8 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "av", versie: "2026-11-21", tekst: "Verduidelijking: na het einde van je abonnement werken gedeelde kaarten tot hun bewaartermijn afloopt, en uiterlijk tot de dag dat we alles van je praktijk wissen." },
   { stuk: "vwo", versie: "2026-11-21", tekst: "Beveiliging: staat de vraaghulp op de patiëntkaart aan, dan gaat de korte vraag van de patiënt over een oefening naar de AI-dienst (niet bewaard; een vraag over pijn, klachten of dosering niet). Uit een foto bij een eigen oefening en uit je logo halen we de plek en het merk en type telefoon." },
   { stuk: "vwo", versie: "2026-11-22", tekst: "Datalekken en geheimhouding gelden nu ook voor de gegevens van de medewerkers van je praktijk, niet alleen voor die van patiënten. Een melding van een datalek noemt ook welke soorten gegevens het raakt, wat Fysiplan nog gaat doen en wie je erover kunt bereiken." },
-  { stuk: "vwo", versie: "2026-11-23", tekst: "Gegevens: bij de naam van de behandelaar bewaart een kaart ook welk account van je team dat is, zodat twee collega's met dezelfde naam niet door elkaar lopen. De patiënt ziet dat niet." }
+  { stuk: "vwo", versie: "2026-11-23", tekst: "Gegevens: bij de naam van de behandelaar bewaart een kaart ook welk account van je team dat is, zodat twee collega's met dezelfde naam niet door elkaar lopen. De patiënt ziet dat niet." },
+  { stuk: "vwo", versie: "2026-11-23-2", tekst: "Gegevens: een kaart houdt bij wanneer de patiënt hem het laatst opende en hoe vaak, zodat je ziet of hij is aangekomen. Dat deed Fysiplan al; nu staat het ook in de overeenkomst." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
