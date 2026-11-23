@@ -346,6 +346,21 @@ versie, wanneer en wie (ook in de download van /v2/gegevens).
 3. Laat de jurist privacyverklaring, verwerkersovereenkomst en voorwaarden samen toetsen (staat al
    hieronder bij Algemene voorwaarden, punt 7).
 
+### Klaar voor de eerste betaling: zie zelf wat er nog ontbreekt (praktijk-routine, 2026-11-23)
+**Wat de code nu doet:** het blok Platform in de beheeromgeving (/dashboard88/omgeving, Overzicht) had één regel
+"Betalingen: Mollie staat uit". Nu staan er vier regels, elk met de exacte variabele die nog ontbreekt:
+- **Betalingen:** uit (geen `MOLLIE_API_KEY`), vraagteken bij een testsleutel (`test_…`, er komt geen echt geld binnen), vinkje bij een livesleutel.
+- **Prijs en btw:** zolang de btw-keuze bij Cijfers open staat, start online afrekenen niet; de regel zegt dat.
+- **Factuur:** volledige factuur of alleen een betaalbewijs, met welke van `FYSIPLAN_BEDRIJF`, `FYSIPLAN_KVK`,
+  `FYSIPLAN_ADRES` en `FYSIPLAN_BTW_NUMMER` er ontbreken (bij de kleineondernemersregeling geen btw-nummer nodig).
+- **Maandincasso:** aan, of wat er ontbreekt van `MOLLIE_INCASSO=aan`, `MOLLIE_API_KEY` en de mail.
+Er staat nooit een sleutel of waarde in, alleen of hij er is. Code: `lib/betaal-gereed.js`, test
+`scripts/test-betaal-gereed.mjs` (in `npm run test:abonnement`) en een controle in `test:beheeromgeving`.
+**Env:** geen; dit werkt meteen na de merge.
+**Wat jij moet doen:** open de beheeromgeving en werk de rode regels van boven naar beneden af. Volgorde die ik adviseer:
+btw-keuze met de boekhouder (Cijfers), dan de bedrijfsgegevens op Railway (KvK nodig), dan Mollie met een testsleutel
+proberen, dan de livesleutel en `MOLLIE_INCASSO=aan`. Staan alle vier op groen, dan kan de eerste praktijk betalen.
+
 ### Collega zonder beheerdersrol krijgt uitleg bij abonnementsknoppen (praktijk-routine, 2026-11-22)
 **Wat de code nu doet:** een therapeut zonder beheerdersrol die toch doorgaan, betalen, opzeggen, intrekken,
 factuurgegevens of proef wissen post (bijvoorbeeld via een oud tabblad), kreeg een stille omleiding naar /v2/proef:
