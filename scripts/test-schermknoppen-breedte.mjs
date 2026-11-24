@@ -64,7 +64,7 @@ try {
   for (const m of maten) {
     const ctx = await browser.newContext({ ...m.opties, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.8.6." + (ip++ & 255) } });
     await ctx.addInitScript(([s]) => { try {
-      localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_release_seen", "2026-11-02-kaarten");
+      localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_alle_schermen", "1"); localStorage.setItem("fysiplan_release_seen", "2026-11-02-kaarten");
       localStorage.setItem("fysiplan_settings", JSON.stringify({ praktijk: "Fysiotherapie Breedveld en Partners" }));
       localStorage.setItem("fp_praksessie", s);
     } catch {} }, [claim.sessie]);

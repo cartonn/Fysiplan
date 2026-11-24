@@ -69,21 +69,16 @@ if (pw) {
     assert.ok(await p.isVisible("#ovPrint"), "venster blijft open bij lege roepnaam");
     await p.fill("#pr_naam", "Jan K."); await p.click("[data-pract='naam']");
     await p.waitForFunction(() => (window.__geprint || 0) === 1, null, { timeout: 5000 });
-    // 2: nieuwe kaart met een bestaande roepnaam -> melding, dan zonder QR printen
+    // 2: tweede kaart voor dezelfde patiënt (Ahmed, 2026-11-24: een patiënt kan meerdere kaarten hebben).
+    // Vroeger vroeg het venster "Er is al een kaart"; nu krijgt de nieuwe kaart een eigen naam en print hij meteen.
     await p.click("#clearBtn"); await p.click("#wis_alles"); await wacht(300);
-    await p.click("[data-add]"); await p.fill("#c_naam", "Jan K.");
+    await p.click("[data-add]"); await p.fill("#c_voornaam", "Jan"); await p.fill("#c_achternaam", "Kok"); await p.fill("#c_gebjaar", "1970");
+    assert.equal(await p.inputValue("#c_naam"), "Jan K.", "kaartlabel volgt uit voornaam en achternaam");
     await p.click("#printBtn"); await p.click("#pr_do");
-    await p.waitForSelector("#pr_melding:not([hidden])", { timeout: 5000 });
-    assert.match(await p.textContent("#pr_melding"), /Er is al een kaart/, "bestaande roepnaam staat in het venster");
-    // Print / PDF zet zichzelf uit tijdens het bewaren; de focus hoort daarna in de melding, niet op body (sweep 2026-11-19, Sanne)
-    let inMelding = false;
-    for (let i = 0; i < 30 && !inMelding; i++) { inMelding = await p.evaluate(() => !!document.activeElement && !!document.activeElement.closest("#pr_melding")); if (!inMelding) await wacht(50); }
-    assert.ok(inMelding, "focus staat na de melding op een knop in het venster");
-    assert.equal(await geprint(), 1, "nog niet geprint");
-    await p.click("[data-pract='zonderqr']");
     await p.waitForFunction(() => (window.__geprint || 0) === 2, null, { timeout: 5000 });
+    assert.equal(await p.inputValue("#c_naam"), "Jan K. (2)", "tweede kaart van dezelfde patiënt kreeg een eigen naam");
     assert.ok(!(await p.isVisible("#ovPrint")), "venster dicht na printen");
-    console.log("test-printknop: venster toont de reden en print daarna (lege roepnaam, bestaande roepnaam)");
+    console.log("test-printknop: venster vraagt de naam en print daarna; tweede kaart van dezelfde patiënt print meteen");
     // 3: niet ingelogd bij een beveiligde praktijk -> QR-code staat uit, printen werkt meteen
     const ctx2 = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.9.7.2" } });
     await ctx2.addInitScript(() => { try { localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_release_seen", "2026-11-02-kaarten"); } catch {} window.print = () => { window.__geprint = (window.__geprint || 0) + 1; }; });

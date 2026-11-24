@@ -109,9 +109,9 @@ const ADMIN_KEY = (() => {
 const ADMIN_KEY_EIGEN = !!process.env.ADMIN_KEY && process.env.ADMIN_KEY !== "admin88" && process.env.ADMIN_KEY !== "account";
 // versie van de verwerkersovereenkomst (public/juridisch.html): bij elke inhoudelijke
 // wijziging ophogen, dan is per praktijk en per proef te zien welke versie geaccepteerd is
-const VWO_VERSIE = "2026-11-23-2";
+const VWO_VERSIE = "2026-11-24";
 // versie van de algemene voorwaarden (concept, blok "voorwaarden" in public/juridisch.html)
-const AV_VERSIE = "2026-11-21";
+const AV_VERSIE = "2026-11-24";
 // versie van de privacyverklaring (blok "privacy"): los van de verwerkersovereenkomst,
 // zodat een nieuwe privacytekst geen nieuw akkoord vraagt maar wel een eerlijke datum toont
 const PRIVACY_VERSIE = "2026-11-23";
@@ -153,7 +153,9 @@ const AKKOORD_WIJZIGINGEN = [
   { stuk: "vwo", versie: "2026-11-21", tekst: "Beveiliging: staat de vraaghulp op de patiëntkaart aan, dan gaat de korte vraag van de patiënt over een oefening naar de AI-dienst (niet bewaard; een vraag over pijn, klachten of dosering niet). Uit een foto bij een eigen oefening en uit je logo halen we de plek en het merk en type telefoon." },
   { stuk: "vwo", versie: "2026-11-22", tekst: "Datalekken en geheimhouding gelden nu ook voor de gegevens van de medewerkers van je praktijk, niet alleen voor die van patiënten. Een melding van een datalek noemt ook welke soorten gegevens het raakt, wat Fysiplan nog gaat doen en wie je erover kunt bereiken." },
   { stuk: "vwo", versie: "2026-11-23", tekst: "Gegevens: bij de naam van de behandelaar bewaart een kaart ook welk account van je team dat is, zodat twee collega's met dezelfde naam niet door elkaar lopen. De patiënt ziet dat niet." },
-  { stuk: "vwo", versie: "2026-11-23-2", tekst: "Gegevens: een kaart houdt bij wanneer de patiënt hem het laatst opende en hoe vaak, zodat je ziet of hij is aangekomen. Dat deed Fysiplan al; nu staat het ook in de overeenkomst." }
+  { stuk: "vwo", versie: "2026-11-23-2", tekst: "Gegevens: een kaart houdt bij wanneer de patiënt hem het laatst opende en hoe vaak, zodat je ziet of hij is aangekomen. Dat deed Fysiplan al; nu staat het ook in de overeenkomst." },
+  { stuk: "vwo", versie: "2026-11-24", tekst: "Gegevens: op een kaart staan nu ook voornaam, achternaam en geboortejaar van de patiënt, zodat je praktijk elke kaart terugvindt onder Patiënten. Alleen je praktijk ziet ze; de patiënt ziet via de QR-code alleen de voornaam." },
+  { stuk: "av", versie: "2026-11-24", tekst: "Gebruik: je mag voornaam, achternaam en geboortejaar van de patiënt op een kaart zetten. Zet er geen BSN, adres of volledige geboortedatum op." }
 ];
 function nieuwAkkoord(wie) { return { av: AV_VERSIE, vwo: VWO_VERSIE, t: new Date().toISOString(), ...(wie ? { wie } : {}) }; }
 function akkoordStatus(acc) {
@@ -7449,7 +7451,10 @@ async function afhandelen(request, response) {
     const mijnL = mijnVoorSessie(request, pk);
     const list = Object.values(map)
       .filter((k) => kaartLeeft(k, pk, nuLijst))
-      .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, magWeg: magKaartVerwijderen(request, pk, k), ...mijnL(k),...(magLog && !k.demo ? { magLog: true } : {}), aantal: (k.chosen || []).length,
+      .map((k) => ({ id: k.id, naam: k.naam, ts: k.ts, magWeg: magKaartVerwijderen(request, pk, k), ...mijnL(k),
+        // patiëntenlijst: wie de patiënt is (alleen voor de ingelogde praktijk; de patiëntkaart krijgt dit niet)
+        ...(k.client && (k.client.c_voornaam || k.client.c_achternaam || k.client.c_gebjaar)
+          ? { patient: { vn: k.client.c_voornaam || "", an: k.client.c_achternaam || "", gj: k.client.c_gebjaar || "" } } : {}),...(magLog && !k.demo ? { magLog: true } : {}), aantal: (k.chosen || []).length,
         // wanneer de kaart door de bewaartermijn verdwijnt: het overzicht waarschuwt
         // ruim van tevoren, zodat de praktijk eerst naar het dossier kan kopiëren
         verloopt: verdwijntOp(pk, k),
@@ -7495,7 +7500,7 @@ async function afhandelen(request, response) {
     try {
       const b = JSON.parse(await readBody(request, 256 * 1024));
       const praktijk = cleanName(b.praktijk, 80);
-      const naam = cleanName(b.naam, 60);
+      let naam = cleanName(b.naam, 60);
       if (!praktijk || !naam) { await sendJson(response, 400, { ok: false, fout: "Geef de praktijknaam en een kaartnaam op." }); return; }
       const pk = praktijkVan(request, praktijk);
       // wachtwoordplicht: patiëntgegevens komen pas op de server als de praktijk een
@@ -7507,10 +7512,36 @@ async function afhandelen(request, response) {
       // niet uit het verzoek: anders zette elke collega met een sessie een willekeurige praktijknaam
       // bovenaan de kaart, langs de regel dat alleen een beheerder het profiel wijzigt
       const kaartPraktijk = kaartPraktijkNaam(pk, praktijk);
-      const kk = naam.toLowerCase();
+      let kk = naam.toLowerCase();
       if (!kaarten[pk] && Object.keys(kaarten).length >= 300) { await sendJson(response, 400, { ok: false, fout: "Maximum aantal praktijken met gedeelde kaarten bereikt." }); return; }
       if (!kaarten[pk] && nieuwePraktijkLimiet(request, response)) return;
       const map = (kaarten[pk] = kaarten[pk] || {});
+      // Patiëntenlijst (Ahmed, 2026-11-24): een patiënt kan meerdere kaarten hebben. Een nieuwe kaart uit de
+      // V2-editor draagt een concept-id (16 hex). Staat de kaartnaam ("Jan K.") al in de praktijk, dan wordt
+      // deze nieuwe kaart "Jan K. (2)" in plaats van de vraag "zelfde patiënt?"; de patiëntgegevens op de kaart
+      // (voornaam, achternaam, geboortejaar) houden de kaarten van één patiënt bij elkaar. Twee verzoeken voor
+      // dezelfde nieuwe kaart (autosave en printen vlak na elkaar) worden via het concept-id één kaart.
+      // Oudere clients sturen geen concept-id en houden het oude gedrag.
+      const concept = /^[a-f0-9]{16}$/.test(String(b.concept || "")) ? String(b.concept) : "";
+      let naamVanServer = false;
+      if (concept && b.kaartId === "") {
+        const nu = Date.now();
+        const zelfde = Object.keys(map).find((k) => map[k] && map[k].concept === concept && !map[k].verwijderdOp &&
+          (map[k].demo || verlooptOp(map[k]) > nu));
+        if (zelfde) {
+          b.kaartId = map[zelfde].id;
+          if (zelfde !== kk) b.hernoem = true;
+        } else {
+          const bezet = (k) => Object.hasOwn(map, k) || Object.values(map).some((x) => x && String(x.naam || "").toLowerCase() === k);
+          if (bezet(kk)) {
+            const basis = naam.replace(/\s*\(\d+\)$/, "").slice(0, 52);
+            for (let n = 2; n < 1000; n++) {
+              const kand = basis + " (" + n + ")";
+              if (!bezet(kand.toLowerCase())) { naam = kand; kk = kand.toLowerCase(); naamVanServer = true; break; }
+            }
+          }
+        }
+      }
       // Een oude editor mag een verwijderde kaart niet opnieuw publiceren of vervangen.
       if (Object.values(map).some((k) => k.verwijderdOp && (k.id === b.kaartId || k.naam.toLowerCase() === kk))) {
         await sendJson(response, 409, { ok: false, verwijderd: true, fout: "Deze naam hoort bij een verwijderde kaart. Vraag de maker of beheerder om herstel via de prullenbak. Gaat het om een andere patiënt? Gebruik een onderscheidende naam, bijvoorbeeld Jan K." }); return;
@@ -7613,6 +7644,17 @@ async function afhandelen(request, response) {
       for (const k of ["c_naam", "c_hf", "c_zone", "c_opm", "c_doel"]) {
         if (b.client && b.client[k]) client[k] = sanStr(b.client[k], k === "c_naam" ? 60 : 500);
       }
+      // de kaart kreeg hierboven een vrije naam ("Jan K. (2)"): de roepnaam op de kaart volgt de kaartnaam
+      if (naamVanServer && client.c_naam) client.c_naam = naam;
+      // Patiëntgegevens voor de patiëntenlijst van de praktijk (Ahmed, 2026-11-24): voornaam, achternaam en
+      // geboortejaar staan op de geprinte kaart en de praktijk zoekt erop. Ze blijven binnen de praktijk:
+      // patientClient geeft de patiëntkaart (/k) alleen de roepnaam, nooit achternaam of geboortejaar.
+      for (const k of ["c_voornaam", "c_achternaam"]) {
+        const v = b.client && typeof b.client[k] === "string" ? zonderOmkeer(b.client[k]).replace(/\s+/g, " ").trim().slice(0, k === "c_voornaam" ? 40 : 60) : "";
+        if (v) client[k] = v;
+      }
+      const gebjaar = b.client ? String(b.client.c_gebjaar == null ? "" : b.client.c_gebjaar).trim() : "";
+      if (/^(19|20)\d{2}$/.test(gebjaar) && Number(gebjaar) <= new Date().getFullYear()) client.c_gebjaar = gebjaar;
       const chosen = (Array.isArray(b.chosen) ? b.chosen : []).slice(0, 12)
         .map((x) => ({ n: sanStr(x && x.n, 80),
           id: (/^fp_[a-f0-9]{16}$/.test(String(x && x.id || "")) || PRAKTIJK_OEF_ID.test(String(x && x.id || ""))) ? String(x.id) : "",
@@ -7646,7 +7688,7 @@ async function afhandelen(request, response) {
         if (bestaand.naam === naam && bestaand.praktijk === kaartPraktijk && zelfde(bestaand.client, client) &&
           zelfde(bestaand.chosen || [], chosen) && zelfde(bestaand.rows, rows) && zelfde(bestaand.cells, cells) &&
           zelfde(bestaand.vids, vids)) {
-          await sendJson(response, 200, { ok: true, id: bestaand.id, ts: bestaand.ts, ongewijzigd: true });
+          await sendJson(response, 200, { ok: true, id: bestaand.id, ts: bestaand.ts, naam: bestaand.naam, ongewijzigd: true });
           return;
         }
       }
@@ -7691,7 +7733,9 @@ async function afhandelen(request, response) {
         gearchiveerdOp: map[kk] ? Number(map[kk].gearchiveerdOp) || null : null,
         planT: map[kk] ? Number(map[kk].planT) || null : null,
         // het label "In dossier" blijft met wie en wanneer; inDossierBij vergelijkt het met `ts`
-        dossier: map[kk] ? map[kk].dossier || null : null };
+        dossier: map[kk] ? map[kk].dossier || null : null,
+        concept: map[kk] ? map[kk].concept || null : concept || null };
+      if (!map[kk].concept) delete map[kk].concept;
       if (!map[kk].gearchiveerdOp) delete map[kk].gearchiveerdOp;
       if (!map[kk].planT) delete map[kk].planT;
       if (!map[kk].inboxGezien) delete map[kk].inboxGezien;
@@ -7711,7 +7755,7 @@ async function afhandelen(request, response) {
       } catch {}
       bewaarStats();
       leesMerk(request, pk, "bewaard", map[kk].id);
-      await sendJson(response, 200, { ok: true, id: map[kk].id, ts: map[kk].ts });
+      await sendJson(response, 200, { ok: true, id: map[kk].id, ts: map[kk].ts, naam: map[kk].naam });
     } catch {
       await sendJson(response, 400, { ok: false, fout: "Ongeldig verzoek (of kaart te groot)." });
     }

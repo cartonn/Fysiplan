@@ -1128,3 +1128,49 @@ html.v2 #a4wrap:focus-visible{outline:3px solid #B9E34B;outline-offset:4px}
   html.v2 :is(input:not([type=checkbox],[type=radio],[type=file],[type=range],[type=color]),select,textarea):not(#a4 *){
     font-size:16px!important}
 }
+/* Patiënten (Ahmed, 2026-11-24): voornaam, achternaam en geboortejaar op de A4; het kaartlabel (roepnaam)
+   en de leeftijd staan niet meer op de kaart. Het labelveld blijft in de pagina voor de bestaande logica. */
+html.v2 #a4 .client .cr.cr-kaartnaam{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+html.v2 #a4 .client .cr.cr-verborgen{display:none}
+html.v2 #a4 .client .cr-pat #c_gebjaar{flex:0 0 64px}
+html.v2 .pr-naam.pr-pat{display:flex;gap:8px;flex-wrap:wrap}
+html.v2 .pr-naam.pr-pat input{flex:1 1 140px;min-width:0}
+html.v2 .pr-naam.pr-pat #pr_gj{flex:0 0 120px}
+@media screen{
+  html.v2 #k_patienten{margin:4px 0 18px}
+  html.v2:not([data-scherm="patienten"]) #k_patienten{display:none}
+  html.v2[data-scherm="patienten"] #ovKaarten .k-eigen{display:none!important}
+  html.v2 .k-patienten .kp-kop{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+  html.v2 .k-patienten .kp-kop label{font-size:15px;font-weight:700;color:#18343b;margin:0}
+  html.v2 .k-patienten .kp-tel{font-size:13px;color:var(--muted)}
+  html.v2 .k-patienten .kp-zoek{width:100%;max-width:520px;height:44px;padding:0 14px;border:1px solid #cfdcd5;border-radius:10px;font-size:15px;background:#fff;color:#18343b}
+  html.v2 .k-patienten .kp-zoek:focus{outline:2px solid #18343b;outline-offset:1px}
+  html.v2 .k-patienten .kp-lijst{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+  html.v2 .k-patienten .kp-leeg{padding:16px;border:1px dashed #cfdcd5;border-radius:12px;color:var(--muted);font-size:14px;line-height:1.5;background:#fff}
+  html.v2 .k-patienten .kp-pat{background:#fff;border:1px solid #dfe7e2;border-radius:12px}
+  html.v2 .k-patienten .kp-pat[open]{border-color:#18343b}
+  html.v2 .k-patienten .kp-pat>summary{display:flex;align-items:center;gap:12px;padding:10px 14px;min-height:52px;cursor:pointer;list-style:none}
+  html.v2 .k-patienten .kp-pat>summary::-webkit-details-marker{display:none}
+  html.v2 .k-patienten .kp-pat>summary::after{content:"";margin-left:auto;width:8px;height:8px;border-right:2px solid #6b7a72;border-bottom:2px solid #6b7a72;transform:rotate(45deg);transition:transform .15s}
+  html.v2 .k-patienten .kp-pat[open]>summary::after{transform:rotate(-135deg)}
+  html.v2 .k-patienten .kp-naam{display:flex;flex-direction:column;min-width:0}
+  html.v2 .k-patienten .kp-naam b{font-size:15px;color:#18343b}
+  html.v2 .k-patienten .kp-naam small{font-size:12.5px;color:var(--muted)}
+  html.v2 .k-patienten .kp-kaarten{list-style:none;margin:0;padding:0 14px}
+  html.v2 .k-patienten .kp-kaart{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid #edf2ef}
+  html.v2 .k-patienten .kp-kdatum{font-weight:600;color:#18343b;min-width:110px}
+  html.v2 .k-patienten .kp-kinfo{flex:1;color:var(--muted);font-size:13px}
+  html.v2 .k-patienten .kp-acties{padding:10px 14px 14px;border-top:1px solid #edf2ef}
+}
+/* Focus op de A4 (Ahmed, 2026-11-24): Vandaag en de oude kaartlijst onder Patiënten verborgen (zie FOCUS_A4) */
+@media screen{
+  html.v2.fp-focus #fpSchermen [data-scherm="vandaag"]{display:none}
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv>label,
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv_uitleg,
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv_sam,
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv_zoek,
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv_sort,
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv_arch,
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv_lijst{display:none!important}
+  html.v2 .k-patienten .kp-weg{min-width:44px;padding:0}
+}
