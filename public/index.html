@@ -455,6 +455,9 @@
           </div>
         </div>
         <div class="client">
+          <div class="cr cr-pat" hidden><label for="c_voornaam">Voornaam</label><input id="c_voornaam" maxlength="40" autocomplete="off"/></div>
+          <div class="cr cr-pat" hidden><label for="c_achternaam">Achternaam</label><input id="c_achternaam" maxlength="60" autocomplete="off"/></div>
+          <div class="cr cr-pat" hidden><label for="c_gebjaar">Geboortejaar</label><input id="c_gebjaar" maxlength="4" inputmode="numeric" pattern="[0-9]{4}" autocomplete="off"/></div>
           <div class="cr"><label>Naam</label><input id="c_naam" aria-label="Naam"/></div>
           <div class="cr"><label>Leeftijd</label><input id="c_leeftijd" aria-label="Leeftijd"/></div>
           <div class="cr"><label>max. HF</label><input id="c_hf" aria-label="max. HF"/></div>
@@ -865,7 +868,7 @@ bridge2.jpg</div>
     </div>
     <div id="k_srv" style="display:none">
       <label style="margin-top:14px;display:block">Kaarten van de praktijk <span id="k_srv_naam" style="font-weight:400;color:var(--muted)"></span></label>
-      <div style="font-size:12px;color:var(--muted);margin:2px 0 4px">Gedeeld binnen je praktijk: wie bij deze praktijk inlogt, ziet deze kaarten op elk apparaat. Op de server staan de roepnaam, de oefeningen, het doel en de opmerking; leeftijd en casus niet.</div>
+      <div id="k_srv_uitleg" style="font-size:12px;color:var(--muted);margin:2px 0 4px">Gedeeld binnen je praktijk: wie bij deze praktijk inlogt, ziet deze kaarten op elk apparaat. Op de server staan de roepnaam, de oefeningen, het doel en de opmerking; leeftijd en casus niet.</div>
       <div id="k_srv_lijst" style="max-height:200px;overflow:auto"></div>
     </div>
     <div class="acts"><button class="btn" id="k_close">Sluiten</button></div>
@@ -1061,6 +1064,10 @@ bridge2.jpg</div>
   try{SET=Object.assign(SET,JSON.parse(localStorage.getItem('fysiplan_settings')||'{}'));}catch(e){}
   function saveSettings(){try{localStorage.setItem('fysiplan_settings',JSON.stringify(SET));}catch(e){}try{tekenZijbalk();}catch(e){}}
   var CLIENTKEYS=['c_naam','c_leeftijd','c_hf','c_zone','c_opm','c_cave','c_doel'];
+  // v2: voornaam, achternaam en geboortejaar van de patiënt op de kaart (Ahmed, 2026-11-24); v1 blijft zoals hij was
+  if(window.FYSIPLAN_V2)CLIENTKEYS.push('c_voornaam','c_achternaam','c_gebjaar');
+  var KAART_CONCEPT='',NAAM_AFLEIDEN=false,VN_UIT_NAAM='';
+  var PAT_VELDEN=['c_voornaam','c_achternaam','c_gebjaar'];
   // id van de gedeelde kaart die deze editor bewerkt ('' = nieuwe kaart). Gaat mee
   // bij delen, zodat de server een tweede patiënt met dezelfde roepnaam niet stil
   // over de kaart van de eerste heen schrijft (zie POST /api/kaarten).
@@ -1167,6 +1174,7 @@ bridge2.jpg</div>
   }
   function zetKaartId(id,ts){
     KAART_ID=id||'';KAART_TS=Number(ts)||0;
+    if(!KAART_ID)KAART_CONCEPT='';
     // v2: de bewaarde kaart blijft ook hier zoals hij is tot de open kaart is hersteld
     if(!BIB_KLAAR)return;
     try{var st=JSON.parse(localStorage.getItem('fysiplan_state')||'{}');st.kaartId=KAART_ID;st.kaartTs=KAART_TS;localStorage.setItem('fysiplan_state',JSON.stringify(st));}catch(e){}
@@ -1188,6 +1196,7 @@ bridge2.jpg</div>
       KAART_TS=Number(st.kaartTs)||0;
       if(st.client&&!veldenHersteld)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
       veldenHersteld=true;
+      if(window.FYSIPLAN_V2)syncPatientUitNaam();
       // v2: de oefeningen zelf pas als de bibliotheek van de server er staat (zie BIB_KLAAR)
       if(!BIB_KLAAR)return;
       var vast=(IS_V2&&st.vast&&typeof st.vast==='object'&&Array.isArray(st.vast.chosen))?st.vast:null;
@@ -1503,6 +1512,7 @@ bridge2.jpg</div>
       // delen pas als de naam af is: bij het verlaten van het veld (of Enter)
       cnV2.addEventListener('blur',function(){planAutoDeel();});
       cnV2.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();cnV2.blur();}});
+      bouwPatientVelden(cnV2);
     }
     // Doel en Opmerking: de server bewaart hooguit 500 tekens. Zonder grens in het veld werd
     // een lange tekst stil afgekapt (sweep 2026-11-08); nu stopt het veld zelf bij 500.
@@ -1518,8 +1528,8 @@ bridge2.jpg</div>
     // eerlijke uitleg in Help: in v2 gaat een gedeelde kaart wel naar de server
     var hp=document.getElementById('help_privacy');
     if(hp)hp.innerHTML='<b>Privacy en bewaren</b>'+
-      'Een kaart staat eerst alleen in deze browser. Is je praktijk beveiligd en vul je een roepnaam in, dan deelt Fysiplan de kaart met je pati&euml;nt via QR-code of link. '+
-      'Op de server staan dan de roepnaam, de oefeningen met dosering en uitleg, het doel en de opmerking die je invult, en wat je pati&euml;nt zelf aanvinkt of meldt. '+
+      'Een kaart staat eerst alleen in deze browser. Is je praktijk beveiligd en vul je de naam van je pati&euml;nt in, dan deelt Fysiplan de kaart met je pati&euml;nt via QR-code of link. '+
+      'Op de server staan dan voornaam, achternaam en geboortejaar van je pati&euml;nt (je pati&euml;nt ziet via de QR-code alleen de voornaam), de oefeningen met dosering en uitleg, het doel en de opmerking die je invult, en wat je pati&euml;nt zelf aanvinkt of meldt. '+
       'Leeftijd en Casus blijven op papier en in deze browser. '+
       'Een gedeelde kaart verdwijnt vanzelf van de server na een periode zonder activiteit, en kort nadat je hem afrondt (archiveert). Kopieer daarom wat je wilt bewaren naar je dossier. '+
       'Werk je op een gedeelde computer, of stop je bij de praktijk? Kies dan bij Kaarten voor <strong>Wis Fysiplan van dit apparaat</strong>. '+
@@ -1889,7 +1899,7 @@ bridge2.jpg</div>
     bouwZijbalk();
     bouwSchermen();
     window.addEventListener('load',function(){setTimeout(startScherm,400);});
-    var _pb=document.getElementById('printBtn');_pb.textContent='Printen';_pb.title='Print het trainingsschema of bewaar het als PDF';
+    var _pb=document.getElementById('printBtn');_pb.textContent='Printen / opslaan';_pb.title='Print de kaart of bewaar hem als PDF; de kaart komt ook bij de pati\u00ebnt onder Pati\u00ebnten';
     document.getElementById('eigenOefBtn').textContent='Eigen oefening';
     bouwSprongLinks();
   }
@@ -2984,6 +2994,73 @@ bridge2.jpg</div>
     bar.style.top=(plak?hb.offsetHeight:0)+'px';
   }
   window.addEventListener('resize',function(){var b=document.getElementById('conflict_bar');if(b&&b.style.display!=='none')zetConflictTop(b);});
+  // ---- v2: voornaam, achternaam en geboortejaar op de kaart (Ahmed, 2026-11-24) ----
+  // De therapeut vult de patiënt in op de A4; die gegevens staan op de geprinte kaart en bij de praktijk
+  // (scherm Patiënten, zoeken op voor- of achternaam). Het interne kaartlabel (c_naam, "Jan K.") volgt er
+  // vanzelf uit: de patiënt ziet op /k nog steeds alleen "Jan", nooit achternaam of geboortejaar.
+  // Een patiënt kan meerdere kaarten hebben: een nieuwe kaart draagt een concept-id, en staat "Jan K." al
+  // in de praktijk, dan maakt de server er "Jan K. (2)" van (zie POST /api/kaarten).
+  // (KAART_CONCEPT, NAAM_AFLEIDEN, VN_UIT_NAAM en PAT_VELDEN staan bij CLIENTKEYS: de velden worden al bij het opstarten gebouwd)
+  function nieuwConcept(){
+    var a=new Uint8Array(8);
+    try{crypto.getRandomValues(a);}catch(e){for(var i=0;i<8;i++)a[i]=Math.floor(Math.random()*256);}
+    return Array.prototype.map.call(a,function(x){return ('0'+x.toString(16)).slice(-2);}).join('');
+  }
+  function patientWaarden(){
+    var g=function(id){var el=document.getElementById(id);return el?String(el.value||'').replace(/\s+/g,' ').trim():'';};
+    return {vn:g('c_voornaam'),an:g('c_achternaam'),gj:g('c_gebjaar')};
+  }
+  function heeftPatient(){var p=patientWaarden();return !!(p.vn||p.an);}
+  function patientFocus(){var a=document.activeElement;return !!(a&&PAT_VELDEN.indexOf(a.id)>-1);}
+  // kaartlabel uit de patiëntvelden; een door de server gegeven volgnummer ("Jan K. (2)") blijft staan
+  function kaartNaamUitPatient(){
+    var cn=document.getElementById('c_naam');if(!cn)return;
+    var p=patientWaarden();
+    if(p.vn&&p.vn===VN_UIT_NAAM&&!p.an)return;
+    var basis=p.vn?kaartLabelVan(p.vn+(p.an?' '+p.an:'')):(p.an?kaartLabelVan(p.an):'');
+    var nu=cn.value.trim(),m=nu.match(/^(.*) \((\d+)\)$/);
+    if(nu===basis||(m&&basis&&m[1].toLowerCase()===basis.toLowerCase()))return;
+    VN_UIT_NAAM='';
+    NAAM_AFLEIDEN=true;
+    try{cn.value=basis;cn.dispatchEvent(new Event('input',{bubbles:true}));}finally{NAAM_AFLEIDEN=false;}
+  }
+  // een kaart zonder patiëntvelden (van vóór deze versie, uit het EPD of met alleen een kaartnaam):
+  // de kaartnaam komt dan in het voornaamveld, zodat de A4 toch laat zien voor wie de kaart is
+  function syncPatientUitNaam(){
+    var cn=document.getElementById('c_naam'),vn=document.getElementById('c_voornaam'),an=document.getElementById('c_achternaam');
+    if(!cn||!vn||!an)return;
+    var naam=cn.value.trim();
+    if(an.value.trim()||(vn.value.trim()&&vn.value.trim()!==VN_UIT_NAAM))return;
+    vn.value=naam;VN_UIT_NAAM=naam;
+  }
+  function bouwPatientVelden(cn){
+    [].forEach.call(document.querySelectorAll('#a4 .cr-pat'),function(r){r.hidden=false;});
+    // het kaartlabel en de leeftijd staan niet meer op de A4: het label volgt uit de naam, het geboortejaar
+    // vervangt de leeftijd. Het labelveld blijft bestaan voor de bestaande logica (delen, hernoemen).
+    var rij=cn.closest('.cr');if(rij)rij.classList.add('cr-kaartnaam');
+    cn.tabIndex=-1;cn.setAttribute('aria-hidden','true');
+    var lft=document.getElementById('c_leeftijd');if(lft&&lft.closest('.cr'))lft.closest('.cr').classList.add('cr-verborgen');
+    cn.addEventListener('input',function(){if(!NAAM_AFLEIDEN)syncPatientUitNaam();});
+    PAT_VELDEN.forEach(function(id,i){
+      var el=document.getElementById(id);if(!el)return;
+      el.addEventListener('input',function(){
+        if(id==='c_gebjaar'){var d=el.value.replace(/\D+/g,'').slice(0,4);if(d!==el.value)el.value=d;}
+        else if(VN_UIT_NAAM&&id==='c_voornaam')VN_UIT_NAAM='';
+        kaartNaamUitPatient();
+      });
+      // delen pas als de naam af is: bij het verlaten van het veld (zoals bij de roepnaam)
+      el.addEventListener('blur',function(){setTimeout(function(){if(!patientFocus())planAutoDeel();},0);});
+      el.addEventListener('keydown',function(e){
+        if(e.key!=='Enter')return;
+        e.preventDefault();
+        var vol=document.getElementById(PAT_VELDEN[i+1]);
+        if(vol)vol.focus();else el.blur();
+      });
+    });
+    syncPatientUitNaam();
+    var ku=document.getElementById('k_srv_uitleg');
+    if(ku)ku.textContent='Gedeeld binnen je praktijk: wie bij deze praktijk inlogt, ziet deze kaarten op elk apparaat. Op de server staan voornaam, achternaam en geboortejaar, de oefeningen, het doel en de opmerking; leeftijd en casus niet. Je patiënt ziet via de QR-code alleen de voornaam.';
+  }
   // ---- pakket A: alleen een roepnaam op de gedeelde kaart ----
   // "Jan de Vries" -> "Jan V.", "Vries, Jan de" -> "Jan V." (EPD's leveren vaak de
   // achternaam eerst). Zo blijft de praktijk de kaart herkennen zonder dat de
@@ -3059,7 +3136,10 @@ bridge2.jpg</div>
     // automatische naam ("Kaart 8-11-2026") laat het naamveld staan.
     if(IS_V2&&c.client&&c.client.c_naam&&naam&&!/^Kaart \d/.test(String(naam).trim())&&
        String(c.client.c_naam).trim().toLowerCase()!==String(naam).trim().toLowerCase())c.client.c_naam=String(naam).trim();
-    if(IS_V2){c.kaartId=KAART_ID||'';if(KAART_ID)c.basisTs=KAART_TS||0;if(OVERSCHRIJF&&OVERSCHRIJF===String(naam).toLowerCase())c.overschrijf=true;
+    if(IS_V2){c.kaartId=KAART_ID||'';if(KAART_ID)c.basisTs=KAART_TS||0;
+      // nieuwe kaart: een concept-id, zodat de server een tweede kaart van dezelfde patiënt een eigen naam geeft
+      else{if(!KAART_CONCEPT)KAART_CONCEPT=nieuwConcept();c.concept=KAART_CONCEPT;}
+     if(OVERSCHRIJF&&OVERSCHRIJF===String(naam).toLowerCase())c.overschrijf=true;
       // gekozen: zelfde patiënt, alleen de naam van de open kaart verbeteren (zelfde QR)
       if(KAART_ID&&HERNOEM_VOOR&&HERNOEM_VOOR===String(naam).toLowerCase())c.hernoem=true;
       // roepnaamvoorstel: de server hernoemt alleen bij dezelfde voornaam, anders vraagt hij
@@ -3263,6 +3343,8 @@ bridge2.jpg</div>
     // tijdens het typen van de naam niet delen: een halve naam werd anders een losse kaart
     var cnF=document.getElementById('c_naam');
     if(cnF&&document.activeElement===cnF)return;
+    // ook niet terwijl de therapeut voornaam, achternaam of geboortejaar typt
+    if(IS_V2&&patientFocus())return;
     // een volledige naam hoort niet op de gedeelde kaart: eerst een voorstel tonen
     if(IS_V2&&naamLijktVolledig(naam)&&NAAM_OK!==naam.toLowerCase()){
       var voorstel=kaartLabelVan(naam);
@@ -3296,6 +3378,8 @@ bridge2.jpg</div>
         if(opnieuw){zetKaartWeg('');OPNIEUW_DELEN='';}
         Object.keys(OPNAME_NIEUW).forEach(function(k){if(c.vids&&c.vids[k]===OPNAME_NIEUW[k])delete OPNAME_NIEUW[k];});
         zetKaartId(d.id,d.ts);OVERSCHRIJF='';
+        // tweede kaart van dezelfde patiënt: de server gaf hem een eigen naam ("Jan K. (2)")
+        if(IS_V2&&d.naam&&d.naam!==naam){volgNieuweKaart(naam,d);return;}
         ensureQr(function(){toonQr(d.id);});
       })
       .catch(function(){OPNIEUW_DELEN='';});
@@ -3389,13 +3473,16 @@ bridge2.jpg</div>
   // hint op de A4, die je op een verkleinde kaart niet zag: de knop leek niets te doen.
   function prBezig(aan){
     var k=document.getElementById('pr_do');
-    k.disabled=!!aan;k.textContent=aan?'Even bewaren\u2026':'Print / PDF';
+    k.disabled=!!aan;k.textContent=aan?'Even bewaren\u2026':(IS_V2?'Printen / opslaan':'Print / PDF');
   }
   function prMelding(tekst,knoppen,metNaamveld,geenUitweg){
     var m=document.getElementById('pr_melding');
     if(!tekst){m.hidden=true;m.innerHTML='';return;}
     m.innerHTML="<p>"+esc(tekst)+"</p>"+
-      (metNaamveld?"<div class='pr-naam'><input id='pr_naam' placeholder='Roepnaam, bijv. Jan K.' autocomplete='off' aria-label='Roepnaam'/></div>":'')+
+      (metNaamveld?(IS_V2?"<div class='pr-naam pr-pat'><input id='pr_naam' placeholder='Voornaam' autocomplete='off' aria-label='Voornaam' maxlength='40'/>"+
+        "<input id='pr_an' placeholder='Achternaam' autocomplete='off' aria-label='Achternaam' maxlength='60'/>"+
+        "<input id='pr_gj' placeholder='Geboortejaar' autocomplete='off' aria-label='Geboortejaar' inputmode='numeric' maxlength='4'/></div>"
+        :"<div class='pr-naam'><input id='pr_naam' placeholder='Roepnaam, bijv. Jan K.' autocomplete='off' aria-label='Roepnaam'/></div>"):'')+
       "<div class='pr-knoppen'>"+(knoppen||[]).map(function(k){return "<button type='button' class='btn"+(k.hoofd?' primary':'')+"' data-pract='"+esc(k.act)+"'>"+esc(k.label)+"</button>";}).join('')+
       (geenUitweg?'':"<button type='button' class='btn' data-pract='zonderqr'>Print zonder QR-code</button>")+"</div>";
     m.hidden=false;
@@ -3417,6 +3504,14 @@ bridge2.jpg</div>
     if(a==='naam'){
       var v=(document.getElementById('pr_naam').value||'').trim();
       if(!v){document.getElementById('pr_naam').focus();return;}
+      if(IS_V2&&document.getElementById('c_voornaam')){
+        // de patiëntvelden op de A4 invullen; het kaartlabel volgt daaruit
+        var zet=function(id,w){var el=document.getElementById(id);if(el){el.value=w;el.dispatchEvent(new Event('input',{bubbles:true}));}};
+        zet('c_voornaam',v);
+        zet('c_achternaam',(document.getElementById('pr_an').value||'').trim());
+        zet('c_gebjaar',(document.getElementById('pr_gj').value||'').replace(/\D+/g,'').slice(0,4));
+        prMelding(null);printMetQr();return;
+      }
       var cn=document.getElementById('c_naam');cn.value=v;cn.dispatchEvent(new Event('input',{bubbles:true}));
       prMelding(null);printMetQr();return;
     }
@@ -3425,7 +3520,7 @@ bridge2.jpg</div>
     if(a==='nieuwste'){closeOv('ovPrint');openNieuwsteVersie();return;}
   });
   document.getElementById('pr_melding').addEventListener('keydown',function(e){
-    if(e.key==='Enter'&&e.target.id==='pr_naam'){e.preventDefault();var b=this.querySelector("[data-pract='naam']");if(b)b.click();}
+    if(e.key==='Enter'&&(e.target.id==='pr_naam'||e.target.id==='pr_an'||e.target.id==='pr_gj')){e.preventDefault();var b=this.querySelector("[data-pract='naam']");if(b)b.click();}
   });
   document.getElementById('pr_do').addEventListener('click',function(){
     var compact=document.getElementById('pr_compact').checked;
@@ -3437,6 +3532,17 @@ bridge2.jpg</div>
     var metQr=document.getElementById('pr_qr').checked;
     if(!metQr){
       if(IS_V2)QR_UIT_VOOR=huidigeKaartNaam().toLowerCase();
+      // ook zonder QR-code komt een kaart met een patiëntnaam bij de praktijk onder Patiënten
+      // (Ahmed, 2026-11-24: elke opgeslagen kaart komt daar binnen). Lukt bewaren niet, dan print hij gewoon.
+      if(IS_V2&&heeftPatient()&&chosen.length&&(SET.praktijk||'').trim()&&PRAKSLOT.ingelogd&&huidigeKaartNaam()){
+        prMelding(null);prBezig(true);
+        saveServerCard(huidigeKaartNaam(),function(d){
+          prBezig(false);
+          if(d&&d.ok){QR_UIT_VOOR=huidigeKaartNaam().toLowerCase();ping('kaart-opgeslagen');}
+          verbergQr();closeOv('ovPrint');doePrint();
+        });
+        return;
+      }
       prMelding(null);verbergQr();closeOv('ovPrint');doePrint();
       return;
     }
@@ -3450,7 +3556,7 @@ bridge2.jpg</div>
     // zonder roepnaam heette elke kaart "Kaart <datum>": de tweede kaart van die dag
     // botste dan met de eerste. Vraag de roepnaam hier in het venster.
     if(IS_V2&&cn&&!cn.value.trim()){
-      prMelding('Geef de kaart een roepnaam, dan weet je straks bij Kaarten welke pati\u00ebnt dit is.',[{act:'naam',label:'Bewaar en print',hoofd:true}],true);
+      prMelding(IS_V2&&document.getElementById('c_voornaam')?'Vul de naam van de pati\u00ebnt in. Die komt op de kaart, en je vindt de kaart daarna terug onder Pati\u00ebnten.':'Geef de kaart een roepnaam, dan weet je straks bij Kaarten welke pati\u00ebnt dit is.',[{act:'naam',label:'Bewaar en print',hoofd:true}],true);
       return;
     }
     if(IS_V2&&cn&&naamLijktVolledig(cn.value)&&NAAM_OK!==cn.value.trim().toLowerCase()){
@@ -4304,6 +4410,7 @@ bridge2.jpg</div>
     VIDS=uit.vids;
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value=(c.client&&c.client[k])||'';});
     normalizePrintableTextFields();
+    if(IS_V2)syncPatientUitNaam();
     render();
     if(uit.missing.length)alert('Niet meer in de oefeningenlijst (overgeslagen): '+uit.missing.join(', '));
   }
@@ -5793,7 +5900,8 @@ bridge2.jpg</div>
     NAAM_OK=nw.toLowerCase();HERNOEM_VOOR='';OVERSCHRIJF='';ROEP_VOOR='';
     cn.value=nw;cn.dispatchEvent(new Event('input',{bubbles:true}));
     laatsteDeel='';
-    if(typeof ensureQr==='function')ensureQr(function(){toonQr(d.id);});
+    // printen zonder QR-code (QR_UIT_VOOR gezet): dan ook geen QR op de kaart zetten
+    if(typeof ensureQr==='function'&&QR_UIT_VOOR===null)ensureQr(function(){toonQr(d.id);});
   }
   function saveServerCard(naam,cb,keuze){
     // de open kaart is nog niet hersteld: niets naar de server, ook niet voor de QR-code
@@ -5813,7 +5921,7 @@ bridge2.jpg</div>
     }
     var c=serverKaart(naam);
     if(keuze==='hernoem')c.hernoem=true;
-    else if(keuze==='nieuw'){c.kaartId='';delete c.basisTs;}
+    else if(keuze==='nieuw'){c.kaartId='';delete c.basisTs;if(IS_V2){KAART_CONCEPT=nieuwConcept();c.concept=KAART_CONCEPT;}}
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){
@@ -5841,7 +5949,9 @@ bridge2.jpg</div>
         // ook bij de eerste deling (nog geen KAART_ID) het id onthouden: anders gaf elke
         // volgende opslag een 409 "bestaat al" over de eigen kaart en kwam een daarna
         // opgenomen eigen video nooit op de kaart van de patiënt (sweep 2026-11-08, Mark)
-        if(d&&d.ok&&d.ts&&d.id&&(d.id===KAART_ID||!KAART_ID))zetKaartId(d.id,d.ts);cb(d);})
+        if(d&&d.ok&&d.ts&&d.id&&(d.id===KAART_ID||!KAART_ID))zetKaartId(d.id,d.ts);
+        if(IS_V2&&d&&d.ok&&d.id&&d.naam&&d.naam!==naam&&d.id===KAART_ID)volgNieuweKaart(naam,d);
+        cb(d);})
       .catch(function(){cb({ok:false,fout:'Geen verbinding met de server.'});});
   }
   // deel- en herinnerberichten in de taal van de patiënt: de kaart zelf is al
@@ -6441,6 +6551,94 @@ bridge2.jpg</div>
       .catch(function(e){alert(e&&e.message==='eigen'?EIGEN_NIET_GELADEN:'Kaart openen is niet gelukt: geen verbinding.');})
       .then(function(){SRV_OPEN_BEZIG=false;});
   }
+  // ---- v2: Patiënten (Ahmed, 2026-11-24) ----
+  // Elke kaart die bij de praktijk is opgeslagen, staat hier onder de patiënt: voornaam, achternaam en
+  // geboortejaar van de kaart. Zoeken op voor- of achternaam; een patiënt kan meerdere kaarten hebben.
+  // Kaarten van vóór deze versie (alleen een roepnaam) staan onder die roepnaam.
+  var PAT_LIJST=[],PAT_ZOEK='';
+  function zoekVorm(t){return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim();}
+  function patientGroepen(kaarten){
+    var groepen={},volgorde=[];
+    (kaarten||[]).forEach(function(c){
+      if(!c||!c.id||c.demo)return;
+      var p=c.patient||null;
+      var basis=String(c.naam||'').replace(/\s*\(\d+\)$/,'').trim();
+      var sleutel=p&&(p.vn||p.an)?'p:'+zoekVorm(p.vn)+'|'+zoekVorm(p.an)+'|'+(p.gj||''):'n:'+zoekVorm(basis);
+      var g=groepen[sleutel];
+      if(!g){
+        g=groepen[sleutel]={sleutel:sleutel,vn:p?p.vn||'':basis,an:p?p.an||'':'',gj:p?p.gj||'':'',oud:!(p&&(p.vn||p.an)),kaarten:[],laatst:0};
+        volgorde.push(g);
+      }
+      g.kaarten.push(c);
+      g.laatst=Math.max(g.laatst,Number(c.ts)||0);
+    });
+    volgorde.forEach(function(g){g.kaarten.sort(function(a,b){return (b.ts||0)-(a.ts||0);});});
+    return volgorde.sort(function(a,b){
+      var x=zoekVorm(a.an||a.vn),y=zoekVorm(b.an||b.vn);
+      return x.localeCompare(y,'nl')||zoekVorm(a.vn).localeCompare(zoekVorm(b.vn),'nl')||String(a.gj).localeCompare(String(b.gj));
+    });
+  }
+  function patientTitel(g){return g.an?(g.an+', '+g.vn).replace(/, $/,''):g.vn;}
+  function tekenPatienten(blok,kaarten){
+    var el=document.getElementById('k_patienten');
+    if(!el){
+      el=document.createElement('section');el.id='k_patienten';el.className='k-patienten';el.setAttribute('aria-label','Patiënten');
+      el.innerHTML="<div class='kp-kop'><label for='kp_zoek'>Zoek een patiënt</label><span class='kp-tel' id='kp_tel'></span></div>"+
+        "<input type='search' id='kp_zoek' class='kp-zoek' placeholder='Zoek op voornaam of achternaam' autocomplete='off'/>"+
+        "<div id='kp_lijst' class='kp-lijst'></div>";
+      var na=document.getElementById('prakslot');
+      if(na&&na.parentNode===blok)blok.insertBefore(el,na.nextSibling);else blok.insertBefore(el,blok.firstChild);
+      document.getElementById('kp_zoek').addEventListener('input',function(){PAT_ZOEK=this.value;tekenPatientRijen();});
+      el.addEventListener('click',function(e){
+        var o=e.target.closest('[data-popen]');
+        if(o){openSrvKaart(o.getAttribute('data-popen'));return;}
+        var n=e.target.closest('[data-pnieuw]');
+        if(n){var g=PAT_LIJST[+n.getAttribute('data-pnieuw')];if(g)nieuweKaartVoor(g);}
+      });
+    }
+    el.hidden=false;
+    PAT_LIJST=patientGroepen(kaarten);
+    tekenPatientRijen();
+  }
+  function tekenPatientRijen(){
+    var lijst=document.getElementById('kp_lijst');if(!lijst)return;
+    var q=zoekVorm(PAT_ZOEK),woorden=q?q.split(' '):[];
+    var dt=function(ts){return ts?new Date(ts).toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'}):'';};
+    var rijen=PAT_LIJST.map(function(g,i){return {g:g,i:i};}).filter(function(x){
+      if(!woorden.length)return true;
+      var hooi=zoekVorm(x.g.vn+' '+x.g.an+' '+x.g.kaarten.map(function(c){return c.naam;}).join(' '));
+      return woorden.every(function(w){return hooi.indexOf(w)>-1;});
+    });
+    var tel=document.getElementById('kp_tel');
+    if(tel)tel.textContent=PAT_LIJST.length?(q?rijen.length+' van '+PAT_LIJST.length:PAT_LIJST.length)+' patiënt'+(PAT_LIJST.length===1?'':'en'):'';
+    if(!PAT_LIJST.length){lijst.innerHTML="<div class='kp-leeg'>Nog geen patiënten. Vul op de kaart voornaam, achternaam en geboortejaar in en kies <b>Printen / opslaan</b>: de kaart komt dan hier.</div>";return;}
+    if(!rijen.length){lijst.innerHTML="<div class='kp-leeg'>Geen patiënt gevonden met “"+esc(PAT_ZOEK.trim())+"”.</div>";return;}
+    lijst.innerHTML=rijen.map(function(x){
+      var g=x.g,n=g.kaarten.length;
+      var kaartRijen=g.kaarten.map(function(c){
+        var aantal=Number(c.aantal)||0;
+        return "<li class='kp-kaart'><span class='kp-kdatum'>"+esc(dt(c.ts))+"</span>"+
+          "<span class='kp-kinfo'>"+aantal+" oefening"+(aantal===1?'':'en')+(c.gearchiveerd?" · afgerond":"")+"</span>"+
+          "<button type='button' class='btn' data-popen='"+esc(c.id)+"' aria-label='Kaart van "+esc(dt(c.ts))+" openen'>Openen</button></li>";
+      }).join('');
+      return "<details class='kp-pat'"+(woorden.length&&rijen.length<=3?" open":"")+">"+
+        "<summary>"+avRond((g.vn+' '+g.an).trim(),'kp-av')+"<span class='kp-naam'><b>"+esc(patientTitel(g))+"</b>"+
+          "<small>"+(g.gj?'Geboortejaar '+esc(g.gj)+' · ':'')+n+" kaart"+(n===1?'':'en')+" · laatst "+esc(dt(g.laatst))+"</small></span></summary>"+
+        "<ul class='kp-kaarten'>"+kaartRijen+"</ul>"+
+        "<div class='kp-acties'><button type='button' class='btn primary' data-pnieuw='"+x.i+"'>Nieuwe kaart voor "+esc(g.vn||g.an)+"</button></div>"+
+      "</details>";
+    }).join('');
+  }
+  // een lege kaart met de patiënt al ingevuld: de snelste weg naar een tweede kaart
+  function nieuweKaartVoor(g){
+    if(chosen.length&&!confirm('De kaart die nu open staat, sluiten en een nieuwe kaart beginnen voor '+patientTitel(g)+'?'))return;
+    wisAlles();
+    var zet=function(id,w){var el=document.getElementById(id);if(el){el.value=w||'';el.dispatchEvent(new Event('input',{bubbles:true}));}};
+    zet('c_voornaam',g.vn);zet('c_achternaam',g.an);zet('c_gebjaar',g.gj);
+    closeOv('ovKaarten');
+    if(SCHERM!=='maken')zetScherm('maken');
+    var z=document.getElementById('search');if(z)setTimeout(function(){z.focus();},30);
+  }
   function toonSrvKaarten(){
     var oudePrul=document.getElementById('k_prullenbak');if(oudePrul)oudePrul.remove();
     var blok=document.getElementById('k_srv');
@@ -6502,6 +6700,7 @@ bridge2.jpg</div>
         if(l&&l.storing){toonOverzichtStoring(el,l.storing,zoekEl);return;}
         // het overzicht toont roepnamen en scores: alleen voor een praktijk met wachtwoord
         if(l&&l.geweigerd){
+          var kpW=document.getElementById('k_patienten');if(kpW)kpW.hidden=true;
           if(zoekEl)zoekEl.style.display='none';
           var samW=document.getElementById('k_srv_sam');if(samW)samW.style.display='none';
           el.innerHTML="<div class='hint'>"+(l.beveilig
@@ -6510,7 +6709,7 @@ bridge2.jpg</div>
           zetSeinBadge(0);return;
         }
         if(Array.isArray(l))toonPrullenbak(blok,pr);
-        if(!Array.isArray(l)||!l.length){if(zoekEl)zoekEl.style.display='none';el.innerHTML="<div class='hint'>Nog geen gedeelde kaarten voor deze praktijk.</div>";zetSeinBadge(0);return;}
+        if(!Array.isArray(l)||!l.length){if(IS_V2)tekenPatienten(blok,[]);if(zoekEl)zoekEl.style.display='none';el.innerHTML="<div class='hint'>Nog geen gedeelde kaarten voor deze praktijk.</div>";zetSeinBadge(0);return;}
         // archiveren: afgeronde kaarten uit het hoofdoverzicht, zonder dataverlies.
         // lArch = gearchiveerd, l = actueel (de standaardweergave).
         var lArch=l.filter(function(c){return c.gearchiveerd;});
@@ -6520,6 +6719,7 @@ bridge2.jpg</div>
         l.concat(lArch).forEach(function(c){if(c.id){SRV_SIGNALEN[c.id]={naam:c.naam,oefZwaar:c.oefZwaar||null};SRV_KAART[c.id]=c;}});
         zetSeinBadge(l.filter(function(c){return c.seintje&&(c.seintje.soort==='vraag'||c.seintje.soort==='pijn');}).length);
         if(IS_V2)tekenNietGeoefend(blok,l);
+        if(IS_V2)tekenPatienten(blok,l.concat(lArch));
         // suggesties voor het behandelaarveld: de namen die op kaarten van deze
         // praktijk al staan, zodat het team consequent dezelfde spelling gebruikt
         var behSugg=document.getElementById('behSugg');
@@ -7429,7 +7629,7 @@ bridge2.jpg</div>
           laatsteDeel='';QR_UIT_VOOR=null;verbergQr();render();
           closeOv('ovKaarten');
           document.getElementById('k_result').textContent='';
-          var cn=document.getElementById('c_naam');if(cn)cn.focus();
+          var cn=document.getElementById(IS_V2?'c_voornaam':'c_naam');if(cn)cn.focus();
         })
         .catch(function(e){alert(e&&e.message==='eigen'?EIGEN_NIET_GELADEN:'Kaart kopiëren is niet gelukt: geen verbinding.');})
         .then(function(){setTimeout(kpVrij,400);});

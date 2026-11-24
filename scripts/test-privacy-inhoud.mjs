@@ -59,7 +59,7 @@ try {
   const tabelTekst = tekst(praktijkDeel);
   const plek = {
     praktijkenPath: [inhoud, /praktijkprofiel/],
-    kaartenPath: [tabelTekst, /Oefenkaarten met de naam/],
+    kaartenPath: [tabelTekst, /Oefenkaarten met de kaartnaam/],
     accountsPath: [tabelTekst, /Teamleden: naam, e-mail, rol/],
     auditPath: [tabelTekst, /Accountactiviteit/],
     leeslogPath: [rij("leeslog"), /Leeslog per kaart/],
@@ -92,7 +92,7 @@ try {
   const [therapeut] = ["Wat je therapeut erop zet"].map((kop) => patientDeel.split(kop)[1].split("Wat je zelf aantikt")[0]);
   const extra = {
     praktijk: null, // naam van de praktijk, staat al in PATIENT_VELDEN (test-privacy.mjs)
-    client: [therapeut, /je roepnaam/],
+    client: [therapeut, /je voornaam/],
     vids: [therapeut, /eigen video of foto/],
     mijnSeintjes: [patientDeel, /seintje aan je praktijk/],
     seinOpen: [patientDeel, /seintje aan je praktijk/],

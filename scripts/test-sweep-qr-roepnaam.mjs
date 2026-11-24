@@ -51,9 +51,10 @@ try {
         a("WhatsApp") + a("E-mail") + a("Kopieer link") + a("Kopieer voor dossier") + "</span>";
       b.style.display = "flex";
       const w = (el) => Math.round(el.getBoundingClientRect().width);
-      return { naam: w(document.getElementById("c_naam")), qr: w(b) };
+      // sinds 2026-11-24 staan voornaam en achternaam op de A4 (het kaartlabel c_naam is verborgen)
+      return { naam: w(document.getElementById("c_achternaam")), qr: w(b) };
     });
-    assert.ok(r.naam >= 90, `Roepnaam-veld met QR op ${breed} px is ${r.naam} px breed (QR-blok ${r.qr} px)`);
+    assert.ok(r.naam >= 90, `Achternaam-veld met QR op ${breed} px is ${r.naam} px breed (QR-blok ${r.qr} px)`);
     await ctx.close();
   }
   console.log("qr roepnaam: ok (Roepnaam-veld blijft bruikbaar naast de QR)");
