@@ -115,7 +115,7 @@ if (pw) {
     try {
       const open = async (sessie, n) => {
         const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.9.9." + n } });
-        await ctx.addInitScript(([t, pr]) => { try { if (!sessionStorage.getItem("al")) { localStorage.setItem("fp_praksessie", t); localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_praktijk", pr); sessionStorage.setItem("al", "1"); } } catch {} }, [sessie, P]);
+        await ctx.addInitScript(([t, pr]) => { try { if (!sessionStorage.getItem("al")) { localStorage.setItem("fp_praksessie", t); localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_alle_schermen", "1"); localStorage.setItem("fysiplan_praktijk", pr); sessionStorage.setItem("al", "1"); } } catch {} }, [sessie, P]);
         const page = await ctx.newPage();
         page.fouten = []; page.on("pageerror", (e) => page.fouten.push(String(e)));
         await page.goto(origin + "/v2/app");

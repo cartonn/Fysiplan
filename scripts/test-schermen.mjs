@@ -63,7 +63,7 @@ try {
   const maakCtx = async (sessie) => {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.8.1." + (ip++ & 255) } });
     await ctx.addInitScript(([s]) => { try {
-      localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_release_seen", "2026-11-02-kaarten");
+      localStorage.setItem("fysiplan_welkom_gezien", "1"); localStorage.setItem("fysiplan_alle_schermen", "1"); localStorage.setItem("fysiplan_release_seen", "2026-11-02-kaarten");
       localStorage.setItem("fysiplan_settings", JSON.stringify({ praktijk: "Fysio Scherm" }));
       if (s) localStorage.setItem("fp_praksessie", s);
     } catch {} }, [sessie]);

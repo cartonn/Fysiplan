@@ -69,7 +69,7 @@ try {
   const zetRol = async (rol) => assert.equal((await post("/api/praktijk/team/rol", { id: basId, rol }, S)).status, 200, "rol " + rol);
 
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: "nl-NL", extraHTTPHeaders: { "x-forwarded-for": "10.6.29.7" } });
-  await ctx.addInitScript((t) => { try { if (!sessionStorage.getItem("gezet")) { localStorage.setItem("fp_praksessie", t); sessionStorage.setItem("gezet", "1"); } } catch {} }, L["x-praktijk-sessie"]);
+  await ctx.addInitScript((t) => { try { localStorage.setItem("fysiplan_alle_schermen", "1"); if (!sessionStorage.getItem("gezet")) { localStorage.setItem("fp_praksessie", t); sessionStorage.setItem("gezet", "1"); } } catch {} }, L["x-praktijk-sessie"]);
   const page = await ctx.newPage();
   const fouten = [];
   page.on("pageerror", (e) => fouten.push(String(e)));

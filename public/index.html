@@ -1196,7 +1196,7 @@ bridge2.jpg</div>
       KAART_TS=Number(st.kaartTs)||0;
       if(st.client&&!veldenHersteld)CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el&&st.client[k]!=null)el.value=st.client[k];});
       veldenHersteld=true;
-      if(window.FYSIPLAN_V2)syncPatientUitNaam();
+      if(window.FYSIPLAN_V2&&typeof syncPatientUitNaam==='function')syncPatientUitNaam();
       // v2: de oefeningen zelf pas als de bibliotheek van de server er staat (zie BIB_KLAAR)
       if(!BIB_KLAAR)return;
       var vast=(IS_V2&&st.vast&&typeof st.vast==='object'&&Array.isArray(st.vast.chosen))?st.vast:null;
@@ -1888,6 +1888,7 @@ bridge2.jpg</div>
     if(!IS_V2||SCHERM_GEKOZEN||epdVoorinvulData)return;
     var bewaard='';try{bewaard=localStorage.getItem('fysiplan_scherm')||'';}catch(_){}
     if(['vandaag','patienten','praktijk'].indexOf(bewaard)<0)return;
+    if(bewaard==='vandaag'&&FOCUS_A4)return;
     var pr=(SET.praktijk||'').trim();if(!pr)return;
     fetch('api/praktijk/status?praktijk='+encodeURIComponent(pr),PGET()).then(function(r){return r.ok?r.json():null;}).then(function(d){
       if(!d||!d.geclaimd||!d.ingelogd||SCHERM_GEKOZEN||SCHERM!=='maken')return;
@@ -1895,6 +1896,12 @@ bridge2.jpg</div>
       zetScherm(bewaard);
     }).catch(function(){});
   }
+  // Focus op de A4 (Ahmed, 2026-11-24: "ja verberg"): het scherm Vandaag en de oude kaartlijst onder Patiënten
+  // staan uit; Patiënten toont alleen de patiëntenlijst. De code blijft; met localStorage
+  // fysiplan_alle_schermen=1 komen ze terug (zo testen de bestaande tests van Vandaag en de kaartlijst verder).
+  var FOCUS_A4=true;
+  try{if(localStorage.getItem('fysiplan_alle_schermen')==='1')FOCUS_A4=false;}catch(_){}
+  if(window.FYSIPLAN_V2&&FOCUS_A4)document.documentElement.classList.add('fp-focus');
   if(window.FYSIPLAN_V2){
     bouwZijbalk();
     bouwSchermen();
@@ -4410,7 +4417,7 @@ bridge2.jpg</div>
     VIDS=uit.vids;
     CLIENTKEYS.forEach(function(k){var el=document.getElementById(k);if(el)el.value=(c.client&&c.client[k])||'';});
     normalizePrintableTextFields();
-    if(IS_V2)syncPatientUitNaam();
+    if(IS_V2&&typeof syncPatientUitNaam==='function')syncPatientUitNaam();
     render();
     if(uit.missing.length)alert('Niet meer in de oefeningenlijst (overgeslagen): '+uit.missing.join(', '));
   }
@@ -5921,7 +5928,7 @@ bridge2.jpg</div>
     }
     var c=serverKaart(naam);
     if(keuze==='hernoem')c.hernoem=true;
-    else if(keuze==='nieuw'){c.kaartId='';delete c.basisTs;if(IS_V2){KAART_CONCEPT=nieuwConcept();c.concept=KAART_CONCEPT;}}
+    else if(keuze==='nieuw'){c.kaartId='';delete c.basisTs;if(typeof IS_V2!=='undefined'&&IS_V2&&typeof nieuwConcept==='function'){KAART_CONCEPT=nieuwConcept();c.concept=KAART_CONCEPT;}}
     fetch('api/kaarten',{method:'POST',headers:PJSON(),body:JSON.stringify(c)})
       .then(function(r){return r.json().catch(function(){return {ok:false};});})
       .then(function(d){
@@ -5950,7 +5957,7 @@ bridge2.jpg</div>
         // volgende opslag een 409 "bestaat al" over de eigen kaart en kwam een daarna
         // opgenomen eigen video nooit op de kaart van de patiënt (sweep 2026-11-08, Mark)
         if(d&&d.ok&&d.ts&&d.id&&(d.id===KAART_ID||!KAART_ID))zetKaartId(d.id,d.ts);
-        if(IS_V2&&d&&d.ok&&d.id&&d.naam&&d.naam!==naam&&d.id===KAART_ID)volgNieuweKaart(naam,d);
+        if(typeof IS_V2!=='undefined'&&IS_V2&&d&&d.ok&&d.id&&d.naam&&d.naam!==naam&&d.id===KAART_ID)volgNieuweKaart(naam,d);
         cb(d);})
       .catch(function(){cb({ok:false,fout:'Geen verbinding met de server.'});});
   }
@@ -6592,6 +6599,9 @@ bridge2.jpg</div>
       el.addEventListener('click',function(e){
         var o=e.target.closest('[data-popen]');
         if(o){openSrvKaart(o.getAttribute('data-popen'));return;}
+        // naar de prullenbak: dezelfde knop (met vraag en slot) als in de kaartlijst eronder
+        var w=e.target.closest('[data-pweg]');
+        if(w){var oud=document.querySelector("#k_srv_lijst [data-sdelid='"+w.getAttribute('data-pweg').replace(/[^a-z0-9]/gi,'')+"']");if(oud)oud.click();return;}
         var n=e.target.closest('[data-pnieuw]');
         if(n){var g=PAT_LIJST[+n.getAttribute('data-pnieuw')];if(g)nieuweKaartVoor(g);}
       });
@@ -6619,7 +6629,8 @@ bridge2.jpg</div>
         var aantal=Number(c.aantal)||0;
         return "<li class='kp-kaart'><span class='kp-kdatum'>"+esc(dt(c.ts))+"</span>"+
           "<span class='kp-kinfo'>"+aantal+" oefening"+(aantal===1?'':'en')+(c.gearchiveerd?" · afgerond":"")+"</span>"+
-          "<button type='button' class='btn' data-popen='"+esc(c.id)+"' aria-label='Kaart van "+esc(dt(c.ts))+" openen'>Openen</button></li>";
+          "<button type='button' class='btn' data-popen='"+esc(c.id)+"' aria-label='Kaart van "+esc(dt(c.ts))+" openen'>Openen</button>"+
+          (c.magWeg===true&&!c.gearchiveerd?"<button type='button' class='btn kp-weg' data-pweg='"+esc(c.id)+"' title='Naar prullenbak' aria-label='Kaart van "+esc(dt(c.ts))+" naar de prullenbak'>\u00d7</button>":"")+"</li>";
       }).join('');
       return "<details class='kp-pat'"+(woorden.length&&rijen.length<=3?" open":"")+">"+
         "<summary>"+avRond((g.vn+' '+g.an).trim(),'kp-av')+"<span class='kp-naam'><b>"+esc(patientTitel(g))+"</b>"+

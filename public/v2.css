@@ -1162,3 +1162,15 @@ html.v2 .pr-naam.pr-pat #pr_gj{flex:0 0 120px}
   html.v2 .k-patienten .kp-kinfo{flex:1;color:var(--muted);font-size:13px}
   html.v2 .k-patienten .kp-acties{padding:10px 14px 14px;border-top:1px solid #edf2ef}
 }
+/* Focus op de A4 (Ahmed, 2026-11-24): Vandaag en de oude kaartlijst onder Patiënten verborgen (zie FOCUS_A4) */
+@media screen{
+  html.v2.fp-focus #fpSchermen [data-scherm="vandaag"]{display:none}
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv>label,
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv_uitleg,
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv_sam,
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv_zoek,
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv_sort,
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv_arch,
+  html.v2.fp-focus[data-scherm="patienten"] #k_srv_lijst{display:none!important}
+  html.v2 .k-patienten .kp-weg{min-width:44px;padding:0}
+}
