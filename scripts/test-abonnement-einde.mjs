@@ -81,7 +81,10 @@ try {
   for (let i = 0; i < 60; i++) {
     await new Promise((r) => setTimeout(r, 250));
     na = await lees("proef-aanmeldingen.json");
-    if (na.lang?.gewist && na.kort?.abonnement?.status === "beeindigd") break;
+    // De aanmelding wordt vóór het accountbestand opgeslagen. Wacht op beide
+    // schrijfacties; anders meet een snelle CI-run halverwege de wisactie.
+    if (na.lang?.gewist && na.kort?.abonnement?.status === "beeindigd" &&
+        !(pkLang in await lees("praktijk-accounts.json"))) break;
   }
   // Karin: gestopt, geen klant, kaarten nog op de server, nieuwe kaarten geweigerd
   assert.equal(na.kort.abonnement.status, "beeindigd", "opgezegd abonnement stopt na de betaalde maand");

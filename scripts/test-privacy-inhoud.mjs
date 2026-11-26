@@ -64,6 +64,9 @@ try {
     auditPath: [tabelTekst, /Accountactiviteit/],
     leeslogPath: [rij("leeslog"), /Leeslog per kaart/],
     sessiesPath: [rij("inloggen"), /op welke apparaten je bent ingelogd/],
+    // V1 gebruikt dezelfde tijdelijke tokenafdrukken; de cookie fp1 en de
+    // termijn van 30 dagen staan ook expliciet in de browseropslagtabel.
+    v1SessiesPath: [rij("inloggen"), /alleen als hash van de inlogsleutel/],
     // foute wachtwoorden per praktijk of e-mailadres (lib/inlogrem.js: alleen als hash, opgeruimd na een kwartier)
     inlogRemPath: [rij("inloggen"), /foute wachtwoorden per praktijk of e-mailadres \(alleen als hash[\s\S]*Foute wachtwoorden: hooguit een half uur/],
     beheerLogPath: [rij("beheerlog"), /beheerlogboek/],

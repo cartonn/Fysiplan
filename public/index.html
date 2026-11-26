@@ -126,6 +126,9 @@
   @media print{#a4 #p_msg{display:none!important}}
   #a4 .client{flex:1;padding-top:2px;min-width:0}
   #a4 .client .cr{display:flex;align-items:flex-end;gap:10px;margin-bottom:10px}
+  /* V2-patiëntvelden mogen de V1-kaart niet veranderen, ook niet bij afdrukken.
+     display:flex op .cr overschrijft anders de browserstijl voor [hidden]. */
+  #a4 .client .cr[hidden],html:not(.v2) #a4 .client .cr-pat{display:none!important}
   #a4 .client label{font-size:11.5px;font-weight:700;color:#101828;flex:0 0 96px}
   #a4 .client input{height:20px;border:none;border-bottom:1.5px solid #98a2b3;border-radius:0;font-size:12.5px;flex:1;min-width:0;background:transparent;padding:0 2px;color:#101828;font-family:inherit}
   #a4 .client input:focus{outline:none;border-bottom-color:var(--brand)}

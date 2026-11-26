@@ -223,6 +223,7 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
     const roep = async (method, pad, extra = {}) => { const res = { setHeader() {} }; await om.afhandelen({ method, url: pad, headers: extra.headers || {}, body: extra.body, R: extra.R, wie: extra.wie, ip: extra.ip }, res, pad.split("?")[0]); return res; };
     const beheer = (pad, body, extra) => roep("POST", "/api/beheer/omgeving/" + pad, { body: { bron: "echt", ...body }, ...extra });
     const pagina = async (extra) => (await roep("GET", "/api/beheer/omgeving", extra)).body;
+    const demoBeginWacht = (await roep("GET", "/api/beheer/omgeving?bron=demo")).body.loket.concepten.filter((c) => c.stand === "wacht").length;
 
     // zonder sleutel bestaat het loket niet
     assert.equal((await roep("GET", "/api/agent/support/werk", { headers: { authorization: "Bearer " + nieuweSleutel() } })).status, 404);
@@ -510,7 +511,7 @@ const GOED = { onderwerp: "Lukt het nog met de kaarten?", tekst: "We zagen dat e
     assert.deepEqual([r.status, r.body.loket.concepten.find((c) => c.id === wachtend[0].id).stand, /\.invalid$/.test(r.body.agent.mails[0].aan), r.body.agent.mails[0].tekst.includes(wachtend[0].praktijk)], [200, "verstuurd", true, true]);
     assert.deepEqual([gelogd.length, JSON.stringify(accounts), JSON.stringify(opgeslagen["beheer-loket.json"]), gemaild.length], [logVoor, accVoor, bestandVoor, voorMails], "de demo raakt het logboek, de accounts, het bestand en de mail niet");
     r = await demoPost("demo-opnieuw", {});
-    assert.deepEqual([r.body.loket.pauze, r.body.loket.concepten.filter((c) => c.stand === "wacht").length, r.body.agent.stand["eigen-bericht"]], [null, wachtend.length, "handmatig"]);
+    assert.deepEqual([r.body.loket.pauze, r.body.loket.concepten.filter((c) => c.stand === "wacht").length, r.body.agent.stand["eigen-bericht"]], [null, demoBeginWacht, "handmatig"]);
 
     // wat een account niet mag zien, wordt niet berekend
     const fin = (await roep("GET", "/api/beheer/omgeving?bron=demo", { R: ["finance"] })).body;

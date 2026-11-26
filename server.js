@@ -1363,7 +1363,11 @@ function eigenHost(request) {
   const eigen = kaal === "fysiplan.nl" || kaal.endsWith(".fysiplan.nl") || lokaal;
   return eigen ? netjes : "fysiplan.nl";
 }
-const v1Sessies = new Map(); // token -> { email, t }
+// Apart van V2; alleen tokenafdrukken, nooit cookies of wachtwoorden op schijf.
+const v1SessiesPath = join(dataDir, "v1-sessies.json");
+const v1Sessies = new SessieTabel((inhoud) => saveJson(v1SessiesPath, inhoud));
+// Het bestaande sessieformaat gebruikt pk; bij V1 is dat het accountadres.
+v1Sessies.vul(await laadSessies(v1SessiesPath));
 const v1LoginMis = new Map(); // emailLower -> { start, n }
 function v1LoginOpSlot(em) {
   const nu = Date.now();
@@ -1387,7 +1391,7 @@ function maakV1Sessie(email) {
     }
   }
   const token = randomBytes(24).toString("hex");
-  v1Sessies.set(token, { email, t: nu });
+  v1Sessies.set(sessieSleutel(token), { pk: email, t: nu, w: wachtwoordAfdruk(v1Accounts[email].hash) });
   return token;
 }
 // sessie uit de HttpOnly-cookie halen (v1 gate't de HTML server-side, dus geen header)
@@ -1395,11 +1399,12 @@ function v1SessieVan(req) {
   const rauw = String(req.headers.cookie || "");
   const m = rauw.match(/(?:^|;\s*)fp1=([a-f0-9]{48})(?:;|$)/);
   if (!m) return null;
-  const s = v1Sessies.get(m[1]);
+  const sleutel = sessieSleutel(m[1]);
+  const s = v1Sessies.get(sleutel);
   if (!s) return null;
-  if (!v1Accounts[s.email] || v1Accounts[s.email].geblokkeerd) { v1Sessies.delete(m[1]); return null; }
-  if (Date.now() - s.t > 30 * 86400000) { v1Sessies.delete(m[1]); return null; }
-  return s.email;
+  if (!v1Accounts[s.pk] || v1Accounts[s.pk].geblokkeerd || s.w !== wachtwoordAfdruk(v1Accounts[s.pk].hash)) { v1Sessies.delete(sleutel); return null; }
+  if (Date.now() - s.t > 30 * 86400000) { v1Sessies.delete(sessieSleutel(m[1])); return null; }
+  return s.pk;
 }
 function v1CookieHeader(token, weg, request) {
   // Secure alleen op https (achter de Railway-proxy); op localhost tijdens ontwikkeling niet
@@ -3968,8 +3973,8 @@ async function send(res, status, type, body) {
   }
   // Een sessiewijziging (inloggen, uitloggen, intrekken) staat op schijf vóór het antwoord
   // vertrekt. Meestal is er niets om op te wachten en loopt dit antwoord de oude weg.
-  if (praktijkSessies.achter || beheerSessieTabel.achter || loginMisPraktijk.achter) {
-    await Promise.all([praktijkSessies.bijgewerkt(), beheerSessieTabel.bijgewerkt(), loginMisPraktijk.bijgewerkt()]);
+  if (v1Sessies.achter || praktijkSessies.achter || beheerSessieTabel.achter || loginMisPraktijk.achter) {
+    await Promise.all([v1Sessies.bijgewerkt(), praktijkSessies.bijgewerkt(), beheerSessieTabel.bijgewerkt(), loginMisPraktijk.bijgewerkt()]);
     if (res.headersSent || res.destroyed || res.writableEnded) return;
   }
   // een testomgeving: het lint en "[TEST]" op elke pagina, en geen link naar productie
@@ -6612,7 +6617,7 @@ async function afhandelen(request, response) {
         const next = { ...v1Accounts, [email]: { ...v1Accounts[email], geblokkeerd: b.geblokkeerd, gewijzigd: Date.now() } };
         await saveJson(v1AccountsPath, next);
         v1Accounts = next;
-        for (const [tok, s] of v1Sessies) if (s.email === email) v1Sessies.delete(tok);
+        for (const [tok, s] of v1Sessies) if (s.pk === email) v1Sessies.delete(tok);
         for (const [hash, t] of Object.entries(v1Tokens)) if (t.email === email) delete v1Tokens[hash];
         await saveJson(v1TokensPath, v1Tokens);
         auditLog(V1_PRAKTIJK, "v1-toegang-" + (b.geblokkeerd ? "ingetrokken" : "hersteld"), request);
@@ -6715,7 +6720,7 @@ async function afhandelen(request, response) {
       v1Accounts[email] = { email, hash: maakHash(ww), praktijk: V1_PRAKTIJK,
         gemaakt: bestond ? v1Accounts[email].gemaakt : Date.now(), gewijzigd: Date.now() };
       await saveJson(v1AccountsPath, v1Accounts);
-      for (const [tok, s] of v1Sessies) if (s.email === email) v1Sessies.delete(tok);
+      for (const [tok, s] of v1Sessies) if (s.pk === email) v1Sessies.delete(tok);
       v1LoginMis.delete(email);
       const sessie = maakV1Sessie(email);
       response.setHeader("set-cookie", v1CookieHeader(sessie, false, request));
@@ -6756,7 +6761,7 @@ async function afhandelen(request, response) {
   if (urlPath === "/api/v1/logout" && request.method === "POST") {
     const rauw = String(request.headers.cookie || "");
     const m = rauw.match(/(?:^|;\s*)fp1=([a-f0-9]{48})(?:;|$)/);
-    if (m) v1Sessies.delete(m[1]);
+    if (m) v1Sessies.delete(sessieSleutel(m[1]));
     response.setHeader("set-cookie", v1CookieHeader("", true, request));
     await sendJson(response, 200, { ok: true });
     return;
@@ -10299,6 +10304,7 @@ async function netjesStoppen(signaal) {
   server.closeIdleConnections();
   await dicht;
   clearInterval(veeg);
+  try { await v1Sessies.opSchijf(); } catch {}
   try { await praktijkSessies.opSchijf(); } catch {}
   try { await beheerSessieTabel.opSchijf(); } catch {}
   try { await loginMisPraktijk.opSchijf(); } catch {}
